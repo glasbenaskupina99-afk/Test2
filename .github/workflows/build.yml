@@ -1,8 +1,10 @@
 name: Build app (Android + web)
 
-# Builds the Android APK and the browser version, and publishes both to the
-# gh-pages branch: the web app at https://<owner>.github.io/<repo>/ and the APK
-# at .../LanguageMaster.apk.
+# Every push: builds the Android APK, publishes it as a release and replaces
+# .../LanguageMaster.apk on the website. The web app itself is left unchanged.
+#
+# To also publish the web app (https://<owner>.github.io/<repo>/), run this
+# workflow manually (Actions → Run workflow) with "Publish web app" ticked.
 # One-time setup: Settings → Pages → Source: "Deploy from a branch" → gh-pages / (root).
 
 on:
@@ -12,6 +14,11 @@ on:
       - "mobile/**"
       - ".github/workflows/build.yml"
   workflow_dispatch:
+    inputs:
+      publish_web:
+        description: "Publish web app too"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -63,19 +70,39 @@ jobs:
           name: LanguageMaster-apk
           path: LanguageMaster.apk
 
-      - name: Add APK to the website
+      # Only when asked for: replace the whole website with the new web app (+ APK).
+      - name: Prepare web app
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_web
         run: |
           cp LanguageMaster.apk mobile/www/LanguageMaster.apk
           touch mobile/www/.nojekyll
 
-      - name: Publish website (web app + APK)
+      - name: Publish web app + APK
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_web
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: mobile/www
           publish_branch: gh-pages
           force_orphan: true
-          commit_message: "Publish Language Master 1.0.${{ env.APP_VERSION }}"
+          commit_message: "Publish Language Master 1.0.${{ env.APP_VERSION }} (web + app)"
+
+      # Default: update only the APK download, keep the published web app as it is.
+      - name: Prepare APK-only update
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
+        run: |
+          mkdir -p apk-only
+          cp LanguageMaster.apk apk-only/LanguageMaster.apk
+
+      - name: Publish APK only
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: apk-only
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: "Update Android app 1.0.${{ env.APP_VERSION }}"
 
       - name: Publish release
         continue-on-error: true

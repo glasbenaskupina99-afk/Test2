@@ -36,7 +36,7 @@ Open **https://glasbenaskupina99-afk.github.io/Test2/** in Chrome or Edge. Nothi
 - **Installing:** use the install icon in the address bar to get Language Master as its own app window. It also works offline.
 - **Gemma on the computer:** install [Ollama](https://ollama.com) and run `ollama pull gemma4:e4b`. Then set the environment variable `OLLAMA_ORIGINS=https://glasbenaskupina99-afk.github.io` and restart Ollama, so the site is allowed to talk to it. Finally press **Settings → Test connection**, and allow access to your local network if the browser asks.
 
-The site and the APK are built by the *Build app (Android + web)* workflow and published to the `gh-pages` branch. **One-time setup:** Settings → Pages → Source: *Deploy from a branch* → `gh-pages` / `(root)`.
+Each push builds a new APK and updates only the APK download; the web app stays as it was. To publish the web app too, go to Actions → *Build app (Android + web)* → *Run workflow* and tick **Publish web app too**. Both are served from the `gh-pages` branch. **One-time setup:** Settings → Pages → Source: *Deploy from a branch* → `gh-pages` / `(root)`.
 
 ## 📱 Android app (no server)
 

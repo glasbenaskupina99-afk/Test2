@@ -5,7 +5,7 @@
 import { api, h, icons, iconBtn, shuffle, toast } from "./util.js";
 import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder } from "./audio.js";
 import { writingPad, strokeDemo } from "./writer.js";
-import { state } from "./state.js";
+import { state, T, isJa, sayText } from "./state.js";
 
 const speakerBtn = (text, cls = "speaker") => iconBtn("speaker", cls, () => speak(text), "Listen");
 const slowBtn = (text) => iconBtn("slow", "speaker sm", () => speak(text, { slow: true }), "Listen slowly");
@@ -70,14 +70,14 @@ export function intro(ctx, word) {
       "div",
       { class: "word-hero" },
       demo.el,
-      h("div", { class: "row", style: { justifyContent: "center", marginTop: "12px" } }, speakerBtn(word.hanzi), slowBtn(word.hanzi)),
+      h("div", { class: "row", style: { justifyContent: "center", marginTop: "12px" } }, speakerBtn(sayText(word)), slowBtn(sayText(word))),
       h("div", { class: "py" }, word.pinyin),
       h("div", { class: "en" }, word.english)
     ),
     aiOn && !word.extras ? h("button", { class: "btn ghost small auto", style: { alignSelf: "center" }, onclick: (e) => { e.target.remove(); loadAI(); } }, "✨ Memory hook & example") : null,
     ai
   );
-  setTimeout(() => speak(word.hanzi), 400);
+  setTimeout(() => speak(sayText(word)), 400);
   return { el, mode: "continue" };
 }
 
@@ -86,7 +86,7 @@ export function intro(ctx, word) {
 export function trace(ctx, word) {
   const pad = writingPad([...word.hanzi].map((c) => ({ c, outline: true })));
   pad.done.then((r) => {
-    speak(word.hanzi);
+    speak(sayText(word));
     ctx.finish({ ok: true, grade: 2, title: "Nice tracing!", detail: solution(word), xp: 0, result: r });
   });
   return {
@@ -106,12 +106,12 @@ export function write(ctx, word, { pinyinHint = false } = {}) {
   const pyEl = h("span", {}, word.pinyin);
   pyEl.hidden = !pinyinHint;
   let pinyinPeeked = false;
-  const peek = h("button", { class: "reveal", onclick: () => { pinyinPeeked = true; pyEl.hidden = false; peek.remove(); } }, "show pinyin");
+  const peek = h("button", { class: "reveal", onclick: () => { pinyinPeeked = true; pyEl.hidden = false; peek.remove(); } }, `show ${T.reading()}`);
   const pad = writingPad([...word.hanzi].map((c) => ({ c, outline: false })));
   pad.done.then((r) => {
     let grade = writeGrade(r);
     if (pinyinPeeked) grade = Math.min(grade, 2);
-    speak(word.hanzi);
+    speak(sayText(word));
     const ok = grade >= 1;
     const title = grade === 3 ? "Perfect!" : grade === 2 ? "Great job!" : grade === 1 ? "Got there!" : "Keep practising";
     const extra = `${r.mistakes} wrong stroke${r.mistakes === 1 ? "" : "s"}${r.hints ? `, ${r.hints} hint${r.hints > 1 ? "s" : ""}` : ""}`;
@@ -171,7 +171,7 @@ export function multipleChoice(ctx, word, pool) {
         if (options[i].hanzi === word.hanzi) t.classList.add("correct");
         else if (options[i] === picked) t.classList.add("wrong");
       });
-      speak(word.hanzi);
+      speak(sayText(word));
       return { ok, grade: ok ? 2 : 0, title: ok ? "Correct!" : "Correct answer:", detail: solution(word, !ok ? `You picked ${picked.hanzi} = ${picked.english}` : "") };
     },
   };
@@ -183,7 +183,7 @@ export function pinyinType(ctx, word) {
     autocomplete: "off",
     autocapitalize: "off",
     spellcheck: "false",
-    placeholder: "e.g. mao1 or māo",
+    placeholder: isJa() ? "e.g. yama or やま" : "e.g. mao1 or māo",
     oninput: () => ctx.setReady(input.value.trim().length > 0),
     onkeydown: (e) => e.key === "Enter" && input.value.trim() && ctx.submit(),
   });
@@ -192,15 +192,15 @@ export function pinyinType(ctx, word) {
     el: h(
       "div",
       {},
-      h("div", { class: "ex-kicker orange" }, "⌨️ Pinyin"),
+      h("div", { class: "ex-kicker orange" }, isJa() ? "⌨️ Reading" : "⌨️ Pinyin"),
       h("h2", { class: "ex-title" }, `How do you say “${word.english}”?`),
-      h("p", { class: "muted" }, "Type the pinyin. Tones as numbers (ni3 hao3) or marks."),
+      h("p", { class: "muted" }, isJa() ? "Type the reading in romaji or hiragana." : "Type the pinyin. Tones as numbers (ni3 hao3) or marks."),
       input
     ),
     mode: "check",
     async check() {
       const r = await api("/api/check/pinyin", { method: "POST", body: { answer: input.value, expected: word.pinyin } });
-      speak(word.hanzi);
+      speak(sayText(word));
       if (r.result === "correct") return { ok: true, grade: 2, title: "Correct!", detail: solution(word) };
       if (r.result === "tones_wrong") return { ok: false, grade: 1, title: "Almost — check the tones", detail: solution(word) };
       return { ok: false, grade: 0, title: "Correct answer:", detail: solution(word) };
@@ -232,7 +232,7 @@ function scoreGrade(score) {
 }
 
 /** Shared speaking widget. target is hanzi. */
-function speakPanel(ctx, target, solutionNode) {
+function speakPanel(ctx, target, solutionNode, reading = "") {
   const mode = speechMode();
   const out = h("div", { class: "mic-wrap" });
   const mic = h("button", { class: "mic", "aria-label": "Record" });
@@ -297,7 +297,7 @@ function speakPanel(ctx, target, solutionNode) {
         mic.classList.remove("rec");
         if (!alts.length) { statusEl.textContent = "Didn't catch that — tap and try again"; return; }
         statusEl.textContent = "";
-        const scored = await Promise.all(alts.map((a) => api("/api/speech/compare", { method: "POST", body: { heard: a, expected: target } }).then((r) => ({ ...r, heard: a }))));
+        const scored = await Promise.all(alts.map((a) => api("/api/speech/compare", { method: "POST", body: { heard: a, expected: target, reading } }).then((r) => ({ ...r, heard: a }))));
         scored.sort((a, b) => b.score - a.score);
         const r = scored[0];
         handleScore(r.score, [syllableChips(r.syllables), h("div", { class: "heard" }, "Heard: ", h("span", { class: "hz" }, r.heard), ` (${r.heard_pinyin})`)]);
@@ -338,7 +338,7 @@ function speakPanel(ctx, target, solutionNode) {
       "div",
       { class: "row" },
       h("button", { class: "btn ghost small", onclick: () => audio.play() }, "▶ Me"),
-      h("button", { class: "btn ghost small", onclick: () => speak(target) }, "🔊 Native")
+      h("button", { class: "btn ghost small", onclick: () => speak(reading && isJa() && [...target].length < 4 ? reading : target) }, "🔊 Native")
     );
 
     if (mode === "ai" && wavBase64) {
@@ -380,7 +380,7 @@ function speakPanel(ctx, target, solutionNode) {
 export function speakWord(ctx, word, { showPinyin = true } = {}) {
   const py = h("div", { class: "py" }, word.pinyin);
   py.hidden = !showPinyin;
-  const peek = showPinyin ? null : h("button", { class: "reveal", onclick: () => { py.hidden = false; peek.remove(); } }, "show pinyin");
+  const peek = showPinyin ? null : h("button", { class: "reveal", onclick: () => { py.hidden = false; peek.remove(); } }, `show ${T.reading()}`);
   return {
     el: h(
       "div",
@@ -393,9 +393,9 @@ export function speakWord(ctx, word, { showPinyin = true } = {}) {
         h("div", { class: "big-hz hz" }, word.hanzi),
         py,
         peek,
-        h("div", { class: "row", style: { justifyContent: "center", marginTop: "10px" } }, speakerBtn(word.hanzi), slowBtn(word.hanzi))
+        h("div", { class: "row", style: { justifyContent: "center", marginTop: "10px" } }, speakerBtn(sayText(word)), slowBtn(sayText(word)))
       ),
-      speakPanel(ctx, word.hanzi, solution(word))
+      speakPanel(ctx, word.hanzi, solution(word), word.pinyin)
     ),
     mode: "auto",
     skip: "Can't speak now",
@@ -453,18 +453,18 @@ export function sentenceWrite(ctx, s) {
 export function sentenceType(ctx, s) {
   const ta = h("textarea", {
     class: "text-answer",
-    placeholder: "Type in Chinese (or pinyin with tone numbers)",
+    placeholder: isJa() ? "Type in Japanese (or romaji)" : "Type in Chinese (or pinyin with tone numbers)",
     oninput: () => ctx.setReady(ta.value.trim().length > 0),
   });
   setTimeout(() => ta.focus(), 300);
   return {
-    el: h("div", {}, ...sentencePrompt(s, "⌨️ Translate", "purple"), ta, h("div", { class: "hint" }, "Tip: add the Chinese (Pinyin) keyboard on your phone.")),
+    el: h("div", {}, ...sentencePrompt(s, "⌨️ Translate", "purple"), ta, h("div", { class: "hint" }, isJa() ? "Tip: add the Japanese keyboard on your phone." : "Tip: add the Chinese (Pinyin) keyboard on your phone.")),
     mode: "check",
     async check() {
-      const r = await api("/api/sentences/grade", { method: "POST", body: { en: s.en, zh: s.zh, answer: ta.value } });
+      const r = await api("/api/sentences/grade", { method: "POST", body: { en: s.en, zh: s.zh, reading: s.pinyin, answer: ta.value } });
       speak(r.correct ? s.zh : r.corrected || s.zh);
       const shown = { ...s };
-      const bare = (t) => (t || "").replace(/[^\u3400-\u9fff]/g, "");
+      const bare = (t) => (t || "").replace(/[^\u3400-\u9fff\u3041-\u30ff]/g, "");
       if (r.corrected && bare(r.corrected) !== bare(s.zh)) Object.assign(shown, { zh: r.corrected, pinyin: "" });
       return {
         ok: r.correct,
@@ -486,17 +486,17 @@ export function sentenceType(ctx, s) {
 export function sentenceSpeak(ctx, s) {
   const py = h("div", { class: "small muted center" }, s.pinyin);
   py.hidden = true;
-  const peek = h("button", { class: "reveal", style: { alignSelf: "center" }, onclick: () => { py.hidden = false; peek.remove(); } }, "show pinyin");
+  const peek = h("button", { class: "reveal", style: { alignSelf: "center" }, onclick: () => { py.hidden = false; peek.remove(); } }, `show ${T.reading()}`);
   return {
     el: h(
       "div",
       { style: { display: "flex", flexDirection: "column" } },
-      ...sentencePrompt(s, "🎤 Say it in Chinese", "orange"),
+      ...sentencePrompt(s, `🎤 Say it in ${T.lang()}`, "orange"),
       h("div", { class: "sentence-hz hz" }, s.zh),
       py,
       peek,
       h("div", { class: "row", style: { justifyContent: "center", marginTop: "10px" } }, speakerBtn(s.zh), slowBtn(s.zh)),
-      speakPanel(ctx, s.zh, sentenceSolution(s))
+      speakPanel(ctx, s.zh, sentenceSolution(s), s.pinyin)
     ),
     mode: "auto",
     skip: "Can't speak now",
@@ -507,7 +507,7 @@ export function sentenceSpeak(ctx, s) {
 export function sentenceSpeakRecall(ctx, s) {
   const reveal = h("div", { class: "sentence-hz hz" }, s.zh);
   reveal.hidden = true;
-  const peek = h("button", { class: "reveal", style: { alignSelf: "center" }, onclick: () => { reveal.hidden = false; peek.remove(); } }, "show Chinese");
+  const peek = h("button", { class: "reveal", style: { alignSelf: "center" }, onclick: () => { reveal.hidden = false; peek.remove(); } }, `show ${T.lang()}`);
   return {
     el: h(
       "div",
@@ -515,7 +515,7 @@ export function sentenceSpeakRecall(ctx, s) {
       ...sentencePrompt(s, "🎤 Translate out loud", "orange"),
       reveal,
       peek,
-      speakPanel(ctx, s.zh, sentenceSolution(s))
+      speakPanel(ctx, s.zh, sentenceSolution(s), s.pinyin)
     ),
     mode: "auto",
     skip: "Can't speak now",

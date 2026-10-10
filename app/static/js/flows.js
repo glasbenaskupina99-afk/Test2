@@ -2,7 +2,7 @@
 import { api, h, shuffle, toast } from "./util.js";
 import { runLesson } from "./lesson.js";
 import * as ex from "./exercises.js";
-import { state } from "./state.js";
+import { state, T } from "./state.js";
 
 const step = (make, after, key) => ({ make, after, key });
 
@@ -123,7 +123,7 @@ export function pickSentenceMode() {
         "div",
         { class: "sheet" },
         h("h2", {}, "Sentence practice"),
-        h("p", { class: "muted" }, "Translate English sentences into Chinese — by hand, keyboard or voice."),
+        h("p", { class: "muted" }, `Translate English sentences into ${T.lang()} — by hand, keyboard or voice.`),
         h("div", { class: "mode-pick" }, buttons),
         h(
           "div",

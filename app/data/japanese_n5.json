@@ -1,0 +1,163 @@
+{
+  "source": "Beginner (JLPT N5) kanji vocabulary, grouped into themed units. Readings in hiragana.",
+  "units": [
+    {
+      "name": "Numbers & money",
+      "words": [
+        ["一", "いち", "one"],
+        ["二", "に", "two"],
+        ["三", "さん", "three"],
+        ["四", "よん", "four"],
+        ["五", "ご", "five"],
+        ["六", "ろく", "six"],
+        ["七", "なな", "seven"],
+        ["八", "はち", "eight"],
+        ["九", "きゅう", "nine"],
+        ["十", "じゅう", "ten"],
+        ["百", "ひゃく", "hundred"],
+        ["千", "せん", "thousand"],
+        ["万", "まん", "ten thousand"],
+        ["円", "えん", "yen"],
+        ["お金", "おかね", "money"]
+      ]
+    },
+    {
+      "name": "People",
+      "words": [
+        ["人", "ひと", "person"],
+        ["私", "わたし", "I; me"],
+        ["男", "おとこ", "man"],
+        ["女", "おんな", "woman"],
+        ["子ども", "こども", "child"],
+        ["父", "ちち", "(my) father"],
+        ["母", "はは", "(my) mother"],
+        ["友だち", "ともだち", "friend"],
+        ["先生", "せんせい", "teacher"],
+        ["学生", "がくせい", "student"],
+        ["名前", "なまえ", "name"],
+        ["日本人", "にほんじん", "Japanese person"]
+      ]
+    },
+    {
+      "name": "Time",
+      "words": [
+        ["日", "ひ", "day; sun"],
+        ["月", "つき", "moon; month"],
+        ["年", "とし", "year"],
+        ["今", "いま", "now"],
+        ["今日", "きょう", "today"],
+        ["明日", "あした", "tomorrow"],
+        ["毎日", "まいにち", "every day"],
+        ["時間", "じかん", "time; hours"],
+        ["午前", "ごぜん", "morning; a.m."],
+        ["午後", "ごご", "afternoon; p.m."],
+        ["半", "はん", "half; half past"],
+        ["何", "なに", "what"]
+      ]
+    },
+    {
+      "name": "Days of the week",
+      "words": [
+        ["月曜日", "げつようび", "Monday"],
+        ["火曜日", "かようび", "Tuesday"],
+        ["水曜日", "すいようび", "Wednesday"],
+        ["木曜日", "もくようび", "Thursday"],
+        ["金曜日", "きんようび", "Friday"],
+        ["土曜日", "どようび", "Saturday"],
+        ["日曜日", "にちようび", "Sunday"]
+      ]
+    },
+    {
+      "name": "Nature",
+      "words": [
+        ["山", "やま", "mountain"],
+        ["川", "かわ", "river"],
+        ["火", "ひ", "fire"],
+        ["水", "みず", "water"],
+        ["木", "き", "tree"],
+        ["土", "つち", "soil; earth"],
+        ["雨", "あめ", "rain"],
+        ["空", "そら", "sky"],
+        ["花", "はな", "flower"],
+        ["天気", "てんき", "weather"],
+        ["元気", "げんき", "healthy; energetic"]
+      ]
+    },
+    {
+      "name": "Places & directions",
+      "words": [
+        ["上", "うえ", "up; above"],
+        ["下", "した", "down; below"],
+        ["中", "なか", "inside; middle"],
+        ["外", "そと", "outside"],
+        ["右", "みぎ", "right"],
+        ["左", "ひだり", "left"],
+        ["前", "まえ", "front; before"],
+        ["後ろ", "うしろ", "behind"],
+        ["北", "きた", "north"],
+        ["南", "みなみ", "south"],
+        ["東", "ひがし", "east"],
+        ["西", "にし", "west"],
+        ["日本", "にほん", "Japan"],
+        ["国", "くに", "country"],
+        ["学校", "がっこう", "school"],
+        ["駅", "えき", "station"],
+        ["店", "みせ", "shop"],
+        ["会社", "かいしゃ", "company"]
+      ]
+    },
+    {
+      "name": "Actions",
+      "words": [
+        ["行く", "いく", "to go"],
+        ["来る", "くる", "to come"],
+        ["見る", "みる", "to see; to watch"],
+        ["食べる", "たべる", "to eat"],
+        ["飲む", "のむ", "to drink"],
+        ["読む", "よむ", "to read"],
+        ["書く", "かく", "to write"],
+        ["聞く", "きく", "to listen; to ask"],
+        ["話す", "はなす", "to speak"],
+        ["買う", "かう", "to buy"],
+        ["休む", "やすむ", "to rest"],
+        ["言う", "いう", "to say"],
+        ["出る", "でる", "to go out; to leave"],
+        ["入る", "はいる", "to enter"],
+        ["立つ", "たつ", "to stand"],
+        ["会う", "あう", "to meet"]
+      ]
+    },
+    {
+      "name": "Describing",
+      "words": [
+        ["大きい", "おおきい", "big"],
+        ["小さい", "ちいさい", "small"],
+        ["高い", "たかい", "tall; expensive"],
+        ["安い", "やすい", "cheap"],
+        ["新しい", "あたらしい", "new"],
+        ["古い", "ふるい", "old (things)"],
+        ["長い", "ながい", "long"],
+        ["白い", "しろい", "white"],
+        ["多い", "おおい", "many; a lot"],
+        ["少ない", "すくない", "few; little"]
+      ]
+    },
+    {
+      "name": "Things & body",
+      "words": [
+        ["本", "ほん", "book"],
+        ["車", "くるま", "car"],
+        ["電車", "でんしゃ", "train"],
+        ["電気", "でんき", "electricity; light"],
+        ["日本語", "にほんご", "Japanese (language)"],
+        ["英語", "えいご", "English (language)"],
+        ["魚", "さかな", "fish"],
+        ["手", "て", "hand"],
+        ["目", "め", "eye"],
+        ["耳", "みみ", "ear"],
+        ["口", "くち", "mouth"],
+        ["足", "あし", "foot; leg"]
+      ]
+    }
+  ]
+}

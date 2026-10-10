@@ -1,5 +1,5 @@
 import { api, h, iconBtn, toast } from "./util.js";
-import { state } from "./state.js";
+import { state, T, isJa, sayText, applyCourse } from "./state.js";
 import { speak, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
@@ -64,11 +64,59 @@ async function startFlow(fn) {
 
 // ------------------------------------------------------------------ home
 
+const COURSES = {
+  zh: { flag: "🇨🇳", name: "Chinese", script: "汉字", sub: "Mandarin · HSK 1" },
+  ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kanji · JLPT N5" },
+};
+
+function courseSheet(home) {
+  const bg = h(
+    "div",
+    { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() },
+    h(
+      "div",
+      { class: "sheet" },
+      h("h2", { style: { marginBottom: "14px" } }, "Choose a course"),
+      h(
+        "div",
+        { class: "modes", style: { marginTop: 0 } },
+        home.courses.map((c) => {
+          const info = COURSES[c.lang];
+          return h(
+            "button",
+            {
+              class: "mode" + (c.lang === "ja" ? " blue" : "") + (c.lang === home.course ? "" : ""),
+              style: c.lang === home.course ? { outline: "4px solid var(--yellow)" } : {},
+              onclick: async () => {
+                state.settings = await api("/api/settings", { method: "PUT", body: { course: c.lang } });
+                applyCourse();
+                bg.remove();
+                route();
+              },
+            },
+            h("div", { class: "badge-ico" }, info.flag),
+            h("div", {}, h("h3", {}, `${info.name} `, h("span", { class: "hz" }, info.script)), h("p", {}, `${info.sub} · ${c.learned}/${c.total} learned`))
+          );
+        })
+      ),
+      h("p", { class: "muted small center", style: { marginTop: "14px" } }, "Each course keeps its own words and progress. Your streak and XP are shared.")
+    )
+  );
+  document.body.append(bg);
+}
+
 function topbar(home) {
   const ai = state.aiStatus;
   return h(
     "div",
     { class: "topbar" },
+    home.courses
+      ? h(
+          "button",
+          { class: "stat", title: "Switch course", onclick: () => courseSheet(home), style: { background: "none", border: "2px solid var(--border)", borderRadius: "12px", padding: "4px 8px", cursor: "pointer" } },
+          h("span", { class: "ico" }, COURSES[home.course].flag)
+        )
+      : null,
     h("div", { class: "stat fire" + (home.streak ? "" : " dim") }, h("span", { class: "ico" }, "🔥"), home.streak),
     h("div", { class: "stat gem" }, h("span", { class: "ico" }, "📚"), `${home.learned}`),
     h("div", { class: "stat xp" }, h("span", { class: "ico" }, "⚡"), home.xp_today),
@@ -136,7 +184,7 @@ async function homeScreen() {
       h("div", { class: "modes" }, learnCard, reviewCard, sentenceCard),
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week),
-      h("h2", { class: "section-title" }, "Your path"),
+      h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
       units,
     ],
     "#/"
@@ -228,7 +276,7 @@ function wordSheet(w) {
         { class: "word-hero" },
         h("div", { class: "py" }, w.pinyin),
         h("div", { class: "en" }, w.english),
-        h("div", { class: "row", style: { justifyContent: "center", marginTop: "10px" } }, iconBtn("speaker", "speaker", () => speak(w.hanzi), "Listen"))
+        h("div", { class: "row", style: { justifyContent: "center", marginTop: "10px" } }, iconBtn("speaker", "speaker", () => speak(sayText(w)), "Listen"))
       ),
       w.cards
         ? h("p", { class: "muted small center" }, `Strength: ${Math.round(w.strength || 0)} day interval · ${w.lapses || 0} lapses`)
@@ -251,7 +299,7 @@ function wordSheet(w) {
     )
   );
   document.body.append(bg);
-  speak(w.hanzi);
+  speak(sayText(w));
 }
 
 // ------------------------------------------------------------------ words
@@ -301,7 +349,7 @@ async function wordsScreen() {
   shell(
     [
       h("div", { class: "topbar" }, h("h2", {}, "Words"), h("button", { class: "btn small", onclick: addWordSheet }, "+ Add word")),
-      h("input", { class: "input search", placeholder: "Search 汉字, pinyin or English", value: wordSearch, oninput: (e) => { wordSearch = e.target.value; render(); } }),
+      h("input", { class: "input search", placeholder: isJa() ? "Search 漢字, reading or English" : "Search 汉字, pinyin or English", value: wordSearch, oninput: (e) => { wordSearch = e.target.value; render(); } }),
       h("div", { class: "filter-row" }, fbtns),
       h("p", { class: "muted small" }, `${words.filter((w) => w.cards).length} of ${words.length} learned`),
       list,
@@ -311,10 +359,10 @@ async function wordsScreen() {
 }
 
 function addWordSheet() {
-  const hz = h("input", { class: "input hz", placeholder: "汉字", style: { fontSize: "24px" } });
-  const py = h("input", { class: "input", placeholder: "pinyin (auto-filled if empty)" });
+  const hz = h("input", { class: "input hz", placeholder: isJa() ? "漢字" : "汉字", style: { fontSize: "24px" } });
+  const py = h("input", { class: "input", placeholder: isJa() ? "reading in hiragana or romaji" : "pinyin (auto-filled if empty)" });
   const en = h("input", { class: "input", placeholder: "English meaning" });
-  const q = h("input", { class: "input", placeholder: "e.g. “bicycle” or “zixingche”" });
+  const q = h("input", { class: "input", placeholder: isJa() ? "e.g. “bicycle” or “jitensha”" : "e.g. “bicycle” or “zixingche”" });
   hz.addEventListener("change", async () => {
     if (hz.value && !py.value) py.value = (await api("/api/words/pinyin", { method: "POST", body: { query: hz.value } })).pinyin;
   });
@@ -356,7 +404,7 @@ function addWordSheet() {
       h("h2", { style: { marginBottom: "14px" } }, "Add a word"),
       aiRow,
       h("div", { class: "field" }, h("label", {}, "Characters"), hz),
-      h("div", { class: "field" }, h("label", {}, "Pinyin"), py),
+      h("div", { class: "field" }, h("label", {}, isJa() ? "Reading" : "Pinyin"), py),
       h("div", { class: "field" }, h("label", {}, "English"), en),
       h(
         "button",
@@ -502,7 +550,7 @@ async function settingsScreen() {
     ? [["browser", "Android speech recognition"], ["self", "Record & compare myself"]]
     : [["browser", "Phone speech recognition (fast)"], ["ai", "Gemma audio (needs audio-capable server)"], ["self", "Record & compare myself"]];
 
-  const speechSupport = isApp ? ["Tip: for offline recognition, install the Chinese (Mandarin) offline speech pack in Android settings → Google → Voice."] : [
+  const speechSupport = isApp ? [`Tip: for offline recognition, install the ${isJa() ? "Japanese" : "Chinese (Mandarin)"} offline speech pack in Android settings → Google → Voice.`] : [
     `Browser speech recognition: ${canRecognize() ? "✅ available" : "❌ not available"}`,
     `Recording: ${canRecord() ? "✅ available" : "❌ not available"}`,
     window.isSecureContext ? "" : "⚠️ Not on HTTPS — the microphone is blocked. Use the https:// address.",
@@ -524,7 +572,7 @@ async function settingsScreen() {
         ),
         h("div", { class: "hint", style: { marginTop: 0 } }, speechSupport.map((t) => h("div", {}, t))),
         field("Voice speed", select("tts_rate", [["0.6", "Slow"], ["0.8", "Normal"], ["1", "Native"]])),
-        h("button", { class: "btn ghost small", onclick: () => { save(true).then(() => speak("你好，我们开始学习吧")); } }, "🔊 Test voice")
+        h("button", { class: "btn ghost small", onclick: () => { save(true).then(() => speak(isJa() ? "こんにちは、勉強を始めましょう" : "你好，我们开始学习吧")); } }, "🔊 Test voice")
       ),
       h("h2", { class: "section-title" }, "✍️ Handwriting"),
       h(
@@ -557,6 +605,7 @@ async function settingsScreen() {
 (async function boot() {
   try {
     state.settings = await api("/api/settings");
+    applyCourse();
   } catch (e) {
     app.replaceChildren(h("div", { class: "empty" }, h("div", { class: "e" }, "🔌"), h("h2", {}, "Can't reach the server"), h("p", {}, e.message)));
     return;

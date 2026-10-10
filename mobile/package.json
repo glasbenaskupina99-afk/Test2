@@ -16,7 +16,9 @@
     "@capacitor/filesystem": "8.1.4",
     "@capacitor/preferences": "8.0.1",
     "@capacitor/share": "8.0.3",
-    "pinyin-pro": "3.29.5"
+    "@k1low/hanzi-writer-data-jp": "0.8.0",
+    "pinyin-pro": "3.29.5",
+    "wanakana": "5.3.1"
   },
   "devDependencies": {
     "@capacitor/cli": "8.5.3",

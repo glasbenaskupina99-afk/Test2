@@ -22,15 +22,16 @@ const storage = isNative
       save: async (v) => { try { localStorage.setItem(KEY, v); } catch { /* ignore */ } },
     };
 
-window.__charDataUrl = (c) => `chars/${encodeURIComponent(c)}.json`;
+// Chinese and Japanese stroke orders differ, so each course has its own stroke data.
+window.__charDataUrl = (c) => `${window.__course === "ja" ? "chars-ja" : "chars"}/${encodeURIComponent(c)}.json`;
 
-function recognize() {
+function recognize(language = "zh-CN") {
   const p = (async () => {
     let perm = await SpeechRecognition.checkPermissions();
     if (perm.speechRecognition !== "granted") perm = await SpeechRecognition.requestPermissions();
     if (perm.speechRecognition !== "granted") throw new Error("Microphone permission denied");
     try {
-      const res = await SpeechRecognition.start({ language: "zh-CN", maxResults: 4, popup: false, partialResults: false });
+      const res = await SpeechRecognition.start({ language, maxResults: 4, popup: false, partialResults: false });
       return (res && res.matches) || [];
     } catch (e) {
       if (/no match|no speech|didn't|timeout|7|6/i.test(e.message || "")) return [];
@@ -44,7 +45,7 @@ function recognize() {
 if (isNative) {
   window.__native = {
     gemma: Gemma,
-    speak: (text, rate) => TextToSpeech.speak({ text, lang: "zh-CN", rate: rate / 0.8, pitch: 1, volume: 1, category: "playback" }),
+    speak: (text, rate, lang = "zh-CN") => TextToSpeech.speak({ text, lang, rate: rate / 0.8, pitch: 1, volume: 1, category: "playback" }),
     stopSpeaking: () => TextToSpeech.stop().catch(() => {}),
     recognize,
     shareFile: async (name, text) => {

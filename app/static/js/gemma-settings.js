@@ -140,7 +140,7 @@ export function gemmaCard(s, fields, save) {
     h("div", { class: "switch-row" }, h("div", {}, "Use AI", h("div", { class: "small muted" }, "Sentences, translation grading, memory hooks")), aiToggle),
     statusEl,
     h("h3", { style: { margin: "16px 0 8px", fontSize: "17px" } }, "Get the model"),
-    h("p", { class: "small muted", style: { marginTop: 0 } }, "Downloads once over Wi-Fi, then runs offline. Keep the app open while it downloads; if it stops, tap Download again to resume."),
+    h("p", { class: "small muted", style: { marginTop: 0 } }, "Downloads once (over Wi-Fi or mobile data — check your data plan, it's a few GB), then runs offline. Keep the app open while it downloads; if it stops, tap Download again to resume."),
     h("div", { class: "field" }, h("label", {}, "Model"), repoSel, repoCustom),
     h("div", { class: "field" }, h("label", {}, "Hugging Face token (optional)"), token),
     h("button", { class: "btn ghost", onclick: findFiles }, "Find model files"),

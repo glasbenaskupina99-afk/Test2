@@ -1,9 +1,15 @@
 // On-device Gemma prompts (JS port of app/ai.py). Inference runs in the native GemmaPlugin.
 import { hanziOnly } from "./pinyin.js";
+import { normKana, writable } from "./japanese.js";
 
-const SYSTEM =
-  "You are a patient Mandarin Chinese tutor for an English-speaking beginner. " +
-  "Use Simplified Chinese characters. Always answer with a single JSON object and nothing else.";
+const SYSTEMS = {
+  zh:
+    "You are a patient Mandarin Chinese tutor for an English-speaking beginner. " +
+    "Use Simplified Chinese characters. Always answer with a single JSON object and nothing else.",
+  ja:
+    "You are a patient Japanese tutor for an English-speaking beginner. Use standard Japanese " +
+    "(kanji with hiragana, polite です/ます style). Always answer with a single JSON object and nothing else.",
+};
 
 export class AIError extends Error {
   constructor(msg) {
@@ -14,6 +20,7 @@ export class AIError extends Error {
 }
 
 let getSettings = () => ({});
+const lang = () => (getSettings().course === "ja" ? "ja" : "zh");
 export function configure(settingsFn) {
   getSettings = settingsFn;
 }
@@ -45,7 +52,7 @@ export async function chat(prompt, { temperature = 0.7 } = {}) {
   if (!gemma()) throw new AIError("On-device AI is only available in the Android app");
   let res;
   try {
-    res = await gemma().generate({ prompt, system: SYSTEM, temperature, backend: s.gemma_backend || "cpu" });
+    res = await gemma().generate({ prompt, system: SYSTEMS[lang()], temperature, backend: s.gemma_backend || "cpu" });
   } catch (e) {
     throw new AIError(e.message || String(e));
   }
@@ -64,8 +71,10 @@ export async function test() {
   const s = getSettings();
   if (!gemma()) throw new AIError("On-device AI is only available in the Android app");
   const res = await gemma().generate({
-    prompt: "Greet a beginner in one short Chinese sentence with pinyin and English. Plain text, one line.",
-    system: "You are a friendly Mandarin tutor.",
+    prompt: lang() === "ja"
+      ? "Greet a beginner in one short Japanese sentence with its reading and English. Plain text, one line."
+      : "Greet a beginner in one short Chinese sentence with pinyin and English. Plain text, one line.",
+    system: lang() === "ja" ? "You are a friendly Japanese tutor." : "You are a friendly Mandarin tutor.",
     temperature: 0.7,
     backend: s.gemma_backend || "cpu",
   });
@@ -78,6 +87,7 @@ export async function generateSentences(known, focus, count, avoid) {
   // Keep the prompt short: small on-device models are slow at reading long inputs.
   const sample = [...focus, ...known.filter((w) => !focus.some((f) => f.hanzi === w.hanzi)).sort(() => Math.random() - 0.5)].slice(0, 120);
   const vocab = sample.map((w) => `${w.hanzi} (${w.english})`).join("; ");
+  if (lang() === "ja") return generateSentencesJa(vocab, focus, count, avoid);
   const prompt = `Create ${count} short, natural Mandarin practice sentences for a beginner.
 
 Rules:
@@ -98,8 +108,30 @@ Return JSON: {"sentences": [{"en": "...", "zh": "..."}]}`;
   return out;
 }
 
+async function generateSentencesJa(vocab, focus, count, avoid) {
+  const prompt = `Create ${count} short, natural Japanese practice sentences for a beginner.
+
+Rules:
+- Use mainly words from this vocabulary list, plus basic particles, です/ます verb forms and simple kana words: ${vocab}
+- Try to include these focus words: ${focus.map((w) => w.hanzi).join(", ") || "any"}
+- Polite style, 4 to 14 characters each, everyday sentences a native speaker would say.
+- Vary the grammar (statements, questions with か, negatives with ません).
+- Don't repeat these recent sentences: ${avoid.slice(0, 15).join(" / ") || "none"}
+- "en": natural English. "ja": the Japanese with normal kanji and kana. "reading": the whole sentence in hiragana only.
+
+Return JSON: {"sentences": [{"en": "...", "ja": "...", "reading": "..."}]}`;
+  const data = await chat(prompt, { temperature: 0.9 });
+  const items = Array.isArray(data) ? data : data.sentences;
+  const out = (Array.isArray(items) ? items : [])
+    .filter((it) => it && it.en && writable(it.ja || it.zh))
+    .map((it) => ({ en: String(it.en).trim(), zh: String(it.ja || it.zh).trim(), reading: normKana(String(it.reading || "")) }));
+  if (!out.length) throw new AIError("Gemma returned no usable sentences");
+  return out;
+}
+
 export async function gradeTranslation(english, reference, answer) {
-  const prompt = `A student translated an English sentence into Chinese.
+  const target = lang() === "ja" ? "Japanese" : "Chinese";
+  const prompt = `A student translated an English sentence into ${target}.
 
 English: ${english}
 Reference translation: ${reference}
@@ -109,12 +141,27 @@ Decide whether the student's answer is a correct, natural translation. Different
 wordings are correct. Ignore punctuation and spacing. Be encouraging but honest.
 
 Return JSON: {"correct": true/false, "score": 0-100, "feedback": "one or two short sentences in English",
-"corrected": "the best correct Chinese version closest to the student's answer"}`;
+"corrected": "the best correct ${target} version closest to the student's answer"}`;
   const d = await chat(prompt, { temperature: 0.2 });
   return { correct: !!d.correct, score: Number(d.score) || 0, feedback: String(d.feedback || ""), corrected: String(d.corrected || reference) };
 }
 
 export async function wordExtras(word) {
+  if (lang() === "ja") {
+    const prompt = `Help me remember the Japanese word ${word.hanzi} (read ${word.pinyin}) meaning "${word.english}".
+
+Return JSON: {
+ "example_zh": "a short, simple polite example sentence using it (kanji and kana)",
+ "example_pinyin": "that sentence in hiragana",
+ "example_en": "its English translation",
+ "mnemonic": "a vivid one-sentence memory hook linking the shape/parts of the kanji to the meaning",
+ "components": "brief breakdown of the kanji's parts/radicals (one line)"
+}`;
+    const d = await chat(prompt, { temperature: 0.6 });
+    const out = {};
+    for (const k of ["example_zh", "example_pinyin", "example_en", "mnemonic", "components"]) out[k] = String(d[k] || "");
+    return out;
+  }
   const prompt = `Help me remember the Chinese word ${word.hanzi} (${word.pinyin}) meaning "${word.english}".
 
 Return JSON: {
@@ -130,6 +177,14 @@ Return JSON: {
 }
 
 export async function fillWord(query) {
+  if (lang() === "ja") {
+    const prompt = `The user wants to add a word to their Japanese study list. Their input: "${query}"
+It may be English, romaji, kana or kanji. Pick the most common everyday Japanese word.
+
+Return JSON: {"word": "the word as normally written (kanji + kana)", "reading": "hiragana reading", "english": "short English meaning(s)"}`;
+    const d = await chat(prompt, { temperature: 0.2 });
+    return { hanzi: writable(String(d.word || d.kanji || "")), pinyin: normKana(String(d.reading || "")).replace(/[^\u3041-\u3096ー]/g, ""), english: String(d.english || "").trim() };
+  }
   const prompt = `The user wants to add a word to their Chinese study list. Their input: "${query}"
 It may be English, pinyin or Chinese characters. Pick the most common everyday Mandarin word.
 

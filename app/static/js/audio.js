@@ -1,19 +1,18 @@
 // Text-to-speech, speech recognition and WAV recording — all in the browser.
-import { state } from "./state.js";
+import { state, T } from "./state.js";
 
-let zhVoice = null;
-function pickVoice() {
+function pickVoice(lang) {
   const voices = speechSynthesis.getVoices();
-  zhVoice =
-    voices.find((v) => /zh[-_]CN/i.test(v.lang) && /google|xiaoxiao|tingting|natural/i.test(v.name)) ||
-    voices.find((v) => /zh[-_]CN/i.test(v.lang)) ||
-    voices.find((v) => /^zh/i.test(v.lang)) ||
-    null;
+  const [base, region] = lang.split("-");
+  const exact = new RegExp(`^${base}[-_]${region}`, "i");
+  return (
+    voices.find((v) => exact.test(v.lang) && /google|natural|xiaoxiao|tingting|kyoko|nanami/i.test(v.name)) ||
+    voices.find((v) => exact.test(v.lang)) ||
+    voices.find((v) => new RegExp(`^${base}`, "i").test(v.lang)) ||
+    null
+  );
 }
-if ("speechSynthesis" in window) {
-  pickVoice();
-  speechSynthesis.onvoiceschanged = pickVoice;
-}
+if ("speechSynthesis" in window) speechSynthesis.getVoices();
 
 // In the Android app, window.__native provides the phone's own TTS / speech recognition.
 const native = () => window.__native;
@@ -25,13 +24,15 @@ export function stopSpeaking() {
 
 export function speak(text, { slow = false } = {}) {
   const rate0 = Number(state.settings?.tts_rate || 0.8);
-  if (native()?.speak) return native().speak(text, slow ? Math.max(0.4, rate0 - 0.35) : rate0).catch(() => {});
+  const lang = T.speechLang();
+  if (native()?.speak) return native().speak(text, slow ? Math.max(0.4, rate0 - 0.35) : rate0, lang).catch(() => {});
   if (!("speechSynthesis" in window)) return Promise.resolve();
   speechSynthesis.cancel();
   return new Promise((resolve) => {
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "zh-CN";
-    if (zhVoice) u.voice = zhVoice;
+    u.lang = lang;
+    const voice = pickVoice(lang);
+    if (voice) u.voice = voice;
     const rate = Number(state.settings?.tts_rate || 0.8);
     u.rate = slow ? Math.max(0.4, rate - 0.35) : rate;
     u.onend = u.onerror = () => resolve();
@@ -49,9 +50,9 @@ export const canRecord = () => !!(navigator.mediaDevices && navigator.mediaDevic
 
 /** Start listening; resolves with an array of hanzi alternatives. Call .stop() to end early. */
 export function recognize() {
-  if (native()?.recognize) return native().recognize();
+  if (native()?.recognize) return native().recognize(T.speechLang());
   const rec = new Recognition();
-  rec.lang = "zh-CN";
+  rec.lang = T.speechLang();
   rec.interimResults = false;
   rec.maxAlternatives = 4;
   rec.continuous = false;

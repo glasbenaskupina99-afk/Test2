@@ -1,13 +1,21 @@
 // The whole server (app/main.py) re-implemented to run inside the app.
 // Data is a single JSON document persisted on the phone.
-import seed from "../../app/data/hsk1.json";
-import FALLBACK_SENTENCES from "../../app/data/sentences.json";
+import seedZh from "../../app/data/hsk1.json";
+import seedJa from "../../app/data/japanese_n5.json";
+import FALLBACK_ZH from "../../app/data/sentences.json";
+import FALLBACK_JA from "../../app/data/japanese_sentences.json";
 import * as ai from "./ai.js";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
+import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
+
+const SEEDS = { zh: seedZh, ja: seedJa };
+// Fallback sentences as [english, text, reading]
+const FALLBACK = { zh: FALLBACK_ZH.map(([en, zh]) => [en, zh, null]), ja: FALLBACK_JA };
 
 const SKILLS = ["write", "speak", "recall"];
 
 const DEFAULTS = {
+  course: "zh", // "zh" Mandarin (hanzi) or "ja" Japanese (kanji)
   ai_enabled: true,
   gemma_backend: "cpu",
   hf_repo: "litert-community/gemma-4-E2B-it-litert-lm",
@@ -44,16 +52,34 @@ let db = null;
 let store = null;
 let saveTimer = null;
 
-function freshDb() {
+function seedWords(lang, startId) {
   const words = [];
-  let id = 1;
+  let id = startId;
   let pos = 0;
-  for (const unit of seed.units) {
+  for (const unit of SEEDS[lang].units) {
     for (const [hanzi, pinyin, english] of unit.words) {
-      words.push({ id: id++, hanzi, pinyin, english, unit: unit.name, position: pos++, source: "hsk1", extras: null, created_at: fmt(now()) });
+      words.push({ id: id++, lang, hanzi, pinyin, english, unit: unit.name, position: pos++, source: lang === "zh" ? "hsk1" : "n5", extras: null, created_at: fmt(now()) });
     }
   }
-  return { version: 1, nextId: id, words, cards: [], activity: {}, sentenceLog: [], settings: {} };
+  return words;
+}
+
+function freshDb() {
+  const zh = seedWords("zh", 1);
+  const ja = seedWords("ja", zh.length + 1);
+  return { version: 2, nextId: zh.length + ja.length + 1, words: [...zh, ...ja], cards: [], activity: {}, sentenceLog: [], settings: {} };
+}
+
+/** Older saves had Chinese only: tag them and add the Japanese course. */
+function migrate() {
+  for (const w of db.words) w.lang ||= "zh";
+  for (const r of db.sentenceLog) r.lang ||= "zh";
+  if (!db.words.some((w) => w.lang === "ja")) {
+    const ja = seedWords("ja", db.nextId);
+    db.words.push(...ja);
+    db.nextId += ja.length;
+  }
+  db.version = 2;
 }
 
 export async function init(storage) {
@@ -65,6 +91,7 @@ export async function init(storage) {
     db = null;
   }
   if (!db || !Array.isArray(db.words)) db = freshDb();
+  migrate();
   ai.configure(settingsAll);
   document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && flush());
 }
@@ -116,9 +143,16 @@ function streak() {
   return n;
 }
 
+const course = () => settingsAll().course;
+/** Words / cards of the course being studied. */
+const W = () => db.words.filter((w) => w.lang === course());
+const C = () => {
+  const ids = new Set(W().map((w) => w.id));
+  return db.cards.filter((c) => ids.has(c.word_id));
+};
 const wordById = (id) => db.words.find((w) => w.id === id);
 const cardsOf = (id) => db.cards.filter((c) => c.word_id === id);
-const learnedIds = () => new Set(db.cards.map((c) => c.word_id));
+const learnedIds = () => new Set(C().map((c) => c.word_id));
 const byPosition = (a, b) => a.position - b.position || a.id - b.id;
 const pick = ({ id, hanzi, pinyin, english }) => ({ id, hanzi, pinyin, english });
 const shuffled = (arr) => arr.map((x) => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
@@ -131,7 +165,7 @@ function getWord(id) {
 
 function learnedWords() {
   const ids = learnedIds();
-  return db.words.filter((w) => ids.has(w.id)).sort(byPosition).map(pick);
+  return W().filter((w) => ids.has(w.id)).sort(byPosition).map(pick);
 }
 
 function schedule(card, grade) {
@@ -161,7 +195,18 @@ function schedule(card, grade) {
 
 // ------------------------------------------------------------------ sentences
 
+// Sentences keep the field names zh (target text) and pinyin (reading) for both courses.
 function decorate(sent, knownChars, source) {
+  if (course() === "ja") {
+    return {
+      en: sent.en,
+      zh: sent.zh,
+      // Kana are assumed known; kanji you haven't learned get a tracing guide.
+      chars: [...writable(sent.zh)].map((c) => ({ c, known: !isKanji(c) || knownChars.has(c) })),
+      pinyin: sent.reading || "",
+      source,
+    };
+  }
   return {
     en: sent.en,
     zh: sent.zh,
@@ -172,14 +217,15 @@ function decorate(sent, knownChars, source) {
 }
 
 function fallbackSentences(knownChars, count, avoid) {
+  const all = FALLBACK[course()];
   const coverage = ([, zh]) => {
-    const chars = [...hanziOnly(zh)];
-    return chars.filter((c) => knownChars.has(c)).length / chars.length;
+    const chars = [...zh].filter(isKanji);
+    return chars.length ? chars.filter((c) => knownChars.has(c)).length / chars.length : 1;
   };
-  let cands = FALLBACK_SENTENCES.filter((s) => !avoid.has(s[1]));
-  if (!cands.length) cands = FALLBACK_SENTENCES;
+  let cands = all.filter((s) => !avoid.has(s[1]));
+  if (!cands.length) cands = all;
   cands = shuffled(cands).sort((a, b) => coverage(b) - coverage(a));
-  return cands.slice(0, count).map(([en, zh]) => ({ en, zh }));
+  return cands.slice(0, count).map(([en, zh, reading]) => ({ en, zh, reading }));
 }
 
 // ------------------------------------------------------------------ routes
@@ -190,7 +236,7 @@ const routes = {
     const n = fmt(now());
     const ids = learnedIds();
     const units = [];
-    for (const w of [...db.words].sort(byPosition)) {
+    for (const w of W().sort(byPosition)) {
       let u = units.find((x) => x.name === w.unit);
       if (!u) units.push((u = { name: w.unit, pos: w.position, total: 0, learned: 0 }));
       u.total++;
@@ -199,22 +245,30 @@ const routes = {
     const weekStart = new Date();
     weekStart.setDate(weekStart.getDate() - 6);
     const ws = dayKey(weekStart);
-    const future = db.cards.filter((c) => c.due > n).map((c) => c.due).sort();
+    const cards = C();
+    const future = cards.filter((c) => c.due > n).map((c) => c.due).sort();
+    const courses = ["zh", "ja"].map((lang) => {
+      const ws = db.words.filter((w) => w.lang === lang);
+      const all = new Set(db.cards.map((c) => c.word_id));
+      return { lang, total: ws.length, learned: ws.filter((w) => all.has(w.id)).length };
+    });
     return {
       streak: streak(),
       xp_today: db.activity[dayKey()]?.xp || 0,
       daily_goal: s.daily_goal,
-      due: db.cards.filter((c) => c.due <= n).length,
+      course: course(),
+      courses,
+      due: cards.filter((c) => c.due <= n).length,
       next_due: future[0] || null,
       learned: ids.size,
-      total: db.words.length,
+      total: W().length,
       units,
       week: Object.entries(db.activity).filter(([d]) => d >= ws).map(([day, a]) => ({ day, xp: a.xp })),
     };
   },
 
   "GET /api/words": () =>
-    [...db.words].sort(byPosition).map((w) => {
+    W().sort(byPosition).map((w) => {
       const cs = cardsOf(w.id);
       return {
         id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, english: w.english, unit: w.unit, source: w.source,
@@ -226,11 +280,17 @@ const routes = {
     }),
 
   "POST /api/words": (_, body) => {
-    const hanzi = hanziOnly(body.hanzi);
-    if (!hanzi || !String(body.english || "").trim()) throw new HttpError(400, "Need Chinese characters and an English meaning");
-    if (db.words.some((w) => w.hanzi === hanzi)) throw new HttpError(409, `${hanzi} is already in your list`);
+    const ja = course() === "ja";
+    const hanzi = ja ? writable(body.hanzi) : hanziOnly(body.hanzi);
+    if (!hanzi || !String(body.english || "").trim()) throw new HttpError(400, `Need ${ja ? "Japanese" : "Chinese characters"} and an English meaning`);
+    if (W().some((w) => w.hanzi === hanzi)) throw new HttpError(409, `${hanzi} is already in your list`);
+    let reading = String(body.pinyin || "").trim();
+    if (ja) {
+      reading = normKana(reading || (/^[\u3041-\u30ff]+$/.test(hanzi) ? hanzi : "")).replace(/[^\u3041-\u3096ー]/g, "");
+      if (!reading) throw new HttpError(400, "Enter the reading in hiragana or romaji");
+    }
     const w = {
-      id: db.nextId++, hanzi, pinyin: String(body.pinyin || "").trim() || toPinyin(hanzi), english: body.english.trim(),
+      id: db.nextId++, lang: course(), hanzi, pinyin: ja ? reading : reading || toPinyin(hanzi), english: body.english.trim(),
       unit: "My words", position: 100000, source: "custom", extras: null, created_at: fmt(now()),
     };
     db.words.push(w);
@@ -241,10 +301,10 @@ const routes = {
   "POST /api/words/ai-fill": async (_, body) => {
     const d = await ai.fillWord(body.query);
     if (!d.hanzi) throw new HttpError(422, "Couldn't figure that word out");
-    return { ...d, pinyin: toPinyin(d.hanzi) };
+    return course() === "ja" ? d : { ...d, pinyin: toPinyin(d.hanzi) };
   },
 
-  "POST /api/words/pinyin": (_, body) => ({ pinyin: toPinyin(body.query) }),
+  "POST /api/words/pinyin": (_, body) => ({ pinyin: course() === "ja" ? "" : toPinyin(body.query) }),
 
   "DELETE /api/words/:id": ({ id }) => {
     db.words = db.words.filter((w) => w.id !== Number(id));
@@ -264,7 +324,7 @@ const routes = {
     if (!w) throw new HttpError(404, "word not found");
     if (w.extras && !query.get("refresh")) return w.extras;
     const d = await ai.wordExtras(w);
-    if (d.example_zh) d.example_pinyin = toPinyin(d.example_zh);
+    if (d.example_zh && course() === "zh") d.example_pinyin = toPinyin(d.example_zh);
     w.extras = d;
     persist();
     return d;
@@ -273,8 +333,8 @@ const routes = {
   "GET /api/learn/next": (_, __, query) => {
     const n = Number(query.get("n")) || settingsAll().new_per_lesson;
     const ids = learnedIds();
-    const words = db.words.filter((w) => !ids.has(w.id)).sort(byPosition).slice(0, n).map((w) => ({ ...w }));
-    return { words, pool: shuffled(db.words).slice(0, 40).map(pick) };
+    const words = W().filter((w) => !ids.has(w.id)).sort(byPosition).slice(0, n).map((w) => ({ ...w }));
+    return { words, pool: shuffled(W()).slice(0, 40).map(pick) };
   },
 
   "POST /api/learn/complete": (_, body) => {
@@ -294,8 +354,8 @@ const routes = {
     const size = settingsAll().review_size;
     const n = fmt(now());
     const cards = query.get("extra")
-      ? [...db.cards].sort((a, b) => b.lapses * 2 - b.interval - (a.lapses * 2 - a.interval) || (a.due < b.due ? -1 : 1)).slice(0, size)
-      : db.cards.filter((c) => c.due <= n).sort((a, b) => (a.due < b.due ? -1 : 1)).slice(0, size);
+      ? C().sort((a, b) => b.lapses * 2 - b.interval - (a.lapses * 2 - a.interval) || (a.due < b.due ? -1 : 1)).slice(0, size)
+      : C().filter((c) => c.due <= n).sort((a, b) => (a.due < b.due ? -1 : 1)).slice(0, size);
     const items = shuffled(cards.map((c) => ({ skill: c.skill, word: getWord(c.word_id) })));
     for (let i = 1; i < items.length; i++) {
       if (items[i].word.id !== items[i - 1].word.id) continue;
@@ -303,7 +363,7 @@ const routes = {
       if (j > 0) [items[i], items[j]] = [items[j], items[i]];
     }
     const learned = shuffled(learnedWords()).slice(0, 60);
-    return { items, pool: learned.length >= 8 ? learned : shuffled(db.words).slice(0, 60).map(pick) };
+    return { items, pool: learned.length >= 8 ? learned : shuffled(W()).slice(0, 60).map(pick) };
   },
 
   "POST /api/review/answer": (_, body) => {
@@ -316,16 +376,19 @@ const routes = {
     return { xp, ...card };
   },
 
-  "POST /api/check/pinyin": (_, body) => comparePinyin(String(body.answer || ""), String(body.expected || "")),
+  "POST /api/check/pinyin": (_, body) =>
+    course() === "ja"
+      ? compareReading(String(body.answer || ""), String(body.expected || ""))
+      : comparePinyin(String(body.answer || ""), String(body.expected || "")),
 
   "GET /api/sentences/session": async (_, __, query) => {
     const s = settingsAll();
     const useAI = query.get("use_ai") !== "0";
     const known = learnedWords();
     const knownChars = new Set(known.flatMap((w) => [...w.hanzi]));
-    const recent = db.sentenceLog.slice(-40).map((r) => r.hanzi).reverse();
+    const recent = db.sentenceLog.filter((r) => r.lang === course()).slice(-40).map((r) => r.hanzi).reverse();
     const lapsesBy = {};
-    for (const c of db.cards) lapsesBy[c.word_id] = (lapsesBy[c.word_id] || 0) + c.lapses;
+    for (const c of C()) lapsesBy[c.word_id] = (lapsesBy[c.word_id] || 0) + c.lapses;
     const focus = Object.entries(lapsesBy).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([id]) => pick(wordById(Number(id))));
     let note = null;
     let sentences = [];
@@ -345,10 +408,15 @@ const routes = {
   },
 
   "POST /api/sentences/grade": async (_, body) => {
+    if (course() === "ja") {
+      const strip = (t) => (t || "").replace(/[\s。、？！?!.,]/g, "");
+      if (strip(body.answer) && strip(body.answer) === strip(body.zh)) return { correct: true, score: 100, feedback: "Perfect!", corrected: body.zh, by: "exact" };
+      if (body.reading && normKana(body.answer) === normKana(body.reading)) return { correct: true, score: 100, feedback: "Correct!", corrected: body.zh, by: "reading" };
+    }
     const ans = hanziOnly(body.answer);
     const ref = hanziOnly(body.zh);
-    if (ans && ans === ref) return { correct: true, score: 100, feedback: "Perfect!", corrected: body.zh, by: "exact" };
-    if (!ans) {
+    if (course() === "zh" && ans && ans === ref) return { correct: true, score: 100, feedback: "Perfect!", corrected: body.zh, by: "exact" };
+    if (course() === "zh" && !ans) {
       const r = comparePinyin(body.answer, toPinyin(body.zh));
       if (r.result === "correct") return { correct: true, score: 100, feedback: "Correct pinyin!", corrected: body.zh, by: "pinyin" };
       if (r.result === "tones_wrong") return { correct: false, score: 70, feedback: "Right syllables — check your tones.", corrected: body.zh, by: "pinyin" };
@@ -364,14 +432,15 @@ const routes = {
   },
 
   "POST /api/sentences/log": (_, body) => {
-    db.sentenceLog.push({ english: body.en, hanzi: body.zh, mode: body.mode, score: body.score, source: body.source || "", created_at: fmt(now()) });
+    db.sentenceLog.push({ lang: course(), english: body.en, hanzi: body.zh, mode: body.mode, score: body.score, source: body.source || "", created_at: fmt(now()) });
     if (db.sentenceLog.length > 300) db.sentenceLog = db.sentenceLog.slice(-300);
     const xp = body.score >= 80 ? 5 : 2;
     addActivity({ xp, sentences: 1 });
     return { xp };
   },
 
-  "POST /api/speech/compare": (_, body) => compareSpoken(body.heard, body.expected),
+  "POST /api/speech/compare": (_, body) =>
+    course() === "ja" ? compareSpokenJa(body.heard, body.expected, body.reading) : compareSpoken(body.heard, body.expected),
 
   "POST /api/speech/assess": () => {
     throw new ai.AIError("Gemma audio isn't available in the app — switch pronunciation to Android speech recognition");
@@ -394,10 +463,10 @@ const routes = {
   "GET /api/stats": () => {
     const days = Object.entries(db.activity).sort((a, b) => (a[0] < b[0] ? 1 : -1)).slice(0, 60).map(([day, a]) => ({ day, ...a }));
     const skills = SKILLS.map((skill) => {
-      const cs = db.cards.filter((c) => c.skill === skill);
+      const cs = C().filter((c) => c.skill === skill);
       return { skill, n: cs.length, avg_interval: cs.length ? cs.reduce((a, c) => a + c.interval, 0) / cs.length : 0, lapses: cs.reduce((a, c) => a + c.lapses, 0) };
     }).filter((k) => k.n);
-    const hardest = db.words
+    const hardest = W()
       .map((w) => ({ ...pick(w), lapses: cardsOf(w.id).reduce((a, c) => a + c.lapses, 0) }))
       .filter((w) => w.lapses > 0)
       .sort((a, b) => b.lapses - a.lapses)
@@ -412,6 +481,7 @@ const routes = {
     const token = db.settings.hf_token;
     const { app: _a, exported_at: _e, ...rest } = body;
     db = { ...freshDb(), ...rest, settings: { ...rest.settings, hf_token: token || "" } };
+    migrate();
     flush();
     return { ok: true };
   },

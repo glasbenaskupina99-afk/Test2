@@ -12,9 +12,10 @@ const www = join(mobile, "www");
 rmSync(www, { recursive: true, force: true });
 mkdirSync(www, { recursive: true });
 
-for (const item of ["css", "vendor", "icon.svg", "manifest.webmanifest"]) {
+for (const item of ["css", "vendor", "icons", "icon.svg", "manifest.webmanifest"]) {
   cpSync(join(staticDir, item), join(www, item), { recursive: true });
 }
+copyFileSync(join(mobile, "web", "sw.js"), join(www, "sw.js"));
 
 // Fonts bundled so the app looks right offline.
 const fontDir = join(mobile, "node_modules", "@fontsource", "nunito", "files");

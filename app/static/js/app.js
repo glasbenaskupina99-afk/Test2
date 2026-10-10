@@ -560,6 +560,23 @@ async function settingsScreen() {
   );
 
   const isApp = !!window.__native?.gemma;
+  // Browser version (GitHub Pages / computer): no server, data in this browser.
+  const isWeb = !!window.__localApi && !isApp;
+  const ollamaHelp = isWeb
+    ? h(
+        "details",
+        { class: "hint", style: { margin: "0 0 14px" } },
+        h("summary", { style: { cursor: "pointer", color: "var(--blue)" } }, "How to run Gemma on this computer"),
+        h(
+          "ol",
+          { style: { paddingLeft: "20px", margin: "8px 0 0" } },
+          h("li", {}, "Install Ollama from ollama.com"),
+          h("li", {}, "In a terminal: ollama pull gemma4:e4b"),
+          h("li", {}, "Allow this site to talk to it — set the environment variable OLLAMA_ORIGINS to ", h("code", {}, location.origin), " (or *) and restart Ollama"),
+          h("li", {}, "Press “Test connection”. If the browser asks to access devices on your local network, allow it.")
+        )
+      )
+    : null;
   const aiCard = isApp
     ? gemmaCard(s, f, (quiet) => save(quiet))
     : h(
@@ -567,13 +584,16 @@ async function settingsScreen() {
         { class: "card" },
         h("div", { class: "switch-row" }, h("div", {}, "Use AI", h("div", { class: "small muted" }, "Sentences, translation grading, memory hooks")), aiToggle),
         field("Server URL (OpenAI-compatible)", input("llm_base_url"), "Ollama: http://<host>:11434/v1 · llama.cpp: http://<host>:8080/v1"),
-        field("Model", input("llm_model"), "e.g. gemma4:e4b (Ollama) — E2B/E4B variants understand audio"),
+        field("Model", input("llm_model"), isWeb ? "e.g. gemma4:e4b — bigger: gemma4:26b if your computer has the memory" : "e.g. gemma4:e4b (Ollama) — E2B/E4B variants understand audio"),
+        ollamaHelp,
         field("API key (optional)", input("llm_api_key", { type: "password", placeholder: "none" })),
         statusEl,
         h("div", { style: { marginTop: "12px" } }, h("button", { class: "btn ghost", onclick: testAI }, "Test connection"))
       );
   const speechOptions = isApp
     ? [["browser", "Android speech recognition"], ["self", "Record & compare myself"]]
+    : isWeb
+    ? [["browser", "Browser speech recognition (Chrome / Edge)"], ["self", "Record & compare myself"]]
     : [["browser", "Phone speech recognition (fast)"], ["ai", "Gemma audio (needs audio-capable server)"], ["self", "Record & compare myself"]];
 
   const speechSupport = isApp ? [`Tip: for offline recognition, install the ${isJa() ? "Japanese" : "Chinese (Mandarin)"} offline speech pack in Android settings → Google → Voice.`] : [
@@ -617,10 +637,10 @@ async function settingsScreen() {
         field("Sentences per session", select("sentence_count", [["4", "4"], ["6", "6"], ["9", "9"], ["12", "12"]])),
         field("Theme", themeSel)
       ),
-      isApp ? h("h2", { class: "section-title" }, "💾 Backup") : null,
-      isApp ? backupCard() : null,
+      window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup") : null,
+      window.__localApi ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),
-      h("p", { class: "muted small center", style: { marginTop: "24px" } }, `Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : "Runs entirely on your network."}`),
+      h("p", { class: "muted small center", style: { marginTop: "24px" } }, `Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
     ],
     "#/settings"
   );

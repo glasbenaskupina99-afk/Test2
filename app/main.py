@@ -518,4 +518,9 @@ def index():
 
 @app.get("/manifest.webmanifest")
 def manifest():
-    return FileResponse(STATIC / "manifest.webmanifest", media_type="application/manifest+json")
+    # The manifest uses paths relative to the web build; here static files live under /static.
+    data = json.loads((STATIC / "manifest.webmanifest").read_text("utf-8"))
+    data["start_url"] = data["scope"] = "/"
+    for icon in data.get("icons", []):
+        icon["src"] = "/static/" + icon["src"]
+    return JSONResponse(data, media_type="application/manifest+json")

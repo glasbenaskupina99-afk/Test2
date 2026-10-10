@@ -29,6 +29,10 @@ const DEFAULTS = {
   section_ja: "",
   ai_enabled: true,
   gemma_backend: "cpu",
+  // Browser version: Gemma through an OpenAI-compatible server (e.g. Ollama on this computer).
+  llm_base_url: "http://localhost:11434/v1",
+  llm_model: "gemma4:e4b",
+  llm_api_key: "",
   hf_repo: "litert-community/gemma-4-E2B-it-litert-lm",
   hf_token: "",
   speech_mode: "browser",
@@ -452,7 +456,7 @@ const routes = {
       if (r.result === "correct") return { correct: true, score: 100, feedback: "Correct pinyin!", corrected: body.zh, by: "pinyin" };
       if (r.result === "tones_wrong") return { correct: false, score: 70, feedback: "Right syllables — check your tones.", corrected: body.zh, by: "pinyin" };
     }
-    if (settingsAll().ai_enabled && window.__native?.gemma) {
+    if (ai.available()) {
       try {
         return { ...(await ai.gradeTranslation(body.en, body.zh, body.answer)), by: "ai" };
       } catch (e) {
@@ -479,11 +483,12 @@ const routes = {
 
   "GET /api/settings": () => {
     const s = settingsAll();
-    return { ...s, hf_token: s.hf_token ? "••••" : "" };
+    return { ...s, hf_token: s.hf_token ? "••••" : "", llm_api_key: s.llm_api_key ? "••••" : "" };
   },
 
   "PUT /api/settings": (_, body) => {
     if (body.hf_token === "••••") delete body.hf_token;
+    if (body.llm_api_key === "••••") delete body.llm_api_key;
     settingsUpdate(body);
     return routes["GET /api/settings"]();
   },
@@ -505,7 +510,7 @@ const routes = {
     return { days, skills, hardest, streak: streak() };
   },
 
-  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, settings: { ...db.settings, hf_token: "" } }),
+  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
 
   "POST /api/backup/restore": (_, body) => {
     if (!body || body.app !== "hanzi-home" || !Array.isArray(body.words) || !Array.isArray(body.cards)) throw new HttpError(400, "That isn't a Hanzi Home backup");

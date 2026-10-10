@@ -46,37 +46,85 @@ export function parseJson(text) {
   }
 }
 
+// ------------------------------------------------------------------ providers
+// Android app: Gemma runs on the phone (native plugin).
+// Browser (computer): Gemma via an OpenAI-compatible server such as Ollama on this computer.
+
+async function webGenerate({ prompt, system, temperature, json = true }) {
+  const s = getSettings();
+  const url = s.llm_base_url.replace(/\/+$/, "") + "/chat/completions";
+  const headers = { "Content-Type": "application/json" };
+  if (s.llm_api_key) headers.Authorization = `Bearer ${s.llm_api_key}`;
+  const body = {
+    model: s.llm_model,
+    messages: [{ role: "system", content: system }, { role: "user", content: prompt }],
+    temperature,
+    stream: false,
+    ...(json ? { response_format: { type: "json_object" } } : {}),
+  };
+  let r;
+  try {
+    r = await fetch(url, { method: "POST", headers, body: JSON.stringify(body) });
+    if (r.status === 400 && json) {
+      delete body.response_format;
+      r = await fetch(url, { method: "POST", headers, body: JSON.stringify(body) });
+    }
+  } catch (e) {
+    throw new AIError(`Can't reach ${s.llm_base_url}. Is Ollama running, with OLLAMA_ORIGINS allowing this site? (${e.message})`);
+  }
+  if (!r.ok) throw new AIError(`Model server error ${r.status}: ${(await r.text()).slice(0, 200)}`);
+  const data = await r.json();
+  return { text: data.choices?.[0]?.message?.content || "" };
+}
+
+function generate(opts) {
+  const s = getSettings();
+  return gemma() ? gemma().generate({ ...opts, backend: s.gemma_backend || "cpu" }) : webGenerate(opts);
+}
+
+export const available = () => !!getSettings().ai_enabled && (!!gemma() || !!getSettings().llm_base_url);
+
 export async function chat(prompt, { temperature = 0.7 } = {}) {
   const s = getSettings();
   if (!s.ai_enabled) throw new AIError("AI is turned off in settings");
-  if (!gemma()) throw new AIError("On-device AI is only available in the Android app");
   let res;
   try {
-    res = await gemma().generate({ prompt, system: SYSTEMS[lang()], temperature, backend: s.gemma_backend || "cpu" });
+    res = await generate({ prompt, system: SYSTEMS[lang()], temperature });
   } catch (e) {
-    throw new AIError(e.message || String(e));
+    throw e instanceof AIError ? e : new AIError(e.message || String(e));
   }
   return parseJson(res.text);
+}
+
+async function webStatus() {
+  const s = getSettings();
+  const headers = s.llm_api_key ? { Authorization: `Bearer ${s.llm_api_key}` } : {};
+  try {
+    const r = await fetch(s.llm_base_url.replace(/\/+$/, "") + "/models", { headers });
+    const models = ((await r.json()).data || []).map((m) => m.id);
+    const found = models.includes(s.llm_model) || models.some((m) => m && m.split(":")[0] === s.llm_model);
+    return { ok: found, enabled: true, model: s.llm_model, models, message: found ? "Connected" : `Server is up but model '${s.llm_model}' isn't installed` };
+  } catch {
+    return { ok: false, enabled: true, message: `Can't reach ${s.llm_base_url} — start Ollama (see Settings)` };
+  }
 }
 
 export async function status() {
   const s = getSettings();
   if (!s.ai_enabled) return { ok: false, enabled: false, message: "AI is turned off" };
-  if (!gemma()) return { ok: false, enabled: true, message: "On-device AI needs the Android app" };
+  if (!gemma()) return webStatus();
   const st = await gemma().status();
   return { ok: st.hasModel, enabled: true, model: st.modelName, message: st.hasModel ? "Gemma ready on device" : "No model downloaded — see Settings" };
 }
 
 export async function test() {
-  const s = getSettings();
-  if (!gemma()) throw new AIError("On-device AI is only available in the Android app");
-  const res = await gemma().generate({
+  const res = await generate({
+    json: false,
     prompt: lang() === "ja"
       ? "Greet a beginner in one short Japanese sentence with its reading and English. Plain text, one line."
       : "Greet a beginner in one short Chinese sentence with pinyin and English. Plain text, one line.",
     system: lang() === "ja" ? "You are a friendly Japanese tutor." : "You are a friendly Mandarin tutor.",
     temperature: 0.7,
-    backend: s.gemma_backend || "cpu",
   });
   return { reply: (res.text || "").trim().slice(0, 200) };
 }

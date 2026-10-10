@@ -58,6 +58,11 @@ if (isNative) {
   window.__native = { gemma: window.__gemmaMock, shareFile: async () => {} };
 }
 
+// Browser version: work offline and be installable as an app.
+if (!isNative && "serviceWorker" in navigator && location.protocol === "https:") {
+  navigator.serviceWorker.register("sw.js").catch((e) => console.warn("service worker", e));
+}
+
 await backend.init(storage);
 window.__localApi = backend.handle;
 await import("../../app/static/js/app.js");

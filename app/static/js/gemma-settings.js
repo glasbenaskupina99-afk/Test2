@@ -183,7 +183,7 @@ export function backupCard() {
   return h(
     "div",
     { class: "card" },
-    h("p", { class: "small muted", style: { marginTop: 0 } }, "Your progress lives only on this phone. Export a backup now and then (e.g. to Google Drive)."),
+    h("p", { class: "small muted", style: { marginTop: 0 } }, window.__native ? "Your progress lives only on this phone. Export a backup now and then (e.g. to Google Drive)." : "Your progress lives only in this browser. Export a backup now and then — you can also import it on your phone and back."),
     h(
       "div",
       { class: "row" },
@@ -193,7 +193,14 @@ export function backupCard() {
           const data = await api("/api/backup");
           const name = `language-master-backup-${new Date().toISOString().slice(0, 10)}.json`;
           try {
-            await window.__native.shareFile(name, JSON.stringify(data));
+            if (window.__native?.shareFile) await window.__native.shareFile(name, JSON.stringify(data));
+            else {
+              // Browser: plain file download
+              const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/json" })), download: name });
+              document.body.append(a);
+              a.click();
+              a.remove();
+            }
           } catch (e) {
             if (!/cancel/i.test(e.message)) toast(e.message, 4000);
           }

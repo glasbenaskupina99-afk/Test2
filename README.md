@@ -1,6 +1,6 @@
 # 汉字 Hanzi Home
 
-A self-hosted Chinese (English → Mandarin) trainer in the style of Duolingo, built to be used on your phone over your home network. It covers handwriting with stroke-order checking, pronunciation, recall and sentence translation. Gemma 4 handles the parts that need language understanding. Everything else works without it.
+A Chinese (English → Mandarin) trainer in the style of Duolingo. Run it as an **offline Android app** with Gemma on the phone, or self-host it and use it from your phone over your home network. It covers handwriting with stroke-order checking, pronunciation, recall and sentence translation. Gemma 4 handles the parts that need language understanding. Everything else works without it.
 
 **Why it exists:** writing on paper means your earlier attempts stay in view, so you end up copying them. Here every character starts on a fresh pad, gets checked stroke by stroke, and is wiped as soon as you finish it. Nothing to peek at, and no paper used up.
 
@@ -25,7 +25,29 @@ Also included: 153 HSK 1 words in 10 themed units, adding your own words (Gemma 
 | Sentence generation, translation grading, memory hooks, auto-filling new words | **Gemma** |
 | Pronunciation | Your choice: phone speech recognition (compared syllable by syllable, tones included), **Gemma audio**, or record yourself and compare against the native voice. |
 
-## Running it
+## 📱 Android app (no server)
+
+The `mobile/` folder wraps the same app as an Android app that works completely offline. Your progress, stroke data, the voice, speech recognition and Gemma all live on the phone.
+
+**Install:** open this repo's **Releases** page on your phone, download `HanziHome.apk` from the newest release, and open it. Android will ask you to allow installs from your browser. Every push builds a new release (GitHub Actions → *Build Android app*), and installing a newer APK updates the app while keeping your progress.
+
+**Gemma on the phone:** open **Settings → Gemma on this phone → Find model files**, choose the plain `.litertlm` file, and tap **Download**. Gemma 4 E2B is about 2.6 GB and needs 6 GB or more of RAM; E4B is about 3.7 GB and needs 8 GB or more. Download it once over Wi-Fi; after that it runs offline through [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM). If Hugging Face says access is denied, accept the model's licence on huggingface.co and paste an access token. You can also import a `.litertlm` file you already have. Start with the **CPU** processor. **GPU** is faster but can crash on phones with less RAM.
+
+**Pronunciation** uses Android's speech recognition. For it to work offline, install the Chinese (Mandarin) offline speech pack: Android Settings → Google → Voice / speech.
+
+**Backups:** progress is stored only on the phone, so use **Settings → Backup → Export** now and then.
+
+Build it yourself (needs Node 22, JDK 21 and the Android SDK):
+
+```bash
+cd mobile
+npm install
+npm run apk        # → android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+The APK is signed with `mobile/android/app/hanzi.keystore`, a key committed to the repo so that every build can update the installed app. That's fine for a personal app, but don't reuse the key for anything you publish.
+
+## Running it as a server
 
 Requires Python 3.10+.
 

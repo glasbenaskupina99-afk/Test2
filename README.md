@@ -25,6 +25,18 @@ Also included: 153 HSK 1 words in 10 themed units, adding your own words (Gemma 
 | Sentence generation, translation grading, memory hooks, auto-filling new words | **Gemma** |
 | Pronunciation | Your choice: phone speech recognition (compared syllable by syllable, tones included), **Gemma audio**, or record yourself and compare against the native voice. |
 
+## 💻 On a computer (in the browser)
+
+Open **https://glasbenaskupina99-afk.github.io/Test2/** in Chrome or Edge. Nothing to install or host:
+
+- **Your data** stays in this browser. Use Settings → Backup to move it between devices, and the same backup file works in the Android app.
+- **Writing** works with the mouse, a touchscreen or a pen tablet.
+- **Voice and speech recognition** come from the browser. Chrome and Edge have both; Firefox has no speech recognition, so it uses record-and-compare instead.
+- **Installing:** use the install icon in the address bar to get Language Master as its own app window. It also works offline.
+- **Gemma on the computer:** install [Ollama](https://ollama.com) and run `ollama pull gemma4:e4b`. Then set the environment variable `OLLAMA_ORIGINS=https://glasbenaskupina99-afk.github.io` and restart Ollama, so the site is allowed to talk to it. Finally press **Settings → Test connection**, and allow access to your local network if the browser asks.
+
+The site is built by the *Publish web app* workflow into the `gh-pages` branch. **One-time setup:** Settings → Pages → Source: *Deploy from a branch* → `gh-pages` / `(root)`.
+
 ## 📱 Android app (no server)
 
 The `mobile/` folder wraps the same app as an Android app that works completely offline. Your progress, stroke data, the voice, speech recognition and Gemma all live on the phone.

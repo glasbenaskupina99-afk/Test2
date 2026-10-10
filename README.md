@@ -35,13 +35,13 @@ Open **https://glasbenaskupina99-afk.github.io/Test2/** in Chrome or Edge. Nothi
 - **Installing:** use the install icon in the address bar to get Language Master as its own app window. It also works offline.
 - **Gemma on the computer:** install [Ollama](https://ollama.com) and run `ollama pull gemma4:e4b`. Then set the environment variable `OLLAMA_ORIGINS=https://glasbenaskupina99-afk.github.io` and restart Ollama, so the site is allowed to talk to it. Finally press **Settings → Test connection**, and allow access to your local network if the browser asks.
 
-The site is built by the *Publish web app* workflow into the `gh-pages` branch. **One-time setup:** Settings → Pages → Source: *Deploy from a branch* → `gh-pages` / `(root)`.
+The site and the APK are built by the *Build app (Android + web)* workflow and published to the `gh-pages` branch. **One-time setup:** Settings → Pages → Source: *Deploy from a branch* → `gh-pages` / `(root)`.
 
 ## 📱 Android app (no server)
 
 The `mobile/` folder wraps the same app as an Android app that works completely offline. Your progress, stroke data, the voice, speech recognition and Gemma all live on the phone.
 
-**Install:** open this repo's **Releases** page on your phone, download `LanguageMaster.apk` from the newest release, and open it. Android will ask you to allow installs from your browser. Every push builds a new release (GitHub Actions → *Build Android app*), and installing a newer APK updates the app while keeping your progress.
+**Install:** on your phone, open **https://glasbenaskupina99-afk.github.io/Test2/LanguageMaster.apk** (or the newest file on the repo's **Releases** page) and open the downloaded file. Android will ask you to allow installs from your browser. Every push builds a new version (GitHub Actions → *Build app (Android + web)*), and installing a newer APK updates the app while keeping your progress.
 
 **Gemma on the phone:** open **Settings → Gemma on this phone → Find model files**, choose the plain `.litertlm` file, and tap **Download**. Gemma 4 E2B is about 2.6 GB and needs 6 GB or more of RAM; E4B is about 3.7 GB and needs 8 GB or more. You only download it once, over Wi-Fi or mobile data (it's a few GB, so mind your data plan); after that it runs offline through [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM). If Hugging Face says access is denied, accept the model's licence on huggingface.co and paste an access token. You can also import a `.litertlm` file you already have. Start with the **CPU** processor. **GPU** is faster but can crash on phones with less RAM.
 

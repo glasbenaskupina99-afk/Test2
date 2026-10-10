@@ -637,6 +637,9 @@ async function settingsScreen() {
         field("Sentences per session", select("sentence_count", [["4", "4"], ["6", "6"], ["9", "9"], ["12", "12"]])),
         field("Theme", themeSel)
       ),
+      isWeb
+        ? h("a", { class: "btn ghost", href: "LanguageMaster.apk", download: "LanguageMaster.apk", style: { marginTop: "20px", textDecoration: "none" } }, "📱 Download the Android app")
+        : null,
       window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup") : null,
       window.__localApi ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),

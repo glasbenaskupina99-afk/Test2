@@ -1,20 +1,35 @@
-name: Build Android app
+name: Build app (Android + web)
+
+# Builds the Android APK and the browser version, and publishes both to the
+# gh-pages branch: the web app at https://<owner>.github.io/<repo>/ and the APK
+# at .../LanguageMaster.apk.
+# One-time setup: Settings → Pages → Source: "Deploy from a branch" → gh-pages / (root).
 
 on:
   push:
     paths:
       - "app/**"
       - "mobile/**"
-      - ".github/workflows/android.yml"
+      - ".github/workflows/build.yml"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  apk:
+  build:
     runs-on: ubuntu-latest
+    env:
+      # Must keep increasing so installed apps accept updates (old workflow got to 6).
+      APP_VERSION: ${{ github.run_number }}
     steps:
+      - name: Version number
+        run: echo "APP_VERSION=$(( ${{ github.run_number }} + 100 ))" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -48,11 +63,26 @@ jobs:
           name: LanguageMaster-apk
           path: LanguageMaster.apk
 
+      - name: Add APK to the website
+        run: |
+          cp LanguageMaster.apk mobile/www/LanguageMaster.apk
+          touch mobile/www/.nojekyll
+
+      - name: Publish website (web app + APK)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: mobile/www
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "Publish Language Master 1.0.${{ env.APP_VERSION }}"
+
       - name: Publish release
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: Language Master 1.0.${{ github.run_number }}
+          tag_name: v1.0.${{ env.APP_VERSION }}
+          name: Language Master 1.0.${{ env.APP_VERSION }}
           target_commitish: ${{ github.sha }}
           make_latest: true
           files: LanguageMaster.apk

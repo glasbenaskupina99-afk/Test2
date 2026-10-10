@@ -8,8 +8,8 @@ android {
         applicationId "com.hanzihome.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode((System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInteger())
-        versionName "1.0.${System.getenv("GITHUB_RUN_NUMBER") ?: "0"}"
+        versionCode((System.getenv("APP_VERSION") ?: "1").toInteger())
+        versionName "1.0.${System.getenv("APP_VERSION") ?: "0"}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // Phones are arm64; skipping x86_64 (emulators) saves ~25 MB of LiteRT-LM native code.
         ndk {

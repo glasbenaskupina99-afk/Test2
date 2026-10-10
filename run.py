@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Start Hanzi Home.
+"""Start Language Master.
 
     python run.py              # HTTPS on port 8443 (needed for the phone microphone)
     python run.py --http       # plain HTTP on port 8000 (mic only works on localhost)
@@ -50,7 +50,7 @@ def ensure_cert() -> tuple[Path, Path]:
 
     cert_dir.mkdir(parents=True, exist_ok=True)
     pkey = rsa.generate_private_key(public_exponent=65537, key_size=2048)
-    name = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "Hanzi Home")])
+    name = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "Language Master")])
     host = socket.gethostname()
     alt = [x509.DNSName("localhost"), x509.DNSName(host), x509.DNSName(f"{host}.local")]
     alt += [x509.IPAddress(ipaddress.ip_address(ip)) for ip in lan_ips()]
@@ -90,7 +90,7 @@ def main():
         ssl = {"ssl_certfile": str(cert), "ssl_keyfile": str(key)}
 
     scheme = "https" if use_https else "http"
-    print("\n  汉字 Hanzi Home is starting. Open on your phone:")
+    print("\n  Language Master is starting. Open on your phone:")
     for ip in lan_ips():
         if ip != "127.0.0.1":
             print(f"    {scheme}://{ip}:{port}")

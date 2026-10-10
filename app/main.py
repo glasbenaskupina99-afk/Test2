@@ -28,7 +28,7 @@ async def lifespan(_app):
     yield
 
 
-app = FastAPI(title="Hanzi Home", lifespan=lifespan)
+app = FastAPI(title="Language Master", lifespan=lifespan)
 
 
 def _download_chardata():

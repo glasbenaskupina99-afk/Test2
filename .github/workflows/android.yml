@@ -41,22 +41,22 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon --stacktrace
-          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/HanziHome.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/LanguageMaster.apk"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: HanziHome-apk
-          path: HanziHome.apk
+          name: LanguageMaster-apk
+          path: LanguageMaster.apk
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
-          name: Hanzi Home 1.0.${{ github.run_number }}
+          name: Language Master 1.0.${{ github.run_number }}
           target_commitish: ${{ github.sha }}
           make_latest: true
-          files: HanziHome.apk
+          files: LanguageMaster.apk
           body: |
-            Install on your phone: download **HanziHome.apk** below and open it
+            Install on your phone: download **LanguageMaster.apk** below and open it
             (allow "install unknown apps" for your browser when asked).
             Built from ${{ github.sha }}.

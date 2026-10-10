@@ -1,6 +1,6 @@
 {
   "appId": "com.hanzihome.app",
-  "appName": "Hanzi Home",
+  "appName": "Language Master",
   "webDir": "www",
   "android": {
     "allowMixedContent": false

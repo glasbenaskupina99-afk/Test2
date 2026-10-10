@@ -1,4 +1,4 @@
-# 汉字 Hanzi Home
+# Language Master
 
 A Chinese (English → Mandarin) trainer in the style of Duolingo. Run it as an **offline Android app** with Gemma on the phone, or self-host it and use it from your phone over your home network. It covers handwriting with stroke-order checking, pronunciation, recall and sentence translation. Gemma 4 handles the parts that need language understanding. Everything else works without it.
 
@@ -29,7 +29,7 @@ Also included: 153 HSK 1 words in 10 themed units, adding your own words (Gemma 
 
 The `mobile/` folder wraps the same app as an Android app that works completely offline. Your progress, stroke data, the voice, speech recognition and Gemma all live on the phone.
 
-**Install:** open this repo's **Releases** page on your phone, download `HanziHome.apk` from the newest release, and open it. Android will ask you to allow installs from your browser. Every push builds a new release (GitHub Actions → *Build Android app*), and installing a newer APK updates the app while keeping your progress.
+**Install:** open this repo's **Releases** page on your phone, download `LanguageMaster.apk` from the newest release, and open it. Android will ask you to allow installs from your browser. Every push builds a new release (GitHub Actions → *Build Android app*), and installing a newer APK updates the app while keeping your progress.
 
 **Gemma on the phone:** open **Settings → Gemma on this phone → Find model files**, choose the plain `.litertlm` file, and tap **Download**. Gemma 4 E2B is about 2.6 GB and needs 6 GB or more of RAM; E4B is about 3.7 GB and needs 8 GB or more. You only download it once, over Wi-Fi or mobile data (it's a few GB, so mind your data plan); after that it runs offline through [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM). If Hugging Face says access is denied, accept the model's licence on huggingface.co and paste an access token. You can also import a `.litertlm` file you already have. Start with the **CPU** processor. **GPU** is faster but can crash on phones with less RAM.
 

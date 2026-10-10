@@ -3,7 +3,7 @@
 // ctx: { setReady(bool), finish(result), skip() }
 // result: { ok: true|false, grade: 0..3, title?, detail? }
 import { api, h, icons, iconBtn, shuffle, toast } from "./util.js";
-import { speak, canRecognize, canRecord, recognize, Recorder } from "./audio.js";
+import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder } from "./audio.js";
 import { writingPad, strokeDemo } from "./writer.js";
 import { state } from "./state.js";
 
@@ -211,7 +211,7 @@ export function pinyinType(ctx, word) {
 // ------------------------------------------------------------------ speaking
 
 function speechMode() {
-  if (!window.isSecureContext) return "none";
+  if (!window.isSecureContext && !window.__native) return "none";
   let m = state.settings?.speech_mode || "browser";
   if (m === "ai" && (!canRecord() || !state.settings?.ai_enabled)) m = "browser";
   if (m === "browser" && !canRecognize()) m = canRecord() ? "self" : "none";
@@ -287,7 +287,7 @@ function speakPanel(ctx, target, solutionNode) {
     let listening = null;
     mic.onclick = async () => {
       if (listening) { listening.stop(); return; }
-      speechSynthesis.cancel();
+      stopSpeaking();
       mic.classList.add("rec");
       statusEl.textContent = "Listening… tap to stop";
       try {
@@ -314,7 +314,7 @@ function speakPanel(ctx, target, solutionNode) {
   let rec = null;
   mic.onclick = async () => {
     if (!rec) {
-      speechSynthesis.cancel();
+      stopSpeaking();
       rec = new Recorder();
       try {
         await rec.start();

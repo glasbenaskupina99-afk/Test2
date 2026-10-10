@@ -6,7 +6,8 @@ import { state } from "./state.js";
 const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 function loader(char, onLoad, onError) {
-  fetch(`/api/chardata/${encodeURIComponent(char)}`)
+  const url = window.__charDataUrl ? window.__charDataUrl(char) : `/api/chardata/${encodeURIComponent(char)}`;
+  fetch(url)
     .then((r) => (r.ok ? r.json() : Promise.reject(new Error("no data"))))
     .then(onLoad)
     .catch(onError);

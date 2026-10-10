@@ -1,0 +1,62 @@
+name: Build Android app
+
+on:
+  push:
+    paths:
+      - "app/**"
+      - "mobile/**"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Build web assets
+        working-directory: mobile
+        run: |
+          npm ci
+          npm run build
+          npx cap sync android
+
+      - name: Build APK
+        working-directory: mobile/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/HanziHome.apk"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: HanziHome-apk
+          path: HanziHome.apk
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Hanzi Home 1.0.${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          files: HanziHome.apk
+          body: |
+            Install on your phone: download **HanziHome.apk** below and open it
+            (allow "install unknown apps" for your browser when asked).
+            Built from ${{ github.sha }}.

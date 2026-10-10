@@ -1,0 +1,27 @@
+{
+  "name": "hanzi-home-mobile",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Hanzi Home as an offline Android app",
+  "scripts": {
+    "build": "node scripts/build-web.mjs",
+    "sync": "npm run build && npx cap sync android",
+    "apk": "npm run sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor-community/speech-recognition": "7.0.1",
+    "@capacitor-community/text-to-speech": "8.0.2",
+    "@capacitor/android": "8.5.3",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/filesystem": "8.1.4",
+    "@capacitor/preferences": "8.0.1",
+    "@capacitor/share": "8.0.3",
+    "pinyin-pro": "3.29.5"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3",
+    "@fontsource/nunito": "^5.2.7",
+    "esbuild": "0.28.2",
+    "hanzi-writer-data": "2.0.1"
+  }
+}

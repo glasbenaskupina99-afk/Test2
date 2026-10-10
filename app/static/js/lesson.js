@@ -1,5 +1,6 @@
 // Duolingo-style lesson runner: progress bar, exercise, check/continue footer, end screen.
 import { h } from "./util.js";
+import { stopSpeaking } from "./audio.js";
 
 /**
  * steps: [{ make(ctx) -> exercise, after?(result) -> Promise<{xp?, requeue?: step}> }]
@@ -46,7 +47,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
 
   function close(result) {
     current?.destroy?.();
-    speechSynthesis?.cancel();
+    stopSpeaking();
     root.remove();
     document.body.style.overflow = "";
     resolveLesson(result);

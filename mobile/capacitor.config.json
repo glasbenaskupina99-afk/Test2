@@ -1,0 +1,8 @@
+{
+  "appId": "com.hanzihome.app",
+  "appName": "Hanzi Home",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}

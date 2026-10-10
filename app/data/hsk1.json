@@ -1,0 +1,208 @@
+{
+  "source": "HSK 1 (classic 150-word list), grouped into themed units",
+  "units": [
+    {
+      "name": "Basics",
+      "words": [
+        ["你", "nǐ", "you"],
+        ["好", "hǎo", "good; well"],
+        ["我", "wǒ", "I; me"],
+        ["是", "shì", "to be (am / is / are)"],
+        ["不", "bù", "not; no"],
+        ["人", "rén", "person; people"],
+        ["他", "tā", "he; him"],
+        ["她", "tā", "she; her"],
+        ["吗", "ma", "question particle (yes/no)"],
+        ["谢谢", "xiè xie", "thank you"],
+        ["不客气", "bú kè qi", "you're welcome"],
+        ["再见", "zài jiàn", "goodbye"]
+      ]
+    },
+    {
+      "name": "Numbers",
+      "words": [
+        ["一", "yī", "one"],
+        ["二", "èr", "two"],
+        ["三", "sān", "three"],
+        ["四", "sì", "four"],
+        ["五", "wǔ", "five"],
+        ["六", "liù", "six"],
+        ["七", "qī", "seven"],
+        ["八", "bā", "eight"],
+        ["九", "jiǔ", "nine"],
+        ["十", "shí", "ten"],
+        ["零", "líng", "zero"],
+        ["几", "jǐ", "how many (small numbers); several"],
+        ["多少", "duō shao", "how many; how much"],
+        ["岁", "suì", "years old"]
+      ]
+    },
+    {
+      "name": "People & family",
+      "words": [
+        ["爸爸", "bà ba", "dad; father"],
+        ["妈妈", "mā ma", "mom; mother"],
+        ["儿子", "ér zi", "son"],
+        ["女儿", "nǚ ér", "daughter"],
+        ["家", "jiā", "home; family"],
+        ["爱", "ài", "to love"],
+        ["朋友", "péng you", "friend"],
+        ["我们", "wǒ men", "we; us"],
+        ["同学", "tóng xué", "classmate"],
+        ["老师", "lǎo shī", "teacher"],
+        ["学生", "xué sheng", "student"],
+        ["先生", "xiān sheng", "Mr.; sir"],
+        ["小姐", "xiǎo jiě", "Miss; young lady"],
+        ["叫", "jiào", "to be called; to call"],
+        ["名字", "míng zi", "name"],
+        ["认识", "rèn shi", "to know (someone); to recognize"]
+      ]
+    },
+    {
+      "name": "Food & shopping",
+      "words": [
+        ["吃", "chī", "to eat"],
+        ["喝", "hē", "to drink"],
+        ["水", "shuǐ", "water"],
+        ["茶", "chá", "tea"],
+        ["米饭", "mǐ fàn", "cooked rice"],
+        ["菜", "cài", "dish (of food); vegetable"],
+        ["苹果", "píng guǒ", "apple"],
+        ["水果", "shuǐ guǒ", "fruit"],
+        ["杯子", "bēi zi", "cup; glass"],
+        ["饭店", "fàn diàn", "restaurant; hotel"],
+        ["买", "mǎi", "to buy"],
+        ["钱", "qián", "money"],
+        ["块", "kuài", "yuan (unit of money, spoken)"],
+        ["商店", "shāng diàn", "shop; store"],
+        ["东西", "dōng xi", "thing; stuff"]
+      ]
+    },
+    {
+      "name": "Time",
+      "words": [
+        ["今天", "jīn tiān", "today"],
+        ["明天", "míng tiān", "tomorrow"],
+        ["昨天", "zuó tiān", "yesterday"],
+        ["年", "nián", "year"],
+        ["月", "yuè", "month; moon"],
+        ["日", "rì", "day (of the month); sun"],
+        ["星期", "xīng qī", "week"],
+        ["点", "diǎn", "o'clock; a little"],
+        ["分钟", "fēn zhōng", "minute"],
+        ["现在", "xiàn zài", "now"],
+        ["时候", "shí hou", "time; moment (when...)"],
+        ["上午", "shàng wǔ", "morning (before noon)"],
+        ["中午", "zhōng wǔ", "noon"],
+        ["下午", "xià wǔ", "afternoon"]
+      ]
+    },
+    {
+      "name": "Places & directions",
+      "words": [
+        ["中国", "zhōng guó", "China"],
+        ["北京", "běi jīng", "Beijing"],
+        ["在", "zài", "at; in; to be (located)"],
+        ["这", "zhè", "this"],
+        ["那", "nà", "that"],
+        ["这儿", "zhèr", "here"],
+        ["那儿", "nàr", "there"],
+        ["哪", "nǎ", "which"],
+        ["哪儿", "nǎr", "where"],
+        ["里", "lǐ", "inside"],
+        ["上", "shàng", "up; on; above"],
+        ["下", "xià", "down; under; below"],
+        ["前面", "qián miàn", "in front; ahead"],
+        ["后面", "hòu miàn", "behind; at the back"],
+        ["学校", "xué xiào", "school"],
+        ["医院", "yī yuàn", "hospital"],
+        ["火车站", "huǒ chē zhàn", "train station"],
+        ["住", "zhù", "to live (somewhere)"]
+      ]
+    },
+    {
+      "name": "Actions",
+      "words": [
+        ["去", "qù", "to go"],
+        ["来", "lái", "to come"],
+        ["回", "huí", "to return; to go back"],
+        ["看", "kàn", "to look; to watch; to read"],
+        ["看见", "kàn jiàn", "to see"],
+        ["听", "tīng", "to listen; to hear"],
+        ["说话", "shuō huà", "to speak; to talk"],
+        ["读", "dú", "to read (aloud); to study"],
+        ["写", "xiě", "to write"],
+        ["做", "zuò", "to do; to make"],
+        ["工作", "gōng zuò", "work; job; to work"],
+        ["学习", "xué xí", "to study; to learn"],
+        ["睡觉", "shuì jiào", "to sleep"],
+        ["坐", "zuò", "to sit; to travel by"],
+        ["开", "kāi", "to open; to drive"],
+        ["打电话", "dǎ diàn huà", "to make a phone call"]
+      ]
+    },
+    {
+      "name": "Describing",
+      "words": [
+        ["大", "dà", "big; large"],
+        ["小", "xiǎo", "small; little"],
+        ["多", "duō", "many; much"],
+        ["少", "shǎo", "few; little"],
+        ["很", "hěn", "very"],
+        ["太", "tài", "too (much); extremely"],
+        ["热", "rè", "hot"],
+        ["冷", "lěng", "cold"],
+        ["漂亮", "piào liang", "pretty; beautiful"],
+        ["高兴", "gāo xìng", "happy; glad"],
+        ["天气", "tiān qì", "weather"],
+        ["下雨", "xià yǔ", "to rain"]
+      ]
+    },
+    {
+      "name": "Things",
+      "words": [
+        ["书", "shū", "book"],
+        ["本", "běn", "measure word for books"],
+        ["个", "gè", "general measure word"],
+        ["电脑", "diàn nǎo", "computer"],
+        ["电视", "diàn shì", "television"],
+        ["电影", "diàn yǐng", "movie; film"],
+        ["衣服", "yī fu", "clothes"],
+        ["桌子", "zhuō zi", "table; desk"],
+        ["椅子", "yǐ zi", "chair"],
+        ["字", "zì", "character; word (written)"],
+        ["汉语", "hàn yǔ", "Chinese (language)"],
+        ["猫", "māo", "cat"],
+        ["狗", "gǒu", "dog"],
+        ["飞机", "fēi jī", "airplane"],
+        ["出租车", "chū zū chē", "taxi"],
+        ["医生", "yī shēng", "doctor"]
+      ]
+    },
+    {
+      "name": "Grammar & questions",
+      "words": [
+        ["的", "de", "possessive / descriptive particle ('s)"],
+        ["了", "le", "particle for completed action / change"],
+        ["呢", "ne", "particle (and you? / what about?)"],
+        ["和", "hé", "and; with"],
+        ["都", "dōu", "all; both"],
+        ["有", "yǒu", "to have; there is"],
+        ["没", "méi", "not (have); did not"],
+        ["没关系", "méi guān xi", "it doesn't matter; no problem"],
+        ["对不起", "duì bu qǐ", "sorry"],
+        ["会", "huì", "can; know how to; will"],
+        ["能", "néng", "can; be able to"],
+        ["想", "xiǎng", "to want; to think; to miss"],
+        ["喜欢", "xǐ huan", "to like"],
+        ["请", "qǐng", "please; to invite"],
+        ["喂", "wéi", "hello (on the phone)"],
+        ["什么", "shén me", "what"],
+        ["谁", "shéi", "who"],
+        ["怎么", "zěn me", "how; why"],
+        ["怎么样", "zěn me yàng", "how about; how is it"],
+        ["些", "xiē", "some; a few"]
+      ]
+    }
+  ]
+}

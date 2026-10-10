@@ -1,0 +1,62 @@
+// Android app entry: wires the shared web UI to an in-app backend and native plugins.
+import { Capacitor, registerPlugin } from "@capacitor/core";
+import { Preferences } from "@capacitor/preferences";
+import { TextToSpeech } from "@capacitor-community/text-to-speech";
+import { SpeechRecognition } from "@capacitor-community/speech-recognition";
+import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
+import { Share } from "@capacitor/share";
+import * as backend from "./backend.js";
+
+const isNative = Capacitor.isNativePlatform();
+const Gemma = registerPlugin("Gemma");
+const KEY = "hanzi-db";
+
+const storage = isNative
+  ? {
+      load: async () => (await Preferences.get({ key: KEY })).value,
+      save: (v) => Preferences.set({ key: KEY, value: v }),
+    }
+  : {
+      // Browser preview (npx serve www): keep data in localStorage.
+      load: async () => { try { return localStorage.getItem(KEY); } catch { return null; } },
+      save: async (v) => { try { localStorage.setItem(KEY, v); } catch { /* ignore */ } },
+    };
+
+window.__charDataUrl = (c) => `chars/${encodeURIComponent(c)}.json`;
+
+function recognize() {
+  const p = (async () => {
+    let perm = await SpeechRecognition.checkPermissions();
+    if (perm.speechRecognition !== "granted") perm = await SpeechRecognition.requestPermissions();
+    if (perm.speechRecognition !== "granted") throw new Error("Microphone permission denied");
+    try {
+      const res = await SpeechRecognition.start({ language: "zh-CN", maxResults: 4, popup: false, partialResults: false });
+      return (res && res.matches) || [];
+    } catch (e) {
+      if (/no match|no speech|didn't|timeout|7|6/i.test(e.message || "")) return [];
+      throw e;
+    }
+  })();
+  p.stop = () => SpeechRecognition.stop().catch(() => {});
+  return p;
+}
+
+if (isNative) {
+  window.__native = {
+    gemma: Gemma,
+    speak: (text, rate) => TextToSpeech.speak({ text, lang: "zh-CN", rate: rate / 0.8, pitch: 1, volume: 1, category: "playback" }),
+    stopSpeaking: () => TextToSpeech.stop().catch(() => {}),
+    recognize,
+    shareFile: async (name, text) => {
+      const r = await Filesystem.writeFile({ path: name, data: text, directory: Directory.Cache, encoding: Encoding.UTF8 });
+      await Share.share({ title: name, files: [r.uri] });
+    },
+  };
+} else if (window.__gemmaMock) {
+  // Used by browser tests to exercise the on-device AI code paths.
+  window.__native = { gemma: window.__gemmaMock, shareFile: async () => {} };
+}
+
+await backend.init(storage);
+window.__localApi = backend.handle;
+await import("../../app/static/js/app.js");

@@ -457,3 +457,12 @@ h1, h2, h3 { color: var(--text-strong); margin: 0; font-weight: 800; }
   .mode { flex-direction: column; text-align: center; }
   .mode .count { margin: 0; }
 }
+
+/* Android app / notched phones: keep content clear of the status bar. */
+body { padding-top: env(safe-area-inset-top, 0px); }
+body::before {
+  content: ""; position: fixed; left: 0; right: 0; top: 0; height: env(safe-area-inset-top, 0px);
+  background: var(--bg); z-index: 15;
+}
+.topbar { top: env(safe-area-inset-top, 0px); }
+.lesson { padding-top: env(safe-area-inset-top, 0px); }

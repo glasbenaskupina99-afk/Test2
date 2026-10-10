@@ -21,6 +21,17 @@ export function h(tag, attrs = {}, ...children) {
 }
 
 export async function api(path, { method = "GET", body } = {}) {
+  // In the Android app there is no server: requests are answered by the local backend.
+  if (window.__localApi) {
+    try {
+      return await window.__localApi(path, { method, body: body ? JSON.parse(JSON.stringify(body)) : undefined });
+    } catch (e) {
+      const err = new Error(e.message || String(e));
+      err.status = e.status || 500;
+      err.aiError = !!e.aiError;
+      throw err;
+    }
+  }
   const res = await fetch(path, {
     method,
     headers: body ? { "Content-Type": "application/json" } : {},

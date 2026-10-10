@@ -3,6 +3,7 @@ import { state } from "./state.js";
 import { speak, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
+import { gemmaCard, backupCard } from "./gemma-settings.js";
 
 const app = document.getElementById("app");
 const UNIT_COLORS = ["#58cc02", "#ce82ff", "#1cb0f6", "#ff9600", "#ff4b4b", "#2b70c9", "#00cd9c", "#ff86d0", "#a5a5a5", "#cc348d"];
@@ -470,7 +471,7 @@ async function settingsScreen() {
   };
 
   const save = async (quiet = false) => {
-    const body = { ai_enabled: aiToggle.checked };
+    const body = isApp ? {} : { ai_enabled: aiToggle.checked };
     for (const [k, el] of Object.entries(f)) body[k] = el.value;
     state.settings = await api("/api/settings", { method: "PUT", body });
     if (!quiet) toast("Saved ✓");
@@ -484,17 +485,10 @@ async function settingsScreen() {
     [["auto", "Match system"], ["light", "Light"], ["dark", "Dark"]].map(([v, l]) => h("option", { value: v, selected: v === theme }, l))
   );
 
-  const speechSupport = [
-    `Browser speech recognition: ${canRecognize() ? "✅ available" : "❌ not available"}`,
-    `Recording: ${canRecord() ? "✅ available" : "❌ not available"}`,
-    window.isSecureContext ? "" : "⚠️ Not on HTTPS — the microphone is blocked. Use the https:// address.",
-  ].filter(Boolean);
-
-  shell(
-    [
-      h("div", { class: "topbar" }, h("h2", {}, "Settings")),
-      h("h2", { class: "section-title", style: { marginTop: 0 } }, "✨ Gemma AI"),
-      h(
+  const isApp = !!window.__native?.gemma;
+  const aiCard = isApp
+    ? gemmaCard(s, f, (quiet) => save(quiet))
+    : h(
         "div",
         { class: "card" },
         h("div", { class: "switch-row" }, h("div", {}, "Use AI", h("div", { class: "small muted" }, "Sentences, translation grading, memory hooks")), aiToggle),
@@ -503,18 +497,30 @@ async function settingsScreen() {
         field("API key (optional)", input("llm_api_key", { type: "password", placeholder: "none" })),
         statusEl,
         h("div", { style: { marginTop: "12px" } }, h("button", { class: "btn ghost", onclick: testAI }, "Test connection"))
-      ),
+      );
+  const speechOptions = isApp
+    ? [["browser", "Android speech recognition"], ["self", "Record & compare myself"]]
+    : [["browser", "Phone speech recognition (fast)"], ["ai", "Gemma audio (needs audio-capable server)"], ["self", "Record & compare myself"]];
+
+  const speechSupport = isApp ? ["Tip: for offline recognition, install the Chinese (Mandarin) offline speech pack in Android settings → Google → Voice."] : [
+    `Browser speech recognition: ${canRecognize() ? "✅ available" : "❌ not available"}`,
+    `Recording: ${canRecord() ? "✅ available" : "❌ not available"}`,
+    window.isSecureContext ? "" : "⚠️ Not on HTTPS — the microphone is blocked. Use the https:// address.",
+  ].filter(Boolean);
+  if (isApp) speechSupport.splice(1);
+
+  shell(
+    [
+      h("div", { class: "topbar" }, h("h2", {}, "Settings")),
+      h("h2", { class: "section-title", style: { marginTop: 0 } }, isApp ? "✨ Gemma on this phone" : "✨ Gemma AI"),
+      aiCard,
       h("h2", { class: "section-title" }, "🎤 Pronunciation"),
       h(
         "div",
         { class: "card" },
         field(
           "Check my pronunciation with",
-          select("speech_mode", [
-            ["browser", "Phone speech recognition (fast)"],
-            ["ai", "Gemma audio (needs audio-capable server)"],
-            ["self", "Record & compare myself"],
-          ])
+          select("speech_mode", speechOptions)
         ),
         h("div", { class: "hint", style: { marginTop: 0 } }, speechSupport.map((t) => h("div", {}, t))),
         field("Voice speed", select("tts_rate", [["0.6", "Slow"], ["0.8", "Normal"], ["1", "Native"]])),
@@ -537,8 +543,10 @@ async function settingsScreen() {
         field("Sentences per session", select("sentence_count", [["4", "4"], ["6", "6"], ["9", "9"], ["12", "12"]])),
         field("Theme", themeSel)
       ),
+      isApp ? h("h2", { class: "section-title" }, "💾 Backup") : null,
+      isApp ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),
-      h("p", { class: "muted small center", style: { marginTop: "24px" } }, "Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). Runs entirely on your network."),
+      h("p", { class: "muted small center", style: { marginTop: "24px" } }, `Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : "Runs entirely on your network."}`),
     ],
     "#/settings"
   );

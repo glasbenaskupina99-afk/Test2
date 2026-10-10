@@ -15,7 +15,17 @@ if ("speechSynthesis" in window) {
   speechSynthesis.onvoiceschanged = pickVoice;
 }
 
+// In the Android app, window.__native provides the phone's own TTS / speech recognition.
+const native = () => window.__native;
+
+export function stopSpeaking() {
+  if (native()?.stopSpeaking) native().stopSpeaking();
+  else if ("speechSynthesis" in window) speechSynthesis.cancel();
+}
+
 export function speak(text, { slow = false } = {}) {
+  const rate0 = Number(state.settings?.tts_rate || 0.8);
+  if (native()?.speak) return native().speak(text, slow ? Math.max(0.4, rate0 - 0.35) : rate0).catch(() => {});
   if (!("speechSynthesis" in window)) return Promise.resolve();
   speechSynthesis.cancel();
   return new Promise((resolve) => {
@@ -29,16 +39,17 @@ export function speak(text, { slow = false } = {}) {
   });
 }
 
-export const hasTTS = () => "speechSynthesis" in window;
+export const hasTTS = () => !!native()?.speak || "speechSynthesis" in window;
 
 // ---------------------------------------------------------------- recognition
 
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-export const canRecognize = () => !!Recognition && window.isSecureContext;
+export const canRecognize = () => (native()?.recognize ? true : !!Recognition && window.isSecureContext);
 export const canRecord = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
 
 /** Start listening; resolves with an array of hanzi alternatives. Call .stop() to end early. */
 export function recognize() {
+  if (native()?.recognize) return native().recognize();
   const rec = new Recognition();
   rec.lang = "zh-CN";
   rec.interimResults = false;

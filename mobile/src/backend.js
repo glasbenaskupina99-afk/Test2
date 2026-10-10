@@ -2,20 +2,31 @@
 // Data is a single JSON document persisted on the phone.
 import seedZh from "../../app/data/hsk1.json";
 import seedJa from "../../app/data/japanese_n5.json";
+import seedJaN3 from "../../app/data/japanese_n3.json";
 import FALLBACK_ZH from "../../app/data/sentences.json";
 import FALLBACK_JA from "../../app/data/japanese_sentences.json";
+import FALLBACK_JA_N3 from "../../app/data/japanese_n3_sentences.json";
 import * as ai from "./ai.js";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
 
-const SEEDS = { zh: seedZh, ja: seedJa };
+// Built-in word lists. Each is a "section" of its course (e.g. JLPT N5 / JLPT N3).
+const SEED_SETS = [
+  { lang: "zh", data: seedZh, section: "HSK 1", source: "hsk1", base: 0 },
+  { lang: "ja", data: seedJa, section: "JLPT N5", source: "n5", base: 0 },
+  { lang: "ja", data: seedJaN3, section: "JLPT N3", source: "n3", base: 10000 },
+];
+const SECTION_OF_SOURCE = Object.fromEntries(SEED_SETS.map((x) => [x.source, x.section]));
+const MY_WORDS = "My words";
 // Fallback sentences as [english, text, reading]
-const FALLBACK = { zh: FALLBACK_ZH.map(([en, zh]) => [en, zh, null]), ja: FALLBACK_JA };
+const FALLBACK = { zh: FALLBACK_ZH.map(([en, zh]) => [en, zh, null]), ja: [...FALLBACK_JA, ...FALLBACK_JA_N3] };
 
 const SKILLS = ["write", "speak", "recall"];
 
 const DEFAULTS = {
   course: "zh", // "zh" Mandarin (hanzi) or "ja" Japanese (kanji)
+  section_zh: "", // section chosen for "Learn new words" ("" = first unfinished)
+  section_ja: "",
   ai_enabled: true,
   gemma_backend: "cpu",
   hf_repo: "litert-community/gemma-4-E2B-it-litert-lm",
@@ -52,34 +63,36 @@ let db = null;
 let store = null;
 let saveTimer = null;
 
-function seedWords(lang, startId) {
+function seedWords(set, startId) {
   const words = [];
   let id = startId;
-  let pos = 0;
-  for (const unit of SEEDS[lang].units) {
+  let pos = set.base;
+  for (const unit of set.data.units) {
     for (const [hanzi, pinyin, english] of unit.words) {
-      words.push({ id: id++, lang, hanzi, pinyin, english, unit: unit.name, position: pos++, source: lang === "zh" ? "hsk1" : "n5", extras: null, created_at: fmt(now()) });
+      words.push({ id: id++, lang: set.lang, section: set.section, hanzi, pinyin, english, unit: unit.name, position: pos++, source: set.source, extras: null, created_at: fmt(now()) });
     }
   }
   return words;
 }
 
 function freshDb() {
-  const zh = seedWords("zh", 1);
-  const ja = seedWords("ja", zh.length + 1);
-  return { version: 2, nextId: zh.length + ja.length + 1, words: [...zh, ...ja], cards: [], activity: {}, sentenceLog: [], settings: {} };
+  return { version: 3, nextId: 1, words: [], cards: [], activity: {}, sentenceLog: [], settings: {} };
 }
 
-/** Older saves had Chinese only: tag them and add the Japanese course. */
+/** Bring older saves up to date: tag languages/sections and add any new built-in word lists. */
 function migrate() {
-  for (const w of db.words) w.lang ||= "zh";
-  for (const r of db.sentenceLog) r.lang ||= "zh";
-  if (!db.words.some((w) => w.lang === "ja")) {
-    const ja = seedWords("ja", db.nextId);
-    db.words.push(...ja);
-    db.nextId += ja.length;
+  for (const w of db.words) {
+    w.lang ||= "zh";
+    w.section ||= w.source === "custom" ? MY_WORDS : SECTION_OF_SOURCE[w.source] || "HSK 1";
   }
-  db.version = 2;
+  for (const r of db.sentenceLog) r.lang ||= "zh";
+  for (const set of SEED_SETS) {
+    if (db.words.some((w) => w.lang === set.lang && w.source === set.source)) continue;
+    const words = seedWords(set, db.nextId);
+    db.words.push(...words);
+    db.nextId += words.length;
+  }
+  db.version = 3;
 }
 
 export async function init(storage) {
@@ -146,6 +159,20 @@ function streak() {
 const course = () => settingsAll().course;
 /** Words / cards of the course being studied. */
 const W = () => db.words.filter((w) => w.lang === course());
+/** Sections of the current course in path order, with the one picked for new words. */
+function sections() {
+  const ids = learnedIds();
+  const list = [];
+  for (const w of W().sort(byPosition)) {
+    let sec = list.find((x) => x.name === w.section);
+    if (!sec) list.push((sec = { name: w.section, total: 0, learned: 0 }));
+    sec.total++;
+    if (ids.has(w.id)) sec.learned++;
+  }
+  const chosen = settingsAll()[`section_${course()}`];
+  const current = list.find((x) => x.name === chosen) || list.find((x) => x.learned < x.total && x.name !== MY_WORDS) || list[0];
+  return { list, current: current?.name };
+}
 const C = () => {
   const ids = new Set(W().map((w) => w.id));
   return db.cards.filter((c) => ids.has(c.word_id));
@@ -235,8 +262,9 @@ const routes = {
     const s = settingsAll();
     const n = fmt(now());
     const ids = learnedIds();
+    const secs = sections();
     const units = [];
-    for (const w of W().sort(byPosition)) {
+    for (const w of W().filter((x) => x.section === secs.current).sort(byPosition)) {
       let u = units.find((x) => x.name === w.unit);
       if (!u) units.push((u = { name: w.unit, pos: w.position, total: 0, learned: 0 }));
       u.total++;
@@ -258,6 +286,8 @@ const routes = {
       daily_goal: s.daily_goal,
       course: course(),
       courses,
+      sections: secs.list,
+      section: secs.current,
       due: cards.filter((c) => c.due <= n).length,
       next_due: future[0] || null,
       learned: ids.size,
@@ -271,7 +301,7 @@ const routes = {
     W().sort(byPosition).map((w) => {
       const cs = cardsOf(w.id);
       return {
-        id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, english: w.english, unit: w.unit, source: w.source,
+        id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, english: w.english, unit: w.unit, section: w.section, source: w.source,
         cards: cs.length,
         due: cs.length ? cs.map((c) => c.due).sort()[0] : null,
         strength: cs.length ? cs.reduce((a, c) => a + c.interval, 0) / cs.length : null,
@@ -291,7 +321,7 @@ const routes = {
     }
     const w = {
       id: db.nextId++, lang: course(), hanzi, pinyin: ja ? reading : reading || toPinyin(hanzi), english: body.english.trim(),
-      unit: "My words", position: 100000, source: "custom", extras: null, created_at: fmt(now()),
+      unit: MY_WORDS, section: MY_WORDS, position: 100000, source: "custom", extras: null, created_at: fmt(now()),
     };
     db.words.push(w);
     persist();
@@ -333,7 +363,8 @@ const routes = {
   "GET /api/learn/next": (_, __, query) => {
     const n = Number(query.get("n")) || settingsAll().new_per_lesson;
     const ids = learnedIds();
-    const words = W().filter((w) => !ids.has(w.id)).sort(byPosition).slice(0, n).map((w) => ({ ...w }));
+    const sec = sections().current;
+    const words = W().filter((w) => !ids.has(w.id) && w.section === sec).sort(byPosition).slice(0, n).map((w) => ({ ...w }));
     return { words, pool: shuffled(W()).slice(0, 40).map(pick) };
   },
 

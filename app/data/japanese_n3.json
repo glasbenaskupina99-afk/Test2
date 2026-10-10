@@ -1,0 +1,247 @@
+{
+  "source": "Intermediate (JLPT N3) kanji vocabulary, grouped into themed units. Readings in hiragana.",
+  "section": "JLPT N3",
+  "units": [
+    {
+      "name": "Work & business",
+      "words": [
+        ["会議", "かいぎ", "meeting; conference"],
+        ["資料", "しりょう", "materials; documents"],
+        ["給料", "きゅうりょう", "salary; pay"],
+        ["残業", "ざんぎょう", "overtime work"],
+        ["経験", "けいけん", "experience"],
+        ["責任", "せきにん", "responsibility"],
+        ["担当", "たんとう", "being in charge (of)"],
+        ["営業", "えいぎょう", "sales; business operations"],
+        ["契約", "けいやく", "contract"],
+        ["報告", "ほうこく", "report"],
+        ["連絡", "れんらく", "contact; getting in touch"],
+        ["出張", "しゅっちょう", "business trip"],
+        ["退職", "たいしょく", "leaving a job; retirement"],
+        ["就職", "しゅうしょく", "finding employment"],
+        ["募集", "ぼしゅう", "recruitment; call for applicants"]
+      ]
+    },
+    {
+      "name": "Society & news",
+      "words": [
+        ["政治", "せいじ", "politics"],
+        ["経済", "けいざい", "economy"],
+        ["事件", "じけん", "incident; case"],
+        ["事故", "じこ", "accident"],
+        ["犯人", "はんにん", "criminal; culprit"],
+        ["警察", "けいさつ", "police"],
+        ["選挙", "せんきょ", "election"],
+        ["国際", "こくさい", "international"],
+        ["環境", "かんきょう", "environment"],
+        ["平和", "へいわ", "peace"],
+        ["戦争", "せんそう", "war"],
+        ["増加", "ぞうか", "increase"],
+        ["減少", "げんしょう", "decrease"],
+        ["情報", "じょうほう", "information"]
+      ]
+    },
+    {
+      "name": "Feelings & personality",
+      "words": [
+        ["感情", "かんじょう", "emotion; feelings"],
+        ["喜ぶ", "よろこぶ", "to be glad; to rejoice"],
+        ["悲しむ", "かなしむ", "to grieve; to be sad"],
+        ["怒る", "おこる", "to get angry"],
+        ["驚く", "おどろく", "to be surprised"],
+        ["笑う", "わらう", "to laugh; to smile"],
+        ["泣く", "なく", "to cry"],
+        ["恥ずかしい", "はずかしい", "embarrassed; shy"],
+        ["寂しい", "さびしい", "lonely"],
+        ["苦しい", "くるしい", "painful; hard"],
+        ["優しい", "やさしい", "kind; gentle"],
+        ["厳しい", "きびしい", "strict; severe"],
+        ["素直", "すなお", "honest; obedient"],
+        ["不安", "ふあん", "anxiety; uneasy"],
+        ["自信", "じしん", "self-confidence"]
+      ]
+    },
+    {
+      "name": "Health & body",
+      "words": [
+        ["健康", "けんこう", "health"],
+        ["症状", "しょうじょう", "symptom"],
+        ["治る", "なおる", "to get better; to heal"],
+        ["怪我", "けが", "injury"],
+        ["痛み", "いたみ", "pain"],
+        ["熱", "ねつ", "fever; heat"],
+        ["薬局", "やっきょく", "pharmacy"],
+        ["手術", "しゅじゅつ", "surgery; operation"],
+        ["血", "ち", "blood"],
+        ["骨", "ほね", "bone"],
+        ["呼吸", "こきゅう", "breathing"],
+        ["疲れる", "つかれる", "to get tired"],
+        ["命", "いのち", "life"],
+        ["頭痛", "ずつう", "headache"],
+        ["患者", "かんじゃ", "patient"]
+      ]
+    },
+    {
+      "name": "Home & daily life",
+      "words": [
+        ["家具", "かぐ", "furniture"],
+        ["掃除", "そうじ", "cleaning"],
+        ["洗濯", "せんたく", "laundry; washing"],
+        ["片付ける", "かたづける", "to tidy up"],
+        ["暮らす", "くらす", "to live (one's life)"],
+        ["生活", "せいかつ", "daily life; living"],
+        ["近所", "きんじょ", "neighbourhood"],
+        ["引っ越す", "ひっこす", "to move house"],
+        ["留守", "るす", "being away from home"],
+        ["家賃", "やちん", "rent"],
+        ["台所", "だいどころ", "kitchen"],
+        ["冷蔵庫", "れいぞうこ", "refrigerator"],
+        ["鍵", "かぎ", "key; lock"],
+        ["宅配", "たくはい", "home delivery"],
+        ["床", "ゆか", "floor"]
+      ]
+    },
+    {
+      "name": "Travel & transport",
+      "words": [
+        ["観光", "かんこう", "sightseeing"],
+        ["予約", "よやく", "reservation; booking"],
+        ["空港", "くうこう", "airport"],
+        ["到着", "とうちゃく", "arrival"],
+        ["出発", "しゅっぱつ", "departure"],
+        ["乗り換える", "のりかえる", "to change (trains, buses)"],
+        ["渋滞", "じゅうたい", "traffic jam"],
+        ["交通", "こうつう", "traffic; transportation"],
+        ["往復", "おうふく", "round trip"],
+        ["片道", "かたみち", "one way"],
+        ["地図", "ちず", "map"],
+        ["港", "みなと", "harbour; port"],
+        ["宿泊", "しゅくはく", "lodging; staying overnight"],
+        ["荷物", "にもつ", "luggage; package"],
+        ["景色", "けしき", "scenery; view"]
+      ]
+    },
+    {
+      "name": "School & study",
+      "words": [
+        ["試験", "しけん", "exam; test"],
+        ["合格", "ごうかく", "passing (an exam)"],
+        ["宿題", "しゅくだい", "homework"],
+        ["授業", "じゅぎょう", "class; lesson"],
+        ["復習", "ふくしゅう", "review (of lessons)"],
+        ["予習", "よしゅう", "preparing for a lesson"],
+        ["成績", "せいせき", "grades; results"],
+        ["専門", "せんもん", "speciality; major"],
+        ["研究", "けんきゅう", "research"],
+        ["論文", "ろんぶん", "thesis; paper"],
+        ["辞書", "じしょ", "dictionary"],
+        ["単語", "たんご", "word; vocabulary"],
+        ["文法", "ぶんぽう", "grammar"],
+        ["説明", "せつめい", "explanation"],
+        ["例", "れい", "example"]
+      ]
+    },
+    {
+      "name": "Nature & weather",
+      "words": [
+        ["自然", "しぜん", "nature"],
+        ["季節", "きせつ", "season"],
+        ["気温", "きおん", "air temperature"],
+        ["湿度", "しつど", "humidity"],
+        ["台風", "たいふう", "typhoon"],
+        ["地震", "じしん", "earthquake"],
+        ["雷", "かみなり", "thunder; lightning"],
+        ["晴れる", "はれる", "to clear up (weather)"],
+        ["曇る", "くもる", "to become cloudy"],
+        ["森", "もり", "forest"],
+        ["島", "しま", "island"],
+        ["岩", "いわ", "rock"],
+        ["波", "なみ", "wave"],
+        ["星", "ほし", "star"],
+        ["植物", "しょくぶつ", "plant"]
+      ]
+    },
+    {
+      "name": "Useful verbs",
+      "words": [
+        ["届ける", "とどける", "to deliver; to report"],
+        ["届く", "とどく", "to arrive; to reach"],
+        ["比べる", "くらべる", "to compare"],
+        ["決める", "きめる", "to decide"],
+        ["選ぶ", "えらぶ", "to choose"],
+        ["集める", "あつめる", "to collect; to gather"],
+        ["続ける", "つづける", "to continue"],
+        ["変える", "かえる", "to change (something)"],
+        ["助ける", "たすける", "to help; to save"],
+        ["守る", "まもる", "to protect; to keep (a promise)"],
+        ["認める", "みとめる", "to admit; to recognise"],
+        ["断る", "ことわる", "to refuse; to decline"],
+        ["許す", "ゆるす", "to forgive; to allow"],
+        ["失う", "うしなう", "to lose"],
+        ["迷う", "まよう", "to get lost; to hesitate"],
+        ["探す", "さがす", "to look for"]
+      ]
+    },
+    {
+      "name": "Describing things",
+      "words": [
+        ["必要", "ひつよう", "necessary"],
+        ["大切", "たいせつ", "important; precious"],
+        ["簡単", "かんたん", "simple; easy"],
+        ["複雑", "ふくざつ", "complicated"],
+        ["正確", "せいかく", "accurate; exact"],
+        ["適当", "てきとう", "suitable; half-hearted"],
+        ["十分", "じゅうぶん", "enough; sufficient"],
+        ["特別", "とくべつ", "special"],
+        ["普通", "ふつう", "normal; usual"],
+        ["珍しい", "めずらしい", "rare; unusual"],
+        ["細かい", "こまかい", "fine; detailed"],
+        ["深い", "ふかい", "deep"],
+        ["浅い", "あさい", "shallow"],
+        ["柔らかい", "やわらかい", "soft"],
+        ["固い", "かたい", "hard; firm"],
+        ["確か", "たしか", "certain; if I remember correctly"]
+      ]
+    },
+    {
+      "name": "Time & frequency",
+      "words": [
+        ["最近", "さいきん", "recently; these days"],
+        ["将来", "しょうらい", "the future"],
+        ["過去", "かこ", "the past"],
+        ["現在", "げんざい", "the present; now"],
+        ["以前", "いぜん", "before; formerly"],
+        ["最初", "さいしょ", "first; the beginning"],
+        ["最後", "さいご", "last; the end"],
+        ["途中", "とちゅう", "on the way; midway"],
+        ["期間", "きかん", "period; term"],
+        ["締め切り", "しめきり", "deadline"],
+        ["普段", "ふだん", "usually; everyday"],
+        ["突然", "とつぜん", "suddenly"],
+        ["偶然", "ぐうぜん", "by chance"],
+        ["次第に", "しだいに", "gradually"],
+        ["相変わらず", "あいかわらず", "as usual; as ever"]
+      ]
+    },
+    {
+      "name": "Communication",
+      "words": [
+        ["意見", "いけん", "opinion"],
+        ["返事", "へんじ", "reply; answer"],
+        ["伝える", "つたえる", "to tell; to convey"],
+        ["約束", "やくそく", "promise; appointment"],
+        ["挨拶", "あいさつ", "greeting"],
+        ["会話", "かいわ", "conversation"],
+        ["表現", "ひょうげん", "expression"],
+        ["意味", "いみ", "meaning"],
+        ["理由", "りゆう", "reason"],
+        ["話題", "わだい", "topic (of conversation)"],
+        ["噂", "うわさ", "rumour"],
+        ["説得", "せっとく", "persuasion"],
+        ["感謝", "かんしゃ", "gratitude; thanks"],
+        ["賛成", "さんせい", "agreement; approval"],
+        ["反対", "はんたい", "opposition; the opposite"]
+      ]
+    }
+  ]
+}

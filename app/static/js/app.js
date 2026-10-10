@@ -66,7 +66,7 @@ async function startFlow(fn) {
 
 const COURSES = {
   zh: { flag: "🇨🇳", name: "Chinese", script: "汉字", sub: "Mandarin · HSK 1" },
-  ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kanji · JLPT N5" },
+  ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kanji · JLPT N5 & N3" },
 };
 
 function courseSheet(home) {
@@ -142,8 +142,10 @@ async function homeScreen() {
     h(
       "div",
       {},
-      h("h3", {}, "Learn new words"),
-      next.words.length ? h("div", { class: "preview" }, preview) : h("p", {}, "All words learned — add more!")
+      h("h3", {}, "Learn new words", home.sections?.length > 1 ? h("span", { class: "level-tag" }, home.section) : null),
+      next.words.length
+        ? h("div", { class: "preview" }, preview)
+        : h("p", {}, home.sections?.length > 1 ? `${home.section} complete — pick another level below` : "All words learned — add more!")
     )
   );
   const reviewCard = h(
@@ -166,6 +168,29 @@ async function homeScreen() {
   );
 
   const units = await unitsView(home.units);
+  const sectionPicker =
+    home.sections?.length > 1
+      ? h(
+          "div",
+          { class: "section-pick" },
+          home.sections.map((sec) =>
+            h(
+              "button",
+              {
+                class: sec.name === home.section ? "on" : "",
+                onclick: async () => {
+                  if (sec.name === home.section) return;
+                  state.settings = await api("/api/settings", { method: "PUT", body: { [`section_${home.course}`]: sec.name } });
+                  route();
+                },
+              },
+              h("b", {}, sec.name),
+              h("span", {}, `${sec.learned}/${sec.total}`),
+              h("i", { style: { width: `${Math.round((100 * sec.learned) / Math.max(sec.total, 1))}%` } })
+            )
+          )
+        )
+      : null;
 
   shell(
     [
@@ -185,6 +210,7 @@ async function homeScreen() {
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
+      sectionPicker,
       units,
     ],
     "#/"

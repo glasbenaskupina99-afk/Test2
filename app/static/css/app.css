@@ -469,3 +469,18 @@ body::before {
 }
 .topbar { top: env(safe-area-inset-top, 0px); }
 .lesson { padding-top: env(safe-area-inset-top, 0px); }
+
+/* Level picker (e.g. JLPT N5 / N3) above the path */
+.section-pick { display: flex; gap: 10px; margin: -2px 0 16px; overflow-x: auto; padding-bottom: 4px; }
+.section-pick button {
+  position: relative; flex: 1 0 auto; min-width: 104px; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: 10px 14px 14px; border-radius: 16px; cursor: pointer;
+  border: 2px solid var(--border); border-bottom-width: 4px; background: var(--surface); color: var(--text);
+}
+.section-pick button b { font-size: 16px; font-weight: 900; color: var(--text-strong); }
+.section-pick button span { font-size: 13px; color: var(--muted); }
+.section-pick button i { position: absolute; left: 0; bottom: 0; height: 4px; background: var(--green); }
+.section-pick button.on { border-color: var(--blue); background: var(--blue-light); }
+.section-pick button.on b { color: var(--blue-dark); }
+.level-tag { margin-left: 8px; padding: 2px 8px; border-radius: 99px; background: rgba(255, 255, 255, .25); font-size: 13px; vertical-align: middle; }

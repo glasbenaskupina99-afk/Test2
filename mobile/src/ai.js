@@ -109,12 +109,13 @@ Return JSON: {"sentences": [{"en": "...", "zh": "..."}]}`;
 }
 
 async function generateSentencesJa(vocab, focus, count, avoid) {
-  const prompt = `Create ${count} short, natural Japanese practice sentences for a beginner.
+  const n3 = String(getSettings().section_ja || "").includes("N3");
+  const prompt = `Create ${count} natural Japanese practice sentences for ${n3 ? "an intermediate learner (JLPT N3 level)" : "a beginner"}.
 
 Rules:
-- Use mainly words from this vocabulary list, plus basic particles, です/ます verb forms and simple kana words: ${vocab}
+- Use mainly words from this vocabulary list, plus ${n3 ? "N3-level grammar (〜ために, 〜てしまう, 〜そうだ, 〜なければならない, conditionals)" : "basic particles, です/ます verb forms and simple kana words"}: ${vocab}
 - Try to include these focus words: ${focus.map((w) => w.hanzi).join(", ") || "any"}
-- Polite style, 4 to 14 characters each, everyday sentences a native speaker would say.
+- ${n3 ? "8 to 24 characters each, polite or plain style" : "Polite style, 4 to 14 characters each"}, everyday sentences a native speaker would say.
 - Vary the grammar (statements, questions with か, negatives with ません).
 - Don't repeat these recent sentences: ${avoid.slice(0, 15).join(" / ") || "none"}
 - "en": natural English. "ja": the Japanese with normal kanji and kana. "reading": the whole sentence in hiragana only.

@@ -293,6 +293,7 @@ const routes = {
       sections: secs.list,
       section: secs.current,
       due: cards.filter((c) => c.due <= n).length,
+      due_by_skill: Object.fromEntries(SKILLS.map((k) => [k, cards.filter((c) => c.skill === k && c.due <= n).length])),
       next_due: future[0] || null,
       learned: ids.size,
       total: W().length,
@@ -388,9 +389,11 @@ const routes = {
   "GET /api/review/session": (_, __, query) => {
     const size = settingsAll().review_size;
     const n = fmt(now());
+    const only = (query.get("skills") || "").split(",").filter(Boolean);
+    const pool = only.length ? C().filter((c) => only.includes(c.skill)) : C();
     const cards = query.get("extra")
-      ? C().sort((a, b) => b.lapses * 2 - b.interval - (a.lapses * 2 - a.interval) || (a.due < b.due ? -1 : 1)).slice(0, size)
-      : C().filter((c) => c.due <= n).sort((a, b) => (a.due < b.due ? -1 : 1)).slice(0, size);
+      ? pool.sort((a, b) => b.lapses * 2 - b.interval - (a.lapses * 2 - a.interval) || (a.due < b.due ? -1 : 1)).slice(0, size)
+      : pool.filter((c) => c.due <= n).sort((a, b) => (a.due < b.due ? -1 : 1)).slice(0, size);
     const items = shuffled(cards.map((c) => ({ skill: c.skill, word: getWord(c.word_id) })));
     for (let i = 1; i < items.length; i++) {
       if (items[i].word.id !== items[i - 1].word.id) continue;

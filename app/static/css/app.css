@@ -500,3 +500,9 @@ body::before {
   .screen { margin-left: max(260px, calc(50vw - 320px + 120px)); padding-bottom: 48px; }
   .lesson-body { padding-top: 24px; }
 }
+
+/* text answers in choice exercises (meanings / readings) */
+.choice.text { padding: 16px 10px; min-height: 72px; justify-content: center; }
+.choice .txt { font-size: 17px; font-weight: 800; color: var(--text-strong); line-height: 1.3; }
+.choice .txt.py { font-size: 22px; color: var(--blue); }
+.choice.selected .txt { color: var(--blue-dark); }

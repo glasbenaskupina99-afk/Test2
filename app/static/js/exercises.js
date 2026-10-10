@@ -177,6 +177,78 @@ export function multipleChoice(ctx, word, pool) {
   };
 }
 
+/**
+ * Choice-only exercises (no writing):
+ *   meaning — see the character, pick its meaning
+ *   reading — see the character, pick its pinyin / reading
+ *   listen  — hear the word, pick the character
+ */
+export function choice(ctx, word, pool, kind) {
+  const field = kind === "meaning" ? "english" : kind === "reading" ? "pinyin" : "hanzi";
+  const norm = (v) => String(v || "").toLowerCase().replace(/\s+/g, "");
+  const seen = new Set([norm(word[field])]);
+  const distractors = [];
+  for (const w of shuffle(pool)) {
+    if (distractors.length === 3) break;
+    if (w.id === word.id || seen.has(norm(w[field])) || w.hanzi === word.hanzi) continue;
+    seen.add(norm(w[field]));
+    distractors.push(w);
+  }
+  const options = shuffle([word, ...distractors]);
+  let picked = null;
+  const textual = kind !== "listen";
+  const tiles = options.map((w) => {
+    const t = h(
+      "button",
+      {
+        class: "choice" + (textual ? " text" : ""),
+        onclick: () => {
+          picked = w;
+          tiles.forEach((x) => x.classList.toggle("selected", x === t));
+          if (kind === "listen") speak(sayText(w));
+          ctx.setReady(true);
+        },
+      },
+      textual ? h("span", { class: kind === "reading" ? "txt py" : "txt" }, w[field]) : h("span", { class: "hz" }, w.hanzi)
+    );
+    return t;
+  });
+
+  let prompt;
+  if (kind === "listen") {
+    setTimeout(() => speak(sayText(word)), 350);
+    prompt = [
+      h("div", { class: "ex-kicker blue" }, "👂 Listen"),
+      h("h2", { class: "ex-title" }, "Which character do you hear?"),
+      h("div", { class: "row", style: { justifyContent: "center", margin: "6px 0 20px" } }, speakerBtn(sayText(word)), slowBtn(sayText(word))),
+    ];
+  } else {
+    prompt = [
+      h("div", { class: "ex-kicker" }, kind === "meaning" ? "🧠 Meaning" : `🔤 ${isJa() ? "Reading" : "Pinyin"}`),
+      h("h2", { class: "ex-title" }, kind === "meaning" ? "What does this mean?" : `How is this read?`),
+      h("div", { class: "big-hz hz", style: { margin: "4px 0 18px" } }, word.hanzi),
+    ];
+  }
+  return {
+    el: h("div", {}, ...prompt, h("div", { class: "choices" }, tiles)),
+    mode: "check",
+    async check() {
+      const ok = picked.id === word.id || norm(picked[field]) === norm(word[field]);
+      tiles.forEach((t, i) => {
+        if (options[i] === word) t.classList.add("correct");
+        else if (options[i] === picked && !ok) t.classList.add("wrong");
+      });
+      speak(sayText(word));
+      return {
+        ok,
+        grade: ok ? 2 : 0,
+        title: ok ? "Correct!" : "Correct answer:",
+        detail: solution(word, !ok ? `You picked ${picked.hanzi} = ${picked.english}` : ""),
+      };
+    },
+  };
+}
+
 export function pinyinType(ctx, word) {
   const input = h("input", {
     class: "input",

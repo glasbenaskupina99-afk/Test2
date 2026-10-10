@@ -104,6 +104,9 @@ def home():
     with db() as c:
         act = c.execute("SELECT * FROM activity WHERE day = ?", (today,)).fetchone()
         due = c.execute("SELECT COUNT(*) FROM cards WHERE due <= ?", (now,)).fetchone()[0]
+        due_by_skill = {
+            r["skill"]: r["n"] for r in c.execute("SELECT skill, COUNT(*) AS n FROM cards WHERE due <= ? GROUP BY skill", (now,))
+        }
         learned = c.execute("SELECT COUNT(DISTINCT word_id) FROM cards").fetchone()[0]
         total = c.execute("SELECT COUNT(*) FROM words").fetchone()[0]
         units = rows(
@@ -126,6 +129,7 @@ def home():
         "xp_today": act["xp"] if act else 0,
         "daily_goal": s["daily_goal"],
         "due": due,
+        "due_by_skill": due_by_skill,
         "next_due": next_due,
         "learned": learned,
         "total": total,
@@ -261,20 +265,26 @@ def learn_complete(body: LearnDone):
 
 
 @app.get("/api/review/session")
-def review_session(extra: bool = False):
+def review_session(extra: bool = False, skills: str = ""):
     size = settings.get("review_size")
     now = srs.fmt(srs.now())
+    only = [k for k in skills.split(",") if k in srs.SKILLS] or list(srs.SKILLS)
+    marks = ",".join("?" * len(only))
     with db() as c:
         if extra:
             # Nothing due: practise the weakest cards anyway.
             cards = rows(
                 c.execute(
-                    "SELECT * FROM cards ORDER BY (lapses * 2 - interval) DESC, due LIMIT ?",
-                    (size,),
+                    f"SELECT * FROM cards WHERE skill IN ({marks}) ORDER BY (lapses * 2 - interval) DESC, due LIMIT ?",
+                    (*only, size),
                 )
             )
         else:
-            cards = rows(c.execute("SELECT * FROM cards WHERE due <= ? ORDER BY due LIMIT ?", (now, size)))
+            cards = rows(
+                c.execute(
+                    f"SELECT * FROM cards WHERE due <= ? AND skill IN ({marks}) ORDER BY due LIMIT ?", (now, *only, size)
+                )
+            )
         pool = rows(c.execute("SELECT id, hanzi, pinyin, english FROM words ORDER BY RANDOM() LIMIT 60"))
         learned_pool = rows(
             c.execute(

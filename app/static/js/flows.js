@@ -6,15 +6,55 @@ import { state, T } from "./state.js";
 
 const step = (make, after, key) => ({ make, after, key });
 
+// ------------------------------------------------------------------ study mode picker
+
+/** Ask whether to study with handwriting or with choice-only exercises. Resolves { writing } or null. */
+export function pickStudyMode({ title, writingSub, choiceSub, extraNote = "" }) {
+  return new Promise((resolve) => {
+    let last = "writing";
+    try { last = localStorage.getItem("studyMode") || "writing"; } catch { /* ignore */ }
+    const choose = (mode) => {
+      try { localStorage.setItem("studyMode", mode); } catch { /* ignore */ }
+      bg.remove();
+      resolve({ writing: mode === "writing" });
+    };
+    const option = (mode, emoji, label, sub, cls) =>
+      h(
+        "button",
+        { class: `mode ${cls}`, style: last === mode ? { outline: "4px solid var(--yellow)" } : {}, onclick: () => choose(mode) },
+        h("div", { class: "badge-ico" }, emoji),
+        h("div", {}, h("h3", {}, label), h("p", {}, sub))
+      );
+    const bg = h(
+      "div",
+      { class: "sheet-bg", onclick: (e) => e.target === bg && (bg.remove(), resolve(null)) },
+      h(
+        "div",
+        { class: "sheet" },
+        h("h2", { style: { marginBottom: "14px" } }, title),
+        h(
+          "div",
+          { class: "modes", style: { marginTop: 0 } },
+          option("writing", "✍️", "With writing", writingSub, ""),
+          option("choice", "👆", "Choice only", choiceSub, "blue")
+        ),
+        extraNote ? h("p", { class: "muted small center", style: { marginTop: "14px" } }, extraNote) : null
+      )
+    );
+    document.body.append(bg);
+  });
+}
+
 // ------------------------------------------------------------------ learn new words
 
-export async function learnNew() {
+export async function learnNew({ writing = true } = {}) {
   const { words, pool } = await api("/api/learn/next");
   if (!words.length) {
     toast("You've learned every word in your list! Add more on the Words tab.");
     return null;
   }
   const allPool = [...words, ...pool.filter((p) => !words.some((w) => w.id === p.id))];
+  if (!writing) return learnChoiceOnly(words, allPool);
   const steps = [];
 
   for (const w of words) {
@@ -48,6 +88,50 @@ export async function learnNew() {
   });
 }
 
+/** Learn new words without handwriting: see them, then recognise meaning, reading and sound. */
+function learnChoiceOnly(words, pool) {
+  const steps = [];
+  for (const w of words) {
+    steps.push(step((ctx) => ex.intro(ctx, w)));
+    steps.push(
+      step(
+        (ctx) => ex.choice(ctx, w, pool, "meaning"),
+        async (res) => {
+          await api("/api/learn/complete", { method: "POST", body: { word_ids: [w.id], xp: 3 } });
+          return { xp: 3, requeue: res.ok ? null : step((ctx) => ex.choice(ctx, w, pool, "meaning"), async () => ({ xp: 1 })) };
+        }
+      )
+    );
+  }
+  const finalRound = [];
+  for (const w of words) {
+    for (const make of [
+      (ctx) => ex.multipleChoice(ctx, w, pool),
+      (ctx) => ex.choice(ctx, w, pool, "reading"),
+      (ctx) => ex.choice(ctx, w, pool, "listen"),
+    ]) {
+      finalRound.push(step(make, async (res) => ({ xp: res.ok ? 2 : 1, requeue: res.ok ? null : step(make, async () => ({ xp: 1 })) }), w.id));
+    }
+  }
+  steps.push(...spreadOut(shuffle(finalRound)));
+  return runLesson({
+    steps,
+    endTitle: "New words learned!",
+    onDone: (s) => api("/api/learn/complete", { method: "POST", body: { word_ids: [], xp: Math.max(0, s.xp - 3 * words.length) } }),
+  });
+}
+
+/** Any choice exercise for a word (used by choice-only practice). */
+function randomChoice(w, pool) {
+  const kinds = [
+    (ctx) => ex.multipleChoice(ctx, w, pool),
+    (ctx) => ex.choice(ctx, w, pool, "meaning"),
+    (ctx) => ex.choice(ctx, w, pool, "reading"),
+    (ctx) => ex.choice(ctx, w, pool, "listen"),
+  ];
+  return kinds[Math.floor(Math.random() * kinds.length)];
+}
+
 /** For practice-only steps: give XP and re-queue a mistake at the end of the lesson. */
 function practiceAfter(w, kind, pool) {
   return async (res) => ({
@@ -68,8 +152,13 @@ function spreadOut(steps) {
 
 // ------------------------------------------------------------------ practice old words
 
-export async function review({ extra = false } = {}) {
-  const { items, pool } = await api("/api/review/session" + (extra ? "?extra=1" : ""));
+export async function review({ extra = false, writing = true } = {}) {
+  // Choice-only practice reviews (and reschedules) just the recall cards; writing and
+  // speaking reviews stay due until you practise them for real.
+  const qs = new URLSearchParams();
+  if (extra) qs.set("extra", "1");
+  if (!writing) qs.set("skills", "recall");
+  const { items, pool } = await api("/api/review/session" + (qs.toString() ? `?${qs}` : ""));
   if (!items.length) {
     toast(extra ? "Learn some words first!" : "Nothing due — nice work!");
     return null;
@@ -80,7 +169,8 @@ export async function review({ extra = false } = {}) {
   const steps = items.map((it) => {
     const w = it.word;
     let make;
-    if (it.skill === "write") make = (ctx) => ex.write(ctx, w);
+    if (!writing) make = randomChoice(w, allPool);
+    else if (it.skill === "write") make = (ctx) => ex.write(ctx, w);
     else if (it.skill === "speak") make = (ctx) => ex.speakWord(ctx, w, { showPinyin: false });
     else make = Math.random() < 0.5 ? (ctx) => ex.multipleChoice(ctx, w, allPool) : (ctx) => ex.pinyinType(ctx, w);
 
@@ -89,7 +179,7 @@ export async function review({ extra = false } = {}) {
       let requeue = null;
       if (res.grade === 0) {
         // Practise it again at the end (not graded a second time).
-        requeue = step(it.skill === "write" ? (ctx) => ex.write(ctx, w) : make, async () => ({ xp: 0 }));
+        requeue = step(writing && it.skill === "write" ? (ctx) => ex.write(ctx, w) : make, async () => ({ xp: 0 }));
       }
       return { xp: r.xp, requeue };
     });

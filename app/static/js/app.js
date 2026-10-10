@@ -137,7 +137,15 @@ async function homeScreen() {
 
   const learnCard = h(
     "button",
-    { class: "mode" + (next.words.length ? "" : " done"), onclick: () => next.words.length && startFlow(flows.learnNew) },
+    { class: "mode" + (next.words.length ? "" : " done"), onclick: async () => {
+      if (!next.words.length) return;
+      const m = await flows.pickStudyMode({
+        title: "Learn new words",
+        writingSub: "See, trace and write each word, then a mixed quiz",
+        choiceSub: "See each word, then pick meanings, readings and sounds",
+      });
+      if (m) startFlow(() => flows.learnNew(m));
+    } },
     h("div", { class: "badge-ico" }, "🌱"),
     h(
       "div",
@@ -150,7 +158,17 @@ async function homeScreen() {
   );
   const reviewCard = h(
     "button",
-    { class: "mode blue" + (home.learned ? "" : " done"), onclick: () => home.learned && startFlow(() => flows.review({ extra: home.due === 0 })) },
+    { class: "mode blue" + (home.learned ? "" : " done"), onclick: async () => {
+      if (!home.learned) return;
+      const d = home.due_by_skill || {};
+      const m = await flows.pickStudyMode({
+        title: "Practice",
+        writingSub: home.due ? `All reviews: writing, speaking, recall · ${home.due} due` : "Nothing due — extra writing practice",
+        choiceSub: d.recall ? `Recognise characters & meanings · ${d.recall} due` : "Nothing due — extra recognition practice",
+        extraNote: "Choice-only practice doesn't count as writing practice — writing reviews stay due until you write them.",
+      });
+      if (m) startFlow(() => flows.review({ writing: m.writing, extra: m.writing ? home.due === 0 : !d.recall }));
+    } },
     h("div", { class: "badge-ico" }, "🏋️"),
     h(
       "div",

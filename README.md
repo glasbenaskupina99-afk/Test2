@@ -10,6 +10,7 @@ A Chinese (English → Mandarin) trainer in the style of Duolingo. Run it as an 
 |---|---|
 | 🌱 **Learn new words** | See the word with an animated stroke order, audio, pinyin and an optional AI memory hook → trace it → write it from memory → a mixed quiz (multiple choice, speaking, writing). |
 | 🏋️ **Practice** | Spaced-repetition review. Each word has three cards that are scheduled separately: **writing** (from the English prompt only, with no outline), **speaking** and **recall** (multiple choice or typed pinyin). Mistakes come back at the end of the session. |
+| ✍️ / 👆 **With or without writing** | When you tap Learn new words or Practice, you pick **With writing** (trace and write by hand) or **Choice only**. Choice only is a no-writing mode: choose the character for an English word, pick the meaning of a character, pick its pinyin or reading, or listen and pick the character. Choice-only practice only updates the recall reviews, so writing reviews stay due until you actually write. |
 | 💬 **Sentences** | Gemma writes new sentences using the words you already know, focusing on the ones you get wrong. You can **hand-write** them (characters you haven't learned show a tracing guide), **type** them (Gemma grades your translation, so valid alternative wordings count), or **say** them from memory. 50 built-in sentences are used if AI is off. |
 
 Also included: 153 HSK 1 words in 10 themed units, adding your own words (Gemma can fill in the characters and meaning), streaks, a daily XP goal, stats, the "trickiest words" list, and dark mode.

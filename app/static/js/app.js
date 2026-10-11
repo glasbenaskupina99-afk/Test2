@@ -356,14 +356,21 @@ function wordSheet(w) {
 
 let wordFilter = "all";
 let wordSearch = "";
+let wordSection = "all"; // level: "all" or a section name such as "JLPT N3"
 
 async function wordsScreen() {
   shell(loading(), "#/words");
   const words = await api("/api/words");
   const list = h("div", { class: "list" });
+  const count = h("p", { class: "muted small" });
+  // Levels present in this course, in path order (JLPT N5, JLPT N3, My words…)
+  const sections = [...new Set(words.map((w) => w.section).filter(Boolean))];
+  if (!sections.includes(wordSection)) wordSection = "all";
   const render = () => {
     const q = wordSearch.toLowerCase();
-    const shown = words.filter((w) => {
+    const inLevel = words.filter((w) => wordSection === "all" || w.section === wordSection);
+    count.textContent = `${inLevel.filter((w) => w.cards).length} of ${inLevel.length} learned${wordSection === "all" ? "" : ` in ${wordSection}`}`;
+    const shown = inLevel.filter((w) => {
       if (wordFilter === "learned" && !w.cards) return false;
       if (wordFilter === "new" && w.cards) return false;
       if (wordFilter === "weak" && !(w.lapses > 0)) return false;
@@ -395,13 +402,18 @@ async function wordsScreen() {
   const fbtns = filters.map(([k, label]) =>
     h("button", { class: k === wordFilter ? "on" : "", onclick: () => { wordFilter = k; fbtns.forEach((b, i) => b.classList.toggle("on", filters[i][0] === k)); render(); } }, label)
   );
+  const levels = [["all", "All levels"], ...sections.map((x) => [x, x])];
+  const lbtns = levels.map(([k, label]) =>
+    h("button", { class: k === wordSection ? "on" : "", onclick: () => { wordSection = k; lbtns.forEach((b, i) => b.classList.toggle("on", levels[i][0] === k)); render(); } }, label)
+  );
   render();
   shell(
     [
       h("div", { class: "topbar" }, h("h2", {}, "Words"), h("button", { class: "btn small", onclick: addWordSheet }, "+ Add word")),
       h("input", { class: "input search", placeholder: isJa() ? "Search 漢字, reading or English" : "Search 汉字, pinyin or English", value: wordSearch, oninput: (e) => { wordSearch = e.target.value; render(); } }),
+      sections.length > 1 ? h("div", { class: "section-pick level-filter", role: "group", "aria-label": "Level" }, lbtns) : null,
       h("div", { class: "filter-row" }, fbtns),
-      h("p", { class: "muted small" }, `${words.filter((w) => w.cards).length} of ${words.length} learned`),
+      count,
       list,
     ],
     "#/words"
@@ -795,6 +807,63 @@ async function settingsScreen() {
 
 // ------------------------------------------------------------------ boot
 
+// ------------------------------------------------------------------ welcome (first start)
+
+function welcomeScreen() {
+  return new Promise((resolve) => {
+    let chosen = state.settings.course === "ja" ? "ja" : "zh";
+    const name = h("input", {
+      class: "input",
+      placeholder: "Your name",
+      maxlength: "30",
+      autocomplete: "given-name",
+      "aria-label": "Your name",
+      oninput: () => (go.disabled = !name.value.trim()),
+      onkeydown: (e) => e.key === "Enter" && name.value.trim() && go.click(),
+    });
+    const courseBtns = Object.entries(COURSES).map(([lang, info]) => {
+      const b = h(
+        "button",
+        {
+          class: "welcome-course" + (lang === chosen ? " on" : ""),
+          onclick: () => { chosen = lang; courseBtns.forEach((x) => x.classList.toggle("on", x === b)); },
+        },
+        h("span", { class: "flag" }, info.flag),
+        h("span", {}, h("b", {}, info.name, " ", h("span", { class: "hz" }, info.script)), h("small", {}, info.sub))
+      );
+      return b;
+    });
+    const go = h(
+      "button",
+      {
+        class: "btn",
+        disabled: true,
+        onclick: async () => {
+          state.settings = await api("/api/settings", { method: "PUT", body: { display_name: name.value.trim(), course: chosen } });
+          applyCourse();
+          resolve();
+        },
+      },
+      "Start learning"
+    );
+    app.replaceChildren(
+      h(
+        "div",
+        { class: "welcome" },
+        h("div", { class: "journey-avatar welcome-avatar", html: SVG.leaf }),
+        h("h1", {}, "Welcome to Language Master"),
+        h("p", { class: "muted" }, "Learn to write, read and say Chinese and Japanese characters — without wasting paper."),
+        h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),
+        h("div", { class: "small muted", style: { alignSelf: "flex-start", margin: "6px 0 8px" } }, "What do you want to learn?"),
+        h("div", { class: "welcome-courses" }, courseBtns),
+        h("div", { style: { width: "100%", marginTop: "18px" } }, go),
+        h("p", { class: "muted small" }, "Everything stays on this device. You can change this later in Settings.")
+      )
+    );
+    setTimeout(() => name.focus(), 200);
+  });
+}
+
 (async function boot() {
   try {
     state.settings = await api("/api/settings");
@@ -803,6 +872,8 @@ async function settingsScreen() {
     app.replaceChildren(h("div", { class: "empty" }, h("div", { class: "e" }, "🔌"), h("h2", {}, "Can't reach the server"), h("p", {}, e.message)));
     return;
   }
+  // First start: ask for the learner's name (shown on "My journey").
+  if ("display_name" in state.settings && !String(state.settings.display_name || "").trim()) await welcomeScreen();
   route();
   api("/api/ai/status")
     .then((st) => {

@@ -671,3 +671,28 @@ body::before {
 .achv.locked { opacity: .5; }
 .achv b { display: block; color: var(--text-strong); font-size: 16px; }
 .achv span { font-size: 13px; color: var(--muted); }
+
+/* Level filter on the Words screen */
+.level-filter { margin: 0 0 10px; }
+.level-filter button { min-width: 0; padding: 8px 14px 10px; }
+.level-filter button i { display: none; }
+
+/* Welcome (first start) */
+.welcome {
+  min-height: 100vh; box-sizing: border-box; max-width: 460px; margin: 0 auto;
+  padding: 48px 24px calc(32px + var(--safe-bottom));
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center;
+}
+.welcome h1 { font-size: 28px; line-height: 1.2; }
+.welcome p { margin: 0; }
+.welcome-avatar { width: 96px; height: 96px; margin-bottom: 8px; }
+.welcome-avatar svg { width: 56px; height: 56px; }
+.welcome-courses { display: grid; gap: 10px; width: 100%; }
+.welcome-course {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; cursor: pointer; text-align: left;
+  border: 2px solid var(--border); background: var(--surface); color: var(--text);
+}
+.welcome-course .flag { font-size: 30px; }
+.welcome-course b { display: block; font-size: 17px; color: var(--text-strong); }
+.welcome-course small { color: var(--muted); font-size: 13px; }
+.welcome-course.on { border-color: #8fb0c8; background: var(--blue-light); }

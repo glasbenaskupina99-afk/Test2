@@ -174,7 +174,7 @@ async function homeScreen() {
       "div",
       {},
       h("h3", {}, "Practice"),
-      h("p", {}, !home.learned ? "Learn a few words first" : home.due ? "Words ready for review" : `All caught up! ${nextDueText(home.next_due)} Tap for extra practice`)
+      h("p", {}, !home.learned ? "Learn a few words first" : home.due ? (home.sections?.length > 1 ? `${home.section} words ready for review` : "Words ready for review") : `All caught up${home.sections?.length > 1 ? ` in ${home.section}` : ""}! ${nextDueText(home.next_due)} Tap for extra practice`)
     ),
     home.due ? h("div", { class: "count" }, home.due) : null
   );

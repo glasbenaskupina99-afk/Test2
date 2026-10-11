@@ -182,6 +182,13 @@ const C = () => {
   const ids = new Set(W().map((w) => w.id));
   return db.cards.filter((c) => ids.has(c.word_id));
 };
+/** Cards of the selected level only (e.g. JLPT N3), so Practice doesn't repeat another level. */
+const SC = () => {
+  const secs = sections();
+  if (secs.list.length < 2) return C();
+  const ids = new Set(W().filter((w) => w.section === secs.current).map((w) => w.id));
+  return db.cards.filter((c) => ids.has(c.word_id));
+};
 const wordById = (id) => db.words.find((w) => w.id === id);
 const cardsOf = (id) => db.cards.filter((c) => c.word_id === id);
 const learnedIds = () => new Set(C().map((c) => c.word_id));
@@ -278,7 +285,7 @@ const routes = {
     const weekStart = new Date();
     weekStart.setDate(weekStart.getDate() - 6);
     const ws = dayKey(weekStart);
-    const cards = C();
+    const cards = SC();
     const future = cards.filter((c) => c.due > n).map((c) => c.due).sort();
     const courses = ["zh", "ja"].map((lang) => {
       const ws = db.words.filter((w) => w.lang === lang);
@@ -393,7 +400,7 @@ const routes = {
     const size = settingsAll().review_size;
     const n = fmt(now());
     const only = (query.get("skills") || "").split(",").filter(Boolean);
-    const pool = only.length ? C().filter((c) => only.includes(c.skill)) : C();
+    const pool = only.length ? SC().filter((c) => only.includes(c.skill)) : SC();
     const cards = query.get("extra")
       ? pool.sort((a, b) => b.lapses * 2 - b.interval - (a.lapses * 2 - a.interval) || (a.due < b.due ? -1 : 1)).slice(0, size)
       : pool.filter((c) => c.due <= n).sort((a, b) => (a.due < b.due ? -1 : 1)).slice(0, size);

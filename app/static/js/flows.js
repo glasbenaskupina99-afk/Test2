@@ -160,7 +160,7 @@ export async function review({ extra = false, writing = true } = {}) {
   if (!writing) qs.set("skills", "recall");
   const { items, pool } = await api("/api/review/session" + (qs.toString() ? `?${qs}` : ""));
   if (!items.length) {
-    toast(extra ? "Learn some words first!" : "Nothing due — nice work!");
+    toast(extra ? "No learned words at this level yet — learn some first!" : "Nothing due — nice work!");
     return null;
   }
   const words = items.map((i) => i.word);

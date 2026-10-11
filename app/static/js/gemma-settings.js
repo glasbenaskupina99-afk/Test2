@@ -1,13 +1,13 @@
 // Settings card for running Gemma on the phone (Android app only).
 import { api, h, toast, confirmDialog } from "./util.js";
 import { state } from "./state.js";
+import { hfToken, pickFile } from "./gemma-setup.js";
 
 const REPOS = [
   ["litert-community/gemma-4-E2B-it-litert-lm", "Gemma 4 E2B — recommended (~2.6 GB, phones with 6 GB+ RAM)"],
   ["litert-community/gemma-4-E4B-it-litert-lm", "Gemma 4 E4B — smarter, slower (~3.7 GB, 8 GB+ RAM)"],
   ["custom", "Other Hugging Face repo…"],
 ];
-const SKIP = /npu|qualcomm|qnn|mediatek|mtk|sm8\d|intel|tpu|web|ios|apple/i;
 
 const mb = (b) => (b >= 1e9 ? `${(b / 1e9).toFixed(2)} GB` : `${Math.round(b / 1e6)} MB`);
 
@@ -44,8 +44,11 @@ export function gemmaCard(s, fields, save) {
   const downloadBtn = h("button", { class: "btn", disabled: true, onclick: () => startDownload() }, "Download");
   const cancelBtn = h("button", { class: "btn ghost", hidden: true, onclick: () => G.cancelDownload() }, "Cancel");
 
+  const easySetup = h("a", { class: "btn", href: "#/gemma", hidden: true, style: { margin: "12px 0 4px", textDecoration: "none" } }, "🌱 Easy setup");
+
   async function refresh() {
     const st = await G.status();
+    easySetup.hidden = st.hasModel || st.downloading;
     statusEl.replaceChildren(
       ...[
       h("span", { class: "status-dot" + (st.hasModel ? " ok" : "") }),
@@ -81,10 +84,10 @@ export function gemmaCard(s, fields, save) {
     if (!repo()) return toast("Enter a repository");
     files.replaceChildren(h("div", { class: "muted small" }, "Looking…"));
     try {
-      const r = await G.listRemote({ repo: repo(), token: token.value });
+      const r = await G.listRemote({ repo: repo(), token: await hfToken(token.value) });
       if (!r.files.length) return files.replaceChildren(h("div", { class: "muted small" }, "No .litertlm files in that repository."));
-      const sorted = r.files.slice().sort((a, b) => SKIP.test(a.path) - SKIP.test(b.path) || a.size - b.size);
-      chosen = sorted[0];
+      chosen = pickFile(r.files);
+      const sorted = [chosen, ...r.files.filter((f) => f !== chosen)];
       files.replaceChildren(
         ...sorted.map((f) => {
           const radio = h("input", { type: "radio", name: "gemmafile", checked: f === chosen, onchange: () => { chosen = f; } });
@@ -103,7 +106,7 @@ export function gemmaCard(s, fields, save) {
     await save(true);
     showProgress(true, "Starting…");
     try {
-      await G.download({ repo: repo(), file: chosen.path, token: token.value });
+      await G.download({ repo: repo(), file: chosen.path, token: await hfToken(token.value) });
       toast("Model downloaded ✓");
     } catch (e) {
       toast(e.message, 5000);
@@ -143,6 +146,7 @@ export function gemmaCard(s, fields, save) {
   card.append(
     h("div", { class: "switch-row" }, h("div", {}, "Use AI", h("div", { class: "small muted" }, "Sentences, translation grading, memory hooks")), aiToggle),
     statusEl,
+    easySetup,
     h("h3", { style: { margin: "16px 0 8px", fontSize: "17px" } }, "Get the model"),
     h("p", { class: "small muted", style: { marginTop: 0 } }, "Downloads once (over Wi-Fi or mobile data — check your data plan, it's a few GB), then runs offline. Keep the app open while it downloads; if it stops, tap Download again to resume."),
     h("div", { class: "field" }, h("label", {}, "Model"), repoSel, repoCustom),

@@ -34,6 +34,7 @@ const DEFAULTS = {
   ai_enabled: true,
   gemma_backend: "cpu",
   display_name: "",
+  gemma_card_hidden: false, // "Add your AI tutor" card on the home screen dismissed
   gemma_preload: true, // load the model in the background when the app starts
   // Browser version: Gemma through an OpenAI-compatible server (e.g. Ollama on this computer).
   llm_base_url: "http://localhost:11434/v1",
@@ -526,6 +527,9 @@ const routes = {
     settingsUpdate(body);
     return routes["GET /api/settings"]();
   },
+
+  // The settings screen only sees a masked token; the model download needs the real one.
+  "GET /api/gemma/token": () => ({ token: db.settings.hf_token || "" }),
 
   "GET /api/ai/status": () => ai.status(),
   "POST /api/ai/test": () => ai.test(),

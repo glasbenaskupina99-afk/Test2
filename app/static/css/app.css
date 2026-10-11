@@ -730,3 +730,42 @@ body::before {
 :root[data-course="sl"] .mode .preview { font-family: var(--font); letter-spacing: 0; font-size: 16px; }
 :root[data-course="sl"] .list-item .hz { font-size: 20px; min-width: 110px; }
 :root[data-course="sl"] .sentence-hz { font-family: var(--font); font-size: 28px; letter-spacing: 0; }
+
+/* Guided Gemma setup (first start + "Add your AI tutor") */
+.gsetup { gap: 14px; }
+.gsetup-step { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); font-weight: 700; }
+.gsetup-step i { width: 22px; height: 6px; border-radius: 99px; background: var(--border); }
+.gsetup-step i.on { background: var(--accent, var(--green)); }
+.gsetup-avatar { font-size: 44px; display: grid; place-items: center; }
+.gsetup-avatar.ok { color: var(--green); font-weight: 900; }
+.gsetup-feats { display: grid; gap: 8px; width: 100%; text-align: left; }
+.gsetup-feat { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; background: var(--surface); border: 2px solid var(--border); }
+.gsetup-feat .e { font-size: 22px; }
+.gsetup-feat b { display: block; color: var(--text-strong); font-size: 15px; }
+.gsetup-feat small { color: var(--muted); font-size: 13px; }
+.gsetup-opt { padding: 12px 14px; }
+.gsetup-opt .radio { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-dark, var(--border)); }
+.gsetup-opt.on .radio { border: 6px solid var(--blue); }
+.gsetup-info { color: var(--muted); }
+.gsetup-info.warn { color: var(--red); font-weight: 700; }
+.gsetup-ring {
+  --p: 0; width: 140px; height: 140px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 6px;
+  background: conic-gradient(var(--accent, var(--green)) calc(var(--p) * 1%), var(--surface-2, var(--border)) 0);
+}
+.gsetup-ring span {
+  width: 112px; height: 112px; border-radius: 50%; background: var(--bg); display: grid; place-items: center;
+  font-size: 30px; font-weight: 900; color: var(--text-strong);
+}
+.gsetup-tip { text-align: left; font-size: 14px; line-height: 1.45; margin: 4px 0; }
+.ai-invite { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); border-style: dashed; }
+.ai-invite h3 { margin: 0 0 2px; font-size: 16px; color: var(--text-strong); }
+.ai-invite p { margin: 0; }
+.ai-invite-ico { font-size: 28px; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--green-light); flex: none; }
+.dl-pill {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(76px + var(--safe-bottom)); z-index: 12;
+  display: flex; align-items: center; gap: 8px; padding: 9px 16px 11px; border-radius: 99px; overflow: hidden;
+  background: var(--surface); border: 2px solid var(--border); color: var(--text-strong); font-size: 13px; font-weight: 700;
+  text-decoration: none; box-shadow: 0 6px 18px rgba(0, 0, 0, .3); white-space: nowrap; max-width: calc(100% - 32px);
+}
+.dl-pill i { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--accent, var(--green)); transition: width .3s; }
+.dl-pill.err { border-color: var(--red); }

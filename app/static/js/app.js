@@ -3,6 +3,7 @@ import { state, T, isJa, isSl, sayText, applyCourse } from "./state.js";
 import { speak, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
+import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
 import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 
@@ -53,6 +54,11 @@ async function route() {
     if (hash.startsWith("#/words")) return await wordsScreen();
     if (hash.startsWith("#/stats")) return await statsScreen();
     if (hash.startsWith("#/settings")) return await settingsScreen();
+    if (hash.startsWith("#/gemma")) {
+      await gemmaSetupScreen();
+      location.hash = "#/";
+      return;
+    }
     return await homeScreen();
   } catch (e) {
     shell(h("div", { class: "empty" }, h("div", { class: "e" }, "😵"), h("h2", {}, "Something went wrong"), h("p", { class: "muted" }, e.message)), hash);
@@ -232,6 +238,7 @@ async function homeScreen() {
           h("div", { class: "progress yellow", style: { marginTop: "8px" } }, h("i", { style: { width: goalPct + "%" } }))
         )
       ),
+      aiInviteCard(),
       h("div", { class: "modes" }, learnCard, reviewCard, sentenceCard),
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week),
@@ -241,6 +248,34 @@ async function homeScreen() {
     ],
     "#/"
   );
+}
+
+/** Home card inviting learners without a model to download Gemma (Android app only). */
+function aiInviteCard() {
+  if (!hasGemmaSupport() || state.settings.gemma_card_hidden || gemmaDl.state === "downloading") return null;
+  const slot = h("div");
+  window.__native.gemma.status().then((st) => {
+    if (st.hasModel || st.downloading) return;
+    slot.replaceWith(
+      h(
+        "a",
+        { class: "card ai-invite", href: "#/gemma" },
+        h("div", { class: "ai-invite-ico" }, "🌱"),
+        h("div", { style: { flex: 1 } }, h("h3", {}, "Add your AI tutor"), h("p", { class: "muted small" }, "AI sentences, grading & memory hooks. Free, private, offline.")),
+        h("button", {
+          class: "icon-btn",
+          "aria-label": "Hide",
+          onclick: async (e) => {
+            e.preventDefault();
+            e.currentTarget.closest(".ai-invite").remove();
+            state.settings = await api("/api/settings", { method: "PUT", body: { gemma_card_hidden: true } });
+            toast("You can add Gemma anytime in Settings");
+          },
+        }, "✕")
+      )
+    );
+  }).catch(() => {});
+  return slot;
 }
 
 function nextDueText(nextDue) {
@@ -813,7 +848,7 @@ async function settingsScreen() {
 
 // ------------------------------------------------------------------ welcome (first start)
 
-function welcomeScreen() {
+function welcomeScreen(gemmaNext) {
   return new Promise((resolve) => {
     let chosen = state.settings.course === "ja" ? "ja" : "zh";
     const name = h("input", {
@@ -848,12 +883,13 @@ function welcomeScreen() {
           resolve();
         },
       },
-      "Start learning"
+      gemmaNext ? "Continue" : "Start learning"
     );
     app.replaceChildren(
       h(
         "div",
         { class: "welcome" },
+        gemmaNext ? h("div", { class: "gsetup-step" }, h("i", { class: "on" }), h("i"), "Step 1 of 2") : null,
         h("div", { class: "journey-avatar welcome-avatar", html: SVG.leaf }),
         h("h1", {}, "Welcome to Language Master"),
         h("p", { class: "muted" }, "Learn a new language — write, read and speak it, without wasting paper."),
@@ -877,7 +913,12 @@ function welcomeScreen() {
     return;
   }
   // First start: ask for the learner's name (shown on "My journey").
-  if ("display_name" in state.settings && !String(state.settings.display_name || "").trim()) await welcomeScreen();
+  if ("display_name" in state.settings && !String(state.settings.display_name || "").trim()) {
+    // Android app: step 2 sets up the on-device AI right away (skippable).
+    const offerGemma = hasGemmaSupport() && !(await window.__native.gemma.status().catch(() => ({}))).hasModel;
+    await welcomeScreen(offerGemma);
+    if (offerGemma) await gemmaSetupScreen({ step: "2 of 2" });
+  }
   route();
   api("/api/ai/status")
     .then((st) => {

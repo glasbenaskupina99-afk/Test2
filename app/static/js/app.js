@@ -8,6 +8,8 @@ import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 
 const app = document.getElementById("app");
+// The app build serves static files from its root; the Python server under /static/.
+const LOGO = `${window.__localApi ? "" : "/static/"}icons/logo.png`;
 const UNIT_COLORS = ["#6f8f6c", "#557389", "#a9643f", "#8a6d3b", "#6b5b7b", "#3f7065", "#9a5a55", "#5c6e3a", "#7a6a55", "#4f5f7a"];
 
 // ------------------------------------------------------------------ theme
@@ -838,7 +840,8 @@ async function settingsScreen() {
       window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup") : null,
       window.__localApi ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),
-      h("p", { class: "muted small center", style: { marginTop: "24px" } }, `${window.__appVersion ? `Language Master ${window.__appVersion} · ` : ""}Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
+      h("img", { class: "app-logo settings-logo", src: LOGO, alt: "" }),
+      h("p", { class: "muted small center", style: { marginTop: "4px" } }, `${window.__appVersion ? `Language Master ${window.__appVersion} · ` : ""}Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
     ],
     "#/settings"
   );
@@ -890,7 +893,7 @@ function welcomeScreen(gemmaNext) {
         "div",
         { class: "welcome" },
         gemmaNext ? h("div", { class: "gsetup-step" }, h("i", { class: "on" }), h("i"), "Step 1 of 2") : null,
-        h("div", { class: "journey-avatar welcome-avatar", html: SVG.leaf }),
+        h("img", { class: "app-logo welcome-logo", src: LOGO, alt: "" }),
         h("h1", {}, "Welcome to Language Master"),
         h("p", { class: "muted" }, "Learn a new language — write, read and speak it, without wasting paper."),
         h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),

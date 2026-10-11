@@ -769,3 +769,8 @@ body::before {
 }
 .dl-pill i { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--accent, var(--green)); transition: width .3s; }
 .dl-pill.err { border-color: var(--red); }
+
+/* App logo (leaf with four scripts) */
+.app-logo { display: block; object-fit: contain; pointer-events: none; user-select: none; }
+.welcome-logo { width: 150px; height: 150px; margin: -8px 0 -4px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35)); }
+.settings-logo { width: 64px; height: 64px; margin: 28px auto 0; opacity: .9; }

@@ -29,6 +29,7 @@ const DEFAULTS = {
   section_ja: "",
   ai_enabled: true,
   gemma_backend: "cpu",
+  gemma_preload: true, // load the model in the background when the app starts
   // Browser version: Gemma through an OpenAI-compatible server (e.g. Ollama on this computer).
   llm_base_url: "http://localhost:11434/v1",
   llm_model: "gemma4:e4b",
@@ -357,7 +358,9 @@ const routes = {
   "GET /api/words/:id/extras": async ({ id }, _, query) => {
     const w = wordById(Number(id));
     if (!w) throw new HttpError(404, "word not found");
-    if (w.extras && !query.get("refresh")) return w.extras;
+    // Older versions sometimes saved hooks written in Chinese/Japanese: regenerate those.
+    const readable = (x) => x && ai.EXTRAS_ENGLISH.every((k) => !x[k] || ai.isEnglish(x[k]));
+    if (w.extras && readable(w.extras) && !query.get("refresh")) return w.extras;
     const d = await ai.wordExtras(w);
     if (d.example_zh && course() === "zh") d.example_pinyin = toPinyin(d.example_zh);
     w.extras = d;

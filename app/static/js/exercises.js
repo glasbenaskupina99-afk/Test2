@@ -42,7 +42,7 @@ export function intro(ctx, word) {
         h(
           "div",
           { class: "ai-box" },
-          x.mnemonic ? h("div", {}, h("b", {}, "Memory hook: "), x.mnemonic) : null,
+          x.mnemonic ? h("div", {}, h("b", {}, "Memory hook: "), x.mnemonic) : h("div", { class: "small muted" }, "No English memory hook this time — tap “New memory hook” to try again."),
           x.components ? h("div", { style: { marginTop: "6px" } }, h("b", {}, "Parts: "), x.components) : null,
           x.example_zh
             ? h(
@@ -51,11 +51,14 @@ export function intro(ctx, word) {
                 speakerBtn(x.example_zh, "speaker sm"),
                 h("div", {}, h("div", { class: "hz" }, x.example_zh), h("div", { class: "small muted" }, x.example_pinyin || ""), h("div", { class: "small" }, x.example_en))
               )
-            : null
+            : null,
+          h("button", { class: "reveal", style: { marginTop: "10px" }, onclick: () => loadAI(true) }, "↻ New memory hook")
         )
       );
     } catch (e) {
-      ai.replaceChildren(h("div", { class: "ai-box" }, "AI hints unavailable: ", e.message));
+      ai.replaceChildren(
+        h("div", { class: "ai-box" }, "AI hints unavailable: ", e.message, " ", h("button", { class: "reveal", onclick: () => loadAI(true) }, "Try again"))
+      );
     }
   };
   const aiOn = state.settings?.ai_enabled;

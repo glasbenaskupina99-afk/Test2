@@ -661,7 +661,7 @@ async function settingsScreen() {
       window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup") : null,
       window.__localApi ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),
-      h("p", { class: "muted small center", style: { marginTop: "24px" } }, `Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
+      h("p", { class: "muted small center", style: { marginTop: "24px" } }, `${window.__appVersion ? `Language Master ${window.__appVersion} · ` : ""}Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
     ],
     "#/settings"
   );

@@ -23,6 +23,7 @@ const storage = isNative
     };
 
 // Chinese and Japanese stroke orders differ, so each course has its own stroke data.
+window.__appVersion = __APP_VERSION__;
 window.__charDataUrl = (c) => `${window.__course === "ja" ? "chars-ja" : "chars"}/${encodeURIComponent(c)}.json`;
 
 function recognize(language = "zh-CN") {
@@ -65,4 +66,19 @@ if (!isNative && "serviceWorker" in navigator && location.protocol === "https:")
 
 await backend.init(storage);
 window.__localApi = backend.handle;
+
+// Load Gemma in the background shortly after start, so the first AI answer doesn't
+// have to wait for the model to load (can be turned off in Settings).
+if (isNative) {
+  setTimeout(async () => {
+    try {
+      const s = await backend.handle("/api/settings");
+      if (!s.ai_enabled || !s.gemma_preload) return;
+      const st = await Gemma.status();
+      if (st.hasModel && !st.loaded && !st.loading) await Gemma.load({ backend: s.gemma_backend || "cpu" });
+    } catch (e) {
+      console.warn("Gemma preload failed", e);
+    }
+  }, 4000);
+}
 await import("../../app/static/js/app.js");

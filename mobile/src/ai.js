@@ -2,14 +2,28 @@
 import { hanziOnly } from "./pinyin.js";
 import { normKana, writable } from "./japanese.js";
 
+const ENGLISH_RULE =
+  "The student only reads English: write every explanation, memory hook, breakdown, translation and piece of feedback " +
+  "in ENGLISH. Use the target language only inside example sentences and when quoting the word or its parts.";
 const SYSTEMS = {
   zh:
     "You are a patient Mandarin Chinese tutor for an English-speaking beginner. " +
-    "Use Simplified Chinese characters. Always answer with a single JSON object and nothing else.",
+    "Chinese text uses Simplified characters. " + ENGLISH_RULE + " Always answer with a single JSON object and nothing else.",
   ja:
-    "You are a patient Japanese tutor for an English-speaking beginner. Use standard Japanese " +
-    "(kanji with hiragana, polite です/ます style). Always answer with a single JSON object and nothing else.",
+    "You are a patient Japanese tutor for an English-speaking beginner. Japanese text uses standard " +
+    "kanji with hiragana, polite です/ます style. " + ENGLISH_RULE + " Always answer with a single JSON object and nothing else.",
 };
+
+/**
+ * True when text is (mostly) English. Quoted characters such as 亻 or 学 are fine,
+ * but an explanation written in Chinese/Japanese is not.
+ */
+export function isEnglish(text) {
+  const t = String(text || "");
+  const latin = (t.match(/[A-Za-z]/g) || []).length;
+  const cjk = (t.match(/[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff]/g) || []).length;
+  return latin >= 2 && latin >= cjk * 3;
+}
 
 export class AIError extends Error {
   constructor(msg) {
@@ -192,36 +206,54 @@ wordings are correct. Ignore punctuation and spacing. Be encouraging but honest.
 Return JSON: {"correct": true/false, "score": 0-100, "feedback": "one or two short sentences in English",
 "corrected": "the best correct ${target} version closest to the student's answer"}`;
   const d = await chat(prompt, { temperature: 0.2 });
-  return { correct: !!d.correct, score: Number(d.score) || 0, feedback: String(d.feedback || ""), corrected: String(d.corrected || reference) };
+  const feedback = String(d.feedback || "");
+  return {
+    correct: !!d.correct,
+    score: Number(d.score) || 0,
+    feedback: isEnglish(feedback) ? feedback : d.correct ? "Correct!" : "Not quite — compare with the corrected version.",
+    corrected: String(d.corrected || reference),
+  };
 }
 
+// Fields of a memory hook that must be written in English.
+export const EXTRAS_ENGLISH = ["mnemonic", "components", "example_en"];
+
 export async function wordExtras(word) {
-  if (lang() === "ja") {
-    const prompt = `Help me remember the Japanese word ${word.hanzi} (read ${word.pinyin}) meaning "${word.english}".
+  const ja = lang() === "ja";
+  const langName = ja ? "Japanese" : "Chinese";
+  const example = ja
+    ? `{"example_zh": "毎日学校へ行きます。", "example_pinyin": "まいにちがっこうへいきます", "example_en": "I go to school every day.",
+ "mnemonic": "A child (子) under a roof full of sparks of knowledge is learning.",
+ "components": "⺍ sparks + 冖 roof + 子 child"}  (example for 学, "to study")`
+    : `{"example_zh": "我在学校学习汉语。", "example_en": "I study Chinese at school.",
+ "mnemonic": "A child (子) under a roof full of sparks of knowledge is learning.",
+ "components": "⺍ sparks + 冖 roof + 子 child"}  (example for 学, "to study")`;
+  const base = `Help an English-speaking beginner remember the ${langName} word ${word.hanzi} (${word.pinyin}) meaning "${word.english}".
 
-Return JSON: {
- "example_zh": "a short, simple polite example sentence using it (kanji and kana)",
- "example_pinyin": "that sentence in hiragana",
- "example_en": "its English translation",
- "mnemonic": "a vivid one-sentence memory hook linking the shape/parts of the kanji to the meaning",
- "components": "brief breakdown of the kanji's parts/radicals (one line)"
-}`;
-    const d = await chat(prompt, { temperature: 0.6 });
-    const out = {};
-    for (const k of ["example_zh", "example_pinyin", "example_en", "mnemonic", "components"]) out[k] = String(d[k] || "");
-    return out;
+Return JSON with these fields:
+ "example_zh": a short, simple ${ja ? "polite Japanese sentence (kanji and kana)" : "Chinese sentence (simplified characters)"} that uses the word
+${ja ? ' "example_pinyin": that sentence written in hiragana only\n' : ""} "example_en": the English translation of that sentence
+ "mnemonic": ONE vivid sentence IN ENGLISH linking the shape or parts of the character(s) to the meaning
+ "components": a short breakdown IN ENGLISH of the parts/radicals, e.g. "亻 person + 尔 you"
+
+"mnemonic", "components" and "example_en" MUST be written in English (characters may only be quoted).
+Format example: ${example}`;
+
+  const keys = ["example_zh", ...(ja ? ["example_pinyin"] : []), "example_en", "mnemonic", "components"];
+  const clean = (d) => Object.fromEntries(keys.map((k) => [k, String((d && d[k]) || "").trim()]));
+  const badFields = (o) => EXTRAS_ENGLISH.filter((k) => o[k] && !isEnglish(o[k]));
+
+  let out = clean(await chat(base, { temperature: 0.5 }));
+  if (badFields(out).length) {
+    // Small models sometimes slip into the target language: ask again, firmly.
+    const retry = clean(
+      await chat(`${base}\n\nYour previous answer explained things in ${langName}. Write "mnemonic", "components" and "example_en" in plain English this time.`, { temperature: 0.2 })
+    );
+    for (const k of keys) if (retry[k] && (!EXTRAS_ENGLISH.includes(k) || isEnglish(retry[k]))) out[k] = retry[k];
   }
-  const prompt = `Help me remember the Chinese word ${word.hanzi} (${word.pinyin}) meaning "${word.english}".
-
-Return JSON: {
- "example_zh": "a short, simple example sentence using it (simplified characters)",
- "example_en": "its English translation",
- "mnemonic": "a vivid one-sentence memory hook linking the shape/components of the character(s) to the meaning",
- "components": "brief breakdown of the character components/radicals (one line)"
-}`;
-  const d = await chat(prompt, { temperature: 0.6 });
-  const out = {};
-  for (const k of ["example_zh", "example_en", "mnemonic", "components"]) out[k] = String(d[k] || "");
+  // Never show an explanation the student can't read.
+  for (const k of badFields(out)) out[k] = "";
+  if (!out.mnemonic && !out.example_zh) throw new AIError("Gemma didn't manage an English memory hook — try again");
   return out;
 }
 

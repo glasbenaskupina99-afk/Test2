@@ -33,6 +33,10 @@ export function gemmaCard(s, fields, save) {
   const token = h("input", { class: "input", type: "password", placeholder: "only if the download says access denied", value: s.hf_token || "" });
   fields.hf_token = token;
 
+  const preload = h("input", { type: "checkbox", class: "toggle" });
+  preload.checked = s.gemma_preload !== false;
+  fields.gemma_preload = { get value() { return preload.checked; } };
+
   const backend = h("select", {}, [["cpu", "CPU — works on every phone"], ["gpu", "GPU — faster, may crash on phones under 12 GB RAM"]].map(([v, l]) => h("option", { value: v, selected: s.gemma_backend === v }, l)));
   fields.gemma_backend = backend;
 
@@ -150,6 +154,7 @@ export function gemmaCard(s, fields, save) {
     h("button", { class: "btn flat", onclick: importFile }, "…or import a .litertlm file from this phone"),
     h("h3", { style: { margin: "16px 0 8px", fontSize: "17px" } }, "Run it"),
     h("div", { class: "field" }, h("label", {}, "Processor"), backend),
+    h("div", { class: "switch-row" }, h("div", {}, "Load at startup", h("div", { class: "small muted" }, "Gemma loads in the background so the first answer is quick (uses memory)")), preload),
     h(
       "div",
       { class: "row" },

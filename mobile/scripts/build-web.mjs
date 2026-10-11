@@ -110,6 +110,9 @@ await build({
   outfile: join(www, "app.js"),
   loader: { ".json": "json" },
   logLevel: "warning",
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.APP_VERSION ? `1.1.${process.env.APP_VERSION}` : "1.1-dev"),
+  },
 });
 
 console.log(`www built: ${n} Chinese + ${nja} Japanese characters of stroke data`);

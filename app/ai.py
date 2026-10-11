@@ -20,7 +20,9 @@ from .pinyin import hanzi_only
 
 SYSTEM = (
     "You are a patient Mandarin Chinese tutor for an English-speaking beginner. "
-    "Use Simplified Chinese characters. Always answer with a single JSON object and nothing else."
+    "Use Simplified Chinese characters for Chinese text. The student only reads English: write every "
+    "explanation, memory hook, breakdown, translation and piece of feedback in ENGLISH, quoting characters only when needed. "
+    "Always answer with a single JSON object and nothing else."
 )
 
 
@@ -152,8 +154,8 @@ async def word_extras(word: dict) -> dict:
 Return JSON: {{
  "example_zh": "a short, simple example sentence using it (simplified characters)",
  "example_en": "its English translation",
- "mnemonic": "a vivid one-sentence memory hook linking the shape/components of the character(s) to the meaning",
- "components": "brief breakdown of the character components/radicals (one line)"
+ "mnemonic": "a vivid one-sentence memory hook IN ENGLISH linking the shape/components of the character(s) to the meaning",
+ "components": "brief breakdown IN ENGLISH of the character components/radicals, e.g. 亻 person + 尔 you"
 }}"""
     data = await chat(prompt, temperature=0.6)
     return {k: str(data.get(k, "")) for k in ("example_zh", "example_en", "mnemonic", "components")}

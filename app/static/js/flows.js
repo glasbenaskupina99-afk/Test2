@@ -2,7 +2,10 @@
 import { api, h, shuffle, toast } from "./util.js";
 import { runLesson } from "./lesson.js";
 import * as ex from "./exercises.js";
-import { state, T } from "./state.js";
+import { state, T, isSl } from "./state.js";
+
+/** Handwriting exercise for the course: stroke-order writing, or spelling for Slovenian. */
+const writeEx = (ctx, w, opts) => (isSl() ? ex.spell(ctx, w, { hint: !!opts?.pinyinHint }) : ex.write(ctx, w, opts));
 
 const step = (make, after, key) => ({ make, after, key });
 
@@ -55,6 +58,7 @@ export async function learnNew({ writing = true } = {}) {
   }
   const allPool = [...words, ...pool.filter((p) => !words.some((w) => w.id === p.id))];
   if (!writing) return learnChoiceOnly(words, allPool);
+  if (isSl()) return learnSpelling(words, allPool);
   const steps = [];
 
   for (const w of words) {
@@ -107,7 +111,7 @@ function learnChoiceOnly(words, pool) {
   for (const w of words) {
     for (const make of [
       (ctx) => ex.multipleChoice(ctx, w, pool),
-      (ctx) => ex.choice(ctx, w, pool, "reading"),
+      isSl() ? (ctx) => ex.choice(ctx, w, pool, "meaning") : (ctx) => ex.choice(ctx, w, pool, "reading"),
       (ctx) => ex.choice(ctx, w, pool, "listen"),
     ]) {
       finalRound.push(step(make, async (res) => ({ xp: res.ok ? 2 : 1, requeue: res.ok ? null : step(make, async () => ({ xp: 1 })) }), w.id));
@@ -121,12 +125,46 @@ function learnChoiceOnly(words, pool) {
   });
 }
 
+/** Slovenian new words "with writing": see the word, spell it, then a mixed round. */
+function learnSpelling(words, pool) {
+  const steps = [];
+  for (const w of words) {
+    steps.push(step((ctx) => ex.intro(ctx, w)));
+    steps.push(
+      step(
+        (ctx) => ex.spell(ctx, w, { hint: true }),
+        async (res) => {
+          await api("/api/learn/complete", { method: "POST", body: { word_ids: [w.id], xp: 4 } });
+          return { xp: 4, requeue: res.ok ? null : step((ctx) => ex.spell(ctx, w, { hint: true }), async () => ({ xp: 1 })) };
+        }
+      )
+    );
+  }
+  const finalRound = [];
+  for (const w of words) {
+    for (const make of [
+      (ctx) => ex.multipleChoice(ctx, w, pool),
+      (ctx) => ex.choice(ctx, w, pool, "listen"),
+      (ctx) => ex.speakWord(ctx, w, { showPinyin: true }),
+      (ctx) => ex.spell(ctx, w),
+    ]) {
+      finalRound.push(step(make, async (res) => ({ xp: res.ok ? 2 : 1, requeue: res.ok ? null : step(make, async () => ({ xp: 1 })) }), w.id));
+    }
+  }
+  steps.push(...spreadOut(shuffle(finalRound)));
+  return runLesson({
+    steps,
+    endTitle: "New words learned!",
+    onDone: (s) => api("/api/learn/complete", { method: "POST", body: { word_ids: [], xp: Math.max(0, s.xp - 4 * words.length) } }),
+  });
+}
+
 /** Any choice exercise for a word (used by choice-only practice). */
 function randomChoice(w, pool) {
   const kinds = [
     (ctx) => ex.multipleChoice(ctx, w, pool),
     (ctx) => ex.choice(ctx, w, pool, "meaning"),
-    (ctx) => ex.choice(ctx, w, pool, "reading"),
+    ...(isSl() ? [] : [(ctx) => ex.choice(ctx, w, pool, "reading")]),
     (ctx) => ex.choice(ctx, w, pool, "listen"),
   ];
   return kinds[Math.floor(Math.random() * kinds.length)];
@@ -170,8 +208,9 @@ export async function review({ extra = false, writing = true } = {}) {
     const w = it.word;
     let make;
     if (!writing) make = randomChoice(w, allPool);
-    else if (it.skill === "write") make = (ctx) => ex.write(ctx, w);
+    else if (it.skill === "write") make = (ctx) => writeEx(ctx, w);
     else if (it.skill === "speak") make = (ctx) => ex.speakWord(ctx, w, { showPinyin: false });
+    else if (isSl()) make = Math.random() < 0.5 ? (ctx) => ex.multipleChoice(ctx, w, allPool) : (ctx) => ex.choice(ctx, w, allPool, "meaning");
     else make = Math.random() < 0.5 ? (ctx) => ex.multipleChoice(ctx, w, allPool) : (ctx) => ex.pinyinType(ctx, w);
 
     return step(make, async (res) => {
@@ -179,7 +218,7 @@ export async function review({ extra = false, writing = true } = {}) {
       let requeue = null;
       if (res.grade === 0) {
         // Practise it again at the end (not graded a second time).
-        requeue = step(writing && it.skill === "write" ? (ctx) => ex.write(ctx, w) : make, async () => ({ xp: 0 }));
+        requeue = step(writing && it.skill === "write" ? (ctx) => writeEx(ctx, w) : make, async () => ({ xp: 0 }));
       }
       return { xp: r.xp, requeue };
     });
@@ -255,7 +294,7 @@ export async function sentences() {
   const steps = data.sentences.map((s, i) => {
     const m = choice.mode === "mixed" ? cycle[i % 3] : choice.mode;
     const make =
-      m === "write" ? (ctx) => ex.sentenceWrite(ctx, s) : m === "type" ? (ctx) => ex.sentenceType(ctx, s) : (ctx) => ex.sentenceSpeakRecall(ctx, s);
+      m === "write" && !isSl() ? (ctx) => ex.sentenceWrite(ctx, s) : m === "type" || m === "write" ? (ctx) => ex.sentenceType(ctx, s) : (ctx) => ex.sentenceSpeakRecall(ctx, s);
     return step(make, async (res) => {
       const score = res.score ?? (res.ok ? 90 : 40);
       const r = await api("/api/sentences/log", { method: "POST", body: { en: s.en, zh: s.zh, mode: m, score, source: s.source } });
@@ -268,7 +307,7 @@ export async function sentences() {
 /** Quick handwriting drill for a single word (from the word sheet). */
 export function drillWord(w) {
   return runLesson({
-    steps: [step((ctx) => ex.write(ctx, w)), step((ctx) => ex.write(ctx, w))],
+    steps: [step((ctx) => writeEx(ctx, w)), step((ctx) => writeEx(ctx, w))],
     endTitle: "Drill done!",
   });
 }

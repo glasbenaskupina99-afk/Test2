@@ -4,21 +4,24 @@ export const state = {
   aiStatus: null,
 };
 
-/** Which course is active: "zh" (Mandarin) or "ja" (Japanese kanji). */
-export const course = () => (state.settings?.course === "ja" ? "ja" : "zh");
+/** Which course is active: "zh" (Mandarin), "ja" (Japanese kanji) or "sl" (Slovenian). */
+export const course = () => (["ja", "sl"].includes(state.settings?.course) ? state.settings.course : "zh");
 export const isJa = () => course() === "ja";
+/** Slovenian uses the Latin alphabet: spelling instead of stroke-order handwriting. */
+export const isSl = () => course() === "sl";
 
+const NAMES = { zh: "Chinese", ja: "Japanese", sl: "Slovenian" };
 export const T = {
-  lang: () => (isJa() ? "Japanese" : "Chinese"),
-  reading: () => (isJa() ? "reading" : "pinyin"),
-  speechLang: () => (isJa() ? "ja-JP" : "zh-CN"),
+  lang: () => NAMES[course()],
+  reading: () => ({ zh: "pinyin", ja: "reading", sl: "pronunciation" })[course()],
+  speechLang: () => ({ zh: "zh-CN", ja: "ja-JP", sl: "sl-SI" })[course()],
 };
 
 /** What to send to text-to-speech for a word (kana reading is unambiguous for single kanji). */
 export const sayText = (w) => (isJa() ? w.pinyin || w.hanzi : w.hanzi);
 
 export function applyCourse() {
-  document.documentElement.lang = isJa() ? "ja" : "zh-CN";
+  document.documentElement.lang = { zh: "zh-CN", ja: "ja", sl: "sl" }[course()];
   document.documentElement.dataset.course = course();
   window.__course = course();
 }

@@ -1,6 +1,7 @@
 // On-device Gemma prompts (JS port of app/ai.py). Inference runs in the native GemmaPlugin.
 import { hanziOnly } from "./pinyin.js";
 import { normKana, writable } from "./japanese.js";
+import { normSl } from "./slovenian.js";
 
 const ENGLISH_RULE =
   "The student only reads English: write every explanation, memory hook, breakdown, translation and piece of feedback " +
@@ -12,6 +13,9 @@ const SYSTEMS = {
   ja:
     "You are a patient Japanese tutor for an English-speaking beginner. Japanese text uses standard " +
     "kanji with hiragana, polite です/ます style. " + ENGLISH_RULE + " Always answer with a single JSON object and nothing else.",
+  sl:
+    "You are a patient Slovenian tutor for an English-speaking complete beginner (CEFR A1). Slovenian text uses correct " +
+    "standard spelling with č, š and ž. " + ENGLISH_RULE + " Always answer with a single JSON object and nothing else.",
 };
 
 /**
@@ -34,7 +38,7 @@ export class AIError extends Error {
 }
 
 let getSettings = () => ({});
-const lang = () => (getSettings().course === "ja" ? "ja" : "zh");
+const lang = () => (["ja", "sl"].includes(getSettings().course) ? getSettings().course : "zh");
 export function configure(settingsFn) {
   getSettings = settingsFn;
 }
@@ -136,8 +140,10 @@ export async function test() {
     json: false,
     prompt: lang() === "ja"
       ? "Greet a beginner in one short Japanese sentence with its reading and English. Plain text, one line."
+      : lang() === "sl"
+      ? "Greet a beginner in one short Slovenian sentence with its English translation. Plain text, one line."
       : "Greet a beginner in one short Chinese sentence with pinyin and English. Plain text, one line.",
-    system: lang() === "ja" ? "You are a friendly Japanese tutor." : "You are a friendly Mandarin tutor.",
+    system: lang() === "ja" ? "You are a friendly Japanese tutor." : lang() === "sl" ? "You are a friendly Slovenian tutor." : "You are a friendly Mandarin tutor.",
     temperature: 0.7,
   });
   return { reply: (res.text || "").trim().slice(0, 200) };
@@ -150,6 +156,7 @@ export async function generateSentences(known, focus, count, avoid) {
   const sample = [...focus, ...known.filter((w) => !focus.some((f) => f.hanzi === w.hanzi)).sort(() => Math.random() - 0.5)].slice(0, 120);
   const vocab = sample.map((w) => `${w.hanzi} (${w.english})`).join("; ");
   if (lang() === "ja") return generateSentencesJa(vocab, focus, count, avoid);
+  if (lang() === "sl") return generateSentencesSl(vocab, focus, count, avoid);
   const prompt = `Create ${count} short, natural Mandarin practice sentences for a beginner.
 
 Rules:
@@ -166,6 +173,26 @@ Return JSON: {"sentences": [{"en": "...", "zh": "..."}]}`;
   const out = (Array.isArray(items) ? items : [])
     .filter((it) => it && it.en && hanziOnly(it.zh))
     .map((it) => ({ en: String(it.en).trim(), zh: String(it.zh).trim() }));
+  if (!out.length) throw new AIError("Gemma returned no usable sentences");
+  return out;
+}
+
+async function generateSentencesSl(vocab, focus, count, avoid) {
+  const prompt = `Create ${count} very short, natural Slovenian sentences for a complete beginner (CEFR A1).
+
+Rules:
+- Use mainly these words, plus the most basic words (je, sem, to, in, moj/moja) if needed: ${vocab}
+- Try to include these focus words: ${focus.map((w) => w.hanzi).join(", ") || "any"}
+- 2 to 6 words each, everyday phrases (greetings, ordering, simple statements). Correct grammar and spelling with č, š, ž.
+- Don't repeat these recent sentences: ${avoid.slice(0, 15).join(" / ") || "none"}
+- "en": natural English. "sl": the Slovenian sentence.
+
+Return JSON: {"sentences": [{"en": "...", "sl": "..."}]}`;
+  const data = await chat(prompt, { temperature: 0.8 });
+  const items = Array.isArray(data) ? data : data.sentences;
+  const out = (Array.isArray(items) ? items : [])
+    .filter((it) => it && it.en && (it.sl || it.zh))
+    .map((it) => ({ en: String(it.en).trim(), zh: String(it.sl || it.zh).trim(), reading: "" }));
   if (!out.length) throw new AIError("Gemma returned no usable sentences");
   return out;
 }
@@ -193,7 +220,7 @@ Return JSON: {"sentences": [{"en": "...", "ja": "...", "reading": "..."}]}`;
 }
 
 export async function gradeTranslation(english, reference, answer) {
-  const target = lang() === "ja" ? "Japanese" : "Chinese";
+  const target = { ja: "Japanese", sl: "Slovenian", zh: "Chinese" }[lang()];
   const prompt = `A student translated an English sentence into ${target}.
 
 English: ${english}
@@ -219,6 +246,7 @@ Return JSON: {"correct": true/false, "score": 0-100, "feedback": "one or two sho
 export const EXTRAS_ENGLISH = ["mnemonic", "components", "example_en"];
 
 export async function wordExtras(word) {
+  if (lang() === "sl") return wordExtrasSl(word);
   const ja = lang() === "ja";
   const langName = ja ? "Japanese" : "Chinese";
   const example = ja
@@ -257,7 +285,32 @@ Format example: ${example}`;
   return out;
 }
 
+async function wordExtrasSl(word) {
+  const prompt = `Help an English-speaking complete beginner remember the Slovenian word "${word.hanzi}" (pronounced ${word.pinyin}) meaning "${word.english}".
+
+Return JSON with these fields:
+ "example_zh": a very short, simple Slovenian sentence that uses the word
+ "example_en": the English translation of that sentence
+ "mnemonic": ONE vivid sentence IN ENGLISH that links the sound of the word to its meaning
+ "components": a short grammar note IN ENGLISH (gender, plural or a key form), e.g. "feminine noun · plural: kave · 'I'd like a coffee' = kavo"
+
+Format example: {"example_zh": "Kavo, prosim.", "example_en": "A coffee, please.", "mnemonic": "Imagine a café called 'Java' — kava is coffee.", "components": "feminine noun (ž) · ordering: kavo"}`;
+  const d = await chat(prompt, { temperature: 0.5 });
+  const out = {};
+  for (const k of ["example_zh", "example_en", "mnemonic", "components"]) out[k] = String((d && d[k]) || "").trim();
+  if (!out.mnemonic && !out.example_zh) throw new AIError("Gemma didn't manage a memory hook — try again");
+  return out;
+}
+
 export async function fillWord(query) {
+  if (lang() === "sl") {
+    const prompt = `The user wants to add a word to their Slovenian study list. Their input: "${query}"
+It may be English or Slovenian. Pick the most common everyday Slovenian word.
+
+Return JSON: {"word": "the Slovenian word in its basic form", "pronunciation": "syllables with the stressed one in capitals, e.g. ZDRA-vo", "english": "short English meaning(s)"}`;
+    const d = await chat(prompt, { temperature: 0.2 });
+    return { hanzi: normSl(String(d.word || "")), pinyin: String(d.pronunciation || "").trim(), english: String(d.english || "").trim() };
+  }
   if (lang() === "ja") {
     const prompt = `The user wants to add a word to their Japanese study list. Their input: "${query}"
 It may be English, romaji, kana or kanji. Pick the most common everyday Japanese word.

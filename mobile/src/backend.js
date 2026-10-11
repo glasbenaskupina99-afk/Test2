@@ -6,6 +6,9 @@ import seedJaN3 from "../../app/data/japanese_n3.json";
 import FALLBACK_ZH from "../../app/data/sentences.json";
 import FALLBACK_JA from "../../app/data/japanese_sentences.json";
 import FALLBACK_JA_N3 from "../../app/data/japanese_n3_sentences.json";
+import seedSl from "../../app/data/slovenian_a1.json";
+import FALLBACK_SL from "../../app/data/slovenian_sentences.json";
+import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
@@ -15,11 +18,12 @@ const SEED_SETS = [
   { lang: "zh", data: seedZh, section: "HSK 1", source: "hsk1", base: 0 },
   { lang: "ja", data: seedJa, section: "JLPT N5", source: "n5", base: 0 },
   { lang: "ja", data: seedJaN3, section: "JLPT N3", source: "n3", base: 10000 },
+  { lang: "sl", data: seedSl, section: "A1", source: "sl_a1", base: 0 },
 ];
 const SECTION_OF_SOURCE = Object.fromEntries(SEED_SETS.map((x) => [x.source, x.section]));
 const MY_WORDS = "My words";
 // Fallback sentences as [english, text, reading]
-const FALLBACK = { zh: FALLBACK_ZH.map(([en, zh]) => [en, zh, null]), ja: [...FALLBACK_JA, ...FALLBACK_JA_N3] };
+const FALLBACK = { zh: FALLBACK_ZH.map(([en, zh]) => [en, zh, null]), ja: [...FALLBACK_JA, ...FALLBACK_JA_N3], sl: FALLBACK_SL };
 
 const SKILLS = ["write", "speak", "recall"];
 
@@ -74,8 +78,8 @@ function seedWords(set, startId) {
   let id = startId;
   let pos = set.base;
   for (const unit of set.data.units) {
-    for (const [hanzi, pinyin, english] of unit.words) {
-      words.push({ id: id++, lang: set.lang, section: set.section, hanzi, pinyin, english, unit: unit.name, position: pos++, source: set.source, extras: null, created_at: fmt(now()) });
+    for (const [hanzi, pinyin, english, gender] of unit.words) {
+      words.push({ id: id++, lang: set.lang, section: set.section, hanzi, pinyin, english, gender: gender || null, unit: unit.name, position: pos++, source: set.source, extras: null, created_at: fmt(now()) });
     }
   }
   return words;
@@ -238,6 +242,10 @@ function schedule(card, grade) {
 
 // Sentences keep the field names zh (target text) and pinyin (reading) for both courses.
 function decorate(sent, knownChars, source) {
+  if (course() === "sl") {
+    // Latin script: no handwriting guide, no separate reading.
+    return { en: sent.en, zh: sent.zh, chars: [], pinyin: sent.reading || "", source };
+  }
   if (course() === "ja") {
     return {
       en: sent.en,
@@ -260,6 +268,7 @@ function decorate(sent, knownChars, source) {
 function fallbackSentences(knownChars, count, avoid) {
   const all = FALLBACK[course()];
   const coverage = ([, zh]) => {
+    if (course() === "sl") return 1;
     const chars = [...zh].filter(isKanji);
     return chars.length ? chars.filter((c) => knownChars.has(c)).length / chars.length : 1;
   };
@@ -289,7 +298,7 @@ const routes = {
     const ws = dayKey(weekStart);
     const cards = SC();
     const future = cards.filter((c) => c.due > n).map((c) => c.due).sort();
-    const courses = ["zh", "ja"].map((lang) => {
+    const courses = ["zh", "ja", "sl"].map((lang) => {
       const ws = db.words.filter((w) => w.lang === lang);
       const all = new Set(db.cards.map((c) => c.word_id));
       return { lang, total: ws.length, learned: ws.filter((w) => all.has(w.id)).length };
@@ -316,7 +325,7 @@ const routes = {
     W().sort(byPosition).map((w) => {
       const cs = cardsOf(w.id);
       return {
-        id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, english: w.english, unit: w.unit, section: w.section, source: w.source,
+        id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, english: w.english, gender: w.gender || null, unit: w.unit, section: w.section, source: w.source,
         cards: cs.length,
         due: cs.length ? cs.map((c) => c.due).sort()[0] : null,
         strength: cs.length ? cs.reduce((a, c) => a + c.interval, 0) / cs.length : null,
@@ -326,7 +335,8 @@ const routes = {
 
   "POST /api/words": (_, body) => {
     const ja = course() === "ja";
-    const hanzi = ja ? writable(body.hanzi) : hanziOnly(body.hanzi);
+    const sl = course() === "sl";
+    const hanzi = sl ? normSl(body.hanzi) : ja ? writable(body.hanzi) : hanziOnly(body.hanzi);
     if (!hanzi || !String(body.english || "").trim()) throw new HttpError(400, `Need ${ja ? "Japanese" : "Chinese characters"} and an English meaning`);
     if (W().some((w) => w.hanzi === hanzi)) throw new HttpError(409, `${hanzi} is already in your list`);
     let reading = String(body.pinyin || "").trim();
@@ -335,7 +345,7 @@ const routes = {
       if (!reading) throw new HttpError(400, "Enter the reading in hiragana or romaji");
     }
     const w = {
-      id: db.nextId++, lang: course(), hanzi, pinyin: ja ? reading : reading || toPinyin(hanzi), english: body.english.trim(),
+      id: db.nextId++, lang: course(), hanzi, pinyin: ja || sl ? reading : reading || toPinyin(hanzi), english: body.english.trim(),
       unit: MY_WORDS, section: MY_WORDS, position: 100000, source: "custom", extras: null, created_at: fmt(now()),
     };
     db.words.push(w);
@@ -346,10 +356,10 @@ const routes = {
   "POST /api/words/ai-fill": async (_, body) => {
     const d = await ai.fillWord(body.query);
     if (!d.hanzi) throw new HttpError(422, "Couldn't figure that word out");
-    return course() === "ja" ? d : { ...d, pinyin: toPinyin(d.hanzi) };
+    return course() === "zh" ? { ...d, pinyin: toPinyin(d.hanzi) } : d;
   },
 
-  "POST /api/words/pinyin": (_, body) => ({ pinyin: course() === "ja" ? "" : toPinyin(body.query) }),
+  "POST /api/words/pinyin": (_, body) => ({ pinyin: course() === "zh" ? toPinyin(body.query) : "" }),
 
   "DELETE /api/words/:id": ({ id }) => {
     db.words = db.words.filter((w) => w.id !== Number(id));
@@ -427,7 +437,9 @@ const routes = {
   },
 
   "POST /api/check/pinyin": (_, body) =>
-    course() === "ja"
+    course() === "sl"
+      ? compareSpelling(String(body.answer || ""), String(body.expected || ""))
+      : course() === "ja"
       ? compareReading(String(body.answer || ""), String(body.expected || ""))
       : comparePinyin(String(body.answer || ""), String(body.expected || "")),
 
@@ -458,6 +470,11 @@ const routes = {
   },
 
   "POST /api/sentences/grade": async (_, body) => {
+    if (course() === "sl") {
+      const r = compareSpelling(body.answer, body.zh);
+      if (r.result === "correct") return { correct: true, score: 100, feedback: "Perfect!", corrected: body.zh, by: "exact" };
+      if (r.result === "tones_wrong") return { correct: true, score: 90, feedback: "Correct — just mind č, š and ž.", corrected: body.zh, by: "exact" };
+    }
     if (course() === "ja") {
       const strip = (t) => (t || "").replace(/[\s。、？！?!.,]/g, "");
       if (strip(body.answer) && strip(body.answer) === strip(body.zh)) return { correct: true, score: 100, feedback: "Perfect!", corrected: body.zh, by: "exact" };
@@ -490,7 +507,9 @@ const routes = {
   },
 
   "POST /api/speech/compare": (_, body) =>
-    course() === "ja" ? compareSpokenJa(body.heard, body.expected, body.reading) : compareSpoken(body.heard, body.expected),
+    course() === "sl"
+      ? compareSpokenSl(body.heard, body.expected)
+      : course() === "ja" ? compareSpokenJa(body.heard, body.expected, body.reading) : compareSpoken(body.heard, body.expected),
 
   "POST /api/speech/assess": () => {
     throw new ai.AIError("Gemma audio isn't available in the app — switch pronunciation to Android speech recognition");

@@ -5,7 +5,11 @@
 import { api, h, icons, iconBtn, shuffle, toast } from "./util.js";
 import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder } from "./audio.js";
 import { writingPad, strokeDemo } from "./writer.js";
-import { state, T, isJa, sayText } from "./state.js";
+import { state, T, isJa, isSl, sayText } from "./state.js";
+
+const GENDER = { m: "masculine", ž: "feminine", s: "neuter" };
+/** Slovenian nouns show their grammatical gender from the very first word. */
+export const genderTag = (word) => (word.gender ? h("span", { class: `tag gender g-${word.gender}` }, `${word.gender} · ${GENDER[word.gender] || ""}`) : null);
 
 const speakerBtn = (text, cls = "speaker") => iconBtn("speaker", cls, () => speak(text), "Listen");
 const slowBtn = (text) => iconBtn("slow", "speaker sm", () => speak(text, { slow: true }), "Listen slowly");
@@ -64,7 +68,8 @@ export function intro(ctx, word) {
   const aiOn = state.settings?.ai_enabled;
   if (word.extras) loadAI();
 
-  const demo = strokeDemo(word.hanzi);
+  // Latin-script words have no stroke order: show the word itself.
+  const demo = isSl() ? { el: h("div", { class: "sl-word" }, h("div", { class: "sl-word-text" }, word.hanzi), genderTag(word)) } : strokeDemo(word.hanzi);
   const el = h(
     "div",
     {},
@@ -258,6 +263,39 @@ export function choice(ctx, word, pool, kind) {
   };
 }
 
+/** Slovenian "writing": spell the word from its English meaning (with audio). */
+export function spell(ctx, word, { hint = false } = {}) {
+  const input = h("input", {
+    class: "input",
+    autocomplete: "off",
+    autocapitalize: "off",
+    spellcheck: "false",
+    placeholder: "Type the Slovenian word",
+    oninput: () => ctx.setReady(input.value.trim().length > 0),
+    onkeydown: (e) => e.key === "Enter" && input.value.trim() && ctx.submit(),
+  });
+  setTimeout(() => input.focus(), 300);
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker blue" }, "⌨️ Spell it"),
+      h("h2", { class: "ex-title" }, `How do you write “${word.english}” in Slovenian?`),
+      h("div", { class: "row", style: { margin: "0 0 16px" } }, speakerBtn(word.hanzi), slowBtn(word.hanzi), hint ? h("span", { class: "muted" }, word.pinyin) : null),
+      input,
+      h("div", { class: "hint" }, "Tip: č, š, ž — long-press c, s or z on your keyboard.")
+    ),
+    mode: "check",
+    async check() {
+      const r = await api("/api/check/pinyin", { method: "POST", body: { answer: input.value, expected: word.hanzi } });
+      speak(word.hanzi);
+      if (r.result === "correct") return { ok: true, grade: 2, title: "Correct!", detail: solution(word) };
+      if (r.result === "tones_wrong") return { ok: true, grade: 1, title: "Almost — mind č, š, ž", detail: solution(word) };
+      return { ok: false, grade: 0, title: "Correct spelling:", detail: solution(word, `You wrote: ${input.value}`) };
+    },
+  };
+}
+
 export function pinyinType(ctx, word) {
   const input = h("input", {
     class: "input",
@@ -283,7 +321,7 @@ export function pinyinType(ctx, word) {
       const r = await api("/api/check/pinyin", { method: "POST", body: { answer: input.value, expected: word.pinyin } });
       speak(sayText(word));
       if (r.result === "correct") return { ok: true, grade: 2, title: "Correct!", detail: solution(word) };
-      if (r.result === "tones_wrong") return { ok: false, grade: 1, title: "Almost — check the tones", detail: solution(word) };
+      if (r.result === "tones_wrong") return { ok: false, grade: 1, title: isSl() ? "Almost — mind č, š, ž" : "Almost — check the tones", detail: solution(word) };
       return { ok: false, grade: 0, title: "Correct answer:", detail: solution(word) };
     },
   };
@@ -534,12 +572,12 @@ export function sentenceWrite(ctx, s) {
 export function sentenceType(ctx, s) {
   const ta = h("textarea", {
     class: "text-answer",
-    placeholder: isJa() ? "Type in Japanese (or romaji)" : "Type in Chinese (or pinyin with tone numbers)",
+    placeholder: isSl() ? "Type in Slovenian" : isJa() ? "Type in Japanese (or romaji)" : "Type in Chinese (or pinyin with tone numbers)",
     oninput: () => ctx.setReady(ta.value.trim().length > 0),
   });
   setTimeout(() => ta.focus(), 300);
   return {
-    el: h("div", {}, ...sentencePrompt(s, "⌨️ Translate", "purple"), ta, h("div", { class: "hint" }, isJa() ? "Tip: add the Japanese keyboard on your phone." : "Tip: add the Chinese (Pinyin) keyboard on your phone.")),
+    el: h("div", {}, ...sentencePrompt(s, "⌨️ Translate", "purple"), ta, h("div", { class: "hint" }, isSl() ? "Tip: č, š, ž — long-press c, s or z on your keyboard." : isJa() ? "Tip: add the Japanese keyboard on your phone." : "Tip: add the Chinese (Pinyin) keyboard on your phone.")),
     mode: "check",
     async check() {
       const r = await api("/api/sentences/grade", { method: "POST", body: { en: s.en, zh: s.zh, reading: s.pinyin, answer: ta.value } });

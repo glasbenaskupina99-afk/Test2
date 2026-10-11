@@ -1,0 +1,47 @@
+{
+  "source": "Slovenian A1 — first basic words. Second field: pronunciation with the stressed syllable in capitals. Fourth field: grammatical gender (m / ž / s) for nouns.",
+  "section": "A1",
+  "units": [
+    {
+      "name": "First words",
+      "words": [
+        ["zdravo", "ZDRA-vo", "hello; hi"],
+        ["hvala", "HVA-la", "thank you"],
+        ["prosim", "PRO-sim", "please; you're welcome"],
+        ["ja", "JA", "yes"],
+        ["ne", "NE", "no; not"],
+        ["dober dan", "DO-ber DAN", "good day; hello (formal)"],
+        ["nasvidenje", "na-SVI-de-nje", "goodbye"],
+        ["oprostite", "o-PROS-ti-te", "excuse me; sorry (formal)"]
+      ]
+    },
+    {
+      "name": "People",
+      "words": [
+        ["jaz", "JAZ", "I"],
+        ["ti", "TI", "you (informal)"],
+        ["mama", "MA-ma", "mom", "ž"],
+        ["oče", "O-če", "father", "m"],
+        ["prijatelj", "pri-JA-telj", "friend (male)", "m"]
+      ]
+    },
+    {
+      "name": "Café & home",
+      "words": [
+        ["kava", "KA-va", "coffee", "ž"],
+        ["voda", "VO-da", "water", "ž"],
+        ["kruh", "KRUH", "bread", "m"],
+        ["mleko", "MLE-ko", "milk", "s"],
+        ["hiša", "HI-ša", "house", "ž"]
+      ]
+    },
+    {
+      "name": "Numbers",
+      "words": [
+        ["ena", "E-na", "one"],
+        ["dva", "DVA", "two"],
+        ["tri", "TRI", "three"]
+      ]
+    }
+  ]
+}

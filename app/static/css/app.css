@@ -696,3 +696,18 @@ body::before {
 .welcome-course b { display: block; font-size: 17px; color: var(--text-strong); }
 .welcome-course small { color: var(--muted); font-size: 13px; }
 .welcome-course.on { border-color: #8fb0c8; background: var(--blue-light); }
+
+/* Slovenian (Latin script): word card instead of stroke order, smaller tiles */
+.sl-word { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 28px 12px 8px; }
+.sl-word-text { font-size: 48px; font-weight: 900; color: var(--text-strong); letter-spacing: .5px; line-height: 1.1; text-align: center; }
+.tag.gender { font-size: 12px; }
+.tag.g-m { background: #2c4352; color: #bcd6ea; }
+.tag.g-ž { background: #4a3328; color: #f0c7ab; }
+.tag.g-s { background: #2e4a36; color: #c7dfbf; }
+:root[data-course="sl"] .hz { font-family: var(--font); font-weight: 800; }
+:root[data-course="sl"] .choice .hz { font-size: 22px; }
+:root[data-course="sl"] .big-hz { font-size: 44px; }
+:root[data-course="sl"] .chip .hz { font-size: 17px; }
+:root[data-course="sl"] .mode .preview { font-family: var(--font); letter-spacing: 0; font-size: 16px; }
+:root[data-course="sl"] .list-item .hz { font-size: 20px; min-width: 110px; }
+:root[data-course="sl"] .sentence-hz { font-family: var(--font); font-size: 28px; letter-spacing: 0; }

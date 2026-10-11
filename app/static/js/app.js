@@ -1,8 +1,9 @@
 import { api, h, iconBtn, toast } from "./util.js";
-import { state, T, isJa, sayText, applyCourse } from "./state.js";
+import { state, T, isJa, isSl, sayText, applyCourse } from "./state.js";
 import { speak, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
+import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 
 const app = document.getElementById("app");
@@ -73,6 +74,7 @@ async function startFlow(fn) {
 const COURSES = {
   zh: { flag: "🇨🇳", name: "Chinese", script: "汉字", sub: "Mandarin · HSK 1" },
   ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kanji · JLPT N5 & N3" },
+  sl: { flag: "🇸🇮", name: "Slovenian", script: "Aa", sub: "A1 · first words" },
 };
 
 function courseSheet(home) {
@@ -313,7 +315,9 @@ async function unitsView(units) {
 // ------------------------------------------------------------------ word sheet
 
 function wordSheet(w) {
-  const demo = strokeDemo(w.hanzi, { size: Math.min(160, Math.floor((window.innerWidth - 80) / [...w.hanzi].length)) });
+  const demo = isSl()
+    ? { el: h("div", { class: "sl-word" }, h("div", { class: "sl-word-text" }, w.hanzi), genderTag(w)) }
+    : strokeDemo(w.hanzi, { size: Math.min(160, Math.floor((window.innerWidth - 80) / [...w.hanzi].length)) });
   const bg = h(
     "div",
     { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() },
@@ -410,7 +414,7 @@ async function wordsScreen() {
   shell(
     [
       h("div", { class: "topbar" }, h("h2", {}, "Words"), h("button", { class: "btn small", onclick: addWordSheet }, "+ Add word")),
-      h("input", { class: "input search", placeholder: isJa() ? "Search 漢字, reading or English" : "Search 汉字, pinyin or English", value: wordSearch, oninput: (e) => { wordSearch = e.target.value; render(); } }),
+      h("input", { class: "input search", placeholder: isSl() ? "Search Slovenian or English" : isJa() ? "Search 漢字, reading or English" : "Search 汉字, pinyin or English", value: wordSearch, oninput: (e) => { wordSearch = e.target.value; render(); } }),
       sections.length > 1 ? h("div", { class: "section-pick level-filter", role: "group", "aria-label": "Level" }, lbtns) : null,
       h("div", { class: "filter-row" }, fbtns),
       count,
@@ -421,10 +425,10 @@ async function wordsScreen() {
 }
 
 function addWordSheet() {
-  const hz = h("input", { class: "input hz", placeholder: isJa() ? "漢字" : "汉字", style: { fontSize: "24px" } });
-  const py = h("input", { class: "input", placeholder: isJa() ? "reading in hiragana or romaji" : "pinyin (auto-filled if empty)" });
+  const hz = h("input", { class: "input hz", placeholder: isSl() ? "Slovenian word" : isJa() ? "漢字" : "汉字", style: { fontSize: "24px" } });
+  const py = h("input", { class: "input", placeholder: isSl() ? "pronunciation, e.g. ZDRA-vo (optional)" : isJa() ? "reading in hiragana or romaji" : "pinyin (auto-filled if empty)" });
   const en = h("input", { class: "input", placeholder: "English meaning" });
-  const q = h("input", { class: "input", placeholder: isJa() ? "e.g. “bicycle” or “jitensha”" : "e.g. “bicycle” or “zixingche”" });
+  const q = h("input", { class: "input", placeholder: isSl() ? "e.g. “bicycle” or “kolo”" : isJa() ? "e.g. “bicycle” or “jitensha”" : "e.g. “bicycle” or “zixingche”" });
   hz.addEventListener("change", async () => {
     if (hz.value && !py.value) py.value = (await api("/api/words/pinyin", { method: "POST", body: { query: hz.value } })).pinyin;
   });
@@ -466,7 +470,7 @@ function addWordSheet() {
       h("h2", { style: { marginBottom: "14px" } }, "Add a word"),
       aiRow,
       h("div", { class: "field" }, h("label", {}, "Characters"), hz),
-      h("div", { class: "field" }, h("label", {}, isJa() ? "Reading" : "Pinyin"), py),
+      h("div", { class: "field" }, h("label", {}, isSl() ? "Pronunciation" : isJa() ? "Reading" : "Pinyin"), py),
       h("div", { class: "field" }, h("label", {}, "English"), en),
       h(
         "button",
@@ -852,7 +856,7 @@ function welcomeScreen() {
         { class: "welcome" },
         h("div", { class: "journey-avatar welcome-avatar", html: SVG.leaf }),
         h("h1", {}, "Welcome to Language Master"),
-        h("p", { class: "muted" }, "Learn to write, read and say Chinese and Japanese characters — without wasting paper."),
+        h("p", { class: "muted" }, "Learn a new language — write, read and speak it, without wasting paper."),
         h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),
         h("div", { class: "small muted", style: { alignSelf: "flex-start", margin: "6px 0 8px" } }, "What do you want to learn?"),
         h("div", { class: "welcome-courses" }, courseBtns),

@@ -9,6 +9,11 @@ const writeEx = (ctx, w, opts) => (isSl() ? ex.spell(ctx, w, { hint: !!opts?.pin
 
 const step = (make, after, key) => ({ make, after, key });
 
+/** After-handler for a repeat: a wrong answer comes back at the end again, until it's right. */
+const untilRight = (make, key) => async (res) => ({ xp: res.ok ? 1 : 0, requeue: res.ok ? null : step(make, untilRight(make, key), key) });
+/** First attempt: XP, and a wrong answer is repeated at the end until it's right. */
+const learnAfter = (make, key) => async (res) => ({ xp: res.ok ? 2 : 1, requeue: res.ok ? null : step(make, untilRight(make, key), key) });
+
 // ------------------------------------------------------------------ study mode picker
 
 /** Ask whether to study with handwriting or with choice-only exercises. Resolves { writing } or null. */
@@ -70,7 +75,10 @@ export async function learnNew({ writing = true } = {}) {
         async (res) => {
           // The word counts as learned once you've written it yourself.
           await api("/api/learn/complete", { method: "POST", body: { word_ids: [w.id], xp: 5 } });
-          return { xp: 5, requeue: res.grade === 0 ? step((ctx) => ex.trace(ctx, w)) : null };
+          if (res.ok) return { xp: 5 };
+          // Trace it once more, then write it again at the end until it's right.
+          const rewrite = (ctx) => ex.write(ctx, w, { pinyinHint: true });
+          return { xp: 5, requeue: step((ctx) => ex.trace(ctx, w), async () => ({ xp: 0, requeue: step(rewrite, untilRight(rewrite, w.id), w.id) }), w.id) };
         }
       )
     );
@@ -79,9 +87,13 @@ export async function learnNew({ writing = true } = {}) {
   // Mixed review of everything from this lesson.
   const finalRound = [];
   for (const w of words) {
-    finalRound.push(step((ctx) => ex.multipleChoice(ctx, w, allPool), practiceAfter(w, "mc", allPool), w.id));
-    finalRound.push(step((ctx) => ex.speakWord(ctx, w, { showPinyin: true }), async (r) => ({ xp: r.ok ? 2 : 1 }), w.id));
-    finalRound.push(step((ctx) => ex.write(ctx, w), practiceAfter(w, "write", allPool), w.id));
+    for (const make of [
+      (ctx) => ex.multipleChoice(ctx, w, allPool),
+      (ctx) => ex.speakWord(ctx, w, { showPinyin: true }),
+      (ctx) => ex.write(ctx, w),
+    ]) {
+      finalRound.push(step(make, learnAfter(make, w.id), w.id));
+    }
   }
   steps.push(...spreadOut(shuffle(finalRound)));
 
@@ -102,7 +114,8 @@ function learnChoiceOnly(words, pool) {
         (ctx) => ex.choice(ctx, w, pool, "meaning"),
         async (res) => {
           await api("/api/learn/complete", { method: "POST", body: { word_ids: [w.id], xp: 3 } });
-          return { xp: 3, requeue: res.ok ? null : step((ctx) => ex.choice(ctx, w, pool, "meaning"), async () => ({ xp: 1 })) };
+          const again = (ctx) => ex.choice(ctx, w, pool, "meaning");
+          return { xp: 3, requeue: res.ok ? null : step(again, untilRight(again, w.id), w.id) };
         }
       )
     );
@@ -114,7 +127,7 @@ function learnChoiceOnly(words, pool) {
       isSl() ? (ctx) => ex.choice(ctx, w, pool, "meaning") : (ctx) => ex.choice(ctx, w, pool, "reading"),
       (ctx) => ex.choice(ctx, w, pool, "listen"),
     ]) {
-      finalRound.push(step(make, async (res) => ({ xp: res.ok ? 2 : 1, requeue: res.ok ? null : step(make, async () => ({ xp: 1 })) }), w.id));
+      finalRound.push(step(make, learnAfter(make, w.id), w.id));
     }
   }
   steps.push(...spreadOut(shuffle(finalRound)));
@@ -135,7 +148,8 @@ function learnSpelling(words, pool) {
         (ctx) => ex.spell(ctx, w, { hint: true }),
         async (res) => {
           await api("/api/learn/complete", { method: "POST", body: { word_ids: [w.id], xp: 4 } });
-          return { xp: 4, requeue: res.ok ? null : step((ctx) => ex.spell(ctx, w, { hint: true }), async () => ({ xp: 1 })) };
+          const again = (ctx) => ex.spell(ctx, w, { hint: true });
+          return { xp: 4, requeue: res.ok ? null : step(again, untilRight(again, w.id), w.id) };
         }
       )
     );
@@ -148,7 +162,7 @@ function learnSpelling(words, pool) {
       (ctx) => ex.speakWord(ctx, w, { showPinyin: true }),
       (ctx) => ex.spell(ctx, w),
     ]) {
-      finalRound.push(step(make, async (res) => ({ xp: res.ok ? 2 : 1, requeue: res.ok ? null : step(make, async () => ({ xp: 1 })) }), w.id));
+      finalRound.push(step(make, learnAfter(make, w.id), w.id));
     }
   }
   steps.push(...spreadOut(shuffle(finalRound)));
@@ -168,14 +182,6 @@ function randomChoice(w, pool) {
     (ctx) => ex.choice(ctx, w, pool, "listen"),
   ];
   return kinds[Math.floor(Math.random() * kinds.length)];
-}
-
-/** For practice-only steps: give XP and re-queue a mistake at the end of the lesson. */
-function practiceAfter(w, kind, pool) {
-  return async (res) => ({
-    xp: res.ok ? 2 : 1,
-    requeue: res.ok ? null : step((ctx) => (kind === "mc" ? ex.multipleChoice(ctx, w, pool) : ex.write(ctx, w)), async () => ({ xp: 1 })),
-  });
 }
 
 /** Avoid the same word appearing twice in a row. */

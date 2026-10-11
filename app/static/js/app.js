@@ -4,6 +4,8 @@ import { speak, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
 import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
+import { plantArt, gardenSheet, gardenNotice, dayLeafArt } from "./garden.js";
+import { canRemind, ensurePermission, scheduleReminders } from "./reminders.js";
 import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 
@@ -72,6 +74,7 @@ async function startFlow(fn) {
   try {
     const result = await fn();
     if (result !== undefined) route();
+    scheduleReminders();
   } catch (e) {
     toast(e.message, 4000);
   }
@@ -133,7 +136,12 @@ function topbar(home) {
           h("span", { class: "ico" }, COURSES[home.course].flag)
         )
       : null,
-    h("div", { class: "stat fire" + (home.streak ? "" : " dim") }, h("span", { class: "ico" }, "🔥"), home.streak),
+    h(
+      "button",
+      { class: `stat streak-plant ${home.plant || "seed"}`, title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => gardenSheet() },
+      plantArt(home.plant || "seed", "ico"),
+      home.streak
+    ),
     h("div", { class: "stat gem" }, h("span", { class: "ico" }, "📚"), `${home.learned}`),
     h("div", { class: "stat xp" }, h("span", { class: "ico" }, "⚡"), home.xp_today),
     h(
@@ -201,6 +209,15 @@ async function homeScreen() {
     h("div", {}, h("h3", {}, "Sentences"), h("p", {}, state.settings.ai_enabled ? "Write, type & say AI-made sentences" : "Write, type & say sentences"))
   );
 
+  const lookalikeCard = home.lookalikes
+    ? h(
+        "button",
+        { class: "mode orange", onclick: () => startFlow(flows.lookalikes) },
+        h("div", { class: "badge-ico", html: SVG.twins }),
+        h("div", {}, h("h3", {}, "Look-alikes"), h("p", {}, home.course === "ja" ? "未 or 末? 待, 持 or 特? Tell similar kanji apart" : "未 or 末? 己 or 已? Tell similar characters apart"))
+      )
+    : null;
+
   const units = await unitsView(home.units);
   const sectionPicker =
     home.sections?.length > 1
@@ -240,15 +257,53 @@ async function homeScreen() {
           h("div", { class: "progress yellow", style: { marginTop: "8px" } }, h("i", { style: { width: goalPct + "%" } }))
         )
       ),
+      planCard(home.plan),
       aiInviteCard(),
-      h("div", { class: "modes" }, learnCard, reviewCard, sentenceCard),
+      h("div", { class: "modes" }, learnCard, reviewCard, sentenceCard, lookalikeCard),
       h("h2", { class: "section-title" }, "This week"),
-      weekChart(home.week),
+      weekChart(home.week, home.saved_days),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
       sectionPicker,
       units,
     ],
     "#/"
+  );
+  gardenNotice(home.garden_notice);
+}
+
+/** Today's plan: what's left to keep the garden growing, with a time estimate. */
+function planCard(plan) {
+  if (!plan) return null;
+  const rows = [
+    ["Reviews", plan.reviews_done, plan.reviews_left],
+    ["New words", plan.new_done, plan.new_left],
+  ];
+  const left = plan.reviews_left + plan.new_left;
+  return h(
+    "div",
+    { class: "card plan-card" + (left ? "" : " done") },
+    h(
+      "div",
+      { class: "row" },
+      h("h3", {}, left ? "🌿 Today's plan" : "🌳 All done for today"),
+      h("span", { class: "spacer" }),
+      left ? h("span", { class: "plan-time" }, `≈ ${Math.max(1, plan.minutes)} min`) : null
+    ),
+    h(
+      "div",
+      { class: "plan-rows" },
+      rows.map(([label, done, rest]) =>
+        h(
+          "div",
+          { class: "plan-row" + (rest ? "" : done ? " ok" : " none") },
+          h("span", { class: "plan-check" }, rest || !done ? "" : "✓"),
+          h("span", {}, label),
+          h("span", { class: "spacer" }),
+          h("b", {}, rest ? `${done} / ${done + rest}` : done ? `${done} done` : label === "Reviews" ? "nothing due" : "—")
+        )
+      )
+    ),
+    left ? null : h("p", { class: "small muted", style: { margin: "6px 0 0" } }, "Your garden is watered. Extra practice is always welcome.")
   );
 }
 
@@ -288,14 +343,14 @@ function nextDueText(nextDue) {
   return `Next review in ${Math.round(mins / 1440)} d.`;
 }
 
-function weekChart(week) {
+function weekChart(week, saved = []) {
   const byDay = Object.fromEntries(week.map((d) => [d.day, d.xp]));
   const days = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    days.push({ label: d.toLocaleDateString(undefined, { weekday: "narrow" }), xp: byDay[key] || 0 });
+    days.push({ label: d.toLocaleDateString(undefined, { weekday: "narrow" }), xp: byDay[key] || 0, saved: saved.includes(key) });
   }
   const max = Math.max(30, ...days.map((d) => d.xp));
   return h(
@@ -305,7 +360,13 @@ function weekChart(week) {
       "div",
       { class: "week" },
       days.map((d) =>
-        h("div", { class: "bar" + (d.xp ? "" : " empty") }, h("span", {}, d.xp || ""), h("i", { style: { height: `${Math.max(4, (80 * d.xp) / max)}px` } }), h("span", {}, d.label))
+        h(
+          "div",
+          { class: "bar" + (d.xp ? "" : " empty") + (d.saved ? " saved" : ""), title: d.saved ? "Saved by a raindrop" : "" },
+          d.saved ? dayLeafArt("saved", "week-dry") : h("span", {}, d.xp || ""),
+          h("i", { style: { height: `${Math.max(4, (80 * d.xp) / max)}px` } }),
+          h("span", {}, d.label)
+        )
       )
     )
   );
@@ -538,7 +599,9 @@ const SVG = {
   hourglass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3h12M6 21h12M7 3c0 5 10 6 10 9s-10 4-10 9M17 3c0 5-10 6-10 9s10 4 10 9"/></svg>',
   book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/><path d="M12 9c1-2 2-3 4-3.5M12 9c-1-2-2-3-4-3.5"/></svg>',
   sprout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C12 8 9 5 4 5c0 4 3 7 8 7zM12 10c0-3 2-6 8-6 0 4-3 6-8 6z"/></svg>',
+  plant: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-9"/><path d="M12 15c-4 0-7-2-7-6 4 0 7 2 7 6zM12 11c0-4 3-7 7-7 0 4-3 7-7 7z"/><path d="M7 20h10"/></svg>',
   flame: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-5 3-7 1 2 2 3 3 3 0-2-1-4 0-7z"/></svg>',
+  twins: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19c0-6 3-10 8-11-.5 6-3 10-8 11z"/><path d="M21 19c0-6-3-10-8-11 .5 6 3 10 8 11z"/><path d="M3 19l5-6M21 19l-5-6"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
   star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>',
   brush: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4L10 14"/><path d="M10 14c-3 0-5 2-5 5-1 1-2 1-2 1 4 1 8 0 9-3 1-1 0-2-2-3z"/></svg>',
@@ -612,20 +675,20 @@ function achievements(s, learned, best, sentences, level) {
   const list = [
     { icon: "sprout", title: "First steps", goal: 1, have: learned, unit: "word", date: s.first_day },
     { icon: "book", title: "10 words", goal: 10, have: learned, unit: "words" },
-    { icon: "flame", title: "Daily streak ×7", goal: 7, have: best, unit: "days", active: s.streak >= 7 },
+    { icon: "plant", title: "Daily streak ×7", goal: 7, have: best, unit: "days", active: s.streak >= 7 },
     { icon: "chat", title: "First sentence", goal: 1, have: sentences, unit: "sentence" },
-    { icon: "flame", title: "Daily streak ×10", goal: 10, have: best, unit: "days", active: s.streak >= 10 },
+    { icon: "plant", title: "Daily streak ×10", goal: 10, have: best, unit: "days", active: s.streak >= 10 },
     { icon: "book", title: "50 words", goal: 50, have: learned, unit: "words" },
     { icon: "star", title: "Level 5", goal: 5, have: level, unit: "" },
     { icon: "brush", title: "100 words", goal: 100, have: learned, unit: "words" },
-    { icon: "flame", title: "Daily streak ×30", goal: 30, have: best, unit: "days", active: s.streak >= 30 },
+    { icon: "plant", title: "Daily streak ×30", goal: 30, have: best, unit: "days", active: s.streak >= 30 },
     { icon: "chat", title: "50 sentences", goal: 50, have: sentences, unit: "sentences" },
     { icon: "book", title: "250 words", goal: 250, have: learned, unit: "words" },
     { icon: "star", title: "Level 10", goal: 10, have: level, unit: "" },
   ];
   const done = list.filter((a) => a.have >= a.goal);
   const next = list.filter((a) => a.have < a.goal).slice(0, 2);
-  const colors = { sprout: "#9cbc8f", book: "#a9c6da", flame: "#e08d6c", chat: "#e2bd4e", star: "#e2bd4e", brush: "#c9b48a" };
+  const colors = { sprout: "#9cbc8f", book: "#a9c6da", flame: "#e08d6c", plant: "#8cc06b", chat: "#e2bd4e", star: "#e2bd4e", brush: "#c9b48a" };
   const row = (a, locked) =>
     h(
       "div",
@@ -662,7 +725,7 @@ async function statsScreen() {
         "div",
         { class: "journey-head" },
         h("div", { class: "journey-avatar" }, svgEl(SVG.leaf)),
-        h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, `Level ${level} · ${totalXp} XP · 🔥 ${s.streak || 0}`))
+        h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, `Level ${level} · ${totalXp} XP · 🌱 ${s.streak || 0}-day streak`))
       ),
       h(
         "div",
@@ -823,6 +886,8 @@ async function settingsScreen() {
         field("Stroke strictness", select("leniency", [["0.7", "Strict"], ["1", "Normal"], ["1.4", "Relaxed"]])),
         field("Show a hint after", select("hint_after_misses", [["2", "2 misses"], ["3", "3 misses"], ["5", "5 misses"], ["99", "Never"]]))
       ),
+      canRemind() ? h("h2", { class: "section-title" }, "🔔 Daily reminder") : null,
+      canRemind() ? reminderCard(s) : null,
       h("h2", { class: "section-title" }, "🎯 Lessons"),
       h(
         "div",
@@ -844,6 +909,30 @@ async function settingsScreen() {
       h("p", { class: "muted small center", style: { marginTop: "4px" } }, `${window.__appVersion ? `Language Master ${window.__appVersion} · ` : ""}Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
     ],
     "#/settings"
+  );
+}
+
+/** Reminder toggle + time; changes apply right away. */
+function reminderCard(s) {
+  const toggle = h("input", { type: "checkbox", class: "toggle" });
+  toggle.checked = s.reminder_on;
+  const time = h("input", { class: "input", type: "time", value: s.reminder_time || "19:00", style: { maxWidth: "170px" } });
+  const apply = async () => {
+    if (toggle.checked && !(await ensurePermission())) {
+      toggle.checked = false;
+      toast("Allow notifications for Language Master in Android settings to get reminders", 5000);
+    }
+    state.settings = await api("/api/settings", { method: "PUT", body: { reminder_on: toggle.checked, reminder_time: time.value || "19:00" } });
+    await scheduleReminders();
+    toast(toggle.checked ? `🌱 We'll remind you at ${time.value} if your plant is thirsty` : "Reminder off");
+  };
+  toggle.onchange = apply;
+  time.onchange = () => toggle.checked && apply();
+  return h(
+    "div",
+    { class: "card" },
+    h("div", { class: "switch-row" }, h("div", {}, "Remind me to practise", h("div", { class: "small muted" }, "Only on days you haven't watered your plant yet")), toggle),
+    h("div", { class: "field", style: { marginTop: "12px", marginBottom: 0 } }, h("label", {}, "Time"), time)
   );
 }
 
@@ -923,6 +1012,10 @@ function welcomeScreen(gemmaNext) {
     if (offerGemma) await gemmaSetupScreen({ step: "2 of 2" });
   }
   route();
+  if (canRemind()) {
+    scheduleReminders();
+    document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && scheduleReminders());
+  }
   api("/api/ai/status")
     .then((st) => {
       state.aiStatus = st;

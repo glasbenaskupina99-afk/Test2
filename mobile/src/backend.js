@@ -10,6 +10,8 @@ import seedSl from "../../app/data/slovenian_a1.json";
 import FALLBACK_SL from "../../app/data/slovenian_sentences.json";
 import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
+import * as fsrs from "./fsrs.js";
+import LOOKALIKES from "../../app/data/lookalikes.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
 
@@ -34,7 +36,9 @@ const DEFAULTS = {
   ai_enabled: true,
   gemma_backend: "cpu",
   display_name: "",
-  gemma_card_hidden: false, // "Add your AI tutor" card on the home screen dismissed
+  gemma_card_hidden: false,
+  reminder_on: false, // daily practice reminder (Android app)
+  reminder_time: "19:00", // "Add your AI tutor" card on the home screen dismissed
   gemma_preload: true, // load the model in the background when the app starts
   // Browser version: Gemma through an OpenAI-compatible server (e.g. Ollama on this computer).
   llm_base_url: "http://localhost:11434/v1",
@@ -86,8 +90,13 @@ function seedWords(set, startId) {
   return words;
 }
 
+/** Streak plant: raindrops (streak freezes) and the days they saved. */
+function freshGarden() {
+  return { raindrops: 1, saved: [], awarded: [], notice: null, lostNoticed: null };
+}
+
 function freshDb() {
-  return { version: 3, nextId: 1, words: [], cards: [], activity: {}, sentenceLog: [], settings: {} };
+  return { version: 3, nextId: 1, words: [], cards: [], activity: {}, sentenceLog: [], settings: {}, garden: freshGarden(), lookalikes: {} };
 }
 
 /** Bring older saves up to date: tag languages/sections and add any new built-in word lists. */
@@ -116,6 +125,8 @@ export async function init(storage) {
   }
   if (!db || !Array.isArray(db.words)) db = freshDb();
   migrate();
+  db.garden ||= freshGarden();
+  db.lookalikes ||= {};
   ai.configure(settingsAll);
   document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && flush());
 }
@@ -154,18 +165,87 @@ function addActivity({ xp = 0, new_words = 0, reviews = 0, sentences = 0, second
   a.new_words += new_words;
   a.reviews += reviews;
   a.sentences += sentences;
+  if (xp > 0) awardRaindrop();
   persist();
 }
 
+const practiced = (k) => db.activity[k]?.xp > 0;
+/** A day keeps the streak alive if you practised or a raindrop watered it. */
+const covered = (k) => practiced(k) || db.garden.saved.includes(k);
+const shiftDay = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+
 function streak() {
-  const d = new Date();
-  if (!(db.activity[dayKey(d)]?.xp > 0)) d.setDate(d.getDate() - 1);
+  let d = new Date();
+  if (!covered(dayKey(d))) d = shiftDay(d, -1);
   let n = 0;
-  while (db.activity[dayKey(d)]?.xp > 0) {
-    n++;
-    d.setDate(d.getDate() - 1);
+  while (covered(dayKey(d))) {
+    if (practiced(dayKey(d))) n++;
+    d = shiftDay(d, -1);
   }
   return n;
+}
+
+/** Longest streak ever (days saved by raindrops bridge the gap but don't count). */
+function bestStreak() {
+  const keys = [...new Set([...Object.keys(db.activity).filter(practiced), ...db.garden.saved])].sort();
+  let best = 0, run = 0, prev = null;
+  for (const k of keys) {
+    const d = new Date(k + "T12:00:00");
+    if (!(prev && Math.round((d - prev) / DAY) === 1)) run = 0;
+    if (practiced(k)) run++;
+    best = Math.max(best, run);
+    prev = d;
+  }
+  return Math.max(best, streak());
+}
+
+const MAX_RAINDROPS = 2;
+function awardRaindrop() {
+  const g = db.garden;
+  const today = dayKey();
+  const s = streak();
+  if (s > 0 && s % 7 === 0 && !g.awarded.includes(today) && g.raindrops < MAX_RAINDROPS) {
+    g.raindrops++;
+    g.awarded.push(today);
+    g.notice = { kind: "earned", streak: s, raindrops: g.raindrops };
+  }
+}
+
+/**
+ * Called when the app opens: if you missed days since your last practice and have enough
+ * raindrops to cover all of them, they water the plant on those days and the streak lives on.
+ * Otherwise the streak is lost (raindrops are kept for next time).
+ */
+function waterMissedDays() {
+  const g = db.garden;
+  const today = new Date();
+  let last = null;
+  for (let i = 1; i <= 60; i++) {
+    const k = dayKey(shiftDay(today, -i));
+    if (covered(k)) { last = shiftDay(today, -i); break; }
+  }
+  if (!last) return;
+  const missed = [];
+  for (let d = shiftDay(last, 1); dayKey(d) < dayKey(today); d = shiftDay(d, 1)) missed.push(dayKey(d));
+  if (!missed.length) return;
+  const before = (() => { let n = 0, d = last; while (covered(dayKey(d))) { if (practiced(dayKey(d))) n++; d = shiftDay(d, -1); } return n; })();
+  if (!before) return;
+  if (missed.length <= g.raindrops) {
+    g.raindrops -= missed.length;
+    g.saved.push(...missed);
+    g.saved = g.saved.slice(-60);
+    g.notice = { kind: "saved", days: missed.length, streak: before, raindrops: g.raindrops };
+  } else if (g.lostNoticed !== dayKey(last)) {
+    g.lostNoticed = dayKey(last);
+    g.notice = { kind: "lost", streak: before, raindrops: g.raindrops };
+  }
+  persist();
+}
+
+/** healthy (watered today) · thirsty (streak waiting for today's practice) · seed (no streak) */
+function plantState() {
+  if (practiced(dayKey())) return "healthy";
+  return streak() > 0 ? "thirsty" : "seed";
 }
 
 const course = () => settingsAll().course;
@@ -214,29 +294,30 @@ function learnedWords() {
   return W().filter((w) => ids.has(w.id)).sort(byPosition).map(pick);
 }
 
+/** FSRS scheduling. grade 0..3 = Again, Hard, Good, Easy. */
 function schedule(card, grade) {
-  let { ease, interval, reps, lapses } = card;
+  const rating = grade + 1;
+  let { reps = 0, lapses = 0 } = card;
+  // Cards reviewed with the old SM-2 scheduler carry over their interval and ease.
+  const prev = card.stability ? card : card.reps > 0 ? fsrs.fromSm2(card) : {};
+  const last = card.last_review ? new Date(card.last_review.replace(" ", "T")) : null;
+  const elapsed = last ? (Date.now() - last) / DAY : 0;
+  const { stability, difficulty } = fsrs.next(prev, rating, elapsed);
+  let interval;
   let due;
-  if (grade === 0) {
+  if (rating === 1) {
     lapses++;
-    ease = Math.max(1.3, ease - 0.2);
     interval = 0;
-    due = addMs(10 * 60000);
+    due = addMs(10 * 60000); // see it again later in the day
   } else {
-    if (grade === 1) {
-      ease = Math.max(1.3, ease - 0.15);
-      interval = Math.max(1, interval * 1.2);
-    } else if (grade === 2) {
-      interval = interval < 1 ? 1 : interval < 3 ? 3 : interval * ease;
-    } else {
-      ease += 0.15;
-      interval = interval < 1 ? 3 : interval * ease * 1.3;
-    }
-    interval = Math.min(interval, 365);
+    interval = fsrs.scheduleDays(stability, rating);
     due = addMs(interval * DAY);
     reps++;
   }
-  return { ease: +ease.toFixed(3), interval: +interval.toFixed(3), reps, lapses, due: fmt(due), last_review: fmt(now()) };
+  return {
+    stability: +stability.toFixed(4), difficulty: +difficulty.toFixed(3), interval: +interval.toFixed(3),
+    reps, lapses, due: fmt(due), last_review: fmt(now()),
+  };
 }
 
 // ------------------------------------------------------------------ sentences
@@ -283,6 +364,7 @@ function fallbackSentences(knownChars, count, avoid) {
 
 const routes = {
   "GET /api/home": () => {
+    waterMissedDays();
     const s = settingsAll();
     const n = fmt(now());
     const ids = learnedIds();
@@ -304,15 +386,34 @@ const routes = {
       const all = new Set(db.cards.map((c) => c.word_id));
       return { lang, total: ws.length, learned: ws.filter((w) => all.has(w.id)).length };
     });
+    const today = db.activity[dayKey()] || {};
+    const due = cards.filter((c) => c.due <= n).length;
+    const newLeft = W().filter((w) => !ids.has(w.id) && w.section === secs.current).length;
+    const plan = {
+      reviews_done: today.reviews || 0,
+      reviews_left: due,
+      new_done: today.new_words || 0,
+      new_left: Math.min(newLeft, Math.max(0, s.new_per_lesson - (today.new_words || 0))),
+    };
+    // ~15 s per review, ~1 min per new word (see, trace, write, quiz)
+    plan.minutes = Math.ceil((plan.reviews_left * 15 + plan.new_left * 60) / 60);
+    const notice = db.garden.notice;
+    if (notice) { db.garden.notice = null; persist(); }
     return {
       streak: streak(),
+      plant: plantState(),
+      raindrops: db.garden.raindrops,
+      saved_days: db.garden.saved.slice(-14),
+      garden_notice: notice,
+      plan,
+      lookalikes: (LOOKALIKES[course()] || []).length,
       xp_today: db.activity[dayKey()]?.xp || 0,
       daily_goal: s.daily_goal,
       course: course(),
       courses,
       sections: secs.list,
       section: secs.current,
-      due: cards.filter((c) => c.due <= n).length,
+      due,
       due_by_skill: Object.fromEntries(SKILLS.map((k) => [k, cards.filter((c) => c.skill === k && c.due <= n).length])),
       next_due: future[0] || null,
       learned: ids.size,
@@ -437,6 +538,48 @@ const routes = {
     return { xp, ...card };
   },
 
+  "GET /api/reminder-info": () => {
+    const st = settingsAll();
+    return { on: st.reminder_on, time: st.reminder_time, streak: streak(), practiced_today: practiced(dayKey()), due: SC().filter((c) => c.due <= fmt(now())).length };
+  },
+
+  "GET /api/garden": () => {
+    const days = [];
+    for (let i = 13; i >= 0; i--) {
+      const k = dayKey(shiftDay(new Date(), -i));
+      days.push({ day: k, state: practiced(k) ? "watered" : db.garden.saved.includes(k) ? "saved" : "missed" });
+    }
+    return { streak: streak(), best: bestStreak(), plant: plantState(), raindrops: db.garden.raindrops, max_raindrops: MAX_RAINDROPS, days };
+  },
+
+  // Look-alike characters (未/末, 己/已 …): groups with learned characters and past mistakes come first.
+  "GET /api/lookalikes/session": (_, __, query) => {
+    const groups = LOOKALIKES[course()] || [];
+    const n = Math.min(Number(query.get("n")) || 8, groups.length);
+    const known = new Set(learnedWords().flatMap((w) => [...w.hanzi]));
+    const scored = groups.map((g, i) => {
+      const key = g.chars.map((c) => c[0]).join("");
+      const st = db.lookalikes[key] || { seen: 0, wrong: 0 };
+      const knownN = g.chars.filter((c) => known.has(c[0])).length;
+      return { g, key, score: knownN * 2 + st.wrong * 3 - st.seen * 0.5 + Math.random() * 2, i };
+    });
+    const items = scored.sort((a, b) => b.score - a.score).slice(0, n).map(({ g, key }) => ({
+      key,
+      hint: g.hint,
+      chars: g.chars.map(([c, meaning, reading]) => ({ c, meaning, reading: course() === "zh" ? toPinyin(c) : reading || "", known: known.has(c) })),
+    }));
+    return { items: shuffled(items) };
+  },
+
+  "POST /api/lookalikes/answer": (_, body) => {
+    const st = (db.lookalikes[body.key] ||= { seen: 0, wrong: 0 });
+    st.seen++;
+    if (!body.ok) st.wrong++;
+    const xp = body.ok ? 2 : 1;
+    addActivity({ xp, reviews: 0 });
+    return { xp };
+  },
+
   "POST /api/check/pinyin": (_, body) =>
     course() === "sl"
       ? compareSpelling(String(body.answer || ""), String(body.expected || ""))
@@ -549,16 +692,7 @@ const routes = {
     const all = Object.entries(db.activity).sort((a, b) => (a[0] < b[0] ? -1 : 1));
     const totalXp = all.reduce((a, [, d]) => a + (d.xp || 0), 0);
     const month = dayKey().slice(0, 7);
-    let best = 0;
-    let run = 0;
-    let prev = null;
-    for (const [day, d] of all) {
-      if (!(d.xp > 0)) continue;
-      const dt = new Date(day + "T12:00:00");
-      run = prev && Math.round((dt - prev) / DAY) === 1 ? run + 1 : 1;
-      best = Math.max(best, run);
-      prev = dt;
-    }
+    const best = bestStreak();
     return {
       days,
       skills,

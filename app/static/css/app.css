@@ -774,3 +774,97 @@ body::before {
 .app-logo { display: block; object-fit: contain; pointer-events: none; user-select: none; }
 .welcome-logo { width: 150px; height: 150px; margin: -8px 0 -4px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35)); }
 .settings-logo { width: 64px; height: 64px; margin: 28px auto 0; opacity: .9; }
+
+/* ---------- Streak plant (1.3) ---------- */
+.art { display: inline-grid; place-items: center; line-height: 0; }
+.art svg { width: 100%; height: 100%; overflow: visible; }
+.plant .soil { fill: #6b4f36; }
+.plant .stem { stroke: #6f9a58; transition: stroke .4s; }
+.plant .leaf { fill: #8cc06b; transform-box: view-box; transition: transform .6s ease, fill .6s; }
+.plant .l1 { transform-origin: 32px 46px; }
+.plant .l2 { transform-origin: 32px 39px; }
+.plant .l3 { transform-origin: 32px 28px; fill: #a5d17f; }
+.plant.healthy .leaf { animation: sway 4s ease-in-out infinite; }
+.plant.healthy .l2 { animation-delay: -1.3s; }
+.plant.healthy .l3 { animation-delay: -2.6s; }
+/* thirsty: leaves droop and yellow */
+.plant.thirsty .stem { stroke: #9a9a55; }
+.plant.thirsty .leaf { fill: #c2b45c; }
+.plant.thirsty .l1 { transform: rotate(-38deg); }
+.plant.thirsty .l2 { transform: rotate(40deg); }
+.plant.thirsty .l3 { transform: rotate(28deg) scale(.92); fill: #cdbf6a; }
+.plant.thirsty { animation: wilt 3.2s ease-in-out infinite; transform-origin: 50% 90%; }
+/* seed: a tiny sprout */
+.plant.seed .l1, .plant.seed .l2 { transform: scale(.55); }
+.plant.seed .l3 { transform: scale(0); }
+.plant.seed .stem { transform: scaleY(.55); transform-origin: 32px 57px; transform-box: view-box; }
+/* dry: brown and curled */
+.plant.dry .stem { stroke: #8a6a45; }
+.plant.dry .leaf { fill: #a57c4f; }
+.plant.dry .l1 { transform: rotate(-60deg) scale(.85); }
+.plant.dry .l2 { transform: rotate(62deg) scale(.85); }
+.plant.dry .l3 { transform: rotate(48deg) scale(.75); fill: #b48a5a; }
+@keyframes sway { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(4deg); } }
+@keyframes wilt { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2.5deg); } }
+
+.stat.streak-plant { background: none; border: none; padding: 0; cursor: pointer; color: #8cc06b; font: inherit; font-weight: 800; font-size: 17px; }
+.stat.streak-plant .ico { width: 26px; height: 26px; }
+.stat.streak-plant.thirsty { color: #c2b45c; }
+.stat.streak-plant.seed { color: var(--muted); }
+
+.drop path:first-child { fill: #7fb4d6; stroke: #5b93b8; stroke-width: 1.2; }
+.drop .shine { stroke: #e6f3fb; }
+.drop.drop-empty path:first-child { fill: none; stroke: var(--border-dark, var(--border)); stroke-dasharray: 2 2; }
+.drop.drop-empty .shine { display: none; }
+.dayleaf path:first-child { fill: #8cc06b; }
+.dayleaf .vein { stroke: #4f7a3d; }
+.dayleaf.saved path:first-child { fill: #b98a55; }
+.dayleaf.saved .vein { stroke: #7a5733; }
+.dayleaf.missed circle { fill: var(--border); }
+
+.garden-hero { display: grid; place-items: center; margin-top: 4px; }
+.garden-plant { width: 128px; height: 128px; }
+.garden-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px 4px; margin: 4px 0 8px; }
+.gday { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.gday .art { width: 26px; height: 26px; }
+.gday small { color: var(--muted); font-size: 11px; }
+.garden-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: center; margin-bottom: 12px; }
+.garden-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.garden-legend .art { width: 16px; height: 16px; }
+.garden-drops .row { align-items: center; gap: 6px; }
+.garden-drops .art { width: 26px; height: 26px; flex: none; }
+.art { flex: none; }
+.garden-remind { text-decoration: none; }
+.dialog-icon.art { background: var(--surface-2, var(--green-light)); }
+.dialog-icon .art.big { width: 46px; height: 46px; }
+
+.week .bar.saved .week-dry { width: 18px; height: 18px; }
+
+/* Today's plan */
+.plan-card h3 { margin: 0; font-size: 17px; }
+.plan-time { font-weight: 800; color: var(--yellow); font-size: 14px; }
+.plan-rows { display: grid; gap: 6px; margin-top: 10px; }
+.plan-row { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+.plan-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); display: grid; place-items: center; font-size: 12px; font-weight: 900; flex: none; }
+.plan-row.ok .plan-check { background: var(--green); border-color: var(--green); color: #fff; }
+.plan-row.ok b { color: var(--muted); }
+.plan-card.done { border-color: var(--green); }
+
+/* Look-alikes */
+.mode.orange { --c: var(--orange); --cd: var(--orange-dark); }
+:root[data-theme="forest"] .mode.orange { --c: #8a7a3a; --cd: #6a5d2b; }
+.choices.three { grid-template-columns: repeat(3, 1fr); }
+.lookalike-compare { margin-top: 18px; }
+.lookalike-row { display: flex; gap: 10px; justify-content: center; }
+.lookalike-card {
+  flex: 1; max-width: 140px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px 12px;
+  border: 2px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text); cursor: pointer; font: inherit; font-size: 13px;
+}
+.lookalike-card .hz { font-size: 44px; line-height: 1.15; color: var(--text-strong); }
+.lookalike-card .py { color: var(--blue); font-weight: 700; }
+.lookalike-card.on { border-color: var(--green); background: var(--green-light); }
+.lookalike-hint { margin: 12px 0 0; padding: 10px 14px; border-radius: 14px; background: var(--surface-2, var(--surface)); font-size: 14px; line-height: 1.45; }
+.plan-row.none b { color: var(--muted); font-weight: 700; }
+.drop.drop-empty path:first-child { stroke: var(--muted); opacity: .55; }
+:root[data-theme="forest"] input[type="time"] { color-scheme: dark; }
+.drop.drop-empty path:first-child { fill: rgba(127, 180, 214, .12); stroke: #7fb4d6; stroke-width: 1.4; stroke-dasharray: none; opacity: .6; }

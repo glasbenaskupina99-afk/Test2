@@ -89,12 +89,12 @@ export function confirmDialog({ title, message = "", icon = "", confirmLabel = "
     const onKey = (e) => { if (e.key === "Escape") done(false); };
     const bg = h("div", { class: "dialog-bg", onclick: (e) => { if (e.target === bg) done(false); } },
       h("div", { class: "dialog", role: "alertdialog", "aria-modal": "true" },
-        icon ? h("div", { class: "dialog-icon" }, icon) : null,
+        icon ? h("div", { class: "dialog-icon" + (icon instanceof Node ? " art" : "") }, icon) : null,
         h("h2", {}, title),
         message ? h("p", { class: "muted" }, message) : null,
         h("div", { class: "dialog-actions" },
-          h("button", { class: "btn", onclick: () => done(false) }, cancelLabel),
-          h("button", { class: `btn ghost${danger ? " danger" : ""}`, onclick: () => done(true) }, confirmLabel),
+          cancelLabel ? h("button", { class: "btn", onclick: () => done(false) }, cancelLabel) : null,
+          h("button", { class: cancelLabel ? `btn ghost${danger ? " danger" : ""}` : "btn", onclick: () => done(true) }, confirmLabel),
         ),
       ),
     );

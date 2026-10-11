@@ -640,3 +640,73 @@ export function sentenceSpeakRecall(ctx, s) {
     skip: "Can't speak now",
   };
 }
+
+/**
+ * Look-alike characters (未/末 …).
+ *   pick    — "Which one means …?" choose among the look-alikes
+ *   meaning — see one of them, choose its meaning
+ * After checking, all of them are shown side by side with what tells them apart.
+ */
+export function lookalike(ctx, item, kind) {
+  const target = item.chars[Math.floor(Math.random() * item.chars.length)];
+  const say = (c) => speak(isJa() ? c.reading || c.c : c.c);
+  const options = shuffle(item.chars.slice());
+  let picked = null;
+  const tiles = options.map((c) => {
+    const t = h(
+      "button",
+      {
+        class: "choice" + (kind === "meaning" ? " text" : ""),
+        onclick: () => {
+          picked = c;
+          tiles.forEach((x) => x.classList.toggle("selected", x === t));
+          ctx.setReady(true);
+        },
+      },
+      kind === "meaning" ? h("span", { class: "txt" }, c.meaning) : h("span", { class: "hz" }, c.c)
+    );
+    return t;
+  });
+  const compare = h("div", { class: "lookalike-compare", hidden: true });
+  const el = h(
+    "div",
+    {},
+    h("div", { class: "ex-kicker green" }, "🍃 Look-alikes"),
+    kind === "meaning"
+      ? [h("h2", { class: "ex-title" }, "What does this mean?"), h("div", { class: "big-hz hz", style: { margin: "4px 0 18px" } }, target.c)]
+      : h("h2", { class: "ex-title" }, `Which one means “${target.meaning}”?`),
+    h("div", { class: "choices" + (options.length === 3 ? " three" : "") }, tiles),
+    compare
+  );
+  return {
+    el,
+    mode: "check",
+    async check() {
+      const ok = picked === target;
+      tiles.forEach((t, i) => {
+        if (options[i] === target) t.classList.add("correct");
+        else if (options[i] === picked) t.classList.add("wrong");
+      });
+      say(target);
+      compare.replaceChildren(
+        h(
+          "div",
+          { class: "lookalike-row" },
+          item.chars.map((c) =>
+            h(
+              "button",
+              { class: "lookalike-card" + (c === target ? " on" : ""), onclick: () => say(c) },
+              h("span", { class: "hz" }, c.c),
+              c.reading ? h("small", { class: "py" }, c.reading) : null,
+              h("span", {}, c.meaning)
+            )
+          )
+        ),
+        h("p", { class: "lookalike-hint" }, "💡 ", item.hint)
+      );
+      compare.hidden = false;
+      setTimeout(() => compare.scrollIntoView({ behavior: "smooth", block: "nearest" }), 50);
+      return { ok, grade: ok ? 2 : 0, title: ok ? "Correct!" : `That was ${picked.c} — ${picked.meaning}`, detail: ok ? `${target.c} = ${target.meaning}` : `${target.c} = ${target.meaning}` };
+    },
+  };
+}

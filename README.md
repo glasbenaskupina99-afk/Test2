@@ -11,16 +11,19 @@ A Chinese (English → Mandarin) trainer in the style of Duolingo. Run it as an 
 | 🌱 **Learn new words** | See the word with an animated stroke order, audio, pinyin and an optional AI memory hook → trace it → write it from memory → a mixed quiz (multiple choice, speaking, writing). |
 | 🏋️ **Practice** | Spaced-repetition review. Each word has three cards that are scheduled separately: **writing** (from the English prompt only, with no outline), **speaking** and **recall** (multiple choice or typed pinyin). Mistakes come back at the end of the session. |
 | ✍️ / 👆 **With or without writing** | When you tap Learn new words or Practice, you pick **With writing** (trace and write by hand) or **Choice only**. Choice only is a no-writing mode: choose the character for an English word, pick the meaning of a character, pick its pinyin or reading, or listen and pick the character. Choice-only practice only updates the recall reviews, so writing reviews stay due until you actually write. |
+| 🍃 **Look-alikes** | Tell apart characters that are easy to mix up (未/末, 己/已, 人/入/八, 待/持/特 …): pick the right one for a meaning, or the meaning for a character, then see them side by side with what tells them apart. Groups with characters you've learned and ones you got wrong come first. Chinese and Japanese. |
 | 💬 **Sentences** | Gemma writes new sentences using the words you already know, focusing on the ones you get wrong. You can **hand-write** them (characters you haven't learned show a tracing guide), **type** them (Gemma grades your translation, so valid alternative wordings count), or **say** them from memory. 50 built-in sentences are used if AI is off. |
 
-Also included: 153 HSK 1 words in 10 themed units, adding your own words (Gemma can fill in the characters and meaning), streaks, a daily XP goal, stats, the "trickiest words" list, and dark mode.
+Also included: 153 HSK 1 words in 10 themed units, adding your own words (Gemma can fill in the characters and meaning), a daily XP goal, stats, the "trickiest words" list, and dark mode.
+
+**Streak plant (Android app 1.3):** your streak is a plant that grows while you practise every day and droops when today's practice is still missing. **Raindrops** are streak freezes: if you miss a day, a raindrop waters the plant so the streak survives, and that day shows a dried leaf. You earn one for every 7 days in a row (you can keep 2). **Today's plan** on the home screen shows the reviews and new words left with a time estimate, and an optional **daily reminder** (Settings → Daily reminder) sends a leaf-themed notification at your chosen time, only on days you haven't practised yet.
 
 ### What uses AI and what doesn't
 
 | Task | How |
 |---|---|
 | Stroke and stroke-order grading | [Hanzi Writer](https://hanziwriter.org) with Make Me a Hanzi data. No AI, runs in the browser. |
-| Scheduling (SRS) | SM-2-style algorithm, no AI. |
+| Scheduling (SRS) | [FSRS](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm) in the app and browser version (older SM-2 progress carries over); the Python server version still uses SM-2. No AI. |
 | Pinyin answers, tone checking | Local, using `pypinyin`. |
 | Audio playback | Your phone's built-in Chinese voice. |
 | Sentence generation, translation grading, memory hooks, auto-filling new words | **Gemma** |

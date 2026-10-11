@@ -5,6 +5,7 @@ import { TextToSpeech } from "@capacitor-community/text-to-speech";
 import { SpeechRecognition } from "@capacitor-community/speech-recognition";
 import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
 import { Share } from "@capacitor/share";
+import { LocalNotifications } from "@capacitor/local-notifications";
 import * as backend from "./backend.js";
 
 const isNative = Capacitor.isNativePlatform();
@@ -46,6 +47,7 @@ function recognize(language = "zh-CN") {
 if (isNative) {
   window.__native = {
     gemma: Gemma,
+    notifications: LocalNotifications,
     speak: (text, rate, lang = "zh-CN") => TextToSpeech.speak({ text, lang, rate: rate / 0.8, pitch: 1, volume: 1, category: "playback" }),
     stopSpeaking: () => TextToSpeech.stop().catch(() => {}),
     recognize,
@@ -56,7 +58,7 @@ if (isNative) {
   };
 } else if (window.__gemmaMock) {
   // Used by browser tests to exercise the on-device AI code paths.
-  window.__native = { gemma: window.__gemmaMock, shareFile: async () => {} };
+  window.__native = { gemma: window.__gemmaMock, notifications: window.__notifyMock, shareFile: async () => {} };
 }
 
 // Browser version: work offline and be installable as an app.

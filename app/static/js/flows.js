@@ -311,3 +311,23 @@ export function drillWord(w) {
     endTitle: "Drill done!",
   });
 }
+
+// ------------------------------------------------------------------ look-alike characters
+
+export async function lookalikes() {
+  const { items } = await api("/api/lookalikes/session?n=8");
+  if (!items.length) {
+    toast("No look-alike characters for this course yet");
+    return null;
+  }
+  const steps = items.map((it, i) => {
+    const make = (ctx) => ex.lookalike(ctx, it, i % 2 ? "meaning" : "pick");
+    return step(make, async (res) => {
+      const r = await api("/api/lookalikes/answer", { method: "POST", body: { key: it.key, ok: res.ok } });
+      // A mistake comes back once at the end, the other way round.
+      const requeue = res.ok ? null : step((ctx) => ex.lookalike(ctx, it, i % 2 ? "pick" : "meaning"), async () => ({ xp: 0 }));
+      return { xp: r.xp, requeue };
+    }, it.key);
+  });
+  return runLesson({ steps, endTitle: "Look-alikes done!" });
+}

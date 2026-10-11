@@ -6,13 +6,13 @@ import * as flows from "./flows.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 
 const app = document.getElementById("app");
-const UNIT_COLORS = ["#58cc02", "#ce82ff", "#1cb0f6", "#ff9600", "#ff4b4b", "#2b70c9", "#00cd9c", "#ff86d0", "#a5a5a5", "#cc348d"];
+const UNIT_COLORS = ["#6f8f6c", "#557389", "#a9643f", "#8a6d3b", "#6b5b7b", "#3f7065", "#9a5a55", "#5c6e3a", "#7a6a55", "#4f5f7a"];
 
 // ------------------------------------------------------------------ theme
 
 function applyTheme() {
   let t = "auto";
-  try { t = localStorage.getItem("theme") || "auto"; } catch { /* ignore */ }
+  try { t = localStorage.getItem("theme") || "forest"; } catch { /* ignore */ }
   if (t === "auto") document.documentElement.removeAttribute("data-theme");
   else document.documentElement.setAttribute("data-theme", t);
 }
@@ -20,18 +20,24 @@ applyTheme();
 
 // ------------------------------------------------------------------ shell
 
+const TAB_ICONS = {
+  learn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>',
+  words: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/></svg>',
+  stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="11" width="3.5" height="9" rx="1"/><rect x="10.25" y="5" width="3.5" height="15" rx="1"/><rect x="16.5" y="14" width="3.5" height="6" rx="1"/></svg>',
+  settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg>',
+};
 const TABS = [
-  ["#/", "🏠", "Learn"],
-  ["#/words", "📖", "Words"],
-  ["#/stats", "📊", "Stats"],
-  ["#/settings", "⚙️", "Settings"],
+  ["#/", "learn", "Learn"],
+  ["#/words", "words", "Words"],
+  ["#/stats", "stats", "Stats"],
+  ["#/settings", "settings", "Settings"],
 ];
 
 function shell(content, active) {
   const tabbar = h(
     "nav",
     { class: "tabbar" },
-    TABS.map(([href, ico, label]) => h("a", { href, class: href === active ? "active" : "" }, h("span", { class: "ico" }, ico), label))
+    TABS.map(([href, ico, label]) => h("a", { href, class: href === active ? "active" : "" }, h("span", { class: "ico", html: TAB_ICONS[ico] }), label))
   );
   app.replaceChildren(h("div", { class: "screen" }, content), tabbar);
 }
@@ -146,7 +152,7 @@ async function homeScreen() {
       });
       if (m) startFlow(() => flows.learnNew(m));
     } },
-    h("div", { class: "badge-ico" }, "🌱"),
+    h("div", { class: "badge-ico", html: SVG.sprout }),
     h(
       "div",
       {},
@@ -169,7 +175,7 @@ async function homeScreen() {
       });
       if (m) startFlow(() => flows.review({ writing: m.writing, extra: m.writing ? home.due === 0 : !d.recall }));
     } },
-    h("div", { class: "badge-ico" }, "🏋️"),
+    h("div", { class: "badge-ico", html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/><path d="M12 8v4l3 2"/></svg>' }),
     h(
       "div",
       {},
@@ -181,7 +187,7 @@ async function homeScreen() {
   const sentenceCard = h(
     "button",
     { class: "mode purple", onclick: () => startFlow(flows.sentences) },
-    h("div", { class: "badge-ico" }, "💬"),
+    h("div", { class: "badge-ico", html: SVG.chat }),
     h("div", {}, h("h3", {}, "Sentences"), h("p", {}, state.settings.ai_enabled ? "Write, type & say AI-made sentences" : "Write, type & say sentences"))
   );
 
@@ -474,39 +480,158 @@ function addWordSheet() {
 
 // ------------------------------------------------------------------ stats
 
+const SVG = {
+  leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#3d5a40" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6-1-10-6-14 7 0 12 4 12 10-2 1-4 2-6 4z"/><path d="M12 21c-1-4-2-7-5-10M9 15H6M11 18H7"/></svg>',
+  hourglass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3h12M6 21h12M7 3c0 5 10 6 10 9s-10 4-10 9M17 3c0 5-10 6-10 9s10 4 10 9"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/><path d="M12 9c1-2 2-3 4-3.5M12 9c-1-2-2-3-4-3.5"/></svg>',
+  sprout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C12 8 9 5 4 5c0 4 3 7 8 7zM12 10c0-3 2-6 8-6 0 4-3 6-8 6z"/></svg>',
+  flame: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-5 3-7 1 2 2 3 3 3 0-2-1-4 0-7z"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>',
+  brush: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4L10 14"/><path d="M10 14c-3 0-5 2-5 5-1 1-2 1-2 1 4 1 8 0 9-3 1-1 0-2-2-3z"/></svg>',
+};
+const svgEl = (markup, attrs = {}) => {
+  const span = h("span", attrs);
+  span.innerHTML = markup;
+  return span.firstChild;
+};
+
+/** Smooth line through points (Catmull-Rom → cubic Bézier). */
+function smoothPath(pts) {
+  if (pts.length < 2) return "";
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0]},${p2[1]}`;
+  }
+  return d;
+}
+
+function weeklyFromDays(days) {
+  const weeks = [];
+  const today = new Date();
+  for (let w = 7; w >= 0; w--) {
+    const end = new Date(today);
+    end.setDate(end.getDate() - w * 7);
+    const start = new Date(end);
+    start.setDate(start.getDate() - 6);
+    const key = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const ks = key(start), ke = key(end);
+    const inWeek = days.filter((d) => d.day >= ks && d.day <= ke);
+    weeks.push({
+      label: start.toLocaleDateString(undefined, { day: "numeric", month: "numeric" }),
+      xp: inWeek.reduce((a, d) => a + (d.xp || 0), 0),
+      words: inWeek.reduce((a, d) => a + (d.new_words || 0), 0),
+    });
+  }
+  return weeks;
+}
+
+function journeyChart(weeks) {
+  const W = 340, H = 150, padX = 10, top = 14, bottom = 26;
+  const maxXp = Math.max(30, ...weeks.map((w) => w.xp));
+  const maxWords = Math.max(5, ...weeks.map((w) => w.words));
+  const x = (i) => padX + (i * (W - 2 * padX)) / (weeks.length - 1);
+  const yXp = (v) => top + (H - top - bottom) * (1 - v / maxXp);
+  const yW = (v) => top + (H - top - bottom) * (1 - v / maxWords);
+  const xpPts = weeks.map((w, i) => [+x(i).toFixed(1), +yXp(w.xp).toFixed(1)]);
+  const wPts = weeks.map((w, i) => [+x(i).toFixed(1), +yW(w.words).toFixed(1)]);
+  const base = H - bottom;
+  const area = `${smoothPath(xpPts)} L${xpPts.at(-1)[0]},${base} L${xpPts[0][0]},${base} Z`;
+  const dots = (pts, color) => pts.map(([cx, cy]) => `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${color}" stroke="#1c3026" stroke-width="1.5"/>`).join("");
+  const labels = weeks.map((w, i) => (i % 2 === 1 || i === weeks.length - 1 ? `<text x="${x(i)}" y="${H - 6}" text-anchor="middle" font-size="10" fill="#a9b5a6">${w.label}</text>` : "")).join("");
+  const grid = [0.25, 0.5, 0.75].map((f) => `<line x1="${padX}" x2="${W - padX}" y1="${top + (base - top) * f}" y2="${top + (base - top) * f}" stroke="#36503f" stroke-dasharray="3 5"/>`).join("");
+  return svgEl(
+    `<svg class="journey-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Weekly XP and new words over the last 8 weeks">
+      ${grid}
+      <path d="${area}" fill="#c4694a" opacity=".18"/>
+      <path d="${smoothPath(xpPts)}" fill="none" stroke="#d9845f" stroke-width="2.5"/>
+      <path d="${smoothPath(wPts)}" fill="none" stroke="#e2bd4e" stroke-width="2.5"/>
+      ${dots(xpPts, "#d9845f")}${dots(wPts, "#e2bd4e")}
+      ${labels}
+    </svg>`
+  );
+}
+
+function achievements(s, learned, best, sentences, level) {
+  const list = [
+    { icon: "sprout", title: "First steps", goal: 1, have: learned, unit: "word", date: s.first_day },
+    { icon: "book", title: "10 words", goal: 10, have: learned, unit: "words" },
+    { icon: "flame", title: "Daily streak ×7", goal: 7, have: best, unit: "days", active: s.streak >= 7 },
+    { icon: "chat", title: "First sentence", goal: 1, have: sentences, unit: "sentence" },
+    { icon: "flame", title: "Daily streak ×10", goal: 10, have: best, unit: "days", active: s.streak >= 10 },
+    { icon: "book", title: "50 words", goal: 50, have: learned, unit: "words" },
+    { icon: "star", title: "Level 5", goal: 5, have: level, unit: "" },
+    { icon: "brush", title: "100 words", goal: 100, have: learned, unit: "words" },
+    { icon: "flame", title: "Daily streak ×30", goal: 30, have: best, unit: "days", active: s.streak >= 30 },
+    { icon: "chat", title: "50 sentences", goal: 50, have: sentences, unit: "sentences" },
+    { icon: "book", title: "250 words", goal: 250, have: learned, unit: "words" },
+    { icon: "star", title: "Level 10", goal: 10, have: level, unit: "" },
+  ];
+  const done = list.filter((a) => a.have >= a.goal);
+  const next = list.filter((a) => a.have < a.goal).slice(0, 2);
+  const colors = { sprout: "#9cbc8f", book: "#a9c6da", flame: "#e08d6c", chat: "#e2bd4e", star: "#e2bd4e", brush: "#c9b48a" };
+  const row = (a, locked) =>
+    h(
+      "div",
+      { class: "achv" + (locked ? " locked" : "") },
+      h("div", { class: "achv-ico", style: { color: colors[a.icon] } }, svgEl(SVG[a.icon])),
+      h(
+        "div",
+        {},
+        h("b", {}, a.title),
+        h("span", {}, locked ? `${Math.min(a.have, a.goal)} / ${a.goal}${a.unit ? " " + a.unit : ""}` : a.active ? "Active" : a.date ? `Completed ${new Date(a.date).toLocaleDateString(undefined, { day: "numeric", month: "short" })}` : "Completed")
+      )
+    );
+  return [...done.reverse().map((a) => row(a, false)), ...next.map((a) => row(a, true))];
+}
+
 async function statsScreen() {
   shell(loading(), "#/stats");
   const s = await api("/api/stats");
-  const total = s.days.reduce((a, d) => a + d.xp, 0);
+  const days = s.days || [];
+  const totalXp = s.total_xp ?? days.reduce((a, d) => a + d.xp, 0);
+  const level = s.level ?? Math.floor(Math.sqrt(totalXp / 20)) + 1;
+  const learned = s.learned_total ?? Math.max(0, ...(s.skills || []).map((k) => k.n));
+  const sentences = s.sentences_total ?? days.reduce((a, d) => a + (d.sentences || 0), 0);
+  const best = Math.max(s.best_streak || 0, s.streak || 0);
+  const hours = (s.study_seconds_month || 0) / 3600;
+  const weeks = weeklyFromDays(days);
   const skillNames = { write: ["✍️", "Writing"], speak: ["🎤", "Speaking"], recall: ["🧠", "Recall"] };
-  // 5-week calendar
-  const byDay = Object.fromEntries(s.days.map((d) => [d.day, d.xp]));
-  const cells = [];
-  for (let i = 34; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    const xp = byDay[key] || 0;
-    const lvl = xp === 0 ? 0 : xp < 15 ? 0.35 : xp < 40 ? 0.65 : 1;
-    cells.push(h("div", { title: `${key}: ${xp} XP`, style: { aspectRatio: "1", borderRadius: "6px", background: lvl ? `color-mix(in srgb, var(--green) ${lvl * 100}%, transparent)` : "var(--border)" } }));
-  }
+  const name = (state.settings?.display_name || "").trim();
+
   shell(
     [
-      h("div", { class: "topbar" }, h("h2", {}, "Statistics")),
+      h("div", { class: "topbar" }, h("h2", { style: { letterSpacing: "1px", fontWeight: 700 } }, "MY JOURNEY")),
       h(
         "div",
-        { class: "end-stats", style: { maxWidth: "none" } },
-        h("div", { class: "end-stat", style: { "--c": "var(--orange)" } }, h("div", { class: "lbl" }, "Streak"), h("div", { class: "val" }, `🔥${s.streak}`)),
-        h("div", { class: "end-stat", style: { "--c": "var(--yellow)" } }, h("div", { class: "lbl" }, "XP (60d)"), h("div", { class: "val" }, `⚡${total}`)),
-        h("div", { class: "end-stat", style: { "--c": "var(--purple)" } }, h("div", { class: "lbl" }, "Sentences"), h("div", { class: "val" }, `💬${s.days.reduce((a, d) => a + d.sentences, 0)}`))
+        { class: "journey-head" },
+        h("div", { class: "journey-avatar" }, svgEl(SVG.leaf)),
+        h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, `Level ${level} · ${totalXp} XP · 🔥 ${s.streak || 0}`))
       ),
-      h("h2", { class: "section-title" }, "Activity"),
-      h("div", { class: "card" }, h("div", { style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "6px" } }, cells)),
+      h(
+        "div",
+        { class: "journey-tiles" },
+        h("div", { class: "journey-tile time" }, h("div", { class: "lbl" }, "Study time"), svgEl(SVG.hourglass), h("div", { class: "big" }, `${hours < 10 ? hours.toFixed(1) : Math.round(hours)} h`), h("div", { class: "sub" }, "This month")),
+        h("div", { class: "journey-tile words" }, h("div", { class: "lbl" }, "Words mastered"), svgEl(SVG.book), h("div", { class: "big" }, learned), h("div", { class: "sub" }, "Active vocabulary"))
+      ),
+      h("h2", { class: "section-title" }, "Progress over time"),
+      h(
+        "div",
+        { class: "card" },
+        h("div", { class: "small muted", style: { marginBottom: "6px" } }, "Weekly overview · last 8 weeks"),
+        journeyChart(weeks),
+        h("div", { class: "journey-legend" }, h("span", {}, h("i", { style: { background: "#d9845f" } }), "XP"), h("span", {}, h("i", { style: { background: "#e2bd4e" } }), "New words"))
+      ),
+      h("h2", { class: "section-title" }, "Achievements"),
+      h("div", { class: "card", style: { paddingTop: "6px", paddingBottom: "6px" } }, achievements(s, learned, best, sentences, level)),
       h("h2", { class: "section-title" }, "Skills"),
       h(
         "div",
         { class: "list" },
-        s.skills.length
+        (s.skills || []).length
           ? s.skills.map((k) =>
               h(
                 "div",
@@ -518,7 +643,7 @@ async function statsScreen() {
           : h("div", { class: "list-item muted" }, "Learn some words to see skill stats.")
       ),
       h("h2", { class: "section-title" }, "Trickiest words"),
-      s.hardest.length
+      (s.hardest || []).length
         ? h(
             "div",
             { class: "list" },
@@ -526,7 +651,7 @@ async function statsScreen() {
               h("div", { class: "list-item", style: { cursor: "pointer" }, onclick: () => wordSheet({ ...w, cards: 3 }) }, h("div", { class: "hz" }, w.hanzi), h("div", { class: "meta" }, h("div", { class: "py" }, w.pinyin), h("div", { class: "en" }, w.english)), h("span", { class: "tag" }, `${w.lapses}×`))
             )
           )
-        : h("p", { class: "muted" }, "No trouble words yet. 🎉"),
+        : h("p", { class: "muted" }, "No trouble words yet."),
     ],
     "#/stats"
   );
@@ -570,11 +695,11 @@ async function settingsScreen() {
   };
 
   let theme = "auto";
-  try { theme = localStorage.getItem("theme") || "auto"; } catch { /* ignore */ }
+  try { theme = localStorage.getItem("theme") || "forest"; } catch { /* ignore */ }
   const themeSel = h(
     "select",
     { onchange: (e) => { try { localStorage.setItem("theme", e.target.value); } catch { /* ignore */ } applyTheme(); } },
-    [["auto", "Match system"], ["light", "Light"], ["dark", "Dark"]].map(([v, l]) => h("option", { value: v, selected: v === theme }, l))
+    [["forest", "Naravni eko (forest)"], ["auto", "Classic · match system"], ["light", "Classic light"], ["dark", "Classic dark"]].map(([v, l]) => h("option", { value: v, selected: v === theme }, l))
   );
 
   const isApp = !!window.__native?.gemma;
@@ -653,7 +778,8 @@ async function settingsScreen() {
         field("New words per lesson", select("new_per_lesson", [["3", "3"], ["5", "5"], ["8", "8"], ["10", "10"]])),
         field("Reviews per practice", select("review_size", [["10", "10"], ["15", "15"], ["25", "25"], ["40", "40"]])),
         field("Sentences per session", select("sentence_count", [["4", "4"], ["6", "6"], ["9", "9"], ["12", "12"]])),
-        field("Theme", themeSel)
+        field("Theme", themeSel),
+        field("Your name", input("display_name", { placeholder: "Shown on “My journey”" }))
       ),
       isWeb
         ? h("a", { class: "btn ghost", href: "LanguageMaster.apk", download: "LanguageMaster.apk", style: { marginTop: "20px", textDecoration: "none" } }, "📱 Download the Android app")

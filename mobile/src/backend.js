@@ -29,6 +29,7 @@ const DEFAULTS = {
   section_ja: "",
   ai_enabled: true,
   gemma_backend: "cpu",
+  display_name: "",
   gemma_preload: true, // load the model in the background when the app starts
   // Browser version: Gemma through an OpenAI-compatible server (e.g. Ollama on this computer).
   llm_base_url: "http://localhost:11434/v1",
@@ -140,9 +141,10 @@ function settingsUpdate(values) {
   return settingsAll();
 }
 
-function addActivity({ xp = 0, new_words = 0, reviews = 0, sentences = 0 }) {
+function addActivity({ xp = 0, new_words = 0, reviews = 0, sentences = 0, seconds = 0 }) {
   const k = dayKey();
   const a = (db.activity[k] ||= { xp: 0, new_words: 0, reviews: 0, sentences: 0 });
+  a.seconds = (a.seconds || 0) + seconds;
   a.xp += xp;
   a.new_words += new_words;
   a.reviews += reviews;
@@ -520,7 +522,39 @@ const routes = {
       .filter((w) => w.lapses > 0)
       .sort((a, b) => b.lapses - a.lapses)
       .slice(0, 10);
-    return { days, skills, hardest, streak: streak() };
+    // "My journey" figures
+    const all = Object.entries(db.activity).sort((a, b) => (a[0] < b[0] ? -1 : 1));
+    const totalXp = all.reduce((a, [, d]) => a + (d.xp || 0), 0);
+    const month = dayKey().slice(0, 7);
+    let best = 0;
+    let run = 0;
+    let prev = null;
+    for (const [day, d] of all) {
+      if (!(d.xp > 0)) continue;
+      const dt = new Date(day + "T12:00:00");
+      run = prev && Math.round((dt - prev) / DAY) === 1 ? run + 1 : 1;
+      best = Math.max(best, run);
+      prev = dt;
+    }
+    return {
+      days,
+      skills,
+      hardest,
+      streak: streak(),
+      best_streak: best,
+      total_xp: totalXp,
+      level: Math.floor(Math.sqrt(totalXp / 20)) + 1,
+      learned_total: learnedIds().size,
+      sentences_total: all.reduce((a, [, d]) => a + (d.sentences || 0), 0),
+      study_seconds_month: all.filter(([day]) => day.startsWith(month)).reduce((a, [, d]) => a + (d.seconds || 0), 0),
+      first_day: all.find(([, d]) => d.xp > 0)?.[0] || null,
+    };
+  },
+
+  "POST /api/activity/time": (_, body) => {
+    const seconds = Math.max(0, Math.min(Number(body.seconds) || 0, 3 * 3600));
+    addActivity({ seconds });
+    return { ok: true };
   },
 
   "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),

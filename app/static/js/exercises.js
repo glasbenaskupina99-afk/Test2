@@ -77,7 +77,13 @@ export function intro(ctx, word) {
       h("div", { class: "py" }, word.pinyin),
       h("div", { class: "en" }, word.english)
     ),
-    aiOn && !word.extras ? h("button", { class: "btn ghost small auto", style: { alignSelf: "center" }, onclick: (e) => { e.target.remove(); loadAI(); } }, "✨ Memory hook & example") : null,
+    aiOn && !word.extras
+      ? h(
+          "div",
+          { style: { display: "flex", justifyContent: "center", marginTop: "4px" } },
+          h("button", { class: "btn ghost small auto", onclick: (e) => { e.currentTarget.parentElement.remove(); loadAI(); } }, "✨ Memory hook & example")
+        )
+      : null,
     ai
   );
   setTimeout(() => speak(sayText(word)), 400);

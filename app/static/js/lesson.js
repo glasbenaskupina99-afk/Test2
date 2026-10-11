@@ -1,5 +1,5 @@
 // Duolingo-style lesson runner: progress bar, exercise, check/continue footer, end screen.
-import { h } from "./util.js";
+import { api, h } from "./util.js";
 import { stopSpeaking } from "./audio.js";
 
 /**
@@ -140,6 +140,8 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
     const secs = Math.round((Date.now() - started) / 1000);
     const acc = graded ? Math.round((100 * correct) / graded) : 100;
     const summary = { xp, accuracy: acc, seconds: secs, correct, graded };
+    // Study time for "My journey" (servers without this endpoint just ignore it).
+    api("/api/activity/time", { method: "POST", body: { seconds: Math.min(secs, 3 * 3600) } }).catch(() => {});
     const finishBtn = h("button", { class: "btn", onclick: () => close(summary) }, "Continue");
     body.replaceChildren(
       h(

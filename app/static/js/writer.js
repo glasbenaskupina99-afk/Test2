@@ -95,7 +95,7 @@ export function writingPad(chars, { showSlots = true } = {}) {
       showOutline: outline,
       strokeColor: css("--ink") || "#3c3c3c",
       outlineColor: css("--grid") || "#ddd",
-      drawingColor: css("--blue") || "#1cb0f6",
+      drawingColor: css("--draw") || css("--blue") || "#1cb0f6",
       highlightColor: css("--orange") || "#ff9600",
       radicalColor: null,
       drawingWidth: Math.max(14, Math.round(size / 22)),

@@ -1,5 +1,5 @@
 // Duolingo-style lesson runner: progress bar, exercise, check/continue footer, end screen.
-import { api, h } from "./util.js";
+import { api, h, confirmDialog } from "./util.js";
 import { stopSpeaking } from "./audio.js";
 
 /**
@@ -53,8 +53,13 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
     resolveLesson(result);
   }
 
-  function quit() {
-    if (pos === 0 || confirm("Quit this lesson? Progress from answered questions is kept.")) close(null);
+  async function quit() {
+    if (pos === 0) return close(null);
+    const ok = await confirmDialog({
+      icon: "🌱", title: "Quit this lesson?", message: "Progress from answered questions is kept.",
+      cancelLabel: "Keep learning", confirmLabel: "Quit", danger: true,
+    });
+    if (ok && root.isConnected) close(null);
   }
 
   function setFoot(...nodes) {

@@ -1,4 +1,4 @@
-import { api, h, iconBtn, toast } from "./util.js";
+import { api, h, iconBtn, toast, confirmDialog } from "./util.js";
 import { state, T, isJa, isSl, sayText, applyCourse } from "./state.js";
 import { speak, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
@@ -347,7 +347,7 @@ function wordSheet(w) {
           ? h("button", { class: "btn ghost small", onclick: async () => { await api(`/api/words/${w.id}/reset`, { method: "POST" }); bg.remove(); toast("Progress reset"); route(); } }, "Reset progress")
           : null,
         w.source === "custom"
-          ? h("button", { class: "btn ghost small", style: { "--fg": "var(--red)" }, onclick: async () => { if (!confirm(`Delete ${w.hanzi}?`)) return; await api(`/api/words/${w.id}`, { method: "DELETE" }); bg.remove(); route(); } }, "Delete")
+          ? h("button", { class: "btn ghost small", style: { "--fg": "var(--red)" }, onclick: async () => { if (!(await confirmDialog({ icon: "🗑️", title: `Delete ${w.hanzi}?`, message: "Its review progress will be removed too.", cancelLabel: "Keep", confirmLabel: "Delete", danger: true }))) return; await api(`/api/words/${w.id}`, { method: "DELETE" }); bg.remove(); route(); } }, "Delete")
           : null
       )
     )

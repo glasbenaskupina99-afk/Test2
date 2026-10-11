@@ -81,3 +81,25 @@ export function iconBtn(name, cls, onClick, title) {
   b.innerHTML = icons[name];
   return b;
 }
+
+/** In-app replacement for window.confirm(), styled like the rest of the app. Resolves true/false. */
+export function confirmDialog({ title, message = "", icon = "", confirmLabel = "OK", cancelLabel = "Cancel", danger = false } = {}) {
+  return new Promise((resolve) => {
+    const done = (v) => { bg.remove(); document.removeEventListener("keydown", onKey); resolve(v); };
+    const onKey = (e) => { if (e.key === "Escape") done(false); };
+    const bg = h("div", { class: "dialog-bg", onclick: (e) => { if (e.target === bg) done(false); } },
+      h("div", { class: "dialog", role: "alertdialog", "aria-modal": "true" },
+        icon ? h("div", { class: "dialog-icon" }, icon) : null,
+        h("h2", {}, title),
+        message ? h("p", { class: "muted" }, message) : null,
+        h("div", { class: "dialog-actions" },
+          h("button", { class: "btn", onclick: () => done(false) }, cancelLabel),
+          h("button", { class: `btn ghost${danger ? " danger" : ""}`, onclick: () => done(true) }, confirmLabel),
+        ),
+      ),
+    );
+    document.addEventListener("keydown", onKey);
+    document.body.append(bg);
+    bg.querySelector(".btn").focus();
+  });
+}

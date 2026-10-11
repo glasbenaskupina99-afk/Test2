@@ -1,5 +1,5 @@
 // Settings card for running Gemma on the phone (Android app only).
-import { api, h, toast } from "./util.js";
+import { api, h, toast, confirmDialog } from "./util.js";
 import { state } from "./state.js";
 
 const REPOS = [
@@ -159,7 +159,7 @@ export function gemmaCard(s, fields, save) {
       "div",
       { class: "row" },
       h("button", { class: "btn ghost", onclick: (e) => test(e.currentTarget) }, "Load & test"),
-      h("button", { class: "btn ghost small", style: { "--fg": "var(--red)" }, onclick: async () => { if (confirm("Delete the downloaded model?")) { await G.deleteModel(); refresh(); } } }, "Delete")
+      h("button", { class: "btn ghost small", style: { "--fg": "var(--red)" }, onclick: async () => { if (await confirmDialog({ icon: "🗑️", title: "Delete the downloaded model?", message: "You can download or import it again later.", cancelLabel: "Keep", confirmLabel: "Delete", danger: true })) { await G.deleteModel(); refresh(); } } }, "Delete")
     )
   );
   refresh();
@@ -175,7 +175,7 @@ export function backupCard() {
     onchange: async () => {
       const f = fileIn.files[0];
       if (!f) return;
-      if (!confirm("Replace all progress on this phone with the backup?")) return;
+      if (!(await confirmDialog({ icon: "📦", title: "Restore backup?", message: "This replaces all progress on this phone with the backup.", cancelLabel: "Cancel", confirmLabel: "Restore", danger: true }))) { fileIn.value = ""; return; }
       try {
         await api("/api/backup/restore", { method: "POST", body: JSON.parse(await f.text()) });
         toast("Backup restored ✓");

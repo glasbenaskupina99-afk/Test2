@@ -716,6 +716,7 @@ const routes = {
       study_seconds_month: all.filter(([day]) => day.startsWith(month)).reduce((a, [, d]) => a + (d.seconds || 0), 0),
       first_day: all.find(([, d]) => d.xp > 0)?.[0] || null,
       saved_days: db.garden.saved,
+      plant: plantState(),
     };
   },
 

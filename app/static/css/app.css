@@ -977,3 +977,5 @@ select.select-native { display: none !important; }
 .pc-detail { min-height: 22px; font-size: 14px; color: var(--muted); text-align: center; margin: 4px 0 2px; }
 .pc-detail b { color: var(--text-strong); }
 .journey-legend i.bar { background: #d9845f; border-radius: 2px; height: 10px; width: 8px; }
+.journey-plant { border: none; padding: 0; cursor: pointer; font: inherit; }
+.journey-plant-art { width: 64%; height: 64%; }

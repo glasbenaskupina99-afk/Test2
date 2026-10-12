@@ -867,7 +867,8 @@ async function statsScreen() {
       h(
         "div",
         { class: "journey-head" },
-        h("div", { class: "journey-avatar" }, svgEl(SVG.leaf)),
+        // Your streak plant, the same one as next to the streak count on the home screen.
+        h("button", { class: "journey-avatar journey-plant", title: "Your streak plant", "aria-label": "Your streak plant", onclick: () => gardenSheet() }, plantArt(s.plant || "seed", "journey-plant-art")),
         h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, `Level ${level} · ${totalXp} XP · 🌱 ${s.streak || 0}-day streak`))
       ),
       h(

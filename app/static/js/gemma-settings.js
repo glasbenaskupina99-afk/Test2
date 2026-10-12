@@ -200,7 +200,7 @@ export function backupCard() {
         class: "btn ghost",
         onclick: async () => {
           const data = await api("/api/backup");
-          const name = `language-master-backup-${new Date().toISOString().slice(0, 10)}.json`;
+          const name = `bloomko-backup-${new Date().toISOString().slice(0, 10)}.json`;
           try {
             if (window.__native?.shareFile) await window.__native.shareFile(name, JSON.stringify(data));
             else {

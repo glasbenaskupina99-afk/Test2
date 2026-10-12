@@ -1,4 +1,4 @@
-// Offline support for the browser version of Language Master.
+// Offline support for the browser version of Bloomko.
 // App files: network first (so updates arrive), cache as fallback.
 // Stroke data (chars/, chars-ja/): cache first — it never changes.
 const CACHE = "lm-v1";

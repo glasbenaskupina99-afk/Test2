@@ -2,7 +2,7 @@
   "name": "hanzi-home-mobile",
   "private": true,
   "version": "1.0.0",
-  "description": "Language Master as an offline Android app",
+  "description": "Bloomko as an offline Android app",
   "scripts": {
     "build": "node scripts/build-web.mjs",
     "sync": "npm run build && npx cap sync android",

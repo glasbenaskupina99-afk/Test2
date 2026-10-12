@@ -1,4 +1,4 @@
-# Language Master + Ollama running Gemma 4.
+# Bloomko + Ollama running Gemma 4.
 #   docker compose up -d
 #   docker compose exec ollama ollama pull gemma4:e4b
 # Then open https://<this-machine's-ip>:8443 on your phone.

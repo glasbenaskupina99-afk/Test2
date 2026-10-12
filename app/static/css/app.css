@@ -511,7 +511,7 @@ body::before {
     border-top: none; border-right: 2px solid var(--border); padding: 28px 16px;
   }
   .tabbar::before {
-    content: "Language Master"; display: block; padding: 0 12px 22px;
+    content: "Bloomko"; display: block; padding: 0 12px 22px;
     font-size: 24px; font-weight: 900; color: var(--green); letter-spacing: -.3px;
   }
   .tabbar a { flex: none; max-width: none; flex-direction: row; gap: 16px; padding: 12px 14px; font-size: 15px; }

@@ -76,7 +76,7 @@ class GemmaPlugin : Plugin() {
         conn.connectTimeout = 20000
         conn.readTimeout = 60000
         conn.instanceFollowRedirects = true
-        conn.setRequestProperty("User-Agent", "LanguageMaster/1.0")
+        conn.setRequestProperty("User-Agent", "Bloomko/1.3")
         if (!token.isNullOrBlank()) conn.setRequestProperty("Authorization", "Bearer ${token.trim()}")
         if (rangeFrom > 0) conn.setRequestProperty("Range", "bytes=$rangeFrom-")
         return conn

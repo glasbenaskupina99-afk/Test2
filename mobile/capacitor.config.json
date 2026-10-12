@@ -1,6 +1,6 @@
 {
   "appId": "com.hanzihome.app",
-  "appName": "Language Master",
+  "appName": "Bloomko",
   "webDir": "www",
   "android": {
     "allowMixedContent": false

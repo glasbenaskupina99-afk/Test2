@@ -1,7 +1,7 @@
 name: Build app (Android + web)
 
 # Every push: builds the Android APK, publishes it as a release and replaces
-# .../LanguageMaster.apk on the website. The web app itself is left unchanged.
+# .../Bloomko.apk on the website (LanguageMaster.apk is kept as an alias for old links). The web app itself is left unchanged.
 #
 # To also publish the web app (https://<owner>.github.io/<repo>/), run this
 # workflow manually (Actions → Run workflow) with "Publish web app" ticked.
@@ -63,18 +63,19 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon --stacktrace
-          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/LanguageMaster.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/Bloomko.apk"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: LanguageMaster-apk
-          path: LanguageMaster.apk
+          name: Bloomko-apk
+          path: Bloomko.apk
 
       # Only when asked for: replace the whole website with the new web app (+ APK).
       - name: Prepare web app
         if: github.event_name == 'workflow_dispatch' && inputs.publish_web
         run: |
-          cp LanguageMaster.apk mobile/www/LanguageMaster.apk
+          cp Bloomko.apk mobile/www/Bloomko.apk
+          cp Bloomko.apk mobile/www/LanguageMaster.apk
           touch mobile/www/.nojekyll
 
       - name: Publish web app + APK
@@ -85,14 +86,16 @@ jobs:
           publish_dir: mobile/www
           publish_branch: gh-pages
           force_orphan: true
-          commit_message: "Publish Language Master 1.3.${{ env.APP_VERSION }} (web + app)"
+          commit_message: "Publish Bloomko 1.3.${{ env.APP_VERSION }} (web + app)"
 
       # Default: update only the APK download, keep the published web app as it is.
       - name: Prepare APK-only update
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
         run: |
           mkdir -p apk-only
-          cp LanguageMaster.apk apk-only/LanguageMaster.apk
+          cp Bloomko.apk apk-only/Bloomko.apk
+          # Old download link keeps working
+          cp Bloomko.apk apk-only/LanguageMaster.apk
 
       - name: Publish APK only
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
@@ -109,11 +112,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.3.${{ env.APP_VERSION }}
-          name: Language Master 1.3.${{ env.APP_VERSION }}
+          name: Bloomko 1.3.${{ env.APP_VERSION }}
           target_commitish: ${{ github.sha }}
           make_latest: true
-          files: LanguageMaster.apk
+          files: Bloomko.apk
           body: |
-            Install on your phone: download **LanguageMaster.apk** below and open it
+            Install on your phone: download **Bloomko.apk** below and open it
             (allow "install unknown apps" for your browser when asked).
             Built from ${{ github.sha }}.

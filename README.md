@@ -1,4 +1,4 @@
-# Language Master
+# Bloomko
 
 A Chinese (English → Mandarin) trainer in the style of Duolingo. Run it as an **offline Android app** with Gemma on the phone, or self-host it and use it from your phone over your home network. It covers handwriting with stroke-order checking, pronunciation, recall and sentence translation. Gemma 4 handles the parts that need language understanding. Everything else works without it.
 
@@ -36,7 +36,7 @@ Open **https://glasbenaskupina99-afk.github.io/Test2/** in Chrome or Edge. Nothi
 - **Your data** stays in this browser. Use Settings → Backup to move it between devices, and the same backup file works in the Android app.
 - **Writing** works with the mouse, a touchscreen or a pen tablet.
 - **Voice and speech recognition** come from the browser. Chrome and Edge have both; Firefox has no speech recognition, so it uses record-and-compare instead.
-- **Installing:** use the install icon in the address bar to get Language Master as its own app window. It also works offline.
+- **Installing:** use the install icon in the address bar to get Bloomko as its own app window. It also works offline.
 - **Gemma on the computer:** install [Ollama](https://ollama.com) and run `ollama pull gemma4:e4b`. Then set the environment variable `OLLAMA_ORIGINS=https://glasbenaskupina99-afk.github.io` and restart Ollama, so the site is allowed to talk to it. Finally press **Settings → Test connection**, and allow access to your local network if the browser asks.
 
 Each push builds a new APK and updates only the APK download; the web app stays as it was. To publish the web app too, go to Actions → *Build app (Android + web)* → *Run workflow* and tick **Publish web app too**. Both are served from the `gh-pages` branch. **One-time setup:** Settings → Pages → Source: *Deploy from a branch* → `gh-pages` / `(root)`.
@@ -45,7 +45,7 @@ Each push builds a new APK and updates only the APK download; the web app stays 
 
 The `mobile/` folder wraps the same app as an Android app that works completely offline. Your progress, stroke data, the voice, speech recognition and Gemma all live on the phone.
 
-**Install:** on your phone, open **https://glasbenaskupina99-afk.github.io/Test2/LanguageMaster.apk** (or the newest file on the repo's **Releases** page) and open the downloaded file. Android will ask you to allow installs from your browser. Every push builds a new version (GitHub Actions → *Build app (Android + web)*), and installing a newer APK updates the app while keeping your progress.
+**Install:** on your phone, open **https://glasbenaskupina99-afk.github.io/Test2/Bloomko.apk** (or the newest file on the repo's **Releases** page) and open the downloaded file. Android will ask you to allow installs from your browser. Every push builds a new version (GitHub Actions → *Build app (Android + web)*), and installing a newer APK updates the app while keeping your progress.
 
 **Gemma on the phone:** open **Settings → Gemma on this phone → Find model files**, choose the plain `.litertlm` file, and tap **Download**. Gemma 4 E2B is about 2.6 GB and needs 6 GB or more of RAM; E4B is about 3.7 GB and needs 8 GB or more. You only download it once, over Wi-Fi or mobile data (it's a few GB, so mind your data plan); after that it runs offline through [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM). If Hugging Face says access is denied, accept the model's licence on huggingface.co and paste an access token. You can also import a `.litertlm` file you already have. Start with the **CPU** processor. **GPU** is faster but can crash on phones with less RAM.
 

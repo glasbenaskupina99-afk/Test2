@@ -900,13 +900,13 @@ async function settingsScreen() {
         field("Your name", input("display_name", { placeholder: "Shown on “My journey”" }))
       ),
       isWeb
-        ? h("a", { class: "btn ghost", href: "LanguageMaster.apk", download: "LanguageMaster.apk", style: { marginTop: "20px", textDecoration: "none" } }, "📱 Download the Android app")
+        ? h("a", { class: "btn ghost", href: "Bloomko.apk", download: "Bloomko.apk", style: { marginTop: "20px", textDecoration: "none" } }, "📱 Download the Android app")
         : null,
       window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup") : null,
       window.__localApi ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),
       h("img", { class: "app-logo settings-logo", src: LOGO, alt: "" }),
-      h("p", { class: "muted small center", style: { marginTop: "4px" } }, `${window.__appVersion ? `Language Master ${window.__appVersion} · ` : ""}Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
+      h("p", { class: "muted small center", style: { marginTop: "4px" } }, `${window.__appVersion ? `Bloomko ${window.__appVersion} · ` : ""}Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
     ],
     "#/settings"
   );
@@ -920,7 +920,7 @@ function reminderCard(s) {
   const apply = async () => {
     if (toggle.checked && !(await ensurePermission())) {
       toggle.checked = false;
-      toast("Allow notifications for Language Master in Android settings to get reminders", 5000);
+      toast("Allow notifications for Bloomko in Android settings to get reminders", 5000);
     }
     state.settings = await api("/api/settings", { method: "PUT", body: { reminder_on: toggle.checked, reminder_time: time.value || "19:00" } });
     await scheduleReminders();
@@ -983,7 +983,7 @@ function welcomeScreen(gemmaNext) {
         { class: "welcome" },
         gemmaNext ? h("div", { class: "gsetup-step" }, h("i", { class: "on" }), h("i"), "Step 1 of 2") : null,
         h("img", { class: "app-logo welcome-logo", src: LOGO, alt: "" }),
-        h("h1", {}, "Welcome to Language Master"),
+        h("h1", {}, "Welcome to Bloomko"),
         h("p", { class: "muted" }, "Learn a new language — write, read and speak it, without wasting paper."),
         h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),
         h("div", { class: "small muted", style: { alignSelf: "flex-start", margin: "6px 0 8px" } }, "What do you want to learn?"),

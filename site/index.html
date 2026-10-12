@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bloomko — watch your languages bloom</title>
-  <meta name="description" content="Bloomko is a new way to learn Chinese, Japanese and more: write every character from memory with stroke-by-stroke checking, practise speaking, and learn with an AI tutor that runs privately on your phone. Coming soon.">
+  <title>Bloomko — AI language learning that grows with you</title>
+  <meta name="description" content="Bloomko is AI-powered language learning for Chinese, Japanese and more: write every character from memory with stroke-by-stroke checking, practise speaking, and learn with an AI tutor that runs privately on your phone. Coming soon.">
   <meta name="theme-color" content="#1c3026">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/icon-192.png">
@@ -122,6 +122,36 @@
     .final .contact { margin: 34px auto 0; font-size: 17px; }
     .final .contact a, footer a { color: var(--sage); font-weight: 800; text-decoration: none; }
     .final .contact a:hover, footer a:hover { text-decoration: underline; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: -8px 0 26px; }
+    .tags span { font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 99px; background: var(--surface); border: 2px solid var(--border); color: var(--strong); }
+    .notify { display: flex; flex-wrap: wrap; gap: 10px; max-width: 520px; }
+    .notify.center { margin: 0 auto; justify-content: center; }
+    .notify input[type=email] {
+      flex: 1 1 240px; min-width: 0; padding: 15px 18px; border-radius: 16px; border: 2px solid var(--border); background: var(--surface);
+      color: var(--strong); font: inherit; font-size: 16px; outline: none;
+    }
+    .notify input[type=email]:focus { border-color: var(--sage); }
+    .notify .btn { border: none; cursor: pointer; font-family: inherit; }
+    .notify .btn:disabled { opacity: .6; cursor: default; }
+    .notify .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .notify-note { flex-basis: 100%; margin: 4px 2px 0; font-size: 14px; color: var(--muted); }
+    .notify.center .notify-note { text-align: center; }
+    .notify-done { flex-basis: 100%; padding: 16px 20px; border-radius: 16px; background: var(--surface-2); border: 2px solid var(--sage); color: var(--strong); font-weight: 800; }
+    .notify.center .notify-done { text-align: center; }
+
+    .ai { padding-top: 30px; }
+    .chat { background: var(--surface); border: 2px solid var(--border); border-bottom-width: 5px; border-radius: 26px; padding: 18px; display: grid; gap: 12px; max-width: 460px; justify-self: center; width: 100%; }
+    .chat-head { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14px; color: var(--muted); padding: 2px 4px 6px; border-bottom: 2px solid var(--border); }
+    .chat-head .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 0 4px rgba(140, 192, 107, .2); }
+    .bubble { padding: 12px 16px; border-radius: 18px; font-size: 16px; line-height: 1.5; max-width: 92%; }
+    .bubble small { display: block; color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+    .bubble.tutor { background: var(--surface-2); color: var(--text); border-bottom-left-radius: 6px; }
+    .bubble.me { justify-self: end; background: var(--gold); color: #17241b; font-size: 22px; font-weight: 800; border-bottom-right-radius: 6px; }
+    .bubble.ok { border: 2px solid var(--sage); }
+    .bubble.ok b { color: var(--sage); }
+    .bubble.hook { border: 2px dashed var(--border); }
+    .hz { font-weight: 800; color: var(--strong); }
+
     footer { border-top: 2px solid var(--border); padding: 26px 0 40px; color: var(--muted); font-size: 14px; }
     footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; }
 
@@ -162,16 +192,21 @@
 
     <header class="hero">
       <div>
-        <div class="eyebrow">🌸 A new way to learn languages</div>
+        <div class="eyebrow">✨ AI-powered language learning</div>
         <h1>Watch your languages <em>bloom.</em></h1>
         <p class="lead">
-          Bloomko teaches you to truly <b>write, read and speak</b> a new language. Every character is written by your own hand and checked stroke by stroke,
-          an AI tutor lives right on your phone, and a little plant grows with every lesson you take.
+          Bloomko is your <b>personal AI language tutor</b>. It writes new practice sentences from the words you know, checks your translations and explains your mistakes —
+          while you learn to truly <b>write, read and speak</b>, with every character checked stroke by stroke.
         </p>
-        <div class="cta">
-          <span class="btn" aria-disabled="true">🌱 Coming soon to Android</span>
-          <span class="small-note">iPhone version to follow</span>
+        <div class="tags">
+          <span>✨ AI tutor built in</span><span>🔒 Runs privately on your phone</span><span>✍️ Stroke-by-stroke writing</span>
         </div>
+        <form class="notify" data-notify>
+          <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-label="Your email address">
+          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">🌱 Notify me</button>
+          <p class="notify-note">Be the first to know when Bloomko launches on Android. One email, no spam.</p>
+        </form>
       </div>
       <div class="phones" aria-hidden="true">
         <div class="phone p1"><img src="img/trace.webp" alt=""></div>
@@ -180,6 +215,30 @@
       </div>
     </header>
   </div>
+
+  <section class="ai">
+    <div class="wrap split">
+      <div class="text">
+        <div class="eyebrow">✨ Meet your AI tutor</div>
+        <h2>A tutor that knows exactly which words you know</h2>
+        <p>Bloomko's AI tutor is built on <b>Gemma</b>, Google's open AI model, and runs entirely on your phone. It learns along with you — and never runs out of new things to practise.</p>
+        <ul>
+          <li><b>Fresh sentences, every time</b> — made only from words you've learned, focusing on the ones you get wrong</li>
+          <li><b>Smart grading</b> — understands different but correct translations and explains what to fix</li>
+          <li><b>Memory hooks</b> — a little story or picture to help every new word stick</li>
+          <li><b>Grows with you</b> — sentences get harder as your level rises</li>
+          <li><b>Private and offline</b> — no account, no cloud, your sentences never leave your phone</li>
+        </ul>
+      </div>
+      <div class="chat" aria-label="Example of the AI tutor grading a translation">
+        <div class="chat-head"><span class="dot"></span> AI tutor · on device</div>
+        <div class="bubble tutor"><small>Translate into Chinese</small>“I want to drink some tea.”</div>
+        <div class="bubble me">我要喝茶。</div>
+        <div class="bubble tutor ok"><b>✓ Correct!</b> Natural and clear. You could also say <span class="hz">我想喝点儿茶</span> — 想 sounds a bit softer than 要, and 点儿 means “a little”.</div>
+        <div class="bubble tutor hook"><small>💡 Memory hook for 茶 (tea)</small>A person 人 under a roof of grass 艹, resting among the trees 木 — with a cup of tea.</div>
+      </div>
+    </div>
+  </section>
 
   <section>
     <div class="wrap">
@@ -259,7 +318,12 @@
     <img src="img/logo.png" alt="Bloomko logo">
     <h2>Coming soon</h2>
     <p>Bloomko is growing right now. The first version is coming to Android, with iPhone to follow. Every word starts as a seed — yours will bloom soon.</p>
-    <span class="btn" aria-disabled="true">🌸 bloomko.eu</span>
+    <form class="notify center" data-notify>
+      <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-label="Your email address">
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">🌸 Notify me</button>
+      <p class="notify-note">We'll email you once when Bloomko is ready — and want testers before that. Your address is used for nothing else.</p>
+    </form>
     <p class="contact">Questions, ideas or want to help test? <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></p>
   </div>
 
@@ -269,5 +333,29 @@
       <span>Stroke order data: Make Me a Hanzi &amp; animCJK (Arphic Public License)</span>
     </div>
   </footer>
+  <script>
+    // "Notify me": saved by the site's Cloudflare Worker; falls back to an email if that isn't available.
+    document.querySelectorAll("[data-notify]").forEach((form) => {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector("button");
+        const email = form.email.value.trim();
+        btn.disabled = true;
+        try {
+          const r = await fetch("/api/notify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, website: form.website.value }),
+          });
+          if (r.status === 400) { btn.disabled = false; form.email.focus(); alert("Please enter a valid email address."); return; }
+          if (!r.ok) throw new Error(String(r.status));
+          form.replaceChildren(Object.assign(document.createElement("div"), { className: "notify-done", textContent: "🌱 Thank you! We'll let you know when Bloomko blooms." }));
+        } catch {
+          btn.disabled = false;
+          location.href = "mailto:thebloomko@gmail.com?subject=" + encodeURIComponent("Notify me about Bloomko") + "&body=" + encodeURIComponent("Please let me know when Bloomko launches: " + email);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

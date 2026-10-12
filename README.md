@@ -70,6 +70,7 @@ The APK is signed with `mobile/android/app/hanzi.keystore`, a key committed to t
 `site/` is the static "coming soon" landing page. It's plain HTML with no build step, served by a **Cloudflare Worker** with static assets (`wrangler.jsonc` at the repo root; deploy command `npx wrangler deploy`). Alternatively with **Cloudflare Pages**:
 Pages → *Connect to Git* → this repo → build command: *(none)* → build output directory: `site` → then *Custom domains* → `bloomko.eu`.
 Pushing changes under `site/` doesn't trigger the Android build.
+"Notify me" sign-ups are handled by `worker/index.js` and stored in a Workers KV namespace bound as `NOTIFY` (created automatically on the first deploy). To see them: Cloudflare dashboard → *Storage & Databases → KV* → the namespace → each key is an email address.
 
 ## Running it as a server
 

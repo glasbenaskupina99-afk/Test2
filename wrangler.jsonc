@@ -1,11 +1,16 @@
-// Cloudflare Workers: serves the Bloomko website (static files in site/).
+// Cloudflare Workers: the Bloomko website. Static files come from site/;
+// worker/index.js handles "Notify me" sign-ups (stored in the NOTIFY KV namespace).
 {
   "name": "test2",
+  "main": "worker/index.js",
   "compatibility_date": "2026-09-01",
   // Public test address <name>.<account>.workers.dev (bloomko.eu is added as a custom domain).
   "workers_dev": true,
   "assets": {
     "directory": "./site",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
-  }
+  },
+  // No id: Wrangler creates the namespace on the first deploy and reuses it afterwards.
+  "kv_namespaces": [{ "binding": "NOTIFY" }]
 }

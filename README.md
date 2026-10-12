@@ -67,7 +67,7 @@ The APK is signed with `mobile/android/app/hanzi.keystore`, a key committed to t
 
 ## 🌐 Website (bloomko.eu)
 
-`site/` is the static "coming soon" landing page. It's plain HTML with no build step, hosted on **Cloudflare Pages**:
+`site/` is the static "coming soon" landing page. It's plain HTML with no build step, served by a **Cloudflare Worker** with static assets (`wrangler.jsonc` at the repo root; deploy command `npx wrangler deploy`). Alternatively with **Cloudflare Pages**:
 Pages → *Connect to Git* → this repo → build command: *(none)* → build output directory: `site` → then *Custom domains* → `bloomko.eu`.
 Pushing changes under `site/` doesn't trigger the Android build.
 

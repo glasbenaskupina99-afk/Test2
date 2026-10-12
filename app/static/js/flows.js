@@ -62,6 +62,8 @@ export async function learnNew({ writing = true } = {}) {
     return null;
   }
   const allPool = [...words, ...pool.filter((p) => !words.some((w) => w.id === p.id))];
+  // Your own words have no ready-made memory hook: let Gemma prepare them while you study.
+  ex.prefetchExtras(words);
   if (!writing) return learnChoiceOnly(words, allPool);
   if (isSl()) return learnSpelling(words, allPool);
   const steps = [];

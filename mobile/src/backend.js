@@ -12,6 +12,8 @@ import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as fsrs from "./fsrs.js";
 import LOOKALIKES from "../../app/data/lookalikes.json";
+// Ready-made memory hooks + examples for every course word: shown instantly, no AI wait.
+import PREBUILT_EXTRAS from "../../app/data/extras.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
 
@@ -278,6 +280,8 @@ const SC = () => {
   return db.cards.filter((c) => ids.has(c.word_id));
 };
 const wordById = (id) => db.words.find((w) => w.id === id);
+/** The word's memory hook: one generated earlier, else the ready-made one for course words. */
+const extrasOf = (w) => w.extras || PREBUILT_EXTRAS[w.lang]?.[w.hanzi] || null;
 const cardsOf = (id) => db.cards.filter((c) => c.word_id === id);
 const learnedIds = () => new Set(C().map((c) => c.word_id));
 const byPosition = (a, b) => a.position - b.position || a.id - b.id;
@@ -490,7 +494,11 @@ const routes = {
     if (!w) throw new HttpError(404, "word not found");
     // Older versions sometimes saved hooks written in Chinese/Japanese: regenerate those.
     const readable = (x) => x && ai.EXTRAS_ENGLISH.every((k) => !x[k] || ai.isEnglish(x[k]));
-    if (w.extras && readable(w.extras) && !query.get("refresh")) return w.extras;
+    if (!query.get("refresh")) {
+      if (w.extras && readable(w.extras)) return w.extras;
+      const ready = PREBUILT_EXTRAS[w.lang]?.[w.hanzi];
+      if (ready) return ready;
+    }
     const d = await ai.wordExtras(w);
     if (d.example_zh && course() === "zh") d.example_pinyin = toPinyin(d.example_zh);
     w.extras = d;
@@ -502,7 +510,7 @@ const routes = {
     const n = Number(query.get("n")) || settingsAll().new_per_lesson;
     const ids = learnedIds();
     const sec = sections().current;
-    const words = W().filter((w) => !ids.has(w.id) && w.section === sec).sort(byPosition).slice(0, n).map((w) => ({ ...w }));
+    const words = W().filter((w) => !ids.has(w.id) && w.section === sec).sort(byPosition).slice(0, n).map((w) => ({ ...w, extras: extrasOf(w) }));
     return { words, pool: shuffled(W()).slice(0, 40).map(pick) };
   },
 

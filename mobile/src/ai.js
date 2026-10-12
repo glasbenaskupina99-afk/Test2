@@ -246,34 +246,31 @@ Return JSON: {"correct": true/false, "score": 0-100, "feedback": "one or two sho
 export const EXTRAS_ENGLISH = ["mnemonic", "components", "example_en"];
 
 export async function wordExtras(word) {
-  if (lang() === "sl") return wordExtrasSl(word);
+  if (LATIN[lang()]) return wordExtrasLatin(word, LATIN[lang()]);
   const ja = lang() === "ja";
   const langName = ja ? "Japanese" : "Chinese";
   const example = ja
-    ? `{"example_zh": "毎日学校へ行きます。", "example_pinyin": "まいにちがっこうへいきます", "example_en": "I go to school every day.",
- "mnemonic": "A child (子) under a roof full of sparks of knowledge is learning.",
- "components": "⺍ sparks + 冖 roof + 子 child"}  (example for 学, "to study")`
-    : `{"example_zh": "我在学校学习汉语。", "example_en": "I study Chinese at school.",
- "mnemonic": "A child (子) under a roof full of sparks of knowledge is learning.",
- "components": "⺍ sparks + 冖 roof + 子 child"}  (example for 学, "to study")`;
-  const base = `Help an English-speaking beginner remember the ${langName} word ${word.hanzi} (${word.pinyin}) meaning "${word.english}".
+    ? `{"mnemonic": "A child (子) under a roof full of sparks of knowledge is learning.", "components": "⺍ sparks + 冖 roof + 子 child", "example_en": "I go to school every day.", "example_zh": "毎日学校へ行きます。", "example_pinyin": "まいにちがっこうへいきます。"}`
+    : `{"mnemonic": "A child (子) under a roof full of sparks of knowledge is learning.", "components": "⺍ sparks + 冖 roof + 子 child", "example_en": "I study Chinese at school.", "example_zh": "我在学校学习汉语。"}`;
+  // Short prompt, English fields first: faster on a phone and less likely to drift into Chinese/Japanese.
+  const base = `${langName} word ${word.hanzi} (${word.pinyin}) = "${word.english}". Help an English-speaking beginner remember it.
 
-Return JSON with these fields:
- "example_zh": a short, simple ${ja ? "polite Japanese sentence (kanji and kana)" : "Chinese sentence (simplified characters)"} that uses the word
-${ja ? ' "example_pinyin": that sentence written in hiragana only\n' : ""} "example_en": the English translation of that sentence
- "mnemonic": ONE vivid sentence IN ENGLISH linking the shape or parts of the character(s) to the meaning
- "components": a short breakdown IN ENGLISH of the parts/radicals, e.g. "亻 person + 尔 you"
-
-"mnemonic", "components" and "example_en" MUST be written in English (characters may only be quoted).
-Format example: ${example}`;
+Reply with JSON only:
+ "mnemonic": ONE vivid English sentence (max 20 words) linking the character shapes to the meaning
+ "components": the parts in English, e.g. "亻 person + 尔 you"
+ "example_en": a short simple English sentence using the word
+ "example_zh": that sentence in ${ja ? "simple polite Japanese" : "simple Chinese"}
+${ja ? ' "example_pinyin": the Japanese sentence in hiragana only\n' : ""}
+Example (学, to study): ${example}`;
 
   const keys = ["example_zh", ...(ja ? ["example_pinyin"] : []), "example_en", "mnemonic", "components"];
   const clean = (d) => Object.fromEntries(keys.map((k) => [k, String((d && d[k]) || "").trim()]));
   const badFields = (o) => EXTRAS_ENGLISH.filter((k) => o[k] && !isEnglish(o[k]));
 
   let out = clean(await chat(base, { temperature: 0.5 }));
-  if (badFields(out).length) {
-    // Small models sometimes slip into the target language: ask again, firmly.
+  if (out.mnemonic && !isEnglish(out.mnemonic)) {
+    // Small models sometimes slip into the target language: ask again, firmly (only when the
+    // hook itself is unreadable — other stray fields are simply dropped, saving a second wait).
     const retry = clean(
       await chat(`${base}\n\nYour previous answer explained things in ${langName}. Write "mnemonic", "components" and "example_en" in plain English this time.`, { temperature: 0.2 })
     );
@@ -285,19 +282,23 @@ Format example: ${example}`;
   return out;
 }
 
-async function wordExtrasSl(word) {
-  const prompt = `Help an English-speaking complete beginner remember the Slovenian word "${word.hanzi}" (pronounced ${word.pinyin}) meaning "${word.english}".
+/** Latin-script languages (Slovenian, and future ones): hooks built on how the word SOUNDS. */
+const LATIN = { sl: "Slovenian" };
 
-Return JSON with these fields:
- "example_zh": a very short, simple Slovenian sentence that uses the word
- "example_en": the English translation of that sentence
- "mnemonic": ONE vivid sentence IN ENGLISH that links the sound of the word to its meaning
- "components": a short grammar note IN ENGLISH (gender, plural or a key form), e.g. "feminine noun · plural: kave · 'I'd like a coffee' = kavo"
+async function wordExtrasLatin(word, langName) {
+  const prompt = `${langName} word "${word.hanzi}" (pronounced ${word.pinyin}) = "${word.english}". Help an English-speaking beginner remember it by its SOUND (keyword method).
 
-Format example: {"example_zh": "Kavo, prosim.", "example_en": "A coffee, please.", "mnemonic": "Imagine a café called 'Java' — kava is coffee.", "components": "feminine noun (ž) · ordering: kavo"}`;
+Reply with JSON only:
+ "sounds_like": an English word or phrase that sounds like it, e.g. "HVA-la ≈ value"
+ "mnemonic": ONE vivid English sentence (max 20 words) linking that sound-alike to the meaning
+ "components": a short grammar note in English (gender, key form)
+ "example_en": a very short simple English sentence using the word
+ "example_zh": that sentence in ${langName}
+
+Example (hvala, thank you): {"sounds_like": "HVA-la ≈ value", "mnemonic": "You value their help, so you say HVALA: thank you!", "components": "interjection · 'thank you very much' = najlepša hvala", "example_en": "Thank you for the coffee.", "example_zh": "Hvala za kavo."}`;
   const d = await chat(prompt, { temperature: 0.5 });
   const out = {};
-  for (const k of ["example_zh", "example_en", "mnemonic", "components"]) out[k] = String((d && d[k]) || "").trim();
+  for (const k of ["sounds_like", "mnemonic", "components", "example_zh", "example_en"]) out[k] = String((d && d[k]) || "").trim();
   if (!out.mnemonic && !out.example_zh) throw new AIError("Gemma didn't manage a memory hook — try again");
   return out;
 }

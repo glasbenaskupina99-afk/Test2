@@ -36,29 +36,57 @@ export function writeGrade(r) {
 
 // ------------------------------------------------------------------ intro (new word)
 
+/** Memory hooks being prepared in the background, by word id (see prefetchExtras). */
+const extrasJobs = new Map();
+
+function fetchExtras(word, refresh = false) {
+  if (!refresh && extrasJobs.has(word.id)) return extrasJobs.get(word.id);
+  const job = api(`/api/words/${word.id}/extras${refresh ? "?refresh=1" : ""}`).then((x) => (word.extras = x));
+  extrasJobs.set(word.id, job);
+  job.catch(() => extrasJobs.delete(word.id));
+  return job;
+}
+
+/**
+ * Start preparing memory hooks for a lesson's words, one after another, so the next word's hook
+ * is ready by the time you get to it. Words with a ready-made hook are skipped.
+ */
+export function prefetchExtras(words) {
+  if (!state.settings?.ai_enabled) return;
+  const todo = words.filter((w) => !w.extras && !extrasJobs.has(w.id));
+  (async () => {
+    for (const w of todo) await fetchExtras(w).catch(() => {});
+  })();
+}
+
+function extrasBox(x, onRefresh) {
+  return h(
+    "div",
+    { class: "ai-box" },
+    x.mnemonic ? h("div", {}, h("b", {}, "Memory hook: "), x.mnemonic) : h("div", { class: "small muted" }, "No English memory hook this time — tap “New memory hook” to try again."),
+    x.sounds_like ? h("div", { style: { marginTop: "6px" } }, h("b", {}, "Sounds like: "), x.sounds_like) : null,
+    x.components ? h("div", { style: { marginTop: "6px" } }, h("b", {}, x.sounds_like || isSl() ? "Grammar: " : "Parts: "), x.components) : null,
+    x.example_zh
+      ? h(
+          "div",
+          { class: "row", style: { marginTop: "8px" } },
+          speakerBtn(x.example_zh, "speaker sm"),
+          h("div", {}, h("div", { class: "hz" }, x.example_zh), h("div", { class: "small muted" }, x.example_pinyin || ""), h("div", { class: "small" }, x.example_en))
+        )
+      : null,
+    state.settings?.ai_enabled ? h("button", { class: "reveal", style: { marginTop: "10px" }, onclick: onRefresh }, "↻ New memory hook") : null
+  );
+}
+
 export function intro(ctx, word) {
   const ai = h("div");
   const loadAI = async (refresh = false) => {
+    // Ready-made (or already prepared) hook: show it straight away.
+    if (!refresh && word.extras) return ai.replaceChildren(extrasBox(word.extras, () => loadAI(true)));
     ai.replaceChildren(h("div", { class: "ai-box" }, "✨ Asking Gemma…"));
     try {
-      const x = await api(`/api/words/${word.id}/extras${refresh ? "?refresh=1" : ""}`);
-      ai.replaceChildren(
-        h(
-          "div",
-          { class: "ai-box" },
-          x.mnemonic ? h("div", {}, h("b", {}, "Memory hook: "), x.mnemonic) : h("div", { class: "small muted" }, "No English memory hook this time — tap “New memory hook” to try again."),
-          x.components ? h("div", { style: { marginTop: "6px" } }, h("b", {}, "Parts: "), x.components) : null,
-          x.example_zh
-            ? h(
-                "div",
-                { class: "row", style: { marginTop: "8px" } },
-                speakerBtn(x.example_zh, "speaker sm"),
-                h("div", {}, h("div", { class: "hz" }, x.example_zh), h("div", { class: "small muted" }, x.example_pinyin || ""), h("div", { class: "small" }, x.example_en))
-              )
-            : null,
-          h("button", { class: "reveal", style: { marginTop: "10px" }, onclick: () => loadAI(true) }, "↻ New memory hook")
-        )
-      );
+      const x = await fetchExtras(word, refresh);
+      ai.replaceChildren(extrasBox(x, () => loadAI(true)));
     } catch (e) {
       ai.replaceChildren(
         h("div", { class: "ai-box" }, "AI hints unavailable: ", e.message, " ", h("button", { class: "reveal", onclick: () => loadAI(true) }, "Try again"))
@@ -66,8 +94,9 @@ export function intro(ctx, word) {
     }
   };
   const aiOn = state.settings?.ai_enabled;
-  if (word.extras) loadAI();
-
+  // Show the hook right away if it's ready or already being prepared in the background.
+  const autoShow = word.extras || extrasJobs.has(word.id);
+  if (autoShow) loadAI();
   // Latin-script words have no stroke order: show the word itself.
   const demo = isSl() ? { el: h("div", { class: "sl-word" }, h("div", { class: "sl-word-text" }, word.hanzi), genderTag(word)) } : strokeDemo(word.hanzi);
   const el = h(
@@ -82,7 +111,7 @@ export function intro(ctx, word) {
       h("div", { class: "py" }, word.pinyin),
       h("div", { class: "en" }, word.english)
     ),
-    aiOn && !word.extras
+    aiOn && !autoShow
       ? h(
           "div",
           { style: { display: "flex", justifyContent: "center", marginTop: "4px" } },

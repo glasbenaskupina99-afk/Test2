@@ -39,6 +39,7 @@ const LANGS = {
 // ------------------------------------------------------------------ index of all words
 
 const WORDS = {}; // "chinese" → Map(word → entry)
+const WITH_CHAR = {}; // "chinese" → Map(character → entries)
 for (const [key, L] of Object.entries(LANGS)) {
   const map = new Map();
   for (const level of L.levels) {
@@ -56,6 +57,13 @@ for (const [key, L] of Object.entries(LANGS)) {
     level.count = level.units.reduce((n, u) => n + u.words.length, 0);
   }
   WORDS[key] = map;
+  // Character → words that contain it (for "Words with 爱").
+  const byChar = new Map();
+  for (const e of map.values()) for (const c of new Set(e.word)) {
+    if (!byChar.has(c)) byChar.set(c, []);
+    byChar.get(c).push(e);
+  }
+  WITH_CHAR[key] = byChar;
 }
 
 // ------------------------------------------------------------------ helpers
@@ -142,6 +150,13 @@ function wordPage(e) {
     ? `How to write the ${script} ${e.word} (“${meaning}”): animated stroke order (${strokesTotal} strokes), a memory trick and an example word.`
     : `${e.word} (${e.reading}) means “${meaning}”. ${e.level.name} word. Animated stroke order, a memory trick${x.example_zh ? ` and an example: ${x.example_zh}` : "."}`;
 
+  // Words that share a character with this one (not for single kana).
+  const related = kanaWord
+    ? []
+    : chars
+        .filter((c) => !isKanaChar(c))
+        .map((c) => ({ c, words: (WITH_CHAR[e.langKey].get(c) || []).filter((w) => w !== e).slice(0, 18) }))
+        .filter((r) => r.words.length);
   const charLinks = chars.length > 1
     ? `<p class="chars">${chars
         .map((c) => {
@@ -151,6 +166,13 @@ function wordPage(e) {
         })
         .join("")}</p>`
     : "";
+  // What each character of a compound means on its own, when it is a word in the course.
+  const parts = chars.length > 1
+    ? chars
+        .map((c) => WORDS[e.langKey].get(c))
+        .filter(Boolean)
+        .map((w) => `<li><a href="${wordUrl(w)}" lang="${L.htmlLang}">${esc(w.word)}</a> <span lang="${L.htmlLang}">${esc(w.reading)}</span> — ${esc(w.english)} (${strokeCounts[L.lang][w.word] || "?"} strokes)</li>`)
+    : [];
 
   const unitWords = e.unit.words;
   const i = unitWords.indexOf(e);
@@ -179,9 +201,13 @@ ${charLinks}
 
 ${x.mnemonic ? `<section class="card hook"><h2>Memory trick</h2><p>${esc(x.mnemonic)}</p>${x.sounds_like ? `<p class="muted">Sounds like: ${esc(x.sounds_like)}</p>` : ""}${x.components ? `<p class="muted"><b>${kanaWord ? "Origin" : "Parts"}:</b> ${esc(x.components)}</p>` : ""}</section>` : ""}
 
+${parts.length ? `<section class="card"><h2>The characters in ${esc(e.word)}</h2><ul class="parts">${parts.join("")}</ul></section>` : ""}
+
 ${x.example_zh ? `<section class="card"><h2>${kanaWord ? "Example word" : "Example sentence"}</h2><p class="ex" lang="${L.htmlLang}">${esc(x.example_zh)}</p>${x.example_pinyin && x.example_pinyin !== x.example_zh ? `<p class="muted" lang="${L.htmlLang}">${esc(x.example_pinyin)}</p>` : ""}<p>${esc(x.example_en)}</p></section>` : ""}
 
 <nav class="pager">${prev ? `<a href="${wordUrl(prev)}">‹ <span lang="${L.htmlLang}">${esc(prev.word)}</span></a>` : "<span></span>"}<a href="${levelUrl(e.langKey, e.level)}">All ${esc(e.level.name)} words</a>${next ? `<a href="${wordUrl(next)}"><span lang="${L.htmlLang}">${esc(next.word)}</span> ›</a>` : "<span></span>"}</nav>
+
+${related.map((r) => `<section class="card"><h2>Words with <span lang="${L.htmlLang}">${esc(r.c)}</span></h2><div class="grid">${r.words.map((w) => `<a href="${wordUrl(w)}"><b lang="${L.htmlLang}">${esc(w.word)}</b><small>${esc(w.english)}</small></a>`).join("")}</div></section>`).join("")}
 
 ${siblings ? `<section class="card"><h2>More words: ${esc(e.unit.name)}</h2><div class="grid">${siblings}</div></section>` : ""}
 </article>`;
@@ -189,7 +215,16 @@ ${siblings ? `<section class="card"><h2>More words: ${esc(e.unit.name)}</h2><div
     title, description, body,
     canonical: wordUrl(e),
     breadcrumbs: [{ name: "Bloomko", url: "/" }, { name: L.name, url: `/${e.langKey}/` }, { name: e.level.name, url: levelUrl(e.langKey, e.level) }, { name: e.word, url: wordUrl(e) }],
-    extraHead: `<script src="/vendor/hanzi-writer.min.js" defer></script><script>${WRITER_JS}</script>`,
+    extraHead: `<script src="/vendor/hanzi-writer.min.js" defer></script><script>${WRITER_JS}</script><script type="application/ld+json">${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "DefinedTerm",
+      name: e.word,
+      alternateName: e.reading !== e.word ? e.reading : undefined,
+      description: meaning,
+      inLanguage: L.htmlLang,
+      url: SITE + wordUrl(e),
+      inDefinedTermSet: { "@type": "DefinedTermSet", name: `${e.level.name} ${kanaWord ? "kana" : "vocabulary"}`, url: SITE + levelUrl(e.langKey, e.level) },
+    }).replace(/</g, "\\u003c")}</script>`,
   });
 }
 
@@ -297,6 +332,7 @@ h2{font-size:20px}
 .wbtns button,.notify button{font:inherit;font-weight:800;border:none;border-radius:12px;padding:8px 14px;cursor:pointer;background:var(--surface-2);color:var(--strong);border:2px solid var(--border)}
 .chars{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0}
 .chars a,.chars span{padding:4px 12px;border-radius:99px;background:var(--surface-2);text-decoration:none;font-weight:700;font-size:15px}
+.parts{margin:0;padding-left:20px}.parts li{margin:4px 0}.parts a{font-size:20px;font-weight:800;text-decoration:none;color:var(--strong)}
 .hook p:first-of-type{font-size:18px;color:var(--strong)}
 .ex{font-size:24px;color:var(--strong);margin:0}
 .pager{display:flex;justify-content:space-between;gap:10px;margin:0 0 16px;font-weight:800}

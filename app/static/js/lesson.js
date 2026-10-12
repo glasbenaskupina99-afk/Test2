@@ -2,6 +2,39 @@
 import { api, h, confirmDialog } from "./util.js";
 import { stopSpeaking } from "./audio.js";
 
+const END_MSG = {
+  bloom: "Beautiful — your plant is in bloom!",
+  grow: "Well watered — your garden grew today.",
+  sprout: "Every drop counts. Your sprout is growing.",
+};
+
+const ICONS = {
+  drop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 3s-6 7-6 11.5a6 6 0 0 0 12 0C18 10 12 3 12 3z"/><path d="M9.5 15a2.6 2.6 0 0 0 2 2.4" stroke-linecap="round"/></svg>',
+  leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 10 10 5 20 4c0 10-5 15-15 15z"/><path d="M5 19l9-9"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.5 2M10 2.5h4"/></svg>',
+};
+
+/** End-of-lesson art: a plant growing in its pot while leaves drift down; it blooms after a great lesson. */
+function gardenArt(mood) {
+  const falling = [12, 30, 52, 70, 88]
+    .map((x, i) => `<path class="fall f${i}" d="M${x} -6c-4 0-7 3-7 7 4 0 7-3 7-7z"/>`)
+    .join("");
+  const bloom =
+    mood === "bloom"
+      ? `<g class="blossom">${[0, 72, 144, 216, 288].map((a) => `<ellipse cx="50" cy="20" rx="5" ry="8" transform="rotate(${a} 50 28)"/>`).join("")}<circle class="heart" cx="50" cy="28" r="4.5"/></g>`
+      : "";
+  const top = mood === "sprout" ? "" : `<path class="leaf l3" d="M50 40C44 34 44 24 50 16C56 24 56 34 50 40Z"/>`;
+  return `<svg viewBox="0 0 100 110" aria-hidden="true">
+    <g class="falls">${falling}</g>
+    <ellipse class="glow" cx="50" cy="64" rx="46" ry="44"/>
+    <path class="pot" d="M30 84h40l-5 22H35z"/><rect class="pot-rim" x="27" y="80" width="46" height="8" rx="3"/>
+    <path class="stem" d="M50 82C50 70 49 56 50 ${mood === "sprout" ? 58 : 34}" fill="none" stroke-width="3.2" stroke-linecap="round"/>
+    <path class="leaf l1" d="M50 70C41 71 31 66 27 57C37 55 46 60 50 70Z"/>
+    <path class="leaf l2" d="M50 60C59 61 69 55 72 45C62 44 54 50 50 60Z"/>
+    ${top}${bloom}
+  </svg>`;
+}
+
 /**
  * steps: [{ make(ctx) -> exercise, after?(result) -> Promise<{xp?, requeue?: step}> }]
  * Returns a promise resolving with a summary when the lesson ends (or null if quit).
@@ -148,18 +181,22 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
     // Study time for "My journey" (servers without this endpoint just ignore it).
     api("/api/activity/time", { method: "POST", body: { seconds: Math.min(secs, 3 * 3600) } }).catch(() => {});
     const finishBtn = h("button", { class: "btn", onclick: () => close(summary) }, "Continue");
+    const mood = acc >= 90 ? "bloom" : acc >= 60 ? "grow" : "sprout";
+    const statCard = (cls, icon, value, label) =>
+      h("div", { class: `end-stat ${cls}` }, h("span", { class: "end-ico", html: icon }), h("b", {}, value), h("small", {}, label));
     body.replaceChildren(
       h(
         "div",
         { class: "end" },
-        h("div", { class: "trophy" }, acc >= 90 ? "🏆" : acc >= 60 ? "🎉" : "💪"),
+        h("div", { class: `end-garden ${mood}`, html: gardenArt(mood) }),
         h("h1", {}, endTitle),
+        h("p", { class: "end-msg" }, END_MSG[mood]),
         h(
           "div",
           { class: "end-stats" },
-          h("div", { class: "end-stat", style: { "--c": "var(--yellow)" } }, h("div", { class: "lbl" }, "Total XP"), h("div", { class: "val" }, `⚡${xp}`)),
-          h("div", { class: "end-stat", style: { "--c": "var(--green)" } }, h("div", { class: "lbl" }, "Accuracy"), h("div", { class: "val" }, `🎯${acc}%`)),
-          h("div", { class: "end-stat", style: { "--c": "var(--blue)" } }, h("div", { class: "lbl" }, "Time"), h("div", { class: "val" }, `⏱${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`))
+          statCard("xp", ICONS.drop, `+${xp}`, "XP"),
+          statCard("acc", ICONS.leaf, `${acc}%`, "Accuracy"),
+          statCard("time", ICONS.clock, `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`, "Time")
         )
       )
     );

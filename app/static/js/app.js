@@ -90,12 +90,12 @@ const COURSES = {
 };
 
 const LEVEL_INFO = {
-  "HSK 1": "Beginner · your first Chinese words",
-  "HSK 2": "Elementary · daily life, travel, feelings",
-  "HSK 3": "Pre-intermediate · work, school, health, nature",
+  "HSK 1": "Beginner · official HSK 3.0 level 1",
+  "HSK 2": "Elementary · official HSK 3.0 level 2",
+  "HSK 3": "Intermediate · official HSK 3.0 level 3",
   Kana: "Start here · hiragana and katakana, stroke by stroke",
-  "JLPT N5": "Beginner · basic kanji and everyday words",
-  "JLPT N4": "Elementary · family, town, work, seasons",
+  "JLPT N5": "Beginner · kanji, kana words and loanwords",
+  "JLPT N4": "Elementary · everyday life, work, plans",
   "JLPT N3": "Intermediate · work, news, feelings, travel",
   A1: "Beginner · first words",
   "My words": "Words you added yourself",

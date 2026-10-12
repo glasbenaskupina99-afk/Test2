@@ -22,6 +22,46 @@
       ]
     },
     {
+      "name": "Counting things",
+      "words": [
+        ["一つ", "ひとつ", "one (thing)"],
+        ["二つ", "ふたつ", "two (things)"],
+        ["三つ", "みっつ", "three (things)"],
+        ["四つ", "よっつ", "four (things)"],
+        ["五つ", "いつつ", "five (things)"],
+        ["六つ", "むっつ", "six (things)"],
+        ["七つ", "ななつ", "seven (things)"],
+        ["八つ", "やっつ", "eight (things)"],
+        ["九つ", "ここのつ", "nine (things)"],
+        ["一人", "ひとり", "one person; alone"],
+        ["二人", "ふたり", "two people"],
+        ["三人", "さんにん", "three people"],
+        ["四人", "よにん", "four people"],
+        ["何人", "なんにん", "how many people"]
+      ]
+    },
+    {
+      "name": "Greetings & phrases",
+      "words": [
+        ["こんにちは", "こんにちは", "hello; good afternoon"],
+        ["こんばんは", "こんばんは", "good evening"],
+        ["おはよう", "おはよう", "good morning (casual)"],
+        ["おはようございます", "おはようございます", "good morning (polite)"],
+        ["さようなら", "さようなら", "goodbye"],
+        ["おやすみなさい", "おやすみなさい", "good night"],
+        ["ありがとう", "ありがとう", "thank you"],
+        ["ありがとうございます", "ありがとうございます", "thank you (polite)"],
+        ["どうも", "どうも", "thanks; hi"],
+        ["すみません", "すみません", "excuse me; sorry"],
+        ["ごめんなさい", "ごめんなさい", "I'm sorry"],
+        ["いただきます", "いただきます", "let's eat (before meals)"],
+        ["ごちそうさまでした", "ごちそうさまでした", "thanks for the meal"],
+        ["はじめまして", "はじめまして", "nice to meet you"],
+        ["どうぞよろしく", "どうぞよろしく", "pleased to meet you"],
+        ["おねがいします", "おねがいします", "please (requesting)"]
+      ]
+    },
+    {
       "name": "People",
       "words": [
         ["人", "ひと", "person"],
@@ -36,6 +76,44 @@
         ["学生", "がくせい", "student"],
         ["名前", "なまえ", "name"],
         ["日本人", "にほんじん", "Japanese person"]
+      ]
+    },
+    {
+      "name": "Big numbers & money",
+      "words": [
+        ["二十", "にじゅう", "twenty"],
+        ["三百", "さんびゃく", "three hundred"],
+        ["六百", "ろっぴゃく", "six hundred"],
+        ["八百", "はっぴゃく", "eight hundred"],
+        ["三千", "さんぜん", "three thousand"],
+        ["一万", "いちまん", "ten thousand"],
+        ["百円", "ひゃくえん", "100 yen"],
+        ["五百円", "ごひゃくえん", "500 yen"],
+        ["千円", "せんえん", "1,000 yen"],
+        ["一万円", "いちまんえん", "10,000 yen"],
+        ["二十歳", "はたち", "twenty years old"],
+        ["全部", "ぜんぶ", "all; everything"],
+        ["半分", "はんぶん", "half"]
+      ]
+    },
+    {
+      "name": "Polite set phrases",
+      "words": [
+        ["いってきます", "いってきます", "I'm off; see you later"],
+        ["いってらっしゃい", "いってらっしゃい", "have a good day; take care"],
+        ["ただいま", "ただいま", "I'm home"],
+        ["おかえりなさい", "おかえりなさい", "welcome home"],
+        ["どういたしまして", "どういたしまして", "you're welcome"],
+        ["いらっしゃいませ", "いらっしゃいませ", "welcome (in shops)"],
+        ["おげんきですか", "おげんきですか", "how are you?"],
+        ["おかげさまで", "おかげさまで", "thanks to you; I'm fine"],
+        ["しつれいします", "しつれいします", "excuse me (entering/leaving)"],
+        ["ください", "ください", "please give me"],
+        ["どうぞ", "どうぞ", "please; go ahead; here you are"],
+        ["では", "では", "well then"],
+        ["じゃあね", "じゃあね", "see you; bye"],
+        ["またね", "またね", "see you later"],
+        ["おめでとう", "おめでとう", "congratulations"]
       ]
     },
     {
@@ -56,6 +134,44 @@
       ]
     },
     {
+      "name": "Counters",
+      "words": [
+        ["一本", "いっぽん", "one (long thing)"],
+        ["三本", "さんぼん", "three (long things)"],
+        ["一枚", "いちまい", "one (flat thing)"],
+        ["一冊", "いっさつ", "one (book)"],
+        ["一台", "いちだい", "one (machine; vehicle)"],
+        ["一匹", "いっぴき", "one (small animal)"],
+        ["一杯", "いっぱい", "one cup; full"],
+        ["一回", "いっかい", "once; one time"],
+        ["二度", "にど", "twice; two times"],
+        ["一階", "いっかい", "first floor"],
+        ["二階", "にかい", "second floor; upstairs"],
+        ["何歳", "なんさい", "how old"],
+        ["一番", "いちばん", "number one; best; most"]
+      ]
+    },
+    {
+      "name": "Yes, no & replies",
+      "words": [
+        ["はい", "はい", "yes"],
+        ["いいえ", "いいえ", "no"],
+        ["ええ", "ええ", "yes (casual)"],
+        ["うん", "うん", "yeah; uh-huh"],
+        ["ううん", "ううん", "nope; no (casual)"],
+        ["そうです", "そうです", "that's right"],
+        ["そうですか", "そうですか", "is that so?; I see"],
+        ["そう", "そう", "so; that way; really?"],
+        ["なるほど", "なるほど", "I see"],
+        ["ちがいます", "ちがいます", "that's wrong; no"],
+        ["だいじょうぶ", "だいじょうぶ", "all right; OK"],
+        ["いいです", "いいです", "it's fine; no thanks"],
+        ["あのう", "あのう", "um; excuse me"],
+        ["ええと", "ええと", "let me see; uh"],
+        ["さあ", "さあ", "well; come on"]
+      ]
+    },
+    {
       "name": "Days of the week",
       "words": [
         ["月曜日", "げつようび", "Monday"],
@@ -65,6 +181,45 @@
         ["金曜日", "きんようび", "Friday"],
         ["土曜日", "どようび", "Saturday"],
         ["日曜日", "にちようび", "Sunday"]
+      ]
+    },
+    {
+      "name": "Telling time",
+      "words": [
+        ["一時", "いちじ", "one o'clock"],
+        ["四時", "よじ", "four o'clock"],
+        ["七時", "しちじ", "seven o'clock"],
+        ["九時", "くじ", "nine o'clock"],
+        ["何時", "なんじ", "what time"],
+        ["一分", "いっぷん", "one minute"],
+        ["三分", "さんぷん", "three minutes"],
+        ["五分", "ごふん", "five minutes"],
+        ["三十分", "さんじゅっぷん", "thirty minutes"],
+        ["何分", "なんぷん", "how many minutes"],
+        ["一時間", "いちじかん", "one hour"],
+        ["一週間", "いっしゅうかん", "one week"],
+        ["一年", "いちねん", "one year"]
+      ]
+    },
+    {
+      "name": "Question words",
+      "words": [
+        ["なに", "なに", "what"],
+        ["なん", "なん", "what (before counters)"],
+        ["だれ", "だれ", "who"],
+        ["どなた", "どなた", "who (polite)"],
+        ["どこ", "どこ", "where"],
+        ["いつ", "いつ", "when"],
+        ["どう", "どう", "how"],
+        ["いかが", "いかが", "how (polite)"],
+        ["どうして", "どうして", "why"],
+        ["なぜ", "なぜ", "why"],
+        ["いくら", "いくら", "how much (price)"],
+        ["いくつ", "いくつ", "how many; how old"],
+        ["どれ", "どれ", "which (of many)"],
+        ["どの", "どの", "which ~"],
+        ["どちら", "どちら", "which (of two); where (polite)"],
+        ["どんな", "どんな", "what kind of"]
       ]
     },
     {
@@ -81,6 +236,45 @@
         ["花", "はな", "flower"],
         ["天気", "てんき", "weather"],
         ["元気", "げんき", "healthy; energetic"]
+      ]
+    },
+    {
+      "name": "Days of the month",
+      "words": [
+        ["一日", "ついたち", "1st (of the month)"],
+        ["二日", "ふつか", "2nd (of the month); two days"],
+        ["三日", "みっか", "3rd (of the month); three days"],
+        ["四日", "よっか", "4th (of the month); four days"],
+        ["五日", "いつか", "5th (of the month); five days"],
+        ["六日", "むいか", "6th (of the month); six days"],
+        ["七日", "なのか", "7th (of the month); seven days"],
+        ["八日", "ようか", "8th (of the month); eight days"],
+        ["九日", "ここのか", "9th (of the month); nine days"],
+        ["十日", "とおか", "10th (of the month); ten days"],
+        ["十四日", "じゅうよっか", "14th (of the month)"],
+        ["二十日", "はつか", "20th (of the month)"],
+        ["何日", "なんにち", "what day; how many days"]
+      ]
+    },
+    {
+      "name": "This & that (ko-so-a-do)",
+      "words": [
+        ["これ", "これ", "this (one)"],
+        ["それ", "それ", "that (one)"],
+        ["あれ", "あれ", "that (one over there)"],
+        ["この", "この", "this ~"],
+        ["その", "その", "that ~"],
+        ["あの", "あの", "that ~ over there"],
+        ["ここ", "ここ", "here"],
+        ["そこ", "そこ", "there"],
+        ["あそこ", "あそこ", "over there"],
+        ["こちら", "こちら", "this way; this person"],
+        ["そちら", "そちら", "that way; that person"],
+        ["あちら", "あちら", "that way over there"],
+        ["こっち", "こっち", "this way (casual)"],
+        ["そっち", "そっち", "that way (casual)"],
+        ["あっち", "あっち", "over there (casual)"],
+        ["どっち", "どっち", "which way (casual)"]
       ]
     },
     {
@@ -107,6 +301,46 @@
       ]
     },
     {
+      "name": "Months",
+      "words": [
+        ["一月", "いちがつ", "January"],
+        ["二月", "にがつ", "February"],
+        ["三月", "さんがつ", "March"],
+        ["四月", "しがつ", "April"],
+        ["五月", "ごがつ", "May"],
+        ["六月", "ろくがつ", "June"],
+        ["七月", "しちがつ", "July"],
+        ["八月", "はちがつ", "August"],
+        ["九月", "くがつ", "September"],
+        ["十月", "じゅうがつ", "October"],
+        ["十一月", "じゅういちがつ", "November"],
+        ["十二月", "じゅうにがつ", "December"],
+        ["先月", "せんげつ", "last month"],
+        ["今月", "こんげつ", "this month"],
+        ["来月", "らいげつ", "next month"]
+      ]
+    },
+    {
+      "name": "Like this & that",
+      "words": [
+        ["こう", "こう", "like this; this way"],
+        ["ああ", "ああ", "like that; ah"],
+        ["こんな", "こんな", "this kind of"],
+        ["そんな", "そんな", "that kind of"],
+        ["あんな", "あんな", "that kind of (over there)"],
+        ["こんなに", "こんなに", "this much; so"],
+        ["そんなに", "そんなに", "that much; not so"],
+        ["どうやって", "どうやって", "how; by what means"],
+        ["どのくらい", "どのくらい", "how long; how much"],
+        ["どれぐらい", "どれぐらい", "about how much"],
+        ["なにか", "なにか", "something"],
+        ["だれか", "だれか", "someone"],
+        ["どこか", "どこか", "somewhere"],
+        ["いつか", "いつか", "someday; sometime"],
+        ["なにも", "なにも", "nothing (with negative)"]
+      ]
+    },
+    {
       "name": "Actions",
       "words": [
         ["行く", "いく", "to go"],
@@ -128,6 +362,45 @@
       ]
     },
     {
+      "name": "Calendar",
+      "words": [
+        ["昨日", "きのう", "yesterday"],
+        ["一昨日", "おととい", "the day before yesterday"],
+        ["明後日", "あさって", "the day after tomorrow"],
+        ["今年", "ことし", "this year"],
+        ["来年", "らいねん", "next year"],
+        ["毎月", "まいつき", "every month"],
+        ["毎年", "まいとし", "every year"],
+        ["毎朝", "まいあさ", "every morning"],
+        ["毎晩", "まいばん", "every night"],
+        ["今晩", "こんばん", "this evening; tonight"],
+        ["夕方", "ゆうがた", "evening; dusk"],
+        ["週末", "しゅうまつ", "weekend"],
+        ["誕生日", "たんじょうび", "birthday"],
+        ["何曜日", "なんようび", "what day of the week"]
+      ]
+    },
+    {
+      "name": "Adverbs of degree",
+      "words": [
+        ["とても", "とても", "very"],
+        ["すこし", "すこし", "a little"],
+        ["ちょっと", "ちょっと", "a little; a moment"],
+        ["たくさん", "たくさん", "a lot; many"],
+        ["もっと", "もっと", "more"],
+        ["いちばん", "いちばん", "most; number one"],
+        ["よく", "よく", "well; often"],
+        ["あまり", "あまり", "not much (with negative)"],
+        ["ぜんぜん", "ぜんぜん", "not at all (with negative)"],
+        ["だいたい", "だいたい", "mostly; roughly"],
+        ["ほんとうに", "ほんとうに", "really; truly"],
+        ["ずっと", "ずっと", "much more; all along"],
+        ["ちょうど", "ちょうど", "exactly; just"],
+        ["ぐらい", "ぐらい", "about; approximately"],
+        ["ほど", "ほど", "about; extent"]
+      ]
+    },
+    {
       "name": "Describing",
       "words": [
         ["大きい", "おおきい", "big"],
@@ -140,6 +413,44 @@
         ["白い", "しろい", "white"],
         ["多い", "おおい", "many; a lot"],
         ["少ない", "すくない", "few; little"]
+      ]
+    },
+    {
+      "name": "Time words",
+      "words": [
+        ["時", "とき", "time; when"],
+        ["時々", "ときどき", "sometimes"],
+        ["後", "あと", "after; later"],
+        ["先", "さき", "ahead; earlier; tip"],
+        ["間", "あいだ", "between; during"],
+        ["初め", "はじめ", "beginning"],
+        ["初めて", "はじめて", "for the first time"],
+        ["次", "つぎ", "next"],
+        ["一緒", "いっしょ", "together"],
+        ["昨夜", "ゆうべ", "last night"],
+        ["休み", "やすみ", "rest; holiday; day off"],
+        ["夏休み", "なつやすみ", "summer vacation"],
+        ["冬休み", "ふゆやすみ", "winter vacation"]
+      ]
+    },
+    {
+      "name": "Adverbs of time",
+      "words": [
+        ["もう", "もう", "already; anymore"],
+        ["まだ", "まだ", "still; not yet"],
+        ["すぐ", "すぐ", "soon; right away"],
+        ["いつも", "いつも", "always"],
+        ["ときどき", "ときどき", "sometimes"],
+        ["たいてい", "たいてい", "usually"],
+        ["また", "また", "again"],
+        ["はじめて", "はじめて", "for the first time"],
+        ["さっき", "さっき", "a little while ago"],
+        ["あとで", "あとで", "later"],
+        ["いま", "いま", "now"],
+        ["これから", "これから", "from now on"],
+        ["やっと", "やっと", "at last; finally"],
+        ["だんだん", "だんだん", "gradually"],
+        ["ゆっくり", "ゆっくり", "slowly; leisurely"]
       ]
     },
     {
@@ -157,6 +468,595 @@
         ["耳", "みみ", "ear"],
         ["口", "くち", "mouth"],
         ["足", "あし", "foot; leg"]
+      ]
+    },
+    {
+      "name": "Family",
+      "words": [
+        ["お父さん", "おとうさん", "father (polite)"],
+        ["お母さん", "おかあさん", "mother (polite)"],
+        ["お兄さん", "おにいさん", "older brother (polite)"],
+        ["お姉さん", "おねえさん", "older sister (polite)"],
+        ["弟さん", "おとうとさん", "younger brother (polite)"],
+        ["妹さん", "いもうとさん", "younger sister (polite)"],
+        ["祖母", "そぼ", "grandmother"],
+        ["夫", "おっと", "husband"],
+        ["奥さん", "おくさん", "wife (someone else's)"],
+        ["息子", "むすこ", "son"],
+        ["父親", "ちちおや", "father"],
+        ["母親", "ははおや", "mother"],
+        ["赤ちゃん", "あかちゃん", "baby"],
+        ["一人っ子", "ひとりっこ", "only child"]
+      ]
+    },
+    {
+      "name": "Other kana adverbs",
+      "words": [
+        ["まっすぐ", "まっすぐ", "straight ahead"],
+        ["いっしょに", "いっしょに", "together"],
+        ["ひとりで", "ひとりで", "alone; by oneself"],
+        ["ぜひ", "ぜひ", "by all means"],
+        ["たぶん", "たぶん", "probably; maybe"],
+        ["きっと", "きっと", "surely; certainly"],
+        ["もちろん", "もちろん", "of course"],
+        ["まず", "まず", "first of all"],
+        ["つぎに", "つぎに", "next"],
+        ["みんな", "みんな", "everyone; all"],
+        ["ぜんぶ", "ぜんぶ", "all; everything"],
+        ["ほかに", "ほかに", "besides; anything else"],
+        ["だけ", "だけ", "only; just"],
+        ["しか", "しか", "only (with negative)"],
+        ["でも", "でも", "but; however"]
+      ]
+    },
+    {
+      "name": "People",
+      "words": [
+        ["大人", "おとな", "adult"],
+        ["男の子", "おとこのこ", "boy"],
+        ["女の子", "おんなのこ", "girl"],
+        ["男の人", "おとこのひと", "man"],
+        ["女の人", "おんなのひと", "woman"],
+        ["外国人", "がいこくじん", "foreigner"],
+        ["友人", "ゆうじん", "friend"],
+        ["皆さん", "みなさん", "everyone"],
+        ["方", "かた", "person (polite)"],
+        ["大学生", "だいがくせい", "university student"],
+        ["留学生", "りゅうがくせい", "international student"],
+        ["小学生", "しょうがくせい", "elementary school student"],
+        ["中学生", "ちゅうがくせい", "junior high school student"],
+        ["高校生", "こうこうせい", "high school student"]
+      ]
+    },
+    {
+      "name": "Linking words",
+      "words": [
+        ["そして", "そして", "and then; and"],
+        ["それから", "それから", "after that; and then"],
+        ["しかし", "しかし", "however"],
+        ["だから", "だから", "so; therefore"],
+        ["それで", "それで", "and so; then"],
+        ["それでは", "それでは", "well then"],
+        ["じゃ", "じゃ", "well then (casual)"],
+        ["けれども", "けれども", "but; although"],
+        ["けど", "けど", "but (casual)"],
+        ["ので", "ので", "because; so"],
+        ["から", "から", "because; from"],
+        ["まで", "まで", "until; up to"],
+        ["ごろ", "ごろ", "around (time)"],
+        ["など", "など", "and so on; etc."]
+      ]
+    },
+    {
+      "name": "At school",
+      "words": [
+        ["大学", "だいがく", "university"],
+        ["小学校", "しょうがっこう", "elementary school"],
+        ["中学校", "ちゅうがっこう", "junior high school"],
+        ["留学", "りゅうがく", "studying abroad"],
+        ["教科書", "きょうかしょ", "textbook"],
+        ["黒板", "こくばん", "blackboard"],
+        ["鉛筆", "えんぴつ", "pencil"],
+        ["机", "つくえ", "desk"],
+        ["紙", "かみ", "paper"],
+        ["本棚", "ほんだな", "bookshelf"],
+        ["外国語", "がいこくご", "foreign language"],
+        ["中国語", "ちゅうごくご", "Chinese (language)"],
+        ["片仮名", "かたかな", "katakana"],
+        ["平仮名", "ひらがな", "hiragana"]
+      ]
+    },
+    {
+      "name": "Kana adjectives & expressions",
+      "words": [
+        ["いい", "いい", "good"],
+        ["きれい", "きれい", "pretty; clean"],
+        ["いろいろ", "いろいろ", "various"],
+        ["だめ", "だめ", "no good; not allowed"],
+        ["けっこう", "けっこう", "fine; enough; quite"],
+        ["おいしい", "おいしい", "delicious"],
+        ["かわいい", "かわいい", "cute"],
+        ["つまらない", "つまらない", "boring"],
+        ["うるさい", "うるさい", "noisy; annoying"],
+        ["まずい", "まずい", "bad-tasting"],
+        ["すてき", "すてき", "lovely; wonderful"],
+        ["ほしい", "ほしい", "want"],
+        ["ちいさな", "ちいさな", "small; little"],
+        ["おおきな", "おおきな", "big"],
+        ["へた", "へた", "unskillful; bad at"]
+      ]
+    },
+    {
+      "name": "Learning",
+      "words": [
+        ["学ぶ", "まなぶ", "to learn; to study"],
+        ["覚える", "おぼえる", "to remember; to memorize"],
+        ["忘れる", "わすれる", "to forget"],
+        ["分かる", "わかる", "to understand"],
+        ["消す", "けす", "to erase; to turn off"],
+        ["写す", "うつす", "to copy"],
+        ["読み方", "よみかた", "way of reading"],
+        ["書き方", "かきかた", "way of writing"],
+        ["文", "ぶん", "sentence"],
+        ["番", "ばん", "number; turn"],
+        ["練習", "れんしゅう", "practice"],
+        ["入学", "にゅうがく", "entering a school"],
+        ["答え", "こたえ", "answer"]
+      ]
+    },
+    {
+      "name": "Counting things (kana)",
+      "words": [
+        ["ひとつ", "ひとつ", "one (thing)"],
+        ["ふたつ", "ふたつ", "two (things)"],
+        ["みっつ", "みっつ", "three (things)"],
+        ["よっつ", "よっつ", "four (things)"],
+        ["いつつ", "いつつ", "five (things)"],
+        ["むっつ", "むっつ", "six (things)"],
+        ["ななつ", "ななつ", "seven (things)"],
+        ["やっつ", "やっつ", "eight (things)"],
+        ["ここのつ", "ここのつ", "nine (things)"],
+        ["とお", "とお", "ten (things)"],
+        ["ひとり", "ひとり", "one person"],
+        ["ふたり", "ふたり", "two people"],
+        ["はたち", "はたち", "20 years old"],
+        ["ついたち", "ついたち", "first day of the month"],
+        ["ふつか", "ふつか", "second day; two days"]
+      ]
+    },
+    {
+      "name": "Daily routine",
+      "words": [
+        ["寝る", "ねる", "to sleep; to go to bed"],
+        ["起こす", "おこす", "to wake (someone) up"],
+        ["洗う", "あらう", "to wash"],
+        ["磨く", "みがく", "to brush; to polish"],
+        ["浴びる", "あびる", "to take (a shower)"],
+        ["着替える", "きがえる", "to change clothes"],
+        ["出かける", "でかける", "to go out"],
+        ["住む", "すむ", "to live (in)"],
+        ["座る", "すわる", "to sit"],
+        ["置く", "おく", "to put; to place"],
+        ["入れる", "いれる", "to put in"],
+        ["出す", "だす", "to take out; to send"],
+        ["付ける", "つける", "to attach; to turn on"],
+        ["閉める", "しめる", "to close"]
+      ]
+    },
+    {
+      "name": "Food & drink (katakana)",
+      "words": [
+        ["コーヒー", "こーひー", "coffee"],
+        ["パン", "ぱん", "bread"],
+        ["ジュース", "じゅーす", "juice"],
+        ["ミルク", "みるく", "milk"],
+        ["ビール", "びーる", "beer"],
+        ["ワイン", "わいん", "wine"],
+        ["ケーキ", "けーき", "cake"],
+        ["バター", "ばたー", "butter"],
+        ["カレー", "かれー", "curry"],
+        ["サラダ", "さらだ", "salad"],
+        ["スープ", "すーぷ", "soup"],
+        ["チーズ", "ちーず", "cheese"],
+        ["アイスクリーム", "あいすくりーむ", "ice cream"],
+        ["ハンバーガー", "はんばーがー", "hamburger"],
+        ["トマト", "とまと", "tomato"],
+        ["レモン", "れもん", "lemon"]
+      ]
+    },
+    {
+      "name": "Movement",
+      "words": [
+        ["泳ぐ", "およぐ", "to swim"],
+        ["遊ぶ", "あそぶ", "to play"],
+        ["飛ぶ", "とぶ", "to fly; to jump"],
+        ["乗る", "のる", "to ride; to get on"],
+        ["降りる", "おりる", "to get off"],
+        ["渡る", "わたる", "to cross"],
+        ["曲がる", "まがる", "to turn"],
+        ["登る", "のぼる", "to climb"],
+        ["急ぐ", "いそぐ", "to hurry"],
+        ["上がる", "あがる", "to go up; to rise"],
+        ["下がる", "さがる", "to go down; to fall"],
+        ["並ぶ", "ならぶ", "to line up"],
+        ["落ちる", "おちる", "to fall; to drop"],
+        ["遅れる", "おくれる", "to be late"]
+      ]
+    },
+    {
+      "name": "Things at home (katakana)",
+      "words": [
+        ["テレビ", "てれび", "TV"],
+        ["ラジオ", "らじお", "radio"],
+        ["ベッド", "べっど", "bed"],
+        ["テーブル", "てーぶる", "table"],
+        ["ドア", "どあ", "door"],
+        ["トイレ", "といれ", "toilet; restroom"],
+        ["シャワー", "しゃわー", "shower"],
+        ["ストーブ", "すとーぶ", "heater; stove"],
+        ["カーテン", "かーてん", "curtain"],
+        ["コップ", "こっぷ", "cup; glass"],
+        ["フォーク", "ふぉーく", "fork"],
+        ["スプーン", "すぷーん", "spoon"],
+        ["ナイフ", "ないふ", "knife"],
+        ["カメラ", "かめら", "camera"],
+        ["パソコン", "ぱそこん", "personal computer"],
+        ["エアコン", "えあこん", "air conditioner"]
+      ]
+    },
+    {
+      "name": "Giving & handling",
+      "words": [
+        ["上げる", "あげる", "to give; to raise"],
+        ["返す", "かえす", "to return (something)"],
+        ["頼む", "たのむ", "to ask; to request"],
+        ["見せる", "みせる", "to show"],
+        ["取る", "とる", "to take"],
+        ["撮る", "とる", "to take (a photo)"],
+        ["拾う", "ひろう", "to pick up"],
+        ["捨てる", "すてる", "to throw away"],
+        ["払う", "はらう", "to pay"],
+        ["引く", "ひく", "to pull"],
+        ["並べる", "ならべる", "to line up; to arrange"],
+        ["呼ぶ", "よぶ", "to call"],
+        ["履く", "はく", "to put on (shoes; pants)"],
+        ["脱ぐ", "ぬぐ", "to take off (clothes)"]
+      ]
+    },
+    {
+      "name": "School & office (katakana)",
+      "words": [
+        ["ノート", "のーと", "notebook"],
+        ["ペン", "ぺん", "pen"],
+        ["ボールペン", "ぼーるぺん", "ballpoint pen"],
+        ["テスト", "てすと", "test"],
+        ["クラス", "くらす", "class"],
+        ["ページ", "ぺーじ", "page"],
+        ["テープ", "てーぷ", "tape"],
+        ["コピー", "こぴー", "copy; photocopy"],
+        ["ファイル", "ふぁいる", "file; folder"],
+        ["カレンダー", "かれんだー", "calendar"],
+        ["ポスト", "ぽすと", "postbox; mailbox"],
+        ["メール", "めーる", "email"],
+        ["パーティー", "ぱーてぃー", "party"],
+        ["アルバイト", "あるばいと", "part-time job"],
+        ["ニュース", "にゅーす", "news"]
+      ]
+    },
+    {
+      "name": "Senses & states",
+      "words": [
+        ["見える", "みえる", "to be visible"],
+        ["聞こえる", "きこえる", "to be audible"],
+        ["困る", "こまる", "to be in trouble"],
+        ["違う", "ちがう", "to differ; to be wrong"],
+        ["要る", "いる", "to need"],
+        ["生まれる", "うまれる", "to be born"],
+        ["生きる", "いきる", "to live"],
+        ["太る", "ふとる", "to gain weight"],
+        ["痩せる", "やせる", "to lose weight"],
+        ["消える", "きえる", "to disappear; to go out"],
+        ["勤める", "つとめる", "to work for"],
+        ["弾く", "ひく", "to play (an instrument)"],
+        ["踊る", "おどる", "to dance"]
+      ]
+    },
+    {
+      "name": "Clothes & things (katakana)",
+      "words": [
+        ["シャツ", "しゃつ", "shirt"],
+        ["ワイシャツ", "わいしゃつ", "dress shirt"],
+        ["セーター", "せーたー", "sweater"],
+        ["コート", "こーと", "coat"],
+        ["スカート", "すかーと", "skirt"],
+        ["ズボン", "ずぼん", "trousers; pants"],
+        ["ネクタイ", "ねくたい", "necktie"],
+        ["ポケット", "ぽけっと", "pocket"],
+        ["ボタン", "ぼたん", "button"],
+        ["スリッパ", "すりっぱ", "slippers"],
+        ["ハンカチ", "はんかち", "handkerchief"],
+        ["かばん", "かばん", "bag"],
+        ["めがね", "めがね", "glasses"],
+        ["ギター", "ぎたー", "guitar"],
+        ["フィルム", "ふぃるむ", "film (camera)"]
+      ]
+    },
+    {
+      "name": "Size, shape & speed",
+      "words": [
+        ["低い", "ひくい", "low; short"],
+        ["短い", "みじかい", "short"],
+        ["軽い", "かるい", "light (weight)"],
+        ["太い", "ふとい", "thick; fat"],
+        ["細い", "ほそい", "thin; slender"],
+        ["狭い", "せまい", "narrow; small (space)"],
+        ["丸い", "まるい", "round"],
+        ["四角い", "しかくい", "square"],
+        ["厚い", "あつい", "thick"],
+        ["薄い", "うすい", "thin; weak"],
+        ["速い", "はやい", "fast"],
+        ["遅い", "おそい", "slow; late"],
+        ["暗い", "くらい", "dark"]
+      ]
+    },
+    {
+      "name": "Places & transport (katakana)",
+      "words": [
+        ["ホテル", "ほてる", "hotel"],
+        ["レストラン", "れすとらん", "restaurant"],
+        ["デパート", "でぱーと", "department store"],
+        ["スーパー", "すーぱー", "supermarket"],
+        ["コンビニ", "こんびに", "convenience store"],
+        ["プール", "ぷーる", "swimming pool"],
+        ["エレベーター", "えれべーたー", "elevator"],
+        ["エスカレーター", "えすかれーたー", "escalator"],
+        ["バス", "ばす", "bus"],
+        ["タクシー", "たくしー", "taxi"],
+        ["バスてい", "ばすてい", "bus stop"],
+        ["ビル", "びる", "building"],
+        ["アパート", "あぱーと", "apartment"],
+        ["ロビー", "ろびー", "lobby"],
+        ["ドライブ", "どらいぶ", "drive (car trip)"]
+      ]
+    },
+    {
+      "name": "Colors, taste & touch",
+      "words": [
+        ["黄色い", "きいろい", "yellow"],
+        ["茶色い", "ちゃいろい", "brown"],
+        ["冷たい", "つめたい", "cold (to touch)"],
+        ["暖かい", "あたたかい", "warm (weather)"],
+        ["温かい", "あたたかい", "warm (to touch)"],
+        ["涼しい", "すずしい", "cool"],
+        ["熱い", "あつい", "hot (to touch)"],
+        ["甘い", "あまい", "sweet"],
+        ["辛い", "からい", "spicy"],
+        ["苦い", "にがい", "bitter"],
+        ["痛い", "いたい", "painful"],
+        ["眠い", "ねむい", "sleepy"],
+        ["汚い", "きたない", "dirty"]
+      ]
+    },
+    {
+      "name": "Leisure & people (katakana)",
+      "words": [
+        ["スポーツ", "すぽーつ", "sports"],
+        ["サッカー", "さっかー", "soccer"],
+        ["テニス", "てにす", "tennis"],
+        ["ゲーム", "げーむ", "game"],
+        ["レコード", "れこーど", "record (music)"],
+        ["ピアノ", "ぴあの", "piano"],
+        ["ダンス", "だんす", "dance"],
+        ["ペット", "ぺっと", "pet"],
+        ["メートル", "めーとる", "meter"],
+        ["キロ", "きろ", "kilo(gram/meter)"],
+        ["グラム", "ぐらむ", "gram"],
+        ["パーセント", "ぱーせんと", "percent"],
+        ["マッチ", "まっち", "match (for fire)"],
+        ["アメリカ", "あめりか", "America"],
+        ["イギリス", "いぎりす", "Britain; UK"],
+        ["フランス", "ふらんす", "France"]
+      ]
+    },
+    {
+      "name": "Feelings & qualities",
+      "words": [
+        ["若い", "わかい", "young"],
+        ["忙しい", "いそがしい", "busy"],
+        ["面白い", "おもしろい", "interesting; funny"],
+        ["危ない", "あぶない", "dangerous"],
+        ["易しい", "やさしい", "easy"],
+        ["難しい", "むずかしい", "difficult"],
+        ["欲しい", "ほしい", "wanted; desired"],
+        ["良い", "よい", "good"],
+        ["嬉しい", "うれしい", "happy; glad"],
+        ["悲しい", "かなしい", "sad"],
+        ["怖い", "こわい", "scary"],
+        ["残念", "ざんねん", "regrettable; too bad"],
+        ["大事", "だいじ", "important"]
+      ]
+    },
+    {
+      "name": "Na-adjectives",
+      "words": [
+        ["好き", "すき", "liked; favorite"],
+        ["大好き", "だいすき", "loved; very fond of"],
+        ["嫌い", "きらい", "disliked"],
+        ["大嫌い", "だいきらい", "hated"],
+        ["静か", "しずか", "quiet"],
+        ["賑やか", "にぎやか", "lively"],
+        ["大丈夫", "だいじょうぶ", "all right; OK"],
+        ["大変", "たいへん", "tough; very"],
+        ["暇", "ひま", "free (time)"],
+        ["色々", "いろいろ", "various"],
+        ["丈夫", "じょうぶ", "sturdy; strong"],
+        ["立派", "りっぱ", "splendid"],
+        ["無理", "むり", "impossible"],
+        ["変", "へん", "strange"]
+      ]
+    },
+    {
+      "name": "Food & drink",
+      "words": [
+        ["牛乳", "ぎゅうにゅう", "milk"],
+        ["卵", "たまご", "egg"],
+        ["果物", "くだもの", "fruit"],
+        ["晩ご飯", "ばんごはん", "dinner"],
+        ["豚肉", "ぶたにく", "pork"],
+        ["お弁当", "おべんとう", "boxed lunch"],
+        ["紅茶", "こうちゃ", "black tea"],
+        ["塩", "しお", "salt"],
+        ["砂糖", "さとう", "sugar"],
+        ["醤油", "しょうゆ", "soy sauce"],
+        ["お菓子", "おかし", "sweets; snacks"],
+        ["食事", "しょくじ", "meal"],
+        ["箸", "はし", "chopsticks"],
+        ["皿", "さら", "plate; dish"]
+      ]
+    },
+    {
+      "name": "Body & clothes",
+      "words": [
+        ["鼻", "はな", "nose"],
+        ["歯", "は", "tooth"],
+        ["背", "せ", "height; back"],
+        ["腕", "うで", "arm"],
+        ["風邪", "かぜ", "a cold"],
+        ["服", "ふく", "clothes"],
+        ["上着", "うわぎ", "jacket"],
+        ["背広", "せびろ", "business suit"],
+        ["帽子", "ぼうし", "hat"],
+        ["眼鏡", "めがね", "glasses"],
+        ["靴", "くつ", "shoes"],
+        ["傘", "かさ", "umbrella"],
+        ["手袋", "てぶくろ", "gloves"]
+      ]
+    },
+    {
+      "name": "Around town",
+      "words": [
+        ["交番", "こうばん", "police box"],
+        ["喫茶店", "きっさてん", "coffee shop"],
+        ["八百屋", "やおや", "greengrocer"],
+        ["肉屋", "にくや", "butcher shop"],
+        ["花屋", "はなや", "flower shop"],
+        ["魚屋", "さかなや", "fish shop"],
+        ["百貨店", "ひゃっかてん", "department store"],
+        ["角", "かど", "corner"],
+        ["橋", "はし", "bridge"],
+        ["信号", "しんごう", "traffic light"],
+        ["交差点", "こうさてん", "intersection"],
+        ["階段", "かいだん", "stairs"],
+        ["池", "いけ", "pond"]
+      ]
+    },
+    {
+      "name": "Where is it?",
+      "words": [
+        ["真ん中", "まんなか", "middle; center"],
+        ["右側", "みぎがわ", "right side"],
+        ["左側", "ひだりがわ", "left side"],
+        ["隣", "となり", "next to; next door"],
+        ["横", "よこ", "side; beside"],
+        ["近く", "ちかく", "near; nearby"],
+        ["向こう", "むこう", "over there; the other side"],
+        ["辺", "へん", "area; vicinity"],
+        ["所", "ところ", "place"],
+        ["東口", "ひがしぐち", "east exit"],
+        ["西口", "にしぐち", "west exit"],
+        ["南口", "みなみぐち", "south exit"],
+        ["北口", "きたぐち", "north exit"]
+      ]
+    },
+    {
+      "name": "At home",
+      "words": [
+        ["玄関", "げんかん", "entrance; front door"],
+        ["お風呂", "おふろ", "bath"],
+        ["窓", "まど", "window"],
+        ["戸", "と", "door"],
+        ["門", "もん", "gate"],
+        ["押し入れ", "おしいれ", "closet"],
+        ["電灯", "でんとう", "electric light"],
+        ["灰皿", "はいざら", "ashtray"],
+        ["花瓶", "かびん", "vase"],
+        ["石鹸", "せっけん", "soap"],
+        ["お手洗い", "おてあらい", "restroom"],
+        ["壁", "かべ", "wall"],
+        ["屋根", "やね", "roof"]
+      ]
+    },
+    {
+      "name": "Travel & mail",
+      "words": [
+        ["飛行機", "ひこうき", "airplane"],
+        ["切符", "きっぷ", "ticket"],
+        ["乗り場", "のりば", "boarding place"],
+        ["封筒", "ふうとう", "envelope"],
+        ["切手", "きって", "stamp"],
+        ["葉書", "はがき", "postcard"],
+        ["雑誌", "ざっし", "magazine"],
+        ["電話", "でんわ", "telephone"],
+        ["電話番号", "でんわばんごう", "phone number"],
+        ["外国旅行", "がいこくりょこう", "trip abroad"],
+        ["乗り物", "のりもの", "vehicle"],
+        ["大使館", "たいしかん", "embassy"],
+        ["郵便局", "ゆうびんきょく", "post office"]
+      ]
+    },
+    {
+      "name": "Weather & nature",
+      "words": [
+        ["雪", "ゆき", "snow"],
+        ["曇り", "くもり", "cloudy weather"],
+        ["晴れ", "はれ", "clear weather"],
+        ["雲", "くも", "cloud"],
+        ["石", "いし", "stone"],
+        ["天気予報", "てんきよほう", "weather forecast"],
+        ["猫", "ねこ", "cat"],
+        ["牛", "うし", "cow"],
+        ["豚", "ぶた", "pig"],
+        ["虫", "むし", "insect; bug"],
+        ["降る", "ふる", "to fall (rain; snow)"],
+        ["吹く", "ふく", "to blow"],
+        ["大雨", "おおあめ", "heavy rain"],
+        ["大雪", "おおゆき", "heavy snow"]
+      ]
+    },
+    {
+      "name": "Free time",
+      "words": [
+        ["散歩", "さんぽ", "walk; stroll"],
+        ["野球", "やきゅう", "baseball"],
+        ["趣味", "しゅみ", "hobby"],
+        ["お祭り", "おまつり", "festival"],
+        ["遊び", "あそび", "play; fun"],
+        ["休日", "きゅうじつ", "holiday; day off"],
+        ["結婚", "けっこん", "marriage"],
+        ["外食", "がいしょく", "eating out"],
+        ["読書", "どくしょ", "reading"],
+        ["山登り", "やまのぼり", "mountain climbing"],
+        ["花火", "はなび", "fireworks"],
+        ["絵", "え", "picture; painting"],
+        ["番組", "ばんぐみ", "TV program"]
+      ]
+    },
+    {
+      "name": "Useful words",
+      "words": [
+        ["気持ち", "きもち", "feeling"],
+        ["気", "き", "spirit; mind"],
+        ["他", "ほか", "other"],
+        ["事", "こと", "thing; matter"],
+        ["中国", "ちゅうごく", "China"],
+        ["西洋", "せいよう", "the West"],
+        ["東洋", "とうよう", "the East; Asia"],
+        ["名刺", "めいし", "business card"],
+        ["人口", "じんこう", "population"],
+        ["半日", "はんにち", "half a day"],
+        ["一日中", "いちにちじゅう", "all day"],
+        ["今日中", "きょうじゅう", "by the end of today"],
+        ["大勢", "おおぜい", "many people; crowd"]
       ]
     }
   ]

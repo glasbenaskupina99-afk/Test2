@@ -24,6 +24,41 @@
       ]
     },
     {
+      "name": "Plans & arrangements",
+      "words": [
+        ["準備", "じゅんび", "preparation"],
+        ["予定", "よてい", "plan; schedule"],
+        ["案内", "あんない", "guidance; showing around"],
+        ["相談", "そうだん", "consultation; talking over"],
+        ["都合", "つごう", "convenience; circumstances"],
+        ["支度", "したく", "getting ready"],
+        ["出席", "しゅっせき", "attendance"],
+        ["欠席", "けっせき", "absence"],
+        ["集合", "しゅうごう", "gathering; meeting up"],
+        ["中止", "ちゅうし", "cancellation"],
+        ["確認", "かくにん", "confirmation"],
+        ["間に合う", "まにあう", "to be in time"],
+        ["手伝う", "てつだう", "to help"],
+        ["世話", "せわ", "care; looking after"]
+      ]
+    },
+    {
+      "name": "Adverbs of degree",
+      "words": [
+        ["ずいぶん", "ずいぶん", "quite; considerably"],
+        ["なかなか", "なかなか", "quite; not easily"],
+        ["だいぶ", "だいぶ", "greatly; a lot"],
+        ["かなり", "かなり", "fairly; considerably"],
+        ["ほとんど", "ほとんど", "almost; hardly"],
+        ["すっかり", "すっかり", "completely"],
+        ["さらに", "さらに", "furthermore; even more"],
+        ["ちっとも", "ちっとも", "not at all"],
+        ["ほぼ", "ほぼ", "almost; nearly"],
+        ["それほど", "それほど", "not that much"],
+        ["できるだけ", "できるだけ", "as much as possible"]
+      ]
+    },
+    {
       "name": "Seasons & colours",
       "words": [
         ["春", "はる", "spring"],
@@ -40,6 +75,41 @@
         ["寒い", "さむい", "cold (weather)"],
         ["花見", "はなみ", "cherry-blossom viewing"],
         ["空気", "くうき", "air"]
+      ]
+    },
+    {
+      "name": "At work",
+      "words": [
+        ["会議室", "かいぎしつ", "meeting room"],
+        ["部長", "ぶちょう", "department head"],
+        ["課長", "かちょう", "section chief"],
+        ["社員", "しゃいん", "employee"],
+        ["同僚", "どうりょう", "colleague"],
+        ["受付", "うけつけ", "reception desk"],
+        ["書類", "しょるい", "documents"],
+        ["休憩", "きゅうけい", "break; rest"],
+        ["通勤", "つうきん", "commuting"],
+        ["職業", "しょくぎょう", "occupation"],
+        ["技術", "ぎじゅつ", "technology; skill"],
+        ["会計", "かいけい", "accounting; bill"],
+        ["産業", "さんぎょう", "industry"],
+        ["貿易", "ぼうえき", "trade"],
+        ["輸出", "ゆしゅつ", "export"],
+        ["輸入", "ゆにゅう", "import"]
+      ]
+    },
+    {
+      "name": "Frequency & timing",
+      "words": [
+        ["そろそろ", "そろそろ", "soon; it's about time"],
+        ["ようやく", "ようやく", "finally; at length"],
+        ["とうとう", "とうとう", "finally; in the end"],
+        ["このあいだ", "このあいだ", "the other day"],
+        ["しばらく", "しばらく", "for a while"],
+        ["たまに", "たまに", "occasionally"],
+        ["もうすぐ", "もうすぐ", "soon; shortly"],
+        ["まもなく", "まもなく", "shortly; soon"],
+        ["そのうち", "そのうち", "before long; eventually"]
       ]
     },
     {
@@ -65,6 +135,36 @@
       ]
     },
     {
+      "name": "Feelings",
+      "words": [
+        ["興味", "きょうみ", "interest"],
+        ["楽しみ", "たのしみ", "looking forward; pleasure"],
+        ["笑顔", "えがお", "smiling face"],
+        ["涙", "なみだ", "tears"],
+        ["感動", "かんどう", "being moved"],
+        ["懐かしい", "なつかしい", "nostalgic"],
+        ["羨ましい", "うらやましい", "envious"],
+        ["気が付く", "きがつく", "to notice"],
+        ["幸せ", "しあわせ", "happiness; happy"]
+      ]
+    },
+    {
+      "name": "Certainty & attitude",
+      "words": [
+        ["かならず", "かならず", "without fail"],
+        ["もしかしたら", "もしかしたら", "perhaps; possibly"],
+        ["やはり", "やはり", "as expected; after all"],
+        ["やっぱり", "やっぱり", "as expected; after all"],
+        ["まさか", "まさか", "surely not; no way"],
+        ["どうせ", "どうせ", "anyway; after all"],
+        ["せっかく", "せっかく", "with much trouble; specially"],
+        ["わざわざ", "わざわざ", "going out of one's way"],
+        ["わざと", "わざと", "on purpose"],
+        ["なるべく", "なるべく", "as much as possible"],
+        ["ちゃんと", "ちゃんと", "properly; neatly"]
+      ]
+    },
+    {
       "name": "School & study",
       "words": [
         ["教室", "きょうしつ", "classroom"],
@@ -84,6 +184,45 @@
         ["私立", "しりつ", "private (school etc.)"],
         ["高校", "こうこう", "high school"],
         ["英会話", "えいかいわ", "English conversation"]
+      ]
+    },
+    {
+      "name": "Polite life",
+      "words": [
+        ["丁寧", "ていねい", "polite; careful"],
+        ["失礼", "しつれい", "rudeness; excuse me"],
+        ["お礼", "おれい", "thanks; gratitude"],
+        ["お祝い", "おいわい", "celebration; gift"],
+        ["お土産", "おみやげ", "souvenir"],
+        ["拝見", "はいけん", "looking at (humble)"],
+        ["伺う", "うかがう", "to visit; to ask (humble)"],
+        ["申す", "もうす", "to say (humble)"],
+        ["申し上げる", "もうしあげる", "to say (very humble)"],
+        ["召し上がる", "めしあがる", "to eat (honorific)"],
+        ["差し上げる", "さしあげる", "to give (humble)"],
+        ["致す", "いたす", "to do (humble)"],
+        ["参る", "まいる", "to go; to come (humble)"],
+        ["存じる", "ぞんじる", "to know (humble)"],
+        ["御覧になる", "ごらんになる", "to see (honorific)"],
+        ["下さる", "くださる", "to give (honorific)"]
+      ]
+    },
+    {
+      "name": "Manner adverbs",
+      "words": [
+        ["うっかり", "うっかり", "carelessly"],
+        ["にっこり", "にっこり", "with a smile"],
+        ["ほっと", "ほっと", "relieved"],
+        ["ふらふら", "ふらふら", "dizzy; unsteady"],
+        ["びっしょり", "びっしょり", "soaking wet"],
+        ["しっかり", "しっかり", "firmly; reliably"],
+        ["はっきり", "はっきり", "clearly"],
+        ["じっと", "じっと", "still; fixedly"],
+        ["そっと", "そっと", "softly; gently"],
+        ["どんどん", "どんどん", "rapidly; steadily"],
+        ["いっしょうけんめい", "いっしょうけんめい", "with all one's might"],
+        ["ついに", "ついに", "finally; at last"],
+        ["とにかく", "とにかく", "anyway; at any rate"]
       ]
     },
     {
@@ -107,6 +246,41 @@
       ]
     },
     {
+      "name": "Hobbies & culture",
+      "words": [
+        ["文化", "ぶんか", "culture"],
+        ["美術館", "びじゅつかん", "art museum"],
+        ["美術", "びじゅつ", "fine arts"],
+        ["漫画", "まんが", "comics; manga"],
+        ["放送", "ほうそう", "broadcast"],
+        ["踊り", "おどり", "dance"],
+        ["釣り", "つり", "fishing"],
+        ["祭り", "まつり", "festival"],
+        ["見物", "けんぶつ", "sightseeing"],
+        ["競争", "きょうそう", "competition"],
+        ["柔道", "じゅうどう", "judo"],
+        ["動物園", "どうぶつえん", "zoo"]
+      ]
+    },
+    {
+      "name": "Linking words",
+      "words": [
+        ["なお", "なお", "furthermore; still"],
+        ["けれど", "けれど", "but; however"],
+        ["それに", "それに", "besides; moreover"],
+        ["そのうえ", "そのうえ", "in addition"],
+        ["それとも", "それとも", "or; or else"],
+        ["ところが", "ところが", "however; but"],
+        ["ところで", "ところで", "by the way"],
+        ["すると", "すると", "thereupon; then"],
+        ["そこで", "そこで", "so; accordingly"],
+        ["それなら", "それなら", "in that case"],
+        ["または", "または", "or; otherwise"],
+        ["つまり", "つまり", "in short; that is"],
+        ["たとえば", "たとえば", "for example"]
+      ]
+    },
+    {
       "name": "Food & cooking",
       "words": [
         ["料理", "りょうり", "cooking; dish"],
@@ -127,6 +301,39 @@
       ]
     },
     {
+      "name": "Around town",
+      "words": [
+        ["神社", "じんじゃ", "shrine"],
+        ["お寺", "おてら", "temple"],
+        ["教会", "きょうかい", "church"],
+        ["郊外", "こうがい", "suburbs"],
+        ["辺り", "あたり", "vicinity; around"],
+        ["駐車場", "ちゅうしゃじょう", "parking lot"],
+        ["美容院", "びよういん", "beauty salon"],
+        ["床屋", "とこや", "barber"],
+        ["売店", "ばいてん", "kiosk; stand"],
+        ["歩道", "ほどう", "sidewalk"],
+        ["県", "けん", "prefecture"],
+        ["村", "むら", "village"]
+      ]
+    },
+    {
+      "name": "Conditionals & grammar words",
+      "words": [
+        ["もし", "もし", "if"],
+        ["たとえ", "たとえ", "even if"],
+        ["まるで", "まるで", "just like; as if"],
+        ["どうしても", "どうしても", "no matter what"],
+        ["まま", "まま", "as is; unchanged"],
+        ["ばかり", "ばかり", "only; just"],
+        ["ため", "ため", "for the sake of; because of"],
+        ["はず", "はず", "should be; expected"],
+        ["つもり", "つもり", "intention; plan"],
+        ["ところ", "ところ", "just about to; point"],
+        ["ように", "ように", "so that; like"]
+      ]
+    },
+    {
       "name": "Body & health",
       "words": [
         ["体", "からだ", "body"],
@@ -144,6 +351,38 @@
         ["注意", "ちゅうい", "care; caution"],
         ["薬", "くすり", "medicine"],
         ["心配", "しんぱい", "worry"]
+      ]
+    },
+    {
+      "name": "Getting around",
+      "words": [
+        ["運ぶ", "はこぶ", "to carry"],
+        ["飛行場", "ひこうじょう", "airfield; airport"],
+        ["新幹線", "しんかんせん", "bullet train"],
+        ["駐車", "ちゅうしゃ", "parking"],
+        ["停留所", "ていりゅうじょ", "bus stop"],
+        ["見送る", "みおくる", "to see off"],
+        ["旅", "たび", "journey"],
+        ["海外", "かいがい", "overseas"],
+        ["帰国", "きこく", "returning to one's country"],
+        ["通る", "とおる", "to pass through"],
+        ["地下", "ちか", "underground"],
+        ["線", "せん", "line; track"]
+      ]
+    },
+    {
+      "name": "Set phrases",
+      "words": [
+        ["おつかれさまでした", "おつかれさまでした", "thanks for your hard work"],
+        ["ようこそ", "ようこそ", "welcome"],
+        ["おひさしぶりです", "おひさしぶりです", "long time no see"],
+        ["いってまいります", "いってまいります", "I'm off (polite)"],
+        ["おまたせしました", "おまたせしました", "sorry to keep you waiting"],
+        ["おめでとうございます", "おめでとうございます", "congratulations"],
+        ["かしこまりました", "かしこまりました", "certainly (polite)"],
+        ["おじゃまします", "おじゃまします", "sorry to intrude"],
+        ["おだいじに", "おだいじに", "take care of yourself"],
+        ["おさきに", "おさきに", "excuse me for leaving first"]
       ]
     },
     {
@@ -168,6 +407,42 @@
       ]
     },
     {
+      "name": "Home",
+      "words": [
+        ["布団", "ふとん", "futon"],
+        ["畳", "たたみ", "tatami mat"],
+        ["屋上", "おくじょう", "rooftop"],
+        ["引き出し", "ひきだし", "drawer"],
+        ["鏡", "かがみ", "mirror"],
+        ["人形", "にんぎょう", "doll"],
+        ["棚", "たな", "shelf"],
+        ["暖房", "だんぼう", "heating"],
+        ["冷房", "れいぼう", "air conditioning"],
+        ["湯", "ゆ", "hot water"],
+        ["沸かす", "わかす", "to boil; to heat"],
+        ["沸く", "わく", "to boil"]
+      ]
+    },
+    {
+      "name": "Honorific & polite words",
+      "words": [
+        ["いらっしゃる", "いらっしゃる", "to be; come; go (honorific)"],
+        ["おっしゃる", "おっしゃる", "to say (honorific)"],
+        ["なさる", "なさる", "to do (honorific)"],
+        ["めしあがる", "めしあがる", "to eat; drink (honorific)"],
+        ["くださる", "くださる", "to give (honorific)"],
+        ["いただく", "いただく", "to receive (humble)"],
+        ["まいる", "まいる", "to go; come (humble)"],
+        ["もうす", "もうす", "to say (humble)"],
+        ["いたす", "いたす", "to do (humble)"],
+        ["ござる", "ござる", "to be (polite)"],
+        ["おる", "おる", "to be (humble)"],
+        ["さしあげる", "さしあげる", "to give (humble)"],
+        ["うかがう", "うかがう", "to visit; ask (humble)"],
+        ["ございます", "ございます", "to be (polite)"]
+      ]
+    },
+    {
       "name": "Hobbies & things",
       "words": [
         ["音楽", "おんがく", "music"],
@@ -189,6 +464,45 @@
       ]
     },
     {
+      "name": "Things happen",
+      "words": [
+        ["汚れる", "よごれる", "to get dirty"],
+        ["割れる", "われる", "to break; to crack"],
+        ["壊れる", "こわれる", "to be broken"],
+        ["壊す", "こわす", "to break; to destroy"],
+        ["燃える", "もえる", "to burn"],
+        ["焼く", "やく", "to bake; to grill"],
+        ["焼ける", "やける", "to be burnt; to be grilled"],
+        ["揺れる", "ゆれる", "to shake; to sway"],
+        ["起こる", "おこる", "to happen"],
+        ["止む", "やむ", "to stop (rain etc.)"],
+        ["盗む", "ぬすむ", "to steal"],
+        ["逃げる", "にげる", "to run away"]
+      ]
+    },
+    {
+      "name": "Onomatopoeia",
+      "words": [
+        ["そわそわ", "そわそわ", "restless; fidgety"],
+        ["がっかり", "がっかり", "disappointed"],
+        ["にこにこ", "にこにこ", "smiling"],
+        ["どきどき", "どきどき", "heart pounding"],
+        ["わくわく", "わくわく", "excited"],
+        ["いらいら", "いらいら", "irritated"],
+        ["ぺらぺら", "ぺらぺら", "fluent"],
+        ["ぴかぴか", "ぴかぴか", "sparkling; shiny"],
+        ["ぐっすり", "ぐっすり", "soundly (sleep)"],
+        ["ばらばら", "ばらばら", "scattered; in pieces"],
+        ["ごろごろ", "ごろごろ", "lazing around; rumbling"],
+        ["ざあざあ", "ざあざあ", "pouring (rain)"],
+        ["のんびり", "のんびり", "relaxed; carefree"],
+        ["すっきり", "すっきり", "refreshed; neat"],
+        ["ぺこぺこ", "ぺこぺこ", "starving"],
+        ["きらきら", "きらきら", "glittering"],
+        ["がらがら", "がらがら", "empty; rattling"]
+      ]
+    },
+    {
       "name": "Everyday verbs",
       "words": [
         ["始める", "はじめる", "to begin (sth)"],
@@ -207,6 +521,43 @@
         ["起きる", "おきる", "to get up; to wake up"],
         ["着る", "きる", "to wear; to put on"],
         ["持つ", "もつ", "to hold; to have"]
+      ]
+    },
+    {
+      "name": "Food & cooking",
+      "words": [
+        ["食料品", "しょくりょうひん", "groceries"],
+        ["材料", "ざいりょう", "ingredients; materials"],
+        ["味噌", "みそ", "miso"],
+        ["豆腐", "とうふ", "tofu"],
+        ["朝食", "ちょうしょく", "breakfast"],
+        ["夕食", "ゆうしょく", "dinner"],
+        ["弁当", "べんとう", "boxed lunch"],
+        ["煮る", "にる", "to simmer"],
+        ["冷える", "ひえる", "to get cold"],
+        ["温める", "あたためる", "to warm up"]
+      ]
+    },
+    {
+      "name": "Kana nouns & verbs",
+      "words": [
+        ["おもちゃ", "おもちゃ", "toy"],
+        ["おしゃべり", "おしゃべり", "chatting; talkative"],
+        ["おしゃれ", "おしゃれ", "stylish; fashionable"],
+        ["おつり", "おつり", "change (money)"],
+        ["おみやげ", "おみやげ", "souvenir"],
+        ["ていねい", "ていねい", "polite; careful"],
+        ["けんか", "けんか", "quarrel; fight"],
+        ["うそ", "うそ", "lie"],
+        ["すり", "すり", "pickpocket"],
+        ["いたずら", "いたずら", "prank; mischief"],
+        ["がんばる", "がんばる", "to do one's best"],
+        ["さわぐ", "さわぐ", "to make noise"],
+        ["こわれる", "こわれる", "to break"],
+        ["すべる", "すべる", "to slip"],
+        ["びっくりする", "びっくりする", "to be surprised"],
+        ["かまう", "かまう", "to mind; care about"],
+        ["たまる", "たまる", "to accumulate"]
       ]
     },
     {
@@ -232,6 +583,42 @@
       ]
     },
     {
+      "name": "Health & body",
+      "words": [
+        ["具合", "ぐあい", "condition; health"],
+        ["注射", "ちゅうしゃ", "injection"],
+        ["入院", "にゅういん", "hospitalization"],
+        ["退院", "たいいん", "leaving hospital"],
+        ["胸", "むね", "chest"],
+        ["喉", "のど", "throat"],
+        ["毛", "け", "hair; fur"],
+        ["亡くなる", "なくなる", "to pass away"],
+        ["折れる", "おれる", "to break; to be folded"],
+        ["治す", "なおす", "to cure"],
+        ["看護師", "かんごし", "nurse"],
+        ["体重", "たいじゅう", "body weight"]
+      ]
+    },
+    {
+      "name": "Shopping (katakana)",
+      "words": [
+        ["カタログ", "かたろぐ", "catalog"],
+        ["ベルト", "べると", "belt"],
+        ["サンダル", "さんだる", "sandals"],
+        ["イヤリング", "いやりんぐ", "earrings"],
+        ["マフラー", "まふらー", "muffler; scarf"],
+        ["レジ", "れじ", "cash register"],
+        ["アクセサリー", "あくせさりー", "accessory"],
+        ["サイズ", "さいず", "size"],
+        ["セール", "せーる", "sale"],
+        ["サービス", "さーびす", "service; free extra"],
+        ["レシート", "れしーと", "receipt"],
+        ["ブランド", "ぶらんど", "brand"],
+        ["ハンドバッグ", "はんどばっぐ", "handbag"],
+        ["スカーフ", "すかーふ", "scarf"]
+      ]
+    },
+    {
       "name": "Describing",
       "words": [
         ["明るい", "あかるい", "bright; cheerful"],
@@ -251,6 +638,38 @@
         ["安心", "あんしん", "relief; peace of mind"],
         ["同じ", "おなじ", "same"],
         ["広い", "ひろい", "wide; spacious"]
+      ]
+    },
+    {
+      "name": "School & study",
+      "words": [
+        ["大学院", "だいがくいん", "graduate school"],
+        ["講義", "こうぎ", "lecture"],
+        ["数学", "すうがく", "mathematics"],
+        ["歴史", "れきし", "history"],
+        ["地理", "ちり", "geography"],
+        ["物理", "ぶつり", "physics"],
+        ["卒業", "そつぎょう", "graduation"],
+        ["点", "てん", "point; score"],
+        ["教育", "きょういく", "education"],
+        ["校長", "こうちょう", "principal"],
+        ["間違える", "まちがえる", "to make a mistake"]
+      ]
+    },
+    {
+      "name": "Food & drink (katakana)",
+      "words": [
+        ["ドレッシング", "どれっしんぐ", "dressing"],
+        ["マヨネーズ", "まよねーず", "mayonnaise"],
+        ["パスタ", "ぱすた", "pasta"],
+        ["スパゲッティ", "すぱげってぃ", "spaghetti"],
+        ["ソーセージ", "そーせーじ", "sausage"],
+        ["ハム", "はむ", "ham"],
+        ["ステーキ", "すてーき", "steak"],
+        ["ハンバーグ", "はんばーぐ", "hamburger steak"],
+        ["サンドイッチ", "さんどいっち", "sandwich"],
+        ["ジャム", "じゃむ", "jam"],
+        ["デザート", "でざーと", "dessert"]
       ]
     },
     {
@@ -274,6 +693,40 @@
       ]
     },
     {
+      "name": "Communication",
+      "words": [
+        ["小包", "こづつみ", "parcel"],
+        ["伝言", "でんごん", "message"],
+        ["知らせ", "しらせ", "notice; news"],
+        ["相手", "あいて", "partner; other party"],
+        ["話し合う", "はなしあう", "to discuss"],
+        ["謝る", "あやまる", "to apologize"],
+        ["褒める", "ほめる", "to praise"],
+        ["叱る", "しかる", "to scold"],
+        ["尋ねる", "たずねる", "to ask"],
+        ["訪ねる", "たずねる", "to visit"],
+        ["文句", "もんく", "complaint"]
+      ]
+    },
+    {
+      "name": "Tech & media (katakana)",
+      "words": [
+        ["ドラマ", "どらま", "TV drama"],
+        ["ポスター", "ぽすたー", "poster"],
+        ["レポート", "れぽーと", "report"],
+        ["ホームページ", "ほーむぺーじ", "website"],
+        ["スマホ", "すまほ", "smartphone"],
+        ["アプリ", "あぷり", "app"],
+        ["テキスト", "てきすと", "textbook; text"],
+        ["ソフト", "そふと", "software"],
+        ["インターネット", "いんたーねっと", "internet"],
+        ["データ", "でーた", "data"],
+        ["プリンター", "ぷりんたー", "printer"],
+        ["ステレオ", "すてれお", "stereo"],
+        ["アナウンス", "あなうんす", "announcement"]
+      ]
+    },
+    {
       "name": "Useful words",
       "words": [
         ["言葉", "ことば", "word; language"],
@@ -292,6 +745,183 @@
         ["田舎", "いなか", "countryside"],
         ["安全", "あんぜん", "safe; safety"],
         ["目立つ", "めだつ", "to stand out"]
+      ]
+    },
+    {
+      "name": "Nature & weather",
+      "words": [
+        ["光る", "ひかる", "to shine"],
+        ["光", "ひかり", "light"],
+        ["林", "はやし", "woods"],
+        ["湖", "みずうみ", "lake"],
+        ["砂", "すな", "sand"],
+        ["枝", "えだ", "branch"],
+        ["咲く", "さく", "to bloom"],
+        ["坂", "さか", "slope; hill"],
+        ["火事", "かじ", "fire"],
+        ["海岸", "かいがん", "coast"],
+        ["植える", "うえる", "to plant"]
+      ]
+    },
+    {
+      "name": "Life & travel (katakana)",
+      "words": [
+        ["オートバイ", "おーとばい", "motorcycle"],
+        ["トラック", "とらっく", "truck"],
+        ["ガイド", "がいど", "guide"],
+        ["ガラス", "がらす", "glass"],
+        ["ベンチ", "べんち", "bench"],
+        ["ピクニック", "ぴくにっく", "picnic"],
+        ["ヘルメット", "へるめっと", "helmet"],
+        ["ガソリン", "がそりん", "gasoline"],
+        ["ガソリンスタンド", "がそりんすたんど", "gas station"],
+        ["スケジュール", "すけじゅーる", "schedule"],
+        ["パスポート", "ぱすぽーと", "passport"],
+        ["スーツケース", "すーつけーす", "suitcase"]
+      ]
+    },
+    {
+      "name": "Shopping & money",
+      "words": [
+        ["お釣り", "おつり", "change (money)"],
+        ["貯金", "ちょきん", "savings"],
+        ["無料", "むりょう", "free of charge"],
+        ["有料", "ゆうりょう", "paid; with a fee"],
+        ["料金", "りょうきん", "fee; charge"],
+        ["税金", "ぜいきん", "tax"],
+        ["両替", "りょうがえ", "money exchange"],
+        ["売れる", "うれる", "to sell well"],
+        ["見本", "みほん", "sample"],
+        ["商店", "しょうてん", "shop"],
+        ["安売り", "やすうり", "bargain sale"],
+        ["新品", "しんぴん", "brand-new item"],
+        ["現金", "げんきん", "cash"],
+        ["借金", "しゃっきん", "debt"],
+        ["包む", "つつむ", "to wrap"]
+      ]
+    },
+    {
+      "name": "Leisure & work (katakana)",
+      "words": [
+        ["オフィス", "おふぃす", "office"],
+        ["チャンス", "ちゃんす", "chance"],
+        ["ルール", "るーる", "rule"],
+        ["パート", "ぱーと", "part-time work"],
+        ["スピーチ", "すぴーち", "speech"],
+        ["トレーニング", "とれーにんぐ", "training"],
+        ["コンサート", "こんさーと", "concert"],
+        ["ゴルフ", "ごるふ", "golf"],
+        ["ジョギング", "じょぎんぐ", "jogging"],
+        ["アニメ", "あにめ", "anime"],
+        ["マンガ", "まんが", "manga"],
+        ["チケット", "ちけっと", "ticket"],
+        ["ボランティア", "ぼらんてぃあ", "volunteer"],
+        ["ミーティング", "みーてぃんぐ", "meeting"]
+      ]
+    },
+    {
+      "name": "People",
+      "words": [
+        ["恋人", "こいびと", "sweetheart"],
+        ["孫", "まご", "grandchild"],
+        ["親戚", "しんせき", "relative"],
+        ["知り合い", "しりあい", "acquaintance"],
+        ["男性", "だんせい", "man; male"],
+        ["女性", "じょせい", "woman; female"],
+        ["青年", "せいねん", "young man; youth"],
+        ["少年", "しょうねん", "boy"],
+        ["少女", "しょうじょ", "girl"],
+        ["先輩", "せんぱい", "senior (at school/work)"],
+        ["後輩", "こうはい", "junior (at school/work)"]
+      ]
+    },
+    {
+      "name": "Society & life",
+      "words": [
+        ["世の中", "よのなか", "society; the world"],
+        ["国民", "こくみん", "citizens; nation"],
+        ["法律", "ほうりつ", "law"],
+        ["宗教", "しゅうきょう", "religion"],
+        ["習慣", "しゅうかん", "custom; habit"],
+        ["人生", "じんせい", "life"],
+        ["事情", "じじょう", "circumstances"],
+        ["機会", "きかい", "opportunity"],
+        ["方法", "ほうほう", "method"],
+        ["目的", "もくてき", "purpose"],
+        ["離婚", "りこん", "divorce"],
+        ["公共", "こうきょう", "public"],
+        ["世代", "せだい", "generation"]
+      ]
+    },
+    {
+      "name": "Describing people & things",
+      "words": [
+        ["熱心", "ねっしん", "enthusiastic"],
+        ["真面目", "まじめ", "serious; diligent"],
+        ["盛ん", "さかん", "thriving; popular"],
+        ["急", "きゅう", "sudden; urgent"],
+        ["重要", "じゅうよう", "important; essential"],
+        ["正直", "しょうじき", "honest"],
+        ["退屈", "たいくつ", "boring"],
+        ["不思議", "ふしぎ", "mysterious; strange"],
+        ["迷惑", "めいわく", "trouble; annoyance"],
+        ["邪魔", "じゃま", "hindrance; in the way"],
+        ["平気", "へいき", "fine; unconcerned"],
+        ["楽", "らく", "easy; comfortable"]
+      ]
+    },
+    {
+      "name": "More adjectives",
+      "words": [
+        ["得意", "とくい", "good at; strong point"],
+        ["苦手", "にがて", "poor at; weak point"],
+        ["嫌", "いや", "unpleasant; disliked"],
+        ["様々", "さまざま", "various"],
+        ["素晴らしい", "すばらしい", "wonderful"],
+        ["親しい", "したしい", "close; intimate"],
+        ["硬い", "かたい", "hard; stiff"],
+        ["酷い", "ひどい", "cruel; terrible"],
+        ["寝坊", "ねぼう", "oversleeping"]
+      ]
+    },
+    {
+      "name": "More verbs",
+      "words": [
+        ["調べる", "しらべる", "to look up; to investigate"],
+        ["頑張る", "がんばる", "to do one's best"],
+        ["祈る", "いのる", "to pray"],
+        ["見つける", "みつける", "to find"],
+        ["見つかる", "みつかる", "to be found"],
+        ["決まる", "きまる", "to be decided"],
+        ["変わる", "かわる", "to change"],
+        ["続く", "つづく", "to continue"],
+        ["増える", "ふえる", "to increase"],
+        ["減る", "へる", "to decrease"],
+        ["似合う", "にあう", "to suit"],
+        ["慌てる", "あわてる", "to panic"],
+        ["動かす", "うごかす", "to move (something)"],
+        ["直す", "なおす", "to fix; to correct"]
+      ]
+    },
+    {
+      "name": "Even more verbs",
+      "words": [
+        ["残る", "のこる", "to remain"],
+        ["残す", "のこす", "to leave behind"],
+        ["勝つ", "かつ", "to win"],
+        ["投げる", "なげる", "to throw"],
+        ["取り替える", "とりかえる", "to exchange"],
+        ["足す", "たす", "to add"],
+        ["思い出す", "おもいだす", "to remember"],
+        ["感じる", "かんじる", "to feel"],
+        ["信じる", "しんじる", "to believe"],
+        ["過ぎる", "すぎる", "to pass; to exceed"],
+        ["騒ぐ", "さわぐ", "to make noise"],
+        ["触る", "さわる", "to touch"],
+        ["塗る", "ぬる", "to paint; to spread"],
+        ["飾る", "かざる", "to decorate"],
+        ["隠す", "かくす", "to hide"],
+        ["移る", "うつる", "to move; to shift"]
       ]
     }
   ]

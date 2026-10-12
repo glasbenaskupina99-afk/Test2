@@ -2,6 +2,8 @@
 {
   "name": "test2",
   "compatibility_date": "2026-09-01",
+  // Public test address <name>.<account>.workers.dev (bloomko.eu is added as a custom domain).
+  "workers_dev": true,
   "assets": {
     "directory": "./site",
     "not_found_handling": "404-page"

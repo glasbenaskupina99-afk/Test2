@@ -205,6 +205,78 @@ function spreadOut(steps) {
   return steps;
 }
 
+// ------------------------------------------------------------------ grammar
+
+/** Answer options for a grammar quiz: the right point plus up to three others with different labels. */
+function grammarOptions(p, lesson, others, kind, x) {
+  const label = (q) => (kind === "mark" ? (q.mark || q.examples?.[0]?.mark || []).join(" … ") : q.short);
+  // For the gap quiz the right answer is what's missing from this very example.
+  const mine = kind === "mark" ? (x.mark || []).join(" … ") : p.short;
+  const seen = new Set([mine]);
+  const out = [{ id: p.id, label: mine }];
+  const pool = [...lesson.filter((q) => q.id !== p.id), ...shuffle(others.filter((q) => q.learned)), ...shuffle(others)];
+  for (const q of pool) {
+    if (out.length === 4) break;
+    const l = label(q);
+    if (!l || seen.has(l) || q.id === p.id) continue;
+    seen.add(l);
+    out.push({ id: q.id, label: l });
+  }
+  return shuffle(out);
+}
+
+/** One graded grammar question about point p (which grammar / fill the gap). */
+function grammarQuestion(p, lesson, others, n = 1) {
+  const x = p.examples[n % p.examples.length];
+  return Math.random() < 0.5 || !(x.mark || []).length
+    ? (ctx) => ex.grammarWhich(ctx, p, x, grammarOptions(p, lesson, others, "short"))
+    : (ctx) => ex.grammarGap(ctx, p, x, grammarOptions(p, lesson, others, "mark", x));
+}
+
+/** A grammar lesson: three new points, each introduced, then a quiz on all of them. */
+export async function grammarLesson() {
+  let data;
+  try {
+    data = await api("/api/grammar/lesson");
+  } catch (e) {
+    toast(e.message, 4000);
+    return null;
+  }
+  const { points, others } = data;
+  const steps = points.map((p, i) => step((ctx) => ex.grammarIntro(ctx, p, i, points.length)));
+  const quiz = [];
+  for (const p of points) {
+    const x1 = p.examples[1] || p.examples[0];
+    const x2 = p.examples[2] || p.examples[0];
+    const which = (ctx) => ex.grammarWhich(ctx, p, x1, grammarOptions(p, points, others, "short"));
+    const gap = (ctx) => ex.grammarGap(ctx, p, x2, grammarOptions(p, points, others, "mark", x2));
+    quiz.push(step(which, learnAfter(which, p.id), p.id), step(gap, learnAfter(gap, p.id), p.id));
+  }
+  steps.push(...spreadOut(shuffle(quiz)));
+  return runLesson({
+    steps,
+    endTitle: "Grammar learned!",
+    onDone: (s) => api("/api/grammar/complete", { method: "POST", body: { ids: points.map((p) => p.id), xp: s.xp } }),
+  });
+}
+
+/** Grammar questions due for practice, as lesson steps. */
+async function grammarReviewSteps(extra) {
+  let g;
+  try {
+    g = await api(`/api/grammar/review?n=${extra ? 2 : 3}${extra ? "&extra=1" : ""}`);
+  } catch {
+    return [];
+  }
+  return g.items.map((p) => {
+    const make = grammarQuestion(p, [], g.others, 1 + Math.floor(Math.random() * 3));
+    return step(make, async (res) => {
+      const r = await api("/api/grammar/answer", { method: "POST", body: { id: p.id, grade: res.grade } });
+      return { xp: r.xp, requeue: res.grade === 0 ? step(make, async () => ({ xp: 0 })) : null };
+    }, p.id);
+  });
+}
+
 // ------------------------------------------------------------------ practice old words
 
 export async function review({ extra = false, writing = true } = {}) {
@@ -214,7 +286,8 @@ export async function review({ extra = false, writing = true } = {}) {
   if (extra) qs.set("extra", "1");
   if (!writing) qs.set("skills", "recall");
   const { items, pool } = await api("/api/review/session" + (qs.toString() ? `?${qs}` : ""));
-  if (!items.length) {
+  const grammarSteps = await grammarReviewSteps(extra);
+  if (!items.length && !grammarSteps.length) {
     toast(extra ? "No learned words at this level yet — learn some first!" : "Nothing due — nice work!");
     return null;
   }
@@ -242,6 +315,8 @@ export async function review({ extra = false, writing = true } = {}) {
     });
   });
 
+  // Unlocked grammar comes back in practice too, spread among the words.
+  for (const g of grammarSteps) steps.splice(Math.floor(Math.random() * (steps.length + 1)), 0, g);
   return runLesson({ steps, endTitle: extra ? "Extra practice done!" : "Practice complete!" });
 }
 

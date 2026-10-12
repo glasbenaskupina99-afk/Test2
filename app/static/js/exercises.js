@@ -756,3 +756,111 @@ export function lookalike(ctx, item, kind) {
     },
   };
 }
+
+// ------------------------------------------------------------------ grammar
+
+const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** The example sentence with the grammar highlighted — or blanked out for the gap quiz. */
+function markedSentence(x, { gap = false } = {}) {
+  const marks = (x.mark || []).filter(Boolean);
+  if (!marks.length) return h("span", {}, x.text);
+  const parts = x.text.split(new RegExp(`(${marks.map(escRe).join("|")})`));
+  return h("span", {}, parts.map((p) => (marks.includes(p) ? (gap ? h("span", { class: "g-gap" }, "＿＿") : h("mark", { class: "g-mark" }, p)) : p)));
+}
+
+function grammarExampleBox(x, { gap = false, showReading = true } = {}) {
+  return h(
+    "div",
+    { class: "g-example" },
+    h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, speakerBtn(x.text), h("div", { class: "g-text hz" }, markedSentence(x, { gap }))),
+    showReading && x.reading && x.reading !== x.text ? h("div", { class: "g-reading small muted" }, x.reading) : null,
+    h("div", { class: "g-en small" }, x.en)
+  );
+}
+
+/** Introduces one grammar point: pattern, an example from words you know, and how it's used. */
+export function grammarIntro(ctx, p, i, n) {
+  const exBox = h("div", {}, grammarExampleBox(p.examples[0]));
+  const more = p.examples.slice(1);
+  const moreBox = h("div", { class: "g-more", hidden: true }, more.map((x) => grammarExampleBox(x)));
+  const aiBtn = state.settings?.ai_enabled
+    ? h(
+        "button",
+        {
+          class: "btn ghost small auto",
+          onclick: async (e) => {
+            const b = e.currentTarget;
+            b.disabled = true;
+            b.textContent = "✨ Asking Gemma…";
+            try {
+              const x = await api("/api/grammar/example", { method: "POST", body: { id: p.id } });
+              exBox.replaceChildren(grammarExampleBox(x));
+              speak(x.text);
+              b.textContent = "✨ Another example from my words";
+            } catch (err) {
+              b.textContent = "✨ New example from my words";
+              toast(err.message, 3500);
+            }
+            b.disabled = false;
+          },
+        },
+        "✨ New example from my words"
+      )
+    : null;
+  const el = h(
+    "div",
+    { class: "g-intro" },
+    h("div", { class: "ex-kicker blue" }, `📘 Grammar ${i + 1} of ${n}`),
+    h("h2", { class: "ex-title" }, p.title),
+    h("div", { class: "g-pattern hz" }, p.pattern),
+    exBox,
+    h("p", { class: "g-explain" }, p.explain),
+    h(
+      "div",
+      { class: "row", style: { gap: "8px", flexWrap: "wrap", justifyContent: "center" } },
+      more.length ? h("button", { class: "btn ghost small auto", onclick: (e) => { moreBox.hidden = !moreBox.hidden; e.currentTarget.textContent = moreBox.hidden ? `More examples (${more.length})` : "Hide examples"; } }, `More examples (${more.length})`) : null,
+      aiBtn
+    ),
+    moreBox
+  );
+  setTimeout(() => speak(p.examples[0].text), 400);
+  return { el, mode: "continue" };
+}
+
+function grammarChoice(ctx, p, x, options, { kicker, title, gap }) {
+  let picked = null;
+  const tiles = options.map((o) => {
+    const t = h(
+      "button",
+      { class: "choice text", onclick: () => { picked = o; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } },
+      h("span", { class: gap ? "txt hz" : "txt" }, o.label)
+    );
+    return t;
+  });
+  return {
+    el: h("div", {}, h("div", { class: "ex-kicker blue" }, kicker), h("h2", { class: "ex-title" }, title), grammarExampleBox(x, { gap, showReading: !gap }), h("div", { class: "choices" }, tiles)),
+    mode: "check",
+    async check() {
+      const ok = picked.id === p.id;
+      tiles.forEach((t, i) => {
+        if (options[i].id === p.id) t.classList.add("correct");
+        else if (options[i] === picked) t.classList.add("wrong");
+      });
+      speak(x.text);
+      return {
+        ok,
+        grade: ok ? 2 : 0,
+        title: ok ? "Correct!" : "Correct answer:",
+        detail: h("div", {}, h("b", {}, p.title), h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, x.en)),
+      };
+    },
+  };
+}
+
+/** Quiz: which grammar point does this sentence use? */
+export const grammarWhich = (ctx, p, x, options) =>
+  grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: "What does the highlighted part do?", gap: false });
+
+/** Quiz: fill the gap with the right grammar. */
+export const grammarGap = (ctx, p, x, options) =>
+  grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: "Fill in the gap", gap: true });

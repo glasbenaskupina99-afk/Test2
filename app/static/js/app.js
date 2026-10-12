@@ -254,8 +254,32 @@ async function homeScreen() {
       h("h3", {}, "Practice"),
       h("p", {}, !home.learned ? "Learn a few words first" : home.due ? (home.sections?.length > 1 ? `${home.section} words ready for review` : "Words ready for review") : `All caught up${home.sections?.length > 1 ? ` in ${home.section}` : ""}! ${nextDueText(home.next_due)} Tap for extra practice`)
     ),
-    home.due ? h("div", { class: "count" }, home.due) : null
+    home.due + (home.grammar?.due || 0) ? h("div", { class: "count" }, home.due + (home.grammar?.due || 0)) : null
   );
+  const g = home.grammar;
+  const grammarCard = g?.available
+    ? h(
+        "button",
+        { class: "mode teal" + (g.unlocked ? "" : " soft"), onclick: () => (g.unlocked ? startFlow(flows.grammarLesson) : grammarBook()) },
+        h("div", { class: "badge-ico", html: SVG.book }),
+        h(
+          "div",
+          {},
+          h("h3", {}, "Grammar"),
+          h(
+            "p",
+            {},
+            g.unlocked
+              ? `Lesson ${g.lesson} of ${g.lessons} · 3 new grammar points`
+              : g.finished
+                ? `All ${g.total} ${home.section} grammar points learned · tap to look them up`
+                : `Learn ${g.words_to_next} more word${g.words_to_next === 1 ? "" : "s"} to unlock lesson ${g.lesson}${g.learned ? " · tap for your grammar book" : ""}`
+          )
+        ),
+        g.unlocked ? h("div", { class: "count" }, "NEW") : h("div", { class: "lock-ico", html: SVG.lock })
+      )
+    : null;
+
   const sentenceCard = h(
     "button",
     { class: "mode purple", onclick: () => startFlow(flows.sentences) },
@@ -290,7 +314,7 @@ async function homeScreen() {
       ),
       planCard(home.plan),
       aiInviteCard(),
-      h("div", { class: "modes" }, learnCard, reviewCard, sentenceCard, lookalikeCard),
+      h("div", { class: "modes" }, learnCard, grammarCard, reviewCard, sentenceCard, lookalikeCard),
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week, home.saved_days),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
@@ -438,6 +462,36 @@ async function unitsView(units) {
       );
     })
   );
+}
+
+// ------------------------------------------------------------------ grammar book
+
+/** The level's grammar: learned points with pattern, explanation and examples; the rest locked. */
+async function grammarBook() {
+  const b = await api("/api/grammar/book");
+  const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() });
+  const item = (p) =>
+    p.learned
+      ? h(
+          "details",
+          { class: "g-book-item" },
+          h("summary", {}, h("b", {}, p.title), h("small", {}, p.short)),
+          h("div", { class: "g-pattern hz" }, p.pattern),
+          h("p", { class: "g-explain" }, p.explain),
+          p.examples.slice(0, 3).map((x) => h("div", { class: "g-example" }, h("div", { class: "g-text hz" }, x.text), x.reading && x.reading !== x.text ? h("div", { class: "small muted" }, x.reading) : null, h("div", { class: "small" }, x.en)))
+        )
+      : h("div", { class: "g-book-item locked" }, h("span", { html: SVG.lock }), p.title);
+  bg.append(
+    h(
+      "div",
+      { class: "sheet" },
+      h("h2", { style: { margin: "0 0 4px" } }, `${b.section} grammar`),
+      h("p", { class: "muted small", style: { margin: "0 0 14px" } }, b.finished ? `All ${b.total} points learned.` : `${b.learned} of ${b.total} learned · next lesson unlocks after ${b.words_to_next} more word${b.words_to_next === 1 ? "" : "s"}.`),
+      h("div", { class: "g-book" }, b.points.map(item)),
+      h("button", { class: "btn", style: { marginTop: "14px" }, onclick: () => bg.remove() }, "Close")
+    )
+  );
+  document.body.append(bg);
 }
 
 // ------------------------------------------------------------------ word sheet
@@ -753,6 +807,7 @@ const SVG = {
   twins: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19c0-6 3-10 8-11-.5 6-3 10-8 11z"/><path d="M21 19c0-6-3-10-8-11 .5 6 3 10 8 11z"/><path d="M3 19l5-6M21 19l-5-6"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
   star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
   brush: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4L10 14"/><path d="M10 14c-3 0-5 2-5 5-1 1-2 1-2 1 4 1 8 0 9-3 1-1 0-2-2-3z"/></svg>',
 };
 const svgEl = (markup, attrs = {}) => {

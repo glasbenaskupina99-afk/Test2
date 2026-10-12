@@ -303,6 +303,28 @@ Example (hvala, thank you): {"sounds_like": "HVA-la ≈ value", "mnemonic": "You
   return out;
 }
 
+/** A new example sentence for a grammar point, using only words the student knows. */
+export async function grammarExample(point, known) {
+  const ja = lang() === "ja";
+  const langName = ja ? "Japanese" : "Chinese";
+  const ex = point.examples[0];
+  const prompt = `Write ONE new short ${langName} sentence that uses the grammar point "${point.pattern}" (${point.short}).
+Use only these words the student knows, plus basic particles and pronouns: ${known.join(", ")}.
+
+Reply with JSON only:
+ "text": the ${langName} sentence${ja ? "\n \"reading\": the sentence in hiragana only" : ""}
+ "mark": the exact part of "text" that is the grammar point
+ "en": an English translation
+
+Example: ${JSON.stringify({ text: ex.text, ...(ja ? { reading: ex.reading } : {}), mark: ex.mark[0], en: ex.en })}`;
+  const d = await chat(prompt, { temperature: 0.8 });
+  const text = String(d?.text || "").trim();
+  const en = String(d?.en || "").trim();
+  if (!text || !en || !isEnglish(en)) throw new AIError("Gemma didn't manage a new example — try again");
+  const mark = [String(d.mark || "").trim()].filter((m) => m && text.includes(m));
+  return { text, reading: ja ? String(d.reading || "").trim() : "", mark: mark.length ? mark : point.examples[0].mark.filter((m) => text.includes(m)), en };
+}
+
 export async function fillWord(query) {
   if (lang() === "sl") {
     const prompt = `The user wants to add a word to their Slovenian study list. Their input: "${query}"

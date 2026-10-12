@@ -105,7 +105,7 @@ function freshGarden() {
 }
 
 function freshDb() {
-  return { version: 3, nextId: 1, words: [], cards: [], activity: {}, sentenceLog: [], settings: {}, garden: freshGarden(), lookalikes: {} };
+  return { version: 3, nextId: 1, words: [], cards: [], activity: {}, sentenceLog: [], settings: {}, garden: freshGarden(), lookalikes: {}, grammar: { learned: {} } };
 }
 
 /** Bring older saves up to date: tag languages/sections and add any new built-in word lists. */
@@ -156,6 +156,7 @@ export async function init(storage) {
   migrate();
   db.garden ||= freshGarden();
   db.lookalikes ||= {};
+  db.grammar ||= { learned: {} };
   ai.configure(settingsAll);
   document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && flush());
 }
@@ -409,6 +410,57 @@ function fallbackSentences(knownChars, count, avoid) {
 }
 
 
+
+// ------------------------------------------------------------------ grammar
+
+// Grammar points per level (www/grammar/<file>.json), loaded when first needed.
+const GRAMMAR_FILE = { "HSK 1": "hsk1", "HSK 2": "hsk2", "HSK 3": "hsk3", "JLPT N5": "n5", "JLPT N4": "n4", "JLPT N3": "n3" };
+const GRAMMAR = {};
+const grammarJobs = {};
+function loadGrammar(section) {
+  const file = GRAMMAR_FILE[section];
+  if (!file) return Promise.resolve(null);
+  grammarJobs[file] ||= fetch(`grammar/${file}.json`)
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+    .then((g) => (GRAMMAR[section] = g?.points || null));
+  return grammarJobs[file];
+}
+const PER_LESSON = 3;
+
+/** Where grammar stands at the current level: lessons unlock as you learn the level's words. */
+async function grammarStatus() {
+  const sec = sections().current;
+  const points = await loadGrammar(sec);
+  if (!points?.length) return { available: false, section: sec };
+  const words = W().filter((w) => w.section === sec);
+  const ids = learnedIds();
+  const learnedWords_ = words.filter((w) => ids.has(w.id)).length;
+  const lessons = Math.ceil(points.length / PER_LESSON);
+  // Spread the lessons over the level's words, so grammar and vocabulary finish together.
+  const interval = Math.max(8, Math.floor(words.length / lessons));
+  const first = Math.min(10, interval);
+  const done = points.filter((p) => db.grammar.learned[p.id]).length;
+  const lessonNo = Math.floor(done / PER_LESSON); // lessons finished
+  const needed = first + lessonNo * interval;
+  const finished = done >= points.length;
+  const due = Object.entries(db.grammar.learned).filter(([id, c]) => c.due <= fmt(now()) && points.some((p) => p.id === id)).length;
+  return {
+    available: true, section: sec, total: points.length, learned: done, lessons, lesson: lessonNo + 1, finished,
+    unlocked: !finished && learnedWords_ >= needed, words_to_next: Math.max(0, needed - learnedWords_), due,
+  };
+}
+
+/** Characters of the words you've learned, to pick examples you can read. */
+const knownChars = () => new Set(learnedWords().flatMap((w) => [...w.hanzi]));
+function grammarPoint(p, known) {
+  const score = (t) => { const cs = [...t].filter((c) => /[㐀-鿿]/.test(c)); return cs.length ? cs.filter((c) => known.has(c)).length / cs.length : 1; };
+  const examples = p.examples
+    .map((x) => ({ ...x, reading: course() === "zh" ? toPinyin(x.text) : x.reading || "" }))
+    .sort((a, b) => score(b.text) - score(a.text));
+  return { ...p, examples };
+}
+
 // ------------------------------------------------------------------ your own words
 
 /** A word you add yourself (one at a time or from an imported list). Throws with a readable reason. */
@@ -451,8 +503,9 @@ function looksLikeReading(x) {
 // ------------------------------------------------------------------ routes
 
 const routes = {
-  "GET /api/home": () => {
+  "GET /api/home": async () => {
     waterMissedDays();
+    const grammar = await grammarStatus();
     const s = settingsAll();
     const n = fmt(now());
     const ids = learnedIds();
@@ -503,6 +556,7 @@ const routes = {
       garden_notice: notice,
       plan,
       lookalikes: (LOOKALIKES[course()] || []).length,
+      grammar,
       xp_today: db.activity[dayKey()]?.xp || 0,
       daily_goal: s.daily_goal,
       course: course(),
@@ -681,6 +735,73 @@ const routes = {
       days.push({ day: k, state: practiced(k) ? "watered" : db.garden.saved.includes(k) ? "saved" : "missed" });
     }
     return { streak: streak(), best: bestStreak(), plant: plantState(), raindrops: db.garden.raindrops, max_raindrops: MAX_RAINDROPS, days };
+  },
+
+  // Grammar: lessons of 3 points that unlock while you learn the level's words.
+  "GET /api/grammar/status": () => grammarStatus(),
+
+  "GET /api/grammar/lesson": async () => {
+    const st = await grammarStatus();
+    if (!st.available) throw new HttpError(404, "No grammar for this level yet");
+    if (!st.unlocked) throw new HttpError(409, st.finished ? "You've learned all the grammar of this level!" : `Learn ${st.words_to_next} more words to unlock the next grammar lesson`);
+    const points = GRAMMAR[st.section];
+    const known = knownChars();
+    const next = points.filter((p) => !db.grammar.learned[p.id]).slice(0, PER_LESSON).map((p) => grammarPoint(p, known));
+    // Other points of the level (learned first) as wrong answers in the quiz.
+    const others = points.filter((p) => !next.some((n) => n.id === p.id)).map((p) => ({ id: p.id, short: p.short, mark: p.examples[0].mark }));
+    return { lesson: st.lesson, points: next, others };
+  },
+
+  // Every grammar point of the level, with the learned ones fully shown (the "grammar book").
+  "GET /api/grammar/book": async () => {
+    const st = await grammarStatus();
+    if (!st.available) return { ...st, points: [] };
+    const known = knownChars();
+    return { ...st, points: GRAMMAR[st.section].map((p) => (db.grammar.learned[p.id] ? { ...grammarPoint(p, known), learned: true } : { id: p.id, title: p.title, learned: false })) };
+  },
+
+  "POST /api/grammar/complete": (_, body) => {
+    const tomorrow = fmt(addMs(20 * 3600000));
+    for (const id of body.ids || []) db.grammar.learned[id] ||= { due: tomorrow, reps: 0, lapses: 0, last_review: null };
+    addActivity({ xp: body.xp || 0 });
+    persist();
+    return { ok: true, streak: streak() };
+  },
+
+  // Grammar due for practice (learned points of the current level).
+  "GET /api/grammar/review": async (_, __, query) => {
+    const st = await grammarStatus();
+    if (!st.available) return { items: [], others: [] };
+    const points = GRAMMAR[st.section];
+    const n = fmt(now());
+    const known = knownChars();
+    const learned = points.filter((p) => db.grammar.learned[p.id]);
+    const due = learned.filter((p) => db.grammar.learned[p.id].due <= n).sort((a, b) => (db.grammar.learned[a.id].due < db.grammar.learned[b.id].due ? -1 : 1));
+    const pool = query.get("extra") ? shuffled(learned) : due;
+    const items = pool.slice(0, Number(query.get("n")) || 3).map((p) => grammarPoint(p, known));
+    const others = points.map((p) => ({ id: p.id, short: p.short, mark: p.examples[0].mark, learned: !!db.grammar.learned[p.id] }));
+    return { items, others };
+  },
+
+  "POST /api/grammar/answer": (_, body) => {
+    const card = db.grammar.learned[body.id];
+    if (!card) throw new HttpError(404, "grammar point not learned");
+    Object.assign(card, schedule(card, Math.max(0, Math.min(3, Number(body.grade)))));
+    const xp = body.grade >= 2 ? 3 : 1;
+    addActivity({ xp, reviews: 1 });
+    persist();
+    return { xp };
+  },
+
+  // A fresh example of a grammar point, built by Gemma from the words you know.
+  "POST /api/grammar/example": async (_, body) => {
+    const sec = sections().current;
+    const p = (await loadGrammar(sec))?.find((x) => x.id === body.id);
+    if (!p) throw new HttpError(404, "grammar point not found");
+    const known = shuffled(learnedWords()).slice(0, 60).map((w) => w.hanzi);
+    const x = await ai.grammarExample(p, known);
+    if (course() === "zh") x.reading = toPinyin(x.text);
+    return x;
   },
 
   // Look-alike characters (未/末, 己/已 …): groups with learned characters and past mistakes come first.

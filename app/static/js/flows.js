@@ -70,6 +70,15 @@ export async function learnNew({ writing = true } = {}) {
 
   for (const w of words) {
     steps.push(step((ctx) => ex.intro(ctx, w)));
+    if (ex.noKanji(w)) {
+      // Kana-only words (コーヒー, ちょっと): learn the meaning, nothing to write.
+      steps.push(step((ctx) => ex.choice(ctx, w, allPool, "meaning"), async (res) => {
+        await api("/api/learn/complete", { method: "POST", body: { word_ids: [w.id], xp: 5 } });
+        const again = (ctx) => ex.choice(ctx, w, allPool, "meaning");
+        return { xp: 5, requeue: res.ok ? null : step(again, untilRight(again, w.id), w.id) };
+      }));
+      continue;
+    }
     steps.push(step((ctx) => ex.trace(ctx, w), async () => ({ xp: 1 })));
     steps.push(
       step(
@@ -92,7 +101,7 @@ export async function learnNew({ writing = true } = {}) {
     for (const make of [
       (ctx) => ex.multipleChoice(ctx, w, allPool),
       (ctx) => ex.speakWord(ctx, w, { showPinyin: true }),
-      (ctx) => ex.write(ctx, w),
+      ex.noKanji(w) ? (ctx) => ex.choice(ctx, w, allPool, "listen") : (ctx) => ex.write(ctx, w),
     ]) {
       finalRound.push(step(make, learnAfter(make, w.id), w.id));
     }
@@ -216,6 +225,7 @@ export async function review({ extra = false, writing = true } = {}) {
     const w = it.word;
     let make;
     if (!writing) make = randomChoice(w, allPool);
+    else if (ex.noKanji(w)) make = it.skill === "speak" ? (ctx) => ex.speakWord(ctx, w, { showPinyin: false }) : randomChoice(w, allPool);
     else if (it.skill === "write") make = (ctx) => writeEx(ctx, w);
     else if (it.skill === "speak") make = (ctx) => ex.speakWord(ctx, w, { showPinyin: false });
     else if (isSl()) make = Math.random() < 0.5 ? (ctx) => ex.multipleChoice(ctx, w, allPool) : (ctx) => ex.choice(ctx, w, allPool, "meaning");
@@ -226,7 +236,7 @@ export async function review({ extra = false, writing = true } = {}) {
       let requeue = null;
       if (res.grade === 0) {
         // Practise it again at the end (not graded a second time).
-        requeue = step(writing && it.skill === "write" ? (ctx) => writeEx(ctx, w) : make, async () => ({ xp: 0 }));
+        requeue = step(writing && it.skill === "write" && !ex.noKanji(w) ? (ctx) => writeEx(ctx, w) : make, async () => ({ xp: 0 }));
       }
       return { xp: r.xp, requeue };
     });

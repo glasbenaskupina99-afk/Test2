@@ -39,6 +39,9 @@ html = html
   .replace('<script type="module" src="js/app.js"></script>', '<script type="module" src="app.js"></script>');
 writeFileSync(join(www, "index.html"), html);
 
+// Ready-made memory hooks, one file per language, loaded by the app when needed.
+cpSync(join(mobile, "..", "app", "data", "extras"), join(www, "extras"), { recursive: true });
+
 // Stroke data for every character, bundled for offline use.
 const charSrc = join(mobile, "node_modules", "hanzi-writer-data");
 mkdirSync(join(www, "chars"), { recursive: true });

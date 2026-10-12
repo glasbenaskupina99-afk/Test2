@@ -16,8 +16,6 @@ import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as fsrs from "./fsrs.js";
 import LOOKALIKES from "../../app/data/lookalikes.json";
-// Ready-made memory hooks + examples for every course word: shown instantly, no AI wait.
-import PREBUILT_EXTRAS from "../../app/data/extras.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
 
@@ -127,13 +125,21 @@ function migrate() {
     const open = ws.find((w) => !learned.has(w.id));
     if (open) db.settings[key] = open.section;
   }
-  // Add built-in lists and any words added to them in an update (matched by the word itself).
-  for (const set of SEED_SETS) {
-    const have = new Set(db.words.filter((w) => w.lang === set.lang && w.source === set.source).map((w) => w.hanzi));
-    const words = seedWords(set, db.nextId).filter((w) => !have.has(w.hanzi));
-    words.forEach((w, i) => (w.id = db.nextId + i));
-    db.words.push(...words);
-    db.nextId += words.length;
+  // Built-in words follow the current lists (matched by the word itself): a word an update moves
+  // to another level (e.g. HSK 3 → new HSK 2) moves there with its progress; new words are added.
+  const seeded = new Map();
+  for (const set of SEED_SETS) for (const w of seedWords(set, 0)) if (!seeded.has(w.lang + w.hanzi)) seeded.set(w.lang + w.hanzi, w);
+  const have = new Set();
+  for (const w of db.words) {
+    if (w.source === "custom") continue;
+    const s = seeded.get(w.lang + w.hanzi);
+    if (s) Object.assign(w, { section: s.section, source: s.source, unit: s.unit, position: s.position, pinyin: s.pinyin, english: s.english });
+    have.add(w.lang + w.hanzi);
+  }
+  for (const w of seeded.values()) {
+    if (have.has(w.lang + w.hanzi)) continue;
+    w.id = db.nextId++;
+    db.words.push(w);
   }
   db.version = 3;
 }
@@ -302,8 +308,19 @@ const SC = () => {
 const wordById = (id) => db.words.find((w) => w.id === id);
 /** The word's memory hook: one generated earlier, else the ready-made one for course words. */
 // Ready-made hooks shipped with the app; Chinese examples get their pinyin here.
+// Ready-made memory hooks + examples for every course word (www/extras/<lang>.json), loaded
+// per language the first time they're needed so app start stays fast.
+const READY = {};
+const readyJobs = {};
+function loadReady(lang) {
+  readyJobs[lang] ||= fetch(`extras/${lang}.json`)
+    .then((r) => (r.ok ? r.json() : {}))
+    .catch(() => ({}))
+    .then((x) => (READY[lang] = x));
+  return readyJobs[lang];
+}
 function prebuilt(w) {
-  const x = PREBUILT_EXTRAS[w.lang]?.[w.hanzi];
+  const x = READY[w.lang]?.[w.hanzi];
   if (!x) return null;
   return w.lang === "zh" && x.example_zh && !x.example_pinyin ? { ...x, example_pinyin: toPinyin(x.example_zh) } : x;
 }
@@ -588,6 +605,7 @@ const routes = {
     const readable = (x) => x && ai.EXTRAS_ENGLISH.every((k) => !x[k] || ai.isEnglish(x[k]));
     if (!query.get("refresh")) {
       if (w.extras && readable(w.extras)) return w.extras;
+      await loadReady(w.lang);
       const ready = prebuilt(w);
       if (ready) return ready;
     }
@@ -598,7 +616,8 @@ const routes = {
     return d;
   },
 
-  "GET /api/learn/next": (_, __, query) => {
+  "GET /api/learn/next": async (_, __, query) => {
+    await loadReady(course());
     const n = Number(query.get("n")) || settingsAll().new_per_lesson;
     const ids = learnedIds();
     const sec = sections().current;

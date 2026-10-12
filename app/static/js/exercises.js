@@ -16,6 +16,8 @@ const slowBtn = (text) => iconBtn("slow", "speaker sm", () => speak(text, { slow
 
 /** "hiragana" / "katakana" for words of the kana course, else null. */
 const kanaOf = (w) => (w.source === "kana" ? (/[ァ-ヺ]/.test(w.hanzi) ? "katakana" : "hiragana") : null);
+/** Japanese vocabulary written only in kana (コーヒー, ちょっと): quizzed on meaning and sound, not reading/writing. */
+export const noKanji = (w) => isJa() && w.source !== "kana" && !/[㐀-鿿豈-﫿々]/.test(w.hanzi);
 /** Kana are quizzed against other kana of the same script, not against kanji words. */
 function samePool(word, pool) {
   const k = kanaOf(word);
@@ -237,6 +239,7 @@ export function multipleChoice(ctx, word, pool) {
  *   listen  — hear the word, pick the character
  */
 export function choice(ctx, word, pool, kind) {
+  if (kind === "reading" && noKanji(word)) kind = "meaning"; // its reading is the word itself
   pool = samePool(word, pool);
   // For kana the reading is quizzed as romaji (the hiragana reading of あ is just あ).
   const field = kind === "meaning" || (kind === "reading" && kanaOf(word)) ? "english" : kind === "reading" ? "pinyin" : "hanzi";

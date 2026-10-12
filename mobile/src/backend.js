@@ -281,7 +281,13 @@ const SC = () => {
 };
 const wordById = (id) => db.words.find((w) => w.id === id);
 /** The word's memory hook: one generated earlier, else the ready-made one for course words. */
-const extrasOf = (w) => w.extras || PREBUILT_EXTRAS[w.lang]?.[w.hanzi] || null;
+// Ready-made hooks shipped with the app; Chinese examples get their pinyin here.
+function prebuilt(w) {
+  const x = PREBUILT_EXTRAS[w.lang]?.[w.hanzi];
+  if (!x) return null;
+  return w.lang === "zh" && x.example_zh && !x.example_pinyin ? { ...x, example_pinyin: toPinyin(x.example_zh) } : x;
+}
+const extrasOf = (w) => w.extras || prebuilt(w);
 const cardsOf = (id) => db.cards.filter((c) => c.word_id === id);
 const learnedIds = () => new Set(C().map((c) => c.word_id));
 const byPosition = (a, b) => a.position - b.position || a.id - b.id;
@@ -496,7 +502,7 @@ const routes = {
     const readable = (x) => x && ai.EXTRAS_ENGLISH.every((k) => !x[k] || ai.isEnglish(x[k]));
     if (!query.get("refresh")) {
       if (w.extras && readable(w.extras)) return w.extras;
-      const ready = PREBUILT_EXTRAS[w.lang]?.[w.hanzi];
+      const ready = prebuilt(w);
       if (ready) return ready;
     }
     const d = await ai.wordExtras(w);

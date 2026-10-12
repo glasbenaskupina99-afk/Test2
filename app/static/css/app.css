@@ -598,16 +598,31 @@ body::before {
 }
 :root[data-theme="forest"] body {
   background:
-    radial-gradient(ellipse 120% 60% at 100% 0%, rgba(122, 156, 120, .10), transparent 60%),
-    var(--bg);
+    radial-gradient(ellipse 90% 45% at 15% -5%, rgba(226, 189, 78, .09), transparent 70%),
+    radial-gradient(ellipse 80% 50% at 100% 10%, rgba(140, 192, 107, .08), transparent 70%),
+    linear-gradient(180deg, #213a2d 0%, #1c3026 45%, #172a20 100%);
   background-attachment: fixed;
 }
-/* subtle leaf behind the home screen */
+/* Forest backdrop: filled leaf silhouettes in the bottom corners and a few slow fireflies. */
 :root[data-theme="forest"] .screen { position: relative; }
-:root[data-theme="forest"] .screen::before {
-  content: ""; position: fixed; right: -80px; top: 120px; width: 380px; height: 380px; pointer-events: none; z-index: -1; opacity: .07;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23e6e1d3' stroke-width='1.2'%3E%3Cpath d='M50 95C50 60 30 35 10 20c35 0 75 20 80 60-15 5-30 8-40 15z'/%3E%3Cpath d='M50 95C45 70 35 50 18 28M40 60c-8-2-15-6-20-12M45 75c-10 0-20-4-26-10M47 50c2-10 0-20-6-28'/%3E%3C/svg%3E") no-repeat center / contain;
+:root[data-theme="forest"]::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 300'%3E %3Cg fill='%239cc28f' fill-opacity='.12'%3E %3Cpath d='M-10 300C0 205 52 128 150 96C133 182 82 248-10 300Z'/%3E %3Cpath d='M-20 190C-34 118-8 52 44 6C68 82 44 150-20 190Z'/%3E %3Cpath d='M10 300C52 232 124 196 222 202C176 258 104 292 10 300Z'/%3E %3C/g%3E %3Cg fill='%23c9dfb6' fill-opacity='.08'%3E %3Cpath d='M40 300C70 250 112 222 168 214C140 258 98 286 40 300Z'/%3E %3Cpath d='M-6 250C8 196 40 160 86 142C76 196 42 232-6 250Z'/%3E %3C/g%3E %3Cg fill='%230d1912' fill-opacity='.35'%3E %3Cpath d='M0 300Q14 236 18 176Q28 240 34 300Z'/%3E%3Cpath d='M26 300Q46 246 60 206Q58 258 58 300Z'/%3E %3Cpath d='M52 300Q76 262 98 240Q86 274 84 300Z'/%3E%3Cpath d='M-4 300Q-2 260 6 230Q12 266 14 300Z'/%3E %3C/g%3E%3C/svg%3E") no-repeat left bottom / min(78vw, 360px) auto,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 340'%3E %3Cg fill='%239cc28f' fill-opacity='.11'%3E %3Cpath d='M270 340C262 236 214 160 120 128C134 216 184 288 270 340Z'/%3E %3Cpath d='M280 210C292 140 270 70 222 20C196 98 214 168 280 210Z'/%3E %3C/g%3E %3Cg fill='%23e2bd4e' fill-opacity='.07'%3E %3Cpath d='M262 300C238 252 196 226 140 222C166 266 210 292 262 300Z'/%3E %3C/g%3E %3Cg fill='%230d1912' fill-opacity='.32'%3E %3Cpath d='M260 340Q246 272 240 214Q232 280 226 340Z'/%3E%3Cpath d='M232 340Q214 286 196 250Q200 300 202 340Z'/%3E %3C/g%3E%3C/svg%3E") no-repeat right bottom / min(58vw, 270px) auto;
 }
+:root[data-theme="forest"]::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    radial-gradient(circle at 18% 34%, rgba(226, 189, 78, .55) 0 1.5px, rgba(226, 189, 78, .12) 3px, transparent 9px),
+    radial-gradient(circle at 82% 22%, rgba(226, 189, 78, .45) 0 1.2px, rgba(226, 189, 78, .1) 3px, transparent 8px),
+    radial-gradient(circle at 70% 62%, rgba(201, 223, 182, .45) 0 1.3px, rgba(201, 223, 182, .1) 3px, transparent 8px),
+    radial-gradient(circle at 30% 76%, rgba(226, 189, 78, .4) 0 1.2px, rgba(226, 189, 78, .1) 3px, transparent 8px),
+    radial-gradient(circle at 90% 48%, rgba(201, 223, 182, .35) 0 1px, transparent 7px);
+  animation: fireflies 7s ease-in-out infinite alternate;
+}
+@keyframes fireflies { 0% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; } 100% { opacity: .5; transform: translateY(-14px); } }
+@media (prefers-reduced-motion: reduce) { :root[data-theme="forest"]::after { animation: none; } }
 
 /* buttons */
 :root[data-theme="forest"] .btn { --c: var(--accent); --cd: var(--accent-dark); --fg: var(--on-accent); }

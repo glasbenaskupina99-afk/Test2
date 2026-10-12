@@ -84,8 +84,8 @@ async function startFlow(fn) {
 // ------------------------------------------------------------------ home
 
 const COURSES = {
-  zh: { flag: "🇨🇳", name: "Chinese", script: "汉字", sub: "Mandarin · HSK 1" },
-  ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kanji · JLPT N5 & N3" },
+  zh: { flag: "🇨🇳", name: "Chinese", script: "汉字", sub: "Mandarin · HSK 1–3" },
+  ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kana & kanji · JLPT N5–N3" },
   sl: { flag: "🇸🇮", name: "Slovenian", script: "Aa", sub: "A1 · first words" },
 };
 

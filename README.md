@@ -65,6 +65,12 @@ npm run apk        # → android/app/build/outputs/apk/debug/app-debug.apk
 
 The APK is signed with `mobile/android/app/hanzi.keystore`, a key committed to the repo so that every build can update the installed app. That's fine for a personal app, but don't reuse the key for anything you publish.
 
+## 🌐 Website (bloomko.eu)
+
+`site/` is the static "coming soon" landing page. It's plain HTML with no build step, hosted on **Cloudflare Pages**:
+Pages → *Connect to Git* → this repo → build command: *(none)* → build output directory: `site` → then *Custom domains* → `bloomko.eu`.
+Pushing changes under `site/` doesn't trigger the Android build.
+
 ## Running it as a server
 
 Requires Python 3.10+.

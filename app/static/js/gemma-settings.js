@@ -91,7 +91,7 @@ export function gemmaCard(s, fields, save) {
       files.replaceChildren(
         ...sorted.map((f) => {
           const radio = h("input", { type: "radio", name: "gemmafile", checked: f === chosen, onchange: () => { chosen = f; } });
-          return h("label", { class: "row small", style: { padding: "6px 0", cursor: "pointer" } }, radio, h("span", { style: { flex: 1, wordBreak: "break-all" } }, f.path), h("span", { class: "muted" }, mb(f.size)));
+          return h("label", { class: "file-opt" }, radio, h("span", { class: "file-name" }, f.path), h("span", { class: "file-size" }, mb(f.size)));
         }),
         h("div", { class: "hint" }, "Pick the plain one; NPU/chip-specific builds only work on those chips.")
       );

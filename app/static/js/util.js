@@ -103,3 +103,70 @@ export function confirmDialog({ title, message = "", icon = "", confirmLabel = "
     bg.querySelector(".btn").focus();
   });
 }
+
+/**
+ * Replace native <select> pop-ups (white system dialogs on Android) with a bottom sheet in the
+ * app's style. The <select> stays in the page (hidden) as the source of truth, so code that
+ * reads .value or listens for "change" keeps working.
+ */
+function enhanceSelect(sel) {
+  if (sel.dataset.enhanced) return;
+  sel.dataset.enhanced = "1";
+  const split = (text) => {
+    const [main, ...rest] = String(text).split(" — ");
+    return [main, rest.join(" — ")];
+  };
+  const label = h("span", { class: "select-label" });
+  const btn = h("button", { type: "button", class: "select-btn" }, label, h("span", { class: "select-chevron", "aria-hidden": "true" }, "▾"));
+  const sync = () => {
+    const o = sel.options[sel.selectedIndex];
+    const [main, sub] = split(o ? o.textContent : "");
+    label.replaceChildren(h("b", {}, main), sub ? h("small", {}, sub) : null);
+    btn.hidden = sel.hidden;
+  };
+  sel.addEventListener("change", sync);
+  btn.addEventListener("click", () => {
+    const title = sel.closest(".field")?.querySelector("label")?.textContent || "";
+    const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() });
+    const pick = (i) => {
+      bg.remove();
+      if (sel.selectedIndex === i) return;
+      sel.selectedIndex = i;
+      sel.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+    bg.append(
+      h(
+        "div",
+        { class: "sheet select-sheet" },
+        title ? h("h3", { class: "select-title" }, title) : null,
+        [...sel.options].map((o, i) => {
+          const [main, sub] = split(o.textContent);
+          return h(
+            "button",
+            { type: "button", class: "select-opt" + (i === sel.selectedIndex ? " on" : ""), onclick: () => pick(i) },
+            h("span", { class: "radio" }),
+            h("span", { class: "select-opt-text" }, h("b", {}, main), sub ? h("small", {}, sub) : null)
+          );
+        })
+      )
+    );
+    document.body.append(bg);
+  });
+  sel.after(btn);
+  sel.classList.add("select-native");
+  sync();
+  // Keep the button's visibility in step with the select (e.g. shown/hidden by code).
+  new MutationObserver(sync).observe(sel, { attributes: true, attributeFilter: ["hidden"] });
+}
+
+export function enhanceSelects(root = document.body) {
+  root.querySelectorAll("select:not([data-enhanced])").forEach(enhanceSelect);
+  new MutationObserver((muts) => {
+    for (const m of muts)
+      for (const n of m.addedNodes) {
+        if (n.nodeType !== 1) continue;
+        if (n.tagName === "SELECT") enhanceSelect(n);
+        else n.querySelectorAll?.("select:not([data-enhanced])").forEach(enhanceSelect);
+      }
+  }).observe(root, { childList: true, subtree: true });
+}

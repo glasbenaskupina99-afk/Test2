@@ -890,3 +890,38 @@ body::before {
 }
 .link-btn:hover { color: var(--text-strong); }
 .link-btn.back { margin: 0 0 6px; padding: 4px 0; text-decoration: none; }
+
+/* Themed replacement for native <select> pop-ups */
+select.select-native { display: none !important; }
+.select-btn {
+  width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer;
+  padding: 12px 16px; border-radius: 16px; border: 2px solid var(--border); background: var(--surface-2, var(--surface));
+  color: var(--text); font: inherit;
+}
+.select-btn[hidden] { display: none; }
+.select-label { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.select-label b { font-size: 16px; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.select-label small { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.select-chevron { color: var(--muted); font-size: 14px; }
+.select-sheet { display: grid; gap: 10px; }
+.select-title { margin: 0 0 4px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.select-opt {
+  display: flex; align-items: center; gap: 14px; text-align: left; cursor: pointer; padding: 14px 16px;
+  border-radius: 16px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font: inherit;
+}
+.select-opt .radio { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--muted); }
+.select-opt.on { border-color: #8fb0c8; background: var(--blue-light); }
+.select-opt.on .radio { border: 6px solid var(--accent, var(--blue)); }
+.select-opt-text { display: flex; flex-direction: column; }
+.select-opt-text b { font-size: 16px; color: var(--text-strong); }
+.select-opt-text small { font-size: 13px; color: var(--muted); }
+
+/* Model file list (Gemma settings) */
+.file-opt {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px; margin: 6px 0; cursor: pointer;
+  border-radius: 14px; border: 2px solid var(--border); background: var(--surface); font-size: 14px;
+}
+.file-opt:has(input:checked) { border-color: #8fb0c8; background: var(--blue-light); }
+.file-opt input[type=radio] { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--accent, var(--blue)); }
+.file-opt .file-name { flex: 1; min-width: 0; word-break: break-all; color: var(--text-strong); }
+.file-opt .file-size { color: var(--muted); white-space: nowrap; font-weight: 700; }

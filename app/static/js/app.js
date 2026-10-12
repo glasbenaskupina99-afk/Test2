@@ -1,4 +1,4 @@
-import { api, h, iconBtn, toast, confirmDialog } from "./util.js";
+import { api, h, iconBtn, toast, confirmDialog, enhanceSelects } from "./util.js";
 import { state, T, isJa, isSl, sayText, applyCourse } from "./state.js";
 import { speak, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
@@ -1038,6 +1038,8 @@ function welcomeScreen(gemmaNext) {
     setTimeout(() => name.focus(), 200);
   });
 }
+
+enhanceSelects();
 
 (async function boot() {
   try {

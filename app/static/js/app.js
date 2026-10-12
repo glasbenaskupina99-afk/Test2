@@ -88,41 +88,90 @@ const COURSES = {
   sl: { flag: "🇸🇮", name: "Slovenian", script: "Aa", sub: "A1 · first words" },
 };
 
-function courseSheet(home) {
-  const bg = h(
+const LEVEL_INFO = {
+  "HSK 1": "Beginner · your first Chinese words",
+  "JLPT N5": "Beginner · basic kanji and everyday words",
+  "JLPT N4": "Elementary",
+  "JLPT N3": "Intermediate · work, news, feelings, travel",
+  A1: "Beginner · first words",
+  "My words": "Words you added yourself",
+};
+
+/** Level cards (JLPT N5, N3 …) for one course. */
+function levelCards(levels, current, onPick) {
+  return h(
     "div",
-    { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() },
-    h(
-      "div",
-      { class: "sheet" },
-      h("h2", { style: { marginBottom: "14px" } }, "Choose a course"),
+    { class: "level-cards" },
+    levels.map((l) =>
+      h(
+        "button",
+        { class: "level-card" + (l.name === current ? " on" : ""), onclick: () => onPick(l.name) },
+        h("div", { class: "level-top" }, h("b", {}, l.name), h("span", {}, `${l.learned}/${l.total}`)),
+        h("small", {}, LEVEL_INFO[l.name] || `${l.total} words`),
+        h("i", { style: { width: `${Math.round((100 * l.learned) / Math.max(l.total, 1))}%` } })
+      )
+    )
+  );
+}
+
+/** Pick a language, then (for courses with several levels) a level. */
+function courseSheet(home, startWith = null) {
+  const sheet = h("div", { class: "sheet" });
+  const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() }, sheet);
+  const choose = async (lang, level) => {
+    const body = { course: lang };
+    if (level) body[`section_${lang}`] = level;
+    state.settings = await api("/api/settings", { method: "PUT", body });
+    applyCourse();
+    bg.remove();
+    route();
+  };
+  const levelsStep = (c) => {
+    const info = COURSES[c.lang];
+    sheet.replaceChildren(
+      h("button", { class: "link-btn back", onclick: languagesStep }, "‹ All languages"),
+      h("h2", { style: { margin: "4px 0 4px" } }, `${info.flag} ${info.name}: choose your level`),
+      h("p", { class: "muted small", style: { margin: "0 0 14px" } }, "You can switch levels any time by tapping the flag."),
+      levelCards(c.levels, c.level || c.levels[0]?.name, (name) => choose(c.lang, name))
+    );
+  };
+  const languagesStep = () => {
+    sheet.replaceChildren(
+      h("h2", { style: { marginBottom: "14px" } }, "Choose a language"),
       h(
         "div",
         { class: "modes", style: { marginTop: 0 } },
         home.courses.map((c) => {
           const info = COURSES[c.lang];
+          const multi = c.levels.length > 1;
           return h(
             "button",
             {
-              class: "mode" + (c.lang === "ja" ? " blue" : "") + (c.lang === home.course ? "" : ""),
+              class: "mode" + (c.lang === "ja" ? " blue" : c.lang === "sl" ? " purple" : ""),
               style: c.lang === home.course ? { outline: "4px solid var(--yellow)" } : {},
-              onclick: async () => {
-                state.settings = await api("/api/settings", { method: "PUT", body: { course: c.lang } });
-                applyCourse();
-                bg.remove();
-                route();
-              },
+              onclick: () => (multi ? levelsStep(c) : choose(c.lang)),
             },
             h("div", { class: "badge-ico" }, info.flag),
-            h("div", {}, h("h3", {}, `${info.name} `, h("span", { class: "hz" }, info.script)), h("p", {}, `${info.sub} · ${c.learned}/${c.total} learned`))
+            h(
+              "div",
+              {},
+              h("h3", {}, `${info.name} `, h("span", { class: "hz" }, info.script)),
+              h("p", {}, multi ? `${c.levels.map((l) => l.name).join(" · ")} · ${c.learned}/${c.total} learned` : `${info.sub} · ${c.learned}/${c.total} learned`)
+            ),
+            multi ? h("div", { class: "count", style: { background: "rgba(255,255,255,.18)" } }, "›") : null
           );
         })
       ),
       h("p", { class: "muted small center", style: { marginTop: "14px" } }, "Each course keeps its own words and progress. Your streak and XP are shared.")
-    )
-  );
+    );
+  };
+  const start = startWith && home.courses.find((c) => c.lang === startWith);
+  start && start.levels.length > 1 ? levelsStep(start) : languagesStep();
   document.body.append(bg);
 }
+
+/** "JLPT N5" → "N5", "HSK 1" → "HSK 1" (fits next to the flag). */
+const shortLevel = (name) => String(name || "").replace(/^JLPT\s*/, "");
 
 function topbar(home) {
   const ai = state.aiStatus;
@@ -132,8 +181,9 @@ function topbar(home) {
     home.courses
       ? h(
           "button",
-          { class: "stat", title: "Switch course", onclick: () => courseSheet(home), style: { background: "none", border: "2px solid var(--border)", borderRadius: "12px", padding: "4px 8px", cursor: "pointer" } },
-          h("span", { class: "ico" }, COURSES[home.course].flag)
+          { class: "stat course-btn", title: "Switch language or level", onclick: () => courseSheet(home) },
+          h("span", { class: "ico" }, COURSES[home.course].flag),
+          home.sections?.length > 1 ? h("span", { class: "course-level" }, shortLevel(home.section)) : null
         )
       : null,
     h(
@@ -177,7 +227,7 @@ async function homeScreen() {
       h("h3", {}, "Learn new words", home.sections?.length > 1 ? h("span", { class: "level-tag" }, home.section) : null),
       next.words.length
         ? h("div", { class: "preview" }, preview)
-        : h("p", {}, home.sections?.length > 1 ? `${home.section} complete — pick another level below` : "All words learned — add more!")
+        : h("p", {}, home.sections?.length > 1 ? `${home.section} complete — tap the flag to pick another level` : "All words learned — add more!")
     )
   );
   const reviewCard = h(
@@ -219,29 +269,6 @@ async function homeScreen() {
     : null;
 
   const units = await unitsView(home.units);
-  const sectionPicker =
-    home.sections?.length > 1
-      ? h(
-          "div",
-          { class: "section-pick" },
-          home.sections.map((sec) =>
-            h(
-              "button",
-              {
-                class: sec.name === home.section ? "on" : "",
-                onclick: async () => {
-                  if (sec.name === home.section) return;
-                  state.settings = await api("/api/settings", { method: "PUT", body: { [`section_${home.course}`]: sec.name } });
-                  route();
-                },
-              },
-              h("b", {}, sec.name),
-              h("span", {}, `${sec.learned}/${sec.total}`),
-              h("i", { style: { width: `${Math.round((100 * sec.learned) / Math.max(sec.total, 1))}%` } })
-            )
-          )
-        )
-      : null;
 
   shell(
     [
@@ -263,7 +290,6 @@ async function homeScreen() {
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week, home.saved_days),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
-      sectionPicker,
       units,
     ],
     "#/"
@@ -941,8 +967,21 @@ function reminderCard(s) {
 // ------------------------------------------------------------------ welcome (first start)
 
 function welcomeScreen(gemmaNext) {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     let chosen = state.settings.course === "ja" ? "ja" : "zh";
+    let level = null;
+    // Levels of each course (JLPT N5, N3 …), so a course with several can be started at the right one.
+    const courses = (await api("/api/home").catch(() => ({}))).courses || [];
+    const levelBox = h("div", { class: "welcome-levels" });
+    const showLevels = () => {
+      const c = courses.find((x) => x.lang === chosen);
+      if (!c || c.levels.length < 2) { level = null; levelBox.replaceChildren(); return; }
+      level = level && c.levels.some((l) => l.name === level) ? level : c.levels[0].name;
+      levelBox.replaceChildren(
+        h("div", { class: "small muted", style: { margin: "14px 0 8px", textAlign: "left" } }, "Which level?"),
+        levelCards(c.levels, level, (name) => { level = name; showLevels(); })
+      );
+    };
     const name = h("input", {
       class: "input",
       placeholder: "Your name",
@@ -957,7 +996,7 @@ function welcomeScreen(gemmaNext) {
         "button",
         {
           class: "welcome-course" + (lang === chosen ? " on" : ""),
-          onclick: () => { chosen = lang; courseBtns.forEach((x) => x.classList.toggle("on", x === b)); },
+          onclick: () => { chosen = lang; level = null; courseBtns.forEach((x) => x.classList.toggle("on", x === b)); showLevels(); },
         },
         h("span", { class: "flag" }, info.flag),
         h("span", {}, h("b", {}, info.name, " ", h("span", { class: "hz" }, info.script)), h("small", {}, info.sub))
@@ -970,7 +1009,9 @@ function welcomeScreen(gemmaNext) {
         class: "btn",
         disabled: true,
         onclick: async () => {
-          state.settings = await api("/api/settings", { method: "PUT", body: { display_name: name.value.trim(), course: chosen } });
+          const body = { display_name: name.value.trim(), course: chosen };
+          if (level) body[`section_${chosen}`] = level;
+          state.settings = await api("/api/settings", { method: "PUT", body });
           applyCourse();
           resolve();
         },
@@ -988,10 +1029,12 @@ function welcomeScreen(gemmaNext) {
         h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),
         h("div", { class: "small muted", style: { alignSelf: "flex-start", margin: "6px 0 8px" } }, "What do you want to learn?"),
         h("div", { class: "welcome-courses" }, courseBtns),
+        levelBox,
         h("div", { style: { width: "100%", marginTop: "18px" } }, go),
         h("p", { class: "muted small" }, "Everything stays on this device. You can change this later in Settings.")
       )
     );
+    showLevels();
     setTimeout(() => name.focus(), 200);
   });
 }

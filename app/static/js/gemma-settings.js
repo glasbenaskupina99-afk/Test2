@@ -155,7 +155,7 @@ export function gemmaCard(s, fields, save) {
     files,
     progress,
     h("div", { class: "row" }, downloadBtn, cancelBtn),
-    h("button", { class: "btn flat", onclick: importFile }, "…or import a .litertlm file from this phone"),
+    h("button", { class: "link-btn", onclick: importFile }, "📁 Or import a .litertlm file from this phone"),
     h("h3", { style: { margin: "16px 0 8px", fontSize: "17px" } }, "Run it"),
     h("div", { class: "field" }, h("label", {}, "Processor"), backend),
     h("div", { class: "switch-row" }, h("div", {}, "Load at startup", h("div", { class: "small muted" }, "Gemma loads in the background so the first answer is quick (uses memory)")), preload),

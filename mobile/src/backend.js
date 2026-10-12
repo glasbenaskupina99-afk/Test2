@@ -33,6 +33,7 @@ const DEFAULTS = {
   course: "zh", // "zh" Mandarin (hanzi) or "ja" Japanese (kanji)
   section_zh: "", // section chosen for "Learn new words" ("" = first unfinished)
   section_ja: "",
+  section_sl: "",
   ai_enabled: true,
   gemma_backend: "cpu",
   display_name: "",
@@ -381,10 +382,18 @@ const routes = {
     const ws = dayKey(weekStart);
     const cards = SC();
     const future = cards.filter((c) => c.due > n).map((c) => c.due).sort();
+    const all = new Set(db.cards.map((c) => c.word_id));
     const courses = ["zh", "ja", "sl"].map((lang) => {
-      const ws = db.words.filter((w) => w.lang === lang);
-      const all = new Set(db.cards.map((c) => c.word_id));
-      return { lang, total: ws.length, learned: ws.filter((w) => all.has(w.id)).length };
+      const ws = db.words.filter((w) => w.lang === lang).sort(byPosition);
+      // Levels of this course (e.g. JLPT N5, N3) for the level step after picking a language.
+      const levels = [];
+      for (const w of ws) {
+        let l = levels.find((x) => x.name === w.section);
+        if (!l) levels.push((l = { name: w.section, total: 0, learned: 0 }));
+        l.total++;
+        if (all.has(w.id)) l.learned++;
+      }
+      return { lang, total: ws.length, learned: ws.filter((w) => all.has(w.id)).length, levels, level: lang === course() ? secs.current : s[`section_${lang}`] || "" };
     });
     const today = db.activity[dayKey()] || {};
     const due = cards.filter((c) => c.due <= n).length;

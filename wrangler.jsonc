@@ -12,5 +12,7 @@
     "not_found_handling": "404-page"
   },
   // No id: Wrangler creates the namespace on the first deploy and reuses it afterwards.
-  "kv_namespaces": [{ "binding": "NOTIFY" }]
+  "kv_namespaces": [{ "binding": "NOTIFY" }],
+  // Email Routing: each new sign-up is emailed to this (verified) address.
+  "send_email": [{ "name": "MAIL", "destination_address": "thebloomko@gmail.com" }]
 }

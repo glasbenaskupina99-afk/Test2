@@ -12,6 +12,32 @@ const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 const json = (status, body) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
 
+/** "SI" → "Slovenia (SI)" */
+function countryName(code) {
+  try {
+    return `${new Intl.DisplayNames(["en"], { type: "region" }).of(code)} (${code})`;
+  } catch {
+    return code;
+  }
+}
+
+/** "sl,en-GB;q=0.9,en;q=0.8" → "Slovenian, English (UK), English" */
+function languages(header) {
+  const codes = String(header || "")
+    .split(",")
+    .map((p) => p.split(";")[0].trim())
+    .filter((c) => c && c !== "*")
+    .slice(0, 5);
+  if (!codes.length) return null;
+  let names;
+  try {
+    names = new Intl.DisplayNames(["en"], { type: "language" });
+  } catch {
+    return codes.join(", ");
+  }
+  return codes.map((c) => { try { return names.of(c); } catch { return c; } }).join(", ");
+}
+
 /** A plain-text email to the owner about a new sign-up (best effort, never blocks the visitor). */
 async function mailOwner(env, email, info, total) {
   if (!env.MAIL) return;
@@ -20,9 +46,9 @@ async function mailOwner(env, email, info, total) {
     ``,
     `  ${email}`,
     ``,
-    `Time:     ${info.at}`,
-    `Country:  ${info.country || "unknown"}`,
-    `Language: ${info.lang || "unknown"}`,
+    `Time:      ${new Date(info.at).toUTCString()}`,
+    `Country:   ${info.country ? countryName(info.country) : "unknown"}`,
+    `Languages: ${info.languages || "unknown"}`,
     total ? `Total sign-ups so far: ${total}` : ``,
   ];
   const raw = [
@@ -54,7 +80,11 @@ async function notify(request, env, ctx) {
   if (!EMAIL.test(email) || email.length > 254) return json(400, { error: "invalid email" });
   if (!env.NOTIFY) return json(503, { error: "sign-ups not available" });
   if (!(await env.NOTIFY.get(email))) {
-    const info = { at: new Date().toISOString(), country: request.cf?.country || null, lang: request.headers.get("Accept-Language")?.slice(0, 20) || null };
+    const info = {
+      at: new Date().toISOString(),
+      country: request.cf?.country || null,
+      languages: languages(request.headers.get("Accept-Language")),
+    };
     await env.NOTIFY.put(email, JSON.stringify(info));
     ctx.waitUntil(
       (async () => {

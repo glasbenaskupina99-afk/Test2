@@ -6,6 +6,7 @@ import * as flows from "./flows.js";
 import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
 import { plantArt, gardenSheet, gardenNotice, dayLeafArt } from "./garden.js";
 import { canRemind, ensurePermission, scheduleReminders } from "./reminders.js";
+import { pickTime } from "./timepicker.js";
 import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 
@@ -942,23 +943,41 @@ async function settingsScreen() {
 function reminderCard(s) {
   const toggle = h("input", { type: "checkbox", class: "toggle" });
   toggle.checked = s.reminder_on;
-  const time = h("input", { class: "input", type: "time", value: s.reminder_time || "19:00", style: { maxWidth: "170px" } });
+  let value = s.reminder_time || "19:00";
+  const timeLabel = h("b", { class: "time-value" }, value);
   const apply = async () => {
     if (toggle.checked && !(await ensurePermission())) {
       toggle.checked = false;
       toast("Allow notifications for Bloomko in Android settings to get reminders", 5000);
     }
-    state.settings = await api("/api/settings", { method: "PUT", body: { reminder_on: toggle.checked, reminder_time: time.value || "19:00" } });
+    state.settings = await api("/api/settings", { method: "PUT", body: { reminder_on: toggle.checked, reminder_time: value } });
     await scheduleReminders();
-    toast(toggle.checked ? `🌱 We'll remind you at ${time.value} if your plant is thirsty` : "Reminder off");
+    toast(toggle.checked ? `🌱 We'll remind you at ${value} if your plant is thirsty` : "Reminder off");
   };
   toggle.onchange = apply;
-  time.onchange = () => toggle.checked && apply();
+  const timeBtn = h(
+    "button",
+    {
+      type: "button",
+      class: "select-btn time-btn",
+      onclick: async () => {
+        const v = await pickTime(value);
+        if (!v || v === value) return;
+        value = v;
+        timeLabel.textContent = v;
+        if (toggle.checked) apply();
+        else state.settings = await api("/api/settings", { method: "PUT", body: { reminder_time: v } });
+      },
+    },
+    h("span", { class: "time-ico", "aria-hidden": "true" }, "🕰️"),
+    h("span", { class: "select-label" }, timeLabel, h("small", {}, "Tap to change")),
+    h("span", { class: "select-chevron", "aria-hidden": "true" }, "▾")
+  );
   return h(
     "div",
     { class: "card" },
     h("div", { class: "switch-row" }, h("div", {}, "Remind me to practise", h("div", { class: "small muted" }, "Only on days you haven't watered your plant yet")), toggle),
-    h("div", { class: "field", style: { marginTop: "12px", marginBottom: 0 } }, h("label", {}, "Time"), time)
+    h("div", { class: "field", style: { marginTop: "12px", marginBottom: 0 } }, h("label", {}, "Time"), timeBtn)
   );
 }
 

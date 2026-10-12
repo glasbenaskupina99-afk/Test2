@@ -121,7 +121,7 @@ function enhanceSelect(sel) {
   const sync = () => {
     const o = sel.options[sel.selectedIndex];
     const [main, sub] = split(o ? o.textContent : "");
-    label.replaceChildren(h("b", {}, main), sub ? h("small", {}, sub) : null);
+    label.replaceChildren(...[h("b", {}, main), sub ? h("small", {}, sub) : null].filter(Boolean));
     btn.hidden = sel.hidden;
   };
   sel.addEventListener("change", sync);

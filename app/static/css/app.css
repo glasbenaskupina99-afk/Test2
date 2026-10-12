@@ -925,3 +925,30 @@ select.select-native { display: none !important; }
 .file-opt input[type=radio] { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--accent, var(--blue)); }
 .file-opt .file-name { flex: 1; min-width: 0; word-break: break-all; color: var(--text-strong); }
 .file-opt .file-size { color: var(--muted); white-space: nowrap; font-weight: 700; }
+
+/* Leaf clock time picker */
+.time-btn .time-value { font-size: 22px; letter-spacing: 1px; }
+.time-ico { font-size: 22px; }
+.tp-sheet { display: flex; flex-direction: column; align-items: center; }
+.tp-sheet .select-title { align-self: flex-start; }
+.tp-display { display: flex; align-items: center; gap: 4px; margin: 2px 0 10px; }
+.tp-seg {
+  font: inherit; font-size: 48px; font-weight: 900; line-height: 1; padding: 8px 14px; border-radius: 16px; cursor: pointer;
+  border: 2px solid var(--border); background: var(--surface); color: var(--muted);
+}
+.tp-seg.on { color: var(--text-strong); border-color: var(--green, #8cc06b); background: var(--green-light); }
+.tp-colon { font-size: 44px; font-weight: 900; color: var(--muted); }
+.tp-dial { width: min(78vw, 290px); height: auto; touch-action: none; user-select: none; cursor: pointer; }
+.tp-face { fill: var(--surface); stroke: var(--border); stroke-width: 2; }
+.tp-num { font-family: inherit; font-size: 15px; font-weight: 800; fill: var(--text); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.tp-num.inner { font-size: 12px; fill: var(--muted); }
+.tp-num.on { fill: #17241b; }
+.tp-sel { fill: var(--accent, #c2a63f); }
+.tp-stem { stroke: #6f9a58; stroke-width: 3; stroke-linecap: round; }
+.tp-leaf { fill: #8cc06b; opacity: .9; }
+.tp-vein { stroke: #4f7a3d; stroke-width: 1.5; stroke-linecap: round; }
+.tp-pin { fill: #6b4f36; }
+.tp-hand { transition: transform .25s ease; }
+.tp-hint { margin: 8px 0 14px; font-size: 13px; color: var(--muted); text-align: center; }
+.tp-actions { display: flex; gap: 10px; width: 100%; }
+.tp-actions .btn { flex: 1; }

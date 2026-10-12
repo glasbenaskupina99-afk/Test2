@@ -952,3 +952,28 @@ select.select-native { display: none !important; }
 .tp-hint { margin: 8px 0 14px; font-size: 13px; color: var(--muted); text-align: center; }
 .tp-actions { display: flex; gap: 10px; width: 100%; }
 .tp-actions .btn { flex: 1; }
+
+/* Progress chart (My journey) */
+.pc-tabs { margin: 0 0 12px; }
+.pc-tabs button { flex: 1; min-width: 0; padding: 8px 10px 10px; }
+.pc-tabs button i { display: none; }
+.pc-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
+.pc-stat { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 8px 2px; border-radius: 12px; background: var(--surface-2, var(--surface)); }
+.pc-stat b { font-size: 20px; font-weight: 900; color: var(--text-strong); line-height: 1.1; }
+.pc-stat span { font-size: 11px; color: var(--muted); line-height: 1.2; }
+.pc-stat em { font-style: normal; font-size: 11px; font-weight: 800; margin-top: 2px; }
+.pc-stat em.up { color: #8cc06b; }
+.pc-stat em.down { color: #d9845f; }
+.pc-grid { stroke: var(--border); stroke-dasharray: 3 5; }
+.pc-axis { stroke: var(--border); }
+.pc-bar { fill: #d9845f; opacity: .55; transition: opacity .15s; }
+.pc-bar.on { opacity: 1; }
+.pc-line { fill: none; stroke: #e2bd4e; stroke-width: 2.5; stroke-linejoin: round; }
+.pc-dot { fill: #e2bd4e; stroke: var(--surface); stroke-width: 1.5; }
+.pc-dry { fill: #b98a55; }
+.pc-label { font-size: 10px; fill: var(--muted); font-family: inherit; }
+.pc-sel { fill: var(--text-strong); opacity: .05; }
+.pc-hit { fill: transparent; cursor: pointer; }
+.pc-detail { min-height: 22px; font-size: 14px; color: var(--muted); text-align: center; margin: 4px 0 2px; }
+.pc-detail b { color: var(--text-strong); }
+.journey-legend i.bar { background: #d9845f; border-radius: 2px; height: 10px; width: 8px; }

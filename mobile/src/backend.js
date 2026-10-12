@@ -687,7 +687,8 @@ const routes = {
   "POST /api/ai/test": () => ai.test(),
 
   "GET /api/stats": () => {
-    const days = Object.entries(db.activity).sort((a, b) => (a[0] < b[0] ? 1 : -1)).slice(0, 60).map(([day, a]) => ({ day, ...a }));
+    // Enough history for the 3-month progress chart (and the period before it, for comparison).
+    const days = Object.entries(db.activity).sort((a, b) => (a[0] < b[0] ? 1 : -1)).slice(0, 200).map(([day, a]) => ({ day, ...a }));
     const skills = SKILLS.map((skill) => {
       const cs = C().filter((c) => c.skill === skill);
       return { skill, n: cs.length, avg_interval: cs.length ? cs.reduce((a, c) => a + c.interval, 0) / cs.length : 0, lapses: cs.reduce((a, c) => a + c.lapses, 0) };
@@ -714,6 +715,7 @@ const routes = {
       sentences_total: all.reduce((a, [, d]) => a + (d.sentences || 0), 0),
       study_seconds_month: all.filter(([day]) => day.startsWith(month)).reduce((a, [, d]) => a + (d.seconds || 0), 0),
       first_day: all.find(([, d]) => d.xp > 0)?.[0] || null,
+      saved_days: db.garden.saved,
     };
   },
 

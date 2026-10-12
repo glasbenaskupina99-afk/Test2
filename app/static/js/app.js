@@ -640,61 +640,178 @@ const svgEl = (markup, attrs = {}) => {
 };
 
 /** Smooth line through points (Catmull-Rom → cubic Bézier). */
-function smoothPath(pts) {
-  if (pts.length < 2) return "";
+const dkey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const shiftDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const fmtDate = (d, opts) => d.toLocaleDateString("en-GB", opts);
+
+const PERIODS = {
+  week: { label: "Week", days: 7, unit: "day" },
+  month: { label: "Month", days: 30, unit: "day" },
+  quarter: { label: "3 months", days: 84, unit: "week" },
+};
+
+/** Points for a period ending today (offset = how many periods back). Daily, or weekly for 3 months. */
+function periodPoints(byDay, saved, period, offset = 0) {
+  const P = PERIODS[period];
+  const end = shiftDays(new Date(), -offset * P.days);
+  const pts = [];
+  const step = P.unit === "week" ? 7 : 1;
+  for (let i = P.days - step; i >= 0; i -= step) {
+    const start = shiftDays(end, -i - (step - 1));
+    const last = shiftDays(end, -i);
+    let xp = 0, words = 0, secs = 0, active = 0, isSaved = false;
+    for (let d = new Date(start); d <= last; d = shiftDays(d, 1)) {
+      const a = byDay[dkey(d)];
+      if (saved.has(dkey(d))) isSaved = true;
+      if (!a) continue;
+      xp += a.xp || 0;
+      words += a.new_words || 0;
+      secs += a.seconds || 0;
+      if (a.xp > 0) active++;
+    }
+    pts.push({
+      xp, words, secs, active, saved: step === 1 && isSaved,
+      label: step === 1 ? (P.days === 7 ? fmtDate(last, { weekday: "short" }) : fmtDate(last, { day: "numeric", month: "short" })) : fmtDate(start, { day: "numeric", month: "short" }),
+      tip: step === 1 ? fmtDate(last, { weekday: "short", day: "numeric", month: "short" }) : `${fmtDate(start, { day: "numeric", month: "short" })} – ${fmtDate(last, { day: "numeric", month: "short" })}`,
+    });
+  }
+  return pts;
+}
+
+/** Monotone cubic path (Fritsch–Carlson): smooth, but never overshoots the data (no dips below zero). */
+function monotonePath(pts) {
+  const n = pts.length;
+  if (n < 2) return "";
+  const dx = [], m = [], t = [];
+  for (let i = 0; i < n - 1; i++) { dx[i] = pts[i + 1][0] - pts[i][0]; m[i] = (pts[i + 1][1] - pts[i][1]) / dx[i]; }
+  t[0] = m[0]; t[n - 1] = m[n - 2];
+  for (let i = 1; i < n - 1; i++) t[i] = m[i - 1] * m[i] <= 0 ? 0 : (m[i - 1] + m[i]) / 2;
+  for (let i = 0; i < n - 1; i++) {
+    if (m[i] === 0) { t[i] = 0; t[i + 1] = 0; continue; }
+    const a = t[i] / m[i], b = t[i + 1] / m[i], h2 = a * a + b * b;
+    if (h2 > 9) { const k = 3 / Math.sqrt(h2); t[i] = k * a * m[i]; t[i + 1] = k * b * m[i]; }
+  }
   let d = `M${pts[0][0]},${pts[0][1]}`;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
-    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
-    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-    d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0]},${p2[1]}`;
+  for (let i = 0; i < n - 1; i++) {
+    const h3 = dx[i] / 3;
+    d += ` C${(pts[i][0] + h3).toFixed(1)},${(pts[i][1] + t[i] * h3).toFixed(1)} ${(pts[i + 1][0] - h3).toFixed(1)},${(pts[i + 1][1] - t[i + 1] * h3).toFixed(1)} ${pts[i + 1][0]},${pts[i + 1][1]}`;
   }
   return d;
 }
 
-function weeklyFromDays(days) {
-  const weeks = [];
-  const today = new Date();
-  for (let w = 7; w >= 0; w--) {
-    const end = new Date(today);
-    end.setDate(end.getDate() - w * 7);
-    const start = new Date(end);
-    start.setDate(start.getDate() - 6);
-    const key = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    const ks = key(start), ke = key(end);
-    const inWeek = days.filter((d) => d.day >= ks && d.day <= ke);
-    weeks.push({
-      label: start.toLocaleDateString(undefined, { day: "numeric", month: "numeric" }),
-      xp: inWeek.reduce((a, d) => a + (d.xp || 0), 0),
-      words: inWeek.reduce((a, d) => a + (d.new_words || 0), 0),
-    });
-  }
-  return weeks;
+const NSVG = "http://www.w3.org/2000/svg";
+const sv = (tag, attrs = {}, text) => {
+  const el = document.createElementNS(NSVG, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  if (text != null) el.textContent = text;
+  return el;
+};
+
+/** XP as bars, new words as a line (own scale); tap a bar for details. */
+function progressChart(pts, onPick) {
+  const W = 340, H = 170, padL = 6, padR = 6, top = 12, bottom = 28;
+  const base = H - bottom;
+  const n = pts.length;
+  const slot = (W - padL - padR) / n;
+  const maxXp = Math.max(20, ...pts.map((p) => p.xp));
+  const maxW = Math.max(3, ...pts.map((p) => p.words));
+  const cx = (i) => padL + slot * (i + 0.5);
+  const yXp = (v) => base - (base - top) * (v / maxXp);
+  const yW = (v) => base - (base - top) * (v / maxW);
+  const svg = sv("svg", { class: "journey-chart", viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "XP per day as bars and new words as a line" });
+  for (const f of [0.25, 0.5, 0.75]) svg.append(sv("line", { x1: padL, x2: W - padR, y1: top + (base - top) * f, y2: top + (base - top) * f, class: "pc-grid" }));
+  svg.append(sv("line", { x1: padL, x2: W - padR, y1: base, y2: base, class: "pc-axis" }));
+  const bw = Math.max(3, Math.min(26, slot * 0.62));
+  const bars = pts.map((p, i) => {
+    const y = yXp(p.xp);
+    const hgt = Math.max(p.xp ? 3 : 0, base - y);
+    const r = sv("rect", { x: cx(i) - bw / 2, y: base - hgt, width: bw, height: hgt, rx: Math.min(4, bw / 2), class: "pc-bar" });
+    svg.append(r);
+    return r;
+  });
+  const linePts = pts.map((p, i) => [+cx(i).toFixed(1), +yW(p.words).toFixed(1)]);
+  svg.append(sv("path", { d: monotonePath(linePts), class: "pc-line" }));
+  if (n <= 31) linePts.forEach(([x, y], i) => pts[i].words && svg.append(sv("circle", { cx: x, cy: y, r: n > 14 ? 2.5 : 3.5, class: "pc-dot" })));
+  // Raindrop-saved days: a small dried leaf under the axis.
+  pts.forEach((p, i) => {
+    if (!p.saved) return;
+    const g = sv("g", { transform: `translate(${cx(i) - 5} ${base - 12}) scale(.42)` });
+    g.append(sv("path", { d: "M5 19 C4 12 8 6 18 4 C19 8 18 11 15 13 C13 14.5 13 16 15 17 C11 19.5 7.5 19.8 5 19 Z", class: "pc-dry" }));
+    svg.append(g);
+  });
+  const every = n <= 7 ? 1 : n <= 12 ? 3 : 7;
+  pts.forEach((p, i) => {
+    if ((n - 1 - i) % every) return;
+    // Keep the first/last labels inside the chart.
+    const edge = n > 7 && i === n - 1 ? { "text-anchor": "end", x: W - 1 } : n > 7 && i === 0 ? { "text-anchor": "start", x: 1 } : {};
+    svg.append(sv("text", { x: cx(i), y: H - 6, "text-anchor": "middle", class: "pc-label", ...edge }, p.label));
+  });
+  // One invisible hit area per bar slot.
+  const sel = sv("rect", { x: 0, y: top - 6, width: slot, height: base - top + 6, class: "pc-sel" });
+  svg.insertBefore(sel, svg.firstChild);
+  const pick = (i) => {
+    bars.forEach((b, k) => b.classList.toggle("on", k === i));
+    sel.setAttribute("x", padL + slot * i);
+    onPick(pts[i]);
+  };
+  pts.forEach((_, i) => {
+    const hit = sv("rect", { x: padL + slot * i, y: 0, width: slot, height: H, class: "pc-hit" });
+    hit.addEventListener("click", () => pick(i));
+    svg.append(hit);
+  });
+  return { svg, pick };
 }
 
-function journeyChart(weeks) {
-  const W = 340, H = 150, padX = 10, top = 14, bottom = 26;
-  const maxXp = Math.max(30, ...weeks.map((w) => w.xp));
-  const maxWords = Math.max(5, ...weeks.map((w) => w.words));
-  const x = (i) => padX + (i * (W - 2 * padX)) / (weeks.length - 1);
-  const yXp = (v) => top + (H - top - bottom) * (1 - v / maxXp);
-  const yW = (v) => top + (H - top - bottom) * (1 - v / maxWords);
-  const xpPts = weeks.map((w, i) => [+x(i).toFixed(1), +yXp(w.xp).toFixed(1)]);
-  const wPts = weeks.map((w, i) => [+x(i).toFixed(1), +yW(w.words).toFixed(1)]);
-  const base = H - bottom;
-  const area = `${smoothPath(xpPts)} L${xpPts.at(-1)[0]},${base} L${xpPts[0][0]},${base} Z`;
-  const dots = (pts, color) => pts.map(([cx, cy]) => `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${color}" stroke="#1c3026" stroke-width="1.5"/>`).join("");
-  const labels = weeks.map((w, i) => (i % 2 === 1 || i === weeks.length - 1 ? `<text x="${x(i)}" y="${H - 6}" text-anchor="middle" font-size="10" fill="#a9b5a6">${w.label}</text>` : "")).join("");
-  const grid = [0.25, 0.5, 0.75].map((f) => `<line x1="${padX}" x2="${W - padX}" y1="${top + (base - top) * f}" y2="${top + (base - top) * f}" stroke="#36503f" stroke-dasharray="3 5"/>`).join("");
-  return svgEl(
-    `<svg class="journey-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Weekly XP and new words over the last 8 weeks">
-      ${grid}
-      <path d="${area}" fill="#c4694a" opacity=".18"/>
-      <path d="${smoothPath(xpPts)}" fill="none" stroke="#d9845f" stroke-width="2.5"/>
-      <path d="${smoothPath(wPts)}" fill="none" stroke="#e2bd4e" stroke-width="2.5"/>
-      ${dots(xpPts, "#d9845f")}${dots(wPts, "#e2bd4e")}
-      ${labels}
-    </svg>`
+function progressCard(s) {
+  const byDay = Object.fromEntries((s.days || []).map((d) => [d.day, d]));
+  const saved = new Set(s.saved_days || []);
+  let period = "month";
+  try { period = localStorage.getItem("journey_period") || "month"; } catch { /* ignore */ }
+  if (!PERIODS[period]) period = "month";
+  const tabs = h("div", { class: "section-pick pc-tabs", role: "tablist" });
+  const summary = h("div", { class: "pc-summary" });
+  const chartBox = h("div");
+  const detail = h("div", { class: "pc-detail" });
+  const mins = (secs) => Math.round(secs / 60);
+
+  function render() {
+    tabs.replaceChildren(
+      ...Object.entries(PERIODS).map(([k, P]) =>
+        h("button", { class: k === period ? "on" : "", role: "tab", onclick: () => { period = k; try { localStorage.setItem("journey_period", k); } catch { /* ignore */ } render(); } }, h("b", {}, P.label))
+      )
+    );
+    const pts = periodPoints(byDay, saved, period);
+    const prev = periodPoints(byDay, saved, period, 1);
+    const sum = (arr, f) => arr.reduce((a, p) => a + p[f], 0);
+    const xp = sum(pts, "xp"), prevXp = sum(prev, "xp");
+    const activeDays = sum(pts, "active");
+    const words = sum(pts, "words");
+    const avgMin = activeDays ? mins(sum(pts, "secs") / activeDays) : 0;
+    const change = prevXp ? Math.round(((xp - prevXp) / prevXp) * 100) : null;
+    summary.replaceChildren(
+      h("div", { class: "pc-stat" }, h("b", {}, activeDays), h("span", {}, activeDays === 1 ? "day of study" : "days of study")),
+      h("div", { class: "pc-stat" }, h("b", {}, xp), h("span", {}, "XP"), change != null && xp + prevXp > 0 ? h("em", { class: change >= 0 ? "up" : "down" }, `${change >= 0 ? "▲" : "▼"} ${Math.abs(change)}%`) : null),
+      h("div", { class: "pc-stat" }, h("b", {}, words), h("span", {}, "new words")),
+      h("div", { class: "pc-stat" }, h("b", {}, avgMin), h("span", {}, "min / study day"))
+    );
+    const { svg, pick } = progressChart(pts, (p) => {
+      detail.replaceChildren(
+        h("b", {}, p.tip),
+        p.xp || p.words ? ` · ${p.xp} XP · ${p.words} new ${p.words === 1 ? "word" : "words"}${p.secs ? ` · ${mins(p.secs)} min` : ""}` : p.saved ? " · saved by a raindrop 🍂" : " · no practice"
+      );
+    });
+    chartBox.replaceChildren(svg);
+    pick(pts.length - 1);
+  }
+  render();
+  return h(
+    "div",
+    { class: "card" },
+    tabs,
+    summary,
+    chartBox,
+    detail,
+    h("div", { class: "journey-legend" }, h("span", {}, h("i", { class: "bar" }), "XP"), h("span", {}, h("i", { style: { background: "#e2bd4e" } }), "New words"), saved.size ? h("span", {}, "🍂 raindrop") : null)
   );
 }
 
@@ -741,7 +858,6 @@ async function statsScreen() {
   const sentences = s.sentences_total ?? days.reduce((a, d) => a + (d.sentences || 0), 0);
   const best = Math.max(s.best_streak || 0, s.streak || 0);
   const hours = (s.study_seconds_month || 0) / 3600;
-  const weeks = weeklyFromDays(days);
   const skillNames = { write: ["✍️", "Writing"], speak: ["🎤", "Speaking"], recall: ["🧠", "Recall"] };
   const name = (state.settings?.display_name || "").trim();
 
@@ -761,13 +877,7 @@ async function statsScreen() {
         h("div", { class: "journey-tile words" }, h("div", { class: "lbl" }, "Words mastered"), svgEl(SVG.book), h("div", { class: "big" }, learned), h("div", { class: "sub" }, "Active vocabulary"))
       ),
       h("h2", { class: "section-title" }, "Progress over time"),
-      h(
-        "div",
-        { class: "card" },
-        h("div", { class: "small muted", style: { marginBottom: "6px" } }, "Weekly overview · last 8 weeks"),
-        journeyChart(weeks),
-        h("div", { class: "journey-legend" }, h("span", {}, h("i", { style: { background: "#d9845f" } }), "XP"), h("span", {}, h("i", { style: { background: "#e2bd4e" } }), "New words"))
-      ),
+      progressCard(s),
       h("h2", { class: "section-title" }, "Achievements"),
       h("div", { class: "card", style: { paddingTop: "6px", paddingBottom: "6px" } }, achievements(s, learned, best, sentences, level)),
       h("h2", { class: "section-title" }, "Skills"),

@@ -1,9 +1,10 @@
-// Bloomko website Worker: serves the static site (site/) and stores "Notify me" sign-ups.
+// Bloomko website Worker: serves the static site (site/), the word pages (seo.js) and stores "Notify me" sign-ups.
 // Sign-ups live in the NOTIFY KV namespace (key = email). View them in the Cloudflare
 // dashboard: Storage & Databases → KV → the namespace bound as NOTIFY.
 // With the MAIL send_email binding (Cloudflare Email Routing), every new sign-up is also
 // emailed to the owner.
 import { EmailMessage } from "cloudflare:email";
+import { seo } from "./seo.js";
 
 const FROM = "notify@bloomko.eu";
 const TO = "thebloomko@gmail.com";
@@ -108,6 +109,9 @@ export default {
       url.hostname = "bloomko.eu";
       return Response.redirect(url.toString(), 301);
     }
+    // Word pages (/chinese/…, /japanese/…) and the sitemap.
+    const page = seo(url);
+    if (page) return page;
     return env.ASSETS.fetch(request);
   },
 };

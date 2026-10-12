@@ -38,6 +38,13 @@
     nav { display: flex; align-items: center; gap: 12px; padding: 20px 0; }
     nav img { width: 42px; height: 42px; }
     nav .brand { font-weight: 900; font-size: 24px; color: var(--strong); letter-spacing: .3px; }
+    .navlink { font-weight: 800; color: var(--muted); text-decoration: none; font-size: 15px; }
+    .navlink:first-of-type { margin-left: auto; }
+    .navlink:hover { color: var(--strong); }
+    a.lang { text-decoration: none; transition: border-color .2s; }
+    a.lang:hover { border-color: var(--sage); }
+    .navlink ~ .pill { margin-left: 8px; }
+    @media (max-width: 600px) { .navlink { display: none; } .navlink ~ .pill { margin-left: auto; } }
     .pill {
       margin-left: auto; font-weight: 800; font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
       padding: 7px 14px; border-radius: 99px; border: 2px solid var(--gold); color: var(--gold);
@@ -187,6 +194,8 @@
     <nav>
       <img src="img/logo.png" alt="">
       <span class="brand">Bloomko</span>
+      <a class="navlink" href="/chinese/">Chinese words</a>
+      <a class="navlink" href="/japanese/">Japanese words</a>
       <span class="pill">Coming soon</span>
     </nav>
 
@@ -291,13 +300,13 @@
     <div class="wrap">
       <div class="section-head">
         <h2>Start with these languages</h2>
-        <p>Each course is built around official levels, with words grouped into themed units.</p>
+        <p>Each course is built around official levels, with words grouped into themed units. <a href="/chinese/">Browse every Chinese word</a> or <a href="/japanese/">every Japanese word</a> — with stroke order, memory tricks and examples, free.</p>
       </div>
       <div class="langs">
-        <div class="lang"><span class="flag">🇨🇳</span><div><b>Chinese 汉字</b><span>Mandarin · HSK 1</span></div></div>
-        <div class="lang"><span class="flag">🇯🇵</span><div><b>Japanese 漢字</b><span>Kanji · JLPT N5 &amp; N3</span></div></div>
+        <a class="lang" href="/chinese/"><span class="flag">🇨🇳</span><div><b>Chinese 汉字</b><span>Mandarin · HSK 1–3 · 2,270 words</span></div></a>
+        <a class="lang" href="/japanese/"><span class="flag">🇯🇵</span><div><b>Japanese 日本語</b><span>Kana &amp; kanji · JLPT N5–N3 · 3,500 words</span></div></a>
         <div class="lang"><span class="flag">🇸🇮</span><div><b>Slovenian</b><span>A1 · first words</span></div></div>
-        <div class="lang soon"><span class="flag">🌱</span><div><b>More to come</b><span>HSK 2–3, JLPT N4, kana…</span></div></div>
+        <div class="lang soon"><span class="flag">🌱</span><div><b>More to come</b><span>Korean, Spanish, French, German…</span></div></div>
       </div>
     </div>
   </section>

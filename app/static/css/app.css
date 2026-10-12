@@ -1066,3 +1066,8 @@ select.select-native { display: none !important; }
 .g-book-item.locked { color: var(--muted); display: flex; align-items: center; gap: 8px; }
 .g-book-item.locked span svg { width: 16px; height: 16px; }
 .g-book-item .g-pattern { margin-top: 10px; font-size: 17px; }
+.g-en-reveal { margin-top: 6px; padding: 4px 10px; border-radius: 10px; border: 1px dashed var(--border); background: transparent; color: var(--muted); font: inherit; font-weight: 700; cursor: pointer; }
+.g-en-reveal:hover { color: var(--text-strong); border-color: var(--muted); }
+.g-fresh { animation: fresh-in .45s ease-out; border-color: #6f8f6c; }
+.g-fresh-tag { font-size: 12px; font-weight: 800; color: var(--yellow); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+@keyframes fresh-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }

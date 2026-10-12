@@ -799,7 +799,8 @@ const routes = {
     const p = (await loadGrammar(sec))?.find((x) => x.id === body.id);
     if (!p) throw new HttpError(404, "grammar point not found");
     const known = shuffled(learnedWords()).slice(0, 60).map((w) => w.hanzi);
-    const x = await ai.grammarExample(p, known);
+    const avoid = Array.isArray(body.avoid) ? body.avoid.slice(-12).map(String) : p.examples.map((e) => e.text);
+    const x = await ai.grammarExample(p, known, avoid);
     if (course() === "zh") x.reading = toPinyin(x.text);
     return x;
   },

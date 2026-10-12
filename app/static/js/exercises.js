@@ -768,18 +768,22 @@ function markedSentence(x, { gap = false } = {}) {
   return h("span", {}, parts.map((p) => (marks.includes(p) ? (gap ? h("span", { class: "g-gap" }, "＿＿") : h("mark", { class: "g-mark" }, p)) : p)));
 }
 
-function grammarExampleBox(x, { gap = false, showReading = true } = {}) {
+function grammarExampleBox(x, { gap = false, showReading = true, fresh = false } = {}) {
+  // The translation stays hidden until tapped, so you try to understand the sentence first.
+  const en = h("button", { class: "g-en-reveal small", onclick: () => en.replaceWith(h("div", { class: "g-en small" }, x.en)) }, "👁 Show translation");
   return h(
     "div",
-    { class: "g-example" },
+    { class: "g-example" + (fresh ? " g-fresh" : "") },
+    fresh ? h("div", { class: "g-fresh-tag" }, "✨ From your words") : null,
     h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, speakerBtn(x.text), h("div", { class: "g-text hz" }, markedSentence(x, { gap }))),
     showReading && x.reading && x.reading !== x.text ? h("div", { class: "g-reading small muted" }, x.reading) : null,
-    h("div", { class: "g-en small" }, x.en)
+    en
   );
 }
 
 /** Introduces one grammar point: pattern, an example from words you know, and how it's used. */
 export function grammarIntro(ctx, p, i, n) {
+  const seen = new Set(p.examples.map((x) => x.text));
   const exBox = h("div", {}, grammarExampleBox(p.examples[0]));
   const more = p.examples.slice(1);
   const moreBox = h("div", { class: "g-more", hidden: true }, more.map((x) => grammarExampleBox(x)));
@@ -793,8 +797,12 @@ export function grammarIntro(ctx, p, i, n) {
             b.disabled = true;
             b.textContent = "✨ Asking Gemma…";
             try {
-              const x = await api("/api/grammar/example", { method: "POST", body: { id: p.id } });
-              exBox.replaceChildren(grammarExampleBox(x));
+              // Tell Gemma what you've already seen so it writes a really new sentence.
+              let x = await api("/api/grammar/example", { method: "POST", body: { id: p.id, avoid: [...seen] } });
+              if (seen.has(x.text)) x = await api("/api/grammar/example", { method: "POST", body: { id: p.id, avoid: [...seen] } });
+              if (seen.has(x.text)) throw new Error("Gemma came up with the same sentence again — try once more");
+              seen.add(x.text);
+              exBox.replaceChildren(grammarExampleBox(x, { fresh: true }));
               speak(x.text);
               b.textContent = "✨ Another example from my words";
             } catch (err) {

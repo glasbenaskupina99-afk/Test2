@@ -91,8 +91,11 @@ const COURSES = {
 
 const LEVEL_INFO = {
   "HSK 1": "Beginner · your first Chinese words",
+  "HSK 2": "Elementary · daily life, travel, feelings",
+  "HSK 3": "Pre-intermediate · work, school, health, nature",
+  Kana: "Start here · hiragana and katakana, stroke by stroke",
   "JLPT N5": "Beginner · basic kanji and everyday words",
-  "JLPT N4": "Elementary",
+  "JLPT N4": "Elementary · family, town, work, seasons",
   "JLPT N3": "Intermediate · work, news, feelings, travel",
   A1: "Beginner · first words",
   "My words": "Words you added yourself",
@@ -494,6 +497,7 @@ async function wordsScreen() {
   const count = h("p", { class: "muted small" });
   // Levels present in this course, in path order (JLPT N5, JLPT N3, My words…)
   const sections = [...new Set(words.map((w) => w.section).filter(Boolean))];
+  const customLevels = new Set(words.filter((w) => w.source === "custom").map((w) => w.section));
   if (!sections.includes(wordSection)) wordSection = "all";
   const render = () => {
     const q = wordSearch.toLowerCase();
@@ -538,15 +542,133 @@ async function wordsScreen() {
   render();
   shell(
     [
-      h("div", { class: "topbar" }, h("h2", {}, "Words"), h("button", { class: "btn small", onclick: addWordSheet }, "+ Add word")),
+      h(
+        "div",
+        { class: "topbar" },
+        h("h2", {}, "Words"),
+        h("span", { class: "spacer" }),
+        h("button", { class: "btn ghost small", onclick: importSheet }, "⇪ Import"),
+        h("button", { class: "btn small", onclick: addWordSheet }, "+ Add")
+      ),
       h("input", { class: "input search", placeholder: isSl() ? "Search Slovenian or English" : isJa() ? "Search 漢字, reading or English" : "Search 汉字, pinyin or English", value: wordSearch, oninput: (e) => { wordSearch = e.target.value; render(); } }),
       sections.length > 1 ? h("div", { class: "section-pick level-filter", role: "group", "aria-label": "Level" }, lbtns) : null,
       h("div", { class: "filter-row" }, fbtns),
+      customLevels.has(wordSection)
+        ? h(
+            "div",
+            { class: "row list-tools" },
+            h("span", { class: "muted small" }, "Your own list"),
+            h("span", { class: "spacer" }),
+            h("button", { class: "link-btn danger", onclick: () => deleteList(wordSection) }, "Delete this list")
+          )
+        : null,
       count,
       list,
     ],
     "#/words"
   );
+}
+
+async function deleteList(name) {
+  const ok = await confirmDialog({ icon: "🗑️", title: `Delete “${name}”?`, message: "All its words and their review progress will be removed.", cancelLabel: "Keep", confirmLabel: "Delete", danger: true });
+  if (!ok) return;
+  const r = await api(`/api/lists/${encodeURIComponent(name)}`, { method: "DELETE" });
+  toast(`Deleted ${r.removed} words`);
+  wordSection = "all";
+  route();
+}
+
+const IMPORT_EXAMPLE = {
+  zh: "朋友, péng you, friend\n电脑, computer\n喜欢\txǐ huan\tto like",
+  ja: "友達, ともだち, friend\n電車, densha, train\n食べる\tたべる\tto eat",
+  sl: "kolo, bicycle\nhiša, HI-ša, house\njabolko\tapple",
+};
+
+/** Import your own list (from a textbook, Anki, Pleco…): paste lines or pick a .txt / .csv file. */
+function importSheet() {
+  const lang = state.settings.course || "zh";
+  const name = h("input", { class: "input", placeholder: "e.g. Textbook lesson 3", maxlength: 40 });
+  const text = h("textarea", { class: "input import-text", rows: 7, placeholder: IMPORT_EXAMPLE[lang], spellcheck: "false" });
+  const report = h("div", { class: "import-report small" });
+  const go = h("button", { class: "btn", disabled: true }, "Import");
+  const file = h("input", { type: "file", accept: ".txt,.csv,.tsv,text/plain,text/csv", hidden: true });
+  file.onchange = async () => {
+    const f = file.files[0];
+    if (!f) return;
+    text.value = await f.text();
+    if (!name.value) name.value = f.name.replace(/\.[^.]+$/, "").slice(0, 40);
+    preview();
+  };
+  let timer = null;
+  let last = null;
+  async function preview() {
+    clearTimeout(timer);
+    if (!text.value.trim()) { report.replaceChildren(); go.disabled = true; return; }
+    try {
+      last = await api("/api/words/import", { method: "POST", body: { text: text.value, list: name.value, preview: true } });
+    } catch (e) {
+      report.replaceChildren(h("p", { class: "bad" }, e.message));
+      go.disabled = true;
+      return;
+    }
+    const n = last.added.length;
+    go.disabled = !n;
+    go.textContent = n ? `Import ${n} word${n === 1 ? "" : "s"}` : "Import";
+    report.replaceChildren(
+      h("p", { class: n ? "good" : "muted" }, n ? `✓ ${n} ready: ${last.added.slice(0, 8).map((w) => w.hanzi).join(" ")}${n > 8 ? " …" : ""}` : "No words found yet"),
+      last.skipped.length
+        ? h(
+            "details",
+            {},
+            h("summary", {}, `${last.skipped.length} line${last.skipped.length === 1 ? "" : "s"} skipped`),
+            h("ul", {}, last.skipped.slice(0, 30).map((x) => h("li", {}, h("b", {}, x.line), " — ", x.reason)))
+          )
+        : null
+    );
+  }
+  const later = () => { clearTimeout(timer); timer = setTimeout(preview, 350); };
+  text.addEventListener("input", later);
+  name.addEventListener("input", later);
+  go.onclick = async () => {
+    go.disabled = true;
+    try {
+      const r = await api("/api/words/import", { method: "POST", body: { text: text.value, list: name.value } });
+      bg.remove();
+      toast(`Added ${r.added.length} words to “${r.list}”. Pick it as your level to learn them.`, 4000);
+      wordSection = r.list;
+      route();
+    } catch (e) {
+      toast(e.message, 4000);
+      go.disabled = false;
+    }
+  };
+  const bg = h(
+    "div",
+    { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() },
+    h(
+      "div",
+      { class: "sheet" },
+      h("h2", { style: { marginBottom: "4px" } }, "Import a word list"),
+      h(
+        "p",
+        { class: "muted small", style: { margin: "0 0 14px" } },
+        lang === "zh"
+          ? "One word per line: characters, pinyin (optional — added automatically), meaning."
+          : lang === "ja"
+            ? "One word per line: word, reading in hiragana or romaji (not needed for kana words), meaning."
+            : "One word per line: Slovenian word, pronunciation (optional), meaning.",
+        " Separate with commas, tabs or semicolons — exports from Anki or Pleco work too."
+      ),
+      h("div", { class: "field" }, h("label", {}, "List name"), name),
+      h("div", { class: "field" }, h("label", {}, "Words"), text),
+      h("button", { class: "link-btn", onclick: () => file.click() }, "📁 Or choose a .txt / .csv file"),
+      file,
+      report,
+      go
+    )
+  );
+  document.body.append(bg);
+  setTimeout(() => text.focus(), 200);
 }
 
 function addWordSheet() {

@@ -3,6 +3,10 @@
 import seedZh from "../../app/data/hsk1.json";
 import seedJa from "../../app/data/japanese_n5.json";
 import seedJaN3 from "../../app/data/japanese_n3.json";
+import seedJaN4 from "../../app/data/japanese_n4.json";
+import seedKana from "../../app/data/japanese_kana.json";
+import seedZh2 from "../../app/data/hsk2.json";
+import seedZh3 from "../../app/data/hsk3.json";
 import FALLBACK_ZH from "../../app/data/sentences.json";
 import FALLBACK_JA from "../../app/data/japanese_sentences.json";
 import FALLBACK_JA_N3 from "../../app/data/japanese_n3_sentences.json";
@@ -20,7 +24,11 @@ import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./
 // Built-in word lists. Each is a "section" of its course (e.g. JLPT N5 / JLPT N3).
 const SEED_SETS = [
   { lang: "zh", data: seedZh, section: "HSK 1", source: "hsk1", base: 0 },
+  { lang: "zh", data: seedZh2, section: "HSK 2", source: "hsk2", base: 1000 },
+  { lang: "zh", data: seedZh3, section: "HSK 3", source: "hsk3", base: 2000 },
+  { lang: "ja", data: seedKana, section: "Kana", source: "kana", base: -10000 },
   { lang: "ja", data: seedJa, section: "JLPT N5", source: "n5", base: 0 },
+  { lang: "ja", data: seedJaN4, section: "JLPT N4", source: "n4", base: 5000 },
   { lang: "ja", data: seedJaN3, section: "JLPT N3", source: "n3", base: 10000 },
   { lang: "sl", data: seedSl, section: "A1", source: "sl_a1", base: 0 },
 ];
@@ -109,9 +117,21 @@ function migrate() {
     w.section ||= w.source === "custom" ? MY_WORDS : SECTION_OF_SOURCE[w.source] || "HSK 1";
   }
   for (const r of db.sentenceLog) r.lang ||= "zh";
+  // Someone already studying keeps their level when new levels (e.g. Kana before N5) arrive.
+  db.settings ||= {};
+  const learned = new Set(db.cards.map((c) => c.word_id));
+  for (const lang of new Set(SEED_SETS.map((x) => x.lang))) {
+    const key = `section_${lang}`;
+    const ws = db.words.filter((w) => w.lang === lang && w.source !== "custom").sort(byPosition);
+    if (db.settings[key] || !ws.some((w) => learned.has(w.id))) continue;
+    const open = ws.find((w) => !learned.has(w.id));
+    if (open) db.settings[key] = open.section;
+  }
+  // Add built-in lists and any words added to them in an update (matched by the word itself).
   for (const set of SEED_SETS) {
-    if (db.words.some((w) => w.lang === set.lang && w.source === set.source)) continue;
-    const words = seedWords(set, db.nextId);
+    const have = new Set(db.words.filter((w) => w.lang === set.lang && w.source === set.source).map((w) => w.hanzi));
+    const words = seedWords(set, db.nextId).filter((w) => !have.has(w.hanzi));
+    words.forEach((w, i) => (w.id = db.nextId + i));
     db.words.push(...words);
     db.nextId += words.length;
   }
@@ -260,12 +280,12 @@ function sections() {
   const list = [];
   for (const w of W().sort(byPosition)) {
     let sec = list.find((x) => x.name === w.section);
-    if (!sec) list.push((sec = { name: w.section, total: 0, learned: 0 }));
+    if (!sec) list.push((sec = { name: w.section, total: 0, learned: 0, custom: w.source === "custom" }));
     sec.total++;
     if (ids.has(w.id)) sec.learned++;
   }
   const chosen = settingsAll()[`section_${course()}`];
-  const current = list.find((x) => x.name === chosen) || list.find((x) => x.learned < x.total && x.name !== MY_WORDS) || list[0];
+  const current = list.find((x) => x.name === chosen) || list.find((x) => x.learned < x.total && !x.custom) || list[0];
   return { list, current: current?.name };
 }
 const C = () => {
@@ -291,7 +311,7 @@ const extrasOf = (w) => w.extras || prebuilt(w);
 const cardsOf = (id) => db.cards.filter((c) => c.word_id === id);
 const learnedIds = () => new Set(C().map((c) => c.word_id));
 const byPosition = (a, b) => a.position - b.position || a.id - b.id;
-const pick = ({ id, hanzi, pinyin, english }) => ({ id, hanzi, pinyin, english });
+const pick = ({ id, hanzi, pinyin, english, source }) => ({ id, hanzi, pinyin, english, source });
 const shuffled = (arr) => arr.map((x) => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
 
 function getWord(id) {
@@ -369,6 +389,46 @@ function fallbackSentences(knownChars, count, avoid) {
   if (!cands.length) cands = all;
   cands = shuffled(cands).sort((a, b) => coverage(b) - coverage(a));
   return cands.slice(0, count).map(([en, zh, reading]) => ({ en, zh, reading }));
+}
+
+
+// ------------------------------------------------------------------ your own words
+
+/** A word you add yourself (one at a time or from an imported list). Throws with a readable reason. */
+function makeWord(text, readingIn, englishIn, list = MY_WORDS, seen = new Set()) {
+  const ja = course() === "ja";
+  const sl = course() === "sl";
+  const hanzi = sl ? normSl(text) : ja ? writable(text) : hanziOnly(text);
+  const english = String(englishIn || "").trim();
+  if (!hanzi) throw new HttpError(400, sl ? "No Slovenian word" : `No ${ja ? "Japanese" : "Chinese characters"} found`);
+  if (!english) throw new HttpError(400, "Missing the English meaning");
+  if (seen.has(hanzi) || W().some((w) => w.hanzi === hanzi)) throw new HttpError(409, `${hanzi} is already in your words`);
+  let reading = String(readingIn || "").trim();
+  if (ja) {
+    reading = normKana(reading || (/^[\u3041-\u30ff]+$/.test(hanzi) ? hanzi : "")).replace(/[^\u3041-\u3096ー]/g, "");
+    if (!reading) throw new HttpError(400, "Missing the reading (hiragana or romaji)");
+  }
+  return {
+    id: 0, lang: course(), hanzi, pinyin: ja || sl ? reading : reading || toPinyin(hanzi), english,
+    unit: list, section: list, position: 100000, source: "custom", extras: null, created_at: fmt(now()),
+  };
+}
+
+/** One line of an imported list → [word, reading, meaning]. Tabs, ; | = " - " or commas separate the fields. */
+function splitLine(line) {
+  const sep = ["\t", ";", "|", "=", " - ", " – ", ","].find((x) => line.includes(x));
+  const parts = (sep ? line.split(sep) : [line]).map((x) => x.trim()).filter(Boolean);
+  const [word, ...rest] = parts;
+  if (rest.length >= 2 && looksLikeReading(rest[0])) return [word, rest[0], rest.slice(1).join(sep === "," ? ", " : "; ")];
+  return [word, "", rest.join(sep === "," ? ", " : "; ")];
+}
+
+/** Pinyin (tone marks or numbers), kana, romaji, or a Slovenian pronunciation such as ZDRA-vo. */
+function looksLikeReading(x) {
+  if (/^[\u3041-\u30ffー\s]+$/.test(x)) return true;
+  if (course() === "zh") return /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]|[a-z]+[1-5]/i.test(x) && x.split(/\s+/).length <= 6;
+  if (course() === "ja") return /^[a-z' ]+$/i.test(x) && !/\b(to|the|a|an|of)\b/i.test(x) && x.split(/\s+/).length <= 3;
+  return /^[A-ZČŠŽ]+(-[a-zčšžA-ZČŠŽ]+)+$|^[a-zčšž]+(-[A-ZČŠŽ]+)/.test(x);
 }
 
 // ------------------------------------------------------------------ routes
@@ -455,23 +515,49 @@ const routes = {
     }),
 
   "POST /api/words": (_, body) => {
-    const ja = course() === "ja";
-    const sl = course() === "sl";
-    const hanzi = sl ? normSl(body.hanzi) : ja ? writable(body.hanzi) : hanziOnly(body.hanzi);
-    if (!hanzi || !String(body.english || "").trim()) throw new HttpError(400, `Need ${ja ? "Japanese" : "Chinese characters"} and an English meaning`);
-    if (W().some((w) => w.hanzi === hanzi)) throw new HttpError(409, `${hanzi} is already in your list`);
-    let reading = String(body.pinyin || "").trim();
-    if (ja) {
-      reading = normKana(reading || (/^[\u3041-\u30ff]+$/.test(hanzi) ? hanzi : "")).replace(/[^\u3041-\u3096ー]/g, "");
-      if (!reading) throw new HttpError(400, "Enter the reading in hiragana or romaji");
-    }
-    const w = {
-      id: db.nextId++, lang: course(), hanzi, pinyin: ja || sl ? reading : reading || toPinyin(hanzi), english: body.english.trim(),
-      unit: MY_WORDS, section: MY_WORDS, position: 100000, source: "custom", extras: null, created_at: fmt(now()),
-    };
+    const w = makeWord(body.hanzi, body.pinyin, body.english);
+    w.id = db.nextId++;
     db.words.push(w);
     persist();
     return { ...w };
+  },
+
+  // Import a list (pasted or from a .txt/.csv file): one word per line, e.g. "朋友, péng you, friend".
+  // preview: true only parses and reports; otherwise the words are added as their own level.
+  "POST /api/words/import": (_, body) => {
+    const list = String(body.list || "").trim().slice(0, 40) || MY_WORDS;
+    if (SEED_SETS.some((x) => x.section === list)) throw new HttpError(400, `“${list}” is a built-in level — pick another name`);
+    const added = [];
+    const skipped = [];
+    const seen = new Set();
+    for (const raw of String(body.text || "").split(/\r?\n/)) {
+      const line = raw.trim();
+      if (!line || line.startsWith("#")) continue;
+      try {
+        const [word, reading, english] = splitLine(line);
+        const w = makeWord(word, reading, english, list, seen);
+        seen.add(w.hanzi);
+        added.push(w);
+      } catch (e) {
+        skipped.push({ line, reason: e.message });
+      }
+    }
+    if (!body.preview) {
+      added.forEach((w, i) => { w.id = db.nextId++; w.position = 100000 + i; });
+      db.words.push(...added);
+      persist();
+    }
+    return { list, added: added.map(pick), skipped };
+  },
+
+  "DELETE /api/lists/:name": ({ name }) => {
+    const list = name;
+    const gone = new Set(W().filter((w) => w.source === "custom" && w.section === list).map((w) => w.id));
+    db.words = db.words.filter((w) => !gone.has(w.id));
+    db.cards = db.cards.filter((c) => !gone.has(c.word_id));
+    if (settingsAll()[`section_${course()}`] === list) db.settings[`section_${course()}`] = "";
+    persist();
+    return { ok: true, removed: gone.size };
   },
 
   "POST /api/words/ai-fill": async (_, body) => {
@@ -517,7 +603,9 @@ const routes = {
     const ids = learnedIds();
     const sec = sections().current;
     const words = W().filter((w) => !ids.has(w.id) && w.section === sec).sort(byPosition).slice(0, n).map((w) => ({ ...w, extras: extrasOf(w) }));
-    return { words, pool: shuffled(W()).slice(0, 40).map(pick) };
+    // Distractors from the same level, so N3 words are quizzed against N3 words, kana against kana.
+    const level = W().filter((w) => w.section === sec);
+    return { words, pool: shuffled(level.length >= 12 ? level : W()).slice(0, 40).map(pick) };
   },
 
   "POST /api/learn/complete": (_, body) => {
@@ -547,7 +635,8 @@ const routes = {
       const j = items.findIndex((x, k) => k > i && x.word.id !== items[i - 1].word.id);
       if (j > 0) [items[i], items[j]] = [items[j], items[i]];
     }
-    const learned = shuffled(learnedWords()).slice(0, 60);
+    const known = learnedWords();
+    const learned = [...new Set([...shuffled(known).slice(0, 60), ...known.filter((w) => w.source === "kana")])];
     return { items, pool: learned.length >= 8 ? learned : shuffled(W()).slice(0, 60).map(pick) };
   },
 

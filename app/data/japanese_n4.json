@@ -1,0 +1,298 @@
+{
+  "source": "Elementary (JLPT N4) kanji vocabulary, grouped into themed units. Readings in hiragana.",
+  "section": "JLPT N4",
+  "units": [
+    {
+      "name": "Family & pets",
+      "words": [
+        ["家族", "かぞく", "family"],
+        ["両親", "りょうしん", "parents"],
+        ["親", "おや", "parent"],
+        ["兄", "あに", "(my) older brother"],
+        ["姉", "あね", "(my) older sister"],
+        ["弟", "おとうと", "younger brother"],
+        ["妹", "いもうと", "younger sister"],
+        ["兄弟", "きょうだい", "siblings; brothers"],
+        ["主人", "しゅじん", "husband; owner"],
+        ["自分", "じぶん", "oneself"],
+        ["家", "いえ", "house; home"],
+        ["住所", "じゅうしょ", "address"],
+        ["犬", "いぬ", "dog"],
+        ["鳥", "とり", "bird"],
+        ["動物", "どうぶつ", "animal"],
+        ["金魚", "きんぎょ", "goldfish"]
+      ]
+    },
+    {
+      "name": "Seasons & colours",
+      "words": [
+        ["春", "はる", "spring"],
+        ["夏", "なつ", "summer"],
+        ["秋", "あき", "autumn"],
+        ["冬", "ふゆ", "winter"],
+        ["色", "いろ", "colour"],
+        ["赤い", "あかい", "red"],
+        ["青い", "あおい", "blue"],
+        ["黒い", "くろい", "black"],
+        ["茶色", "ちゃいろ", "brown"],
+        ["風", "かぜ", "wind"],
+        ["暑い", "あつい", "hot (weather)"],
+        ["寒い", "さむい", "cold (weather)"],
+        ["花見", "はなみ", "cherry-blossom viewing"],
+        ["空気", "くうき", "air"]
+      ]
+    },
+    {
+      "name": "Town & shops",
+      "words": [
+        ["町", "まち", "town"],
+        ["銀行", "ぎんこう", "bank"],
+        ["図書館", "としょかん", "library"],
+        ["映画館", "えいがかん", "cinema"],
+        ["本屋", "ほんや", "bookshop"],
+        ["店員", "てんいん", "shop assistant"],
+        ["売る", "うる", "to sell"],
+        ["売り場", "うりば", "sales counter; department"],
+        ["品物", "しなもの", "goods"],
+        ["買い物", "かいもの", "shopping"],
+        ["道", "みち", "road; way"],
+        ["公園", "こうえん", "park"],
+        ["建物", "たてもの", "building"],
+        ["場所", "ばしょ", "place"],
+        ["入口", "いりぐち", "entrance"],
+        ["出口", "でぐち", "exit"],
+        ["中古", "ちゅうこ", "second-hand"]
+      ]
+    },
+    {
+      "name": "School & study",
+      "words": [
+        ["教室", "きょうしつ", "classroom"],
+        ["勉強", "べんきょう", "study"],
+        ["教える", "おしえる", "to teach; to tell"],
+        ["習う", "ならう", "to learn"],
+        ["漢字", "かんじ", "kanji"],
+        ["字", "じ", "character; handwriting"],
+        ["質問", "しつもん", "question"],
+        ["答える", "こたえる", "to answer"],
+        ["問題", "もんだい", "problem; question"],
+        ["研究所", "けんきゅうじょ", "research institute"],
+        ["実験", "じっけん", "experiment"],
+        ["作文", "さくぶん", "composition; essay"],
+        ["文学", "ぶんがく", "literature"],
+        ["発音", "はつおん", "pronunciation"],
+        ["私立", "しりつ", "private (school etc.)"],
+        ["高校", "こうこう", "high school"],
+        ["英会話", "えいかいわ", "English conversation"]
+      ]
+    },
+    {
+      "name": "Work",
+      "words": [
+        ["仕事", "しごと", "work; job"],
+        ["会社員", "かいしゃいん", "office worker"],
+        ["社長", "しゃちょう", "company president"],
+        ["工場", "こうじょう", "factory"],
+        ["事務所", "じむしょ", "office"],
+        ["働く", "はたらく", "to work"],
+        ["用事", "ようじ", "errand; things to do"],
+        ["工業", "こうぎょう", "industry"],
+        ["社会", "しゃかい", "society"],
+        ["計画", "けいかく", "plan"],
+        ["公務員", "こうむいん", "civil servant"],
+        ["作業", "さぎょう", "work; task"],
+        ["会場", "かいじょう", "venue"],
+        ["代わり", "かわり", "substitute; instead"],
+        ["店長", "てんちょう", "store manager"]
+      ]
+    },
+    {
+      "name": "Food & cooking",
+      "words": [
+        ["料理", "りょうり", "cooking; dish"],
+        ["ご飯", "ごはん", "rice; meal"],
+        ["朝ご飯", "あさごはん", "breakfast"],
+        ["昼ご飯", "ひるごはん", "lunch"],
+        ["夕飯", "ゆうはん", "dinner"],
+        ["肉", "にく", "meat"],
+        ["牛肉", "ぎゅうにく", "beef"],
+        ["鳥肉", "とりにく", "chicken (meat)"],
+        ["野菜", "やさい", "vegetable"],
+        ["お茶", "おちゃ", "tea"],
+        ["飲み物", "のみもの", "drink"],
+        ["食べ物", "たべもの", "food"],
+        ["味", "あじ", "taste; flavour"],
+        ["洋食", "ようしょく", "Western food"],
+        ["食堂", "しょくどう", "dining hall; canteen"]
+      ]
+    },
+    {
+      "name": "Body & health",
+      "words": [
+        ["体", "からだ", "body"],
+        ["頭", "あたま", "head"],
+        ["顔", "かお", "face"],
+        ["心", "こころ", "heart; mind"],
+        ["首", "くび", "neck"],
+        ["声", "こえ", "voice"],
+        ["病気", "びょうき", "illness"],
+        ["病院", "びょういん", "hospital"],
+        ["医者", "いしゃ", "doctor"],
+        ["死ぬ", "しぬ", "to die"],
+        ["力", "ちから", "strength; power"],
+        ["気分", "きぶん", "feeling; mood"],
+        ["注意", "ちゅうい", "care; caution"],
+        ["薬", "くすり", "medicine"],
+        ["心配", "しんぱい", "worry"]
+      ]
+    },
+    {
+      "name": "Travel",
+      "words": [
+        ["旅行", "りょこう", "trip; travel"],
+        ["旅館", "りょかん", "Japanese inn"],
+        ["運転", "うんてん", "driving"],
+        ["自転車", "じてんしゃ", "bicycle"],
+        ["自動車", "じどうしゃ", "car; automobile"],
+        ["地下鉄", "ちかてつ", "subway"],
+        ["特急", "とっきゅう", "limited express"],
+        ["急行", "きゅうこう", "express (train)"],
+        ["駅員", "えきいん", "station staff"],
+        ["写真", "しゃしん", "photo"],
+        ["海", "うみ", "sea"],
+        ["外国", "がいこく", "foreign country"],
+        ["東京", "とうきょう", "Tokyo"],
+        ["京都", "きょうと", "Kyoto"],
+        ["世界", "せかい", "world"],
+        ["地方", "ちほう", "region; the provinces"]
+      ]
+    },
+    {
+      "name": "Hobbies & things",
+      "words": [
+        ["音楽", "おんがく", "music"],
+        ["歌", "うた", "song"],
+        ["歌手", "かしゅ", "singer"],
+        ["映画", "えいが", "film; movie"],
+        ["画家", "がか", "painter"],
+        ["試合", "しあい", "match; game"],
+        ["運動", "うんどう", "exercise; sport"],
+        ["小説", "しょうせつ", "novel"],
+        ["新聞", "しんぶん", "newspaper"],
+        ["洋服", "ようふく", "clothes; Western clothes"],
+        ["着物", "きもの", "kimono"],
+        ["手紙", "てがみ", "letter"],
+        ["時計", "とけい", "clock; watch"],
+        ["部屋", "へや", "room"],
+        ["台", "だい", "stand; counter for machines"],
+        ["物", "もの", "thing"]
+      ]
+    },
+    {
+      "name": "Everyday verbs",
+      "words": [
+        ["始める", "はじめる", "to begin (sth)"],
+        ["始まる", "はじまる", "to begin; to start"],
+        ["終わる", "おわる", "to end; to finish"],
+        ["開ける", "あける", "to open (sth)"],
+        ["開く", "あく", "to open; to be opened"],
+        ["止まる", "とまる", "to stop"],
+        ["止める", "とめる", "to stop (sth); to park"],
+        ["待つ", "まつ", "to wait"],
+        ["借りる", "かりる", "to borrow"],
+        ["貸す", "かす", "to lend"],
+        ["帰る", "かえる", "to go home; to return"],
+        ["走る", "はしる", "to run"],
+        ["歩く", "あるく", "to walk"],
+        ["起きる", "おきる", "to get up; to wake up"],
+        ["着る", "きる", "to wear; to put on"],
+        ["持つ", "もつ", "to hold; to have"]
+      ]
+    },
+    {
+      "name": "More verbs",
+      "words": [
+        ["思う", "おもう", "to think"],
+        ["考える", "かんがえる", "to think about; to consider"],
+        ["知る", "しる", "to know"],
+        ["知らせる", "しらせる", "to inform"],
+        ["動く", "うごく", "to move"],
+        ["集まる", "あつまる", "to gather"],
+        ["歌う", "うたう", "to sing"],
+        ["通う", "かよう", "to commute; to attend"],
+        ["使う", "つかう", "to use"],
+        ["作る", "つくる", "to make"],
+        ["送る", "おくる", "to send"],
+        ["着く", "つく", "to arrive"],
+        ["切る", "きる", "to cut"],
+        ["別れる", "わかれる", "to part; to break up"],
+        ["足りる", "たりる", "to be enough"],
+        ["建てる", "たてる", "to build"],
+        ["転ぶ", "ころぶ", "to fall over"]
+      ]
+    },
+    {
+      "name": "Describing",
+      "words": [
+        ["明るい", "あかるい", "bright; cheerful"],
+        ["早い", "はやい", "early"],
+        ["近い", "ちかい", "near"],
+        ["遠い", "とおい", "far"],
+        ["重い", "おもい", "heavy"],
+        ["強い", "つよい", "strong"],
+        ["弱い", "よわい", "weak"],
+        ["悪い", "わるい", "bad"],
+        ["楽しい", "たのしい", "fun; enjoyable"],
+        ["正しい", "ただしい", "correct; right"],
+        ["親切", "しんせつ", "kind"],
+        ["有名", "ゆうめい", "famous"],
+        ["便利", "べんり", "convenient"],
+        ["不便", "ふべん", "inconvenient"],
+        ["安心", "あんしん", "relief; peace of mind"],
+        ["同じ", "おなじ", "same"],
+        ["広い", "ひろい", "wide; spacious"]
+      ]
+    },
+    {
+      "name": "Time",
+      "words": [
+        ["朝", "あさ", "morning"],
+        ["昼", "ひる", "noon; daytime"],
+        ["夜", "よる", "night"],
+        ["今朝", "けさ", "this morning"],
+        ["今夜", "こんや", "tonight"],
+        ["毎週", "まいしゅう", "every week"],
+        ["今週", "こんしゅう", "this week"],
+        ["来週", "らいしゅう", "next week"],
+        ["先週", "せんしゅう", "last week"],
+        ["去年", "きょねん", "last year"],
+        ["曜日", "ようび", "day of the week"],
+        ["昼休み", "ひるやすみ", "lunch break"],
+        ["時代", "じだい", "era; period"],
+        ["一度", "いちど", "once"],
+        ["今度", "こんど", "next time; this time"]
+      ]
+    },
+    {
+      "name": "Useful words",
+      "words": [
+        ["言葉", "ことば", "word; language"],
+        ["話", "はなし", "talk; story"],
+        ["用意", "ようい", "preparation"],
+        ["思い出", "おもいで", "memory"],
+        ["自由", "じゆう", "freedom; free"],
+        ["以上", "いじょう", "more than; that's all"],
+        ["地元", "じもと", "hometown; local area"],
+        ["特に", "とくに", "especially"],
+        ["少し", "すこし", "a little"],
+        ["多分", "たぶん", "probably"],
+        ["本当", "ほんとう", "truth; real"],
+        ["上手", "じょうず", "skilful; good at"],
+        ["下手", "へた", "unskilful; bad at"],
+        ["田舎", "いなか", "countryside"],
+        ["安全", "あんぜん", "safe; safety"],
+        ["目立つ", "めだつ", "to stand out"]
+      ]
+    }
+  ]
+}

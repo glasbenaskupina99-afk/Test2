@@ -242,6 +242,270 @@
         ["賛成", "さんせい", "agreement; approval"],
         ["反対", "はんたい", "opposition; the opposite"]
       ]
+    },
+    {
+      "name": "Law & rules",
+      "words": [
+        ["規則", "きそく", "rule; regulation"],
+        ["制度", "せいど", "system; institution"],
+        ["権利", "けんり", "right; privilege"],
+        ["罪", "つみ", "crime; sin"],
+        ["逮捕", "たいほ", "arrest"],
+        ["判断", "はんだん", "judgment; decision"],
+        ["違反", "いはん", "violation; breach"],
+        ["被害", "ひがい", "damage; harm"],
+        ["盗難", "とうなん", "theft"],
+        ["殺す", "ころす", "to kill"],
+        ["危険", "きけん", "danger; dangerous"],
+        ["処理", "しょり", "handling; processing"],
+        ["警官", "けいかん", "police officer"],
+        ["原因", "げんいん", "cause; origin"],
+        ["逃亡", "とうぼう", "escape; flight"]
+      ]
+    },
+    {
+      "name": "Economy & money",
+      "words": [
+        ["費用", "ひよう", "cost; expense"],
+        ["収入", "しゅうにゅう", "income"],
+        ["支払う", "しはらう", "to pay"],
+        ["財布", "さいふ", "wallet"],
+        ["商品", "しょうひん", "goods; product"],
+        ["値段", "ねだん", "price"],
+        ["生産", "せいさん", "production"],
+        ["数字", "すうじ", "number; figure"],
+        ["割引", "わりびき", "discount"],
+        ["余る", "あまる", "to be left over"],
+        ["貧困", "ひんこん", "poverty"],
+        ["富", "とみ", "wealth; fortune"],
+        ["投資", "とうし", "investment"],
+        ["供給", "きょうきゅう", "supply"],
+        ["寄付", "きふ", "donation"],
+        ["年末", "ねんまつ", "end of the year"]
+      ]
+    },
+    {
+      "name": "Science & technology",
+      "words": [
+        ["機械", "きかい", "machine"],
+        ["科学", "かがく", "science"],
+        ["石油", "せきゆ", "oil; petroleum"],
+        ["調査", "ちょうさ", "investigation; survey"],
+        ["進歩", "しんぽ", "progress"],
+        ["性能", "せいのう", "performance; efficiency"],
+        ["構造", "こうぞう", "structure"],
+        ["番号", "ばんごう", "number"],
+        ["面積", "めんせき", "area (size)"],
+        ["速達", "そくたつ", "express mail"],
+        ["変化", "へんか", "change"],
+        ["位置", "いち", "position; location"],
+        ["飛行", "ひこう", "flight; flying"],
+        ["設備", "せつび", "equipment; facilities"]
+      ]
+    },
+    {
+      "name": "Relationships",
+      "words": [
+        ["夫婦", "ふうふ", "married couple"],
+        ["妻", "つま", "wife"],
+        ["愛", "あい", "love"],
+        ["婚約", "こんやく", "engagement"],
+        ["娘", "むすめ", "daughter"],
+        ["祖父", "そふ", "grandfather"],
+        ["彼氏", "かれし", "boyfriend"],
+        ["互い", "たがい", "each other"],
+        ["似る", "にる", "to resemble"],
+        ["頼る", "たよる", "to rely on"],
+        ["君", "きみ", "you (familiar)"],
+        ["老人", "ろうじん", "elderly person"],
+        ["若者", "わかもの", "young people"],
+        ["招待", "しょうたい", "invitation"],
+        ["迎える", "むかえる", "to welcome; to meet"],
+        ["礼儀", "れいぎ", "manners; courtesy"],
+        ["仲良し", "なかよし", "close friends; being on good terms"]
+      ]
+    },
+    {
+      "name": "Events & culture",
+      "words": [
+        ["演奏", "えんそう", "musical performance"],
+        ["舞台", "ぶたい", "stage"],
+        ["参加", "さんか", "participation"],
+        ["遊園地", "ゆうえんち", "amusement park"],
+        ["絵画", "かいが", "painting"],
+        ["王様", "おうさま", "king"],
+        ["曲", "きょく", "tune; piece of music"],
+        ["客席", "きゃくせき", "audience seats"],
+        ["記念", "きねん", "commemoration; memory"],
+        ["乾杯", "かんぱい", "cheers; toast"],
+        ["登場", "とうじょう", "appearance; entrance"],
+        ["酒", "さけ", "alcohol; sake"],
+        ["勝敗", "しょうはい", "victory or defeat"],
+        ["万歳", "ばんざい", "hurray; banzai"],
+        ["流行", "りゅうこう", "fashion; trend"],
+        ["水泳", "すいえい", "swimming"]
+      ]
+    },
+    {
+      "name": "People & society",
+      "words": [
+        ["市民", "しみん", "citizen"],
+        ["首相", "しゅしょう", "prime minister"],
+        ["都市", "とし", "city"],
+        ["労働", "ろうどう", "labor; work"],
+        ["勤務", "きんむ", "duty; service (at work)"],
+        ["役所", "やくしょ", "government office"],
+        ["共通", "きょうつう", "common; shared"],
+        ["種類", "しゅるい", "kind; type"],
+        ["部分", "ぶぶん", "part; portion"],
+        ["他人", "たにん", "other people; stranger"],
+        ["教師", "きょうし", "teacher"],
+        ["生徒", "せいと", "pupil; student"],
+        ["組織", "そしき", "organization"],
+        ["非常識", "ひじょうしき", "lack of common sense"],
+        ["天才", "てんさい", "genius"],
+        ["皆様", "みなさま", "everyone (polite)"]
+      ]
+    },
+    {
+      "name": "Abstract ideas",
+      "words": [
+        ["理想", "りそう", "ideal"],
+        ["夢", "ゆめ", "dream"],
+        ["絶望", "ぜつぼう", "despair"],
+        ["未来", "みらい", "future"],
+        ["程度", "ていど", "degree; extent"],
+        ["限界", "げんかい", "limit"],
+        ["結果", "けっか", "result"],
+        ["疑問", "ぎもん", "question; doubt"],
+        ["幸福", "こうふく", "happiness"],
+        ["差", "さ", "difference; gap"],
+        ["方向", "ほうこう", "direction"],
+        ["関係", "かんけい", "relationship; connection"],
+        ["形式", "けいしき", "form; format"],
+        ["欠点", "けってん", "flaw; weak point"],
+        ["努力", "どりょく", "effort"]
+      ]
+    },
+    {
+      "name": "More verbs",
+      "words": [
+        ["受ける", "うける", "to receive; to take (a test)"],
+        ["取り消す", "とりけす", "to cancel"],
+        ["求める", "もとめる", "to request; to seek"],
+        ["示す", "しめす", "to show; to indicate"],
+        ["打つ", "うつ", "to hit; to strike"],
+        ["放す", "はなす", "to release; to let go"],
+        ["与える", "あたえる", "to give; to grant"],
+        ["追う", "おう", "to chase; to follow"],
+        ["渡す", "わたす", "to hand over"],
+        ["落とす", "おとす", "to drop; to lose"],
+        ["負ける", "まける", "to lose (a game)"],
+        ["申し込む", "もうしこむ", "to apply; to sign up"],
+        ["破る", "やぶる", "to tear; to break"],
+        ["抜く", "ぬく", "to pull out"],
+        ["押す", "おす", "to push; to press"],
+        ["降ろす", "おろす", "to unload; to drop off"]
+      ]
+    },
+    {
+      "name": "Everyday verbs",
+      "words": [
+        ["倒れる", "たおれる", "to fall down; to collapse"],
+        ["抱く", "だく", "to hold; to hug"],
+        ["戻る", "もどる", "to return; to go back"],
+        ["願う", "ねがう", "to wish; to request"],
+        ["閉じる", "とじる", "to close; to shut"],
+        ["折る", "おる", "to fold; to break"],
+        ["掛ける", "かける", "to hang; to sit down"],
+        ["慣れる", "なれる", "to get used to"],
+        ["鳴る", "なる", "to ring; to sound"],
+        ["眠る", "ねむる", "to sleep"],
+        ["頂く", "いただく", "to receive (humble)"],
+        ["浮かぶ", "うかぶ", "to float; to come to mind"],
+        ["散る", "ちる", "to scatter; to fall (leaves)"],
+        ["育てる", "そだてる", "to raise; to bring up"],
+        ["遅刻", "ちこく", "being late"]
+      ]
+    },
+    {
+      "name": "Describing words",
+      "words": [
+        ["冷静", "れいせい", "calm; composed"],
+        ["偉い", "えらい", "great; admirable"],
+        ["美しい", "うつくしい", "beautiful"],
+        ["恐怖", "きょうふ", "fear; terror"],
+        ["完全", "かんぜん", "perfect; complete"],
+        ["満足", "まんぞく", "satisfaction; satisfied"],
+        ["容易", "ようい", "easy; simple"],
+        ["平等", "びょうどう", "equality; equal"],
+        ["真っ暗", "まっくら", "pitch dark"],
+        ["多忙", "たぼう", "very busy"],
+        ["更に", "さらに", "furthermore; even more"],
+        ["幾つか", "いくつか", "several; some"],
+        ["内緒", "ないしょ", "secret"],
+        ["好み", "このみ", "taste; preference"]
+      ]
+    },
+    {
+      "name": "Body & health",
+      "words": [
+        ["顔色", "かおいろ", "complexion; look"],
+        ["背中", "せなか", "back (body)"],
+        ["お腹", "おなか", "stomach; belly"],
+        ["歯医者", "はいしゃ", "dentist"],
+        ["髪", "かみ", "hair"],
+        ["息", "いき", "breath"],
+        ["寒気", "さむけ", "chill; shivers"],
+        ["指", "ゆび", "finger"],
+        ["煙", "けむり", "smoke"],
+        ["精神", "せいしん", "mind; spirit"],
+        ["大声", "おおごえ", "loud voice"],
+        ["寝不足", "ねぶそく", "lack of sleep"],
+        ["食欲", "しょくよく", "appetite"],
+        ["回復", "かいふく", "recovery"]
+      ]
+    },
+    {
+      "name": "Places & nature",
+      "words": [
+        ["庭", "にわ", "garden; yard"],
+        ["窓口", "まどぐち", "counter; window"],
+        ["子猫", "こねこ", "kitten"],
+        ["葉", "は", "leaf"],
+        ["草", "くさ", "grass"],
+        ["馬", "うま", "horse"],
+        ["船", "ふね", "ship; boat"],
+        ["米", "こめ", "rice (uncooked)"],
+        ["道路", "どうろ", "road"],
+        ["横断歩道", "おうだんほどう", "pedestrian crossing"],
+        ["吹雪", "ふぶき", "snowstorm"],
+        ["太陽", "たいよう", "the sun"],
+        ["地球", "ちきゅう", "the earth"],
+        ["居間", "いま", "living room"],
+        ["気候", "きこう", "climate"],
+        ["両側", "りょうがわ", "both sides"]
+      ]
+    },
+    {
+      "name": "Daily situations",
+      "words": [
+        ["箱", "はこ", "box"],
+        ["靴下", "くつした", "socks"],
+        ["座席", "ざせき", "seat"],
+        ["列", "れつ", "line; queue"],
+        ["一晩", "ひとばん", "one night"],
+        ["昔話", "むかしばなし", "old tale; folk tale"],
+        ["忘れ物", "わすれもの", "thing left behind"],
+        ["誤解", "ごかい", "misunderstanding"],
+        ["冗談", "じょうだん", "joke"],
+        ["遠慮", "えんりょ", "restraint; hesitation"],
+        ["否定", "ひてい", "denial"],
+        ["訪問", "ほうもん", "visit"],
+        ["御存じ", "ごぞんじ", "to know (honorific)"],
+        ["目覚まし", "めざまし", "alarm clock"],
+        ["昨年", "さくねん", "last year"]
+      ]
     }
   ]
 }

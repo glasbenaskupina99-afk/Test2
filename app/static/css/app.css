@@ -979,3 +979,19 @@ select.select-native { display: none !important; }
 .journey-legend i.bar { background: #d9845f; border-radius: 2px; height: 10px; width: 8px; }
 .journey-plant { border: none; padding: 0; cursor: pointer; font: inherit; }
 .journey-plant-art { width: 64%; height: 64%; }
+
+/* ------------------------------------------------------------ import word list */
+.topbar .spacer { flex: 1; }
+.topbar .btn.small { width: auto; }
+.import-text { min-height: 140px; resize: vertical; font-family: inherit; line-height: 1.5; }
+.import-report { margin: 6px 0 14px; }
+.import-report p { margin: 4px 0; font-weight: 700; }
+.import-report .good { color: var(--green); }
+.import-report .bad { color: var(--red); }
+.import-report details { color: var(--muted); }
+.import-report summary { cursor: pointer; font-weight: 700; }
+.import-report ul { margin: 6px 0 0; padding-left: 18px; max-height: 140px; overflow: auto; }
+.list-tools { align-items: center; margin: -4px 0 8px; }
+.list-tools .link-btn { margin: 0; padding: 4px 0; }
+.link-btn.danger { color: var(--red); }
+.topbar .btn.small { white-space: nowrap; }

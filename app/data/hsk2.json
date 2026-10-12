@@ -1,0 +1,206 @@
+{
+  "source": "HSK 2 (classic 150-word list), grouped into themed units",
+  "section": "HSK 2",
+  "units": [
+    {
+      "name": "Family & people",
+      "words": [
+        ["哥哥", "gē ge", "older brother"],
+        ["姐姐", "jiě jie", "older sister"],
+        ["弟弟", "dì di", "younger brother"],
+        ["妹妹", "mèi mei", "younger sister"],
+        ["丈夫", "zhàng fu", "husband"],
+        ["妻子", "qī zi", "wife"],
+        ["孩子", "hái zi", "child"],
+        ["男", "nán", "male; man"],
+        ["女", "nǚ", "female; woman"],
+        ["大家", "dà jiā", "everyone"],
+        ["您", "nín", "you (polite)"],
+        ["它", "tā", "it"],
+        ["服务员", "fú wù yuán", "waiter; attendant"],
+        ["姓", "xìng", "surname; to be surnamed"],
+        ["生日", "shēng rì", "birthday"],
+        ["快乐", "kuài lè", "happy"]
+      ]
+    },
+    {
+      "name": "Daily routine",
+      "words": [
+        ["早上", "zǎo shang", "early morning"],
+        ["晚上", "wǎn shang", "evening"],
+        ["起床", "qǐ chuáng", "to get up"],
+        ["上班", "shàng bān", "to go to work"],
+        ["休息", "xiū xi", "to rest"],
+        ["洗", "xǐ", "to wash"],
+        ["穿", "chuān", "to wear; to put on"],
+        ["时间", "shí jiān", "time"],
+        ["小时", "xiǎo shí", "hour"],
+        ["去年", "qù nián", "last year"],
+        ["号", "hào", "day of month; number"],
+        ["已经", "yǐ jīng", "already"],
+        ["正在", "zhèng zài", "in the middle of (doing)"],
+        ["开始", "kāi shǐ", "to begin; to start"],
+        ["完", "wán", "to finish; finished"],
+        ["准备", "zhǔn bèi", "to prepare; to plan"]
+      ]
+    },
+    {
+      "name": "Food & drink",
+      "words": [
+        ["咖啡", "kā fēi", "coffee"],
+        ["牛奶", "niú nǎi", "milk"],
+        ["鸡蛋", "jī dàn", "egg"],
+        ["面条", "miàn tiáo", "noodles"],
+        ["羊肉", "yáng ròu", "mutton; lamb"],
+        ["鱼", "yú", "fish"],
+        ["西瓜", "xī guā", "watermelon"],
+        ["好吃", "hǎo chī", "tasty; delicious"],
+        ["卖", "mài", "to sell"],
+        ["贵", "guì", "expensive"],
+        ["便宜", "pián yi", "cheap"],
+        ["千", "qiān", "thousand"],
+        ["百", "bǎi", "hundred"],
+        ["两", "liǎng", "two (with measure words)"]
+      ]
+    },
+    {
+      "name": "Body & health",
+      "words": [
+        ["身体", "shēn tǐ", "body; health"],
+        ["眼睛", "yǎn jing", "eye"],
+        ["生病", "shēng bìng", "to get sick"],
+        ["药", "yào", "medicine"],
+        ["累", "lèi", "tired"],
+        ["运动", "yùn dòng", "sport; to exercise"],
+        ["跑步", "pǎo bù", "to run; to jog"],
+        ["游泳", "yóu yǒng", "to swim"],
+        ["踢足球", "tī zú qiú", "to play football"],
+        ["打篮球", "dǎ lán qiú", "to play basketball"],
+        ["跳舞", "tiào wǔ", "to dance"],
+        ["唱歌", "chàng gē", "to sing"],
+        ["玩", "wán", "to play; to have fun"],
+        ["笑", "xiào", "to laugh; to smile"]
+      ]
+    },
+    {
+      "name": "Travel & transport",
+      "words": [
+        ["旅游", "lǚ yóu", "to travel; tourism"],
+        ["机场", "jī chǎng", "airport"],
+        ["公共汽车", "gōng gòng qì chē", "bus"],
+        ["自行车", "zì xíng chē", "bicycle"],
+        ["宾馆", "bīn guǎn", "hotel"],
+        ["房间", "fáng jiān", "room"],
+        ["票", "piào", "ticket"],
+        ["路", "lù", "road; way"],
+        ["走", "zǒu", "to walk; to leave"],
+        ["到", "dào", "to arrive; to reach"],
+        ["进", "jìn", "to enter"],
+        ["出", "chū", "to go out; to exit"],
+        ["门", "mén", "door; gate"],
+        ["欢迎", "huān yíng", "to welcome"],
+        ["快", "kuài", "fast; quickly"],
+        ["慢", "màn", "slow"]
+      ]
+    },
+    {
+      "name": "Places & directions",
+      "words": [
+        ["旁边", "páng biān", "beside; next to"],
+        ["左边", "zuǒ biān", "left side"],
+        ["右边", "yòu biān", "right side"],
+        ["外", "wài", "outside"],
+        ["远", "yuǎn", "far"],
+        ["近", "jìn", "near"],
+        ["离", "lí", "away from"],
+        ["从", "cóng", "from"],
+        ["往", "wǎng", "towards"],
+        ["公司", "gōng sī", "company"],
+        ["教室", "jiào shì", "classroom"],
+        ["手机", "shǒu jī", "mobile phone"],
+        ["手表", "shǒu biǎo", "wristwatch"],
+        ["报纸", "bào zhǐ", "newspaper"]
+      ]
+    },
+    {
+      "name": "Weather & colours",
+      "words": [
+        ["晴", "qíng", "sunny; clear"],
+        ["阴", "yīn", "cloudy; overcast"],
+        ["雪", "xuě", "snow"],
+        ["颜色", "yán sè", "colour"],
+        ["红", "hóng", "red"],
+        ["白", "bái", "white"],
+        ["黑", "hēi", "black"],
+        ["新", "xīn", "new"],
+        ["长", "cháng", "long"],
+        ["高", "gāo", "tall; high"],
+        ["错", "cuò", "wrong; mistake"],
+        ["对", "duì", "right; correct; towards"],
+        ["非常", "fēi cháng", "very; extremely"],
+        ["真", "zhēn", "really; truly"]
+      ]
+    },
+    {
+      "name": "Study & thinking",
+      "words": [
+        ["课", "kè", "class; lesson"],
+        ["考试", "kǎo shì", "exam; to take an exam"],
+        ["题", "tí", "question; problem"],
+        ["问题", "wèn tí", "question; problem"],
+        ["问", "wèn", "to ask"],
+        ["回答", "huí dá", "to answer"],
+        ["懂", "dǒng", "to understand"],
+        ["知道", "zhī dao", "to know"],
+        ["觉得", "jué de", "to think; to feel"],
+        ["希望", "xī wàng", "to hope; hope"],
+        ["意思", "yì si", "meaning"],
+        ["事情", "shì qing", "matter; thing"],
+        ["忙", "máng", "busy"],
+        ["介绍", "jiè shào", "to introduce"],
+        ["告诉", "gào su", "to tell"],
+        ["帮助", "bāng zhù", "to help"]
+      ]
+    },
+    {
+      "name": "Useful verbs",
+      "words": [
+        ["给", "gěi", "to give; for"],
+        ["送", "sòng", "to give (as a gift); to see off"],
+        ["让", "ràng", "to let; to make"],
+        ["找", "zhǎo", "to look for"],
+        ["等", "děng", "to wait"],
+        ["比", "bǐ", "than; compared to"],
+        ["要", "yào", "to want; will"],
+        ["可以", "kě yǐ", "can; may"],
+        ["可能", "kě néng", "maybe; possible"],
+        ["别", "bié", "don't"],
+        ["再", "zài", "again"],
+        ["一起", "yì qǐ", "together"],
+        ["一下", "yí xià", "a bit; once"],
+        ["每", "měi", "every; each"]
+      ]
+    },
+    {
+      "name": "Grammar words",
+      "words": [
+        ["吧", "ba", "(suggestion particle)"],
+        ["得", "de", "(complement particle)"],
+        ["着", "zhe", "(continuous aspect particle)"],
+        ["过", "guo", "(past experience particle)"],
+        ["还", "hái", "still; also"],
+        ["也", "yě", "also; too"],
+        ["就", "jiù", "just; then"],
+        ["最", "zuì", "most"],
+        ["第一", "dì yī", "first"],
+        ["次", "cì", "time (occurrence)"],
+        ["件", "jiàn", "(measure word for clothes, matters)"],
+        ["为什么", "wèi shén me", "why"],
+        ["因为", "yīn wèi", "because"],
+        ["所以", "suǒ yǐ", "so; therefore"],
+        ["虽然", "suī rán", "although"],
+        ["但是", "dàn shì", "but"]
+      ]
+    }
+  ]
+}

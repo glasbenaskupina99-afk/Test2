@@ -14,13 +14,22 @@ export const genderTag = (word) => (word.gender ? h("span", { class: `tag gender
 const speakerBtn = (text, cls = "speaker") => iconBtn("speaker", cls, () => speak(text), "Listen");
 const slowBtn = (text) => iconBtn("slow", "speaker sm", () => speak(text, { slow: true }), "Listen slowly");
 
+/** "hiragana" / "katakana" for words of the kana course, else null. */
+const kanaOf = (w) => (w.source === "kana" ? (/[ァ-ヺ]/.test(w.hanzi) ? "katakana" : "hiragana") : null);
+/** Kana are quizzed against other kana of the same script, not against kanji words. */
+function samePool(word, pool) {
+  const k = kanaOf(word);
+  if (!k) return pool;
+  const same = pool.filter((w) => kanaOf(w) === k);
+  return same.length >= 3 ? same : pool;
+}
+
 function solution(word, extra) {
   return h(
     "div",
     {},
     h("span", { class: "hz" }, word.hanzi),
-    " · ",
-    word.pinyin,
+    word.pinyin && word.pinyin !== word.hanzi ? [" · ", word.pinyin] : null,
     h("div", {}, word.english),
     extra ? h("div", { class: "small" }, extra) : null
   );
@@ -71,7 +80,7 @@ function extrasBox(x, onRefresh) {
           "div",
           { class: "row", style: { marginTop: "8px" } },
           speakerBtn(x.example_zh, "speaker sm"),
-          h("div", {}, h("div", { class: "hz" }, x.example_zh), h("div", { class: "small muted" }, x.example_pinyin || ""), h("div", { class: "small" }, x.example_en))
+          h("div", {}, h("div", { class: "hz" }, x.example_zh), h("div", { class: "small muted" }, x.example_pinyin && x.example_pinyin !== x.example_zh ? x.example_pinyin : ""), h("div", { class: "small" }, x.example_en))
         )
       : null,
     state.settings?.ai_enabled ? h("button", { class: "reveal", style: { marginTop: "10px" }, onclick: onRefresh }, "↻ New memory hook") : null
@@ -169,7 +178,7 @@ export function write(ctx, word, { pinyinHint = false } = {}) {
         "div",
         { class: "prompt-bubble" },
         h("div", { class: "mascot" }, "🐼"),
-        h("div", { class: "bubble" }, `“${word.english}”`, h("div", { class: "small muted row", style: { marginTop: "4px" } }, pyEl, pinyinHint ? null : peek))
+        h("div", { class: "bubble" }, kanaOf(word) ? `“${word.english}” in ${kanaOf(word)}` : `“${word.english}”`, h("div", { class: "small muted row", style: { marginTop: "4px" } }, pyEl, pinyinHint ? null : peek))
       ),
       pad.el
     ),
@@ -181,6 +190,7 @@ export function write(ctx, word, { pinyinHint = false } = {}) {
 // ------------------------------------------------------------------ recall
 
 export function multipleChoice(ctx, word, pool) {
+  pool = samePool(word, pool);
   const distractors = shuffle(pool.filter((w) => w.hanzi !== word.hanzi && w.english !== word.english)).slice(0, 3);
   const options = shuffle([word, ...distractors]);
   let picked = null;
@@ -204,7 +214,7 @@ export function multipleChoice(ctx, word, pool) {
       "div",
       {},
       h("div", { class: "ex-kicker" }, "🧠 Recall"),
-      h("h2", { class: "ex-title" }, `Which one means “${word.english}”?`),
+      h("h2", { class: "ex-title" }, kanaOf(word) ? `Which ${kanaOf(word)} is “${word.english}”?` : `Which one means “${word.english}”?`),
       h("div", { class: "choices" }, tiles)
     ),
     mode: "check",
@@ -227,7 +237,9 @@ export function multipleChoice(ctx, word, pool) {
  *   listen  — hear the word, pick the character
  */
 export function choice(ctx, word, pool, kind) {
-  const field = kind === "meaning" ? "english" : kind === "reading" ? "pinyin" : "hanzi";
+  pool = samePool(word, pool);
+  // For kana the reading is quizzed as romaji (the hiragana reading of あ is just あ).
+  const field = kind === "meaning" || (kind === "reading" && kanaOf(word)) ? "english" : kind === "reading" ? "pinyin" : "hanzi";
   const norm = (v) => String(v || "").toLowerCase().replace(/\s+/g, "");
   const seen = new Set([norm(word[field])]);
   const distractors = [];
@@ -267,8 +279,8 @@ export function choice(ctx, word, pool, kind) {
     ];
   } else {
     prompt = [
-      h("div", { class: "ex-kicker" }, kind === "meaning" ? "🧠 Meaning" : `🔤 ${isJa() ? "Reading" : "Pinyin"}`),
-      h("h2", { class: "ex-title" }, kind === "meaning" ? "What does this mean?" : `How is this read?`),
+      h("div", { class: "ex-kicker" }, kind === "meaning" && !kanaOf(word) ? "🧠 Meaning" : `🔤 ${isJa() ? "Reading" : "Pinyin"}`),
+      h("h2", { class: "ex-title" }, kind === "meaning" && !kanaOf(word) ? "What does this mean?" : `How is this read?`),
       h("div", { class: "big-hz hz", style: { margin: "4px 0 18px" } }, word.hanzi),
     ];
   }
@@ -341,7 +353,9 @@ export function pinyinType(ctx, word) {
       "div",
       {},
       h("div", { class: "ex-kicker orange" }, isJa() ? "⌨️ Reading" : "⌨️ Pinyin"),
-      h("h2", { class: "ex-title" }, `How do you say “${word.english}”?`),
+      ...(kanaOf(word)
+        ? [h("h2", { class: "ex-title" }, "How is this read?"), h("div", { class: "big-hz hz", style: { margin: "4px 0 14px" } }, word.hanzi)]
+        : [h("h2", { class: "ex-title" }, `How do you say “${word.english}”?`)]),
       h("p", { class: "muted" }, isJa() ? "Type the reading in romaji or hiragana." : "Type the pinyin. Tones as numbers (ni3 hao3) or marks."),
       input
     ),

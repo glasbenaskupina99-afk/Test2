@@ -14,6 +14,7 @@ import com.getcapacitor.annotation.CapacitorPlugin
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Content
 import com.google.ai.edge.litertlm.Contents
+import com.google.ai.edge.litertlm.Conversation
 import com.google.ai.edge.litertlm.ConversationConfig
 import com.google.ai.edge.litertlm.Engine
 import com.google.ai.edge.litertlm.EngineConfig
@@ -44,6 +45,8 @@ class GemmaPlugin : Plugin() {
     private var engine: Engine? = null
     private var engineBackend: String? = null
     private var engineAudio = false
+    /** The open Talk conversation: it keeps what was said, so each turn only reads the new line. */
+    private var chat: Conversation? = null
     @Volatile private var loading = false
     @Volatile private var downloadJob: Job? = null
     @Volatile private var lastError: String? = null
@@ -289,8 +292,16 @@ class GemmaPlugin : Plugin() {
         }
     }
 
+    private fun closeChat() {
+        synchronized(engineLock) {
+            try { chat?.close() } catch (_: Throwable) {}
+            chat = null
+        }
+    }
+
     private fun unloadEngine() {
         synchronized(engineLock) {
+            closeChat()
             try { engine?.close() } catch (_: Throwable) {}
             engine = null
             engineBackend = null
@@ -333,6 +344,7 @@ class GemmaPlugin : Plugin() {
                     unloadEngine()
                     throw IllegalStateException("This Gemma model can't listen to audio. Use Gemma 3n or Gemma 4 E2B/E4B, or switch pronunciation to Android speech recognition.")
                 }
+                closeChat()
                 val text = synchronized(engineLock) {
                     val config = ConversationConfig(
                         systemInstruction = Contents.of(system),
@@ -351,6 +363,56 @@ class GemmaPlugin : Plugin() {
                 call.reject("Gemma failed: ${t.message}")
             }
         }
+    }
+
+    // ------------------------------------------------------------------ talk (multi-turn)
+
+    @PluginMethod
+    fun chatStart(call: PluginCall) {
+        val system = call.getString("system") ?: ""
+        val temperature = call.getDouble("temperature") ?: 0.6
+        val backend = call.getString("backend") ?: "cpu"
+        scope.launch {
+            try {
+                val e = ensureEngine(backend)
+                closeChat()
+                synchronized(engineLock) {
+                    chat = e.createConversation(
+                        ConversationConfig(
+                            systemInstruction = Contents.of(system),
+                            samplerConfig = SamplerConfig(topK = 40, topP = 0.95, temperature = temperature),
+                        )
+                    )
+                }
+                call.resolve()
+            } catch (t: Throwable) {
+                lastError = t.message
+                call.reject("Gemma failed: ${t.message}")
+            }
+        }
+    }
+
+    @PluginMethod
+    fun chatSend(call: PluginCall) {
+        val prompt = call.getString("prompt") ?: return call.reject("prompt is required")
+        scope.launch {
+            try {
+                val text = synchronized(engineLock) {
+                    val c = chat ?: throw IllegalStateException("The chat was closed — start it again")
+                    c.sendMessage(prompt).toString()
+                }
+                call.resolve(JSObject().put("text", text))
+            } catch (t: Throwable) {
+                lastError = t.message
+                call.reject("Gemma failed: ${t.message}")
+            }
+        }
+    }
+
+    @PluginMethod
+    fun chatEnd(call: PluginCall) {
+        closeChat()
+        call.resolve()
     }
 
     override fun handleOnDestroy() {

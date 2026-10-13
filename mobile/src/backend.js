@@ -1101,7 +1101,7 @@ const routes = {
     const topic = TALK_TOPICS.find((t) => t.id === body.topic) || TALK_TOPICS[0];
     const words = learnedWords();
     if (words.length < 10) throw new HttpError(409, "Learn at least 10 words first");
-    const known = shuffled(words).slice(0, 60).map((w) => w.hanzi);
+    const known = shuffled(words).slice(0, 30).map((w) => w.hanzi);
     const history = (Array.isArray(body.history) ? body.history : []).map((m) => ({ who: m.who === "me" ? "me" : "gemma", text: String(m.text || "") }));
     const r = await ai.talkTurn(topic, known, history, String(body.answer || ""));
     if (course() === "zh") {
@@ -1110,6 +1110,11 @@ const routes = {
       if (r.fixed) r.fixed_reading = toPinyin(r.fixed);
     }
     return r;
+  },
+
+  "POST /api/talk/end": async () => {
+    await ai.talkEnd();
+    return { ok: true };
   },
 
   "POST /api/talk/done": (_, body) => {

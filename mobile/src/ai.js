@@ -375,45 +375,117 @@ Return JSON: {"hanzi": "simplified characters", "english": "short English meanin
   return { hanzi: hanziOnly(String(d.hanzi || "")), english: String(d.english || "").trim() };
 }
 
-/**
- * One turn of a role-play conversation ("Talk"). With an empty `answer` Gemma opens the scene.
- * history: [{ who: "gemma" | "me", text }]. Gemma checks the student's last line, then replies.
- */
-export async function talkTurn(topic, known, history, answer) {
+/** Pulls the fields out of a reply that isn't quite valid JSON (cut off, stray quotes …). */
+function looseFields(text) {
+  const t = String(text || "");
+  const str = (k) => {
+    const m = t.match(new RegExp(`"${k}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)`));
+    return m ? m[1].replace(/\\"/g, '"').replace(/\\n/g, " ").trim() : "";
+  };
+  const bool = t.match(/"correct"\s*:\s*(true|false)/);
+  const ideasBlock = (t.match(/"ideas"\s*:\s*\[([^\]]*)/) || [])[1] || "";
+  const ideas = [...ideasBlock.matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((m) => m[1]).filter((x) => !/^(text|en|reading)$/.test(x));
+  return { correct: bool ? bool[1] === "true" : true, fixed: str("fixed"), note: str("note"), reply: str("reply"), reading: str("reading"), en: str("en"), ideas };
+}
+
+function parseTalk(text) {
+  try {
+    const d = parseJson(text);
+    if (d && typeof d === "object" && !Array.isArray(d)) return d;
+  } catch { /* fall back below */ }
+  return looseFields(text);
+}
+
+// Talk keeps one Gemma conversation open on the phone, so each turn only has to read the new
+// line (not the whole chat again) — much faster than starting from scratch every time.
+let talk = null; // { key, native, system, transcript: [] }
+
+function talkSystem(topic, known) {
   const ja = lang() === "ja";
   const sl = lang() === "sl";
   const langName = ja ? "Japanese" : sl ? "Slovenian" : "Chinese";
-  const past = history.slice(-8).map((m) => `${m.who === "me" ? "Student" : "You"}: ${m.text}`).join("\n");
-  const opening = !String(answer || "").trim();
-  const prompt = `You are having a short, friendly spoken conversation in ${langName} with a beginner, to help them practise.
-Scene: ${topic.scene}. You play: ${topic.role}.
-Use very short, simple sentences, mainly with these words the student knows: ${known.join(", ")}.
-${opening ? "Open the conversation: greet the student and ask one simple question that fits the scene." : `Conversation so far:\n${past}\n\nThe student just said: "${answer}"`}
+  return `You are ${topic.role}. Scene: ${topic.scene}. You chat in ${langName} with a beginner who is practising.
+Rules:
+- Say only one or two very short, simple ${langName} sentences${ja ? " (simple kanji only)" : ""}. Mainly use these words: ${known.join(", ")}.
+- Stay in the scene. React to what the student said, then ask one easy question.
+- Check ONLY the student's last message. If it has a real grammar or word mistake, give the corrected version of THEIR sentence (same meaning, never your own question). If it is understandable and correct, it is correct. If they wrote English, show how to say it in ${langName}.
+- Answer every message with ONLY this JSON, nothing else:
+{"correct": true, "fixed": "", "note": "", "reply": "your ${langName} line",${ja ? ' "reading": "your line in hiragana",' : ""} "en": "English translation of your line", "ideas": ["short possible answer", "another one"]}
+("fixed" = corrected student sentence and "note" = one short English tip, only when "correct" is false.)`;
+}
 
-Reply with JSON only:
-${opening ? "" : ` "correct": true if what the student said is correct, natural ${langName}; false if it has a mistake or is not in ${langName}
- "fixed": when not correct, how to say it correctly in ${langName} (if they wrote English, translate what they meant); otherwise ""
- "note": when not correct, one short sentence in English about the fix; otherwise ""
-`} "reply": your next line in ${langName} — one or two short sentences that continue the scene, usually ending with a simple question${ja ? '\n "reading": your reply in hiragana only' : ""}
- "en": the English translation of your reply
- "ideas": two short things the student could answer, each {"text": in ${langName}${ja ? ', "reading": in hiragana' : ""}, "en": English}`;
-  const d = await chat(prompt, { temperature: 0.7 });
+async function talkSend(message) {
+  const s = getSettings();
+  if (!s.ai_enabled) throw new AIError("AI is turned off in settings");
+  const g = gemma();
+  try {
+    if (talk.native) {
+      if (!talk.started) {
+        await g.chatStart({ system: talk.system, temperature: 0.5, backend: s.gemma_backend || "cpu" });
+        talk.started = true;
+      }
+      return (await g.chatSend({ prompt: message })).text;
+    }
+    // Ollama / older app: send the whole chat each time.
+    const prompt = [...talk.transcript, message].join("\n");
+    return (await generate({ prompt, system: talk.system, temperature: 0.5 })).text;
+  } catch (e) {
+    if (talk.native) talk.started = false;
+    throw e instanceof AIError ? e : new AIError(e.message || String(e));
+  }
+}
+
+/**
+ * One turn of a role-play conversation ("Talk"). With an empty `answer` Gemma opens the scene.
+ * history: [{ who: "gemma" | "me", text }] — used to pick the conversation up again if needed.
+ */
+export async function talkTurn(topic, known, history, answer) {
+  const ja = lang() === "ja";
+  const opening = !String(answer || "").trim();
+  const key = `${lang()}:${topic.id}`;
+  if (opening || !talk || talk.key !== key) {
+    await talkEnd();
+    const g = gemma();
+    talk = { key, native: !!(g && g.chatStart), started: false, system: talkSystem(topic, known), transcript: [] };
+    if (!opening) {
+      // Picking up an existing chat (e.g. after an error): replay it briefly.
+      const past = history.slice(-6).map((m) => `${m.who === "me" ? "Student" : "You"}: ${m.text}`).join("\n");
+      talk.transcript.push(`(Chat so far:\n${past})`);
+    }
+  }
+  const msg = opening ? 'Student: (arrives) — start the chat with a greeting and one easy question. Use "correct": true.' : `Student: ${answer}`;
+  let text = await talkSend(talk.native && talk.transcript.length && !talk.started ? `${talk.transcript.join("\n")}\n${msg}` : msg);
+  let d = parseTalk(text);
+  if (!String(d?.reply || "").trim()) {
+    text = await talkSend('Answer again with ONLY the JSON object: {"correct": …, "fixed": …, "note": …, "reply": …, "en": …, "ideas": […]}');
+    d = parseTalk(text);
+  }
   const reply = String(d?.reply || "").trim();
+  if (!reply) throw new AIError("Gemma didn't manage an answer — try again");
+  talk.transcript.push(msg, `You: ${reply}`);
+  let fixed = opening || d.correct !== false ? "" : String(d?.fixed || "").trim();
+  // Small models sometimes "correct" the student into their own next question — ignore that.
+  if (fixed && (fixed === reply || (fixed.replace(/[?？。.!！\s]/g, "") === String(answer).replace(/[?？。.!！\s]/g, "")))) fixed = "";
   const en = String(d?.en || "").trim();
-  if (!reply || !en || !isEnglish(en)) throw new AIError("Gemma didn't manage an answer — try again");
-  const fixed = opening || d.correct === true ? "" : String(d?.fixed || "").trim();
   return {
-    correct: opening ? null : d.correct === true || !fixed,
+    correct: opening ? null : !fixed,
     fixed,
     note: fixed ? String(d?.note || "").trim() : "",
     reply,
     reading: ja ? String(d?.reading || "").trim() : "",
-    en,
+    en: en && isEnglish(en) ? en : "",
     ideas: (Array.isArray(d?.ideas) ? d.ideas : [])
-      .map((x) => ({ text: String(x?.text || "").trim(), reading: ja ? String(x?.reading || "").trim() : "", en: String(x?.en || "").trim() }))
+      .map((x) => (typeof x === "string" ? { text: x.trim(), en: "" } : { text: String(x?.text || "").trim(), en: String(x?.en || "").trim() }))
       .filter((x) => x.text)
       .slice(0, 3),
   };
+}
+
+/** Closes the open Talk conversation (frees Gemma for other things). */
+export async function talkEnd() {
+  const was = talk;
+  talk = null;
+  if (was?.native && was.started) await gemma()?.chatEnd?.().catch(() => {});
 }
 
 /** Pronunciation check with an audio-capable Gemma on the phone (Gemma 3n / 4 E2B or E4B). */

@@ -70,7 +70,7 @@ async function talkScreen(topic) {
   const scroll = () => requestAnimationFrame(() => body.scrollTo({ top: body.scrollHeight, behavior: "smooth" }));
   const updateCounter = () => (counter.textContent = `${Math.min(turns, TURNS)} / ${TURNS}`);
 
-  const close = () => { closed = true; stopSpeaking(); root.remove(); };
+  const close = () => { closed = true; stopSpeaking(); root.remove(); api("/api/talk/end", { method: "POST" }).catch(() => {}); };
 
   function gemmaBubble(r) {
     const say = () => speak(isJa() && r.reading ? r.reading : r.reply);
@@ -84,7 +84,7 @@ async function talkScreen(topic) {
           { class: "talk-bubble" },
           h("div", { class: "hz talk-text" }, r.reply),
           readingLine(r.reading),
-          h("div", { class: "row", style: { alignItems: "center", gap: "8px" } }, iconBtn("speaker", "speaker sm", say, "Listen"), revealEn(r.en))
+          h("div", { class: "row", style: { alignItems: "center", gap: "8px" } }, iconBtn("speaker", "speaker sm", say, "Listen"), r.en ? revealEn(r.en) : null)
         )
       )
     );
@@ -122,14 +122,21 @@ async function talkScreen(topic) {
           "button",
           { class: "talk-idea", onclick: () => { input.value = x.text; input.focus(); }, title: x.en },
           h("span", { class: "hz" }, x.text),
-          h("small", {}, x.en)
+          x.en ? h("small", {}, x.en) : null
         )
       )
     );
   }
 
   function thinking() {
-    const el = h("div", { class: "talk-msg gemma" }, h("div", { class: "talk-who" }, topic.icon), h("div", { class: "talk-bubble talk-typing" }, h("span"), h("span"), h("span")));
+    const secs = h("small", { class: "talk-secs" });
+    const el = h("div", { class: "talk-msg gemma" }, h("div", { class: "talk-who" }, topic.icon), h("div", { class: "talk-bubble talk-typing" }, h("span"), h("span"), h("span"), secs));
+    const t0 = Date.now();
+    const timer = setInterval(() => {
+      if (!el.isConnected) return clearInterval(timer);
+      const s = Math.round((Date.now() - t0) / 1000);
+      if (s >= 5) secs.textContent = `${s} s`;
+    }, 1000);
     log.append(el);
     scroll();
     return el;

@@ -573,9 +573,15 @@ const routes = {
     };
   },
 
-  "GET /api/words": () =>
-    W().sort(byPosition).map((w) => {
-      const cs = cardsOf(w.id);
+  "GET /api/words": () => {
+    // Group cards by word once (a course has thousands of words and cards).
+    const byWord = new Map();
+    for (const c of db.cards) {
+      if (!byWord.has(c.word_id)) byWord.set(c.word_id, []);
+      byWord.get(c.word_id).push(c);
+    }
+    return W().sort(byPosition).map((w) => {
+      const cs = byWord.get(w.id) || [];
       return {
         id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, english: w.english, gender: w.gender || null, unit: w.unit, section: w.section, source: w.source,
         cards: cs.length,
@@ -583,7 +589,8 @@ const routes = {
         strength: cs.length ? cs.reduce((a, c) => a + c.interval, 0) / cs.length : null,
         lapses: cs.length ? cs.reduce((a, c) => a + c.lapses, 0) : null,
       };
-    }),
+    });
+  },
 
   "POST /api/words": (_, body) => {
     const w = makeWord(body.hanzi, body.pinyin, body.english);

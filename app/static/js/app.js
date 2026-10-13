@@ -40,13 +40,25 @@ const TABS = [
   ["#/settings", "settings", "Settings"],
 ];
 
+// The last drawn screen of each tab: shown instantly when you come back, then refreshed.
+const screenCache = new Map();
+
 function shell(content, active) {
+  const waiting = content?.classList?.contains("spinner");
+  if (waiting && screenCache.has(active)) {
+    // Coming back to a tab: show it as it was while fresh data loads (no spinner flash).
+    const cached = screenCache.get(active);
+    if (!cached.isConnected) app.replaceChildren(...cached.nodes);
+    return;
+  }
   const tabbar = h(
     "nav",
     { class: "tabbar" },
     TABS.map(([href, ico, label]) => h("a", { href, class: href === active ? "active" : "" }, h("span", { class: "ico", html: TAB_ICONS[ico] }), label))
   );
-  app.replaceChildren(h("div", { class: "screen" }, content), tabbar);
+  const screen = h("div", { class: "screen" }, content);
+  app.replaceChildren(screen, tabbar);
+  if (!waiting) screenCache.set(active, { nodes: [screen, tabbar], get isConnected() { return screen.isConnected; } });
 }
 
 function loading() {
@@ -55,6 +67,9 @@ function loading() {
 
 async function route() {
   const hash = location.hash || "#/";
+  // Highlight the tapped tab right away, before the screen is ready.
+  const tab = TABS.find(([href]) => href !== "#/" && hash.startsWith(href))?.[0] || "#/";
+  document.querySelectorAll(".tabbar a").forEach((a) => a.classList.toggle("active", a.getAttribute("href") === tab));
   try {
     if (hash.startsWith("#/words")) return await wordsScreen();
     if (hash.startsWith("#/stats")) return await statsScreen();
@@ -126,6 +141,7 @@ function courseSheet(home, startWith = null) {
     const body = { course: lang };
     if (level) body[`section_${lang}`] = level;
     state.settings = await api("/api/settings", { method: "PUT", body });
+    screenCache.clear(); // other language: nothing cached applies
     applyCourse();
     bg.remove();
     route();
@@ -435,26 +451,30 @@ async function unitsView(units) {
     {},
     units.map((u, i) => {
       const complete = u.learned === u.total;
-      const body = h(
-        "div",
-        { class: "unit-body" },
-        (byUnit[u.name] || []).map((w) =>
-          h(
-            "button",
-            { class: "chip" + (w.cards ? " learned" : " locked") + (w.lapses > 2 ? " weak" : ""), onclick: () => wordSheet(w) },
-            h("span", { class: "hz" }, w.hanzi),
-            h("span", { class: "py" }, w.cards ? w.pinyin : "·")
+      const body = h("div", { class: "unit-body" });
+      // Word chips are only built when a unit is opened (a level can have dozens of units).
+      const fill = () => {
+        if (body.childElementCount) return;
+        body.append(
+          ...(byUnit[u.name] || []).map((w) =>
+            h(
+              "button",
+              { class: "chip" + (w.cards ? " learned" : " locked") + (w.lapses > 2 ? " weak" : ""), onclick: () => wordSheet(w) },
+              h("span", { class: "hz" }, w.hanzi),
+              h("span", { class: "py" }, w.cards ? w.pinyin : "·")
+            )
           )
-        )
-      );
+        );
+      };
       const started = u.learned > 0 && !complete;
       body.hidden = !(started || (i === 0 && !u.learned));
+      if (!body.hidden) fill();
       return h(
         "div",
         { class: "unit" },
         h(
           "div",
-          { class: "unit-head", style: { "--c": UNIT_COLORS[i % UNIT_COLORS.length] }, onclick: () => (body.hidden = !body.hidden) },
+          { class: "unit-head", style: { "--c": UNIT_COLORS[i % UNIT_COLORS.length] }, onclick: () => { fill(); body.hidden = !body.hidden; } },
           h("div", {}, h("div", { class: "sub" }, `UNIT ${i + 1} · ${u.learned}/${u.total}`), h("h3", {}, u.name)),
           h("div", { class: "crown" }, complete ? "👑" : started ? "📖" : "🔒")
         ),
@@ -543,6 +563,7 @@ function wordSheet(w) {
 let wordFilter = "all";
 let wordSearch = "";
 let wordSection = "all"; // level: "all" or a section name such as "JLPT N3"
+let wordsObserver = null;
 
 async function wordsScreen() {
   shell(loading(), "#/words");
@@ -564,20 +585,35 @@ async function wordsScreen() {
       if (wordFilter === "mine" && w.source !== "custom") return false;
       return !q || w.hanzi.includes(q) || w.english.toLowerCase().includes(q) || w.pinyin.toLowerCase().includes(q);
     });
-    list.replaceChildren(
-      ...(shown.length
-        ? shown.map((w) => {
-            const s = Math.min(5, Math.ceil(Math.log2(1 + (w.strength || 0)) * 1.3));
-            return h(
-              "div",
-              { class: "list-item", onclick: () => wordSheet(w), style: { cursor: "pointer" } },
-              h("div", { class: "hz" }, w.hanzi),
-              h("div", { class: "meta" }, h("div", { class: "py" }, w.pinyin), h("div", { class: "en" }, w.english)),
-              w.cards ? h("div", { class: "strength" }, [0, 1, 2, 3, 4].map((i) => h("i", { class: i < s ? "on" : "" }))) : h("span", { class: "tag blue" }, "new")
-            );
-          })
-        : [h("div", { class: "empty" }, h("div", { class: "e" }, "🔍"), h("p", { class: "muted" }, "No words here"))])
-    );
+    const item = (w) => {
+      const s = Math.min(5, Math.ceil(Math.log2(1 + (w.strength || 0)) * 1.3));
+      return h(
+        "div",
+        { class: "list-item", onclick: () => wordSheet(w), style: { cursor: "pointer" } },
+        h("div", { class: "hz" }, w.hanzi),
+        h("div", { class: "meta" }, h("div", { class: "py" }, w.pinyin), h("div", { class: "en" }, w.english)),
+        w.cards ? h("div", { class: "strength" }, [0, 1, 2, 3, 4].map((i) => h("i", { class: i < s ? "on" : "" }))) : h("span", { class: "tag blue" }, "new")
+      );
+    };
+    if (!shown.length) {
+      list.replaceChildren(h("div", { class: "empty" }, h("div", { class: "e" }, "🔍"), h("p", { class: "muted" }, "No words here")));
+      return;
+    }
+    // Draw the first screenful at once and the rest while scrolling (levels have thousands of words).
+    let drawn = 0;
+    const sentinel = h("div", { class: "list-more" });
+    const more = () => {
+      const next = shown.slice(drawn, drawn + (drawn ? 120 : 60));
+      drawn += next.length;
+      sentinel.before(...next.map(item));
+      if (drawn >= shown.length) { observer.disconnect(); sentinel.remove(); }
+    };
+    const observer = new IntersectionObserver((es) => es.some((e) => e.isIntersecting) && more(), { rootMargin: "800px" });
+    wordsObserver?.disconnect();
+    wordsObserver = observer;
+    list.replaceChildren(sentinel);
+    more();
+    if (sentinel.isConnected) observer.observe(sentinel);
   };
   const filters = [
     ["all", "All"],

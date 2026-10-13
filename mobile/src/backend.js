@@ -14,6 +14,7 @@ import seedSl from "../../app/data/slovenian_a1.json";
 import FALLBACK_SL from "../../app/data/slovenian_sentences.json";
 import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
+import * as sync from "./sync.js";
 import * as fsrs from "./fsrs.js";
 import LOOKALIKES from "../../app/data/lookalikes.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
@@ -159,10 +160,81 @@ export async function init(storage) {
   db.grammar ||= { learned: {} };
   db.stories ||= {};
   ai.configure(settingsAll);
-  document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && flush());
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      flush();
+      autoSync();
+    } else if (db.sync?.code && Date.now() - Date.parse(db.sync.last || 0) > 5 * 60 * 1000) {
+      autoSync();
+    }
+  });
+  if (db.sync?.code) setTimeout(autoSync, 2500);
+}
+
+// ------------------------------------------------------------------ sync between devices
+
+let syncing = null;
+/** Called when sync merged something new from another device (the app redraws the screen). */
+export let onSynced = () => {};
+export function setOnSynced(fn) { onSynced = fn; }
+
+function runSync() {
+  if (!db.sync?.code) return Promise.reject(new HttpError(400, "Sync is off"));
+  if (!navigator.onLine) return Promise.reject(new HttpError(503, "No internet connection"));
+  syncing ||= sync.syncNow(db).then((r) => {
+    db.sync.error = "";
+    flush();
+    if (r.changed) { onSynced(); pushWidget(); }
+    return r;
+  }, (e) => {
+    db.sync.error = e.message;
+    flush();
+    throw e;
+  }).finally(() => { syncing = null; });
+  return syncing;
+}
+
+function autoSync() {
+  if (db.sync?.code) runSync().catch((e) => console.warn("sync", e.message));
+}
+
+/** Home-screen widget (Android): a handful of learned words, review times and the streak. */
+function pushWidget() {
+  const widget = window.__native?.widget;
+  if (!widget) return;
+  try {
+    const learned = new Set(db.cards.map((c) => c.word_id));
+    const words = W().filter((w) => learned.has(w.id));
+    const firstDue = new Map();
+    for (const c of db.cards) if (!firstDue.has(c.word_id) || c.due < firstDue.get(c.word_id)) firstDue.set(c.word_id, c.due);
+    const due = words
+      .map((w) => Date.parse(String(firstDue.get(w.id) || "").replace(" ", "T")))
+      .filter((t) => !Number.isNaN(t))
+      .sort((a, b) => a - b)
+      .slice(0, 1500);
+    const pickFrom = words.length ? words : W().filter((w) => w.source !== "custom").sort(byPosition).slice(0, 7);
+    const sample = shuffled(pickFrom).slice(0, 40).map((w) => ({ w: w.hanzi, r: w.pinyin || "", m: w.english || "" }));
+    const days = [...Object.keys(db.activity).filter(practiced), ...db.garden.saved].sort();
+    const data = {
+      label: words.length ? "Word of the day" : "Coming up next",
+      words: sample,
+      due,
+      streak: streak(),
+      last_day: days[days.length - 1] || "",
+    };
+    widget.update({ json: JSON.stringify(data) }).catch(() => {});
+  } catch (e) {
+    console.warn("widget", e);
+  }
+}
+
+function syncInfo() {
+  const s = db.sync;
+  return s?.code ? { on: true, code: s.code, last: s.last || null, error: s.error || "" } : { on: false };
 }
 
 function persist() {
+  if (db.sync?.code && !syncing) db.sync.changed_at = new Date().toISOString();
   clearTimeout(saveTimer);
   saveTimer = setTimeout(flush, 300);
 }
@@ -526,6 +598,12 @@ function knownShare(story, lex) {
   return Math.round((100 * toks.filter(([t]) => lex.get(t)?.learned).length) / toks.length);
 }
 
+/** Remembers deleted words so sync doesn't bring them back from another device. */
+function tombstone(words) {
+  if (!db.sync?.code || !words.length) return;
+  db.sync.deleted = [...(db.sync.deleted || []), ...words.map(sync.wordKey)].slice(-500);
+}
+
 // ------------------------------------------------------------------ your own words
 
 /** A word you add yourself (one at a time or from an imported list). Throws with a readable reason. */
@@ -570,6 +648,7 @@ function looksLikeReading(x) {
 const routes = {
   "GET /api/home": async () => {
     waterMissedDays();
+    pushWidget();
     const grammar = await grammarStatus();
     const s = settingsAll();
     const n = fmt(now());
@@ -696,6 +775,7 @@ const routes = {
   "DELETE /api/lists/:name": ({ name }) => {
     const list = name;
     const gone = new Set(W().filter((w) => w.source === "custom" && w.section === list).map((w) => w.id));
+    tombstone(db.words.filter((w) => gone.has(w.id)));
     db.words = db.words.filter((w) => !gone.has(w.id));
     db.cards = db.cards.filter((c) => !gone.has(c.word_id));
     if (settingsAll()[`section_${course()}`] === list) db.settings[`section_${course()}`] = "";
@@ -712,6 +792,7 @@ const routes = {
   "POST /api/words/pinyin": (_, body) => ({ pinyin: course() === "zh" ? toPinyin(body.query) : "" }),
 
   "DELETE /api/words/:id": ({ id }) => {
+    tombstone(db.words.filter((w) => w.id === Number(id) && w.source === "custom"));
     db.words = db.words.filter((w) => w.id !== Number(id));
     db.cards = db.cards.filter((c) => c.word_id !== Number(id));
     persist();
@@ -1184,13 +1265,47 @@ const routes = {
     return { ok: true };
   },
 
-  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
+  "GET /api/sync": () => syncInfo(),
+
+  // Turn sync on: with a new code (first device) or the code from another device.
+  "POST /api/sync/enable": async (_, body) => {
+    const code = body.code ? sync.cleanCode(body.code) : sync.newCode();
+    if (!code) throw new HttpError(400, "That doesn't look like a sync code (16 letters and numbers)");
+    db.sync = { code, version: 0, hash: "", last: null, changed_at: new Date().toISOString(), deleted: [] };
+    flush();
+    try {
+      await runSync();
+    } catch (e) {
+      if (body.code) { db.sync = null; flush(); }
+      throw new HttpError(503, `Sync failed: ${e.message}`);
+    }
+    return syncInfo();
+  },
+
+  "POST /api/sync/now": async () => {
+    try {
+      const r = await runSync();
+      return { ...syncInfo(), changed: r.changed };
+    } catch (e) {
+      throw e instanceof HttpError ? e : new HttpError(503, `Sync failed: ${e.message}`);
+    }
+  },
+
+  "POST /api/sync/disable": () => {
+    db.sync = null;
+    flush();
+    return syncInfo();
+  },
+
+  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, sync: null, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
 
   "POST /api/backup/restore": (_, body) => {
     if (!body || body.app !== "hanzi-home" || !Array.isArray(body.words) || !Array.isArray(body.cards)) throw new HttpError(400, "That isn't a Hanzi Home backup");
     const token = db.settings.hf_token;
     const { app: _a, exported_at: _e, ...rest } = body;
-    db = { ...freshDb(), ...rest, settings: { ...rest.settings, hf_token: token || "" } };
+    const keepSync = db.sync || null;
+    db = { ...freshDb(), ...rest, sync: keepSync, settings: { ...rest.settings, hf_token: token || "" } };
+    if (keepSync) keepSync.changed_at = new Date().toISOString();
     migrate();
     flush();
     return { ok: true };

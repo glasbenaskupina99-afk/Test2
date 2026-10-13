@@ -16,6 +16,9 @@
   },
   // No id: Wrangler creates the namespace on the first deploy and reuses it afterwards.
   "kv_namespaces": [{ "binding": "NOTIFY" }],
+  // App sync: one Durable Object (SQLite storage, available on the free plan) per sync code.
+  "durable_objects": { "bindings": [{ "name": "SYNC", "class_name": "SyncStore" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["SyncStore"] }],
   // Email Routing: each new sign-up is emailed to this (verified) address.
   "send_email": [{ "name": "MAIL", "destination_address": "thebloomko@gmail.com" }]
 }

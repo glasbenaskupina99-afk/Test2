@@ -4,4 +4,5 @@
     <string name="title_activity_main">Bloomko</string>
     <string name="package_name">com.hanzihome.app</string>
     <string name="custom_url_scheme">com.hanzihome.app</string>
+    <string name="widget_description">Word of the day, reviews waiting and your streak</string>
 </resources>

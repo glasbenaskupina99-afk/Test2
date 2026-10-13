@@ -1152,3 +1152,10 @@ select.select-native { display: none !important; }
 .talk-send { width: 52px; flex: none; padding: 0; height: 48px; font-size: 20px; }
 .talk-mic svg { width: 24px; height: 24px; }
 .talk-secs { margin-left: 6px; color: var(--muted); font-size: 12px; align-self: center; }
+
+/* ---------------------------------------------------------------- sync */
+.sync-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); margin-right: 8px; box-shadow: 0 0 8px rgba(140, 192, 107, .7); }
+.sync-dot.bad { background: var(--red); box-shadow: none; }
+.sync-code-row { align-items: center; }
+.sync-code { flex: 1; min-width: 0; white-space: nowrap; font: 800 17px/1.2 ui-monospace, "SFMono-Regular", Menlo, monospace; letter-spacing: 1px; color: var(--text-strong); padding: 10px 12px; border-radius: 12px; background: var(--surface-2); border: 2px dashed var(--border); text-align: center; }
+.sync-card .row .input { flex: 1; min-width: 0; margin: 0; }

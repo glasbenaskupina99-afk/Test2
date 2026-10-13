@@ -11,6 +11,7 @@ import { pickTime } from "./timepicker.js";
 import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
+import { syncCard } from "./sync-ui.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -87,6 +88,11 @@ async function route() {
   }
 }
 window.addEventListener("hashchange", route);
+// Sync brought progress from another device: redraw (unless a lesson is open).
+window.addEventListener("bloomko-synced", () => {
+  screenCache.clear();
+  if (!document.querySelector(".lesson")) route();
+});
 
 async function startFlow(fn) {
   try {
@@ -1434,6 +1440,8 @@ async function settingsScreen() {
       isWeb
         ? h("a", { class: "btn ghost", href: "Bloomko.apk", download: "Bloomko.apk", style: { marginTop: "20px", textDecoration: "none" } }, "📱 Download the Android app")
         : null,
+      window.__localApi ? h("h2", { class: "section-title" }, "🔄 Sync between devices") : null,
+      window.__localApi ? syncCard() : null,
       window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup") : null,
       window.__localApi ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),

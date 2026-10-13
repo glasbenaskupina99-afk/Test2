@@ -5,6 +5,10 @@
 // emailed to the owner.
 import { EmailMessage } from "cloudflare:email";
 import { seo } from "./seo.js";
+import { handleSync } from "./sync.js";
+
+// Durable Object class for app sync (bound as SYNC in wrangler.jsonc).
+export { SyncStore } from "./sync.js";
 
 const FROM = "notify@bloomko.eu";
 const TO = "thebloomko@gmail.com";
@@ -100,6 +104,7 @@ async function notify(request, env, ctx) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname.startsWith("/api/sync/")) return handleSync(request, env, url.pathname.slice(10));
     if (url.pathname === "/api/notify") {
       if (request.method !== "POST") return json(405, { error: "use POST" });
       return notify(request, env, ctx);

@@ -10,6 +10,8 @@ import * as backend from "./backend.js";
 
 const isNative = Capacitor.isNativePlatform();
 const Gemma = registerPlugin("Gemma");
+const Widget = registerPlugin("Widget");
+const Ocr = registerPlugin("Ocr");
 const KEY = "hanzi-db";
 
 const storage = isNative
@@ -47,6 +49,8 @@ function recognize(language = "zh-CN") {
 if (isNative) {
   window.__native = {
     gemma: Gemma,
+    widget: Widget,
+    ocr: Ocr,
     notifications: LocalNotifications,
     speak: (text, rate, lang = "zh-CN") => TextToSpeech.speak({ text, lang, rate: rate / 0.8, pitch: 1, volume: 1, category: "playback" }),
     stopSpeaking: () => TextToSpeech.stop().catch(() => {}),
@@ -68,6 +72,7 @@ if (!isNative && "serviceWorker" in navigator && location.protocol === "https:")
 
 await backend.init(storage);
 window.__localApi = backend.handle;
+backend.setOnSynced(() => window.dispatchEvent(new Event("bloomko-synced")));
 
 // Load Gemma in the background shortly after start, so the first AI answer doesn't
 // have to wait for the model to load (can be turned off in Settings).

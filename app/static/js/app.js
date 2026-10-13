@@ -12,6 +12,7 @@ import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
 import { syncCard } from "./sync-ui.js";
+import { photoSheet, canReadPhotos } from "./photo.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -821,6 +822,7 @@ async function wordsScreen() {
         { class: "topbar" },
         h("h2", {}, "Words"),
         h("span", { class: "spacer" }),
+        canReadPhotos() ? h("button", { class: "btn ghost small", onclick: () => photoSheet(() => { screenCache.clear(); route(); }), "aria-label": "Words from a photo" }, "📷") : null,
         h("button", { class: "btn ghost small", onclick: importSheet }, "⇪ Import"),
         h("button", { class: "btn small", onclick: addWordSheet }, "+ Add")
       ),

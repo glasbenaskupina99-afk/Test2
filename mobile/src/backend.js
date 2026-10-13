@@ -772,6 +772,69 @@ const routes = {
     return { list, added: added.map(pick), skipped };
   },
 
+  // Words found in a photo's text (read on the phone): which you know, which are in the course, which are new.
+  "POST /api/photo/words": (_, body) => {
+    const text = String(body.text || "").slice(0, 4000);
+    const lex = courseLexicon();
+    const ja = course() === "ja";
+    const sl = course() === "sl";
+    const seen = new Set();
+    const words = [];
+    // Characters next to each other that aren't in the course are most likely one word (熊+猫 → 熊猫).
+    const cjk = ja ? /^[\u4e00-\u9fff\u30a1-\u30fa\u30fc]$/ : /^[\u4e00-\u9fff]$/;
+    const toks = [];
+    for (const tok of tokenize(text, lex)) {
+      const prev = toks[toks.length - 1];
+      if (!sl && cjk.test(tok[0]) && !lex.has(tok[0]) && prev?.loose && prev[0].length < 4) {
+        prev[0] += tok[0];
+        prev[1] = "";
+      } else {
+        toks.push(Object.assign([...tok], { loose: !sl && cjk.test(tok[0]) && !lex.has(tok[0]) }));
+      }
+    }
+    if (ja) {
+      // Katakana words come out letter by letter (the Kana course has every letter): join them.
+      const kata = /^[\u30a1-\u30fa\u30fc]+$/;
+      for (let i = toks.length - 1; i > 0; i--) {
+        if (kata.test(toks[i][0]) && kata.test(toks[i - 1][0])) {
+          toks[i - 1] = Object.assign([toks[i - 1][0] + toks[i][0], "", ""], { loose: true });
+          toks.splice(i, 1);
+        }
+      }
+      // Verbs and adjectives in another form (食べました → 食べる): match the stem of a course word.
+      const stems = new Map();
+      for (const k of lex.keys()) {
+        const m = k.match(/^([\u4e00-\u9fff]+[\u3041-\u3096]*?)[うくすつぬぶむぐるい]$/);
+        if (m && !stems.has(m[1])) stems.set(m[1], k);
+      }
+      for (let i = 0; i < toks.length; i++) {
+        if (!/[\u4e00-\u9fff]/.test(toks[i][0]) || (lex.has(toks[i][0]) && toks[i][0].length > 1)) continue;
+        for (let k = 3; k >= 0; k--) {
+          const parts = toks.slice(i, i + k + 1);
+          if (parts.length !== k + 1 || parts.slice(1).some((x) => !/^[\u3041-\u3096]$/.test(x[0]))) continue;
+          const word = stems.get(parts.map((x) => x[0]).join(""));
+          if (word) {
+            toks.splice(i, k + 1, [word, "", ""]);
+            break;
+          }
+        }
+      }
+    }
+    for (const [t0, r, m] of toks) {
+      const t = sl ? t0.toLowerCase().replace(/[^a-zčšžćđ-]/g, "") : t0.trim();
+      if (!t || isPunct(t) || seen.has(t)) continue;
+      if (sl ? t.length < 2 : ja ? !/[\u4e00-\u9fff\u30a1-\u30fa]/.test(t) && !(lex.has(t) && t.length > 1) : !/[\u4e00-\u9fff]/.test(t)) continue;
+      if (ja && /^[\u30a1-\u30fa\u30fc]$/.test(t)) continue;
+      seen.add(t);
+      const w = lex.get(t);
+      words.push(w
+        ? { t, r: w.reading, m: w.meaning, kind: w.learned ? "learned" : "course", level: w.level, word_id: w.id }
+        : { t, r: ja ? (/^[\u30a1-\u30fa\u30fc]+$/.test(t) ? normKana(t) : "") : sl ? "" : r || toPinyin(t), m: m || "", kind: "new" });
+      if (words.length >= 80) break;
+    }
+    return { words };
+  },
+
   "DELETE /api/lists/:name": ({ name }) => {
     const list = name;
     const gone = new Set(W().filter((w) => w.source === "custom" && w.section === list).map((w) => w.id));

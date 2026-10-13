@@ -1159,3 +1159,23 @@ select.select-native { display: none !important; }
 .sync-code-row { align-items: center; }
 .sync-code { flex: 1; min-width: 0; white-space: nowrap; font: 800 17px/1.2 ui-monospace, "SFMono-Regular", Menlo, monospace; letter-spacing: 1px; color: var(--text-strong); padding: 10px 12px; border-radius: 12px; background: var(--surface-2); border: 2px dashed var(--border); text-align: center; }
 .sync-card .row .input { flex: 1; min-width: 0; margin: 0; }
+
+/* ---------------------------------------------------------------- words from a photo */
+.photo-sheet { max-height: 88vh; overflow-y: auto; }
+.ph-head { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+.ph-preview { width: 64px; height: 64px; object-fit: cover; border-radius: 12px; border: 2px solid var(--border); flex: none; }
+.ph-text { margin: 0 0 10px; color: var(--muted); }
+.ph-text summary { cursor: pointer; font-weight: 700; font-size: 14px; }
+.ph-text p { white-space: pre-wrap; color: var(--text); font-size: 16px; }
+.ph-known { display: flex; flex-wrap: wrap; gap: 6px; }
+.ph-chip { display: flex; flex-direction: column; align-items: center; padding: 4px 10px; border-radius: 12px; border: 2px solid var(--border); background: var(--surface); color: var(--text-strong); font: inherit; cursor: pointer; }
+.ph-chip b { font-size: 18px; font-weight: 500; }
+.ph-chip small { font-size: 10px; color: var(--muted); }
+.ph-chip.learned { border-color: rgba(140, 192, 107, .55); }
+.ph-rows { display: flex; flex-direction: column; gap: 8px; }
+.ph-row { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); }
+.ph-row.ph-missing { border-color: var(--red); }
+.ph-check { width: 20px; height: 20px; flex: none; accent-color: var(--green); }
+.ph-word { flex: none; min-width: 52px; font-size: 22px; background: none; border: none; color: var(--text-strong); cursor: pointer; padding: 0 4px; }
+.ph-fields { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.ph-fields .input { margin: 0; padding: 6px 10px; font-size: 14px; min-height: 0; }

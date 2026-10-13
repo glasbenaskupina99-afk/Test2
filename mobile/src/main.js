@@ -62,7 +62,7 @@ if (isNative) {
   };
 } else if (window.__gemmaMock) {
   // Used by browser tests to exercise the on-device AI code paths.
-  window.__native = { gemma: window.__gemmaMock, notifications: window.__notifyMock, shareFile: async () => {} };
+  window.__native = { gemma: window.__gemmaMock, notifications: window.__notifyMock, ocr: window.__ocrMock, widget: window.__widgetMock, shareFile: async () => {} };
 }
 
 // Browser version: work offline and be installable as an app.

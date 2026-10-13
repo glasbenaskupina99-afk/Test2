@@ -8,7 +8,14 @@ Website: https://bloomko.eu · Contact: thebloomko@gmail.com
 - Handwriting practice: trace and write characters stroke by stroke with feedback on each stroke.
 - Offline AI tutor (Gemma on the phone): writes practice sentences from the words you know, checks translations and explains mistakes; nothing has to leave the device.
 - Memory tricks and example sentences for every course word.
-- Spaced repetition (FSRS), daily plan, reminders, look-alike character drills, speaking and listening practice.
+- Talk: short role-play conversations with the offline AI tutor (café, shop, asking the way…), answered by voice or typing, with gentle corrections.
+- Pronunciation feedback (the AI can listen on the phone) and Mandarin tone practice with a pitch graph of your own voice.
+- Listening and reading: dictation, 48 graded stories with tap-to-look-up words and comprehension questions.
+- Grammar lessons: 470+ grammar points, unlocked as you learn words, with examples built from words you know.
+- Words from a photo: on-device text recognition of signs, menus or book pages; new words go into your own list.
+- Spaced repetition (FSRS), daily plan, reminders, look-alike character drills, home-screen widget (word of the day), calm nature sounds.
+- Sync between devices without an account (encrypted on the device with a private code).
+- App interface and course explanations in English, French, Spanish and Japanese.
 - Import your own word lists (txt/csv, Anki or Pleco exports).
 - Private by design: no account, no ads, no tracking.
 
@@ -23,4 +30,4 @@ Website: https://bloomko.eu · Contact: thebloomko@gmail.com
 - [Sitemap](https://bloomko.eu/sitemap.xml)
 
 ## Status
-Bloomko is in development; the first public version is coming to Google Play, iPhone later. Sign up on https://bloomko.eu to be notified.
+Bloomko is in development; the first public version is coming to Google Play, iPhone later. Sign up on https://bloomko.eu for early access. The home page lets you try writing a Chinese or Japanese character in the browser.

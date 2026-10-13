@@ -228,6 +228,12 @@ function grammarOptions(p, lesson, others, kind, x) {
 /** One graded grammar question about point p (which grammar / fill the gap). */
 function grammarQuestion(p, lesson, others, n = 1) {
   const x = p.examples[n % p.examples.length];
+  // Slovenian points with ending drills: mostly practise the endings themselves.
+  const drills = p.examples.filter((e) => e.drill);
+  if (drills.length && Math.random() < 0.7) {
+    const d = drills[n % drills.length];
+    return (ctx) => ex.grammarDrill(ctx, p, d);
+  }
   return Math.random() < 0.5 || !(x.mark || []).length
     ? (ctx) => ex.grammarWhich(ctx, p, x, grammarOptions(p, lesson, others, "short"))
     : (ctx) => ex.grammarGap(ctx, p, x, grammarOptions(p, lesson, others, "mark", x));
@@ -248,9 +254,16 @@ export async function grammarLesson() {
   for (const p of points) {
     const x1 = p.examples[1] || p.examples[0];
     const x2 = p.examples[2] || p.examples[0];
+    const drills = p.examples.filter((e) => e.drill);
     const which = (ctx) => ex.grammarWhich(ctx, p, x1, grammarOptions(p, points, others, "short"));
-    const gap = (ctx) => ex.grammarGap(ctx, p, x2, grammarOptions(p, points, others, "mark", x2));
+    const gap = drills.length
+      ? (ctx) => ex.grammarDrill(ctx, p, drills[0])
+      : (ctx) => ex.grammarGap(ctx, p, x2, grammarOptions(p, points, others, "mark", x2));
     quiz.push(step(which, learnAfter(which, p.id), p.id), step(gap, learnAfter(gap, p.id), p.id));
+    if (drills.length > 1) {
+      const more = (ctx) => ex.grammarDrill(ctx, p, drills[1]);
+      quiz.push(step(more, learnAfter(more, p.id), p.id));
+    }
   }
   steps.push(...spreadOut(shuffle(quiz)));
   return runLesson({

@@ -8,7 +8,7 @@ import { soundsOn, setSounds, playCorrect } from "./sounds.js";
 import { plantArt, gardenSheet, gardenNotice, dayLeafArt } from "./garden.js";
 import { canRemind, ensurePermission, scheduleReminders } from "./reminders.js";
 import { pickTime } from "./timepicker.js";
-import { genderTag } from "./exercises.js";
+import { genderTag, withEndings, richText } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
 import { syncCard } from "./sync-ui.js";
@@ -682,9 +682,9 @@ async function grammarBook() {
           "details",
           { class: "g-book-item" },
           h("summary", {}, h("b", {}, p.title), h("small", {}, p.short)),
-          h("div", { class: "g-pattern hz" }, p.pattern),
-          h("p", { class: "g-explain" }, p.explain),
-          p.examples.slice(0, 3).map((x) => h("div", { class: "g-example" }, h("div", { class: "g-text hz" }, x.text), x.reading && x.reading !== x.text ? h("div", { class: "small muted" }, x.reading) : null, h("div", { class: "small" }, x.en)))
+          h("div", { class: "g-pattern hz" }, withEndings(p.pattern)),
+          richText(p.explain),
+          p.examples.slice(0, 3).map((x) => h("div", { class: "g-example" }, h("div", { class: "g-text hz" }, withEndings(x.text)), x.reading && x.reading !== x.text ? h("div", { class: "small muted" }, x.reading) : null, h("div", { class: "small" }, x.en)))
         )
       : h("div", { class: "g-book-item locked" }, h("span", { html: SVG.lock }), p.title);
   bg.append(

@@ -143,7 +143,7 @@ function migrate() {
   for (const w of db.words) {
     if (w.source === "custom") continue;
     const s = seeded.get(w.lang + w.hanzi);
-    if (s) Object.assign(w, { section: s.section, source: s.source, unit: s.unit, position: s.position, pinyin: s.pinyin, english: s.english });
+    if (s) Object.assign(w, { section: s.section, source: s.source, unit: s.unit, position: s.position, pinyin: s.pinyin, english: s.english, gender: s.gender });
     have.add(w.lang + w.hanzi);
   }
   for (const w of seeded.values()) {
@@ -520,7 +520,7 @@ function fallbackSentences(knownChars, count, avoid) {
 // ------------------------------------------------------------------ grammar
 
 // Grammar points per level (www/grammar/<file>.json), loaded when first needed.
-const GRAMMAR_FILE = { "HSK 1": "hsk1", "HSK 2": "hsk2", "HSK 3": "hsk3", "JLPT N5": "n5", "JLPT N4": "n4", "JLPT N3": "n3" };
+const GRAMMAR_FILE = { "HSK 1": "hsk1", "HSK 2": "hsk2", "HSK 3": "hsk3", "JLPT N5": "n5", "JLPT N4": "n4", "JLPT N3": "n3", A1: "sl_a1" };
 const GRAMMAR = {};
 const grammarJobs = {};
 function loadGrammar(section) {

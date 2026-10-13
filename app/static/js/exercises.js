@@ -7,7 +7,7 @@ import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder } fro
 import { writingPad, strokeDemo } from "./writer.js";
 import { state, T, isJa, isSl, sayText } from "./state.js";
 
-const GENDER = { m: "masculine", ž: "feminine", s: "neuter" };
+const GENDER = { m: "masculine", ž: "feminine", s: "neuter", mn: "plural only" };
 /** Slovenian nouns show their grammatical gender from the very first word. */
 export const genderTag = (word) => (word.gender ? h("span", { class: `tag gender g-${word.gender}` }, `${word.gender} · ${GENDER[word.gender] || ""}`) : null);
 
@@ -760,8 +760,49 @@ export function lookalike(ctx, item, kind) {
 // ------------------------------------------------------------------ grammar
 
 const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const ENDED = /([\p{L}]*)\[([^\]]*)\]([\p{L}]*)/u;
+
+/** "hiš[a]" → the text with the ending in its own colour (Slovenian grammar). */
+export function withEndings(text) {
+  return String(text ?? "").split(/\[([^\]]*)\]/).map((part, i) => (i % 2 ? h("span", { class: "g-end" }, part) : part));
+}
+/** The sentence without the [ending] marks (for speech and comparing). */
+export const plainText = (t) => String(t ?? "").replace(/[[\]]/g, "");
+
+/** Grammar explanation: paragraphs (blank line), "• " bullet lists, **bold** and [endings] in colour. */
+export function richText(text, cls = "g-explain") {
+  const inline = (str) => str.split(/(\*\*[^*]+\*\*)/).map((seg) => (seg.startsWith("**") && seg.endsWith("**") ? h("b", {}, withEndings(seg.slice(2, -2))) : withEndings(seg)));
+  return h(
+    "div",
+    { class: cls },
+    String(text ?? "").split(/\n\s*\n/).flatMap((par) => {
+      // Within a paragraph, runs of "• " lines become a list and the other lines stay text.
+      const out = [];
+      for (const l of par.split("\n").filter((x) => x.trim())) {
+        const bullet = /^\s*[•-]\s/.test(l);
+        const last = out[out.length - 1];
+        if (bullet) {
+          if (last?.type === "ul") last.items.push(l.replace(/^\s*[•-]\s/, ""));
+          else out.push({ type: "ul", items: [l.replace(/^\s*[•-]\s/, "")] });
+        } else if (last?.type === "p") last.items.push(l);
+        else out.push({ type: "p", items: [l] });
+      }
+      return out.map((g) => (g.type === "ul" ? h("ul", {}, g.items.map((x) => h("li", {}, inline(x)))) : h("p", {}, g.items.flatMap((x, i) => (i ? [h("br"), ...inline(x)] : inline(x))))));
+    })
+  );
+}
+
 /** The example sentence with the grammar highlighted — or blanked out for the gap quiz. */
 function markedSentence(x, { gap = false } = {}) {
+  if (/\[[^\]]*\]/.test(x.text)) {
+    // Slovenian: endings in colour; in a drill the whole word becomes a gap with its basic form.
+    if (gap && x.drill) {
+      const m = x.text.match(ENDED);
+      const [before, after] = [x.text.slice(0, m.index), x.text.slice(m.index + m[0].length)];
+      return h("span", {}, withEndings(before), h("span", { class: "g-gap" }, "＿＿"), h("span", { class: "g-base" }, ` (${x.drill.base})`), withEndings(after));
+    }
+    return h("span", {}, withEndings(x.text));
+  }
   const marks = (x.mark || []).filter(Boolean);
   if (!marks.length) return h("span", {}, x.text);
   const parts = x.text.split(new RegExp(`(${marks.map(escRe).join("|")})`));
@@ -775,7 +816,7 @@ function grammarExampleBox(x, { gap = false, showReading = true, fresh = false }
     "div",
     { class: "g-example" + (fresh ? " g-fresh" : "") },
     fresh ? h("div", { class: "g-fresh-tag" }, "✨ From your words") : null,
-    h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, speakerBtn(x.text), h("div", { class: "g-text hz" }, markedSentence(x, { gap }))),
+    h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, speakerBtn(plainText(x.text)), h("div", { class: "g-text hz" }, markedSentence(x, { gap }))),
     showReading && x.reading && x.reading !== x.text ? h("div", { class: "g-reading small muted" }, x.reading) : null,
     en
   );
@@ -803,7 +844,7 @@ export function grammarIntro(ctx, p, i, n) {
               if (seen.has(x.text)) throw new Error("Gemma came up with the same sentence again — try once more");
               seen.add(x.text);
               exBox.replaceChildren(grammarExampleBox(x, { fresh: true }));
-              speak(x.text);
+              speak(plainText(x.text));
               b.textContent = "✨ Another example from my words";
             } catch (err) {
               b.textContent = "✨ New example from my words";
@@ -820,9 +861,9 @@ export function grammarIntro(ctx, p, i, n) {
     { class: "g-intro" },
     h("div", { class: "ex-kicker blue" }, `📘 Grammar ${i + 1} of ${n}`),
     h("h2", { class: "ex-title" }, p.title),
-    h("div", { class: "g-pattern hz" }, p.pattern),
+    h("div", { class: "g-pattern hz" }, withEndings(p.pattern)),
     exBox,
-    h("p", { class: "g-explain" }, p.explain),
+    richText(p.explain),
     h(
       "div",
       { class: "row", style: { gap: "8px", flexWrap: "wrap", justifyContent: "center" } },
@@ -831,7 +872,7 @@ export function grammarIntro(ctx, p, i, n) {
     ),
     moreBox
   );
-  setTimeout(() => speak(p.examples[0].text), 400);
+  setTimeout(() => speak(plainText(p.examples[0].text)), 400);
   return { el, mode: "continue" };
 }
 
@@ -854,7 +895,7 @@ function grammarChoice(ctx, p, x, options, { kicker, title, gap }) {
         if (options[i].id === p.id) t.classList.add("correct");
         else if (options[i] === picked) t.classList.add("wrong");
       });
-      speak(x.text);
+      speak(plainText(x.text));
       return {
         ok,
         grade: ok ? 2 : 0,
@@ -872,6 +913,53 @@ export const grammarWhich = (ctx, p, x, options) =>
 /** Quiz: fill the gap with the right grammar. */
 export const grammarGap = (ctx, p, x, options) =>
   grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: "Fill in the gap", gap: true });
+
+/** The form of a word with the part that changes in colour (stem = what all the options share). */
+function formTile(form, stemLen) {
+  return h("span", { class: "txt hz" }, form.slice(0, stemLen), h("span", { class: "g-end" }, form.slice(stemLen)));
+}
+
+/** Ending drill (Slovenian): "Grem v ＿＿ (trgovina)" → pick the right form, trgovin·o. */
+export function grammarDrill(ctx, p, x) {
+  const m = x.text.match(ENDED);
+  const answer = m ? m[1] + m[2] + m[3] : "";
+  // At the start of a sentence the answer is capitalised: show the options the same way.
+  const cap = answer && answer[0] !== answer[0].toLowerCase();
+  const fit = (f) => (cap ? f[0].toUpperCase() + f.slice(1) : f);
+  const forms = shuffle([answer, ...shuffle((x.drill.options || []).map(fit).filter((f) => f && f !== answer)).slice(0, 3)]);
+  let stem = 0;
+  while (forms.every((f) => f[stem] && f[stem] === forms[0][stem])) stem++;
+  let picked = null;
+  const tiles = forms.map((f) => {
+    const t = h("button", { class: "choice text", onclick: () => { picked = f; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } }, formTile(f, stem));
+    return t;
+  });
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker blue" }, "📘 Endings"),
+      h("h2", { class: "ex-title" }, "Which form fits?"),
+      grammarExampleBox(x, { gap: true }),
+      h("div", { class: "choices" }, tiles)
+    ),
+    mode: "check",
+    async check() {
+      const ok = picked === answer;
+      tiles.forEach((t, i) => {
+        if (forms[i] === answer) t.classList.add("correct");
+        else if (forms[i] === picked) t.classList.add("wrong");
+      });
+      speak(plainText(x.text));
+      return {
+        ok,
+        grade: ok ? 2 : 0,
+        title: ok ? "Correct!" : "Correct answer:",
+        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small muted" }, p.title), h("div", { class: "small" }, x.en)),
+      };
+    },
+  };
+}
 
 // ------------------------------------------------------------------ listening
 

@@ -338,6 +338,7 @@ Reply with JSON only:
 /** A new example sentence for a grammar point, using only words the student knows. */
 export async function grammarExample(point, known, avoid = []) {
   const ja = lang() === "ja";
+  if (lang() === "sl") return grammarExampleSl(point, known, avoid);
   const langName = ja ? "Japanese" : "Chinese";
   const ex = point.examples[0];
   const prompt = `Write ONE new short ${langName} sentence that uses the grammar point "${point.pattern}" (${point.short}).
@@ -356,6 +357,24 @@ Example: ${JSON.stringify({ text: ex.text, ...(ja ? { reading: ex.reading } : {}
   if (!text || !en || !isEnglish(en)) throw new AIError("Gemma didn't manage a new example — try again");
   const mark = [String(d.mark || "").trim()].filter((m) => m && text.includes(m));
   return { text, reading: ja ? String(d.reading || "").trim() : "", mark: mark.length ? mark : point.examples[0].mark.filter((m) => text.includes(m)), en };
+}
+
+/** Slovenian: a new example with the ending that shows the grammar in [square brackets]. */
+async function grammarExampleSl(point, known, avoid) {
+  const ex = point.examples[0];
+  const prompt = `Write ONE new short, simple Slovenian sentence (A1 level) that uses the grammar point "${point.title}" (${point.short}).
+Use mainly these words the student knows: ${known.join(", ")}.
+Put square brackets around the ending (or form) that shows this grammar, exactly like in the example.
+It must be DIFFERENT from these sentences: ${avoid.map((t) => t.replace(/[[\]]/g, "")).join(" / ")}
+
+Reply with JSON only: {"text": "the Slovenian sentence with [ending] marks", "en": "English translation"}
+
+Example: ${JSON.stringify({ text: ex.text, en: ex.en })}`;
+  const d = await chat(prompt, { temperature: 0.8 });
+  const text = String(d?.text || "").trim();
+  const en = String(d?.en || "").trim();
+  if (!text || !en || !isEnglish(en)) throw new AIError("Gemma didn't manage a new example — try again");
+  return { text, reading: "", mark: [], en };
 }
 
 export async function fillWord(query) {

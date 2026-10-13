@@ -1,12 +1,302 @@
 [
-  ["Hello!", "Zdravo!", ""],
-  ["Good day!", "Dober dan!", ""],
-  ["Thank you very much.", "Hvala lepa.", ""],
-  ["A coffee, please.", "Kavo, prosim.", ""],
-  ["Water, please.", "Vodo, prosim.", ""],
-  ["Yes, please.", "Ja, prosim.", ""],
-  ["No, thank you.", "Ne, hvala.", ""],
-  ["Excuse me!", "Oprostite!", ""],
-  ["Goodbye, mom!", "Nasvidenje, mama!", ""],
-  ["This is my friend.", "To je moj prijatelj.", ""]
+  [
+    "Hello!",
+    "Zdravo!",
+    ""
+  ],
+  [
+    "Good day!",
+    "Dober dan!",
+    ""
+  ],
+  [
+    "Thank you very much.",
+    "Hvala lepa.",
+    ""
+  ],
+  [
+    "A coffee, please.",
+    "Kavo, prosim.",
+    ""
+  ],
+  [
+    "Water, please.",
+    "Vodo, prosim.",
+    ""
+  ],
+  [
+    "Yes, please.",
+    "Ja, prosim.",
+    ""
+  ],
+  [
+    "No, thank you.",
+    "Ne, hvala.",
+    ""
+  ],
+  [
+    "Excuse me!",
+    "Oprostite!",
+    ""
+  ],
+  [
+    "Goodbye, mom!",
+    "Nasvidenje, mama!",
+    ""
+  ],
+  [
+    "This is my friend.",
+    "To je moj prijatelj.",
+    ""
+  ],
+  [
+    "My name is Ana.",
+    "Ime mi je Ana.",
+    ""
+  ],
+  [
+    "I am from Slovenia.",
+    "Sem iz Slovenije.",
+    ""
+  ],
+  [
+    "Where do you live?",
+    "Kje živiš?",
+    ""
+  ],
+  [
+    "I live in Ljubljana.",
+    "Živim v Ljubljani.",
+    ""
+  ],
+  [
+    "How are you?",
+    "Kako si?",
+    ""
+  ],
+  [
+    "I'm fine, thank you.",
+    "Dobro sem, hvala.",
+    ""
+  ],
+  [
+    "Do you speak English?",
+    "Ali govoriš angleško?",
+    ""
+  ],
+  [
+    "I speak a little Slovenian.",
+    "Govorim malo slovensko.",
+    ""
+  ],
+  [
+    "I don't understand.",
+    "Ne razumem.",
+    ""
+  ],
+  [
+    "Can you help me?",
+    "Ali mi lahko pomagaš?",
+    ""
+  ],
+  [
+    "Where is the station?",
+    "Kje je postaja?",
+    ""
+  ],
+  [
+    "The shop is on the left.",
+    "Trgovina je levo.",
+    ""
+  ],
+  [
+    "I'm going to the shop.",
+    "Grem v trgovino.",
+    ""
+  ],
+  [
+    "Mom is at home.",
+    "Mama je doma.",
+    ""
+  ],
+  [
+    "I have a brother and a sister.",
+    "Imam brata in sestro.",
+    ""
+  ],
+  [
+    "This is my friend.",
+    "To je moja prijateljica.",
+    ""
+  ],
+  [
+    "I am hungry.",
+    "Lačen sem.",
+    ""
+  ],
+  [
+    "I am thirsty.",
+    "Žejna sem.",
+    ""
+  ],
+  [
+    "A glass of water, please.",
+    "Kozarec vode, prosim.",
+    ""
+  ],
+  [
+    "A coffee with milk, please.",
+    "Kavo z mlekom, prosim.",
+    ""
+  ],
+  [
+    "How much does it cost?",
+    "Koliko stane?",
+    ""
+  ],
+  [
+    "It costs two euros.",
+    "Stane dva evra.",
+    ""
+  ],
+  [
+    "The bill, please.",
+    "Račun, prosim.",
+    ""
+  ],
+  [
+    "Can I pay by card?",
+    "Ali lahko plačam s kartico?",
+    ""
+  ],
+  [
+    "Today the weather is nice.",
+    "Danes je lepo vreme.",
+    ""
+  ],
+  [
+    "It is raining.",
+    "Dežuje.",
+    ""
+  ],
+  [
+    "It is cold today.",
+    "Danes je mrzlo.",
+    ""
+  ],
+  [
+    "What time is it?",
+    "Koliko je ura?",
+    ""
+  ],
+  [
+    "It is eight o'clock.",
+    "Ura je osem.",
+    ""
+  ],
+  [
+    "I get up early.",
+    "Zgodaj vstanem.",
+    ""
+  ],
+  [
+    "In the evening I read a book.",
+    "Zvečer berem knjigo.",
+    ""
+  ],
+  [
+    "I like reading.",
+    "Rad berem.",
+    ""
+  ],
+  [
+    "We are going to the seaside.",
+    "Gremo na morje.",
+    ""
+  ],
+  [
+    "The children are at school.",
+    "Otroci so v šoli.",
+    ""
+  ],
+  [
+    "I go to work by bus.",
+    "V službo grem z avtobusom.",
+    ""
+  ],
+  [
+    "I don't have time.",
+    "Nimam časa.",
+    ""
+  ],
+  [
+    "There is no milk.",
+    "Ni mleka.",
+    ""
+  ],
+  [
+    "Yesterday I was at home.",
+    "Včeraj sem bil doma.",
+    ""
+  ],
+  [
+    "Tomorrow I will work.",
+    "Jutri bom delal.",
+    ""
+  ],
+  [
+    "We two are friends.",
+    "Midva sva prijatelja.",
+    ""
+  ],
+  [
+    "I have two sisters.",
+    "Imam dve sestri.",
+    ""
+  ],
+  [
+    "The house is big.",
+    "Hiša je velika.",
+    ""
+  ],
+  [
+    "Our flat is small.",
+    "Naše stanovanje je majhno.",
+    ""
+  ],
+  [
+    "My head hurts.",
+    "Boli me glava.",
+    ""
+  ],
+  [
+    "I'm going to the doctor.",
+    "Grem k zdravniku.",
+    ""
+  ],
+  [
+    "Where is the bathroom?",
+    "Kje je kopalnica?",
+    ""
+  ],
+  [
+    "The door is open.",
+    "Vrata so odprta.",
+    ""
+  ],
+  [
+    "I'm learning Slovenian.",
+    "Učim se slovensko.",
+    ""
+  ],
+  [
+    "See you tomorrow!",
+    "Se vidimo jutri!",
+    ""
+  ],
+  [
+    "Have a nice weekend!",
+    "Lep vikend!",
+    ""
+  ]
 ]

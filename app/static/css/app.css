@@ -1184,3 +1184,14 @@ select.select-native { display: none !important; }
 .welcome-langs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0 0 12px; }
 .welcome-lang { padding: 6px 12px; border-radius: 999px; border: 2px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
 .welcome-lang.on { border-color: var(--green); background: rgba(140, 192, 107, .18); color: var(--text-strong); }
+
+/* ---------------------------------------------------------------- Slovenian endings */
+.g-end { color: #f0b35e; font-weight: 800; }
+:root[data-theme="light"] .g-end, :root:not([data-theme]) .g-end { color: #c46a12; }
+.g-base { color: var(--muted); font-size: .8em; }
+.g-explain p { margin: 0 0 8px; line-height: 1.6; }
+.g-explain p + ul { margin-top: -2px; }
+.g-explain ul { margin: 0 0 10px; padding-left: 20px; line-height: 1.6; }
+.g-explain li { margin: 2px 0; }
+.g-explain b { color: var(--text-strong); }
+.tag.g-mn { background: #3d3550; color: #d6c8f0; }

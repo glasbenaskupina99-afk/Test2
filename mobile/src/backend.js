@@ -15,6 +15,7 @@ import FALLBACK_SL from "../../app/data/slovenian_sentences.json";
 import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as sync from "./sync.js";
+import * as locale from "./locale.js";
 import * as fsrs from "./fsrs.js";
 import LOOKALIKES from "../../app/data/lookalikes.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
@@ -34,7 +35,14 @@ const SEED_SETS = [
 const SECTION_OF_SOURCE = Object.fromEntries(SEED_SETS.map((x) => [x.source, x.section]));
 const MY_WORDS = "My words";
 // Fallback sentences as [english, text, reading]
-const FALLBACK = { zh: FALLBACK_ZH.map(([en, zh]) => [en, zh, null]), ja: [...FALLBACK_JA, ...FALLBACK_JA_N3], sl: FALLBACK_SL };
+const keyed = (rows, file) => rows.map((r, i) => Object.assign([...r], { key: `${file}|${i}` }));
+const FALLBACK_EN = {
+  zh: keyed(FALLBACK_ZH, "sentences").map((r) => Object.assign([r[0], r[1], null], { key: r.key })),
+  ja: [...keyed(FALLBACK_JA, "japanese_sentences"), ...keyed(FALLBACK_JA_N3, "japanese_n3_sentences")],
+  sl: keyed(FALLBACK_SL, "slovenian_sentences"),
+};
+/** Built-in sentences with the translation in the interface language. */
+const FALLBACK = new Proxy({}, { get: (_, lang) => (FALLBACK_EN[lang] || []).map((r) => Object.assign([locale.sentence(r.key) || r[0], r[1], r[2]], { key: r.key })) });
 
 const SKILLS = ["write", "speak", "recall"];
 
@@ -57,6 +65,7 @@ const DEFAULTS = {
   hf_repo: "litert-community/gemma-4-E2B-it-litert-lm",
   hf_token: "",
   speech_mode: "browser",
+  ui_lang: "", // interface language: "" / "en", "fr", "es", "ja"
   daily_goal: 30,
   new_per_lesson: 5,
   review_size: 15,
@@ -160,6 +169,7 @@ export async function init(storage) {
   db.grammar ||= { learned: {} };
   db.stories ||= {};
   ai.configure(settingsAll);
+  await applyLocale();
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
       flush();
@@ -231,6 +241,22 @@ function pushWidget() {
 function syncInfo() {
   const s = db.sync;
   return s?.code ? { on: true, code: s.code, last: s.last || null, error: s.error || "" } : { on: false };
+}
+
+// ------------------------------------------------------------------ interface language
+
+let seedEnglish = null;
+/** Meanings, sentences, grammar, stories and hooks in the interface language (English if missing). */
+async function applyLocale() {
+  await locale.setLang(settingsAll().ui_lang);
+  seedEnglish ||= new Map(SEED_SETS.flatMap((set) => seedWords(set, 0).map((w) => [w.lang + w.hanzi, w.english])));
+  for (const w of db.words) {
+    if (w.source === "custom") continue;
+    const en = seedEnglish.get(w.lang + w.hanzi);
+    if (en !== undefined) w.english = locale.meaning(w.lang, w.hanzi) || en;
+  }
+  // Loaded content is cached per level: load it again in the new language.
+  for (const cache of [grammarJobs, GRAMMAR, storyJobs, STORIES, readyJobs, READY]) for (const k of Object.keys(cache)) delete cache[k];
 }
 
 function persist() {
@@ -387,10 +413,17 @@ const wordById = (id) => db.words.find((w) => w.id === id);
 const READY = {};
 const readyJobs = {};
 function loadReady(lang) {
-  readyJobs[lang] ||= fetch(`extras/${lang}.json`)
-    .then((r) => (r.ok ? r.json() : {}))
-    .catch(() => ({}))
-    .then((x) => (READY[lang] = x));
+  readyJobs[lang] ||= Promise.all([
+    fetch(`extras/${lang}.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+    locale.overlay(`extras-${lang}`),
+  ]).then(([x, ov]) => {
+    if (ov) {
+      for (const [word, e] of Object.entries(x)) {
+        x[word] = { ...e, mnemonic: ov[`${word}|m`] || e.mnemonic, components: ov[`${word}|c`] || e.components, example_en: ov[`${word}|e`] || e.example_en };
+      }
+    }
+    return (READY[lang] = x);
+  });
   return readyJobs[lang];
 }
 function prebuilt(w) {
@@ -493,10 +526,19 @@ const grammarJobs = {};
 function loadGrammar(section) {
   const file = GRAMMAR_FILE[section];
   if (!file) return Promise.resolve(null);
-  grammarJobs[file] ||= fetch(`grammar/${file}.json`)
-    .then((r) => (r.ok ? r.json() : null))
-    .catch(() => null)
-    .then((g) => (GRAMMAR[section] = g?.points || null));
+  grammarJobs[file] ||= Promise.all([
+    fetch(`grammar/${file}.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    locale.overlay(`grammar-${file}`),
+  ]).then(([g, ov]) => {
+    const points = g?.points || null;
+    if (points && ov) {
+      for (const p of points) {
+        for (const f of ["title", "short", "explain"]) p[f] = ov[`${p.id}|${f}`] || p[f];
+        p.examples.forEach((e, i) => (e.en = ov[`${p.id}|ex${i}`] || e.en));
+      }
+    }
+    return (GRAMMAR[section] = points);
+  });
   return grammarJobs[file];
 }
 const PER_LESSON = 3;
@@ -543,10 +585,26 @@ const storyJobs = {};
 function loadStories(section) {
   const file = STORY_FILE[section];
   if (!file) return Promise.resolve(null);
-  storyJobs[file] ||= fetch(`stories/${file}.json`)
-    .then((r) => (r.ok ? r.json() : null))
-    .catch(() => null)
-    .then((d) => (STORIES[section] = d?.stories || null));
+  storyJobs[file] ||= Promise.all([
+    fetch(`stories/${file}.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    locale.overlay(`stories-${["hsk1", "hsk2", "hsk3"].includes(file) ? "zh" : "ja"}`),
+  ]).then(([d, ov]) => {
+    const stories = d?.stories || null;
+    if (stories && ov) {
+      for (const st of stories) {
+        st.title_en = ov[`${st.id}|title`] || st.title_en;
+        st.sentences.forEach((x, i) => {
+          x.en = ov[`${st.id}|s${i}`] || x.en;
+          for (const t of x.tokens || []) if (t[2]) t[2] = ov[`tok|${t[2]}`] || t[2];
+        });
+        (st.questions || []).forEach((q, i) => {
+          q.q = ov[`${st.id}|q${i}`] || q.q;
+          q.options = q.options.map((o, j) => ov[`${st.id}|q${i}o${j}`] || o);
+        });
+      }
+    }
+    return (STORIES[section] = stories);
+  });
   return storyJobs[file];
 }
 const isPunct = (c) => /^[\s。、，！？!?,.:;：；「」『』（）()…—"“”'‘’·・]+$/.test(c);
@@ -1275,10 +1333,12 @@ const routes = {
     return { ...s, hf_token: s.hf_token ? "••••" : "", llm_api_key: s.llm_api_key ? "••••" : "" };
   },
 
-  "PUT /api/settings": (_, body) => {
+  "PUT /api/settings": async (_, body) => {
     if (body.hf_token === "••••") delete body.hf_token;
     if (body.llm_api_key === "••••") delete body.llm_api_key;
+    const before = settingsAll().ui_lang;
     settingsUpdate(body);
+    if (settingsAll().ui_lang !== before) await applyLocale();
     return routes["GET /api/settings"]();
   },
 
@@ -1362,7 +1422,7 @@ const routes = {
 
   "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, sync: null, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
 
-  "POST /api/backup/restore": (_, body) => {
+  "POST /api/backup/restore": async (_, body) => {
     if (!body || body.app !== "hanzi-home" || !Array.isArray(body.words) || !Array.isArray(body.cards)) throw new HttpError(400, "That isn't a Hanzi Home backup");
     const token = db.settings.hf_token;
     const { app: _a, exported_at: _e, ...rest } = body;
@@ -1370,6 +1430,7 @@ const routes = {
     db = { ...freshDb(), ...rest, sync: keepSync, settings: { ...rest.settings, hf_token: token || "" } };
     if (keepSync) keepSync.changed_at = new Date().toISOString();
     migrate();
+    await applyLocale();
     flush();
     return { ok: true };
   },

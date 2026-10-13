@@ -52,7 +52,7 @@ export async function gardenSheet() {
   const stopSound = playForest();
   const g = await api("/api/garden").catch((e) => { stopSound(); throw e; });
   const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() });
-  const fmtDay = (k) => new Date(k + "T12:00:00").toLocaleDateString(undefined, { weekday: "narrow" });
+  const fmtDay = (k) => new Date(k + "T12:00:00").toLocaleDateString(document.documentElement.lang || undefined, { weekday: "narrow" });
   const reminder = window.__native?.notifications
     ? h("a", { class: "btn ghost small garden-remind", href: "#/settings", onclick: () => bg.remove() }, "🔔 Daily reminder")
     : null;

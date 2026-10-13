@@ -45,6 +45,8 @@ writeFileSync(join(www, "index.html"), html);
 cpSync(join(mobile, "..", "app", "data", "extras"), join(www, "extras"), { recursive: true });
 cpSync(join(mobile, "..", "app", "data", "grammar"), join(www, "grammar"), { recursive: true });
 cpSync(join(mobile, "..", "app", "data", "stories"), join(www, "stories"), { recursive: true });
+// Interface and content translations (French, Spanish, Japanese).
+cpSync(join(mobile, "..", "app", "data", "i18n"), join(www, "i18n"), { recursive: true, filter: (src) => !src.endsWith("ui-strings.json") });
 
 // Stroke data for every character, bundled for offline use.
 const charSrc = join(mobile, "node_modules", "hanzi-writer-data");

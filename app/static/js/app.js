@@ -13,6 +13,7 @@ import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
 import { syncCard } from "./sync-ui.js";
 import { photoSheet, canReadPhotos } from "./photo.js";
+import { UI_LANGS, setUiLang, uiLang } from "./i18n.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -436,7 +437,7 @@ function weekChart(week, saved = []) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    days.push({ label: d.toLocaleDateString(undefined, { weekday: "narrow" }), xp: byDay[key] || 0, saved: saved.includes(key) });
+    days.push({ label: d.toLocaleDateString(document.documentElement.lang || undefined, { weekday: "narrow" }), xp: byDay[key] || 0, saved: saved.includes(key) });
   }
   const max = Math.max(30, ...days.map((d) => d.xp));
   return h(
@@ -1242,7 +1243,7 @@ function achievements(s, learned, best, sentences, level) {
         "div",
         {},
         h("b", {}, a.title),
-        h("span", {}, locked ? `${Math.min(a.have, a.goal)} / ${a.goal}${a.unit ? " " + a.unit : ""}` : a.active ? "Active" : a.date ? `Completed ${new Date(a.date).toLocaleDateString(undefined, { day: "numeric", month: "short" })}` : "Completed")
+        h("span", {}, locked ? `${Math.min(a.have, a.goal)} / ${a.goal}${a.unit ? " " + a.unit : ""}` : a.active ? "Active" : a.date ? `Completed ${new Date(a.date).toLocaleDateString(document.documentElement.lang || undefined, { day: "numeric", month: "short" })}` : "Completed")
       )
     );
   return [...done.reverse().map((a) => row(a, false)), ...next.map((a) => row(a, true))];
@@ -1357,6 +1358,20 @@ async function settingsScreen() {
     [["forest", "Naravni eko (forest)"], ["auto", "Classic · match system"], ["light", "Classic light"], ["dark", "Classic dark"]].map(([v, l]) => h("option", { value: v, selected: v === theme }, l))
   );
 
+  const langSel = h(
+    "select",
+    {
+      translate: "no",
+      onchange: async (e) => {
+        state.settings = await api("/api/settings", { method: "PUT", body: { ui_lang: e.target.value } });
+        await setUiLang(e.target.value);
+        screenCache.clear();
+        route();
+      },
+    },
+    UI_LANGS.map(([v, l]) => h("option", { value: v, selected: v === uiLang() }, l))
+  );
+
   const isApp = !!window.__native?.gemma;
   // Browser version (GitHub Pages / computer): no server, data in this browser.
   const isWeb = !!window.__localApi && !isApp;
@@ -1435,6 +1450,7 @@ async function settingsScreen() {
         field("New words per lesson", select("new_per_lesson", [["3", "3"], ["5", "5"], ["8", "8"], ["10", "10"]])),
         field("Reviews per practice", select("review_size", [["10", "10"], ["15", "15"], ["25", "25"], ["40", "40"]])),
         field("Sentences per session", select("sentence_count", [["4", "4"], ["6", "6"], ["9", "9"], ["12", "12"]])),
+        field("Language", langSel),
         field("Theme", themeSel),
         h("div", { class: "switch-row" }, h("div", {}, "Sounds", h("div", { class: "small muted" }, "Nature sounds for answers and your plant")), soundToggle),
         field("Your name", input("display_name", { placeholder: "Shown on “My journey”" }))
@@ -1525,7 +1541,8 @@ function welcomeScreen(gemmaNext) {
       oninput: () => (go.disabled = !name.value.trim()),
       onkeydown: (e) => e.key === "Enter" && name.value.trim() && go.click(),
     });
-    const courseBtns = Object.entries(COURSES).map(([lang, info]) => {
+    let courseBtns = [];
+    const makeCourseBtns = () => (courseBtns = Object.entries(COURSES).map(([lang, info]) => {
       const b = h(
         "button",
         {
@@ -1536,6 +1553,18 @@ function welcomeScreen(gemmaNext) {
         h("span", {}, h("b", {}, info.name, " ", h("span", { class: "hz" }, info.script)), h("small", {}, info.sub))
       );
       return b;
+    }));
+    const langBtns = UI_LANGS.map(([code, label]) => {
+      const b = h("button", {
+        class: "welcome-lang" + (code === uiLang() ? " on" : ""),
+        translate: "no",
+        onclick: async () => {
+          langBtns.forEach((x) => x.classList.toggle("on", x === b));
+          await setUiLang(code);
+          rerender();
+        },
+      }, label);
+      return b;
     });
     const go = h(
       "button",
@@ -1543,7 +1572,7 @@ function welcomeScreen(gemmaNext) {
         class: "btn",
         disabled: true,
         onclick: async () => {
-          const body = { display_name: name.value.trim(), course: chosen };
+          const body = { display_name: name.value.trim(), course: chosen, ui_lang: uiLang() };
           if (level) body[`section_${chosen}`] = level;
           state.settings = await api("/api/settings", { method: "PUT", body });
           applyCourse();
@@ -1552,12 +1581,20 @@ function welcomeScreen(gemmaNext) {
       },
       gemmaNext ? "Continue" : "Start learning"
     );
-    app.replaceChildren(
-      h(
+    // Redraw the texts in the newly chosen language (the inputs keep what was typed).
+    const rerender = () => app.replaceChildren(screen());
+    const screen = () => {
+      makeCourseBtns();
+      name.setAttribute("placeholder", "Your name");
+      name.setAttribute("aria-label", "Your name");
+      go.textContent = gemmaNext ? "Continue" : "Start learning";
+      showLevels();
+      return h(
         "div",
         { class: "welcome" },
         gemmaNext ? h("div", { class: "gsetup-step" }, h("i", { class: "on" }), h("i"), "Step 1 of 2") : null,
         h("img", { class: "app-logo welcome-logo", src: LOGO, alt: "" }),
+        h("div", { class: "welcome-langs", role: "group", "aria-label": "Language" }, langBtns),
         h("h1", {}, "Welcome to Bloomko"),
         h("p", { class: "muted" }, "Learn a new language — write, read and speak it, without wasting paper."),
         h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),
@@ -1566,8 +1603,9 @@ function welcomeScreen(gemmaNext) {
         levelBox,
         h("div", { style: { width: "100%", marginTop: "18px" } }, go),
         h("p", { class: "muted small" }, "Everything stays on this device. You can change this later in Settings.")
-      )
-    );
+      );
+    };
+    app.replaceChildren(screen());
     showLevels();
     setTimeout(() => name.focus(), 200);
   });
@@ -1579,6 +1617,9 @@ enhanceSelects();
   try {
     state.settings = await api("/api/settings");
     applyCourse();
+    // Interface language: chosen on the welcome screen; before that, the phone's language if we have it.
+    const guess = (navigator.language || "en").slice(0, 2);
+    await setUiLang(state.settings.ui_lang || (UI_LANGS.some(([k]) => k === guess) ? guess : "en"));
   } catch (e) {
     app.replaceChildren(h("div", { class: "empty" }, h("div", { class: "e" }, "🔌"), h("h2", {}, "Can't reach the server"), h("p", {}, e.message)));
     return;

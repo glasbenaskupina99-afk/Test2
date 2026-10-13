@@ -24,6 +24,8 @@ const SYSTEMS = {
  */
 export function isEnglish(text) {
   const t = String(text || "");
+  // Japanese interface: explanations must be in Japanese (with kana), not just Chinese characters.
+  if (uiLang() === "ja") return /[\u3040-\u30ff]/.test(t);
   const latin = (t.match(/[A-Za-z]/g) || []).length;
   const cjk = (t.match(/[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff]/g) || []).length;
   return latin >= 2 && latin >= cjk * 3;
@@ -38,6 +40,11 @@ export class AIError extends Error {
 }
 
 let getSettings = () => ({});
+// The learner's interface language: Gemma explains and translates in it (prompts are written in English).
+const UI_NAMES = { fr: "French", es: "Spanish", ja: "Japanese" };
+const uiLang = () => (UI_NAMES[getSettings().ui_lang] ? getSettings().ui_lang : "en");
+/** Swaps "English" in a prompt for the learner's language (keys like "example_en" stay as they are). */
+export const localize = (text) => (uiLang() === "en" || !text ? text : String(text).replace(/\bEnglish\b/g, UI_NAMES[uiLang()]));
 const lang = () => (["ja", "sl"].includes(getSettings().course) ? getSettings().course : "zh");
 export function configure(settingsFn) {
   getSettings = settingsFn;
@@ -97,6 +104,7 @@ async function webGenerate({ prompt, system, temperature, json = true }) {
 
 function generate(opts) {
   const s = getSettings();
+  opts = { ...opts, prompt: localize(opts.prompt), system: localize(opts.system) };
   return gemma() ? gemma().generate({ ...opts, backend: s.gemma_backend || "cpu" }) : webGenerate(opts);
 }
 
@@ -421,7 +429,7 @@ async function talkSend(message) {
   try {
     if (talk.native) {
       if (!talk.started) {
-        await g.chatStart({ system: talk.system, temperature: 0.5, backend: s.gemma_backend || "cpu" });
+        await g.chatStart({ system: localize(talk.system), temperature: 0.5, backend: s.gemma_backend || "cpu" });
         talk.started = true;
       }
       return (await g.chatSend({ prompt: message })).text;
@@ -504,7 +512,7 @@ Listen carefully. Write down what you actually hear, judge the pronunciation${ja
 Reply with JSON only: {"heard": "what you heard, written in ${langName}", "score": 0-100, "feedback": "one or two short sentences in English"}`;
   let res;
   try {
-    res = await gemma().generate({ prompt, system: SYSTEMS[lang()], temperature: 0.2, backend: s.gemma_backend || "cpu", audio: wavBase64 });
+    res = await gemma().generate({ prompt: localize(prompt), system: localize(SYSTEMS[lang()]), temperature: 0.2, backend: s.gemma_backend || "cpu", audio: wavBase64 });
   } catch (e) {
     throw new AIError(e.message || String(e));
   }

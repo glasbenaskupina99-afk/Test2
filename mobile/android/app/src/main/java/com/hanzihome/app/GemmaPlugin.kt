@@ -12,6 +12,7 @@ import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.ActivityCallback
 import com.getcapacitor.annotation.CapacitorPlugin
 import com.google.ai.edge.litertlm.Backend
+import com.google.ai.edge.litertlm.Content
 import com.google.ai.edge.litertlm.Contents
 import com.google.ai.edge.litertlm.ConversationConfig
 import com.google.ai.edge.litertlm.Engine
@@ -42,6 +43,7 @@ class GemmaPlugin : Plugin() {
     private val engineLock = Any()
     private var engine: Engine? = null
     private var engineBackend: String? = null
+    private var engineAudio = false
     @Volatile private var loading = false
     @Volatile private var downloadJob: Job? = null
     @Volatile private var lastError: String? = null
@@ -254,9 +256,13 @@ class GemmaPlugin : Plugin() {
 
     // ------------------------------------------------------------------ inference
 
-    private fun ensureEngine(backend: String): Engine {
+    /**
+     * Loads the model. With [audio] the engine also gets an audio encoder (for pronunciation
+     * checks); only audio-capable models (Gemma 3n / Gemma 4 E2B, E4B) can do that.
+     */
+    private fun ensureEngine(backend: String, audio: Boolean = false): Engine {
         synchronized(engineLock) {
-            engine?.let { if (engineBackend == backend) return it }
+            engine?.let { if (engineBackend == backend && (engineAudio || !audio)) return it }
             unloadEngine()
             val f = modelFile() ?: throw IllegalStateException("No Gemma model on this phone yet. Download one in Settings.")
             loading = true
@@ -264,12 +270,14 @@ class GemmaPlugin : Plugin() {
                 val config = EngineConfig(
                     modelPath = f.absolutePath,
                     backend = if (backend == "gpu") Backend.GPU() else Backend.CPU(),
+                    audioBackend = if (audio) Backend.CPU() else null,
                     cacheDir = context.cacheDir.path,
                 )
                 val e = Engine(config)
                 e.initialize()
                 engine = e
                 engineBackend = backend
+                engineAudio = audio
                 lastError = null
                 return e
             } catch (t: Throwable) {
@@ -286,6 +294,7 @@ class GemmaPlugin : Plugin() {
             try { engine?.close() } catch (_: Throwable) {}
             engine = null
             engineBackend = null
+            engineAudio = false
         }
     }
 
@@ -315,15 +324,26 @@ class GemmaPlugin : Plugin() {
         val system = call.getString("system") ?: ""
         val temperature = call.getDouble("temperature") ?: 0.7
         val backend = call.getString("backend") ?: "cpu"
+        val audio = call.getString("audio")?.takeIf { it.isNotEmpty() }
         scope.launch {
             try {
-                val e = ensureEngine(backend)
+                val e = if (audio == null) ensureEngine(backend) else try {
+                    ensureEngine(backend, audio = true)
+                } catch (t: Throwable) {
+                    unloadEngine()
+                    throw IllegalStateException("This Gemma model can't listen to audio. Use Gemma 3n or Gemma 4 E2B/E4B, or switch pronunciation to Android speech recognition.")
+                }
                 val text = synchronized(engineLock) {
                     val config = ConversationConfig(
                         systemInstruction = Contents.of(system),
                         samplerConfig = SamplerConfig(topK = 40, topP = 0.95, temperature = temperature),
                     )
-                    e.createConversation(config).use { conv -> conv.sendMessage(prompt).toString() }
+                    e.createConversation(config).use { conv ->
+                        if (audio == null) conv.sendMessage(prompt).toString()
+                        else conv.sendMessage(
+                            Contents.of(Content.AudioBytes(android.util.Base64.decode(audio, android.util.Base64.DEFAULT)), Content.Text(prompt))
+                        ).toString()
+                    }
                 }
                 call.resolve(JSObject().put("text", text))
             } catch (t: Throwable) {

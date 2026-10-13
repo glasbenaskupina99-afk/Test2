@@ -374,3 +374,69 @@ Return JSON: {"hanzi": "simplified characters", "english": "short English meanin
   const d = await chat(prompt, { temperature: 0.2 });
   return { hanzi: hanziOnly(String(d.hanzi || "")), english: String(d.english || "").trim() };
 }
+
+/**
+ * One turn of a role-play conversation ("Talk"). With an empty `answer` Gemma opens the scene.
+ * history: [{ who: "gemma" | "me", text }]. Gemma checks the student's last line, then replies.
+ */
+export async function talkTurn(topic, known, history, answer) {
+  const ja = lang() === "ja";
+  const sl = lang() === "sl";
+  const langName = ja ? "Japanese" : sl ? "Slovenian" : "Chinese";
+  const past = history.slice(-8).map((m) => `${m.who === "me" ? "Student" : "You"}: ${m.text}`).join("\n");
+  const opening = !String(answer || "").trim();
+  const prompt = `You are having a short, friendly spoken conversation in ${langName} with a beginner, to help them practise.
+Scene: ${topic.scene}. You play: ${topic.role}.
+Use very short, simple sentences, mainly with these words the student knows: ${known.join(", ")}.
+${opening ? "Open the conversation: greet the student and ask one simple question that fits the scene." : `Conversation so far:\n${past}\n\nThe student just said: "${answer}"`}
+
+Reply with JSON only:
+${opening ? "" : ` "correct": true if what the student said is correct, natural ${langName}; false if it has a mistake or is not in ${langName}
+ "fixed": when not correct, how to say it correctly in ${langName} (if they wrote English, translate what they meant); otherwise ""
+ "note": when not correct, one short sentence in English about the fix; otherwise ""
+`} "reply": your next line in ${langName} — one or two short sentences that continue the scene, usually ending with a simple question${ja ? '\n "reading": your reply in hiragana only' : ""}
+ "en": the English translation of your reply
+ "ideas": two short things the student could answer, each {"text": in ${langName}${ja ? ', "reading": in hiragana' : ""}, "en": English}`;
+  const d = await chat(prompt, { temperature: 0.7 });
+  const reply = String(d?.reply || "").trim();
+  const en = String(d?.en || "").trim();
+  if (!reply || !en || !isEnglish(en)) throw new AIError("Gemma didn't manage an answer — try again");
+  const fixed = opening || d.correct === true ? "" : String(d?.fixed || "").trim();
+  return {
+    correct: opening ? null : d.correct === true || !fixed,
+    fixed,
+    note: fixed ? String(d?.note || "").trim() : "",
+    reply,
+    reading: ja ? String(d?.reading || "").trim() : "",
+    en,
+    ideas: (Array.isArray(d?.ideas) ? d.ideas : [])
+      .map((x) => ({ text: String(x?.text || "").trim(), reading: ja ? String(x?.reading || "").trim() : "", en: String(x?.en || "").trim() }))
+      .filter((x) => x.text)
+      .slice(0, 3),
+  };
+}
+
+/** Pronunciation check with an audio-capable Gemma on the phone (Gemma 3n / 4 E2B or E4B). */
+export async function assessSpeech(wavBase64, expected, reading) {
+  const s = getSettings();
+  if (!s.ai_enabled) throw new AIError("AI is turned off in settings");
+  if (!gemma()) throw new AIError("Gemma audio works in the Android app");
+  const ja = lang() === "ja";
+  const sl = lang() === "sl";
+  const langName = ja ? "Japanese" : sl ? "Slovenian" : "Mandarin Chinese";
+  const prompt = `The attached audio is a beginner saying a ${langName} phrase.
+Target: ${expected}${reading ? ` (${reading})` : ""}.
+
+Listen carefully. Write down what you actually hear, judge the pronunciation${ja || sl ? "" : " and especially the tone of each syllable"}, and give one short, specific tip.
+
+Reply with JSON only: {"heard": "what you heard, written in ${langName}", "score": 0-100, "feedback": "one or two short sentences in English"}`;
+  let res;
+  try {
+    res = await gemma().generate({ prompt, system: SYSTEMS[lang()], temperature: 0.2, backend: s.gemma_backend || "cpu", audio: wavBase64 });
+  } catch (e) {
+    throw new AIError(e.message || String(e));
+  }
+  const d = parseJson(res.text);
+  const score = Math.max(0, Math.min(100, Math.round(Number(d?.score) || 0)));
+  return { heard: String(d?.heard || "").trim(), score, feedback: String(d?.feedback || "").trim() };
+}

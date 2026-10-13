@@ -10,6 +10,7 @@ import { canRemind, ensurePermission, scheduleReminders } from "./reminders.js";
 import { pickTime } from "./timepicker.js";
 import { genderTag } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
+import { talkSheet } from "./talk.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -301,7 +302,7 @@ async function homeScreen() {
     "button",
     { class: "mode sky", onclick: () => listenSheet(home) },
     h("div", { class: "badge-ico", html: SVG.ear }),
-    h("div", {}, h("h3", {}, "Listen & read"), h("p", {}, home.course === "zh" ? "Dictation, short stories and tones" : "Dictation and short stories"))
+    h("div", {}, h("h3", {}, "Listen, read & talk"), h("p", {}, home.course === "zh" ? "Dictation, stories, tones and chats with Gemma" : home.course === "sl" ? "Dictation and chats with Gemma" : "Dictation, stories and chats with Gemma"))
   );
 
   const sentenceCard = h(
@@ -502,11 +503,12 @@ function listenSheet(home) {
     h(
       "div",
       { class: "sheet" },
-      h("h2", { style: { margin: "0 0 4px" } }, "Listen & read"),
-      h("p", { class: "muted small", style: { margin: "0 0 14px" } }, "Train your ear and read real little stories with the words you know."),
+      h("h2", { style: { margin: "0 0 4px" } }, "Listen, read & talk"),
+      h("p", { class: "muted small", style: { margin: "0 0 14px" } }, "Train your ear, read little stories and have a real chat — all with the words you know."),
       option("🎧", "Dictation & listening", isSl() ? "Hear a sentence, type it — or pick what it means" : "Hear a sentence, write it by hand — or pick what it means", () => startFlow(flows.listening)),
       home.course !== "sl" ? option("📖", "Stories", `Short graded stories for ${home.section} — tap any word`, () => storiesSheet()) : null,
-      home.course === "zh" ? option("🎵", "Tones", "Hear the tones — and see the pitch of your own voice", () => startFlow(flows.tones)) : null
+      home.course === "zh" ? option("🎵", "Tones", "Hear the tones — and see the pitch of your own voice", () => startFlow(flows.tones)) : null,
+      option("💬", "Talk", state.settings.ai_enabled ? "Chat with Gemma — at a café, in a shop, asking the way…" : "Chat with Gemma (turn on AI in Settings)", () => talkSheet())
     )
   );
   document.body.append(bg);
@@ -1379,7 +1381,7 @@ async function settingsScreen() {
         h("div", { style: { marginTop: "12px" } }, h("button", { class: "btn ghost", onclick: testAI }, "Test connection"))
       );
   const speechOptions = isApp
-    ? [["browser", "Android speech recognition"], ["self", "Record & compare myself"]]
+    ? [["browser", "Android speech recognition"], ["ai", "Gemma listens (offline · Gemma 3n / 4 E2B, E4B)"], ["self", "Record & compare myself"]]
     : isWeb
     ? [["browser", "Browser speech recognition (Chrome / Edge)"], ["self", "Record & compare myself"]]
     : [["browser", "Phone speech recognition (fast)"], ["ai", "Gemma audio (needs audio-capable server)"], ["self", "Record & compare myself"]];

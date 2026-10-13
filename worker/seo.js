@@ -368,7 +368,7 @@ addEventListener("DOMContentLoaded",()=>{
     });
     setTimeout(()=>w.animateCharacter(),400+i*900);
     el.querySelector("[data-act=play]").onclick=()=>{w.cancelQuiz();w.animateCharacter();};
-    el.querySelector("[data-act=quiz]").onclick=()=>{w.hideCharacter();w.quiz({showHintAfterMisses:2});};
+    el.querySelector("[data-act=quiz]").onclick=()=>{w.hideCharacter();w.quiz({showHintAfterMisses:2,leniency:1.8,averageDistanceThreshold:450});};
   });
 });`;
 

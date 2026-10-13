@@ -487,6 +487,18 @@ function courseLexicon() {
   for (const w of W()) if (!map.has(w.hanzi)) map.set(w.hanzi, { id: w.id, reading: w.pinyin, meaning: w.english, learned: ids.has(w.id), level: w.section });
   return map;
 }
+// Scenes for Talk. Gemma plays the other person.
+const TALK_TOPICS = [
+  { id: "meet", icon: "👋", title: "Meeting someone", sub: "Names, where you're from", scene: "two people meet for the first time at a friend's party", role: "a friendly new acquaintance" },
+  { id: "cafe", icon: "☕", title: "At a café", sub: "Order a drink and a snack", scene: "a small café; the student wants to order", role: "the waiter" },
+  { id: "shop", icon: "🛍️", title: "Shopping", sub: "Ask for things and prices", scene: "a small shop selling fruit, clothes and everyday things", role: "the shop assistant" },
+  { id: "way", icon: "🧭", title: "Asking the way", sub: "Station, shop, toilet…", scene: "on the street; the student is looking for a place", role: "a helpful local" },
+  { id: "family", icon: "👨‍👩‍👧", title: "Family & friends", sub: "Who is in your family", scene: "two friends chatting about their families", role: "a curious friend" },
+  { id: "weekend", icon: "🌳", title: "Free time", sub: "Hobbies and the weekend", scene: "two friends talking about hobbies and plans for the weekend", role: "a friend" },
+  { id: "food", icon: "🍜", title: "Food", sub: "What you like to eat", scene: "two friends deciding what to eat for dinner", role: "a hungry friend" },
+  { id: "day", icon: "⏰", title: "My day", sub: "Time, work and school", scene: "a chat about daily routine, time, work and school", role: "a classmate" },
+];
+
 /** Split text into tokens using the course's words (for stories Gemma writes). */
 function tokenize(text, lex) {
   if (course() === "sl") return text.split(/(\s+|[.,!?;:])/).filter(Boolean).map((t) => [t, "", lex.get(t.toLowerCase())?.meaning || ""]);
@@ -1069,8 +1081,44 @@ const routes = {
       ? compareSpokenSl(body.heard, body.expected)
       : course() === "ja" ? compareSpokenJa(body.heard, body.expected, body.reading) : compareSpoken(body.heard, body.expected),
 
-  "POST /api/speech/assess": () => {
-    throw new ai.AIError("Gemma audio isn't available in the app — switch pronunciation to Android speech recognition");
+  // Pronunciation check by Gemma listening to the recording (audio-capable model on the phone).
+  "POST /api/speech/assess": async (_, body) => {
+    const expected = String(body.expected || "");
+    const reading = course() === "zh" ? toPinyin(expected) : String(body.reading || "");
+    const res = await ai.assessSpeech(String(body.audio || ""), expected, reading);
+    if (res.heard) {
+      res.compare = course() === "sl"
+        ? compareSpokenSl(res.heard, expected)
+        : course() === "ja" ? compareSpokenJa(res.heard, expected, reading) : compareSpoken(res.heard, expected);
+    }
+    return res;
+  },
+
+  // Talk: short role-play conversations with Gemma, using the words you know.
+  "GET /api/talk/topics": () => ({ topics: TALK_TOPICS.map(({ id, icon, title, sub }) => ({ id, icon, title, sub })), known: learnedWords().length }),
+
+  "POST /api/talk/turn": async (_, body) => {
+    const topic = TALK_TOPICS.find((t) => t.id === body.topic) || TALK_TOPICS[0];
+    const words = learnedWords();
+    if (words.length < 10) throw new HttpError(409, "Learn at least 10 words first");
+    const known = shuffled(words).slice(0, 60).map((w) => w.hanzi);
+    const history = (Array.isArray(body.history) ? body.history : []).map((m) => ({ who: m.who === "me" ? "me" : "gemma", text: String(m.text || "") }));
+    const r = await ai.talkTurn(topic, known, history, String(body.answer || ""));
+    if (course() === "zh") {
+      r.reading = toPinyin(r.reply);
+      r.ideas = r.ideas.map((x) => ({ ...x, reading: toPinyin(x.text) }));
+      if (r.fixed) r.fixed_reading = toPinyin(r.fixed);
+    }
+    return r;
+  },
+
+  "POST /api/talk/done": (_, body) => {
+    const turns = Math.max(0, Math.min(20, Number(body.turns) || 0));
+    const good = Math.max(0, Math.min(turns, Number(body.good) || 0));
+    const xp = turns * 3 + good * 2;
+    if (xp) addActivity({ xp, sentences: turns });
+    persist();
+    return { xp };
   },
 
   "GET /api/settings": () => {

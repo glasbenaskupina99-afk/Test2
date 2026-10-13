@@ -3,6 +3,9 @@
 import { h } from "./util.js";
 import { state } from "./state.js";
 
+// Stroke strictness setting -> hanzi-writer leniency (its own default of 1 is very exact).
+const LENIENCY = { "0.7": 1.25, "1": 1.8, "1.4": 2.5 };
+
 const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 function loader(char, onLoad, onError) {
@@ -103,7 +106,9 @@ export function writingPad(chars, { showSlots = true } = {}) {
       delayBetweenStrokes: 120,
       showHintAfterMisses: hintAfter,
       markStrokeCorrectAfterMisses: hintAfter + 2,
-      leniency: Number(settings.leniency || 1),
+      // Forgiving matching: a stroke a little off the line still counts (the setting picks how much).
+      leniency: LENIENCY[String(settings.leniency)] || LENIENCY["1"],
+      averageDistanceThreshold: 450,
       highlightOnComplete: true,
       charDataLoader: loader,
       onLoadCharDataError: () => {

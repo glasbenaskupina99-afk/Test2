@@ -9,6 +9,22 @@ import json, os, re, sys, glob
 base = sys.argv[1]
 root = os.path.join(os.path.dirname(__file__), "..", "app", "data", "i18n")
 PH = re.compile(r"\{\d+\}")
+CJK = re.compile(r"[\u4e00-\u9fff\u3040-\u30ff]")
+KANA = re.compile(r"[\u3040-\u30ff]")
+
+
+def suspicious(lang, en, v):
+    """True when a translation is probably in the wrong language or belongs to another line."""
+    src_cjk = set(CJK.findall(en))
+    if lang != "ja" and src_cjk:
+        # Characters quoted in the English must still be there (a shifted line loses them).
+        if len(src_cjk & set(CJK.findall(v))) < len(src_cjk) / 2:
+            return True
+    if lang != "ja" and KANA.search(v) and not KANA.search(en):
+        return True
+    if lang == "ja" and re.search(r"[A-Za-z]{4}", en) and not CJK.search(v) and v != en:
+        return True
+    return False
 
 
 def load(p):
@@ -38,6 +54,11 @@ for lang_dir in sorted(glob.glob(os.path.join(base, "out", "*"))):
                 continue
             if set(PH.findall(v)) - set(PH.findall(en)):
                 bad += 1
+                continue
+            if suspicious(lang, en, v):
+                bad += 1
+                if bad <= 3 + ok // 1000:
+                    print("   ? ", k, "|", en[:60], "→", v[:60])
                 continue
             ok += 1
             if job == "ui":

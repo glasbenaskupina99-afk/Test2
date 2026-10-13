@@ -2,6 +2,7 @@
   "appId": "com.hanzihome.app",
   "appName": "Bloomko",
   "webDir": "www",
+  "backgroundColor": "#1c3026",
   "android": {
     "allowMixedContent": false
   },

@@ -36,7 +36,9 @@ html = html
   .replace(/<link rel="stylesheet" href="https:\/\/fonts[^>]*>/, '<link rel="stylesheet" href="fonts.css">')
   .replace(/\/static\//g, "")
   .replace('href="/manifest.webmanifest"', 'href="manifest.webmanifest"')
-  .replace('<script type="module" src="js/app.js"></script>', '<script type="module" src="app.js"></script>');
+  .replace('<script type="module" src="js/app.js"></script>', '<script type="module" src="app.js"></script>')
+  // Opening animation (app only): dark from the first frame, so there is no white flash.
+  .replace("<body>", () => "<body>\n" + readFileSync(join(mobile, "web", "splash.html"), "utf8"));
 writeFileSync(join(www, "index.html"), html);
 
 // Ready-made memory hooks, one file per language, loaded by the app when needed.

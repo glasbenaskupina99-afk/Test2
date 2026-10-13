@@ -1,0 +1,63 @@
+<style>
+  html, body { background: #1c3026; }
+  #splash { position: fixed; inset: 0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    background: radial-gradient(circle at 30% 20%, #2b4a38, #16271e 75%); transition: opacity .4s ease; }
+  #splash.out { opacity: 0; pointer-events: none; }
+  #splash svg { width: 132px; height: 132px; overflow: visible; }
+  #splash .leaf { transform-origin: 50% 90%; animation: sp-grow .9s cubic-bezier(.3,1.4,.5,1) both; }
+  #splash .outline { stroke-dasharray: 1; stroke-dashoffset: 1; animation: sp-draw .8s ease-out .1s forwards; }
+  #splash .fill { opacity: 0; animation: sp-fade .5s ease .55s forwards; }
+  #splash .vein { stroke-dasharray: 1; stroke-dashoffset: 1; animation: sp-draw .5s ease-out .85s forwards; }
+  #splash .stem { stroke-dasharray: 1; stroke-dashoffset: 1; animation: sp-draw .35s ease-out forwards; }
+  #splash .sway { transform-origin: 50% 95%; animation: sp-sway 1.6s ease-in-out .9s both; }
+  #splash .name { font: 900 30px/1 "Nunito", system-ui, sans-serif; color: #f3ead8; letter-spacing: .5px; opacity: 0; transform: translateY(10px);
+    animation: sp-up .5s ease 1s forwards; }
+  #splash .dot { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #e8d48a; opacity: 0; box-shadow: 0 0 8px 2px rgba(232,212,138,.6);
+    animation: sp-fly 1.8s ease-out forwards; }
+  @keyframes sp-grow { from { transform: scale(.2) rotate(-25deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes sp-draw { to { stroke-dashoffset: 0; } }
+  @keyframes sp-fade { to { opacity: 1; } }
+  @keyframes sp-up { to { opacity: 1; transform: none; } }
+  @keyframes sp-sway { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(-4deg); } 75% { transform: rotate(2deg); } }
+  @keyframes sp-fly { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translate(var(--dx), -70px); } }
+</style>
+<div id="splash" aria-hidden="true">
+  <svg viewBox="0 0 200 200">
+    <g class="sway">
+      <path class="stem" pathLength="1" d="M100 190 Q98 170 100 150" fill="none" stroke="#d2ae52" stroke-width="5" stroke-linecap="round"/>
+      <g class="leaf">
+        <path class="fill" d="M100 150 C60 125 48 75 100 18 C152 75 140 125 100 150 Z" fill="#a9c39c"/>
+        <path class="outline" pathLength="1" d="M100 150 C60 125 48 75 100 18 C152 75 140 125 100 150 Z" fill="none" stroke="#d2ae52" stroke-width="5" stroke-linejoin="round"/>
+        <g fill="none" stroke="#5f8060" stroke-width="3" stroke-linecap="round">
+          <path class="vein" pathLength="1" d="M100 146 L100 34"/>
+          <path class="vein" pathLength="1" d="M100 110 Q86 100 78 86"/>
+          <path class="vein" pathLength="1" d="M100 110 Q114 100 122 86"/>
+          <path class="vein" pathLength="1" d="M100 80 Q90 72 86 60"/>
+          <path class="vein" pathLength="1" d="M100 80 Q110 72 114 60"/>
+        </g>
+      </g>
+    </g>
+  </svg>
+  <div class="name">Bloomko</div>
+  <span class="dot" style="left:38%;top:52%;--dx:-18px;animation-delay:.9s"></span>
+  <span class="dot" style="left:62%;top:48%;--dx:16px;animation-delay:1.1s"></span>
+  <span class="dot" style="left:52%;top:58%;--dx:6px;animation-delay:1.3s"></span>
+</div>
+<script>
+  // Short opening animation: stays ~2 s (or until the first screen is drawn), then fades into the app.
+  (function () {
+    var t0 = Date.now();
+    function done() {
+      var s = document.getElementById("splash");
+      if (!s) return;
+      s.classList.add("out");
+      setTimeout(function () { s.remove(); }, 450);
+    }
+    function check() {
+      var ready = document.getElementById("app") && document.getElementById("app").children.length;
+      if ((ready && Date.now() - t0 >= 2000) || Date.now() - t0 > 6000) done();
+      else setTimeout(check, 100);
+    }
+    setTimeout(check, 2000);
+  })();
+</script>

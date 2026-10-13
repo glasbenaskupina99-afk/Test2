@@ -4,6 +4,7 @@ import { speak, stopSpeaking, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
 import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
+import { soundsOn, setSounds, playForest, playCorrect } from "./sounds.js";
 import { plantArt, gardenSheet, gardenNotice, dayLeafArt } from "./garden.js";
 import { canRemind, ensurePermission, scheduleReminders } from "./reminders.js";
 import { pickTime } from "./timepicker.js";
@@ -208,7 +209,7 @@ function topbar(home) {
       : null,
     h(
       "button",
-      { class: `stat streak-plant ${home.plant || "seed"}`, title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => gardenSheet() },
+      { class: `stat streak-plant ${home.plant || "seed"}`, title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => { playForest(); gardenSheet(); } },
       plantArt(home.plant || "seed", "ico"),
       home.streak
     ),
@@ -1257,7 +1258,7 @@ async function statsScreen() {
         "div",
         { class: "journey-head" },
         // Your streak plant, the same one as next to the streak count on the home screen.
-        h("button", { class: "journey-avatar journey-plant", title: "Your streak plant", "aria-label": "Your streak plant", onclick: () => gardenSheet() }, plantArt(s.plant || "seed", "journey-plant-art")),
+        h("button", { class: "journey-avatar journey-plant", title: "Your streak plant", "aria-label": "Your streak plant", onclick: () => { playForest(); gardenSheet(); } }, plantArt(s.plant || "seed", "journey-plant-art")),
         h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, `Level ${level} · ${totalXp} XP · 🌱 ${s.streak || 0}-day streak`))
       ),
       h(
@@ -1339,6 +1340,7 @@ async function settingsScreen() {
 
   let theme = "auto";
   try { theme = localStorage.getItem("theme") || "forest"; } catch { /* ignore */ }
+  const soundToggle = h("input", { type: "checkbox", class: "toggle", checked: soundsOn(), onchange: (e) => { setSounds(e.target.checked); if (e.target.checked) playCorrect(); } });
   const themeSel = h(
     "select",
     { onchange: (e) => { try { localStorage.setItem("theme", e.target.value); } catch { /* ignore */ } applyTheme(); } },
@@ -1424,6 +1426,7 @@ async function settingsScreen() {
         field("Reviews per practice", select("review_size", [["10", "10"], ["15", "15"], ["25", "25"], ["40", "40"]])),
         field("Sentences per session", select("sentence_count", [["4", "4"], ["6", "6"], ["9", "9"], ["12", "12"]])),
         field("Theme", themeSel),
+        h("div", { class: "switch-row" }, h("div", {}, "Sounds", h("div", { class: "small muted" }, "Nature sounds for answers and your plant")), soundToggle),
         field("Your name", input("display_name", { placeholder: "Shown on “My journey”" }))
       ),
       isWeb

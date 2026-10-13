@@ -1,6 +1,7 @@
 // Duolingo-style lesson runner: progress bar, exercise, check/continue footer, end screen.
 import { api, h, confirmDialog } from "./util.js";
 import { stopSpeaking } from "./audio.js";
+import { playCorrect, playWrong, playComplete } from "./sounds.js";
 
 const END_MSG = {
   bloom: "Beautiful — your plant is in bloom!",
@@ -151,6 +152,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
     const extra = step.after ? (await step.after(res).catch(() => null)) || {} : {};
     graded++;
     if (res.ok) { correct++; combo++; } else combo = 0;
+    (res.ok ? playCorrect : playWrong)();
     xp += extra.xp || 0;
     if (extra.requeue) queue.push(extra.requeue);
     updateBar();
@@ -175,6 +177,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
   }
 
   function end() {
+    playComplete();
     const secs = Math.round((Date.now() - started) / 1000);
     const acc = graded ? Math.round((100 * correct) / graded) : 100;
     const summary = { xp, accuracy: acc, seconds: secs, correct, graded };

@@ -277,6 +277,82 @@ async function grammarReviewSteps(extra) {
   });
 }
 
+// ------------------------------------------------------------------ listening, tones, stories
+
+const listenAfter = (make, key) => async (res) => {
+  const r = await api("/api/listen/answer", { method: "POST", body: { ok: res.ok } });
+  return { xp: r.xp, requeue: res.ok ? null : step(make, async () => ({ xp: 0 }), key) };
+};
+
+/** Listening practice: dictation and "what did you hear?" with sentences built from words you know. */
+export async function listening() {
+  const { items, others } = await api("/api/listen/session?n=6");
+  if (!items.length) {
+    toast("Learn a few words first — listening uses their example sentences.");
+    return null;
+  }
+  const steps = [];
+  items.forEach((it, i) => {
+    const make = i % 2 ? (ctx) => ex.listenChoose(ctx, it, others) : (ctx) => ex.dictation(ctx, it);
+    steps.push(step(make, listenAfter(make, it.text), it.text));
+  });
+  return runLesson({ steps, endTitle: "Listening done!" });
+}
+
+/** Tone practice (Chinese): hear and pick tones, then say one-syllable words with the right tone. */
+export async function tones() {
+  const { items } = await api("/api/tones/session?n=8");
+  if (!items.length) {
+    toast("Learn a few words first — tone practice uses words you know.");
+    return null;
+  }
+  const pitch = await import("./pitch.js");
+  const steps = items.map((w) => {
+    const make = (ctx) => ex.toneListen(ctx, w);
+    return step(make, listenAfter(make, w.id), w.id);
+  });
+  if (pitch.canTrackPitch()) {
+    for (const w of items.filter((x) => x.syllables.length === 1 && ex.toneOf(x.syllables[0]) !== 5).slice(0, 3)) {
+      const make = (ctx) => ex.toneSpeak(ctx, w, pitch);
+      steps.push(step(make, listenAfter(make, "say" + w.id), "say" + w.id));
+    }
+  }
+  return runLesson({ steps: spreadOut(steps), endTitle: "Tones practised!" });
+}
+
+/** Comprehension questions after reading a story. */
+export function storyQuestions(story) {
+  const qs = story.questions || [];
+  let right = 0;
+  const steps = qs.map((q) =>
+    step(
+      (ctx) => {
+        let picked = null;
+        const tiles = q.options.map((o, i) => {
+          const t = h("button", { class: "choice text", onclick: () => { picked = i; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } }, h("span", { class: "txt" }, o));
+          return t;
+        });
+        return {
+          el: h("div", {}, h("div", { class: "ex-kicker purple" }, `📖 ${story.title_en}`), h("h2", { class: "ex-title" }, q.q), h("div", { class: "choices" }, tiles)),
+          mode: "check",
+          async check() {
+            const ok = picked === q.answer;
+            if (ok) right++;
+            tiles.forEach((t, i) => { if (i === q.answer) t.classList.add("correct"); else if (i === picked) t.classList.add("wrong"); });
+            return { ok, grade: ok ? 2 : 0, title: ok ? "Correct!" : "Correct answer:", detail: h("div", {}, q.options[q.answer]) };
+          },
+        };
+      },
+      async (res) => ({ xp: res.ok ? 3 : 1 })
+    )
+  );
+  return runLesson({
+    steps,
+    endTitle: "Story finished!",
+    onDone: (s) => api(`/api/stories/${encodeURIComponent(story.id)}/done`, { method: "POST", body: { score: qs.length ? Math.round((100 * right) / qs.length) : 100, xp: s.xp + 5 } }),
+  });
+}
+
 // ------------------------------------------------------------------ practice old words
 
 export async function review({ extra = false, writing = true } = {}) {

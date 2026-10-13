@@ -1,0 +1,5200 @@
+{
+ "level": "HSK 2",
+ "stories": [
+  {
+   "id": "zh2-s1",
+   "title": "去北京旅行",
+   "title_en": "A Trip to Beijing",
+   "sentences": [
+    {
+     "text": "上个星期我和妻子去了北京。",
+     "en": "Last week my wife and I went to Beijing.",
+     "tokens": [
+      [
+       "上个星期",
+       "shàng ge xīng qī",
+       "last week"
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "和",
+       "hé",
+       "and; with"
+      ],
+      [
+       "妻子",
+       "qī zi",
+       "wife"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "北京",
+       "Běi jīng",
+       "Beijing"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "我们是坐飞机去的。",
+     "en": "We went by plane.",
+     "tokens": [
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "坐",
+       "zuò",
+       "to take (vehicle); to sit"
+      ],
+      [
+       "飞机",
+       "fēi jī",
+       "airplane"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "北京比我们的城市大很多。",
+     "en": "Beijing is much bigger than our city.",
+     "tokens": [
+      [
+       "北京",
+       "Běi jīng",
+       "Beijing"
+      ],
+      [
+       "比",
+       "bǐ",
+       "than (comparison)"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "城市",
+       "chéng shì",
+       "city"
+      ],
+      [
+       "大",
+       "dà",
+       "big"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "第一天，我们去看了天安门。",
+     "en": "On the first day, we went to see Tiananmen.",
+     "tokens": [
+      [
+       "第一",
+       "dì yī",
+       "first"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "看",
+       "kàn",
+       "to see; to look"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "天安门",
+       "Tiān'ān mén",
+       "Tiananmen"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "那天天气很好，不冷也不热。",
+     "en": "The weather was very nice that day, neither cold nor hot.",
+     "tokens": [
+      [
+       "那",
+       "nà",
+       "that"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "天气",
+       "tiān qì",
+       "weather"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "冷",
+       "lěng",
+       "cold"
+      ],
+      [
+       "也",
+       "yě",
+       "also; either"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "热",
+       "rè",
+       "hot"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "晚上我们吃了北京烤鸭。",
+     "en": "In the evening we ate Peking roast duck.",
+     "tokens": [
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "北京",
+       "Běi jīng",
+       "Beijing"
+      ],
+      [
+       "烤鸭",
+       "kǎo yā",
+       "roast duck"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "我以前没吃过烤鸭，我觉得非常好吃。",
+     "en": "I had never eaten roast duck before, and I thought it was delicious.",
+     "tokens": [
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "以前",
+       "yǐ qián",
+       "before; formerly"
+      ],
+      [
+       "没",
+       "méi",
+       "not (past)"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "过",
+       "guo",
+       "(have done before)"
+      ],
+      [
+       "烤鸭",
+       "kǎo yā",
+       "roast duck"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "觉得",
+       "jué de",
+       "to feel; to think"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "extremely"
+      ],
+      [
+       "好吃",
+       "hǎo chī",
+       "delicious"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "因为人太多了，所以我们每天都很累。",
+     "en": "Because there were too many people, we were tired every day.",
+     "tokens": [
+      [
+       "因为",
+       "yīn wèi",
+       "because"
+      ],
+      [
+       "人",
+       "rén",
+       "person; people"
+      ],
+      [
+       "太",
+       "tài",
+       "too; so"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "所以",
+       "suǒ yǐ",
+       "so; therefore"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "每",
+       "měi",
+       "every"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "累",
+       "lèi",
+       "tired"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "可是我们都很高兴。",
+     "en": "But we were both very happy.",
+     "tokens": [
+      [
+       "可是",
+       "kě shì",
+       "but"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "高兴",
+       "gāo xìng",
+       "happy"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "明年我们还想再去一次。",
+     "en": "Next year we want to go again.",
+     "tokens": [
+      [
+       "明年",
+       "míng nián",
+       "next year"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "还",
+       "hái",
+       "also; still"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want; to think"
+      ],
+      [
+       "再",
+       "zài",
+       "again"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "次",
+       "cì",
+       "time (occurrence)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How did they travel to Beijing?",
+     "options": [
+      "By train",
+      "By plane",
+      "By bus",
+      "By car"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What did they eat in the evening?",
+     "options": [
+      "Roast duck",
+      "Noodles",
+      "Dumplings",
+      "Fish"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "Why were they tired every day?",
+     "options": [
+      "The weather was hot",
+      "They walked too far",
+      "There were too many people",
+      "They slept badly"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "zh2-s2",
+   "title": "王方的生日",
+   "title_en": "Wang Fang's Birthday",
+   "sentences": [
+    {
+     "text": "今天是王方的生日。",
+     "en": "Today is Wang Fang's birthday.",
+     "tokens": [
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "王方",
+       "Wáng Fāng",
+       "Wang Fang (name)"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "生日",
+       "shēng rì",
+       "birthday"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她今年二十岁了。",
+     "en": "She turned twenty this year.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "今年",
+       "jīn nián",
+       "this year"
+      ],
+      [
+       "二十",
+       "èr shí",
+       "twenty"
+      ],
+      [
+       "岁",
+       "suì",
+       "years old"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "早上，妈妈给她做了面条。",
+     "en": "In the morning, her mom made noodles for her.",
+     "tokens": [
+      [
+       "早上",
+       "zǎo shang",
+       "morning"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom"
+      ],
+      [
+       "给",
+       "gěi",
+       "for; to; to give"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "做",
+       "zuò",
+       "to make; to do"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "面条",
+       "miàn tiáo",
+       "noodles"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "下午，她的朋友们来她家了。",
+     "en": "In the afternoon, her friends came to her home.",
+     "tokens": [
+      [
+       "下午",
+       "xià wǔ",
+       "afternoon"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "朋友们",
+       "péng you men",
+       "friends"
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; (measure word for companies)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他们送了她很多礼物。",
+     "en": "They gave her many gifts.",
+     "tokens": [
+      [
+       "他们",
+       "tā men",
+       "they"
+      ],
+      [
+       "送",
+       "sòng",
+       "to give (as a gift); to deliver"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "礼物",
+       "lǐ wù",
+       "gift"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小李送的是一本书，大卫送的是一件红色的衣服。",
+     "en": "Xiao Li gave a book, and David gave a piece of red clothing.",
+     "tokens": [
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "送",
+       "sòng",
+       "to give (as a gift); to deliver"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "本",
+       "běn",
+       "(measure word for books)"
+      ],
+      [
+       "书",
+       "shū",
+       "book"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "大卫",
+       "Dà wèi",
+       "David (name)"
+      ],
+      [
+       "送",
+       "sòng",
+       "to give (as a gift); to deliver"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "件",
+       "jiàn",
+       "(measure word for clothes)"
+      ],
+      [
+       "红色",
+       "hóng sè",
+       "red"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王方最喜欢那件衣服。",
+     "en": "Wang Fang liked that piece of clothing the most.",
+     "tokens": [
+      [
+       "王方",
+       "Wáng Fāng",
+       "Wang Fang (name)"
+      ],
+      [
+       "最",
+       "zuì",
+       "most"
+      ],
+      [
+       "喜欢",
+       "xǐ huan",
+       "to like"
+      ],
+      [
+       "那",
+       "nà",
+       "that"
+      ],
+      [
+       "件",
+       "jiàn",
+       "(measure word for clothes)"
+      ],
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "晚上，大家一起吃蛋糕，唱歌。",
+     "en": "In the evening, everyone ate cake and sang together.",
+     "tokens": [
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "大家",
+       "dà jiā",
+       "everyone"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "蛋糕",
+       "dàn gāo",
+       "cake"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "唱歌",
+       "chàng gē",
+       "to sing"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王方笑着说：“谢谢你们，今天我非常快乐！”",
+     "en": "Wang Fang said with a smile: \"Thank you all, I'm very happy today!\"",
+     "tokens": [
+      [
+       "王方",
+       "Wáng Fāng",
+       "Wang Fang (name)"
+      ],
+      [
+       "笑",
+       "xiào",
+       "to smile; to laugh"
+      ],
+      [
+       "着",
+       "zhe",
+       "(ongoing manner)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "谢谢",
+       "xiè xie",
+       "thank you"
+      ],
+      [
+       "你们",
+       "nǐ men",
+       "you (plural)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "extremely"
+      ],
+      [
+       "快乐",
+       "kuài lè",
+       "happy"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How old is Wang Fang this year?",
+     "options": [
+      "Eighteen",
+      "Nineteen",
+      "Twenty",
+      "Twenty-one"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What did David give her?",
+     "options": [
+      "A book",
+      "A cake",
+      "Flowers",
+      "Red clothing"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "What did her mom make in the morning?",
+     "options": [
+      "Noodles",
+      "Rice",
+      "Cake",
+      "Dumplings"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh2-s3",
+   "title": "小明生病了",
+   "title_en": "Xiao Ming Gets Sick",
+   "sentences": [
+    {
+     "text": "昨天晚上，小明觉得身体不舒服。",
+     "en": "Last night, Xiao Ming didn't feel well.",
+     "tokens": [
+      [
+       "昨天",
+       "zuó tiān",
+       "yesterday"
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "小明",
+       "Xiǎo Míng",
+       "Xiao Ming (name)"
+      ],
+      [
+       "觉得",
+       "jué de",
+       "to feel; to think"
+      ],
+      [
+       "身体",
+       "shēn tǐ",
+       "body; health"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "舒服",
+       "shū fu",
+       "comfortable"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "今天早上他发烧了，头也很疼。",
+     "en": "This morning he had a fever, and his head hurt too.",
+     "tokens": [
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "早上",
+       "zǎo shang",
+       "morning"
+      ],
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "发烧",
+       "fā shāo",
+       "to have a fever"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "头",
+       "tóu",
+       "head"
+      ],
+      [
+       "也",
+       "yě",
+       "also; either"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "疼",
+       "téng",
+       "to hurt"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他给老师打电话说：“老师，我生病了，今天不能去学校。”",
+     "en": "He called his teacher and said: \"Teacher, I'm sick, I can't go to school today.\"",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "给",
+       "gěi",
+       "for; to; to give"
+      ],
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "打",
+       "dǎ",
+       "to make (a call)"
+      ],
+      [
+       "电话",
+       "diàn huà",
+       "phone call; phone"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "生病",
+       "shēng bìng",
+       "to get sick"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "能",
+       "néng",
+       "can; to be able to"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "学校",
+       "xué xiào",
+       "school"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "妈妈带他去了医院。",
+     "en": "His mom took him to the hospital.",
+     "tokens": [
+      [
+       "妈妈",
+       "mā ma",
+       "mom"
+      ],
+      [
+       "带",
+       "dài",
+       "to take; to bring"
+      ],
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "医院",
+       "yī yuàn",
+       "hospital"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "医生说：“你感冒了，要多喝水，多休息。”",
+     "en": "The doctor said: \"You have a cold. You should drink more water and rest more.\"",
+     "tokens": [
+      [
+       "医生",
+       "yī shēng",
+       "doctor"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "感冒",
+       "gǎn mào",
+       "to have a cold"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "要",
+       "yào",
+       "should; need to"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "喝",
+       "hē",
+       "to drink"
+      ],
+      [
+       "水",
+       "shuǐ",
+       "water"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "休息",
+       "xiū xi",
+       "to rest"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "医生还给了他一些药。",
+     "en": "The doctor also gave him some medicine.",
+     "tokens": [
+      [
+       "医生",
+       "yī shēng",
+       "doctor"
+      ],
+      [
+       "还",
+       "hái",
+       "also; still"
+      ],
+      [
+       "给",
+       "gěi",
+       "for; to; to give"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "一些",
+       "yì xiē",
+       "some"
+      ],
+      [
+       "药",
+       "yào",
+       "medicine"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "因为药很苦，所以小明不想吃。",
+     "en": "Because the medicine was very bitter, Xiao Ming didn't want to take it.",
+     "tokens": [
+      [
+       "因为",
+       "yīn wèi",
+       "because"
+      ],
+      [
+       "药",
+       "yào",
+       "medicine"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "苦",
+       "kǔ",
+       "bitter"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "所以",
+       "suǒ yǐ",
+       "so; therefore"
+      ],
+      [
+       "小明",
+       "Xiǎo Míng",
+       "Xiao Ming (name)"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want; to think"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "妈妈说：“不吃药，病不会好。”",
+     "en": "His mom said: \"If you don't take the medicine, you won't get better.\"",
+     "tokens": [
+      [
+       "妈妈",
+       "mā ma",
+       "mom"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "药",
+       "yào",
+       "medicine"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "病",
+       "bìng",
+       "illness"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "会",
+       "huì",
+       "will; can (learned skill)"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "三天以后，小明的病好了，他又去上课了。",
+     "en": "Three days later, Xiao Ming was better, and he went to class again.",
+     "tokens": [
+      [
+       "三",
+       "sān",
+       "three"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after; later"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "小明",
+       "Xiǎo Míng",
+       "Xiao Ming (name)"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "病",
+       "bìng",
+       "illness"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "又",
+       "yòu",
+       "again"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "上课",
+       "shàng kè",
+       "to attend class"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What did the doctor say was wrong?",
+     "options": [
+      "He had a cold",
+      "He broke his leg",
+      "He ate bad food",
+      "He was too tired"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "Who took Xiao Ming to the hospital?",
+     "options": [
+      "His father",
+      "His mother",
+      "His teacher",
+      "His friend"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "How long until he was better?",
+     "options": [
+      "Two days",
+      "One week",
+      "Five days",
+      "Three days"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "zh2-s4",
+   "title": "新工作",
+   "title_en": "A New Job",
+   "sentences": [
+    {
+     "text": "李静找到了一个新工作。",
+     "en": "Li Jing found a new job.",
+     "tokens": [
+      [
+       "李静",
+       "Lǐ Jìng",
+       "Li Jing (name)"
+      ],
+      [
+       "找到",
+       "zhǎo dào",
+       "to find"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "新",
+       "xīn",
+       "new"
+      ],
+      [
+       "工作",
+       "gōng zuò",
+       "job; to work"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她在一家公司工作，公司离她家不远。",
+     "en": "She works at a company that isn't far from her home.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "家",
+       "jiā",
+       "(measure word for companies)"
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "工作",
+       "gōng zuò",
+       "job; to work"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "离",
+       "lí",
+       "from (distance)"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; (measure word for companies)"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "远",
+       "yuǎn",
+       "far"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "每天早上她七点起床，走路去公司。",
+     "en": "Every morning she gets up at seven and walks to the company.",
+     "tokens": [
+      [
+       "每",
+       "měi",
+       "every"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "早上",
+       "zǎo shang",
+       "morning"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "七",
+       "qī",
+       "seven"
+      ],
+      [
+       "点",
+       "diǎn",
+       "o'clock"
+      ],
+      [
+       "起床",
+       "qǐ chuáng",
+       "to get up"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "走路",
+       "zǒu lù",
+       "to walk"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "第一天上班，她很早就到了。",
+     "en": "On her first day at work, she arrived very early.",
+     "tokens": [
+      [
+       "第一",
+       "dì yī",
+       "first"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "上班",
+       "shàng bān",
+       "to go to work"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "早",
+       "zǎo",
+       "early"
+      ],
+      [
+       "就",
+       "jiù",
+       "already; then"
+      ],
+      [
+       "到",
+       "dào",
+       "to arrive"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "公司里的人都很好，常常帮助她。",
+     "en": "The people at the company are all very nice and often help her.",
+     "tokens": [
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "里",
+       "lǐ",
+       "in; inside"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "人",
+       "rén",
+       "person; people"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "常常",
+       "cháng cháng",
+       "often"
+      ],
+      [
+       "帮助",
+       "bāng zhù",
+       "to help"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "这个工作比她以前的工作忙，可是也更有意思。",
+     "en": "This job is busier than her old job, but it's also more interesting.",
+     "tokens": [
+      [
+       "这个",
+       "zhè ge",
+       "this"
+      ],
+      [
+       "工作",
+       "gōng zuò",
+       "job; to work"
+      ],
+      [
+       "比",
+       "bǐ",
+       "than (comparison)"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "以前",
+       "yǐ qián",
+       "before; formerly"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "工作",
+       "gōng zuò",
+       "job; to work"
+      ],
+      [
+       "忙",
+       "máng",
+       "busy"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "可是",
+       "kě shì",
+       "but"
+      ],
+      [
+       "也",
+       "yě",
+       "also; either"
+      ],
+      [
+       "更",
+       "gèng",
+       "even more"
+      ],
+      [
+       "有意思",
+       "yǒu yì si",
+       "interesting"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "中午，她和同事一起去吃饭。",
+     "en": "At noon, she goes to eat with her colleagues.",
+     "tokens": [
+      [
+       "中午",
+       "zhōng wǔ",
+       "noon"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "和",
+       "hé",
+       "and; with"
+      ],
+      [
+       "同事",
+       "tóng shì",
+       "colleague"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "饭",
+       "fàn",
+       "meal; rice"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "下班以后，她还要学习英语，因为公司里有很多外国客人。",
+     "en": "After work, she also has to study English, because the company has many foreign clients.",
+     "tokens": [
+      [
+       "下班",
+       "xià bān",
+       "to get off work"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after; later"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "还",
+       "hái",
+       "also; still"
+      ],
+      [
+       "要",
+       "yào",
+       "should; need to"
+      ],
+      [
+       "学习",
+       "xué xí",
+       "to study"
+      ],
+      [
+       "英语",
+       "Yīng yǔ",
+       "English"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "因为",
+       "yīn wèi",
+       "because"
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "里",
+       "lǐ",
+       "in; inside"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "外国",
+       "wài guó",
+       "foreign"
+      ],
+      [
+       "客人",
+       "kè rén",
+       "guest; client"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她觉得自己的英语说得还不太好。",
+     "en": "She feels her spoken English is not very good yet.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "觉得",
+       "jué de",
+       "to feel; to think"
+      ],
+      [
+       "自己",
+       "zì jǐ",
+       "oneself"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "英语",
+       "Yīng yǔ",
+       "English"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "得",
+       "de",
+       "(complement marker)"
+      ],
+      [
+       "还不太",
+       "hái bú tài",
+       "not yet very"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她希望明年能说得更好。",
+     "en": "She hopes she can speak it better next year.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "希望",
+       "xī wàng",
+       "to hope"
+      ],
+      [
+       "明年",
+       "míng nián",
+       "next year"
+      ],
+      [
+       "能",
+       "néng",
+       "can; to be able to"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "得",
+       "de",
+       "(complement marker)"
+      ],
+      [
+       "更",
+       "gèng",
+       "even more"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How does Li Jing get to work?",
+     "options": [
+      "By bus",
+      "By taxi",
+      "By bike",
+      "On foot"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "Why does she study English?",
+     "options": [
+      "The company has many foreign clients",
+      "She wants to travel",
+      "Her friend asked her",
+      "She has an exam"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "How is the new job compared to her old one?",
+     "options": [
+      "Easier and more boring",
+      "Closer to home and quieter",
+      "Busier but more interesting",
+      "The same"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "zh2-s5",
+   "title": "篮球比赛",
+   "title_en": "The Basketball Game",
+   "sentences": [
+    {
+     "text": "大卫很喜欢运动。",
+     "en": "David really likes sports.",
+     "tokens": [
+      [
+       "大卫",
+       "Dà wèi",
+       "David (name)"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "喜欢",
+       "xǐ huan",
+       "to like"
+      ],
+      [
+       "运动",
+       "yùn dòng",
+       "sports; to exercise"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他每个星期六都和同学们去打篮球。",
+     "en": "Every Saturday he goes to play basketball with his classmates.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "每",
+       "měi",
+       "every"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "星期六",
+       "xīng qī liù",
+       "Saturday"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "和",
+       "hé",
+       "and; with"
+      ],
+      [
+       "同学们",
+       "tóng xué men",
+       "classmates"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "打",
+       "dǎ",
+       "to play (ball)"
+      ],
+      [
+       "篮球",
+       "lán qiú",
+       "basketball"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他打得比别人好，因为他从小就开始打了。",
+     "en": "He plays better than the others, because he started playing as a child.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "打",
+       "dǎ",
+       "to make (a call); to play (ball)"
+      ],
+      [
+       "得",
+       "de",
+       "(complement marker)"
+      ],
+      [
+       "比",
+       "bǐ",
+       "than (comparison)"
+      ],
+      [
+       "别人",
+       "bié rén",
+       "other people"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "因为",
+       "yīn wèi",
+       "because"
+      ],
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "从小",
+       "cóng xiǎo",
+       "since childhood"
+      ],
+      [
+       "就",
+       "jiù",
+       "already; then"
+      ],
+      [
+       "开始",
+       "kāi shǐ",
+       "to begin"
+      ],
+      [
+       "打",
+       "dǎ",
+       "to make (a call); to play (ball)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "上个月，学校有一个篮球比赛。",
+     "en": "Last month, the school had a basketball match.",
+     "tokens": [
+      [
+       "上个月",
+       "shàng ge yuè",
+       "last month"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "学校",
+       "xué xiào",
+       "school"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "篮球",
+       "lán qiú",
+       "basketball"
+      ],
+      [
+       "比赛",
+       "bǐ sài",
+       "match; competition"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "大卫和他的朋友们都参加了。",
+     "en": "David and his friends all took part.",
+     "tokens": [
+      [
+       "大卫",
+       "Dà wèi",
+       "David (name)"
+      ],
+      [
+       "和",
+       "hé",
+       "and; with"
+      ],
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "朋友们",
+       "péng you men",
+       "friends"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "参加",
+       "cān jiā",
+       "to take part in"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "比赛那天，来看的人非常多。",
+     "en": "On the day of the match, a lot of people came to watch.",
+     "tokens": [
+      [
+       "比赛",
+       "bǐ sài",
+       "match; competition"
+      ],
+      [
+       "那",
+       "nà",
+       "that"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "看",
+       "kàn",
+       "to see; to look"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "人",
+       "rén",
+       "person; people"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "extremely"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "开始的时候，他们打得不太好。",
+     "en": "At the beginning, they didn't play very well.",
+     "tokens": [
+      [
+       "开始",
+       "kāi shǐ",
+       "to begin"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "时候",
+       "shí hou",
+       "time; when"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他们",
+       "tā men",
+       "they"
+      ],
+      [
+       "打",
+       "dǎ",
+       "to make (a call); to play (ball)"
+      ],
+      [
+       "得",
+       "de",
+       "(complement marker)"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "太",
+       "tài",
+       "too; so"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "后来，大卫跑得很快，进了很多球。",
+     "en": "Later, David ran very fast and scored many baskets.",
+     "tokens": [
+      [
+       "后来",
+       "hòu lái",
+       "later; afterwards"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "大卫",
+       "Dà wèi",
+       "David (name)"
+      ],
+      [
+       "跑",
+       "pǎo",
+       "to run"
+      ],
+      [
+       "得",
+       "de",
+       "(complement marker)"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "快",
+       "kuài",
+       "fast"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "进",
+       "jìn",
+       "to score; to enter"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "球",
+       "qiú",
+       "ball; goal"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "最后，他们赢了！",
+     "en": "In the end, they won!",
+     "tokens": [
+      [
+       "最后",
+       "zuì hòu",
+       "in the end"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他们",
+       "tā men",
+       "they"
+      ],
+      [
+       "赢",
+       "yíng",
+       "to win"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "大家都很高兴，晚上一起去饭馆吃了饭。",
+     "en": "Everyone was very happy, and in the evening they went to a restaurant together for dinner.",
+     "tokens": [
+      [
+       "大家",
+       "dà jiā",
+       "everyone"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "高兴",
+       "gāo xìng",
+       "happy"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "饭馆",
+       "fàn guǎn",
+       "restaurant"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "饭",
+       "fàn",
+       "meal; rice"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "When does David usually play basketball?",
+     "options": [
+      "Every Sunday",
+      "Every Saturday",
+      "Every evening",
+      "Every Friday"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Why does David play better than the others?",
+     "options": [
+      "He is very tall",
+      "He has a good coach",
+      "He started as a child",
+      "He practices every day"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What happened at the end of the match?",
+     "options": [
+      "They won",
+      "They lost",
+      "It was a draw",
+      "It was cancelled"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh2-s6",
+   "title": "手机不见了",
+   "title_en": "The Lost Phone",
+   "sentences": [
+    {
+     "text": "昨天下午，张老师坐出租车去商店买东西。",
+     "en": "Yesterday afternoon, Teacher Zhang took a taxi to a shop to buy things.",
+     "tokens": [
+      [
+       "昨天",
+       "zuó tiān",
+       "yesterday"
+      ],
+      [
+       "下午",
+       "xià wǔ",
+       "afternoon"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "张",
+       "Zhāng",
+       "Zhang (surname)"
+      ],
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "坐",
+       "zuò",
+       "to take (vehicle); to sit"
+      ],
+      [
+       "出租车",
+       "chū zū chē",
+       "taxi"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "商店",
+       "shāng diàn",
+       "shop"
+      ],
+      [
+       "买",
+       "mǎi",
+       "to buy"
+      ],
+      [
+       "东西",
+       "dōng xi",
+       "things"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "下车以后，她发现手机不见了。",
+     "en": "After getting out of the car, she discovered her phone was missing.",
+     "tokens": [
+      [
+       "下车",
+       "xià chē",
+       "to get out of a vehicle"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after; later"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "发现",
+       "fā xiàn",
+       "to discover"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "mobile phone"
+      ],
+      [
+       "不见",
+       "bú jiàn",
+       "to be missing"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她非常着急，因为手机里有很多重要的东西。",
+     "en": "She was very worried, because there were many important things on the phone.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "extremely"
+      ],
+      [
+       "着急",
+       "zháo jí",
+       "worried; anxious"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "因为",
+       "yīn wèi",
+       "because"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "mobile phone"
+      ],
+      [
+       "里",
+       "lǐ",
+       "in; inside"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "重要",
+       "zhòng yào",
+       "important"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "东西",
+       "dōng xi",
+       "things"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她找了很长时间，可是没找到。",
+     "en": "She looked for a long time, but didn't find it.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "找",
+       "zhǎo",
+       "to look for"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "长",
+       "cháng",
+       "long"
+      ],
+      [
+       "时间",
+       "shí jiān",
+       "time"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "可是",
+       "kě shì",
+       "but"
+      ],
+      [
+       "没找到",
+       "méi zhǎo dào",
+       "did not find"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她想：手机可能在出租车上。",
+     "en": "She thought: maybe the phone is in the taxi.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want; to think"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "mobile phone"
+      ],
+      [
+       "可能",
+       "kě néng",
+       "maybe; possibly"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "出租车",
+       "chū zū chē",
+       "taxi"
+      ],
+      [
+       "上",
+       "shang",
+       "on"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她用商店的电话给自己的手机打了一个电话。",
+     "en": "She used the shop's phone to call her own phone.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "用",
+       "yòng",
+       "to use"
+      ],
+      [
+       "商店",
+       "shāng diàn",
+       "shop"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "电话",
+       "diàn huà",
+       "phone call; phone"
+      ],
+      [
+       "给",
+       "gěi",
+       "for; to; to give"
+      ],
+      [
+       "自己",
+       "zì jǐ",
+       "oneself"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "mobile phone"
+      ],
+      [
+       "打",
+       "dǎ",
+       "to make (a call)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "电话",
+       "diàn huà",
+       "phone call; phone"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "一个男人接了电话，他就是那个出租车司机。",
+     "en": "A man answered the phone; he was the taxi driver.",
+     "tokens": [
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "男人",
+       "nán rén",
+       "man"
+      ],
+      [
+       "接",
+       "jiē",
+       "to answer (a call)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "电话",
+       "diàn huà",
+       "phone call; phone"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he; him"
+      ],
+      [
+       "就是",
+       "jiù shì",
+       "is exactly; is precisely"
+      ],
+      [
+       "那",
+       "nà",
+       "that"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "出租车",
+       "chū zū chē",
+       "taxi"
+      ],
+      [
+       "司机",
+       "sī jī",
+       "driver"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "司机说：“别担心，我马上给您送过去。”",
+     "en": "The driver said: \"Don't worry, I'll bring it over to you right away.\"",
+     "tokens": [
+      [
+       "司机",
+       "sī jī",
+       "driver"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "别",
+       "bié",
+       "don't"
+      ],
+      [
+       "担心",
+       "dān xīn",
+       "to worry"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "马上",
+       "mǎ shàng",
+       "right away"
+      ],
+      [
+       "给",
+       "gěi",
+       "for; to; to give"
+      ],
+      [
+       "您",
+       "nín",
+       "you (polite)"
+      ],
+      [
+       "送过去",
+       "sòng guò qu",
+       "to bring it over"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "十分钟以后，司机来了，张老师拿到了手机。",
+     "en": "Ten minutes later, the driver came, and Teacher Zhang got her phone back.",
+     "tokens": [
+      [
+       "十",
+       "shí",
+       "ten"
+      ],
+      [
+       "分钟",
+       "fēn zhōng",
+       "minute"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after; later"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "司机",
+       "sī jī",
+       "driver"
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "张",
+       "Zhāng",
+       "Zhang (surname)"
+      ],
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "拿到",
+       "ná dào",
+       "to get back; to receive"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "mobile phone"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她说：“太谢谢你了，你真是一个好人！”",
+     "en": "She said: \"Thank you so much, you are really a good person!\"",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "太",
+       "tài",
+       "too; so"
+      ],
+      [
+       "谢谢",
+       "xiè xie",
+       "thank you"
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "真",
+       "zhēn",
+       "really; truly"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "好人",
+       "hǎo rén",
+       "good person"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How did Teacher Zhang go to the shop?",
+     "options": [
+      "By bus",
+      "On foot",
+      "By taxi",
+      "By subway"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Where was the phone?",
+     "options": [
+      "At home",
+      "In the shop",
+      "At school",
+      "In the taxi"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "Who answered the phone call?",
+     "options": [
+      "The taxi driver",
+      "A shop worker",
+      "Her husband",
+      "A student"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh2-s7",
+   "title": "去农村",
+   "title_en": "A Trip to the Countryside",
+   "sentences": [
+    {
+     "text": "上个月，我和爸爸妈妈去了奶奶家。",
+     "en": "Last month, my mom, dad and I went to Grandma's home.",
+     "tokens": [
+      [
+       "上个月",
+       "shàng ge yuè",
+       "last month"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "和",
+       "hé",
+       "and; with"
+      ],
+      [
+       "爸爸",
+       "bà ba",
+       "dad"
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "奶奶",
+       "nǎi nai",
+       "grandma"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; (measure word for companies)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "奶奶住在农村，离城市很远。",
+     "en": "Grandma lives in the countryside, far from the city.",
+     "tokens": [
+      [
+       "奶奶",
+       "nǎi nai",
+       "grandma"
+      ],
+      [
+       "住",
+       "zhù",
+       "to live"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "农村",
+       "nóng cūn",
+       "countryside"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "离",
+       "lí",
+       "from (distance)"
+      ],
+      [
+       "城市",
+       "chéng shì",
+       "city"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "远",
+       "yuǎn",
+       "far"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "我们开了四个小时的车才到。",
+     "en": "We drove for four hours before we arrived.",
+     "tokens": [
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "开",
+       "kāi",
+       "to drive"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "四",
+       "sì",
+       "four"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "小时",
+       "xiǎo shí",
+       "hour"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "车",
+       "chē",
+       "car; vehicle"
+      ],
+      [
+       "才",
+       "cái",
+       "only then"
+      ],
+      [
+       "到",
+       "dào",
+       "to arrive"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "奶奶家的房子不大，可是很干净。",
+     "en": "Grandma's house isn't big, but it's very clean.",
+     "tokens": [
+      [
+       "奶奶",
+       "nǎi nai",
+       "grandma"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; (measure word for companies)"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "房子",
+       "fáng zi",
+       "house"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "大",
+       "dà",
+       "big"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "可是",
+       "kě shì",
+       "but"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "干净",
+       "gān jìng",
+       "clean"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "房子后面有一条小河，河里有很多鱼。",
+     "en": "Behind the house there is a small river with lots of fish in it.",
+     "tokens": [
+      [
+       "房子",
+       "fáng zi",
+       "house"
+      ],
+      [
+       "后面",
+       "hòu miàn",
+       "behind"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "条",
+       "tiáo",
+       "(measure word for rivers, fish)"
+      ],
+      [
+       "小",
+       "xiǎo",
+       "small"
+      ],
+      [
+       "河",
+       "hé",
+       "river"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "河",
+       "hé",
+       "river"
+      ],
+      [
+       "里",
+       "lǐ",
+       "in; inside"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "鱼",
+       "yú",
+       "fish"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "下午，爷爷带我去河边钓鱼。",
+     "en": "In the afternoon, Grandpa took me fishing by the river.",
+     "tokens": [
+      [
+       "下午",
+       "xià wǔ",
+       "afternoon"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "爷爷",
+       "yé ye",
+       "grandpa"
+      ],
+      [
+       "带",
+       "dài",
+       "to take; to bring"
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "河边",
+       "hé biān",
+       "riverside"
+      ],
+      [
+       "钓鱼",
+       "diào yú",
+       "to go fishing"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "我以前没有钓过鱼，觉得很有意思。",
+     "en": "I had never fished before, and I thought it was very interesting.",
+     "tokens": [
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "以前",
+       "yǐ qián",
+       "before; formerly"
+      ],
+      [
+       "没有",
+       "méi yǒu",
+       "have not"
+      ],
+      [
+       "钓",
+       "diào",
+       "to fish (with a rod)"
+      ],
+      [
+       "过",
+       "guo",
+       "(have done before)"
+      ],
+      [
+       "鱼",
+       "yú",
+       "fish"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "觉得",
+       "jué de",
+       "to feel; to think"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "有意思",
+       "yǒu yì si",
+       "interesting"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "我们钓了三条鱼，晚上奶奶给我们做了鱼。",
+     "en": "We caught three fish, and in the evening Grandma cooked the fish for us.",
+     "tokens": [
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "钓",
+       "diào",
+       "to fish (with a rod)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "三",
+       "sān",
+       "three"
+      ],
+      [
+       "条",
+       "tiáo",
+       "(measure word for rivers, fish)"
+      ],
+      [
+       "鱼",
+       "yú",
+       "fish"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "奶奶",
+       "nǎi nai",
+       "grandma"
+      ],
+      [
+       "给",
+       "gěi",
+       "for; to; to give"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "做",
+       "zuò",
+       "to make; to do"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "鱼",
+       "yú",
+       "fish"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "农村的空气比城市的好多了，晚上还能看到很多星星。",
+     "en": "The air in the countryside is much better than in the city, and at night you can see many stars.",
+     "tokens": [
+      [
+       "农村",
+       "nóng cūn",
+       "countryside"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "空气",
+       "kōng qì",
+       "air"
+      ],
+      [
+       "比",
+       "bǐ",
+       "than (comparison)"
+      ],
+      [
+       "城市",
+       "chéng shì",
+       "city"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "还",
+       "hái",
+       "also; still"
+      ],
+      [
+       "能",
+       "néng",
+       "can; to be able to"
+      ],
+      [
+       "看到",
+       "kàn dào",
+       "to see"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "星星",
+       "xīng xing",
+       "stars"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "我真不想回家！",
+     "en": "I really didn't want to go home!",
+     "tokens": [
+      [
+       "我",
+       "wǒ",
+       "I; me"
+      ],
+      [
+       "真",
+       "zhēn",
+       "really; truly"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want; to think"
+      ],
+      [
+       "回",
+       "huí",
+       "to return"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; (measure word for companies)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How long did the drive take?",
+     "options": [
+      "Two hours",
+      "Four hours",
+      "Six hours",
+      "One hour"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "How many fish did they catch?",
+     "options": [
+      "One",
+      "Two",
+      "Five",
+      "Three"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "What is better in the countryside than in the city?",
+     "options": [
+      "The food",
+      "The houses",
+      "The air",
+      "The shops"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "zh2-s8",
+   "title": "安娜学汉语",
+   "title_en": "Anna Learns Chinese",
+   "sentences": [
+    {
+     "text": "安娜是美国人，她去年来到了中国。",
+     "en": "Anna is American; she came to China last year.",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "美国",
+       "Měi guó",
+       "USA"
+      ],
+      [
+       "人",
+       "rén",
+       "person; people"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "去年",
+       "qù nián",
+       "last year"
+      ],
+      [
+       "来到",
+       "lái dào",
+       "to arrive in"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "中国",
+       "Zhōng guó",
+       "China"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她刚来的时候，一句汉语也不会说。",
+     "en": "When she first arrived, she couldn't speak a single sentence of Chinese.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "刚",
+       "gāng",
+       "just"
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "时候",
+       "shí hou",
+       "time; when"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "一",
+       "yī",
+       "one"
+      ],
+      [
+       "句",
+       "jù",
+       "sentence"
+      ],
+      [
+       "汉语",
+       "Hàn yǔ",
+       "Chinese language"
+      ],
+      [
+       "也",
+       "yě",
+       "also; either"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "会",
+       "huì",
+       "will; can (learned skill)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "买东西、坐车、吃饭都很难。",
+     "en": "Buying things, taking buses, and eating out were all very difficult.",
+     "tokens": [
+      [
+       "买",
+       "mǎi",
+       "to buy"
+      ],
+      [
+       "东西",
+       "dōng xi",
+       "things"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "坐",
+       "zuò",
+       "to take (vehicle); to sit"
+      ],
+      [
+       "车",
+       "chē",
+       "car; vehicle"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "饭",
+       "fàn",
+       "meal; rice"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "难",
+       "nán",
+       "difficult"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "所以她开始在大学学习汉语。",
+     "en": "So she began studying Chinese at a university.",
+     "tokens": [
+      [
+       "所以",
+       "suǒ yǐ",
+       "so; therefore"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "开始",
+       "kāi shǐ",
+       "to begin"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "大学",
+       "dà xué",
+       "university"
+      ],
+      [
+       "学习",
+       "xué xí",
+       "to study"
+      ],
+      [
+       "汉语",
+       "Hàn yǔ",
+       "Chinese language"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她的老师姓王，王老师上课非常有意思。",
+     "en": "Her teacher's surname is Wang, and Teacher Wang's classes are very interesting.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "姓",
+       "xìng",
+       "to be surnamed"
+      ],
+      [
+       "王",
+       "Wáng",
+       "Wang (surname)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "王",
+       "Wáng",
+       "Wang (surname)"
+      ],
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "上课",
+       "shàng kè",
+       "to attend class"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "extremely"
+      ],
+      [
+       "有意思",
+       "yǒu yì si",
+       "interesting"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "安娜每天都学习两个小时，还常常和中国朋友聊天。",
+     "en": "Anna studies for two hours every day and often chats with Chinese friends.",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "每",
+       "měi",
+       "every"
+      ],
+      [
+       "天",
+       "tiān",
+       "day"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "学习",
+       "xué xí",
+       "to study"
+      ],
+      [
+       "两",
+       "liǎng",
+       "two"
+      ],
+      [
+       "个",
+       "ge",
+       "(measure word)"
+      ],
+      [
+       "小时",
+       "xiǎo shí",
+       "hour"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "还",
+       "hái",
+       "also; still"
+      ],
+      [
+       "常常",
+       "cháng cháng",
+       "often"
+      ],
+      [
+       "和",
+       "hé",
+       "and; with"
+      ],
+      [
+       "中国",
+       "Zhōng guó",
+       "China"
+      ],
+      [
+       "朋友",
+       "péng you",
+       "friend"
+      ],
+      [
+       "聊天",
+       "liáo tiān",
+       "to chat"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "现在，她的汉语比以前好多了。",
+     "en": "Now her Chinese is much better than before.",
+     "tokens": [
+      [
+       "现在",
+       "xiàn zài",
+       "now"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "汉语",
+       "Hàn yǔ",
+       "Chinese language"
+      ],
+      [
+       "比",
+       "bǐ",
+       "than (comparison)"
+      ],
+      [
+       "以前",
+       "yǐ qián",
+       "before; formerly"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她会说很多话，也会写一些汉字。",
+     "en": "She can say a lot, and can also write some Chinese characters.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "会",
+       "huì",
+       "will; can (learned skill)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much; more"
+      ],
+      [
+       "话",
+       "huà",
+       "words; speech"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "也",
+       "yě",
+       "also; either"
+      ],
+      [
+       "会",
+       "huì",
+       "will; can (learned skill)"
+      ],
+      [
+       "写",
+       "xiě",
+       "to write"
+      ],
+      [
+       "一些",
+       "yì xiē",
+       "some"
+      ],
+      [
+       "汉字",
+       "Hàn zì",
+       "Chinese characters"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "上个星期，她一个人去饭馆点了菜。",
+     "en": "Last week, she went to a restaurant alone and ordered food.",
+     "tokens": [
+      [
+       "上个星期",
+       "shàng ge xīng qī",
+       "last week"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "一个人",
+       "yí ge rén",
+       "alone"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "饭馆",
+       "fàn guǎn",
+       "restaurant"
+      ],
+      [
+       "点",
+       "diǎn",
+       "to order (food)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action / change)"
+      ],
+      [
+       "菜",
+       "cài",
+       "dishes; food"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "服务员说：“你的汉语说得真好！”",
+     "en": "The waiter said: \"Your Chinese is really good!\"",
+     "tokens": [
+      [
+       "服务员",
+       "fú wù yuán",
+       "waiter"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "的",
+       "de",
+       "(possessive / modifier)"
+      ],
+      [
+       "汉语",
+       "Hàn yǔ",
+       "Chinese language"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say; to speak"
+      ],
+      [
+       "得",
+       "de",
+       "(complement marker)"
+      ],
+      [
+       "真",
+       "zhēn",
+       "really; truly"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good; well"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where is Anna from?",
+     "options": [
+      "England",
+      "America",
+      "France",
+      "Japan"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "How long does Anna study every day?",
+     "options": [
+      "Two hours",
+      "One hour",
+      "Three hours",
+      "Thirty minutes"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What is her teacher's surname?",
+     "options": [
+      "Li",
+      "Zhang",
+      "Chen",
+      "Wang"
+     ],
+     "answer": 3
+    }
+   ]
+  }
+ ]
+}

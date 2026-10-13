@@ -303,6 +303,30 @@ Example (hvala, thank you): {"sounds_like": "HVA-la ≈ value", "mnemonic": "You
   return out;
 }
 
+/** A short graded story from words the student knows, with comprehension questions. */
+export async function story(known) {
+  const ja = lang() === "ja";
+  const sl = lang() === "sl";
+  const langName = ja ? "Japanese" : sl ? "Slovenian" : "Chinese";
+  const prompt = `Write a very short, simple story in ${langName} (5–7 short sentences) for a beginner.
+Use mainly these words the student knows: ${known.join(", ")}.
+
+Reply with JSON only:
+ "title": a short title in ${langName}
+ "title_en": the title in English
+ "sentences": a list of {"text": the ${langName} sentence${ja ? ', "reading": the sentence in hiragana only' : ""}, "en": English translation}
+ "questions": 2 questions in English about the story, each {"q": "...", "options": [4 short English answers], "answer": index of the right one}`;
+  const d = await chat(prompt, { temperature: 0.8 });
+  const sentences = (Array.isArray(d?.sentences) ? d.sentences : [])
+    .map((x) => ({ text: String(x?.text || "").trim(), reading: ja ? String(x?.reading || "").trim() : "", en: String(x?.en || "").trim() }))
+    .filter((x) => x.text && x.en && isEnglish(x.en));
+  if (sentences.length < 3) throw new AIError("Gemma didn't manage a story — try again");
+  const questions = (Array.isArray(d?.questions) ? d.questions : [])
+    .filter((q) => q?.q && Array.isArray(q.options) && q.options.length >= 2 && Number.isInteger(q.answer) && q.answer < q.options.length)
+    .map((q) => ({ q: String(q.q), options: q.options.map(String), answer: q.answer }));
+  return { title: String(d?.title || "").trim() || "✨", title_en: String(d?.title_en || "").trim() || "A story from your words", sentences, questions };
+}
+
 /** A new example sentence for a grammar point, using only words the student knows. */
 export async function grammarExample(point, known, avoid = []) {
   const ja = lang() === "ja";

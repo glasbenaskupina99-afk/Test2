@@ -157,6 +157,7 @@ export async function init(storage) {
   db.garden ||= freshGarden();
   db.lookalikes ||= {};
   db.grammar ||= { learned: {} };
+  db.stories ||= {};
   ai.configure(settingsAll);
   document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && flush());
 }
@@ -459,6 +460,58 @@ function grammarPoint(p, known) {
     .map((x) => ({ ...x, reading: course() === "zh" ? toPinyin(x.text) : x.reading || "" }))
     .sort((a, b) => score(b.text) - score(a.text));
   return { ...p, examples };
+}
+
+
+// ------------------------------------------------------------------ listening & reading
+
+const STORY_FILE = GRAMMAR_FILE; // stories exist for the same levels as grammar
+const STORIES = {};
+const storyJobs = {};
+function loadStories(section) {
+  const file = STORY_FILE[section];
+  if (!file) return Promise.resolve(null);
+  storyJobs[file] ||= fetch(`stories/${file}.json`)
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+    .then((d) => (STORIES[section] = d?.stories || null));
+  return storyJobs[file];
+}
+const isPunct = (c) => /^[\s。、，！？!?,.:;：；「」『』（）()…—"“”'‘’·・]+$/.test(c);
+const WRITABLE_CHAR = /[㐀-鿿ぁ-ヿー]/;
+
+/** Words of this course by spelling, for glossing text (longest match first). */
+function courseLexicon() {
+  const ids = learnedIds();
+  const map = new Map();
+  for (const w of W()) if (!map.has(w.hanzi)) map.set(w.hanzi, { id: w.id, reading: w.pinyin, meaning: w.english, learned: ids.has(w.id), level: w.section });
+  return map;
+}
+/** Split text into tokens using the course's words (for stories Gemma writes). */
+function tokenize(text, lex) {
+  if (course() === "sl") return text.split(/(\s+|[.,!?;:])/).filter(Boolean).map((t) => [t, "", lex.get(t.toLowerCase())?.meaning || ""]);
+  const out = [];
+  for (let i = 0; i < text.length; ) {
+    let len = Math.min(6, text.length - i);
+    for (; len > 1; len--) if (lex.has(text.slice(i, i + len))) break;
+    const t = text.slice(i, i + len);
+    const w = lex.get(t);
+    out.push([t, w?.reading || (course() === "zh" && !isPunct(t) ? toPinyin(t) : ""), w?.meaning || ""]);
+    i += len;
+  }
+  return out;
+}
+/** Tokens annotated with whether the word is in the course and learned (for tap-to-look-up). */
+function annotate(tokens, lex) {
+  return tokens.map(([t, r, m]) => {
+    const w = lex.get(t) || (course() === "sl" ? lex.get(t.toLowerCase()) : null);
+    return { t, r, m: m || w?.meaning || "", punct: isPunct(t), word_id: w?.id || null, learned: !!w?.learned, level: w?.level || null };
+  });
+}
+function knownShare(story, lex) {
+  const toks = story.sentences.flatMap((s) => s.tokens).filter(([t]) => !isPunct(t));
+  if (!toks.length) return 0;
+  return Math.round((100 * toks.filter(([t]) => lex.get(t)?.learned).length) / toks.length);
 }
 
 // ------------------------------------------------------------------ your own words
@@ -810,6 +863,107 @@ const routes = {
     const x = await ai.grammarExample(p, known, avoid);
     if (course() === "zh") x.reading = toPinyin(x.text);
     return x;
+  },
+
+  // Listening: dictation and "what did you hear?" from example sentences of words you know.
+  "GET /api/listen/session": async (_, __, query) => {
+    await loadReady(course());
+    const n = Number(query.get("n")) || 6;
+    const known = knownChars();
+    const sl = course() === "sl";
+    const seen = new Set();
+    const pool = [];
+    for (const w of shuffled(learnedWords())) {
+      const full = wordById(w.id);
+      const x = extrasOf(full);
+      if (!x?.example_zh || !x.example_en || seen.has(x.example_zh)) continue;
+      const writable = [...x.example_zh].filter((c) => WRITABLE_CHAR.test(c));
+      if (!sl && (writable.length < 2 || writable.length > 10)) continue;
+      if (sl && x.example_zh.split(/\s+/).length > 8) continue;
+      seen.add(x.example_zh);
+      pool.push({
+        text: x.example_zh,
+        reading: course() === "zh" ? toPinyin(x.example_zh) : x.example_pinyin || "",
+        en: x.example_en,
+        chars: writable.map((c) => ({ c, known: known.has(c) || /[ぁ-ヿー]/.test(c) })),
+        word: w.hanzi,
+      });
+      if (pool.length >= n * 3) break;
+    }
+    // Prefer sentences whose characters you mostly know.
+    const share = (it) => (it.chars.length ? it.chars.filter((c) => c.known).length / it.chars.length : 1);
+    pool.sort((a, b) => share(b) - share(a));
+    const items = pool.slice(0, n);
+    return { items, others: pool.map((p) => p.en) };
+  },
+
+  "POST /api/listen/answer": (_, body) => {
+    const xp = body.ok ? 3 : 1;
+    addActivity({ xp, reviews: 0 });
+    return { xp };
+  },
+
+  // Graded stories for the current level (+ ones Gemma wrote from your words).
+  "GET /api/stories": async () => {
+    const sec = sections().current;
+    const list = (await loadStories(sec)) || [];
+    const lex = courseLexicon();
+    const mine = (db.storiesAi || []).filter((s) => s.lang === course());
+    return {
+      section: sec,
+      stories: [...mine, ...list].map((s) => ({
+        id: s.id, title: s.title, title_en: s.title_en, sentences: s.sentences.length, known: knownShare(s, lex),
+        done: !!db.stories[s.id]?.done, best: db.stories[s.id]?.best ?? null, ai: !!s.ai,
+      })),
+    };
+  },
+
+  "GET /api/stories/:id": async ({ id }) => {
+    const sec = sections().current;
+    const s = (db.storiesAi || []).find((x) => x.id === id) || ((await loadStories(sec)) || []).find((x) => x.id === id);
+    if (!s) throw new HttpError(404, "story not found");
+    const lex = courseLexicon();
+    return {
+      ...s,
+      sentences: s.sentences.map((x) => ({ ...x, reading: course() === "zh" ? toPinyin(x.text) : x.reading || "", tokens: annotate(x.tokens, lex) })),
+    };
+  },
+
+  "POST /api/stories/:id/done": ({ id }, body) => {
+    const score = Math.max(0, Math.min(100, Number(body.score) || 0));
+    const st = (db.stories[id] ||= { done: false, best: 0 });
+    st.done = true;
+    st.best = Math.max(st.best || 0, score);
+    addActivity({ xp: body.xp || 5 });
+    persist();
+    return { ok: true, streak: streak() };
+  },
+
+  // A new short story from the words you know, written by Gemma.
+  "POST /api/stories/generate": async () => {
+    const known = shuffled(learnedWords()).slice(0, 50).map((w) => w.hanzi);
+    if (known.length < 10) throw new HttpError(409, "Learn at least 10 words first");
+    const d = await ai.story(known);
+    const lex = courseLexicon();
+    const story = {
+      id: `ai-${Date.now().toString(36)}`, ai: true, lang: course(), title: d.title, title_en: d.title_en,
+      sentences: d.sentences.map((x) => ({ text: x.text, reading: x.reading || "", en: x.en, tokens: tokenize(x.text, lex) })),
+      questions: d.questions,
+    };
+    db.storiesAi = [story, ...(db.storiesAi || [])].slice(0, 6);
+    persist();
+    return { id: story.id };
+  },
+
+  // Tone practice (Chinese): learned one- and two-syllable words.
+  "GET /api/tones/session": (_, __, query) => {
+    if (course() !== "zh") throw new HttpError(404, "Tone practice is for Chinese");
+    const n = Number(query.get("n")) || 8;
+    const items = shuffled(learnedWords())
+      .map((w) => ({ id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, english: w.english, syllables: w.pinyin.split(/\s+/).filter(Boolean) }))
+      .filter((w) => w.syllables.length >= 1 && w.syllables.length <= 2 && [...w.hanzi].length === w.syllables.length)
+      .slice(0, n);
+    return { items };
   },
 
   // Look-alike characters (未/末, 己/已 …): groups with learned characters and past mistakes come first.

@@ -872,3 +872,186 @@ export const grammarWhich = (ctx, p, x, options) =>
 /** Quiz: fill the gap with the right grammar. */
 export const grammarGap = (ctx, p, x, options) =>
   grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: "Fill in the gap", gap: true });
+
+// ------------------------------------------------------------------ listening
+
+/** Dictation: hear a sentence and write it (by hand for Chinese/Japanese, typed for Slovenian). */
+export function dictation(ctx, item) {
+  const play = () => speak(item.text);
+  setTimeout(play, 400);
+  const audio = h("div", { class: "row", style: { justifyContent: "center", margin: "6px 0 14px" } }, speakerBtn(item.text), slowBtn(item.text));
+  const solutionEl = (extra) => h("div", {}, h("div", { class: "hz" }, item.text), item.reading && item.reading !== item.text ? h("div", { class: "small" }, item.reading) : null, h("div", { class: "small" }, item.en), extra ? h("div", { class: "small" }, extra) : null);
+  if (isSl()) {
+    const input = h("input", { class: "input", autocomplete: "off", autocapitalize: "off", spellcheck: "false", placeholder: "Type what you hear", oninput: () => ctx.setReady(!!input.value.trim()), onkeydown: (e) => e.key === "Enter" && input.value.trim() && ctx.submit() });
+    return {
+      el: h("div", {}, h("div", { class: "ex-kicker blue" }, "🎧 Dictation"), h("h2", { class: "ex-title" }, "Type what you hear"), audio, input, h("div", { class: "hint" }, "Tip: č, š, ž — long-press c, s or z.")),
+      mode: "check",
+      async check() {
+        const r = await api("/api/check/pinyin", { method: "POST", body: { answer: input.value, expected: item.text } });
+        const ok = r.result === "correct";
+        return { ok, grade: ok ? 2 : r.result === "tones_wrong" ? 1 : 0, title: ok ? "Correct!" : r.result === "tones_wrong" ? "Almost — mind č, š, ž" : "Correct answer:", detail: solutionEl() };
+      },
+    };
+  }
+  const pad = writingPad(item.chars.map((x) => ({ c: x.c, outline: !x.known })));
+  pad.done.then((r) => {
+    const total = item.chars.length || 1;
+    const score = Math.max(0, Math.round(100 - (r.mistakes * 6 + r.hints * 15 + r.gaveUp * 35) / total));
+    play();
+    ctx.finish({ ok: score >= 60, grade: score >= 80 ? 2 : score >= 60 ? 1 : 0, score, title: score >= 90 ? "Great ear!" : score >= 60 ? "Well done!" : "Keep listening", detail: solutionEl(`${r.mistakes} wrong strokes · ${score}%`) });
+  });
+  const newCount = item.chars.filter((x) => !x.known).length;
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker blue" }, "🎧 Dictation"),
+      h("h2", { class: "ex-title" }, "Write what you hear"),
+      audio,
+      newCount ? h("p", { class: "small muted center", style: { margin: "0 0 8px" } }, `${newCount} character${newCount > 1 ? "s" : ""} you haven't learned yet will show a tracing guide.`) : null,
+      pad.el
+    ),
+    mode: "auto",
+    destroy: pad.destroy,
+  };
+}
+
+/** Hear a sentence, pick what it means. */
+export function listenChoose(ctx, item, others) {
+  const wrong = shuffle([...new Set(others.filter((e) => e !== item.en))]).slice(0, 3);
+  const options = shuffle([item.en, ...wrong]);
+  let picked = null;
+  setTimeout(() => speak(item.text), 400);
+  const tiles = options.map((o) => {
+    const t = h("button", { class: "choice text", onclick: () => { picked = o; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } }, h("span", { class: "txt" }, o));
+    return t;
+  });
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker blue" }, "👂 Listen"),
+      h("h2", { class: "ex-title" }, "What did you hear?"),
+      h("div", { class: "row", style: { justifyContent: "center", margin: "6px 0 18px" } }, speakerBtn(item.text), slowBtn(item.text)),
+      h("div", { class: "choices" }, tiles)
+    ),
+    mode: "check",
+    async check() {
+      const ok = picked === item.en;
+      tiles.forEach((t, i) => { if (options[i] === item.en) t.classList.add("correct"); else if (options[i] === picked) t.classList.add("wrong"); });
+      return { ok, grade: ok ? 2 : 0, title: ok ? "Correct!" : "Correct answer:", detail: h("div", {}, h("div", { class: "hz" }, item.text), h("div", { class: "small" }, item.reading || ""), h("div", { class: "small" }, item.en)) };
+    },
+  };
+}
+
+// ------------------------------------------------------------------ tones (Chinese)
+
+const TONE_MARKS = { a: "āáǎà", e: "ēéěè", i: "īíǐì", o: "ōóǒò", u: "ūúǔù", ü: "ǖǘǚǜ" };
+const plainSyl = (s) => s.normalize("NFD").replace(/[̀́̌̄]/g, "").normalize("NFC").replace(/ü/g, "ü");
+/** Tone number of a pinyin syllable (5 = neutral). */
+export function toneOf(syl) {
+  const d = syl.normalize("NFD");
+  if (d.includes("̄")) return 1;
+  if (d.includes("́")) return 2;
+  if (d.includes("̌")) return 3;
+  if (d.includes("̀")) return 4;
+  return 5;
+}
+/** The syllable written with another tone mark (standard placement rules). */
+function withTone(syl, tone) {
+  const p = plainSyl(syl).toLowerCase();
+  if (tone === 5) return p;
+  const i = p.search(/[ae]/) >= 0 ? p.search(/[ae]/) : p.includes("ou") ? p.indexOf("o") : Math.max(...[..."iouü"].map((v) => p.lastIndexOf(v)));
+  if (i < 0) return p;
+  return p.slice(0, i) + TONE_MARKS[p[i]][tone - 1] + p.slice(i + 1);
+}
+
+/** Hear a word, pick its tones. */
+export function toneListen(ctx, w) {
+  const tones = w.syllables.map(toneOf);
+  const key = (ts) => ts.join("");
+  const seen = new Set([key(tones)]);
+  const opts = [tones];
+  for (let tries = 0; opts.length < 4 && tries < 40; tries++) {
+    const alt = tones.map((t) => (Math.random() < 0.6 ? 1 + Math.floor(Math.random() * 4) : t));
+    if (!seen.has(key(alt))) { seen.add(key(alt)); opts.push(alt); }
+  }
+  const options = shuffle(opts);
+  const label = (ts) => w.syllables.map((s, i) => withTone(s, ts[i])).join(" ");
+  let picked = null;
+  setTimeout(() => speak(w.hanzi), 400);
+  const tiles = options.map((o) => {
+    const t = h("button", { class: "choice text", onclick: () => { picked = o; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } }, h("span", { class: "txt py" }, label(o)), h("small", { class: "tone-nums" }, o.join(" · ")));
+    return t;
+  });
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker orange" }, "🎵 Tones"),
+      h("h2", { class: "ex-title" }, "Which tones do you hear?"),
+      h("div", { class: "row", style: { justifyContent: "center", margin: "6px 0 18px" } }, speakerBtn(w.hanzi), slowBtn(w.hanzi)),
+      h("div", { class: "choices" }, tiles)
+    ),
+    mode: "check",
+    async check() {
+      const ok = key(picked) === key(tones);
+      tiles.forEach((t, i) => { if (key(options[i]) === key(tones)) t.classList.add("correct"); else if (options[i] === picked) t.classList.add("wrong"); });
+      return { ok, grade: ok ? 2 : 0, title: ok ? "Correct!" : "Correct answer:", detail: h("div", {}, h("span", { class: "hz" }, w.hanzi), ` · ${w.pinyin} · ${w.english}`) };
+    },
+  };
+}
+
+/** Say a one-syllable word; see the pitch of your voice next to the tone's textbook shape. */
+export function toneSpeak(ctx, w, pitch) {
+  const tone = toneOf(w.syllables[0]);
+  const chart = h("div", { class: "tone-box", html: pitch.toneChart(tone, null) });
+  const status = h("p", { class: "muted small center" }, "Tap the microphone, then say the word.");
+  let busy = false;
+  const mic = h(
+    "button",
+    {
+      class: "mic",
+      onclick: async () => {
+        if (busy) return;
+        busy = true;
+        mic.classList.add("rec");
+        status.textContent = "Listening…";
+        try {
+          const frames = await pitch.recordPitch(1700);
+          const pts = pitch.contour(frames);
+          if (!pts) {
+            status.textContent = "I couldn't hear you clearly — try again a bit louder.";
+          } else {
+            const got = pitch.classify(pts);
+            chart.innerHTML = pitch.toneChart(tone, pts);
+            const ok = got === tone || tone === 5;
+            status.textContent = ok ? `Nice — that sounded like tone ${tone}!` : `That sounded like tone ${got}; ${w.syllables[0]} is tone ${tone}. Compare the lines and try again.`;
+            if (ok) ctx.finish({ ok: true, grade: 2, title: "Good tone!", detail: h("div", {}, h("span", { class: "hz" }, w.hanzi), ` · ${w.pinyin} · tone ${tone}`) });
+          }
+        } catch (e) {
+          status.textContent = "Microphone not available: " + e.message;
+        }
+        mic.classList.remove("rec");
+        busy = false;
+      },
+      html: icons.mic || "🎤",
+    }
+  );
+  return {
+    el: h(
+      "div",
+      { class: "tone-speak" },
+      h("div", { class: "ex-kicker orange" }, "🎵 Say it with the right tone"),
+      h("div", { class: "big-hz hz" }, w.hanzi),
+      h("div", { class: "py center", style: { fontSize: "22px" } }, w.pinyin),
+      h("div", { class: "row", style: { justifyContent: "center", margin: "6px 0" } }, speakerBtn(w.hanzi), slowBtn(w.hanzi)),
+      chart,
+      h("p", { class: "small muted center", style: { margin: "0" } }, "Dashed: how the tone should go · solid: your voice"),
+      h("div", { class: "row", style: { justifyContent: "center", margin: "12px 0 4px" } }, mic),
+      status,
+      h("div", { class: "row", style: { justifyContent: "center" } }, h("button", { class: "btn ghost small auto", onclick: () => ctx.finish({ ok: true, grade: 1, title: "Skipped", detail: h("div", {}, `${w.hanzi} · ${w.pinyin}`) }) }, "Skip"))
+    ),
+    mode: "auto",
+  };
+}

@@ -42,6 +42,7 @@ writeFileSync(join(www, "index.html"), html);
 // Ready-made memory hooks, one file per language, loaded by the app when needed.
 cpSync(join(mobile, "..", "app", "data", "extras"), join(www, "extras"), { recursive: true });
 cpSync(join(mobile, "..", "app", "data", "grammar"), join(www, "grammar"), { recursive: true });
+cpSync(join(mobile, "..", "app", "data", "stories"), join(www, "stories"), { recursive: true });
 
 // Stroke data for every character, bundled for offline use.
 const charSrc = join(mobile, "node_modules", "hanzi-writer-data");

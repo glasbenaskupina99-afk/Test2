@@ -1,6 +1,6 @@
 import { api, h, iconBtn, toast, confirmDialog, enhanceSelects } from "./util.js";
 import { state, T, isJa, isSl, sayText, applyCourse } from "./state.js";
-import { speak, canRecognize, canRecord } from "./audio.js";
+import { speak, stopSpeaking, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
 import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
@@ -296,6 +296,13 @@ async function homeScreen() {
       )
     : null;
 
+  const listenCard = h(
+    "button",
+    { class: "mode sky", onclick: () => listenSheet(home) },
+    h("div", { class: "badge-ico", html: SVG.ear }),
+    h("div", {}, h("h3", {}, "Listen & read"), h("p", {}, home.course === "zh" ? "Dictation, short stories and tones" : "Dictation and short stories"))
+  );
+
   const sentenceCard = h(
     "button",
     { class: "mode purple", onclick: () => startFlow(flows.sentences) },
@@ -330,7 +337,7 @@ async function homeScreen() {
       ),
       planCard(home.plan),
       aiInviteCard(),
-      h("div", { class: "modes" }, learnCard, grammarCard, reviewCard, sentenceCard, lookalikeCard),
+      h("div", { class: "modes" }, learnCard, grammarCard, reviewCard, listenCard, sentenceCard, lookalikeCard),
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week, home.saved_days),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
@@ -482,6 +489,174 @@ async function unitsView(units) {
       );
     })
   );
+}
+
+// ------------------------------------------------------------------ listen & read
+
+function listenSheet(home) {
+  const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() });
+  const option = (ico, title, sub, fn) =>
+    h("button", { class: "mode-opt", onclick: () => { bg.remove(); fn(); } }, h("span", { class: "mo-ico" }, ico), h("span", {}, h("b", {}, title), h("small", {}, sub)));
+  bg.append(
+    h(
+      "div",
+      { class: "sheet" },
+      h("h2", { style: { margin: "0 0 4px" } }, "Listen & read"),
+      h("p", { class: "muted small", style: { margin: "0 0 14px" } }, "Train your ear and read real little stories with the words you know."),
+      option("🎧", "Dictation & listening", isSl() ? "Hear a sentence, type it — or pick what it means" : "Hear a sentence, write it by hand — or pick what it means", () => startFlow(flows.listening)),
+      home.course !== "sl" ? option("📖", "Stories", `Short graded stories for ${home.section} — tap any word`, () => storiesSheet()) : null,
+      home.course === "zh" ? option("🎵", "Tones", "Hear the tones — and see the pitch of your own voice", () => startFlow(flows.tones)) : null
+    )
+  );
+  document.body.append(bg);
+}
+
+async function storiesSheet() {
+  const data = await api("/api/stories");
+  const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() });
+  const gen = state.settings.ai_enabled
+    ? h(
+        "button",
+        {
+          class: "btn ghost small",
+          onclick: async (e) => {
+            const b = e.currentTarget;
+            b.disabled = true;
+            b.textContent = "✨ Gemma is writing…";
+            try {
+              const r = await api("/api/stories/generate", { method: "POST" });
+              bg.remove();
+              storyReader(r.id);
+            } catch (err) {
+              toast(err.message, 4000);
+              b.disabled = false;
+              b.textContent = "✨ New story from my words";
+            }
+          },
+        },
+        "✨ New story from my words"
+      )
+    : null;
+  bg.append(
+    h(
+      "div",
+      { class: "sheet" },
+      h("h2", { style: { margin: "0 0 4px" } }, `${data.section} stories`),
+      h("p", { class: "muted small", style: { margin: "0 0 12px" } }, data.stories.length ? "The bar shows how many of the story's words you already know." : "No stories for this level yet."),
+      gen,
+      h(
+        "div",
+        { class: "story-list" },
+        data.stories.map((st) =>
+          h(
+            "button",
+            { class: "story-item" + (st.done ? " done" : ""), onclick: () => { bg.remove(); storyReader(st.id); } },
+            h("div", {}, h("b", { class: "hz" }, st.title), h("small", {}, `${st.ai ? "✨ " : ""}${st.title_en} · ${st.sentences} sentences`)),
+            h("div", { class: "story-known" }, h("i", { style: { width: `${st.known}%` } }), h("span", {}, st.done ? `✓ ${st.best ?? ""}%` : `${st.known}% known`))
+          )
+        )
+      ),
+      h("button", { class: "btn", style: { marginTop: "14px" }, onclick: () => bg.remove() }, "Close")
+    )
+  );
+  document.body.append(bg);
+}
+
+/** Full-screen reader: tap words for reading and meaning, listen, then answer questions. */
+async function storyReader(id) {
+  const st = await api(`/api/stories/${encodeURIComponent(id)}`);
+  const pop = h("div", { class: "word-pop", hidden: true });
+  const showWord = (tok, el) => {
+    document.querySelectorAll(".tok.on").forEach((x) => x.classList.remove("on"));
+    el.classList.add("on");
+    const status = tok.word_id ? (tok.learned ? "✓ learned" : `in ${tok.level}`) : "not in your course";
+    pop.replaceChildren(
+      h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, h("b", { class: "hz wp-word" }, tok.t), h("span", { class: "py" }, tok.r), h("span", { class: "spacer" }), iconBtn("speaker", "speaker sm", () => speak(tok.t), "Listen")),
+      h("div", { class: "wp-mean" }, tok.m || "—"),
+      h(
+        "div",
+        { class: "row", style: { alignItems: "center", marginTop: "6px" } },
+        h("small", { class: "muted" }, status),
+        h("span", { class: "spacer" }),
+        !tok.word_id && tok.m
+          ? h(
+              "button",
+              {
+                class: "btn ghost small",
+                onclick: async (e) => {
+                  try {
+                    await api("/api/words", { method: "POST", body: { hanzi: tok.t, pinyin: tok.r, english: tok.m } });
+                    tok.word_id = -1;
+                    e.currentTarget.replaceWith(h("small", { class: "good" }, "✓ Added to My words"));
+                  } catch (err) {
+                    toast(err.message, 3000);
+                  }
+                },
+              },
+              "+ Add to my words"
+            )
+          : null
+      )
+    );
+    pop.hidden = false;
+    speak(tok.t);
+  };
+  const sentences = st.sentences.map((x) => {
+    const en = h("button", { class: "g-en-reveal small", onclick: () => en.replaceWith(h("div", { class: "st-en small" }, x.en)) }, "👁 Translation");
+    return h(
+      "div",
+      { class: "st-sent" },
+      h(
+        "p",
+        { class: "st-text hz" },
+        x.tokens.map((tok) => (tok.punct ? h("span", {}, tok.t) : h("span", { class: "tok" + (tok.word_id && !tok.learned ? " new" : "") + (!tok.word_id ? " out" : ""), onclick: (e) => showWord(tok, e.currentTarget) }, tok.t)))
+      ),
+      h("div", { class: "row", style: { alignItems: "center", gap: "8px" } }, iconBtn("speaker", "speaker sm", () => speak(x.text), "Listen"), en)
+    );
+  });
+  let playing = false;
+  const playAll = h(
+    "button",
+    {
+      class: "btn ghost small auto",
+      onclick: async () => {
+        playing = !playing;
+        playAll.textContent = playing ? "■ Stop" : "▶ Listen to the story";
+        for (const x of st.sentences) {
+          if (!playing) break;
+          await speak(x.text);
+          await new Promise((r) => setTimeout(r, 350));
+        }
+        playing = false;
+        playAll.textContent = "▶ Listen to the story";
+      },
+    },
+    "▶ Listen to the story"
+  );
+  const close = () => { playing = false; stopSpeaking(); root.remove(); };
+  const root = h(
+    "div",
+    { class: "lesson story-reader" },
+    h("div", { class: "lesson-top" }, h("button", { class: "icon-btn", "aria-label": "Close", onclick: close }, "✕"), h("div", { class: "st-head" }, h("b", { class: "hz" }, st.title), h("small", {}, st.title_en))),
+    h(
+      "div",
+      { class: "lesson-body st-body", onclick: (e) => { if (!e.target.closest(".tok, .word-pop")) { pop.hidden = true; document.querySelectorAll(".tok.on").forEach((x) => x.classList.remove("on")); } } },
+      h("p", { class: "muted small" }, "Tap any word to see its reading and meaning. Words in yellow you haven't learned yet."),
+      playAll,
+      sentences
+    ),
+    pop,
+    h(
+      "div",
+      { class: "lesson-foot" },
+      h(
+        "div",
+        { class: "inner" },
+        h("button", { class: "btn", onclick: () => { close(); startFlow(() => flows.storyQuestions(st)); } }, st.questions?.length ? `Answer ${st.questions.length} questions` : "Finish story")
+      )
+    )
+  );
+  document.body.append(root);
 }
 
 // ------------------------------------------------------------------ grammar book
@@ -843,6 +1018,7 @@ const SVG = {
   twins: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19c0-6 3-10 8-11-.5 6-3 10-8 11z"/><path d="M21 19c0-6-3-10-8-11 .5 6 3 10 8 11z"/><path d="M3 19l5-6M21 19l-5-6"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
   star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>',
+  ear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9a5 5 0 0 1 10 0c0 3-3 4-3 7a3 3 0 0 1-5.5 1.6"/><path d="M10 9.5a2 2 0 0 1 4 0c0 1.2-1 1.6-1.5 2.5"/></svg>',
   lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
   brush: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4L10 14"/><path d="M10 14c-3 0-5 2-5 5-1 1-2 1-2 1 4 1 8 0 9-3 1-1 0-2-2-3z"/></svg>',
 };

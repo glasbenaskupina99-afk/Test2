@@ -21,7 +21,7 @@ function ac() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return null;
   try {
-    ctx ||= new Ctx();
+    ctx ||= window.__splashAudio || new Ctx();
     if (ctx.state === "suspended") ctx.resume();
     return ctx;
   } catch {
@@ -128,40 +128,90 @@ export function playComplete() {
   for (let i = 0; i < 4; i++) chirp(c, o, t + 0.75 + i * 0.075, { from: 3000 + i * 150, to: 4300, dur: 0.06, vol: 0.06 });
 }
 
-/** Tapping your plant: a breath of wind through leaves and a distant bird (~1.5 s). */
-export function playForest() {
+/** A few notes of a small songbird, starting at `t`. */
+function birdSong(c, dest, t, vol = 0.05) {
+  const base = 2400 + Math.random() * 900;
+  const notes = 2 + Math.floor(Math.random() * 4);
+  for (let i = 0; i < notes; i++) {
+    const up = Math.random() < 0.6;
+    chirp(c, dest, t + i * (0.09 + Math.random() * 0.05), {
+      from: up ? base : base * 1.45,
+      to: up ? base * 1.45 : base,
+      dur: 0.06 + Math.random() * 0.05,
+      vol: vol * (0.7 + Math.random() * 0.5),
+    });
+  }
+}
+
+/**
+ * Tapping your plant: about 5 s of forest — wind coming and going through the leaves, a rustle
+ * now and then and a few birds. Returns a function that fades it out early.
+ */
+export function playForest(seconds = 5) {
   const c = ac();
-  if (!c) return;
-  const t = c.currentTime + 0.01;
-  const o = out(c, 0.6);
-  const src = c.createBufferSource();
-  src.buffer = noise(c);
+  if (!c) return () => {};
+  const t = c.currentTime + 0.02;
+  const end = t + seconds;
+  const master = out(c, 0.6);
+  master.gain.setValueAtTime(0.0001, t);
+  master.gain.exponentialRampToValueAtTime(0.6, t + 0.5);
+  master.gain.setValueAtTime(0.6, end - 1);
+  master.gain.exponentialRampToValueAtTime(0.0001, end);
+  const nodes = [];
+
+  // Wind: brown noise through a slowly wandering band-pass, in gusts.
+  const wind = c.createBufferSource();
+  wind.buffer = noise(c);
+  wind.loop = true;
   const bp = c.createBiquadFilter();
   bp.type = "bandpass";
-  bp.Q.value = 0.7;
-  bp.frequency.setValueAtTime(500, t);
-  bp.frequency.linearRampToValueAtTime(1300, t + 0.7);
-  bp.frequency.linearRampToValueAtTime(700, t + 1.5);
-  const g = c.createGain();
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(0.5, t + 0.45);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 1.55);
-  src.connect(bp).connect(g).connect(o);
-  // Leaves: a quieter, brighter rustle on top.
-  const src2 = c.createBufferSource();
-  src2.buffer = noise(c);
-  const hp = c.createBiquadFilter();
-  hp.type = "highpass";
-  hp.frequency.value = 2500;
-  const g2 = c.createGain();
-  g2.gain.setValueAtTime(0.0001, t);
-  g2.gain.exponentialRampToValueAtTime(0.18, t + 0.5);
-  g2.gain.exponentialRampToValueAtTime(0.0001, t + 1.3);
-  src2.connect(hp).connect(g2).connect(o);
-  src.start(t, Math.random());
-  src.stop(t + 1.6);
-  src2.start(t, Math.random());
-  src2.stop(t + 1.4);
-  chirp(c, o, t + 0.6, { from: 2400, to: 3600, dur: 0.12, vol: 0.05 });
-  chirp(c, o, t + 0.78, { from: 2600, to: 3300, dur: 0.1, vol: 0.04 });
+  bp.Q.value = 0.6;
+  const wg = c.createGain();
+  bp.frequency.setValueAtTime(450, t);
+  wg.gain.setValueAtTime(0.15, t);
+  for (let at = t, k = 0; at < end; k++) {
+    const len = 1.1 + Math.random() * 0.9;
+    bp.frequency.linearRampToValueAtTime(k % 2 ? 500 + Math.random() * 200 : 1000 + Math.random() * 500, at + len);
+    wg.gain.linearRampToValueAtTime(k % 2 ? 0.15 + Math.random() * 0.1 : 0.4 + Math.random() * 0.15, at + len);
+    at += len;
+  }
+  wind.connect(bp).connect(wg).connect(master);
+  wind.start(t, Math.random());
+  wind.stop(end + 0.05);
+  nodes.push(wind);
+
+  // Leaves: short bright rustles.
+  for (let at = t + 0.3 + Math.random() * 0.4; at < end - 0.6; at += 0.6 + Math.random() * 0.9) {
+    const r = c.createBufferSource();
+    r.buffer = noise(c);
+    const hp = c.createBiquadFilter();
+    hp.type = "highpass";
+    hp.frequency.value = 2200 + Math.random() * 1200;
+    const g = c.createGain();
+    const d = 0.35 + Math.random() * 0.4;
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(0.1 + Math.random() * 0.08, at + d * 0.4);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + d);
+    r.connect(hp).connect(g).connect(master);
+    r.start(at, Math.random());
+    r.stop(at + d + 0.05);
+    nodes.push(r);
+  }
+
+  // Birds: a few short songs at different distances.
+  for (let at = t + 0.5 + Math.random() * 0.5; at < end - 0.8; at += 0.9 + Math.random() * 1.2) {
+    birdSong(c, master, at, 0.03 + Math.random() * 0.03);
+  }
+
+  let stopped = false;
+  return () => {
+    if (stopped) return;
+    stopped = true;
+    const now = c.currentTime;
+    if (now >= end) return;
+    master.gain.cancelScheduledValues(now);
+    master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), now);
+    master.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+    setTimeout(() => master.disconnect(), 400);
+  };
 }

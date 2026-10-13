@@ -1,6 +1,7 @@
 // The streak plant: grows while you practise every day, gets thirsty when today's practice
 // is missing, and raindrops (streak freezes) water it on days you miss.
 import { api, h, confirmDialog } from "./util.js";
+import { playForest } from "./sounds.js";
 
 const svg = (markup, cls = "") => {
   const el = document.createElement("span");
@@ -47,7 +48,9 @@ const MOOD_TEXT = {
 
 /** Bottom sheet with the plant, the last two weeks and your raindrops. */
 export async function gardenSheet() {
-  const g = await api("/api/garden");
+  // Forest sounds while you look at your plant; they fade out as soon as the sheet closes.
+  const stopSound = playForest();
+  const g = await api("/api/garden").catch((e) => { stopSound(); throw e; });
   const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() });
   const fmtDay = (k) => new Date(k + "T12:00:00").toLocaleDateString(undefined, { weekday: "narrow" });
   const reminder = window.__native?.notifications
@@ -87,6 +90,17 @@ export async function gardenSheet() {
     )
   );
   document.body.append(bg);
+  // The phone's back button closes the sheet (instead of leaving the screen behind it).
+  history.pushState({ gardenSheet: true }, "");
+  const onBack = () => bg.remove();
+  window.addEventListener("popstate", onBack, { once: true });
+  const watch = setInterval(() => {
+    if (bg.isConnected) return;
+    clearInterval(watch);
+    stopSound();
+    window.removeEventListener("popstate", onBack);
+    if (history.state?.gardenSheet) history.back();
+  }, 150);
 }
 
 /** One-time message after a raindrop was used, earned, or the streak dried out. */

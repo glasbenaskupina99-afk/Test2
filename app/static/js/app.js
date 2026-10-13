@@ -4,7 +4,7 @@ import { speak, stopSpeaking, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
 import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
-import { soundsOn, setSounds, playForest, playCorrect } from "./sounds.js";
+import { soundsOn, setSounds, playCorrect } from "./sounds.js";
 import { plantArt, gardenSheet, gardenNotice, dayLeafArt } from "./garden.js";
 import { canRemind, ensurePermission, scheduleReminders } from "./reminders.js";
 import { pickTime } from "./timepicker.js";
@@ -209,7 +209,7 @@ function topbar(home) {
       : null,
     h(
       "button",
-      { class: `stat streak-plant ${home.plant || "seed"}`, title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => { playForest(); gardenSheet(); } },
+      { class: `stat streak-plant ${home.plant || "seed"}`, title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => gardenSheet() },
       plantArt(home.plant || "seed", "ico"),
       home.streak
     ),
@@ -1258,7 +1258,7 @@ async function statsScreen() {
         "div",
         { class: "journey-head" },
         // Your streak plant, the same one as next to the streak count on the home screen.
-        h("button", { class: "journey-avatar journey-plant", title: "Your streak plant", "aria-label": "Your streak plant", onclick: () => { playForest(); gardenSheet(); } }, plantArt(s.plant || "seed", "journey-plant-art")),
+        h("button", { class: "journey-avatar journey-plant", title: "Your streak plant", "aria-label": "Your streak plant", onclick: () => gardenSheet() }, plantArt(s.plant || "seed", "journey-plant-art")),
         h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, `Level ${level} · ${totalXp} XP · 🌱 ${s.streak || 0}-day streak`))
       ),
       h(

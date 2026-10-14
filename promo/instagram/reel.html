@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><title>Bloomko reel</title>
+<html lang="en"><head><meta charset="utf-8"><title>Bloomko reel</title>
 <style>
 @font-face{font-family:N;font-weight:700;src:url(src/nunito-latin-700-normal.woff2)}
 @font-face{font-family:N;font-weight:800;src:url(src/nunito-latin-800-normal.woff2)}
@@ -7,7 +7,7 @@
 :root{--bg:#1c3026;--bg2:#16271e;--sage:#8cc06b;--gold:#d2ae52;--txt:#f4efe2;--mut:#a9b5a6;--end:#f0b35e}
 *{box-sizing:border-box;margin:0}
 html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg2)}
-body{font-family:N,"Noto Sans CJK SC","Noto Sans CJK JP",sans-serif;color:var(--txt);position:relative;
+body{font-family:N,"Noto Sans CJK JP",sans-serif;color:var(--txt);position:relative;
   background:radial-gradient(1000px 900px at 80% 15%,#2c4a36 0%,transparent 60%),radial-gradient(900px 900px at 10% 95%,#24402f 0%,transparent 60%),linear-gradient(160deg,var(--bg),var(--bg2))}
 .bgglyph{position:absolute;font-weight:900;font-size:520px;opacity:.06;animation:drift 18s linear both}
 @keyframes drift{from{transform:translateY(60px) rotate(-4deg)}to{transform:translateY(-120px) rotate(4deg)}}
@@ -33,41 +33,40 @@ h2{font-weight:900;font-size:96px;line-height:1.04;letter-spacing:-1.5px;margin-
 .url{font-weight:900;font-size:96px;color:var(--gold)}
 .a{opacity:0;animation-fill-mode:both}
 </style></head><body>
-<div class="bgglyph" style="left:-80px;top:120px">文</div>
+<div class="bgglyph" style="left:-80px;top:120px">日</div>
 <div class="bgglyph" style="right:-90px;top:900px;animation-delay:-3s">あ</div>
-<div class="bgglyph" style="left:40px;bottom:-60px;animation-delay:-6s">Ž</div>
+<div class="bgglyph" style="left:40px;bottom:-60px;animation-delay:-6s">本</div>
 
 <!-- S1 intro 0–2.6 -->
 <section class="sc" style="animation:show 2.6s 0s both;justify-content:center;padding-top:0">
   <img class="a" src="src/logo.png" style="width:340px;height:340px;border-radius:86px;box-shadow:0 30px 120px rgba(140,192,107,.45);animation:pop .9s .1s both">
   <div class="a" style="font-weight:900;font-size:96px;margin-top:50px;animation:up .7s .6s both">Bloomko</div>
-  <h1 class="a" style="margin-top:40px;font-size:96px;animation:up .7s 1.0s both">Watch your<br><span class="hl">languages bloom</span></h1>
+  <h1 class="a" style="margin-top:40px;font-size:96px;animation:up .7s 1.0s both">Watch your<br><span class="hl">Japanese bloom</span></h1>
 </section>
 
 <!-- S2 write 2.6–6 -->
 <section class="sc" style="animation:show 3.4s 2.6s both">
   <span class="k a" style="animation:pop .5s 2.75s both">Write it</span>
-  <h2 class="a" style="animation:up .6s 2.85s both">Characters <span class="hl">stroke<br>by stroke</span></h2>
-  <div class="phone a" style="--r:-3deg;animation:phoneIn .8s 3.0s cubic-bezier(.2,.8,.2,1) both"><img src="src/trace.webp" style="animation:slowzoom 3s 3s both"></div>
+  <h2 class="a" style="animation:up .6s 2.85s both">Kanji <span class="hl">stroke<br>by stroke</span></h2>
+  <div class="phone a" style="--r:-3deg;animation:phoneIn .8s 3.0s cubic-bezier(.2,.8,.2,1) both"><img src="src/ja_trace.png" style="animation:slowzoom 3s 3s both"></div>
 </section>
 
 <!-- S3 talk 6–9.6 -->
 <section class="sc" style="animation:show 3.6s 6s both">
   <span class="k gold a" style="animation:pop .5s 6.15s both">Talk</span>
   <h2 class="a" style="animation:up .6s 6.25s both">An <span class="gd">AI tutor</span><br>that works offline</h2>
-  <div class="phone a" style="--r:3deg;animation:phoneIn .8s 6.4s cubic-bezier(.2,.8,.2,1) both"><img src="src/turn1.png" style="animation:slowzoom 3.2s 6.4s both"></div>
+  <div class="phone a" style="--r:3deg;animation:phoneIn .8s 6.4s cubic-bezier(.2,.8,.2,1) both"><img src="src/ja_talk.png" style="animation:slowzoom 3.2s 6.4s both"></div>
 </section>
 
-<!-- S4 slovenian 9.6–13.4 -->
+<!-- S4 kana to kanji 9.6–13.4 -->
 <section class="sc" style="animation:show 3.8s 9.6s both">
-  <span class="k gold a" style="animation:pop .5s 9.75s both">New · Slovenian A1</span>
-  <h2 class="a" style="animation:up .6s 9.85s both">See the <span class="en">endings</span><br>change</h2>
-  <div style="margin-top:110px;display:flex;flex-direction:column;gap:20px">
-    <div class="word a" style="animation:pop .55s 10.3s both">hiš<span class="en">a</span></div>
-    <div class="word a" style="animation:pop .55s 11.0s both">v hiš<span class="en">i</span></div>
-    <div class="word a" style="animation:pop .55s 11.7s both">brez hiš<span class="en">e</span></div>
+  <span class="k gold a" style="animation:pop .5s 9.75s both">Kana · N5 → N3</span>
+  <h2 class="a" style="animation:up .6s 9.85s both">From <span class="gd">あ</span> to<br><span class="hl">real Japanese</span></h2>
+  <div style="margin-top:100px;display:flex;flex-direction:column;gap:46px">
+    <div class="a" style="animation:pop .55s 10.3s both"><div class="word">さくら</div><div class="sub" style="margin-top:0">sakura · cherry blossom</div></div>
+    <div class="a" style="animation:pop .55s 11.0s both"><div class="word">先生</div><div class="sub" style="margin-top:0">sensei · teacher</div></div>
+    <div class="a" style="animation:pop .55s 11.7s both"><div class="word">日本語</div><div class="sub" style="margin-top:0">nihongo · Japanese</div></div>
   </div>
-  <div class="sub a" style="margin-top:90px;animation:up .6s 12.2s both">30 grammar lessons in plain English</div>
 </section>
 
 <!-- S5 features 13.4–16 -->
@@ -77,9 +76,9 @@ h2{font-weight:900;font-size:96px;line-height:1.04;letter-spacing:-1.5px;margin-
     <span class="chip a" style="animation:pop .4s 13.75s both">📷 Words from a photo</span>
     <span class="chip a" style="animation:pop .4s 13.95s both">📖 Stories to listen to</span>
     <span class="chip a" style="animation:pop .4s 14.15s both">🗣️ Pronunciation check</span>
-    <span class="chip a" style="animation:pop .4s 14.35s both">🌱 A plant that grows daily</span>
+    <span class="chip a" style="animation:pop .4s 14.35s both">🧠 Memory hooks for kanji</span>
     <span class="chip a" style="animation:pop .4s 14.55s both">📱 Widget · 🔄 Sync</span>
-    <span class="chip a" style="animation:pop .4s 14.75s both">🇨🇳 🇯🇵 🇸🇮 courses</span>
+    <span class="chip a" style="animation:pop .4s 14.75s both">🌱 A plant that grows daily</span>
   </div>
 </section>
 

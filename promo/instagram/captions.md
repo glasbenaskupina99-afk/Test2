@@ -3,7 +3,7 @@
 ## Files
 - `slide-1.png` … `slide-6.png`: carousel, 1080×1350 (4:5), posted in this order
 - `story.png`: story, 1080×1920 (add the link sticker → bloomko.eu over the bottom button)
-- `reel.mp4`: Reels, 1080×1920, 19 s, with music (you can swap in a trending sound in Instagram)
+- `reel.mp4`: Reels, 1080×1920, 19 s, with music (you can swap in a trending sound in Instagram). Japanese only.
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)
@@ -21,8 +21,8 @@ Get early access 👉 bloomko.eu (link in bio)
 #languagelearning #learnchinese #learnjapanese #learnslovenian #mandarin #hsk #jlpt #kanji #hanzi #studygram #langblr #polyglot #slovenia #slovenščina #languageapp #duolingoalternative
 
 ## Reel caption (EN)
-3 languages, 1 tiny garden 🌱 Write 汉字 stroke by stroke, talk to an offline AI tutor and watch Slovenian endings change color. Early access → bloomko.eu
-#learnchinese #learnjapanese #learnslovenian #languagelearning #studygram #reels
+Watch your Japanese bloom 🌸 Trace kanji stroke by stroke, chat with an AI tutor that works offline, and go from あ to real Japanese (Kana → JLPT N5–N3). Early access → bloomko.eu
+#learnjapanese #japanese #日本語 #kanji #hiragana #jlpt #jlptn5 #studygram #languagelearning #reels
 
 ## Opis (SL)
 Opazuj, kako tvoji jeziki cvetijo 🌱

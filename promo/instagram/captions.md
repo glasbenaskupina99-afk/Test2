@@ -6,6 +6,8 @@
 - `reel.mp4`: Reels, 1080×1920, 19 s, with music (you can swap in a trending sound in Instagram). Japanese only.
 - `reel-zh-ja.mp4`: Reels, 1080×1920, 20 s, Chinese + Japanese courses
 - `reel-screen-ja.mp4`: Reels, 1080×1920, 21 s, real app use (screen recording style): kanji stroke order and tracing, Talk, streak plant
+- `quiz-tegami.mp4`: quiz reel, 9 s: 手紙 (JP letter) vs 手纸 (CN toilet paper)
+- `quiz-guess.mp4`: quiz reel, 11.5 s: guess the character before it's drawn (火, 山, bonus 火山)
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)
@@ -33,6 +35,16 @@ Chinese 🇨🇳 and Japanese 🇯🇵 in one calm little app 🌱 Trace 汉字 
 ## Reel caption: screen recording (EN)
 POV: kanji finally make sense 🌱 Watch the stroke order, trace it yourself, then use it in a chat with an AI tutor that works offline. Early access → link in bio
 #learnjapanese #kanji #日本語 #jlpt #studygram #languagelearning #pov #reels
+
+## Quiz caption: 手紙 vs 手纸 (EN)
+Same characters, very different meaning 😂 Did you guess it? Comment A, B or C 👇
+Learn Chinese & Japanese side by side → bloomko.eu
+#learnchinese #learnjapanese #kanji #hanzi #languagefacts #funfacts #中文 #日本語 #studygram #reels
+
+## Quiz caption: guess the character (EN)
+How fast did you get it? ⏱️ Comment after how many strokes you knew 👇
+Kanji & hanzi stroke by stroke → bloomko.eu
+#kanji #hanzi #learnjapanese #learnchinese #quiz #languagelearning #studygram #reels
 
 ## Opis (SL)
 Opazuj, kako tvoji jeziki cvetijo 🌱

@@ -4,6 +4,7 @@
 - `slide-1.png` … `slide-6.png`: carousel, 1080×1350 (4:5), posted in this order
 - `story.png`: story, 1080×1920 (add the link sticker → bloomko.eu over the bottom button)
 - `reel.mp4`: Reels, 1080×1920, 19 s, with music (you can swap in a trending sound in Instagram). Japanese only.
+- `reel-zh-ja.mp4`: Reels, 1080×1920, 20 s, Chinese + Japanese courses
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)
@@ -23,6 +24,10 @@ Get early access 👉 bloomko.eu (link in bio)
 ## Reel caption (EN)
 Watch your Japanese bloom 🌸 Trace kanji stroke by stroke, chat with an AI tutor that works offline, and go from あ to real Japanese (Kana → JLPT N5–N3). Early access → bloomko.eu
 #learnjapanese #japanese #日本語 #kanji #hiragana #jlpt #jlptn5 #studygram #languagelearning #reels
+
+## Reel caption: Chinese + Japanese (EN)
+Chinese 🇨🇳 and Japanese 🇯🇵 in one calm little app 🌱 Trace 汉字 and 漢字 stroke by stroke, chat with an offline AI tutor and see how the same characters live in two languages. Early access → bloomko.eu
+#learnchinese #learnjapanese #mandarin #日本語 #中文 #kanji #hanzi #hsk #jlpt #studygram #languagelearning #reels
 
 ## Opis (SL)
 Opazuj, kako tvoji jeziki cvetijo 🌱

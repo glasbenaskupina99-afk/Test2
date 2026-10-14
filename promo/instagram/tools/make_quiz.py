@@ -63,12 +63,13 @@ def tegami():
 .num{position:relative;width:90px;height:90px;font-size:70px;font-weight:900;color:var(--gold)}
 .num span{position:absolute;inset:0;display:grid;place-items:center}
 """
-    T0, T1 = 2.4, 4.8  # countdown window, reveal at T1
-    seg = (T1 - T0) / 3
+    T0, T1 = 2.4, 7.4  # countdown window, reveal at T1
+    N = 5
+    seg = (T1 - T0) / N
     nums = "".join(
-        f'<span class="a" style="animation:pop .25s {T0+i*seg:.2f}s both,wout .1s {T0+(i+1)*seg-.05:.2f}s forwards">{3-i}</span>' for i in range(3))
+        f'<span class="a" style="animation:pop .25s {T0+i*seg:.2f}s both,wout .1s {T0+(i+1)*seg-.05:.2f}s forwards">{N-i}</span>' for i in range(N))
     body = f"""
-<section class="sc" style="animation:win .2s 0s both,wout .25s 7.0s forwards">
+<section class="sc" style="animation:win .2s 0s both,wout .25s {T1+2.2}s forwards">
   <span class="k a" style="animation:pop .4s .05s both">🇯🇵 vs 🇨🇳</span>
   <h2 class="a" style="animation:up .4s .15s both">Same word,<br><span class="hl">different meaning</span></h2>
   <div class="cards">
@@ -86,7 +87,7 @@ def tegami():
   <div class="a" style="position:absolute;left:0;right:0;top:1460px;animation:pop .45s {T1+.25}s both"><div style="font-size:150px;line-height:1;animation:shake .5s {T1+.7}s 2">😂</div>
     <div class="sub" style="margin-top:20px;font-size:46px;color:var(--txt);padding:0 60px">Careful when you ask for <span class="zh">手纸</span> in China 😅</div></div>
 </section>
-{endcard(7.0, 'Learn <span class="hl">Chinese</span> &amp; <span class="gd">Japanese</span><br>the fun way 🌱')}
+{endcard(T1+2.2, 'Learn <span class="hl">Chinese</span> &amp; <span class="gd">Japanese</span><br>the fun way 🌱')}
 """
     (OUT / "quiz-tegami.html").write_text(HEAD.format(title="Quiz tegami", css=css) + body + TAIL)
 
@@ -115,15 +116,18 @@ def guess():
 .ans .r{font-size:44px;font-weight:800;color:var(--mut);margin-top:6px}
 .round{font-size:38px;font-weight:900;color:var(--mut);letter-spacing:3px;margin-top:24px;position:relative;height:50px;width:100%}
 .round span{position:absolute;left:0;right:0}
+.wbar{position:absolute;left:190px;right:190px;top:150px;height:18px;border-radius:9px;background:rgba(244,239,226,.12);overflow:hidden}
+.wbar i{display:block;height:100%;background:var(--gold);transform-origin:left}
 .plus{font-size:230px;font-weight:900;line-height:1;color:#13201a}
 """
     g1, e1 = glyph("火", .9, .42, .1)
-    r1 = e1 + .1
+    WAIT = 2.0
+    r1 = e1 + WAIT
     g2s = r1 + 1.0
     g2, e2 = glyph("山", g2s + .2, .42, .1)
-    r2 = e2 + .1
+    r2 = e2 + WAIT
     b0 = r2 + 1.0
-    rb = b0 + 1.1
+    rb = b0 + .4 + WAIT
     end = rb + 1.4
     body = f"""
 <section class="sc" style="animation:win .2s 0s both,wout .25s {end}s forwards">
@@ -145,13 +149,16 @@ def guess():
     <div class="sub a" style="animation:win .2s {g2s+.2}s both,wout .1s {r2}s forwards;top:60px">Faster than last time? 👀</div>
     <div class="a" style="animation:pop .4s {r2}s both,wout .2s {b0}s forwards"><div class="m">mountain ⛰️</div><div class="r">shān · yama</div></div>
     <div class="sub a" style="animation:win .2s {b0+.2}s both,wout .1s {rb}s forwards;top:60px">fire + mountain = ?</div>
+    <div class="wbar a" style="animation:win .1s {e1}s both,wout .1s {r1}s forwards"><i style="animation:bar {WAIT}s {e1}s linear both"></i></div>
+    <div class="wbar a" style="animation:win .1s {e2}s both,wout .1s {r2}s forwards"><i style="animation:bar {WAIT}s {e2}s linear both"></i></div>
+    <div class="wbar a" style="animation:win .1s {b0+.4}s both,wout .1s {rb}s forwards"><i style="animation:bar {WAIT}s {b0+.4}s linear both"></i></div>
     <div class="a" style="animation:pop .4s {rb}s both"><div class="m">volcano 🌋</div><div class="r">huǒshān · kazan</div></div>
   </div>
 </section>
 {endcard(end, 'Learn kanji &amp; hanzi<br><span class="hl">stroke by stroke</span> 🌱')}
 """
     (OUT / "quiz-guess.html").write_text(HEAD.format(title="Quiz guess", css=css) + body + TAIL)
-    return dict(r1=r1, r2=r2, rb=rb, end=end, g1=.9, g2=g2s + .2, b0=b0)
+    return dict(e1=e1, r1=r1, e2=e2, r2=r2, rb=rb, end=end, g1=.9, g2=g2s + .2, b0=b0)
 
 tegami()
 print(json.dumps(guess()))

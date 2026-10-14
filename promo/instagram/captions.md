@@ -6,8 +6,8 @@
 - `reel.mp4`: Reels, 1080×1920, 19 s, with music (you can swap in a trending sound in Instagram). Japanese only.
 - `reel-zh-ja.mp4`: Reels, 1080×1920, 20 s, Chinese + Japanese courses
 - `reel-screen-ja.mp4`: Reels, 1080×1920, 21 s, real app use (screen recording style): kanji stroke order and tracing, Talk, streak plant
-- `quiz-tegami.mp4`: quiz reel, 9 s: 手紙 (JP letter) vs 手纸 (CN toilet paper)
-- `quiz-guess.mp4`: quiz reel, 11.5 s: guess the character before it's drawn (火, 山, bonus 火山)
+- `quiz-tegami.mp4`: quiz reel, 11.6 s (5 s countdown): 手紙 (JP letter) vs 手纸 (CN toilet paper)
+- `quiz-guess.mp4`: quiz reel, 16.6 s (2 s wait after each character): guess the character before it's drawn (火, 山, bonus 火山)
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)

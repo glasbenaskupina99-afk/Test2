@@ -214,9 +214,10 @@ def strokes_race():
     (OUT / "quiz-strokes.html").write_text(HEAD.format(title="Quiz strokes", css=css) + body + TAIL)
     return dict(s0=s0, e1=e1, e2=e2, q=q, rv=rv, end=end, st=st + gp)
 
-same_word("quiz-tegami", "手紙", "tegami", "letter ✉️", "手纸", "shǒuzhǐ", "toilet paper 🧻",
-          ["newspaper 📰", "toilet paper 🧻", "glove 🧤"], 1, 'Careful when you ask for <span class="zh">手纸</span> in China 😅')
-same_word("quiz-daijoubu", "大丈夫", "daijōbu", "it's okay 👌", "大丈夫", "dàzhàngfu", "a real man 💪",
-          ["I'm fine 👍", "a real man 💪", "big husband 👨"], 1, 'Ask a Chinese friend <span class="zh">大丈夫?</span> and you just asked "real man?" 😅')
-print(json.dumps(guess()))
-print(json.dumps(strokes_race()))
+if __name__ == "__main__":
+    same_word("quiz-tegami", "手紙", "tegami", "letter ✉️", "手纸", "shǒuzhǐ", "toilet paper 🧻",
+              ["newspaper 📰", "toilet paper 🧻", "glove 🧤"], 1, 'Careful when you ask for <span class="zh">手纸</span> in China 😅')
+    same_word("quiz-daijoubu", "大丈夫", "daijōbu", "it's okay 👌", "大丈夫", "dàzhàngfu", "a real man 💪",
+              ["I'm fine 👍", "a real man 💪", "big husband 👨"], 1, 'Ask a Chinese friend <span class="zh">大丈夫?</span> and you just asked "real man?" 😅')
+    print(json.dumps(guess()))
+    print(json.dumps(strokes_race()))

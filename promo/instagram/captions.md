@@ -10,6 +10,7 @@
 - `quiz-guess.mp4`: quiz reel, 16.6 s (2 s wait after each character): guess the character before it's drawn (火, 山, bonus 火山)
 - `quiz-daijoubu.mp4`: quiz reel, 11.6 s: 大丈夫 (JP it's okay) vs (CN a real man)
 - `quiz-strokes.mp4`: 14.4 s: 一 (1 stroke) vs 鬱 (29 strokes)
+- `pictos.mp4`: 24 s: photo → sketch → character (山 木 雨 目 森). Photos CC0 from Wikimedia Commons, see `src/photos/CREDITS.md`
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)
@@ -57,6 +58,12 @@ Learn both side by side → bloomko.eu
 1 stroke vs 29 strokes 😩 Did you guess what 鬱 means? Comment 👇
 Learn every stroke step by step → bloomko.eu
 #kanji #learnjapanese #japanese #日本語 #hardestkanji #studygram #languagelearning #reels
+
+## Caption: characters are little pictures (EN)
+Chinese & Japanese characters started as pictures 🤯 Mountain → 山, tree → 木, rain → 雨, eye → 目… and three trees make a forest: 森 🌲🌲🌲
+Which one surprised you? 👇 Learn characters that make sense → bloomko.eu
+#kanji #hanzi #learnjapanese #learnchinese #chinesecharacters #languagefacts #didyouknow #studygram #reels
+(Photos: Wikimedia Commons, CC0)
 
 ## Opis (SL)
 Opazuj, kako tvoji jeziki cvetijo 🌱

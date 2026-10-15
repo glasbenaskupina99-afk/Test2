@@ -45,7 +45,7 @@ def endcard(start, line):
 </section>"""
 
 # ---------------------------------------------------------------- 1) 手紙 vs 手纸
-def tegami():
+def same_word(file, ja, ja_r, ja_m, zh, zh_r, zh_m, opts, correct, punch):
     css = """
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:30px;width:100%;margin-top:60px}
 .card{background:rgba(244,239,226,.07);border:3px solid rgba(244,239,226,.14);border-radius:40px;padding:34px 16px 30px;position:relative}
@@ -63,7 +63,11 @@ def tegami():
 .num{position:relative;width:90px;height:90px;font-size:70px;font-weight:900;color:var(--gold)}
 .num span{position:absolute;inset:0;display:grid;place-items:center}
 """
+    wsz = "font-size:112px;line-height:1.55" if max(len(ja), len(zh)) > 2 else ""
     T0, T1 = 2.4, 7.4  # countdown window, reveal at T1
+    options = "\n    ".join(
+        f'<div class="opt a" style="animation:up .3s {1.6+i*.15:.2f}s both,{"right" if i == correct else "dim"} .3s {T1}s forwards"><b>{"ABC"[i]}</b>{o}</div>'
+        for i, o in enumerate(opts))
     N = 5
     seg = (T1 - T0) / N
     nums = "".join(
@@ -73,27 +77,25 @@ def tegami():
   <span class="k a" style="animation:pop .4s .05s both">🇯🇵 vs 🇨🇳</span>
   <h2 class="a" style="animation:up .4s .15s both">Same word,<br><span class="hl">different meaning</span></h2>
   <div class="cards">
-    <div class="card a" style="animation:pop .45s .4s both"><div class="lab">🇯🇵 JAPANESE</div><div class="w ja">手紙</div><div class="r">tegami</div><div class="m"><span>letter ✉️</span></div></div>
-    <div class="card a" style="animation:pop .45s 1.2s both"><div class="lab">🇨🇳 CHINESE</div><div class="w zh">手纸</div><div class="r">shǒuzhǐ</div>
-      <div class="m"><span class="gd" style="animation:wout .1s {T1}s forwards">???</span><span class="a" style="color:var(--sage);animation:pop .4s {T1+.05}s both">toilet paper 🧻</span></div></div>
+    <div class="card a" style="animation:pop .45s .4s both"><div class="lab">🇯🇵 JAPANESE</div><div class="w ja" style="{wsz}">{ja}</div><div class="r">{ja_r}</div><div class="m"><span>{ja_m}</span></div></div>
+    <div class="card a" style="animation:pop .45s 1.2s both"><div class="lab">🇨🇳 CHINESE</div><div class="w zh" style="{wsz}">{zh}</div><div class="r">{zh_r}</div>
+      <div class="m"><span class="gd" style="animation:wout .1s {T1}s forwards">???</span><span class="a" style="color:var(--sage);animation:pop .4s {T1+.05}s both">{zh_m}</span></div></div>
   </div>
   <div class="opts">
-    <div class="opt a" style="animation:up .3s 1.6s both,dim .3s {T1}s forwards"><b>A</b>newspaper 📰</div>
-    <div class="opt a" style="animation:up .3s 1.75s both,right .3s {T1}s forwards"><b>B</b>toilet paper 🧻</div>
-    <div class="opt a" style="animation:up .3s 1.9s both,dim .3s {T1}s forwards"><b>C</b>glove 🧤</div>
+    {options}
   </div>
   <div class="timer a" style="animation:win .2s {T0-.1}s both,wout .2s {T1}s forwards"><div class="num">{nums}</div><div class="track"><i style="animation:bar {T1-T0}s {T0}s linear both"></i></div></div>
   <div class="sub a" style="margin-top:26px;animation:win .2s {T0}s both,wout .2s {T1}s forwards">Comment your answer 👇</div>
   <div class="a" style="position:absolute;left:0;right:0;top:1460px;animation:pop .45s {T1+.25}s both"><div style="font-size:150px;line-height:1;animation:shake .5s {T1+.7}s 2">😂</div>
-    <div class="sub" style="margin-top:20px;font-size:46px;color:var(--txt);padding:0 60px">Careful when you ask for <span class="zh">手纸</span> in China 😅</div></div>
+    <div class="sub" style="margin-top:20px;font-size:46px;color:var(--txt);padding:0 60px">{punch}</div></div>
 </section>
 {endcard(T1+2.2, 'Learn <span class="hl">Chinese</span> &amp; <span class="gd">Japanese</span><br>the fun way 🌱')}
 """
-    (OUT / "quiz-tegami.html").write_text(HEAD.format(title="Quiz tegami", css=css) + body + TAIL)
+    (OUT / f"{file}.html").write_text(HEAD.format(title=file, css=css) + body + TAIL)
 
 # ---------------------------------------------------------------- 5) guess before it's finished
-def glyph(ch, start, stroke_t=.5, gap=.12, size=640):
-    d = json.loads((CHARS / f"{ch}.json").read_text())
+def glyph(ch, start, stroke_t=.5, gap=.12, size=640, chars=CHARS):
+    d = json.loads((chars / f"{ch}.json").read_text())
     defs, paths, t = [], [], start
     for i, (s, med) in enumerate(zip(d["strokes"], d["medians"])):
         mid = f"m{ord(ch)}_{i}"
@@ -160,5 +162,61 @@ def guess():
     (OUT / "quiz-guess.html").write_text(HEAD.format(title="Quiz guess", css=css) + body + TAIL)
     return dict(e1=e1, r1=r1, e2=e2, r2=r2, rb=rb, end=end, g1=.9, g2=g2s + .2, b0=b0)
 
-tegami()
+# ---------------------------------------------------------------- 1 stroke vs 29 strokes
+def strokes_race():
+    css = """
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:30px;width:100%;margin-top:70px}
+.col{display:flex;flex-direction:column;align-items:center}
+.box{position:relative;width:460px;height:460px;border-radius:36px;border:4px solid rgba(244,239,226,.25);
+  background:radial-gradient(circle at 30% 20%,#6c8a6f,#4d6a54);box-shadow:0 30px 80px rgba(0,0,0,.4);display:grid;place-items:center;overflow:hidden}
+.box:before{content:"";position:absolute;inset:0;background:linear-gradient(to right,transparent calc(50% - 2px),rgba(244,239,226,.22) calc(50% - 2px),rgba(244,239,226,.22) calc(50% + 2px),transparent calc(50% + 2px)),linear-gradient(to bottom,transparent calc(50% - 2px),rgba(244,239,226,.22) calc(50% - 2px),rgba(244,239,226,.22) calc(50% + 2px),transparent calc(50% + 2px))}
+.box svg{position:relative;z-index:1}
+.cnt{position:relative;height:80px;width:100%;margin-top:26px;font-size:56px;font-weight:900}
+.cnt span{position:absolute;left:0;right:0}
+.cnt small{font-size:34px;color:var(--mut)}
+.mean{position:relative;height:150px;width:100%;margin-top:14px}
+.mean>div{position:absolute;left:0;right:0}
+.mean .m{font-size:62px;font-weight:900;color:var(--sage)}.mean .r{font-size:38px;font-weight:800;color:var(--mut)}
+.wbar{height:18px;border-radius:9px;background:rgba(244,239,226,.12);overflow:hidden;width:560px;margin:22px auto 0}
+.wbar i{display:block;height:100%;background:var(--gold);transform-origin:left}
+"""
+    ja = ROOT / "mobile" / "www" / "chars-ja"
+    s0 = 1.0
+    g1, e1 = glyph("一", s0, .35, 0, 400, ja)
+    st, gp = .17, .04
+    g2, e2 = glyph("鬱", s0, st, gp, 400, ja)
+    n2 = 29
+    cnt2 = "".join(
+        f'<span class="a" style="animation:win .01s {s0+i*(st+gp):.2f}s both{"" if i == n2-1 else f",wout .01s {s0+(i+1)*(st+gp):.2f}s forwards"}">{i+1}<small> / 29</small></span>' for i in range(n2))
+    q = e2 + .2           # "guess what it means" + wait
+    WAIT = 2.5
+    rv = q + WAIT
+    end = rv + 2.6
+    body = f"""
+<section class="sc" style="animation:win .2s 0s both,wout .25s {end}s forwards">
+  <span class="k a" style="animation:pop .4s .05s both">🇯🇵 Kanji speedrun</span>
+  <h2 class="a" style="animation:up .4s .15s both"><span class="hl">1 stroke</span> vs<br><span class="gd">29 strokes</span></h2>
+  <div class="duo">
+    <div class="col a" style="animation:pop .4s .45s both"><div class="box">{g1}</div>
+      <div class="cnt"><span class="a" style="animation:win .01s {s0}s both,wout .01s {e1}s forwards">0<small> / 1</small></span><span class="a" style="animation:pop .3s {e1}s both">1<small> / 1</small> ✅</span></div>
+      <div class="mean"><div class="sub a" style="animation:pop .3s {e1+.1}s both,wout .2s {rv}s forwards">Done 😎</div>
+        <div class="a" style="animation:pop .4s {rv}s both"><div class="m">one</div><div class="r">ichi</div></div></div></div>
+    <div class="col a" style="animation:pop .4s .6s both"><div class="box">{g2}</div>
+      <div class="cnt"><span class="a" style="animation:win .01s .6s both,wout .01s {s0}s forwards">0<small> / 29</small></span>{cnt2}</div>
+      <div class="mean"><div class="sub a" style="animation:win .2s {s0+1}s both,wout .2s {e2}s forwards">still going… 😩</div>
+        <div class="a" style="animation:pop .4s {rv+.15}s both"><div class="m">depression</div><div class="r">utsu</div></div></div></div>
+  </div>
+  <div class="a" style="margin-top:40px;animation:pop .4s {q}s both,wout .2s {rv}s forwards"><div class="sub" style="color:var(--txt);font-size:50px">Guess what <span class="ja">鬱</span> means 👇</div><div class="wbar"><i style="animation:bar {WAIT}s {q}s linear both"></i></div></div>
+  <div class="a" style="margin-top:-90px;animation:up .4s {rv+.6}s both"><div class="sub" style="color:var(--txt);font-size:50px">Writing it is the reason 😂</div><div class="sub" style="margin-top:14px;font-size:34px">(in Chinese it's simplified to <span class="zh">郁</span>, just 8 strokes)</div></div>
+</section>
+{endcard(end, 'Learn every stroke<br><span class="hl">step by step</span> 🌱')}
+"""
+    (OUT / "quiz-strokes.html").write_text(HEAD.format(title="Quiz strokes", css=css) + body + TAIL)
+    return dict(s0=s0, e1=e1, e2=e2, q=q, rv=rv, end=end, st=st + gp)
+
+same_word("quiz-tegami", "手紙", "tegami", "letter ✉️", "手纸", "shǒuzhǐ", "toilet paper 🧻",
+          ["newspaper 📰", "toilet paper 🧻", "glove 🧤"], 1, 'Careful when you ask for <span class="zh">手纸</span> in China 😅')
+same_word("quiz-daijoubu", "大丈夫", "daijōbu", "it's okay 👌", "大丈夫", "dàzhàngfu", "a real man 💪",
+          ["I'm fine 👍", "a real man 💪", "big husband 👨"], 1, 'Ask a Chinese friend <span class="zh">大丈夫?</span> and you just asked "real man?" 😅')
 print(json.dumps(guess()))
+print(json.dumps(strokes_race()))

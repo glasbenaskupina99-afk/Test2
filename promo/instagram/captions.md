@@ -8,6 +8,8 @@
 - `reel-screen-ja.mp4`: Reels, 1080×1920, 21 s, real app use (screen recording style): kanji stroke order and tracing, Talk, streak plant
 - `quiz-tegami.mp4`: quiz reel, 11.6 s (5 s countdown): 手紙 (JP letter) vs 手纸 (CN toilet paper)
 - `quiz-guess.mp4`: quiz reel, 16.6 s (2 s wait after each character): guess the character before it's drawn (火, 山, bonus 火山)
+- `quiz-daijoubu.mp4`: quiz reel, 11.6 s: 大丈夫 (JP it's okay) vs (CN a real man)
+- `quiz-strokes.mp4`: 14.4 s: 一 (1 stroke) vs 鬱 (29 strokes)
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)
@@ -45,6 +47,16 @@ Learn Chinese & Japanese side by side → bloomko.eu
 How fast did you get it? ⏱️ Comment after how many strokes you knew 👇
 Kanji & hanzi stroke by stroke → bloomko.eu
 #kanji #hanzi #learnjapanese #learnchinese #quiz #languagelearning #studygram #reels
+
+## Quiz caption: 大丈夫 (EN)
+大丈夫 means "it's okay" in Japanese… and something very different in Chinese 😂 Did you get it? Comment A, B or C 👇
+Learn both side by side → bloomko.eu
+#learnjapanese #learnchinese #大丈夫 #daijoubu #kanji #hanzi #languagefacts #studygram #reels
+
+## Caption: 1 vs 29 strokes (EN)
+1 stroke vs 29 strokes 😩 Did you guess what 鬱 means? Comment 👇
+Learn every stroke step by step → bloomko.eu
+#kanji #learnjapanese #japanese #日本語 #hardestkanji #studygram #languagelearning #reels
 
 ## Opis (SL)
 Opazuj, kako tvoji jeziki cvetijo 🌱

@@ -1,13 +1,22 @@
-"""Builds pictos.html: photo of a thing → sketch of its shape → the real character, drawn stroke by stroke."""
+"""Builds picto-*.html: photo of a thing → sketch of its shape → the real character, drawn stroke by stroke."""
 import json, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from make_quiz import HEAD, TAIL, endcard, glyph, ROOT, OUT
 
 TREE = ["M512 110 L512 930", "M512 430 Q380 330 230 300", "M512 430 Q644 330 794 300", "M512 800 Q400 880 290 950", "M512 800 Q624 880 734 950"]
-SCENES = [
+FOREST = [
     dict(ch="木", photo="ki", en="tree", zh="mù", ja="ki", paths=TREE, stroke=.5, gap=.12),
     dict(ch="森", photo="mori", en="forest", zh="sēn", ja="mori", trees=True, paths=[], stroke=.4, gap=.08,
          extra="<span class='zh'>木</span> + <span class='zh'>木</span> + <span class='zh'>木</span>"),
+]
+PICTURES = [
+    dict(ch="山", photo="yama", en="mountain", zh="shān", ja="yama", stroke=.5, gap=.12,
+         paths=["M90 840 L300 470 L410 640 L512 170 L614 640 L724 470 L934 840"]),
+    dict(ch="雨", photo="ame", en="rain", zh="yǔ", ja="ame", stroke=.4, gap=.08, paths=[
+        "M170 330 Q190 200 330 220 Q380 110 512 140 Q640 100 700 220 Q840 200 860 330 Z",
+        "M300 470 L270 590", "M480 450 L450 570", "M660 470 L630 590", "M380 680 L350 800", "M580 680 L550 800", "M760 680 L730 800"]),
+    dict(ch="目", photo="me", en="eye", zh="mù", ja="me", rotate=True, stroke=.45, gap=.1, paths=[
+        "M110 512 Q512 200 914 512 Q512 824 110 512 Z", "M392 512 a120 120 0 1 0 240 0 a120 120 0 1 0 -240 0"]),
 ]
 
 CSS = """
@@ -32,10 +41,10 @@ def sketch(paths, start, dur=.8):
     per = dur / n
     return "".join(f'<path d="{d}" pathLength="1" stroke-dasharray="1 1" style="animation:draw {per:.2f}s {start + k*per:.2f}s ease-out both"/>' for k, d in enumerate(paths))
 
-def build():
+def build(scenes, out, title):
     t = .5
-    scenes, events = [], dict(pop=[.05], brush=[], reveal=[], whoosh=[])
-    for i, s in enumerate(SCENES):
+    parts, events = [], dict(pop=[.05], brush=[], reveal=[], whoosh=[])
+    for i, s in enumerate(scenes):
         extra = .5 if s.get("rotate") or s.get("trees") else 0
         t_sk, t_ch = t + .9, t + 1.8 + extra
         if s.get("trees"):
@@ -49,7 +58,7 @@ def build():
         note = f'<div class="note a" style="position:absolute;top:30px;left:0;right:0;z-index:3;animation:pop .3s {t_sk+.95:.2f}s both,wout .2s {t_ch:.2f}s forwards">turned upright ↻</div>' if s.get("rotate") else ""
         if s.get("trees"):
             note = f'<div class="note a" style="position:absolute;top:30px;left:0;right:0;z-index:3;animation:pop .3s {t_sk+.2:.2f}s both,wout .2s {t_ch:.2f}s forwards">tree + tree + tree</div>'
-        scenes.append(f"""
+        parts.append(f"""
   <div class="card a" style="position:absolute;top:470px;left:110px;margin:0;animation:pop .45s {t:.2f}s both,wout .25s {t_out:.2f}s forwards">
     <div class="pad"></div>
     <img src="src/photos/{s['photo']}.jpg" style="animation:zoom 2.5s {t:.2f}s ease-out both,darken .5s {t_sk:.2f}s forwards,wout .4s {t_ch-.2:.2f}s forwards">
@@ -65,16 +74,20 @@ def build():
     body = f"""
 <section class="sc" style="animation:win .2s 0s both,wout .25s {end:.2f}s forwards">
   <span class="k a" style="animation:pop .4s .05s both">🤯 Did you know?</span>
-  <h2 class="a" style="animation:up .4s .15s both">How do you write<br><span class="hl">"forest"</span>? 🌲</h2>
-  {''.join(scenes)}
+  <h2 class="a" style="animation:up .4s .15s both">{title}</h2>
+  {''.join(parts)}
 </section>
 {endcard(end, 'Learn characters<br><span class="hl">that make sense</span> 🌱')}
 <div class="a" style="position:absolute;bottom:120px;left:0;right:0;text-align:center;font-size:26px;color:var(--mut);animation:win .3s {end+.6:.2f}s both">Photos: Wikimedia Commons (CC0 / public domain)</div>
 """
-    (OUT / "picto-forest.html").write_text(HEAD.format(title="Pictos", css=CSS) + body + TAIL)
+    (OUT / f"{out}.html").write_text(HEAD.format(title="Pictos", css=CSS) + body + TAIL)
     events["chime"] = [round(end, 2)]
     return end, events
 
 if __name__ == "__main__":
-    end, ev = build()
+    which = sys.argv[1] if len(sys.argv) > 1 else "picto-forest"
+    if which == "picto-forest":
+        end, ev = build(FOREST, which, 'How do you write<br><span class="hl">"forest"</span>? 🌲')
+    else:
+        end, ev = build(PICTURES, which, 'Characters are<br><span class="hl">little pictures</span>')
     print(json.dumps(dict(end=end, events=ev)))

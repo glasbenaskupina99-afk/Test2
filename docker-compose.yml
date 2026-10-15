@@ -1,0 +1,36 @@
+# Bloomko + Ollama running Gemma 4.
+#   docker compose up -d
+#   docker compose exec ollama ollama pull gemma4:e4b
+# Then open https://<this-machine's-ip>:8443 on your phone.
+services:
+  hanzi:
+    build: .
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./data:/data
+    environment:
+      LLM_BASE_URL: http://ollama:11434/v1
+      LLM_MODEL: gemma4:e4b
+    restart: unless-stopped
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    restart: unless-stopped
+    # Uncomment for an NVIDIA GPU:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+volumes:
+  ollama:

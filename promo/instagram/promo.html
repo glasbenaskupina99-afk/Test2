@@ -1,0 +1,134 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Bloomko promo</title>
+<style>
+@font-face{font-family:N;font-weight:600;src:url(src/nunito-latin-600-normal.woff2)}
+@font-face{font-family:N;font-weight:700;src:url(src/nunito-latin-700-normal.woff2)}
+@font-face{font-family:N;font-weight:800;src:url(src/nunito-latin-800-normal.woff2)}
+@font-face{font-family:N;font-weight:900;src:url(src/nunito-latin-900-normal.woff2)}
+:root{--bg:#1c3026;--bg2:#16271e;--sage:#8cc06b;--gold:#d2ae52;--txt:#f4efe2;--mut:#a9b5a6;--end:#f0b35e}
+*{box-sizing:border-box;margin:0}
+body{background:#000;font-family:N,"Noto Sans CJK SC","Noto Sans CJK JP",sans-serif;color:var(--txt)}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;
+  background:radial-gradient(900px 700px at 85% 10%,#2c4a36 0%,transparent 60%),radial-gradient(800px 700px at 0% 100%,#24402f 0%,transparent 60%),linear-gradient(160deg,var(--bg),var(--bg2));
+  padding:80px 76px;margin-bottom:20px}
+.s.story{height:1920px;padding:150px 80px}
+.leaf{position:absolute;opacity:.07;font-size:420px;font-weight:900;pointer-events:none}
+.brand{display:flex;align-items:center;gap:16px;font-weight:900;font-size:40px;letter-spacing:.5px}
+.brand img{width:68px;height:68px;border-radius:18px}
+.kick{display:inline-block;font-weight:800;font-size:26px;letter-spacing:3px;text-transform:uppercase;color:var(--bg2);background:var(--sage);padding:10px 22px;border-radius:999px}
+.kick.gold{background:var(--gold)}
+h1{font-weight:900;font-size:92px;line-height:1.02;letter-spacing:-1.5px}
+h2{font-weight:900;font-size:76px;line-height:1.05;letter-spacing:-1px}
+.hl{color:var(--sage)}.gd{color:var(--gold)}.en{color:var(--end)}
+p.lead{font-size:36px;line-height:1.38;color:var(--mut);font-weight:700}
+.phone{position:absolute;width:400px;aspect-ratio:780/1688;border-radius:58px;background:#0b130e;padding:14px;
+  box-shadow:0 0 0 3px #38503f,0 50px 120px rgba(0,0,0,.55),0 0 160px rgba(140,192,107,.18)}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:46px;display:block}
+.phone.sm{width:340px;border-radius:50px;padding:12px}.phone.sm img{border-radius:40px}
+.chip{display:inline-flex;align-items:center;gap:12px;background:rgba(244,239,226,.08);border:2px solid rgba(244,239,226,.14);border-radius:24px;padding:16px 24px;font-size:30px;font-weight:800}
+.list{display:flex;flex-direction:column;gap:22px}
+.dots{position:absolute;bottom:56px;left:76px;display:flex;gap:10px}
+.dots i{width:14px;height:14px;border-radius:50%;background:rgba(244,239,226,.25)}.dots i.on{background:var(--sage);width:40px;border-radius:8px}
+.swipe{position:absolute;bottom:46px;right:76px;font-size:28px;font-weight:800;color:var(--mut)}
+.cta{display:inline-block;background:var(--sage);color:var(--bg2);font-weight:900;font-size:44px;padding:28px 52px;border-radius:999px;box-shadow:0 18px 50px rgba(140,192,107,.35)}
+.url{font-weight:900;font-size:64px;color:var(--gold);letter-spacing:.5px}
+.big-end{font-size:84px;font-weight:900;line-height:1.25}
+.card{background:rgba(244,239,226,.07);border:2px solid rgba(244,239,226,.12);border-radius:36px;padding:34px 40px}
+</style></head><body>
+
+<!-- 1 cover -->
+<section class="s" id="s1">
+  <div class="leaf" style="right:-40px;top:300px">文</div>
+  <div class="brand"><img src="src/logo.png">Bloomko</div>
+  <h1 style="margin-top:80px;max-width:490px">Watch your <span class="hl">languages</span> bloom.</h1>
+  <p class="lead" style="margin-top:34px;max-width:480px">Chinese, Japanese &amp; now <b class="gd">Slovenian</b> — on your phone, with an AI tutor that works offline.</p>
+  <div class="list" style="margin-top:46px;align-items:flex-start">
+    <span class="chip">🇨🇳 HSK 1–3</span><span class="chip">🇯🇵 Kana · N5–N3</span><span class="chip">🇸🇮 A1 <b class="gd" style="font-size:22px">NEW</b></span>
+  </div>
+  <div class="phone" style="right:56px;top:140px;transform:rotate(5deg)"><img src="src/home.webp"></div>
+  <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div><div class="swipe">swipe →</div>
+</section>
+
+<!-- 2 writing -->
+<section class="s" id="s2">
+  <div class="leaf" style="left:-30px;bottom:80px">字</div>
+  <span class="kick">Write it</span>
+  <h2 style="margin-top:34px;max-width:490px">Learn characters <span class="hl">stroke by stroke</span>.</h2>
+  <p class="lead" style="margin-top:30px;max-width:480px">Trace 汉字 and かな with your finger. Bloomko shows the stroke order and forgives a shaky hand.</p>
+  <div class="list" style="margin-top:44px;max-width:480px">
+    <span class="chip">✍️ Guided tracing</span><span class="chip">🔁 Smart reviews</span><span class="chip">🌱 Your plant grows daily</span>
+  </div>
+  <div class="phone" style="right:56px;top:150px;transform:rotate(3deg)"><img src="src/trace.webp"></div>
+  <div class="dots"><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div><div class="swipe">swipe →</div>
+</section>
+
+<!-- 3 talk -->
+<section class="s" id="s3">
+  <div class="leaf" style="right:-20px;bottom:60px">话</div>
+  <span class="kick gold">Talk</span>
+  <h2 style="margin-top:34px;max-width:490px">Chat with an <span class="gd">AI tutor</span>. Even offline.</h2>
+  <p class="lead" style="margin-top:30px;max-width:480px">Order tea at a café, ask the way, go shopping. Gemma runs right on your phone, uses the words you know and gently fixes mistakes.</p>
+  <div class="list" style="margin-top:44px;max-width:480px">
+    <span class="chip">🎙️ Speak or type</span><span class="chip">✏️ Gentle corrections</span><span class="chip">🔒 Private · no internet</span>
+  </div>
+  <div class="phone" style="right:56px;top:150px;transform:rotate(-3deg)"><img src="src/turn1.png"></div>
+  <div class="dots"><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div><div class="swipe">swipe →</div>
+</section>
+
+<!-- 4 slovenian -->
+<section class="s" id="s4">
+  <span class="kick gold">New · Slovenian A1</span>
+  <h2 style="margin-top:34px;max-width:490px">See the <span class="en">endings</span> change.</h2>
+  <div class="card" style="margin-top:40px;max-width:480px">
+    <div class="big-end">hiš<span class="en">a</span></div>
+    <div class="big-end">v hiš<span class="en">i</span></div>
+    <div class="big-end">brez hiš<span class="en">e</span></div>
+  </div>
+  <p class="lead" style="margin-top:34px;max-width:480px">564 words, 30 grammar lessons explained in plain English, endings highlighted in color.</p>
+  <div class="phone" style="right:56px;top:170px;transform:rotate(4deg)"><img src="src/g_intro1.png"></div>
+  <div class="dots"><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div><div class="swipe">swipe →</div>
+</section>
+
+<!-- 5 more -->
+<section class="s" id="s5">
+  <span class="kick">And more</span>
+  <h2 style="margin-top:34px;max-width:490px">Everything to <span class="hl">keep going</span>.</h2>
+  <div class="list" style="margin-top:44px;max-width:490px">
+    <span class="chip">📷 Words from a photo</span>
+    <span class="chip">📖 Stories to listen to</span>
+    <span class="chip">🧩 Grammar with drills</span>
+    <span class="chip">🗣️ Pronunciation check</span>
+    <span class="chip">📱 Home-screen widget</span>
+    <span class="chip">🔄 Encrypted sync</span>
+    <span class="chip">🌍 4 app languages</span>
+  </div>
+  <div class="phone" style="right:50px;top:200px;transform:rotate(4deg)"><img src="src/filled.png"></div>
+  <div class="dots"><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div><div class="swipe">swipe →</div>
+</section>
+
+<!-- 6 cta -->
+<section class="s" id="s6" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center">
+  <div class="leaf" style="left:-60px;top:40px">文</div><div class="leaf" style="right:-60px;bottom:40px">あ</div>
+  <img src="src/logo.png" style="width:220px;height:220px;border-radius:56px;box-shadow:0 30px 90px rgba(140,192,107,.35)">
+  <h1 style="margin-top:56px">Start growing<br><span class="hl">today.</span></h1>
+  <p class="lead" style="margin-top:30px;max-width:760px">Free to try. Get early access and new courses first.</p>
+  <div class="cta" style="margin-top:56px">Get early access</div>
+  <div class="url" style="margin-top:40px">bloomko.eu</div>
+  <p class="lead" style="margin-top:22px;font-size:30px">link in bio 🌱</p>
+</section>
+
+<!-- story -->
+<section class="s story" id="story" style="text-align:center">
+  <div class="leaf" style="left:-60px;top:200px">文</div><div class="leaf" style="right:-60px;bottom:300px">あ</div>
+  <div class="brand" style="justify-content:center"><img src="src/logo.png">Bloomko</div>
+  <h1 style="margin-top:60px">Watch your<br><span class="hl">languages bloom</span></h1>
+  <p class="lead" style="margin-top:28px">Chinese · Japanese · <b class="gd">Slovenian NEW</b></p>
+  <div style="position:relative;height:900px;margin-top:40px">
+    <div class="phone sm" style="left:20px;top:110px;transform:rotate(-8deg)"><img src="src/trace.webp"></div>
+    <div class="phone sm" style="right:20px;top:110px;transform:rotate(8deg)"><img src="src/g_intro1.png"></div>
+    <div class="phone" style="left:50%;top:0;transform:translateX(-50%)"><img src="src/turn1.png"></div>
+  </div>
+  <div class="cta" style="margin-top:30px">Get early access</div>
+  <div class="url" style="margin-top:34px">bloomko.eu</div>
+</section>
+</body></html>

@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>fun-literal</title><style>
+@font-face{font-family:N;font-weight:700;src:url(src/nunito-latin-700-normal.woff2)}
+@font-face{font-family:N;font-weight:800;src:url(src/nunito-latin-800-normal.woff2)}
+@font-face{font-family:N;font-weight:900;src:url(src/nunito-latin-900-normal.woff2)}
+:root{--bg:#1c3026;--bg2:#16271e;--sage:#8cc06b;--gold:#d2ae52;--txt:#f4efe2;--mut:#a9b5a6}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg2)}
+body{font-family:N,"Noto Sans CJK JP",sans-serif;color:var(--txt);position:relative;
+  background:radial-gradient(1000px 900px at 80% 15%,#2c4a36 0%,transparent 60%),radial-gradient(900px 900px at 10% 95%,#24402f 0%,transparent 60%),linear-gradient(160deg,var(--bg),var(--bg2))}
+.zh{font-family:N,"Noto Sans CJK SC",sans-serif}.ja{font-family:N,"Noto Sans CJK JP",sans-serif}
+.a{opacity:0;animation-fill-mode:both}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:150px 70px 0;opacity:0}
+@keyframes win{0%{opacity:0}100%{opacity:1}}
+@keyframes wout{0%{opacity:1}100%{opacity:0}}
+@keyframes up{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.5)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+@keyframes dim{to{opacity:.35;transform:scale(.97)}}
+@keyframes right{to{background:#8cc06b;color:#16271e;border-color:#8cc06b;transform:scale(1.04)}}
+@keyframes bar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.k{display:inline-block;font-weight:900;font-size:36px;letter-spacing:3px;text-transform:uppercase;color:var(--bg2);background:var(--gold);padding:12px 30px;border-radius:999px}
+h2{font-weight:900;font-size:88px;line-height:1.05;letter-spacing:-1.5px;margin-top:28px}
+.hl{color:var(--sage)}.gd{color:var(--gold)}
+.sub{font-size:42px;font-weight:800;color:var(--mut)}
+.cta{display:inline-block;background:var(--sage);color:var(--bg2);font-weight:900;font-size:58px;padding:34px 66px;border-radius:999px;box-shadow:0 20px 60px rgba(140,192,107,.4)}
+.url{font-weight:900;font-size:92px;color:var(--gold)}
+
+.box{position:relative;border-radius:40px;border:4px solid rgba(244,239,226,.25);background:radial-gradient(circle at 30% 20%,#6c8a6f,#4d6a54);
+  box-shadow:0 34px 90px rgba(0,0,0,.45);display:grid;place-items:center;overflow:hidden}
+.box:before{content:"";position:absolute;inset:0;background:linear-gradient(to right,transparent calc(50% - 2px),rgba(244,239,226,.22) calc(50% - 2px),rgba(244,239,226,.22) calc(50% + 2px),transparent calc(50% + 2px)),linear-gradient(to bottom,transparent calc(50% - 2px),rgba(244,239,226,.22) calc(50% - 2px),rgba(244,239,226,.22) calc(50% + 2px),transparent calc(50% + 2px))}
+.box>*{position:relative;z-index:1}
+.ink{color:#13201a;font-weight:700;line-height:1}
+.item{position:absolute;left:70px;right:70px;top:520px;display:flex;flex-direction:column;align-items:center}
+.parts{display:flex;align-items:center;justify-content:center;gap:26px;margin-top:20px}
+.part{display:flex;flex-direction:column;align-items:center;background:rgba(244,239,226,.07);border:3px solid rgba(244,239,226,.14);border-radius:44px;padding:30px 34px 26px;min-width:300px}
+.part .c{font-size:210px;font-weight:900;line-height:1.1}
+.part .e{font-size:56px;font-weight:900;color:var(--sage);margin-top:4px}
+.plus{font-size:96px;font-weight:900;color:var(--gold)}
+.q{font-size:150px;font-weight:900;color:var(--gold);margin-top:80px}
+.wbar{height:18px;border-radius:9px;background:rgba(244,239,226,.12);overflow:hidden;width:560px;margin:24px auto 0}
+.wbar i{display:block;height:100%;background:var(--gold);transform-origin:left}
+.rev{position:absolute;left:0;right:0;top:560px;display:flex;flex-direction:column;align-items:center}
+.emo{font-size:280px;line-height:1.1}
+.big{font-size:118px;font-weight:900;line-height:1.1}.big b{color:var(--sage)}
+.rd{font-size:50px;font-weight:800;color:var(--mut);margin-top:10px}
+.tag{display:inline-block;font-size:40px;font-weight:900;color:var(--bg2);background:var(--gold);border-radius:999px;padding:10px 26px}
+
+</style></head><body>
+
+<section class="sc" style="animation:win .2s 0s both,wout .25s 21.75s forwards">
+  <span class="k a" style="animation:pop .4s .05s both">🇨🇳 Literal Chinese</span>
+  <h2 class="a" style="animation:up .4s .15s both">Chinese words<br>are <span class="hl">so literal</span> 😂</h2>
+  <style>.part[data-s]{min-width:0;padding:26px 18px 22px}.part[data-s] .c{font-size:150px}.part[data-s] .e{font-size:44px}</style>
+  <div class="item a" style="animation:win .1s 0.70s both,wout .25s 3.70s forwards">
+    <div class="parts"><div class="part a" style="animation:pop .35s 0.70s both"><span class="c zh">熊</span><span class="e">bear</span></div><span class="plus a" style="animation:pop .3s 1.00s both">+</span><div class="part a" style="animation:pop .35s 1.15s both"><span class="c zh">猫</span><span class="e">cat</span></div></div>
+    <div class="q a" style="animation:pop .3s 1.70s both">= ?</div>
+    <div class="a" style="animation:win .1s 1.70s both"><div class="wbar"><i style="animation:bar 2.0s 1.70s linear both"></i></div></div>
+  </div>
+  <div class="rev a" style="animation:pop .4s 3.70s both,wout .25s 5.50s forwards">
+    <div class="emo">🐼</div><div class="big"><span class="zh">熊猫</span> = <b>panda</b></div>
+    <div class="rd">xióngmāo · bear + cat</div>
+  </div>
+  <div class="item a" style="animation:win .1s 5.85s both,wout .25s 8.85s forwards">
+    <div class="parts"><div class="part a" style="animation:pop .35s 5.85s both"><span class="c zh">电</span><span class="e">electric</span></div><span class="plus a" style="animation:pop .3s 6.15s both">+</span><div class="part a" style="animation:pop .35s 6.30s both"><span class="c zh">脑</span><span class="e">brain</span></div></div>
+    <div class="q a" style="animation:pop .3s 6.85s both">= ?</div>
+    <div class="a" style="animation:win .1s 6.85s both"><div class="wbar"><i style="animation:bar 2.0s 6.85s linear both"></i></div></div>
+  </div>
+  <div class="rev a" style="animation:pop .4s 8.85s both,wout .25s 10.65s forwards">
+    <div class="emo">💻</div><div class="big"><span class="zh">电脑</span> = <b>computer</b></div>
+    <div class="rd">diànnǎo · electric + brain</div>
+  </div>
+  <div class="item a" style="animation:win .1s 11.00s both,wout .25s 14.00s forwards">
+    <div class="parts"><div class="part a" style="animation:pop .35s 11.00s both"><span class="c zh">火</span><span class="e">fire</span></div><span class="plus a" style="animation:pop .3s 11.30s both">+</span><div class="part a" style="animation:pop .35s 11.45s both"><span class="c zh">车</span><span class="e">vehicle</span></div></div>
+    <div class="q a" style="animation:pop .3s 12.00s both">= ?</div>
+    <div class="a" style="animation:win .1s 12.00s both"><div class="wbar"><i style="animation:bar 2.0s 12.00s linear both"></i></div></div>
+  </div>
+  <div class="rev a" style="animation:pop .4s 14.00s both,wout .25s 15.80s forwards">
+    <div class="emo">🚂</div><div class="big"><span class="zh">火车</span> = <b>train</b></div>
+    <div class="rd">huǒchē · fire + vehicle</div>
+  </div>
+  <div class="item a" style="animation:win .1s 16.15s both,wout .25s 19.60s forwards">
+    <div class="parts"><div class="part a" data-s style="animation:pop .35s 16.15s both"><span class="c zh">长</span><span class="e">long</span></div><span class="plus a" style="animation:pop .3s 16.45s both">+</span><div class="part a" data-s style="animation:pop .35s 16.60s both"><span class="c zh">颈</span><span class="e">neck</span></div><span class="plus a" style="animation:pop .3s 16.90s both">+</span><div class="part a" data-s style="animation:pop .35s 17.05s both"><span class="c zh">鹿</span><span class="e">deer</span></div></div>
+    <div class="q a" style="animation:pop .3s 17.60s both">= ?</div>
+    <div class="a" style="animation:win .1s 17.60s both"><div class="wbar"><i style="animation:bar 2.0s 17.60s linear both"></i></div></div>
+  </div>
+  <div class="rev a" style="animation:pop .4s 19.60s both,wout .25s 21.40s forwards">
+    <div class="emo">🦒</div><div class="big"><span class="zh">长颈鹿</span> = <b>giraffe</b></div>
+    <div class="rd">chángjǐnglù · long + neck + deer</div>
+  </div>
+</section>
+<section class="sc" style="animation:win .3s 21.750000000000007s both;justify-content:center;padding-top:0;background:inherit">
+  <img class="a" src="src/logo.png" style="width:260px;height:260px;border-radius:66px;box-shadow:0 30px 120px rgba(140,192,107,.45);animation:pop .6s 21.800000000000008s both">
+  <div class="a" style="font-weight:900;font-size:76px;line-height:1.1;margin-top:60px;animation:up .5s 21.950000000000006s both">Learn Chinese<br><span class="hl">that makes sense</span> 🌱</div>
+  <div class="cta a" style="margin-top:70px;animation:pop .5s 22.200000000000006s both">Try it free</div>
+  <div class="url a" style="margin-top:50px;animation:up .5s 22.35000000000001s both">bloomko.eu</div>
+</section><script>window.seek=(ms)=>document.getAnimations().forEach(a=>{a.pause();a.currentTime=ms;});</script></body></html>

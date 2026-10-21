@@ -12,6 +12,9 @@
 - `quiz-strokes.mp4`: 14.4 s: 一 (1 stroke) vs 鬱 (29 strokes)
 - `picto-forest.mp4`: 19 s: tree photo → 木, forest photo → 木+木+木 → 森 (every character fully drawn). Photos CC0 from Wikimedia Commons, see `src/photos/CREDITS.md`
 - `picto-pictures.mp4`: 23 s: mountain → 山, rain → 雨, eye → 目 (turned upright), every character fully drawn. Photos CC0, see `src/photos/CREDITS.md`
+- `fun-literal.mp4`: 24 s: 熊猫 bear+cat, 电脑 electric+brain, 火车 fire+vehicle, 长颈鹿 long+neck+deer
+- `fun-shapes.mp4`: 28 s: 凸 凹 傘 回 drawn in full, guess from the shape, bonus 凸凹 (dekoboko)
+- `fun-jiong.mp4`: 18 s: 囧 the meme character, bonus 呆 + 呆 = 槑
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)
@@ -71,6 +74,21 @@ Chinese & Japanese characters started as pictures 🤯 Mountain → 山, rain �
 Which one surprised you most? 👇 Learn characters that make sense → bloomko.eu
 #kanji #hanzi #learnjapanese #learnchinese #chinesecharacters #languagefacts #didyouknow #studygram #reels
 (Photos: Wikimedia Commons, CC0)
+
+## Caption: literal Chinese (EN)
+Chinese words are SO literal 😂 bear + cat = 🐼, electric + brain = 💻… which one is your favourite? 👇
+Learn Chinese that makes sense → bloomko.eu
+#learnchinese #mandarin #中文 #chinesecharacters #languagefacts #funfacts #hanzi #studygram #reels
+
+## Caption: kanji that look like their meaning (EN)
+Can you guess these kanji just from their shape? 👀 凸 凹 傘 回 How many did you get? 👇
+Kanji that make sense → bloomko.eu
+#kanji #learnjapanese #japanese #日本語 #languagefacts #guessthekanji #studygram #reels
+
+## Caption: 囧 (EN)
+This 3,000-year-old character became an internet meme 😳 Can you see the face? 囧
+Bonus: 呆 + 呆 = 槑 😂 Learn Chinese the fun way → bloomko.eu
+#learnchinese #中文 #囧 #chinesecharacters #internetslang #languagefacts #memes #studygram #reels
 
 ## Opis (SL)
 Opazuj, kako tvoji jeziki cvetijo 🌱

@@ -1,6 +1,6 @@
 # Bloomko
 
-> Bloomko is a free language-learning app for Android (coming soon) with an AI tutor that runs offline on the phone (Google Gemma). Learners write Chinese characters, Japanese kanji and kana by hand, stroke by stroke, and the app checks every stroke. Progress is tracked with spaced repetition (FSRS) and a calm "garden": a streak plant that grows when you practise.
+> Bloomko comes as two apps: Bloomko East (Chinese and Japanese) and Bloomko Heritage (lesser-known languages, starting with Slovenian). Bloomko is a free language-learning app for Android (coming soon) with an AI tutor that runs offline on the phone (Google Gemma). Learners write Chinese characters, Japanese kanji and kana by hand, stroke by stroke, and the app checks every stroke. Progress is tracked with spaced repetition (FSRS) and a calm "garden": a streak plant that grows when you practise.
 
 Website: https://bloomko.eu · Contact: thebloomko@gmail.com
 
@@ -20,9 +20,14 @@ Website: https://bloomko.eu · Contact: thebloomko@gmail.com
 - Private by design: no account, no ads, no tracking.
 
 ## Courses
+Bloomko East:
 - Chinese (Mandarin): official HSK 3.0 levels 1–3, about 2,270 words.
 - Japanese: hiragana & katakana, JLPT N5–N3, about 3,500 words.
-- Slovenian: A1 (preview). More languages planned (Korean, Spanish, French, German).
+- Character map: every course character linked to the parts it is built from.
+
+Bloomko Heritage (https://bloomko.eu/heritage/), for lesser-known languages:
+- Slovenian A1: 564 words, 30 grammar lessons explained in English with word endings shown in colour, 91 ending drills, pronunciation with stress marks.
+- More small languages planned (learners can suggest which).
 
 ## Free word pages
 - [Chinese words by HSK level](https://bloomko.eu/chinese/): meaning, pinyin, animated stroke order, memory trick and example for each word.

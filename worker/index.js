@@ -54,12 +54,13 @@ async function mailOwner(env, email, info, total) {
     `Time:      ${new Date(info.at).toUTCString()}`,
     `Country:   ${info.country ? countryName(info.country) : "unknown"}`,
     `Languages: ${info.languages || "unknown"}`,
+    `App:       ${info.edition === "heritage" ? "Bloomko Heritage" : "Bloomko East"}`,
     total ? `Total sign-ups so far: ${total}` : ``,
   ];
   const raw = [
     `From: Bloomko <${FROM}>`,
     `To: ${TO}`,
-    `Subject: =?UTF-8?B?${btoa(String.fromCharCode(...new TextEncoder().encode(`🌱 New Bloomko sign-up: ${email}`)))}?=`,
+    `Subject: =?UTF-8?B?${btoa(String.fromCharCode(...new TextEncoder().encode(`${info.edition === "heritage" ? "🌿 New Bloomko Heritage" : "🌱 New Bloomko East"} sign-up: ${email}`)))}?=`,
     `Date: ${new Date().toUTCString()}`,
     `Message-ID: <${crypto.randomUUID()}@bloomko.eu>`,
     `Reply-To: ${email}`,
@@ -89,6 +90,8 @@ async function notify(request, env, ctx) {
       at: new Date().toISOString(),
       country: request.cf?.country || null,
       languages: languages(request.headers.get("Accept-Language")),
+      // Which app the sign-up came from: Bloomko East (Chinese, Japanese) or Bloomko Heritage.
+      edition: data.edition === "heritage" ? "heritage" : "east",
     };
     await env.NOTIFY.put(email, JSON.stringify(info));
     ctx.waitUntil(

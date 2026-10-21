@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bloomko — AI language learning that grows with you</title>
+  <meta name="description" content="Bloomko is a free, calm language app for Chinese, Japanese and more: write characters by hand with stroke-by-stroke checking, chat with an AI tutor that runs offline on your phone, read graded stories, learn grammar and turn photos into vocabulary. Try writing a character right on this page.">
+  <meta name="theme-color" content="#1c3026">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon-192.png">
+  <meta property="og:title" content="Bloomko — watch your languages bloom">
+  <meta property="og:description" content="Write, read and speak a new language — with handwriting that checks every stroke and an AI tutor that lives on your phone. Coming soon.">
+  <meta property="og:image" content="https://bloomko.eu/img/icon-512.png">
+  <meta property="og:url" content="https://bloomko.eu/">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Organization", "@id": "https://bloomko.eu/#org", "name": "Bloomko", "url": "https://bloomko.eu/", "logo": "https://bloomko.eu/img/icon-512.png", "email": "thebloomko@gmail.com", "description": "Bloomko makes a language-learning app with handwriting practice and an offline AI tutor."}, {"@context": "https://schema.org", "@type": "WebSite", "name": "Bloomko", "url": "https://bloomko.eu/", "publisher": {"@id": "https://bloomko.eu/#org"}}, {"@context": "https://schema.org", "@type": "MobileApplication", "name": "Bloomko", "operatingSystem": "Android", "applicationCategory": "EducationalApplication", "applicationSubCategory": "Language learning", "url": "https://bloomko.eu/", "image": "https://bloomko.eu/img/icon-512.png", "publisher": {"@id": "https://bloomko.eu/#org"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "description": "Bloomko is a free language-learning app (coming soon to Android) for Chinese (HSK 1–3) and Japanese (kana, JLPT N5–N3): write characters by hand with stroke-by-stroke checking, spaced repetition, memory tricks, and an AI tutor (Google Gemma) that runs offline on the phone. Not a shop or a plant variety — a language app.", "featureList": ["Handwriting practice stroke by stroke", "Offline AI tutor (Gemma)", "Role-play conversations with the AI tutor", "Pronunciation and tone feedback", "Dictation and graded stories", "Grammar lessons", "Words from a photo (text recognition)", "Spaced repetition (FSRS)", "Memory tricks and example sentences", "Sync between devices without an account", "Home-screen widget", "Interface in English, French, Spanish and Japanese", "Import your own word lists"]}]</script>
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1c3026; --bg-2: #16271e; --surface: #233a2e; --surface-2: #2a4235; --border: #36503f;
+      --text: #e6e1d3; --strong: #f4efe2; --muted: #a9b5a6;
+      --sage: #8cc06b; --gold: #c2a63f; --gold-dark: #8e7a2b; --terracotta: #a9643f; --slate: #557389;
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: "Nunito", system-ui, sans-serif; color: var(--text); line-height: 1.6;
+      background: radial-gradient(ellipse 110% 60% at 85% -10%, rgba(140, 192, 107, .14), transparent 60%), var(--bg);
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+    h1, h2, h3 { color: var(--strong); line-height: 1.15; margin: 0; }
+
+    /* nav */
+    nav { display: flex; align-items: center; gap: 12px; padding: 20px 0; }
+    nav img { width: 42px; height: 42px; }
+    nav .brand { font-weight: 900; font-size: 24px; color: var(--strong); letter-spacing: .3px; }
+    .navlink { font-weight: 800; color: var(--muted); text-decoration: none; font-size: 15px; }
+    .navlink:first-of-type { margin-left: auto; }
+    .navlink:hover { color: var(--strong); }
+    a.lang { text-decoration: none; transition: border-color .2s; }
+    a.lang:hover { border-color: var(--sage); }
+    .navlink ~ .pill { margin-left: 8px; }
+    @media (max-width: 600px) { .navlink { display: none; } .navlink ~ .pill { margin-left: auto; } }
+    @media (max-width: 480px) { nav .pill { display: none; } nav .brand { font-size: 20px; } }
+    /* East / Heritage tabs */
+    .editions { display: inline-flex; padding: 4px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); margin-left: 6px; }
+    .ed { padding: 6px 14px; border-radius: 99px; font-weight: 800; font-size: 14px; color: var(--muted); text-decoration: none; }
+    .ed.on { background: var(--gold); color: #17241b; }
+    .ed:not(.on):hover { color: var(--strong); }
+    .her-card { border-color: #a8462f !important; background: linear-gradient(135deg, #f6efe3, #ecdcc2) !important; }
+    .her-card b { color: #33241b !important; font-family: "Lora", Georgia, serif; }
+    .her-card span { color: #6e5a48 !important; }
+    .pill {
+      margin-left: auto; font-weight: 800; font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+      padding: 7px 14px; border-radius: 99px; border: 2px solid var(--gold); color: var(--gold);
+    }
+
+    /* hero */
+    .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; padding: 40px 0 70px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; color: var(--sage); font-size: 15px; margin-bottom: 14px; }
+    .hero h1 { font-size: clamp(42px, 6vw, 68px); font-weight: 900; letter-spacing: -.5px; }
+    .hero h1 em { font-style: normal; color: var(--sage); }
+    .hero p.lead { font-size: 20px; color: var(--muted); margin: 22px 0 30px; max-width: 34em; }
+    .cta { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; border-radius: 16px; font-weight: 900;
+      font-size: 16px; letter-spacing: .6px; text-transform: uppercase; text-decoration: none;
+      background: var(--gold); color: #17241b; box-shadow: 0 5px 0 var(--gold-dark);
+    }
+    .btn.ghost { background: transparent; color: var(--strong); box-shadow: none; border: 2px solid var(--border); }
+    .small-note { font-size: 14px; color: var(--muted); }
+
+    .phones { position: relative; height: 600px; }
+    .phone {
+      position: absolute; width: 260px; border-radius: 34px; overflow: hidden; border: 6px solid #0f1a14;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, .45); background: #0f1a14;
+    }
+    .phone img { display: block; width: 100%; height: auto; }
+    .phone.p1 { left: 4%; top: 40px; transform: rotate(-6deg); }
+    .phone.p2 { left: 34%; top: 0; z-index: 2; }
+    .phone.p3 { right: 0; top: 70px; transform: rotate(6deg); }
+
+    /* sections */
+    section { padding: 70px 0; }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 44px; }
+    .section-head h2 { font-size: clamp(32px, 4vw, 44px); font-weight: 900; }
+    .section-head p { color: var(--muted); font-size: 18px; margin: 14px 0 0; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card {
+      background: var(--surface); border: 2px solid var(--border); border-bottom-width: 5px; border-radius: var(--radius);
+      padding: 26px 24px;
+    }
+    .card .ico {
+      width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; font-size: 26px; margin-bottom: 14px;
+      background: var(--surface-2); border: 2px solid var(--border);
+    }
+    .card h3 { font-size: 20px; margin-bottom: 8px; }
+    .card p { margin: 0; color: var(--muted); font-size: 16px; }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .split.rev .text { order: 2; }
+    .split .shot { display: flex; justify-content: center; }
+    .split .shot .phone { position: static; transform: none; width: 280px; }
+    .split h2 { font-size: clamp(30px, 3.6vw, 40px); font-weight: 900; margin-bottom: 16px; }
+    .split p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .split ul { padding: 0; margin: 18px 0 0; list-style: none; }
+    .split li { padding-left: 32px; position: relative; margin: 10px 0; font-size: 17px; }
+    .split li::before { content: "🌱"; position: absolute; left: 0; }
+
+    .langs { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .lang {
+      display: flex; align-items: center; gap: 14px; padding: 16px 22px; border-radius: 18px; min-width: 250px;
+      background: var(--surface); border: 2px solid var(--border);
+    }
+    .lang .flag { font-size: 32px; }
+    .lang b { display: block; font-size: 18px; color: var(--strong); }
+    .lang span { color: var(--muted); font-size: 14px; }
+    .lang.soon { border-style: dashed; opacity: .8; }
+
+    .private {
+      background: linear-gradient(135deg, var(--surface), var(--surface-2)); border: 2px solid var(--border);
+      border-radius: 28px; padding: 46px; display: grid; grid-template-columns: auto 1fr; gap: 30px; align-items: center;
+    }
+    .private .big { font-size: 64px; }
+    .private h2 { font-size: 34px; font-weight: 900; margin-bottom: 10px; }
+    .private p { color: var(--muted); font-size: 18px; margin: 0; }
+
+    .final { text-align: center; padding: 90px 0 70px; }
+    .final img { width: 120px; height: 120px; filter: drop-shadow(0 10px 22px rgba(0, 0, 0, .4)); }
+    .final h2 { font-size: clamp(36px, 5vw, 54px); font-weight: 900; margin: 18px 0 12px; }
+    .final p { color: var(--muted); font-size: 19px; margin: 0 auto 28px; max-width: 36em; }
+
+    .final .contact { margin: 34px auto 0; font-size: 17px; }
+    .final .contact a, footer a { color: var(--sage); font-weight: 800; text-decoration: none; }
+    .final .contact a:hover, footer a:hover { text-decoration: underline; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: -8px 0 26px; }
+    .tags span { font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 99px; background: var(--surface); border: 2px solid var(--border); color: var(--strong); }
+    .notify { display: flex; flex-wrap: wrap; gap: 10px; max-width: 520px; }
+    .notify.center { margin: 0 auto; justify-content: center; }
+    .notify input[type=email] {
+      flex: 1 1 240px; min-width: 0; padding: 15px 18px; border-radius: 16px; border: 2px solid var(--border); background: var(--surface);
+      color: var(--strong); font: inherit; font-size: 16px; outline: none;
+    }
+    .notify input[type=email]:focus { border-color: var(--sage); }
+    .notify .btn { border: none; cursor: pointer; font-family: inherit; }
+    .notify .btn:disabled { opacity: .6; cursor: default; }
+    .notify .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .notify-note { flex-basis: 100%; margin: 4px 2px 0; font-size: 14px; color: var(--muted); }
+    .notify.center .notify-note { text-align: center; }
+    .notify-done { flex-basis: 100%; padding: 16px 20px; border-radius: 16px; background: var(--surface-2); border: 2px solid var(--sage); color: var(--strong); font-weight: 800; }
+    .notify.center .notify-done { text-align: center; }
+
+    .ai { padding-top: 30px; }
+    .chat { background: var(--surface); border: 2px solid var(--border); border-bottom-width: 5px; border-radius: 26px; padding: 18px; display: grid; gap: 12px; max-width: 460px; justify-self: center; width: 100%; }
+    .chat-head { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14px; color: var(--muted); padding: 2px 4px 6px; border-bottom: 2px solid var(--border); }
+    .chat-head .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 0 4px rgba(140, 192, 107, .2); }
+    .bubble { padding: 12px 16px; border-radius: 18px; font-size: 16px; line-height: 1.5; max-width: 92%; }
+    .bubble small { display: block; color: var(--muted); font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+    .bubble.tutor { background: var(--surface-2); color: var(--text); border-bottom-left-radius: 6px; }
+    .bubble.me { justify-self: end; background: var(--gold); color: #17241b; font-size: 22px; font-weight: 800; border-bottom-right-radius: 6px; }
+    .bubble.ok { border: 2px solid var(--sage); }
+    .bubble.ok b { color: var(--sage); }
+    .bubble.hook { border: 2px dashed var(--border); }
+    .hz { font-weight: 800; color: var(--strong); }
+
+    footer { border-top: 2px solid var(--border); padding: 26px 0 40px; color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; }
+
+    .leaf-deco { position: fixed; right: -120px; top: 140px; width: 460px; opacity: .05; pointer-events: none; z-index: -1; }
+
+    /* stats strip */
+    .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: -30px 0 10px; }
+    .stat { text-align: center; padding: 16px 10px; border-radius: 18px; background: var(--surface); border: 2px solid var(--border); }
+    .stat b { display: block; font-size: 28px; font-weight: 900; color: var(--strong); line-height: 1.1; }
+    .stat span { font-size: 13px; font-weight: 800; color: var(--muted); }
+
+    /* try it */
+    .try { display: grid; grid-template-columns: 1fr 1.05fr; gap: 40px; align-items: center; }
+    .try-card { background: linear-gradient(160deg, var(--surface-2), var(--surface)); border: 2px solid var(--border); border-bottom-width: 6px; border-radius: 28px; padding: 22px; }
+    .try-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+    .try-tabs button, .try-btns button { font: inherit; font-weight: 800; cursor: pointer; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--text); padding: 9px 14px; font-size: 15px; }
+    .try-tabs button.on { border-color: var(--sage); color: var(--strong); background: rgba(140, 192, 107, .14); }
+    .try-main { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; }
+    .try-box { width: 230px; height: 230px; border-radius: 22px; background: #142219; border: 2px solid var(--border); position: relative; touch-action: none;
+      background-image: linear-gradient(rgba(244,239,226,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(244,239,226,.06) 1px, transparent 1px);
+      background-size: 50% 50%; background-position: center; }
+    .try-info .meaning { font-size: 22px; font-weight: 900; color: var(--strong); }
+    .try-info .reading { font-size: 18px; font-weight: 800; color: var(--gold); margin: 2px 0 10px; }
+    .try-status { min-height: 26px; font-weight: 800; color: var(--muted); margin: 6px 0 12px; }
+    .try-status.good { color: var(--sage); } .try-status.bad { color: #e0a17e; }
+    .try-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+    .try-btns button.main { background: var(--gold); border-color: var(--gold); color: #17241b; box-shadow: 0 4px 0 var(--gold-dark); }
+    .try-chars { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+    .try-chars button { font: inherit; font-size: 22px; width: 48px; height: 48px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--strong); cursor: pointer; }
+    .try-chars button.on { border-color: var(--gold); }
+    .try-chars button.done { border-color: var(--sage); background: rgba(140, 192, 107, .16); }
+    .try-win { display: none; margin-top: 16px; padding: 16px; border-radius: 18px; background: rgba(140, 192, 107, .1); border: 2px dashed var(--sage); }
+    .try-win.show { display: block; animation: pop .4s ease; }
+    .try-win p { margin: 0 0 10px; font-weight: 800; color: var(--strong); }
+    @keyframes pop { from { transform: scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+
+    /* talk demo */
+    .chat .bubble.partner { background: var(--surface-2); border-bottom-left-radius: 6px; }
+    .chat .bubble.fix { justify-self: end; border: 2px dashed var(--gold); background: rgba(194, 166, 63, .08); font-size: 15px; }
+    .chat .bubble .py { display: block; font-size: 13px; color: var(--muted); font-weight: 700; }
+
+    /* feature grid: 4 columns on wide screens */
+    .grid.four { grid-template-columns: repeat(4, 1fr); }
+    .card .new { display: inline-block; font-size: 11px; font-weight: 900; letter-spacing: .8px; text-transform: uppercase; color: #17241b; background: var(--sage); border-radius: 99px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
+    .uilangs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 20px; }
+    .uilangs span { font-weight: 800; padding: 6px 14px; border-radius: 99px; border: 2px solid var(--border); background: var(--surface); color: var(--strong); }
+
+    /* early access */
+    .perks { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; margin: 0 auto 26px; max-width: 760px; padding: 0; list-style: none; }
+    .perks li { font-weight: 800; color: var(--strong); }
+    .sticky-cta { display: none; }
+    @media (max-width: 700px) {
+      .sticky-cta { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 20; justify-content: center; padding: 14px; border-radius: 16px; font-weight: 900; text-decoration: none; text-transform: uppercase; letter-spacing: .6px;
+        background: var(--gold); color: #17241b; box-shadow: 0 5px 0 var(--gold-dark), 0 12px 30px rgba(0,0,0,.45); transition: transform .3s, opacity .3s; }
+      .sticky-cta.hide { transform: translateY(140%); opacity: 0; }
+      footer { padding-bottom: 90px; }
+    }
+
+    @media (max-width: 900px) {
+      .try { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(3, 1fr); margin-top: -40px; }
+      .grid.four { grid-template-columns: 1fr 1fr; }
+      .hero, .split { grid-template-columns: 1fr; }
+      .split.rev .text { order: 0; }
+      .phones { height: 470px; max-width: 520px; margin: 0 auto; width: 100%; }
+      .phone { width: 200px; }
+      .phone.p2 { left: 30%; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .private { grid-template-columns: 1fr; text-align: center; padding: 34px 24px; }
+    }
+    @media (max-width: 600px) {
+      .grid, .grid.four { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stats .stat:last-child { grid-column: span 2; }
+      .try-main { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .try-btns { justify-content: center; }
+      .try-chars { justify-content: center; }
+      .try-more { display: none; }
+      .phones { height: 400px; }
+      .phone { width: 165px; border-width: 4px; border-radius: 26px; }
+      .phone.p1 { left: 0; } .phone.p2 { left: 27%; } .phone.p3 { right: 0; }
+      .hero { padding-top: 16px; }
+      .hero p.lead { font-size: 18px; }
+      section { padding: 50px 0; }
+      .split .shot .phone { width: 240px; }
+      .lang { min-width: 0; width: 100%; }
+      nav .brand { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <svg class="leaf-deco" viewBox="0 0 100 100" fill="none" stroke="#e6e1d3" stroke-width="1.2" aria-hidden="true"><path d="M50 95C50 60 30 35 10 20c35 0 75 20 80 60-15 5-30 8-40 15z"/><path d="M50 95C45 70 35 50 18 28M40 60c-8-2-15-6-20-12M45 75c-10 0-20-4-26-10M47 50c2-10 0-20-6-28"/></svg>
+
+  <div class="wrap">
+    <nav>
+      <img src="img/logo.png" alt="">
+      <span class="brand">Bloomko</span>
+      <div class="editions" role="tablist" aria-label="Bloomko apps">
+        <a class="ed on" href="/" role="tab" aria-selected="true">East</a>
+        <a class="ed" href="/heritage/" role="tab" aria-selected="false">Heritage</a>
+      </div>
+      <a class="navlink" href="#try">Try it</a>
+      <a class="navlink" href="/chinese/">Chinese words</a>
+      <a class="navlink" href="/japanese/">Japanese words</a>
+      <span class="pill">Coming soon</span>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <div class="eyebrow">✨ Bloomko East · Chinese &amp; Japanese · AI tutor that works offline</div>
+        <h1>Watch your languages <em>bloom.</em></h1>
+        <p class="lead">
+          Learn Chinese or Japanese the way it sticks: <b>write</b> every character by hand, <b>talk</b> with an AI tutor that lives on your phone,
+          <b>read</b> little stories made of the words you know — and watch your garden grow every day you practise.
+        </p>
+        <div class="tags">
+          <span>✍️ Stroke-by-stroke writing</span><span>💬 Chat with Gemma</span><span>📷 Words from photos</span><span>🔒 No account, no ads</span>
+        </div>
+        <form class="notify" data-notify>
+          <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-label="Your email address">
+          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">🌱 Get early access</button>
+          <p class="notify-note">Join the waiting list: be among the first testers when Bloomko opens on Android. No spam, ever.</p>
+        </form>
+      </div>
+      <div class="phones" aria-hidden="true">
+        <div class="phone p1"><img src="img/trace.webp" alt=""></div>
+        <div class="phone p2"><img src="img/home.webp" alt=""></div>
+        <div class="phone p3"><img src="img/garden.webp" alt=""></div>
+      </div>
+    </header>
+
+    <div class="stats" aria-label="Bloomko in numbers">
+      <div class="stat"><b>5,700+</b><span>Chinese &amp; Japanese words</span></div>
+      <div class="stat"><b>500+</b><span>grammar points</span></div>
+      <div class="stat"><b>48</b><span>graded stories</span></div>
+      <div class="stat"><b>4</b><span>app languages</span></div>
+      <div class="stat"><b>100%</b><span>offline AI tutor</span></div>
+    </div>
+  </div>
+
+  <section id="try">
+    <div class="wrap try">
+      <div class="text">
+        <div class="eyebrow">✍️ Try it right here</div>
+        <h2 style="font-size:clamp(30px,3.6vw,40px);font-weight:900;margin-bottom:16px">Write your first character — now</h2>
+        <p style="color:var(--muted);font-size:18px;margin:0 0 14px">This is how Bloomko teaches: watch the stroke order, then draw it yourself with your finger or mouse. Every stroke is checked — a little off the line is fine, the order and direction count.</p>
+        <p class="try-more" style="color:var(--muted);font-size:18px;margin:0">Write all four and see how it feels. In the app there are thousands more, with memory tricks, sound and spaced reviews.</p>
+      </div>
+      <div class="try-card" data-try>
+        <div class="try-tabs" role="tablist">
+          <button class="on" data-lang="zh">🇨🇳 Chinese</button>
+          <button data-lang="ja">🇯🇵 Japanese</button>
+        </div>
+        <div class="try-main">
+          <div class="try-box" id="try-box" aria-label="Drawing area"></div>
+          <div class="try-info">
+            <div class="meaning" id="try-meaning">you</div>
+            <div class="reading" id="try-reading">nǐ</div>
+            <div class="try-status" id="try-status">Watch, then write it yourself</div>
+            <div class="try-btns">
+              <button class="main" data-act="quiz">✍️ Write it</button>
+              <button data-act="play">▶ Show me</button>
+              <button data-act="say" aria-label="Listen">🔊</button>
+            </div>
+          </div>
+        </div>
+        <div class="try-chars" id="try-chars"></div>
+        <div class="try-win" id="try-win">
+          <p>🌸 Beautiful! You just wrote <span id="try-count">1</span> by hand. Imagine thousands more — get Bloomko first:</p>
+          <form class="notify" data-notify>
+            <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-label="Your email address">
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn" type="submit">🌱 Get early access</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai">
+    <div class="wrap split">
+      <div class="text">
+        <div class="eyebrow">✨ Meet your AI tutor</div>
+        <h2>Talk, ask, practise — with a tutor in your pocket</h2>
+        <p>Bloomko's tutor is built on <b>Gemma</b>, Google's open AI model, and runs entirely on your phone — even in airplane mode. It only uses the words you've already learned, so every conversation is just the right level.</p>
+        <ul>
+          <li><b>Role-play chats</b> — order at a café, ask the way, meet someone new. Answer by voice or typing; gentle corrections when something's off</li>
+          <li><b>It listens to you</b> — pronunciation and tone feedback, with your voice's pitch drawn next to the real tone</li>
+          <li><b>Fresh sentences and stories</b> — made only from words you know, focusing on the ones you get wrong</li>
+          <li><b>Memory hooks</b> — a little picture or story for every new word</li>
+          <li><b>Private</b> — your conversations never leave your phone</li>
+        </ul>
+      </div>
+      <div class="chat" aria-label="Example of a role-play chat with the AI tutor">
+        <div class="chat-head"><span class="dot"></span> ☕ At a café · Gemma on device</div>
+        <div class="bubble partner"><small>Waiter</small><span class="hz">你好！你要喝什么？</span><span class="py">nǐ hǎo! nǐ yào hē shén me?</span></div>
+        <div class="bubble me">我要茶。</div>
+        <div class="bubble fix"><small>✏️ Even better</small><span class="hz">我要一杯茶。</span> — add 一杯 “a cup of”.</div>
+        <div class="bubble partner"><small>Waiter</small><span class="hz">好的。你还要什么？</span><span class="py">hǎo de. nǐ hái yào shén me?</span></div>
+        <div class="bubble tutor hook"><small>💡 Memory hook for 茶 (tea)</small>A person 人 under a roof of grass 艹, resting among the trees 木 — with a cup of tea.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Everything you need, in one calm app</h2>
+        <p>Most apps let you tap your way through a language. Bloomko makes you use it — with your hand, your voice, your ears and your memory.</p>
+      </div>
+      <div class="grid four">
+        <div class="card"><div class="ico">✍️</div><h3>Write from memory</h3><p>Stroke order, tracing, then writing it all by yourself. Every stroke checked — forgiving when you're a little off the line.</p></div>
+        <div class="card"><div class="ico">💬</div><h3>Talk <span class="new">new</span></h3><p>Short role-play chats with your AI tutor in eight everyday scenes, using only the words you know.</p></div>
+        <div class="card"><div class="ico">🎧</div><h3>Listen &amp; read <span class="new">new</span></h3><p>Dictation, 48 graded stories where you can tap any word, and comprehension questions.</p></div>
+        <div class="card"><div class="ico">🎵</div><h3>Tones you can see</h3><p>Hear the four Mandarin tones and see the pitch of your own voice drawn over the real one.</p></div>
+        <div class="card"><div class="ico">📘</div><h3>Grammar that unlocks <span class="new">new</span></h3><p>500+ grammar points, three per lesson, unlocked as you learn words — examples built from words you already know.</p></div>
+        <div class="card"><div class="ico">📷</div><h3>Words from a photo <span class="new">new</span></h3><p>Snap a menu, a sign or a book page. Bloomko reads it, shows what you know and adds the new words.</p></div>
+        <div class="card"><div class="ico">⏳</div><h3>Reviews at the right time</h3><p>A modern memory model (FSRS) brings each word back just before you'd forget it.</p></div>
+        <div class="card"><div class="ico">🍃</div><h3>Look-alike training</h3><p>未 or 末? 己 or 已? Side-by-side practice until you can tell them apart at a glance.</p></div>
+        <div class="card"><div class="ico">🪴</div><h3>A streak that grows</h3><p>Your streak is a living plant — tap it to hear the forest. Raindrops save busy days.</p></div>
+        <div class="card"><div class="ico">📱</div><h3>Home-screen widget <span class="new">new</span></h3><p>A word of the day from your own words, reviews waiting and your streak, right on your home screen.</p></div>
+        <div class="card"><div class="ico">🔄</div><h3>Sync, no account <span class="new">new</span></h3><p>Keep your progress on several devices with a private code. Encrypted on your phone before it leaves.</p></div>
+        <div class="card"><div class="ico">🌍</div><h3>In your language <span class="new">new</span></h3><p>The whole app — meanings, grammar, stories, memory hooks — in English, French, Spanish or Japanese.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap split">
+      <div class="text">
+        <h2>Your hand remembers what your eyes forget</h2>
+        <p>Recognising a character is easy. Writing it from nothing is what makes it yours. Bloomko shows you the stroke order, lets you trace, and then asks you to write it from memory — and every mistake comes back until you get it right.</p>
+        <ul>
+          <li>Animated stroke order for thousands of characters</li>
+          <li>Trace first, then write it all by yourself</li>
+          <li>Wrong answers repeat until they're right</li>
+        </ul>
+      </div>
+      <div class="shot"><div class="phone"><img src="img/learn.webp" alt="Learning a new word in Bloomko with stroke order"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap split rev">
+      <div class="text">
+        <h2>A garden instead of a scoreboard</h2>
+        <p>Bloomko is designed to feel calm. No flashing confetti, no pushy notifications — just a forest-green space where your knowledge grows leaf by leaf.</p>
+        <ul>
+          <li>A daily plan that tells you exactly what's left — and how long it takes</li>
+          <li>Raindrops that protect your streak on busy days</li>
+          <li>A friendly leaf-shaped reminder, only on days you haven't practised</li>
+          <li>Soft nature sounds — a kalimba for right answers, wind in the leaves when you tap your plant</li>
+        </ul>
+      </div>
+      <div class="shot"><div class="phone"><img src="img/garden.webp" alt="The streak plant and raindrops in Bloomko"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Start with these languages</h2>
+        <p>Each course is built around official levels, with words grouped into themed units. <a href="/chinese/">Browse every Chinese word</a> or <a href="/japanese/">every Japanese word</a> — with stroke order, memory tricks and examples, free.</p>
+      </div>
+      <div class="langs">
+        <a class="lang" href="/chinese/"><span class="flag">🇨🇳</span><div><b>Chinese 汉字</b><span>Mandarin · official HSK 3.0 levels 1–3 · 2,270 words</span></div></a>
+        <a class="lang" href="/japanese/"><span class="flag">🇯🇵</span><div><b>Japanese 日本語</b><span>Kana &amp; kanji · JLPT N5–N3 · 3,500 words</span></div></a>
+        <a class="lang her-card" href="/heritage/"><img src="img/heritage-logo.png" alt="" width="40" height="40" style="border-radius:10px"><div><b>Bloomko Heritage →</b><span>Lesser-known languages · Slovenian now, Icelandic soon</span></div></a>
+        <div class="lang soon"><span class="flag">🌱</span><div><b>More to come</b><span>Korean, Spanish, French, German…</span></div></div>
+      </div>
+      <div class="uilangs" aria-label="App languages"><span>App in:</span><span>English</span><span>Français</span><span>Español</span><span>日本語</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="private">
+        <div class="big">🔒</div>
+        <div>
+          <h2>Private by design</h2>
+          <p>No account. No ads. No tracking. Your progress lives on your phone and the AI tutor runs on your device, so your sentences never need to leave it. Want it on a second device? Sync is optional and encrypted on your phone with your own code — not even we can read it. Learn on a plane, on a mountain, anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap final" id="join">
+    <img src="img/logo.png" alt="Bloomko logo">
+    <h2>Get early access</h2>
+    <p>Bloomko is almost ready. Leave your email and you'll be among the first to try it on Android — iPhone follows. Every word starts as a seed; yours will bloom soon.</p>
+    <ul class="perks">
+      <li>🌱 Be one of the first testers</li>
+      <li>💬 Tell us what to build next</li>
+      <li>🎁 Free to download</li>
+    </ul>
+    <form class="notify center" data-notify>
+      <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-label="Your email address">
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">🌸 Get early access</button>
+      <p class="notify-note">We'll email you when testing starts and when Bloomko launches. Your address is used for nothing else.</p>
+    </form>
+    <p class="contact">Questions, ideas or want to help test? <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></p>
+  </div>
+
+  <a class="sticky-cta" href="#join" id="sticky-cta">🌱 Get early access</a>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Bloomko · <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></span>
+      <span>Stroke order data: Make Me a Hanzi &amp; animCJK (Arphic Public License)</span>
+    </div>
+  </footer>
+  <script>
+    // "Notify me": saved by the site's Cloudflare Worker; falls back to an email if that isn't available.
+    document.querySelectorAll("[data-notify]").forEach((form) => {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector("button");
+        const email = form.email.value.trim();
+        btn.disabled = true;
+        try {
+          const r = await fetch("/api/notify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, website: form.website.value, edition: "east" }),
+          });
+          if (r.status === 400) { btn.disabled = false; form.email.focus(); alert("Please enter a valid email address."); return; }
+          if (!r.ok) throw new Error(String(r.status));
+          form.replaceChildren(Object.assign(document.createElement("div"), { className: "notify-done", textContent: "🌱 Thank you! You're on the list — we'll write when Bloomko blooms." }));
+          document.querySelectorAll("[data-notify]").forEach((f) => f !== form && f.closest(".try-win") && (f.closest(".try-win").querySelector("p").textContent = "🌸 You're on the list. Keep writing!"));
+        } catch {
+          btn.disabled = false;
+          location.href = "mailto:thebloomko@gmail.com?subject=" + encodeURIComponent("Notify me about Bloomko") + "&body=" + encodeURIComponent("Please let me know when Bloomko launches: " + email);
+        }
+      });
+    });
+  </script>
+  <script src="vendor/hanzi-writer.min.js"></script>
+  <script>
+    // "Try it": write a few characters right on the page (Hanzi Writer + Bloomko's stroke data).
+    (function () {
+      const SETS = {
+        zh: [["你", "nǐ", "you"], ["好", "hǎo", "good"], ["爱", "ài", "love"], ["茶", "chá", "tea"]],
+        ja: [["あ", "a", "the first kana: “a”"], ["日", "にち · ひ", "sun; day"], ["本", "ほん", "book; origin"], ["山", "やま", "mountain"]],
+      };
+      const box = document.getElementById("try-box");
+      if (!box || !window.HanziWriter) return;
+      const statusEl = document.getElementById("try-status");
+      const chars = document.getElementById("try-chars");
+      const win = document.getElementById("try-win");
+      let lang = "zh", idx = 0, writer = null;
+      const done = { zh: new Set(), ja: new Set() };
+      const status = (t, cls = "") => { statusEl.textContent = t; statusEl.className = "try-status " + cls; };
+      const size = () => box.clientWidth;
+
+      function say() {
+        const [c, r] = SETS[lang][idx];
+        if (!("speechSynthesis" in window)) return;
+        const u = new SpeechSynthesisUtterance(lang === "ja" && c === "あ" ? "あ" : c);
+        u.lang = lang === "ja" ? "ja-JP" : "zh-CN";
+        u.rate = 0.8;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(u);
+      }
+
+      function renderChars() {
+        chars.replaceChildren(...SETS[lang].map(([c], i) => {
+          const b = document.createElement("button");
+          b.textContent = c;
+          b.className = (i === idx ? "on " : "") + (done[lang].has(c) ? "done" : "");
+          b.onclick = () => { idx = i; load(); };
+          return b;
+        }));
+      }
+
+      function quiz() {
+        if (!writer) return;
+        writer.hideCharacter();
+        status("Your turn — draw the strokes in order");
+        writer.quiz({
+          leniency: 1.8, averageDistanceThreshold: 450, showHintAfterMisses: 2,
+          onMistake: (d) => status(d.isBackwards ? "Other direction ↩" : "Almost — try that stroke again", "bad"),
+          onCorrectStroke: (d) => status(d.strokesRemaining ? `✓ ${d.strokesRemaining} stroke${d.strokesRemaining > 1 ? "s" : ""} to go` : "✓", "good"),
+          onComplete: () => {
+            done[lang].add(SETS[lang][idx][0]);
+            status("Perfect! ✨", "good");
+            say();
+            renderChars();
+            const n = done.zh.size + done.ja.size;
+            document.getElementById("try-count").textContent = n === 1 ? "your first character" : `${n} characters`;
+            win.classList.add("show");
+            const next = SETS[lang].findIndex(([c]) => !done[lang].has(c));
+            if (next >= 0) setTimeout(() => { idx = next; load(true); }, 1600);
+          },
+        });
+      }
+
+      function load(autoQuiz) {
+        const [c, r, m] = SETS[lang][idx];
+        document.getElementById("try-meaning").textContent = m;
+        document.getElementById("try-reading").textContent = r;
+        renderChars();
+        box.replaceChildren();
+        const code = c.codePointAt(0).toString(16);
+        writer = HanziWriter.create(box, c, {
+          width: size(), height: size(), padding: 14, showCharacter: false,
+          strokeColor: "#f4efe2", radicalColor: "#8cc06b", outlineColor: "rgba(244,239,226,.16)", drawingColor: "#e2bd4e",
+          highlightColor: "#8cc06b", drawingWidth: 22, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 160,
+          charDataLoader: (ch, ok, fail) => fetch(`/strokes/${lang}/${code}.json`).then((x) => x.json()).then(ok).catch(fail),
+        });
+        if (autoQuiz) quiz();
+        else {
+          status("Watch the stroke order…");
+          writer.animateCharacter({ onComplete: () => { status("Now you: tap “Write it”"); } });
+        }
+      }
+
+      document.querySelectorAll(".try-tabs button").forEach((b) => b.addEventListener("click", () => {
+        document.querySelectorAll(".try-tabs button").forEach((x) => x.classList.toggle("on", x === b));
+        lang = b.dataset.lang; idx = 0; load();
+      }));
+      document.querySelector("[data-act=quiz]").onclick = quiz;
+      document.querySelector("[data-act=play]").onclick = () => { if (!writer) return; writer.cancelQuiz(); writer.showOutline(); status("Watch the stroke order…"); writer.animateCharacter({ onComplete: () => status("Now you: tap “Write it”") }); };
+      document.querySelector("[data-act=say]").onclick = say;
+
+      // Start the demo when it scrolls into view.
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); load(); } }, { threshold: 0.3 });
+      io.observe(box);
+
+      // Mobile: the sticky "Get early access" button hides while a sign-up form is on screen.
+      const sticky = document.getElementById("sticky-cta");
+      const forms = [...document.querySelectorAll("[data-notify]")];
+      const vis = new Set();
+      const io2 = new IntersectionObserver((es) => { es.forEach((e) => (e.isIntersecting ? vis.add(e.target) : vis.delete(e.target))); sticky.classList.toggle("hide", vis.size > 0); });
+      forms.forEach((f) => io2.observe(f));
+      io2.observe(document.querySelector("[data-try]")); // don't cover the drawing buttons
+    })();
+  </script>
+</body>
+</html>

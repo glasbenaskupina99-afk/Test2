@@ -1,0 +1,1642 @@
+{
+ "level": "A1",
+ "points": [
+  {
+   "id": "sl-gender",
+   "title": "Every noun has a gender",
+   "pattern": "stol (m) · hiš[a] (ž) · mest[o] (s)",
+   "short": "masculine, feminine or neuter — you can usually tell from the ending",
+   "explain": "In Slovenian every noun is **masculine (m)**, **feminine (ž)** or **neuter (s)**. This isn't about meaning — a chair is masculine and a house is feminine — but it matters a lot, because adjectives, words like \"my\" and later the case endings all change with the gender.\n\nThe good news: in most cases the **last letter** of the word tells you the gender:\n• ends in a **consonant** → usually masculine: stol, kruh, avto (exception: avto, kino, radio end in -o but are masculine)\n• ends in **-a** → usually feminine: hiš[a], kav[a], mam[a]\n• ends in **-o** or **-e** → usually neuter: mest[o], mlek[o], morj[e], sonc[e]\n\nA few useful exceptions to keep in mind: words for men are masculine even when they end in -a or -e (oče, ati, vodja), and some feminine words end in a consonant (noč, pot, sol, stvar, jesen).\n\nIn the app you'll see a small tag next to every noun: **m**, **ž** or **s**. Say the word together with its gender in your head (\"ta hiša, ta stol, to mesto\") and the gender will stick by itself.",
+   "examples": [
+    {
+     "text": "To je stol.",
+     "en": "This is a chair."
+    },
+    {
+     "text": "To je hiš[a].",
+     "en": "This is a house."
+    },
+    {
+     "text": "To je mest[o].",
+     "en": "This is a town."
+    },
+    {
+     "text": "To je morj[e].",
+     "en": "This is the sea."
+    }
+   ]
+  },
+  {
+   "id": "sl-biti",
+   "title": "To be: sem, si, je …",
+   "pattern": "jaz [sem] · ti [si] · on/ona [je]",
+   "short": "the verb \"to be\" in the present",
+   "explain": "**Biti** (to be) is the most important verb. In the present tense it looks like this:\n• jaz [sem] — I am\n• ti [si] — you are (one person, informal)\n• on / ona / ono [je] — he / she / it is\n• mi [smo] — we are\n• vi [ste] — you are (several people, or formal)\n• oni / one [so] — they are\n\nSlovenian also has a form for **two people** (the dual): midva [sva] (we two), vidva [sta] (you two), onadva [sta] (they two). You'll meet it properly later.\n\nBecause the verb ending already shows **who** is meant, the pronoun is usually **left out**: \"[Sem] Ana.\" is more natural than \"Jaz sem Ana.\" Use the pronoun only to stress it: \"Jaz sem iz Slovenije, ti pa iz Italije.\"\n\nThese short forms are \"lazy\" little words: they like to stand in **second place** in the sentence — \"Danes [sem] doma.\" (Today I am at home.) — not at the very end or very beginning.",
+   "examples": [
+    {
+     "text": "Jaz [sem] Ana.",
+     "en": "I am Ana.",
+     "drill": {
+      "base": "biti",
+      "options": [
+       "sem",
+       "si",
+       "je",
+       "so"
+      ]
+     }
+    },
+    {
+     "text": "Ti [si] moj prijatelj.",
+     "en": "You are my friend.",
+     "drill": {
+      "base": "biti",
+      "options": [
+       "si",
+       "sem",
+       "ste",
+       "je"
+      ]
+     }
+    },
+    {
+     "text": "Mi [smo] doma.",
+     "en": "We are at home.",
+     "drill": {
+      "base": "biti",
+      "options": [
+       "smo",
+       "so",
+       "ste",
+       "sem"
+      ]
+     }
+    },
+    {
+     "text": "Oni [so] utrujeni.",
+     "en": "They are tired.",
+     "drill": {
+      "base": "biti",
+      "options": [
+       "so",
+       "smo",
+       "je",
+       "ste"
+      ]
+     }
+    },
+    {
+     "text": "Danes [je] lepo vreme.",
+     "en": "The weather is nice today.",
+     "drill": {
+      "base": "biti",
+      "options": [
+       "je",
+       "so",
+       "si",
+       "sem"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "sl-pronouns",
+   "title": "I, you, he, she …",
+   "pattern": "jaz · ti · on · ona · ono · mi · vi · oni · one",
+   "short": "personal pronouns — and when to drop them",
+   "explain": "The personal pronouns in Slovenian:\n• **jaz** — I\n• **ti** — you (one person you know well)\n• **on** — he · **ona** — she · **ono** — it (for neuter things)\n• **mi** — we\n• **vi** — you (several people — or one person, politely)\n• **oni** — they (men, or a mixed group) · **one** — they (only women or only feminine things)\n\nTwo things are different from English:\n\n**1. \"It\" follows the gender.** A chair (stol, m) is **on**, a house (hiša, ž) is **ona**, a town (mesto, s) is **ono**: \"Kje je hiša? Ona je tam.\" — \"Where is the house? It is there.\"\n\n**2. Pronouns are usually dropped.** The verb ending already says who does it: \"Govori[m] slovensko.\" = I speak Slovenian. You add the pronoun only for emphasis or contrast: \"**Jaz** pijem kavo, **on** pa čaj.\"",
+   "examples": [
+    {
+     "text": "On je učitelj, ona je zdravnica.",
+     "en": "He is a teacher, she is a doctor."
+    },
+    {
+     "text": "Kje je hiša? Ona je tam.",
+     "en": "Where is the house? It is over there."
+    },
+    {
+     "text": "Mi smo iz Ljubljane.",
+     "en": "We are from Ljubljana."
+    },
+    {
+     "text": "Govori[m] slovensko.",
+     "en": "I speak Slovenian."
+    }
+   ]
+  },
+  {
+   "id": "sl-negation",
+   "title": "Saying no: nisem, ni, ne",
+   "pattern": "[nisem] · [nisi] · [ni] · ne + verb",
+   "short": "negative of \"to be\" and of other verbs",
+   "explain": "To make a sentence negative, Slovenian uses **ne** before the verb: \"Ne razumem.\" (I don't understand.) \"Ne pijem kave.\" (I don't drink coffee.)\n\nThe verb **biti** is special: \"ne\" melts together with it into one word:\n• sem → [nisem] (I am not)\n• si → [nisi]\n• je → [ni]\n• smo → [nismo]\n• ste → [niste]\n• so → [niso]\n\nSo you say \"[Nisem] utrujen.\" (I'm not tired), never \"ne sem\". The same happens with **imeti** (to have): imam → **nimam** (I don't have) — more about that later.\n\nA handy short answer: \"Ne, hvala.\" (No, thanks.) And to say something is not there: \"Kave [ni].\" (There's no coffee.)",
+   "examples": [
+    {
+     "text": "[Nisem] utrujen.",
+     "en": "I'm not tired.",
+     "drill": {
+      "base": "biti (ne)",
+      "options": [
+       "nisem",
+       "ni",
+       "niso",
+       "nisi"
+      ]
+     }
+    },
+    {
+     "text": "Ona [ni] doma.",
+     "en": "She isn't at home.",
+     "drill": {
+      "base": "biti (ne)",
+      "options": [
+       "ni",
+       "nisem",
+       "niso",
+       "niste"
+      ]
+     }
+    },
+    {
+     "text": "Mi [nismo] iz Italije.",
+     "en": "We are not from Italy.",
+     "drill": {
+      "base": "biti (ne)",
+      "options": [
+       "nismo",
+       "niso",
+       "nisem",
+       "ni"
+      ]
+     }
+    },
+    {
+     "text": "Ne razumem.",
+     "en": "I don't understand."
+    }
+   ]
+  },
+  {
+   "id": "sl-questions",
+   "title": "Asking questions",
+   "pattern": "Ali …? · Kje …? · Kaj …? · Kdo …?",
+   "short": "yes/no questions with ali, and question words",
+   "explain": "**Yes/no questions** are easy: keep the normal word order and either raise your voice at the end, or put **ali** at the beginning (a bit more careful, written style):\n• \"Si utrujen?\" or \"**Ali** si utrujen?\" — Are you tired?\n• \"Ali govoriš angleško?\" — Do you speak English?\n\n**Question words** go at the beginning:\n• **kdo** — who · **kaj** — what\n• **kje** — where (location) · **kam** — where to · **od kod** — where from\n• **kdaj** — when · **kako** — how · **zakaj** — why\n• **koliko** — how much / how many\n\nNote that Slovenian separates **kje** (where something is) and **kam** (where you're going): \"Kje si?\" (Where are you?) but \"Kam greš?\" (Where are you going?). This difference will matter a lot when you learn cases.\n\nPolite request: \"Ali mi lahko pomagate?\" — Can you help me?",
+   "examples": [
+    {
+     "text": "Kje je postaja?",
+     "en": "Where is the station?"
+    },
+    {
+     "text": "Kam greš?",
+     "en": "Where are you going?"
+    },
+    {
+     "text": "Ali govoriš angleško?",
+     "en": "Do you speak English?"
+    },
+    {
+     "text": "Koliko stane kava?",
+     "en": "How much does the coffee cost?"
+    }
+   ]
+  },
+  {
+   "id": "sl-present-am",
+   "title": "Verbs like delati: -am, -aš, -a",
+   "pattern": "dela[m] · dela[š] · dela · dela[mo] · dela[te] · dela[jo]",
+   "short": "present tense of verbs ending in -am",
+   "explain": "Slovenian verbs change their ending for each person. Good news: there are only **three main patterns**, named after the \"I\" form: **-am**, **-im** and **-em**.\n\nThe first group is **-am** verbs, like **delati** (to work, to do). Take the stem **dela-** and add:\n• (jaz) dela[m] — I work\n• (ti) dela[š] — you work\n• (on/ona) dela — he/she works (no ending!)\n• (mi) dela[mo] — we work\n• (vi) dela[te] — you work\n• (oni) dela[jo] — they work\n\nFor two people (dual): dela[va] (we two), dela[ta] (you two / they two).\n\nOther -am verbs you know: imeti → ima[m], gledati → gleda[m], poslušati → posluša[m], čakati → čaka[m], kuhati → kuha[m], igrati → igra[m], vprašati → vpraša[m], plačati → plača[m], pomagati → pomaga[m], poznati → pozna[m].\n\nRemember: there is no separate \"am doing\" form. \"Dela[m]\" means both \"I work\" and \"I am working\".",
+   "examples": [
+    {
+     "text": "Danes dela[m] doma.",
+     "en": "Today I'm working from home.",
+     "drill": {
+      "base": "delati",
+      "options": [
+       "delam",
+       "delaš",
+       "dela",
+       "delajo"
+      ]
+     }
+    },
+    {
+     "text": "Ali gleda[š] televizijo?",
+     "en": "Are you watching TV?",
+     "drill": {
+      "base": "gledati",
+      "options": [
+       "gledaš",
+       "gledam",
+       "gleda",
+       "gledate"
+      ]
+     }
+    },
+    {
+     "text": "Mi posluša[mo] glasbo.",
+     "en": "We are listening to music.",
+     "drill": {
+      "base": "poslušati",
+      "options": [
+       "poslušamo",
+       "poslušajo",
+       "poslušam",
+       "poslušate"
+      ]
+     }
+    },
+    {
+     "text": "Otroci igra[jo] nogomet.",
+     "en": "The children are playing football.",
+     "drill": {
+      "base": "igrati",
+      "options": [
+       "igrajo",
+       "igramo",
+       "igra",
+       "igraš"
+      ]
+     }
+    },
+    {
+     "text": "Mama kuha kosilo.",
+     "en": "Mom is cooking lunch."
+    }
+   ]
+  },
+  {
+   "id": "sl-present-im",
+   "title": "Verbs like govoriti: -im, -iš, -i",
+   "pattern": "govori[m] · govori[š] · govori · govori[mo] · govori[te] · govori[jo]",
+   "short": "present tense of verbs ending in -im",
+   "explain": "The second group of verbs has **-i-** before the endings. The model verb is **govoriti** (to speak). Stem **govori-**, then the same endings as before:\n• govori[m] — I speak\n• govori[š] — you speak\n• govori — he/she speaks\n• govori[mo] — we speak\n• govori[te] — you speak\n• govori[jo] — they speak\n\nDual: govori[va], govori[ta].\n\nThe endings are exactly the same as for -am verbs (-m, -š, –, -mo, -te, -jo) — only the vowel before them is **i** instead of **a**. So once you know one group, you almost know the other.\n\nOther -im verbs: videti → vidi[m], živeti → živi[m], misliti → misli[m], kupiti → kupi[m], želeti → želi[m], učiti se → uči[m] se, sedeti → sedi[m], voziti → vozi[m], ljubiti → ljubi[m], spati → spi[m] (this one is a bit irregular).\n\nTip: in the dictionary form (infinitive) you can't always see the group — that's why the app shows the \"I\" form in brackets: \"videti (vidim)\".",
+   "examples": [
+    {
+     "text": "Govori[m] malo slovensko.",
+     "en": "I speak a little Slovenian.",
+     "drill": {
+      "base": "govoriti",
+      "options": [
+       "govorim",
+       "govoriš",
+       "govori",
+       "govorijo"
+      ]
+     }
+    },
+    {
+     "text": "Kje živi[š]?",
+     "en": "Where do you live?",
+     "drill": {
+      "base": "živeti",
+      "options": [
+       "živiš",
+       "živim",
+       "živi",
+       "živite"
+      ]
+     }
+    },
+    {
+     "text": "Vidi[mo] se jutri!",
+     "en": "See you tomorrow!",
+     "drill": {
+      "base": "videti",
+      "options": [
+       "vidimo",
+       "vidim",
+       "vidijo",
+       "vidiš"
+      ]
+     }
+    },
+    {
+     "text": "Starši kupi[jo] kruh.",
+     "en": "The parents buy bread.",
+     "drill": {
+      "base": "kupiti",
+      "options": [
+       "kupijo",
+       "kupimo",
+       "kupi",
+       "kupite"
+      ]
+     }
+    },
+    {
+     "text": "Brat spi.",
+     "en": "My brother is sleeping."
+    }
+   ]
+  },
+  {
+   "id": "sl-present-em",
+   "title": "Verbs like pisati: -em, -eš, -e",
+   "pattern": "piše[m] · piše[š] · piše · piše[mo] · piše[te] · piše[jo]",
+   "short": "present tense of verbs ending in -em (and grem)",
+   "explain": "The third group has **-e-** before the endings: same endings, new vowel. But here the **stem often changes** a little compared to the infinitive, so it pays to learn the \"I\" form with each verb:\n• pisati → piše[m] (I write), piše[š], piše, piše[mo], piše[te], piše[jo]\n• brati → bere[m] (I read)\n• iti → gre[m] (I go)\n• priti → pride[m] (I come)\n• piti → pije[m] (I drink)\n• razumeti → razume[m] (I understand)\n• hoteti → hoče[m] (I want)\n• iskati → išče[m] (I look for)\n• potovati → potuje[m] (I travel) — all verbs in **-ovati** become **-ujem**\n\nThe endings, once more: -m, -š, nothing, -mo, -te, -jo. Dual: -va, -ta.\n\nA few very common verbs are completely irregular and simply have to be learned: **jesti** → jem, ješ, je, jemo, jeste, jedo; **vedeti** → vem, veš, ve, vemo, veste, vedo; **dati** → dam, daš, da, damo, daste, dajo.",
+   "examples": [
+    {
+     "text": "Zvečer bere[m] knjigo.",
+     "en": "In the evening I read a book.",
+     "drill": {
+      "base": "brati",
+      "options": [
+       "berem",
+       "bereš",
+       "bere",
+       "berejo"
+      ]
+     }
+    },
+    {
+     "text": "Kam gre[š]?",
+     "en": "Where are you going?",
+     "drill": {
+      "base": "iti",
+      "options": [
+       "greš",
+       "grem",
+       "gre",
+       "gremo"
+      ]
+     }
+    },
+    {
+     "text": "Jutri gre[mo] na morje.",
+     "en": "Tomorrow we're going to the seaside.",
+     "drill": {
+      "base": "iti",
+      "options": [
+       "gremo",
+       "grejo",
+       "greste",
+       "grem"
+      ]
+     }
+    },
+    {
+     "text": "Ali razume[te] slovensko?",
+     "en": "Do you understand Slovenian?",
+     "drill": {
+      "base": "razumeti",
+      "options": [
+       "razumete",
+       "razumem",
+       "razumejo",
+       "razumeš"
+      ]
+     }
+    },
+    {
+     "text": "Kaj pije[š]?",
+     "en": "What are you drinking?",
+     "drill": {
+      "base": "piti",
+      "options": [
+       "piješ",
+       "pijem",
+       "pije",
+       "pijemo"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "sl-imeti",
+   "title": "To have: imam — and nimam",
+   "pattern": "ima[m] · ima[š] · ima · [nimam]",
+   "short": "the verb \"to have\" and its negative",
+   "explain": "**Imeti** (to have) is a regular -am verb:\n• ima[m] — I have\n• ima[š] — you have\n• ima — he/she has\n• ima[mo] — we have\n• ima[te] — you have\n• ima[jo] — they have\n\nIts negative melts together, like with biti: **ne + imam = nimam**:\n• [nimam], [nimaš], [nima], [nimamo], [nimate], [nimajo]\n\nImeti is used in many everyday phrases where English uses other verbs:\n• Age: \"Star sem dvajset let.\" or \"Imam dvajset let.\" (I'm twenty.)\n• \"Imam rad kavo.\" — I like coffee (literally: I have coffee dear) — rad changes to **rada** if you're a woman.\n• \"Imam čas.\" — I have time. → \"Nimam časa.\" — I don't have time.\n\nWatch that last pair: after **nimam** the noun changes its ending (čas → čas[a]). That's the genitive case, which comes in a later lesson — for now just notice it.",
+   "examples": [
+    {
+     "text": "Ima[m] brata in sestro.",
+     "en": "I have a brother and a sister.",
+     "drill": {
+      "base": "imeti",
+      "options": [
+       "imam",
+       "imaš",
+       "ima",
+       "imajo"
+      ]
+     }
+    },
+    {
+     "text": "Ali ima[š] čas?",
+     "en": "Do you have time?",
+     "drill": {
+      "base": "imeti",
+      "options": [
+       "imaš",
+       "imam",
+       "imate",
+       "ima"
+      ]
+     }
+    },
+    {
+     "text": "Danes [nimam] časa.",
+     "en": "I don't have time today.",
+     "drill": {
+      "base": "imeti (ne)",
+      "options": [
+       "nimam",
+       "nima",
+       "nimajo",
+       "imam"
+      ]
+     }
+    },
+    {
+     "text": "Ima[mo] psa in mačko.",
+     "en": "We have a dog and a cat."
+    }
+   ]
+  },
+  {
+   "id": "sl-adjectives",
+   "title": "Adjectives agree: nov stol, nov[a] hiša, nov[o] mesto",
+   "pattern": "nov stol · nov[a] hiša · nov[o] mesto",
+   "short": "adjectives take the gender of their noun",
+   "explain": "An adjective (big, new, beautiful …) always takes the **same gender as its noun**. In the dictionary you see the masculine form, and you change the ending:\n• masculine: **nov** stol — (no ending, or -i: novi)\n• feminine: **nov[a]** hiša — ending **-a**\n• neuter: **nov[o]** mesto — ending **-o** (after č, š, ž, c, j it's **-e**: vroč[e] sonce)\n\nSo the adjective \"rhymes\" with the noun: lep[a] hiš[a], lep[o] mest[o].\n\nMany adjectives lose a vowel when they get an ending: **majhen** → majhn[a] hiša, majhn[o] okno; **dober** → dobr[a] kava; **topel** → topl[a] voda; **lačen** → lačn[a]. Don't worry — you'll get used to it by hearing it.\n\nThe same endings appear when the adjective comes after \"to be\": \"Hiša je velik[a].\" \"Mesto je lep[o].\" And if you're a woman, adjectives about you are feminine: \"Utrujen[a] sem.\" (I'm tired — said by a woman.)\n\nAlso note: **to je** (this is) never changes: \"To je nova hiša.\"",
+   "examples": [
+    {
+     "text": "To je nov[a] hiša.",
+     "en": "This is a new house.",
+     "drill": {
+      "base": "nov",
+      "options": [
+       "nova",
+       "novo",
+       "nov",
+       "nove"
+      ]
+     }
+    },
+    {
+     "text": "Ljubljana je lep[o] mesto.",
+     "en": "Ljubljana is a beautiful town.",
+     "drill": {
+      "base": "lep",
+      "options": [
+       "lepo",
+       "lepa",
+       "lep",
+       "lepi"
+      ]
+     }
+    },
+    {
+     "text": "Kava je vroč[a].",
+     "en": "The coffee is hot.",
+     "drill": {
+      "base": "vroč",
+      "options": [
+       "vroča",
+       "vroče",
+       "vroč",
+       "vroči"
+      ]
+     }
+    },
+    {
+     "text": "Utrujen[a] sem.",
+     "en": "I'm tired. (said by a woman)",
+     "drill": {
+      "base": "utrujen",
+      "options": [
+       "utrujena",
+       "utrujen",
+       "utrujeno",
+       "utrujeni"
+      ]
+     }
+    },
+    {
+     "text": "Imamo majhn[o] stanovanje.",
+     "en": "We have a small flat."
+    }
+   ]
+  },
+  {
+   "id": "sl-possessive",
+   "title": "My, your: moj, moj[a], moj[e]",
+   "pattern": "moj brat · moj[a] sestra · moj[e] ime",
+   "short": "possessive words change like adjectives",
+   "explain": "Words like **my, your, his** behave exactly like adjectives — they take the gender of the **thing owned** (not of the owner!):\n• **moj** brat · moj[a] sestra · moj[e] ime — my\n• **tvoj** · tvoj[a] · tvoj[e] — your (informal)\n• **njegov** · njegov[a] · njegov[o] — his\n• **njen** · njen[a] · njen[o] — her\n• **naš** · naš[a] · naš[e] — our\n• **vaš** · vaš[a] · vaš[e] — your (plural / formal)\n\nNotice that after **j** and **š** the neuter ending is **-e** (moj[e], naš[e]), after other letters it's **-o** (njegov[o], njen[o]).\n\nThe important difference from English: \"his sister\" and \"her sister\" use different words (njegova / njena) — but the ending (-a) comes from **sestra**, which is feminine. Think: \"whose?\" chooses the word, \"what?\" chooses the ending.\n\n\"Čigav je ta avto?\" — Whose car is this? \"To je moj avto.\"",
+   "examples": [
+    {
+     "text": "To je moj[a] sestra.",
+     "en": "This is my sister.",
+     "drill": {
+      "base": "moj",
+      "options": [
+       "moja",
+       "moje",
+       "moj",
+       "moji"
+      ]
+     }
+    },
+    {
+     "text": "Kako je tvoj[e] ime?",
+     "en": "What is your name?",
+     "drill": {
+      "base": "tvoj",
+      "options": [
+       "tvoje",
+       "tvoja",
+       "tvoj",
+       "tvoji"
+      ]
+     }
+    },
+    {
+     "text": "Njegov[a] hiša je velika.",
+     "en": "His house is big.",
+     "drill": {
+      "base": "njegov",
+      "options": [
+       "njegova",
+       "njegovo",
+       "njegov",
+       "njegove"
+      ]
+     }
+    },
+    {
+     "text": "Naš[e] mesto je majhno.",
+     "en": "Our town is small.",
+     "drill": {
+      "base": "naš",
+      "options": [
+       "naše",
+       "naša",
+       "naš",
+       "naši"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "sl-plural",
+   "title": "More than two: stol[i], hiš[e], mest[a]",
+   "pattern": "stol → stol[i] · hiša → hiš[e] · mesto → mest[a]",
+   "short": "plural of nouns (3 or more)",
+   "explain": "For **three or more** things, nouns get a plural ending (for exactly two there's a special form — the dual — in another lesson):\n• masculine: + **-i** → stol → stol[i], brat → brat[je] (a few use -je: brat, mož)\n• feminine: -a → **-e** → hiš[a] → hiš[e], knjig[a] → knjig[e]\n• neuter: -o/-e → **-a** → mest[o] → mest[a], morj[e] → morj[a]\n\nSo the plural endings are just three: **-i, -e, -a**. Yes, that means neuter plural ends in -a — just like feminine singular. The gender tag helps you not mix them up.\n\nAdjectives follow in the plural too: nov[i] stol[i], nov[e] hiš[e], nov[a] mest[a].\n\nSome masculine nouns add **-ov-** before the plural ending (mostly short words): grad → grad[ovi], most → most[ovi], sin → sin[ovi].\n\nSome common nouns only exist in the plural (marked **mn** in the app): vrata (door), hlače (trousers), starši (parents), počitnice (holidays) — \"Vrata so odprta.\" (The door is open.)",
+   "examples": [
+    {
+     "text": "V sobi so trije stol[i].",
+     "en": "There are three chairs in the room.",
+     "drill": {
+      "base": "stol",
+      "options": [
+       "stoli",
+       "stola",
+       "stol",
+       "stole"
+      ]
+     }
+    },
+    {
+     "text": "Na mizi so knjig[e].",
+     "en": "There are books on the table.",
+     "drill": {
+      "base": "knjiga",
+      "options": [
+       "knjige",
+       "knjiga",
+       "knjigo",
+       "knjigi"
+      ]
+     }
+    },
+    {
+     "text": "Slovenska mest[a] so lepa.",
+     "en": "Slovenian towns are beautiful.",
+     "drill": {
+      "base": "mesto",
+      "options": [
+       "mesta",
+       "mesto",
+       "mesti",
+       "meste"
+      ]
+     }
+    },
+    {
+     "text": "Moji brat[je] živijo v Mariboru.",
+     "en": "My brothers live in Maribor."
+    }
+   ]
+  },
+  {
+   "id": "sl-formal",
+   "title": "Polite \"you\": vikanje",
+   "pattern": "Kako [ste]? · Ali govori[te] angleško?",
+   "short": "use vi (plural forms) for strangers and older people",
+   "explain": "Slovenian has two ways of saying \"you\" to one person:\n• **tikanje** — using **ti**: with friends, family, children, and young people among themselves.\n• **vikanje** — using **vi**: with strangers, in shops and offices, with older people, teachers, your boss.\n\nWhen you say **vi** to one person, the verb goes in the **plural** form: \"Kako [ste]?\" (How are you?), \"Ali govori[te] angleško?\", \"Od kod [ste]?\"\n\nGreetings and words change too: **živjo / oprosti** (informal) vs **dober dan / oprostite** (polite). \"Prosim\" works with everybody.\n\nWhen in doubt, use **vi**. If the other person wants to switch, they'll say \"Lahko se tikava.\" (We can say \"ti\" to each other.)",
+   "examples": [
+    {
+     "text": "Dober dan, kako [ste]?",
+     "en": "Good day, how are you? (polite)",
+     "drill": {
+      "base": "biti",
+      "options": [
+       "ste",
+       "si",
+       "so",
+       "smo"
+      ]
+     }
+    },
+    {
+     "text": "Oprostite, ali govori[te] angleško?",
+     "en": "Excuse me, do you speak English?",
+     "drill": {
+      "base": "govoriti",
+      "options": [
+       "govorite",
+       "govoriš",
+       "govori",
+       "govorijo"
+      ]
+     }
+    },
+    {
+     "text": "Od kod [ste]?",
+     "en": "Where are you from? (polite)"
+    },
+    {
+     "text": "Živjo, kako [si]?",
+     "en": "Hi, how are you? (informal)"
+    }
+   ]
+  },
+  {
+   "id": "sl-acc-fem",
+   "title": "What do you see? Feminine -a → -o",
+   "pattern": "kav[a] → Pijem kav[o].",
+   "short": "accusative (tožilnik) of feminine nouns",
+   "explain": "Now the big topic of Slovenian: **cases** (skloni). A noun changes its ending depending on its **role in the sentence**. Don't panic — we'll take them one at a time, starting with the most useful one.\n\nThe **accusative** (tožilnik) is used for the **object** — the thing you see, have, buy, drink, want, love: \"I drink **coffee**\", \"I see **a house**\".\n\nFor **feminine nouns in -a** the rule is simple: **-a becomes -o**.\n• kav[a] → Pijem kav[o]. (I drink coffee.)\n• hiš[a] → Vidim hiš[o]. (I see a house.)\n• sestr[a] → Imam sestr[o]. (I have a sister.)\n• voda → \"Vod[o], prosim.\" (Water, please.)\n\nAdjectives and words like \"my\" do the same: \"Imam nov[o] knjig[o].\" \"Kličem moj[o] mam[o].\"\n\nFeminine nouns ending in a consonant (noč, sol, pot) **don't change** in the accusative: \"Daj mi sol.\"\n\nThis is also the form you use when you order something: \"Kav[o] z mlekom, prosim.\" — so you'll use it every day.",
+   "examples": [
+    {
+     "text": "Pijem kav[o].",
+     "en": "I'm drinking coffee.",
+     "drill": {
+      "base": "kava",
+      "options": [
+       "kavo",
+       "kava",
+       "kavi",
+       "kave"
+      ]
+     }
+    },
+    {
+     "text": "Vod[o], prosim.",
+     "en": "Water, please.",
+     "drill": {
+      "base": "voda",
+      "options": [
+       "vodo",
+       "voda",
+       "vode",
+       "vodi"
+      ]
+     }
+    },
+    {
+     "text": "Imam sestr[o].",
+     "en": "I have a sister.",
+     "drill": {
+      "base": "sestra",
+      "options": [
+       "sestro",
+       "sestra",
+       "sestri",
+       "sestre"
+      ]
+     }
+    },
+    {
+     "text": "Berem zanimivo knjig[o].",
+     "en": "I'm reading an interesting book.",
+     "drill": {
+      "base": "knjiga",
+      "options": [
+       "knjigo",
+       "knjiga",
+       "knjige",
+       "knjigi"
+      ]
+     }
+    },
+    {
+     "text": "Kličem mam[o].",
+     "en": "I'm calling mom."
+    }
+   ]
+  },
+  {
+   "id": "sl-acc-masc",
+   "title": "Accusative of masculine and neuter",
+   "pattern": "Vidim stol. · Vidim brat[a]. · Pijem mlek[o].",
+   "short": "things don't change; people and animals add -a",
+   "explain": "In the accusative, **masculine** nouns have one rule that depends on whether the noun is **alive**:\n• **things** (not alive): **no change** — \"Jem kruh.\" \"Imam avto.\" \"Vidim stol.\"\n• **people and animals**: add **-a** — brat → \"Imam brat[a].\" pes → \"Imam ps[a].\" prijatelj → \"Čakam prijatelj[a].\"\n\n(Notice pes → ps[a]: some words lose their -e- when they get an ending, like we saw with adjectives.)\n\n**Neuter** nouns never change in the accusative: \"Pijem mleko.\" \"Vidim morje.\" \"Imam stanovanje.\"\n\nAdjectives follow the same idea: a masculine thing keeps its form (\"Imam nov avto.\"), a masculine person gets **-ega**: \"Imam star[ega] brat[a].\" — that's a longer ending, but you'll hear it often.\n\nSummary of the accusative so far:\n• ž: hiš[a] → hiš[o]\n• m (thing): stol → stol\n• m (alive): brat → brat[a]\n• s: mesto → mesto",
+   "examples": [
+    {
+     "text": "Imam brat[a].",
+     "en": "I have a brother.",
+     "drill": {
+      "base": "brat",
+      "options": [
+       "brata",
+       "brat",
+       "bratu",
+       "brati"
+      ]
+     }
+    },
+    {
+     "text": "Ali imaš ps[a]?",
+     "en": "Do you have a dog?",
+     "drill": {
+      "base": "pes",
+      "options": [
+       "psa",
+       "pes",
+       "psu",
+       "psi"
+      ]
+     }
+    },
+    {
+     "text": "Čakam prijatelj[a].",
+     "en": "I'm waiting for a friend.",
+     "drill": {
+      "base": "prijatelj",
+      "options": [
+       "prijatelja",
+       "prijatelj",
+       "prijatelju",
+       "prijatelji"
+      ]
+     }
+    },
+    {
+     "text": "Jem kruh in pijem mleko.",
+     "en": "I eat bread and drink milk."
+    }
+   ]
+  },
+  {
+   "id": "sl-kam-acc",
+   "title": "Where to? Grem v šol[o] · na pošt[o]",
+   "pattern": "Kam? → v / na + šol[o]",
+   "short": "v / na + accusative for the place you're going to",
+   "explain": "When you go **somewhere** (question **kam?** — where to?), Slovenian uses **v** or **na** + the **accusative** — the same endings you just learned:\n• Grem v šol[o]. — I'm going to school. (šola → šolo)\n• Grem v trgovin[o]. — I'm going to the shop.\n• Grem na pošt[o]. — I'm going to the post office.\n• Gremo na morje. — We're going to the seaside. (neuter: no change)\n• Grem v park. — I'm going to the park. (masculine thing: no change)\n\n**v or na?** Roughly: **v** = into a closed space or a town/country (v šolo, v trgovino, v Ljubljano, v Italijo); **na** = onto a surface, open places, events and some fixed words (na pošto, na postajo, na morje, na koncert, na avtobus, na Bled). Some just have to be learned with the word — the app's examples help.\n\nTwo important exceptions that don't use v/na: **domov** (home): \"Grem domov.\" and **k** + person (to someone's place) — that's a different case, coming later.",
+   "examples": [
+    {
+     "text": "Grem v trgovin[o].",
+     "en": "I'm going to the shop.",
+     "drill": {
+      "base": "trgovina",
+      "options": [
+       "trgovino",
+       "trgovina",
+       "trgovini",
+       "trgovine"
+      ]
+     }
+    },
+    {
+     "text": "Otroci gredo v šol[o].",
+     "en": "The children go to school.",
+     "drill": {
+      "base": "šola",
+      "options": [
+       "šolo",
+       "šola",
+       "šoli",
+       "šole"
+      ]
+     }
+    },
+    {
+     "text": "Grem na pošt[o].",
+     "en": "I'm going to the post office.",
+     "drill": {
+      "base": "pošta",
+      "options": [
+       "pošto",
+       "pošta",
+       "pošti",
+       "pošte"
+      ]
+     }
+    },
+    {
+     "text": "Jutri gremo v Ljubljan[o].",
+     "en": "Tomorrow we're going to Ljubljana.",
+     "drill": {
+      "base": "Ljubljana",
+      "options": [
+       "Ljubljano",
+       "Ljubljana",
+       "Ljubljani",
+       "Ljubljane"
+      ]
+     }
+    },
+    {
+     "text": "Poleti gremo na morje.",
+     "en": "In summer we go to the seaside."
+    }
+   ]
+  },
+  {
+   "id": "sl-locative",
+   "title": "Where? Sem v šol[i] · na pošt[i]",
+   "pattern": "Kje? → v / na + šol[i] · hotel[u]",
+   "short": "v / na + locative (mestnik) for where something is",
+   "explain": "When something **is** somewhere (question **kje?** — where?), Slovenian uses **v** or **na** + a new case, the **locative** (mestnik). The locative is only ever used after prepositions, so it's easy to spot.\n\nThe endings:\n• feminine -a → **-i**: šol[a] → v šol[i], pošt[a] → na pošt[i], Ljubljan[a] → v Ljubljan[i]\n• masculine → **-u**: hotel → v hotel[u], park → v park[u], avtobus → na avtobus[u]\n• neuter → **-u**: mest[o] → v mest[u], morj[e] → na morj[u]\n\nCompare the pair that confuses everyone at first:\n• Kam greš? → **Grem** v šol[o]. (movement → accusative, -o)\n• Kje si? → **Sem** v šol[i]. (location → locative, -i)\n\nSame little word \"v\", different ending — the ending carries the meaning \"to\" or \"in\". The same choice of v / na applies as before: v šoli, na pošti, na morju, v Ljubljani, na Bledu.\n\nOther prepositions with the locative: **pri** (at someone's / near): pri mam[i] (at mom's); **o** (about): \"Govorimo o film[u].\"; **po** (after / around): po kosil[u] (after lunch).",
+   "examples": [
+    {
+     "text": "Mama je v trgovin[i].",
+     "en": "Mom is in the shop.",
+     "drill": {
+      "base": "trgovina",
+      "options": [
+       "trgovini",
+       "trgovino",
+       "trgovina",
+       "trgovine"
+      ]
+     }
+    },
+    {
+     "text": "Živim v Ljubljan[i].",
+     "en": "I live in Ljubljana.",
+     "drill": {
+      "base": "Ljubljana",
+      "options": [
+       "Ljubljani",
+       "Ljubljano",
+       "Ljubljana",
+       "Ljubljane"
+      ]
+     }
+    },
+    {
+     "text": "Sem v hotel[u].",
+     "en": "I'm at the hotel.",
+     "drill": {
+      "base": "hotel",
+      "options": [
+       "hotelu",
+       "hotel",
+       "hotela",
+       "hoteli"
+      ]
+     }
+    },
+    {
+     "text": "Poleti smo na morj[u].",
+     "en": "In summer we're at the seaside.",
+     "drill": {
+      "base": "morje",
+      "options": [
+       "morju",
+       "morje",
+       "morja",
+       "morji"
+      ]
+     }
+    },
+    {
+     "text": "Po kosil[u] grem na sprehod.",
+     "en": "After lunch I go for a walk."
+    }
+   ]
+  },
+  {
+   "id": "sl-gen-neg",
+   "title": "Nimam čas[a]: the genitive after \"no\"",
+   "pattern": "Imam kav[o]. → Nimam kav[e].",
+   "short": "genitive (rodilnik) after nimam, ni, brez",
+   "explain": "The **genitive** (rodilnik) has many uses. The first one is with **negation**: when you say you **don't have** something, or something **isn't there**, the noun goes into the genitive.\n\nThe endings:\n• feminine -a → **-e**: kav[a] → \"Nimam kav[e].\" (I have no coffee.)\n• masculine → **-a**: čas → \"Nimam čas[a].\" kruh → \"Ni kruh[a].\" (There's no bread.)\n• neuter -o/-e → **-a**: mlek[o] → \"Ni mlek[a].\"\n\nSo with negation, compare:\n• Imam sestr[o]. → Nimam sestr[e].\n• Vidim avto. → Ne vidim avt[a].\n• Tukaj je park. → Tukaj ni park[a].\n\nThe genitive also comes after the preposition **brez** (without): \"Kava brez sladkorj[a]\" (coffee without sugar), \"čaj brez mlek[a]\", and after **iz** and **od** (from): \"Sem iz Slovenij[e].\" (I'm from Slovenia.), \"od mam[e]\" (from mom), and after **do** (until, to): \"do pošt[e]\".",
+   "examples": [
+    {
+     "text": "Danes nimam čas[a].",
+     "en": "I don't have time today.",
+     "drill": {
+      "base": "čas",
+      "options": [
+       "časa",
+       "čas",
+       "času",
+       "časi"
+      ]
+     }
+    },
+    {
+     "text": "V hladilniku ni mlek[a].",
+     "en": "There's no milk in the fridge.",
+     "drill": {
+      "base": "mleko",
+      "options": [
+       "mleka",
+       "mleko",
+       "mleku",
+       "mleke"
+      ]
+     }
+    },
+    {
+     "text": "Kavo brez sladkorj[a], prosim.",
+     "en": "Coffee without sugar, please.",
+     "drill": {
+      "base": "sladkor",
+      "options": [
+       "sladkorja",
+       "sladkor",
+       "sladkorju",
+       "sladkorji"
+      ]
+     }
+    },
+    {
+     "text": "Sem iz Slovenij[e].",
+     "en": "I'm from Slovenia.",
+     "drill": {
+      "base": "Slovenija",
+      "options": [
+       "Slovenije",
+       "Slovenija",
+       "Slovenijo",
+       "Sloveniji"
+      ]
+     }
+    },
+    {
+     "text": "Nimam sestr[e].",
+     "en": "I don't have a sister."
+    }
+   ]
+  },
+  {
+   "id": "sl-gen-quantity",
+   "title": "Veliko vod[e], kilogram kruh[a]",
+   "pattern": "kozarec vod[e] · kilogram jabolk",
+   "short": "genitive after amounts and quantity words",
+   "explain": "The second big use of the **genitive**: after words of **amount**. When English says \"a glass **of** water\", Slovenian puts \"water\" in the genitive (no extra word for \"of\"):\n• kozarec vod[e] — a glass of water\n• skodelica kav[e] — a cup of coffee\n• kilogram kruh[a] — a kilo of bread\n• liter mlek[a] — a litre of milk\n• kos torte → kos tort[e] — a piece of cake\n\nThe same after **veliko** (a lot), **malo** (a little), **dovolj** (enough), **več** (more), **koliko** (how much):\n• Imam veliko del[a]. — I have a lot of work.\n• Koliko denarj[a] imaš? — How much money do you have?\n\nFor things you count, the **genitive plural** is used after these words and after numbers from 5 up. Its endings: masculine **-ov** (stol → pet stol[ov]), feminine and neuter mostly **no ending** (hiša → pet hiš, jabolko → kilogram jabolk). \"Veliko ljudi\" (a lot of people) is an irregular one worth remembering.",
+   "examples": [
+    {
+     "text": "Kozarec vod[e], prosim.",
+     "en": "A glass of water, please.",
+     "drill": {
+      "base": "voda",
+      "options": [
+       "vode",
+       "voda",
+       "vodo",
+       "vodi"
+      ]
+     }
+    },
+    {
+     "text": "Kupi liter mlek[a].",
+     "en": "Buy a litre of milk.",
+     "drill": {
+      "base": "mleko",
+      "options": [
+       "mleka",
+       "mleko",
+       "mleku",
+       "mleki"
+      ]
+     }
+    },
+    {
+     "text": "Imam veliko del[a].",
+     "en": "I have a lot of work.",
+     "drill": {
+      "base": "delo",
+      "options": [
+       "dela",
+       "delo",
+       "delu",
+       "dele"
+      ]
+     }
+    },
+    {
+     "text": "Koliko denarj[a] imaš?",
+     "en": "How much money do you have?",
+     "drill": {
+      "base": "denar",
+      "options": [
+       "denarja",
+       "denar",
+       "denarju",
+       "denarji"
+      ]
+     }
+    },
+    {
+     "text": "Kilogram jabolk stane dva evra.",
+     "en": "A kilo of apples costs two euros."
+    }
+   ]
+  },
+  {
+   "id": "sl-numbers-nouns",
+   "title": "1 stol, 2 stol[a], 3 stol[i], 5 stol[ov]",
+   "pattern": "en stol · dva stol[a] · trije stol[i] · pet stol[ov]",
+   "short": "the noun changes with the number",
+   "explain": "Counting in Slovenian has a special logic, because the noun changes with the number:\n• **1** → singular: en stol, ena hiša, eno jabolko\n• **2** → dual: dva stol[a], dve hiš[i], dve jabolk[i]\n• **3 and 4** → plural: trije stol[i], tri hiš[e], štiri jabolk[a]\n• **5 and more** → genitive plural: pet stol[ov], pet hiš, pet jabolk\n\nNumbers 1–4 also change with gender:\n• 1: en (m), ena (ž), eno (s)\n• 2: dva (m), dve (ž, s)\n• 3: trije (m), tri (ž, s)\n• 4: štirje (m), štiri (ž, s)\nFrom 5 on, numbers don't change: pet, šest, sedem …\n\nPrices work the same way: en evro, dva evr[a], trije evr[i], pet evr[ov]. \"Koliko stane?\" — \"Tri evre.\" (in the accusative, \"trije\" becomes \"tri\").\n\nIt sounds like a lot, but you'll mostly hear the pattern 1 / 2 / 3–4 / 5+, and after a while it just sounds right.",
+   "examples": [
+    {
+     "text": "Imam dva brat[a].",
+     "en": "I have two brothers.",
+     "drill": {
+      "base": "brat",
+      "options": [
+       "brata",
+       "brati",
+       "bratov",
+       "brat"
+      ]
+     }
+    },
+    {
+     "text": "Kava stane dva evr[a].",
+     "en": "The coffee costs two euros.",
+     "drill": {
+      "base": "evro",
+      "options": [
+       "evra",
+       "evri",
+       "evrov",
+       "evro"
+      ]
+     }
+    },
+    {
+     "text": "V razredu je pet študent[ov].",
+     "en": "There are five students in the class.",
+     "drill": {
+      "base": "študent",
+      "options": [
+       "študentov",
+       "študenti",
+       "študenta",
+       "študent"
+      ]
+     }
+    },
+    {
+     "text": "Na mizi so tri knjig[e].",
+     "en": "There are three books on the table.",
+     "drill": {
+      "base": "knjiga",
+      "options": [
+       "knjige",
+       "knjigi",
+       "knjig",
+       "knjiga"
+      ]
+     }
+    },
+    {
+     "text": "Ena kava in dve hiš[i].",
+     "en": "One coffee and two houses."
+    }
+   ]
+  },
+  {
+   "id": "sl-dual",
+   "title": "Exactly two: the dual (dvojina)",
+   "pattern": "midva [sva] · dva stol[a] · dve hiš[i]",
+   "short": "Slovenian's special form for two",
+   "explain": "Here is something that makes Slovenian special: besides singular (1) and plural (3+) it has a **dual** (dvojina) — a separate form for **exactly two**. Very few languages in the world still use it!\n\n**Pronouns and \"to be\":**\n• **midva** (we two, m) / **medve** (we two, ž) → [sva]: \"Midva [sva] prijatelja.\"\n• **vidva / vidve** (you two) → [sta]\n• **onadva / onidve** (they two) → [sta]\n\n**Verbs** in the dual end in **-va** (we two) and **-ta** (you two / they two):\n• dela[va], dela[ta] · govori[va], govori[ta] · gre[va], gre[ta]\n\n**Nouns** after \"dva / dve\":\n• masculine: + **-a** → dva stol[a], dva brat[a]\n• feminine: -a → **-i** → dve hiš[i], dve sestr[i]\n• neuter: → **-i** → dve mest[i], dve jabolk[i]\n\nIt's used all the time, especially for couples and pairs: \"Kam gre[va]?\" (Where are we two going?), \"Ali sta utrujena?\" (Are you two tired?). If you say plural instead of dual, people will understand you — but using the dual will make you sound really Slovenian.",
+   "examples": [
+    {
+     "text": "Midva [sva] prijatelja.",
+     "en": "We two are friends.",
+     "drill": {
+      "base": "biti (dvojina)",
+      "options": [
+       "sva",
+       "smo",
+       "sta",
+       "sem"
+      ]
+     }
+    },
+    {
+     "text": "Kam gre[va] danes?",
+     "en": "Where are we (two) going today?",
+     "drill": {
+      "base": "iti",
+      "options": [
+       "greva",
+       "gremo",
+       "greta",
+       "grem"
+      ]
+     }
+    },
+    {
+     "text": "Imam dve sestr[i].",
+     "en": "I have two sisters.",
+     "drill": {
+      "base": "sestra",
+      "options": [
+       "sestri",
+       "sestre",
+       "sester",
+       "sestra"
+      ]
+     }
+    },
+    {
+     "text": "Ali [sta] utrujena?",
+     "en": "Are you two tired?",
+     "drill": {
+      "base": "biti (dvojina)",
+      "options": [
+       "sta",
+       "sva",
+       "ste",
+       "so"
+      ]
+     }
+    },
+    {
+     "text": "Na mizi sta dva kozarc[a].",
+     "en": "There are two glasses on the table."
+    }
+   ]
+  },
+  {
+   "id": "sl-instrumental",
+   "title": "With: kava z mlek[om], grem z mam[o]",
+   "pattern": "z / s + mlek[om] · mam[o]",
+   "short": "s / z + instrumental (orodnik)",
+   "explain": "To say **with**, Slovenian uses **z** or **s** + the **instrumental** case (orodnik):\n• masculine and neuter → **-om** (after č, š, ž, c, j: **-em**): z mlek[om], s sladkorj[em], s prijatelj[em], z avtom\n• feminine -a → **-o**: z mam[o], s sestr[o], s kartic[o]\n\n**z or s?** Use **s** before the voiceless sounds **c, č, f, h, k, p, s, š, t** (s sestro, s kartico, s prijateljem, s teto), and **z** before everything else (z mamo, z mlekom, z avtobusom). Say it out loud and it chooses itself — it's just pronunciation.\n\nTypical uses:\n• company: \"Grem v kino s prijatelj[em].\" (with a friend)\n• food: \"kava z mlek[om]\", \"čaj z limon[o]\"\n• transport: \"Grem z avtobus[om] / z vlak[om] / z avt[om].\" (by bus, train, car)\n• paying: \"Plačam s kartic[o].\" (I'll pay by card.)\n\nNotice: feminine instrumental (-o) looks just like feminine accusative (-o). The preposition z/s tells you which one it is.",
+   "examples": [
+    {
+     "text": "Kavo z mlek[om], prosim.",
+     "en": "A coffee with milk, please.",
+     "drill": {
+      "base": "mleko",
+      "options": [
+       "mlekom",
+       "mleko",
+       "mleka",
+       "mleku"
+      ]
+     }
+    },
+    {
+     "text": "Grem v kino s prijatelj[em].",
+     "en": "I'm going to the cinema with a friend.",
+     "drill": {
+      "base": "prijatelj",
+      "options": [
+       "prijateljem",
+       "prijatelja",
+       "prijatelju",
+       "prijatelj"
+      ]
+     }
+    },
+    {
+     "text": "Plačam s kartic[o].",
+     "en": "I'll pay by card.",
+     "drill": {
+      "base": "kartica",
+      "options": [
+       "kartico",
+       "kartica",
+       "kartici",
+       "kartice"
+      ]
+     }
+    },
+    {
+     "text": "V službo grem z avtobus[om].",
+     "en": "I go to work by bus.",
+     "drill": {
+      "base": "avtobus",
+      "options": [
+       "avtobusom",
+       "avtobus",
+       "avtobusa",
+       "avtobusu"
+      ]
+     }
+    },
+    {
+     "text": "Živim z mam[o] in sestr[o].",
+     "en": "I live with my mom and sister."
+    }
+   ]
+  },
+  {
+   "id": "sl-dative",
+   "title": "To someone: Dam mam[i], grem k brat[u]",
+   "pattern": "mam[i] · brat[u] · k / h + dative",
+   "short": "dative (dajalnik): giving, telling, going to a person",
+   "explain": "The **dative** (dajalnik) answers **komu?** — to whom? You use it for the person who **receives** something: you give, send, tell, show, help **someone**.\n\nEndings:\n• feminine -a → **-i**: mam[a] → \"Dam mam[i] darilo.\" (I give mom a present.)\n• masculine and neuter → **-u**: brat → \"Pišem brat[u].\" (I'm writing to my brother.)\n\nVerbs with the dative: **dati** (give), **reči / povedati** (say, tell), **pisati** (write to), **pokazati** (show), **pomagati** (help) — careful, in Slovenian you help **to** someone: \"Pomagam sosed[u].\" (I help the neighbour.)\n\nThe preposition **k** (before k and g it becomes **h**) + dative means **to someone's place**: \"Grem k mam[i].\" (I'm going to mom's.), \"Grem k zdravnik[u].\" (I'm going to the doctor.), \"Grem h Gorazd[u].\"\n\nYou'll also meet the dative in feelings: \"Mraz mi je.\" (I'm cold — literally: to me is cold.), \"Všeč mi je.\" (I like it.) — **mi** is the short dative of jaz; **ti** = to you, **mu** = to him, **ji** = to her.",
+   "examples": [
+    {
+     "text": "Mam[i] dam darilo.",
+     "en": "I give mom a present.",
+     "drill": {
+      "base": "mama",
+      "options": [
+       "mami",
+       "mamo",
+       "mama",
+       "mame"
+      ]
+     }
+    },
+    {
+     "text": "Pomagam sosed[u].",
+     "en": "I'm helping the neighbour.",
+     "drill": {
+      "base": "sosed",
+      "options": [
+       "sosedu",
+       "soseda",
+       "sosed",
+       "sosedi"
+      ]
+     }
+    },
+    {
+     "text": "Jutri grem k zdravnik[u].",
+     "en": "Tomorrow I'm going to the doctor.",
+     "drill": {
+      "base": "zdravnik",
+      "options": [
+       "zdravniku",
+       "zdravnika",
+       "zdravnik",
+       "zdravniki"
+      ]
+     }
+    },
+    {
+     "text": "Pišem prijateljic[i].",
+     "en": "I'm writing to my (female) friend.",
+     "drill": {
+      "base": "prijateljica",
+      "options": [
+       "prijateljici",
+       "prijateljico",
+       "prijateljica",
+       "prijateljice"
+      ]
+     }
+    },
+    {
+     "text": "Ta film mi je všeč.",
+     "en": "I like this film."
+    }
+   ]
+  },
+  {
+   "id": "sl-rad",
+   "title": "I like to: rad / rad[a] + verb",
+   "pattern": "Rad berem. · Rad[a] plešem.",
+   "short": "rad / rada / radi + verb = to like doing",
+   "explain": "To say you **like doing** something, put **rad** before the verb — literally \"gladly\":\n• \"Rad berem.\" — I like reading. (said by a man)\n• \"Rad[a] berem.\" — I like reading. (said by a woman)\n• \"Rad[i] potujemo.\" — We like travelling. (a group)\n\n**Rad** changes like an adjective — it agrees with **who** likes: rad (m), rad[a] (ž), rad[i] (m plural), rad[e] (ž plural), rad[a] / rad[i] in the dual (midva rada).\n\nThe word order is usually: (subject) + **rad** + verb: \"Ana rada pleše.\" \"Ali rad kuhaš?\"\n\nTo like **a thing**, use **imeti rad**: \"Rad imam kavo.\" (I like coffee.) or the more neutral **všeč**: \"Kava mi je všeč.\" (I like the coffee — it's pleasing to me.)\n\nNegative: \"Ne berem rad.\" (I don't like reading.) — \"ne\" goes before the verb, and rad moves after it.\n\nThe opposite of rad is **nerad**: \"Nerad vstajam zgodaj.\" (I don't like getting up early.)",
+   "examples": [
+    {
+     "text": "Rad[a] plešem.",
+     "en": "I like dancing. (a woman)",
+     "drill": {
+      "base": "rad (ona)",
+      "options": [
+       "rada",
+       "rad",
+       "radi",
+       "rado"
+      ]
+     }
+    },
+    {
+     "text": "Rad kuham.",
+     "en": "I like cooking. (a man)"
+    },
+    {
+     "text": "Ali rad[i] potujete?",
+     "en": "Do you like travelling? (to a group)",
+     "drill": {
+      "base": "rad (vi)",
+      "options": [
+       "radi",
+       "rad",
+       "rada",
+       "rade"
+      ]
+     }
+    },
+    {
+     "text": "Moja sestra rad[a] bere.",
+     "en": "My sister likes reading.",
+     "drill": {
+      "base": "rad (ona)",
+      "options": [
+       "rada",
+       "rad",
+       "radi",
+       "rade"
+      ]
+     }
+    },
+    {
+     "text": "Ta film mi je všeč.",
+     "en": "I like this film."
+    }
+   ]
+  },
+  {
+   "id": "sl-modal",
+   "title": "Must, can, want: moram, lahko, hočem",
+   "pattern": "Moram delati. · Lahko pridem. · Hočem spati.",
+   "short": "modal verbs + infinitive",
+   "explain": "Some verbs are followed by another verb in its **dictionary form** (infinitive, ending in **-ti** or **-či**):\n• **morati** (must, have to) → \"Moram delati.\" (I have to work.)\n• **hoteti** (want) → \"Hočem spati.\" (I want to sleep.)\n• **želeti** (wish, would like — more polite) → \"Želim plačati.\" (I'd like to pay.)\n• **znati** (know how to) → \"Znam plavati.\" (I can swim.)\n\n**Can / may** is usually expressed with the little word **lahko** + the normal present tense: \"Lahko pridem jutri.\" (I can come tomorrow.) \"Ali lahko plačam s kartico?\" (Can I pay by card?) \"Lahko noč\" (good night) uses the same word.\n\nNegatives: **ne morem** = I can't (from moči): \"Ne morem priti.\" — but **ne moram** = I don't have to, **nočem** = ne + hočem (I don't want), **ni treba** = you don't have to: \"Ni treba plačati.\"\n\nThe infinitive form never changes: \"Mi moramo delati.\" \"Ona hoče delati.\" Only the first verb changes for the person.",
+   "examples": [
+    {
+     "text": "Danes moram delati.",
+     "en": "Today I have to work."
+    },
+    {
+     "text": "Ali lahko plačam s kartico?",
+     "en": "Can I pay by card?"
+    },
+    {
+     "text": "Hočem spati.",
+     "en": "I want to sleep."
+    },
+    {
+     "text": "Ne morem priti, ker sem bolan.",
+     "en": "I can't come because I'm ill."
+    }
+   ]
+  },
+  {
+   "id": "sl-reflexive",
+   "title": "Verbs with se: učim se, imenujem se",
+   "pattern": "uči[m] se · imenuje[m] se",
+   "short": "reflexive verbs with the little word se",
+   "explain": "Many Slovenian verbs come with the little word **se** (\"oneself\"). In English the meaning is often not reflexive at all — just learn **se** as part of the verb:\n• **učiti se** — to learn: \"Učim se slovensko.\"\n• **imenovati se** — to be called: \"Imenujem se Ana.\" (My name is Ana.)\n• **veseliti se** — to look forward to: \"Veselim se počitnic.\"\n• **smejati se** — to laugh · **vrniti se** — to come back · **zgoditi se** — to happen\n\n**Se never changes** for the person: učim se, učiš se, uči se, učimo se …\n\nIts position is the tricky part: **se** is a short \"clitic\" that wants to stand in **second place** in the sentence, together with forms of \"to be\":\n• \"Učim se slovensko.\" (verb first, se second)\n• \"Jutri se učim.\" (jutri first, se second)\n• \"Kako se imenuješ?\" (What's your name?)\n\nWhen it meets \"sem/si/je\" in the past tense, se comes after them: \"Učil sem se.\" / \"Včeraj sem se učil.\"",
+   "examples": [
+    {
+     "text": "Uči[m] se slovensko.",
+     "en": "I'm learning Slovenian.",
+     "drill": {
+      "base": "učiti se",
+      "options": [
+       "učim",
+       "učiš",
+       "uči",
+       "učijo"
+      ]
+     }
+    },
+    {
+     "text": "Kako se imenuje[š]?",
+     "en": "What's your name?",
+     "drill": {
+      "base": "imenovati se",
+      "options": [
+       "imenuješ",
+       "imenujem",
+       "imenuje",
+       "imenujete"
+      ]
+     }
+    },
+    {
+     "text": "Imenujem se Luka.",
+     "en": "My name is Luka."
+    },
+    {
+     "text": "Jutri se vrnemo domov.",
+     "en": "Tomorrow we're coming back home."
+    }
+   ]
+  },
+  {
+   "id": "sl-past",
+   "title": "The past: sem delal[a], si bil[a]",
+   "pattern": "sem dela[l] · sem dela[la] · smo dela[li]",
+   "short": "past tense = sem/si/je + the -l form",
+   "explain": "The Slovenian past tense has **one** form for \"I worked / I was working / I have worked\". It's made of **two parts**:\n1. the present of **biti**: sem, si, je, smo, ste, so (sva, sta)\n2. the **-l form** of the verb, which agrees with the **gender** of the person, like an adjective.\n\nMake the -l form from the infinitive: remove **-ti**, add the ending:\n• man: **-l** → dela[l], govori[l], bi[l]\n• woman: **-la** → dela[la], govori[la], bi[la]\n• neuter: **-lo** → bi[lo]\n• plural: **-li** (m / mixed), **-le** (ž) · dual: **-la** (m), **-li** (ž)\n\nExamples:\n• \"Včeraj sem dela[l].\" (a man) / \"Včeraj sem dela[la].\" (a woman) — Yesterday I worked.\n• \"Kje si bi[l]?\" — Where were you?\n• \"Bili smo na morju.\" — We were at the seaside.\n\n**Iti** is irregular: šel, šla, šli. \"Šel sem domov.\" (I went home.) Jesti → jedel, jedla.\n\nWord order: the short \"sem\" goes to **second place**: \"Včeraj **sem** bil doma.\", but \"Bil **sem** doma.\" Negation: **nisem** + -l form: \"Nisem bil doma.\"",
+   "examples": [
+    {
+     "text": "Včeraj sem dela[l] doma.",
+     "en": "Yesterday I worked at home. (a man)",
+     "drill": {
+      "base": "delati (on)",
+      "options": [
+       "delal",
+       "delala",
+       "delali",
+       "delam"
+      ]
+     }
+    },
+    {
+     "text": "Ana je bi[la] v Ljubljani.",
+     "en": "Ana was in Ljubljana.",
+     "drill": {
+      "base": "biti (ona)",
+      "options": [
+       "bila",
+       "bil",
+       "bili",
+       "bilo"
+      ]
+     }
+    },
+    {
+     "text": "Poleti smo bi[li] na morju.",
+     "en": "In summer we were at the seaside.",
+     "drill": {
+      "base": "biti (mi)",
+      "options": [
+       "bili",
+       "bila",
+       "bil",
+       "bile"
+      ]
+     }
+    },
+    {
+     "text": "Ali si govori[la] z mamo?",
+     "en": "Did you talk to mom? (to a woman)",
+     "drill": {
+      "base": "govoriti (ti, ž)",
+      "options": [
+       "govorila",
+       "govoril",
+       "govorili",
+       "govoriš"
+      ]
+     }
+    },
+    {
+     "text": "Včeraj sem šel v kino.",
+     "en": "Yesterday I went to the cinema. (a man)"
+    }
+   ]
+  },
+  {
+   "id": "sl-future",
+   "title": "The future: bom delal[a]",
+   "pattern": "[bom] delal · [boš] · [bo] · [bomo]",
+   "short": "future = bom/boš/bo + the -l form",
+   "explain": "The future tense is easy once you know the past: use **bom** instead of **sem**, and the same -l form:\n• (jaz) [bom] delal / delala — I will work\n• (ti) [boš] delal(a)\n• (on/ona) [bo] delal / delala\n• (mi) [bomo] delali · (vi) [boste] delali · (oni) [bodo] delali\n• dual: [bova], [bosta]\n\n\"Jutri **bom** delal.\" — Tomorrow I'll work. \"Kaj **boš** jedel?\" — What will you eat?\n\nThe future of **to be** is just bom / boš / bo … on their own: \"Jutri **bom** doma.\" (Tomorrow I'll be at home.) \"Kje **boš** jutri?\"\n\n**Iti** is special: in the future you say **bom šel / šla** — or, very commonly, just the present with a time word: \"Jutri grem v Ljubljano.\" (Tomorrow I'm going to Ljubljana.) Slovenians use the present for plans just like English \"I'm going …\".\n\nNegation: \"Ne bom delal.\" (I won't work.) — here \"ne\" stays separate.",
+   "examples": [
+    {
+     "text": "Jutri [bom] delal.",
+     "en": "Tomorrow I will work.",
+     "drill": {
+      "base": "biti (prihodnjik)",
+      "options": [
+       "bom",
+       "boš",
+       "bo",
+       "bodo"
+      ]
+     }
+    },
+    {
+     "text": "Kaj [boš] jedla?",
+     "en": "What will you eat? (to a woman)",
+     "drill": {
+      "base": "biti (prihodnjik)",
+      "options": [
+       "boš",
+       "bom",
+       "bo",
+       "boste"
+      ]
+     }
+    },
+    {
+     "text": "Poleti [bomo] na morju.",
+     "en": "In summer we'll be at the seaside.",
+     "drill": {
+      "base": "biti (prihodnjik)",
+      "options": [
+       "bomo",
+       "bodo",
+       "boste",
+       "bom"
+      ]
+     }
+    },
+    {
+     "text": "Ne bom pil kave.",
+     "en": "I won't drink coffee."
+    }
+   ]
+  },
+  {
+   "id": "sl-imperative",
+   "title": "Do it! Pridi! Poglej[te]!",
+   "pattern": "dela[j] · govor[i] · pi[ši] → +te for vi",
+   "short": "imperative: orders, requests, instructions",
+   "explain": "The **imperative** is used for requests and instructions: \"Come!\", \"Look!\", \"Sit down, please.\" It's made from the **present** stem:\n• **-am verbs** → **-aj**: delati → dela[j]!, čakati → čaka[j]!, poslušati → posluša[j]!\n• **-im verbs** → **-i**: govoriti → govor[i]!, kupiti → kup[i]!\n• **-em verbs** → **-i** (on the present stem): pisati → piš[i]!, brati → ber[i]!, priti → prid[i]!\n\nFor **vi** (several people, or polite), add **-te**: dela[jte], govor[ite], prid[ite], poglej[te], sed[ite]. For **we (let's)** add **-mo**: \"Gremo!\" \"Pojdimo!\" (Let's go!)\n\nSome very common irregular ones: **iti** → pojdi! / pojdite! (or the everyday \"greva / gremo\"), **jesti** → jej!, **dati** → daj! (\"Daj mi …\" — Give me …), **imeti** → imej!\n\nAdd **prosim** to sound polite: \"Prosim, sedite.\" (Please sit down.) \"Počakajte, prosim.\" (Wait, please.)\n\nNegative orders: ne + imperative: \"Ne skrbi!\" (Don't worry!) \"Ne hodi tja!\"",
+   "examples": [
+    {
+     "text": "Posluša[j]!",
+     "en": "Listen!",
+     "drill": {
+      "base": "poslušati (ti)",
+      "options": [
+       "poslušaj",
+       "poslušam",
+       "posluša",
+       "poslušajte"
+      ]
+     }
+    },
+    {
+     "text": "Prosim, sed[ite].",
+     "en": "Please sit down. (polite)",
+     "drill": {
+      "base": "sesti (vi)",
+      "options": [
+       "sedite",
+       "sedi",
+       "sedimo",
+       "sedijo"
+      ]
+     }
+    },
+    {
+     "text": "Pojdi[mo] domov!",
+     "en": "Let's go home!"
+    },
+    {
+     "text": "Počakaj[te], prosim.",
+     "en": "Wait, please. (polite)",
+     "drill": {
+      "base": "počakati (vi)",
+      "options": [
+       "počakajte",
+       "počakaj",
+       "počakam",
+       "počaka"
+      ]
+     }
+    },
+    {
+     "text": "Daj mi kozarec vode.",
+     "en": "Give me a glass of water."
+    }
+   ]
+  },
+  {
+   "id": "sl-word-order",
+   "title": "Little words in second place",
+   "pattern": "Včeraj [sem] [se] učil.",
+   "short": "clitics (sem, se, mi, ga …) stand in second position",
+   "explain": "Slovenian word order is quite free — but one rule is strict: the **short unstressed words** (clitics) stand in **second place** in the sentence, right after the first word or phrase.\n\nThe clitics you know: forms of **biti** (sem, si, je, smo, ste, so, bom …), **se**, and short pronouns like **mi** (to me), **ti** (to you), **ga** (him/it), **jo** (her).\n\n• \"[Sem] doma.\" → \"Danes **sem** doma.\" → \"Danes zvečer **sem** doma.\" (\"danes zvečer\" counts as one first phrase)\n• \"Učim se.\" → \"Jutri **se** učim.\"\n\nWhen several clitics meet, they come in a fixed order: **biti** (except je) → **se** → dative (mi, ti) → accusative (ga, jo) → **je**:\n• \"Včeraj **sem se** učil.\" (I studied yesterday.)\n• \"Dal **sem mu ga**.\" (I gave it to him.)\n• \"Učil **se je**.\" (He studied — notice je comes last.)\n\nYou don't need to master this now. Just notice how sem / se like to be the second word — copying the example sentences out loud is the best way to get the feel for it.",
+   "examples": [
+    {
+     "text": "Danes [sem] doma.",
+     "en": "Today I'm at home."
+    },
+    {
+     "text": "Včeraj [sem] [se] učil.",
+     "en": "Yesterday I studied. (a man)"
+    },
+    {
+     "text": "Kava mi je všeč.",
+     "en": "I like the coffee."
+    },
+    {
+     "text": "Jutri se vidimo!",
+     "en": "See you tomorrow!"
+    }
+   ]
+  }
+ ]
+}

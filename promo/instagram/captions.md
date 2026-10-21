@@ -95,3 +95,10 @@ Opazuj, kako tvoji jeziki cvetijo 🌱
 Bloomko: kitajščina, japonščina in zdaj tudi **slovenščina (A1)**. Pisanje pismenk po potezah, pogovor z AI učiteljem, ki deluje brez interneta, slovnica z obarvanimi končnicami in besede iz fotografij.
 Zgodnji dostop 👉 bloomko.eu
 #slovenščina #učenjejezikov #kitajščina #japonščina #slovenija
+
+## Caption: character map (EN) · `charmap-reel.mp4`
+Chinese characters aren't random. They're built from pieces 🧩
+好 (good) = 女 woman + 子 child · 妈 (mom) = 女 woman + 马 horse
+Bloomko's character map shows how every character connects, so one piece unlocks dozens of new ones.
+Save this for your next study session 📌 Early access → link in bio (bloomko.eu)
+#learnchinese #chinesecharacters #hanzi #中文 #mandarin #hsk #languagelearning #studygram #reels

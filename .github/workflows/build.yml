@@ -2,6 +2,8 @@ name: Build app (Android + web)
 
 # Every push: builds the Android APK, publishes it as a release and replaces
 # .../Bloomko.apk on the website (LanguageMaster.apk is kept as an alias for old links). The web app itself is left unchanged.
+# The new web app goes to .../preview/ behind an access code (not indexed, not linked anywhere),
+# so it can be checked before release.
 #
 # To also publish the web app (https://<owner>.github.io/<repo>/), run this
 # workflow manually (Actions → Run workflow) with "Publish web app" ticked.
@@ -87,6 +89,23 @@ jobs:
           publish_branch: gh-pages
           force_orphan: true
           commit_message: "Publish Bloomko 1.8.${{ env.APP_VERSION }} (web + app)"
+
+      # Default: the new web app only as a locked preview (asks for an access code) at .../preview/.
+      - name: Prepare locked web preview
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
+        working-directory: mobile
+        run: node scripts/make-preview.mjs www ../preview-out
+
+      - name: Publish locked web preview
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: preview-out
+          destination_dir: preview
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: "Locked web preview 1.8.${{ env.APP_VERSION }}"
 
       # Default: update only the APK download, keep the published web app as it is.
       - name: Prepare APK-only update

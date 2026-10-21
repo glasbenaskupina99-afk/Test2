@@ -1,6 +1,6 @@
 # Bloomko
 
-> Bloomko comes as two apps: Bloomko East (Chinese and Japanese) and Bloomko Heritage (lesser-known languages, starting with Slovenian). Bloomko is a free language-learning app for Android (coming soon) with an AI tutor that runs offline on the phone (Google Gemma). Learners write Chinese characters, Japanese kanji and kana by hand, stroke by stroke, and the app checks every stroke. Progress is tracked with spaced repetition (FSRS) and a calm "garden": a streak plant that grows when you practise.
+> Bloomko comes as two apps: Bloomko East (Chinese and Japanese) and Bloomko Heritage (lesser-known languages: Slovenian, Icelandic coming soon). Bloomko is a free language-learning app for Android (coming soon) with an AI tutor that runs offline on the phone (Google Gemma). Learners write Chinese characters, Japanese kanji and kana by hand, stroke by stroke, and the app checks every stroke. Progress is tracked with spaced repetition (FSRS) and a calm "garden": a streak plant that grows when you practise.
 
 Website: https://bloomko.eu · Contact: thebloomko@gmail.com
 
@@ -27,6 +27,7 @@ Bloomko East:
 
 Bloomko Heritage (https://bloomko.eu/heritage/), for lesser-known languages:
 - Slovenian A1: 564 words, 30 grammar lessons explained in English with word endings shown in colour, 91 ending drills, pronunciation with stress marks.
+- Icelandic: coming soon.
 - More small languages planned (learners can suggest which).
 
 ## Free word pages

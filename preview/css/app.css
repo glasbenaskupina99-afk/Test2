@@ -1408,3 +1408,82 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 :root[data-theme="heritage"] .mode .count { background: #fffaf1; color: var(--accent-dark); }
 :root[data-theme="heritage"] .week .bar i { background: var(--yellow); }
 :root[data-theme="heritage"] .pad { background: #fffaf1; border: 1.5px solid var(--border-dark); border-radius: 16px; }
+
+/* =====================================================================
+   1.10 — Your forest: a tree for every learned word, seasons and weekly challenges
+   ===================================================================== */
+.forest, .forest-groves, .glade, .season-banner, .garden-hero {
+  --crown: #4e9a4a; --crown-2: #3f8a3e; --trunk: #7a5235; --bloom: transparent; --snow: transparent;
+  --sky1: #cfe8d0; --sky2: #b5d9b5; --hill1: #5f9a55; --hill2: #84b874;
+}
+.season-spring { --crown: #8fcf6b; --crown-2: #74ba55; --bloom: #f6b8cf; --sky1: #e8f3df; --hill1: #7dbb5f; --hill2: #a9d68c; }
+.season-summer { --crown: #4e9a4a; --crown-2: #3c8040; --bloom: transparent; --sky1: #d7ecc8; --hill1: #4f8f47; --hill2: #78b468; }
+.season-autumn { --crown: #d98b2b; --crown-2: #c4552b; --bloom: transparent; --sky1: #f3e1c4; --hill1: #b8742f; --hill2: #d9a052; }
+.season-winter { --crown: #4f7a6a; --crown-2: #3e6657; --bloom: transparent; --snow: #f4f8fa; --sky1: #e3ecf1; --hill1: #c9d6dd; --hill2: #e8eff3; }
+
+/* Colours reach the drawings inside <use> through inherited custom properties. */
+.tree { --t-trunk: var(--trunk); --t-crown: var(--crown); --t-bloom: var(--bloom); --t-snow: var(--snow); --t-petal: transparent; }
+.tree:nth-child(3n) { --t-crown: var(--crown-2); }
+.tree.thirsty { --t-crown: #b9b05a; --t-bloom: transparent; opacity: .92; }
+.tree.wilting { --t-crown: #9b7b5a; --t-trunk: #6b5444; --t-bloom: transparent; --t-snow: transparent; }
+.tree.wilting use { transform-box: fill-box; transform-origin: 50% 100%; transform: rotate(-7deg) scaleY(.88); }
+.tree { cursor: pointer; }
+.tree.flower { --t-crown: #f3c6d6; --t-petal: #e98fb0; --t-trunk: #7a5235; }
+:root[data-theme="heritage"] .tree.flower { --t-crown: #f2dca4; --t-petal: #d39b32; }
+
+.season-banner { position: relative; overflow: hidden; border-radius: 22px; margin: 4px 0 14px; background: linear-gradient(180deg, var(--sky1), var(--surface)); border: 1px solid var(--border); }
+.sb-sky svg { display: block; width: 100%; height: 70px; }
+.sb-sky .hill1 { fill: var(--hill1); }
+.sb-sky .hill2 { fill: var(--hill2); }
+.sb-text { padding: 12px 16px 16px; }
+.sb-title { font-family: var(--heading); font-size: 21px; font-weight: 700; color: var(--text-strong); }
+.sb-line { font-size: 14px; color: var(--muted); margin-top: 2px; }
+.sb-next { font-size: 13px; font-weight: 900; color: var(--accent, var(--green-dark)); margin-top: 6px; }
+:root[data-theme="forest"] .season-banner { background: linear-gradient(180deg, rgba(255,255,255,.07), var(--surface)); }
+
+.forest-counts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+.fc { padding: 6px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); font-size: 14px; font-weight: 800; color: var(--muted); }
+.fc b { color: var(--text-strong); }
+.fc.healthy b { color: #5ea457; }
+.fc.thirsty b { color: #b49a2e; }
+.fc.wilting b { color: #b0603c; }
+.water-go { background: var(--blue); color: #fff; }
+
+.challenges { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.challenge { display: flex; gap: 12px; align-items: flex-start; }
+.ch-ico { width: 38px; height: 38px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 19px; background: var(--surface-2); }
+.ch-body { flex: 1; min-width: 0; }
+.ch-title { font-weight: 800; color: var(--text-strong); font-size: 15px; }
+.ch-bar, .chp-bar { display: block; height: 8px; border-radius: 99px; background: var(--border); overflow: hidden; margin-top: 6px; }
+.ch-bar i, .chp-bar i { display: block; height: 100%; border-radius: 99px; background: var(--accent, var(--green)); }
+.challenge.done .ch-bar i, .chp.done .chp-bar i { background: #e98fb0; }
+.ch-num { margin-top: 4px; }
+
+.ch-preview { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; text-decoration: none; color: inherit; border-radius: 20px; }
+.chp { display: grid; grid-template-columns: 24px 1fr 70px; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 800; color: var(--text); }
+.chp-ico { font-size: 16px; }
+.chp-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chp .chp-bar { margin: 0; }
+
+.glade { padding: 10px 14px; }
+.glade-svg svg { display: block; max-height: 60px; }
+.forest-groves { display: flex; flex-direction: column; gap: 10px; }
+.grove { padding: 12px 12px 6px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); }
+.grove-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.grove-head b { font-size: 14px; color: var(--text-strong); }
+.grove-wilt { margin-left: auto; font-size: 13px; font-weight: 900; color: #b0603c; }
+.grove-svg svg { display: block; }
+.season-winter .grove { background: linear-gradient(180deg, var(--surface), rgba(232, 239, 243, .25)); }
+
+.forest-sheet { text-align: center; }
+.fs-word { font-size: 56px; color: var(--text-strong); line-height: 1.2; }
+.fs-meaning { font-size: 18px; font-weight: 800; margin-top: 4px; }
+.fs-state { font-weight: 800; }
+.fs-state.wilting { color: #b0603c; }
+.fs-state.thirsty { color: #a8902a; }
+
+.garden-forest { margin-top: 4px; font-size: 13px; font-weight: 800; color: var(--muted); }
+.garden-forest .gf-wilt { color: #b0603c; }
+.garden-hero.season-autumn { background: linear-gradient(135deg, var(--surface), rgba(217, 139, 43, .08)); }
+.garden-hero.season-winter { background: linear-gradient(135deg, var(--surface), rgba(200, 220, 230, .12)); }
+.garden-hero.season-spring { background: linear-gradient(135deg, var(--surface), rgba(246, 184, 207, .1)); }

@@ -14,6 +14,7 @@ import { talkSheet } from "./talk.js";
 import { syncCard } from "./sync-ui.js";
 import { photoSheet, canReadPhotos } from "./photo.js";
 import { UI_LANGS, setUiLang, uiLang } from "./i18n.js";
+import { charMapScreen } from "./charmap.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -34,16 +35,20 @@ applyTheme();
 
 const TAB_ICONS = {
   learn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>',
+  map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="9" width="6" height="6" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><path d="M9 12h3V6h3M12 12v6h3"/></svg>',
   words: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/></svg>',
   stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="11" width="3.5" height="9" rx="1"/><rect x="10.25" y="5" width="3.5" height="15" rx="1"/><rect x="16.5" y="14" width="3.5" height="6" rx="1"/></svg>',
   settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg>',
 };
-const TABS = [
+const ALL_TABS = [
   ["#/", "learn", "Learn"],
   ["#/words", "words", "Words"],
+  ["#/map", "map", "Map"],
   ["#/stats", "stats", "Stats"],
   ["#/settings", "settings", "Settings"],
 ];
+// The character map is for courses written in characters (not Slovenian).
+const tabs = () => ALL_TABS.filter(([href]) => href !== "#/map" || !isSl());
 
 // The last drawn screen of each tab: shown instantly when you come back, then refreshed.
 const screenCache = new Map();
@@ -59,7 +64,7 @@ function shell(content, active) {
   const tabbar = h(
     "nav",
     { class: "tabbar" },
-    TABS.map(([href, ico, label]) => h("a", { href, class: href === active ? "active" : "" }, h("span", { class: "ico", html: TAB_ICONS[ico] }), label))
+    tabs().map(([href, ico, label]) => h("a", { href, class: href === active ? "active" : "" }, h("span", { class: "ico", html: TAB_ICONS[ico] }), label))
   );
   const screen = h("div", { class: "screen" }, content);
   app.replaceChildren(screen, tabbar);
@@ -73,10 +78,11 @@ function loading() {
 async function route() {
   const hash = location.hash || "#/";
   // Highlight the tapped tab right away, before the screen is ready.
-  const tab = TABS.find(([href]) => href !== "#/" && hash.startsWith(href))?.[0] || "#/";
+  const tab = tabs().find(([href]) => href !== "#/" && hash.startsWith(href))?.[0] || "#/";
   document.querySelectorAll(".tabbar a").forEach((a) => a.classList.toggle("active", a.getAttribute("href") === tab));
   try {
     if (hash.startsWith("#/words")) return await wordsScreen();
+    if (hash.startsWith("#/map") && !isSl()) return await charMapScreen(shell, loading);
     if (hash.startsWith("#/stats")) return await statsScreen();
     if (hash.startsWith("#/settings")) return await settingsScreen();
     if (hash.startsWith("#/gemma")) {
@@ -720,6 +726,15 @@ function wordSheet(w) {
         h("div", { class: "en" }, w.english),
         h("div", { class: "row", style: { justifyContent: "center", marginTop: "10px" } }, iconBtn("speaker", "speaker", () => speak(sayText(w)), "Listen"))
       ),
+      isSl()
+        ? null
+        : h(
+            "div",
+            { class: "cm-open" },
+            [...new Set([...w.hanzi].filter((c) => /[\u3400-\u9fff\uf900-\ufaff]/.test(c)))].map((c) =>
+              h("button", { class: "btn ghost small", onclick: () => { bg.remove(); location.hash = `#/map/${encodeURIComponent(c)}`; } }, "🗺️ ", h("span", { class: "hz" }, c))
+            )
+          ),
       w.cards
         ? h("p", { class: "muted small center" }, `Strength: ${Math.round(w.strength || 0)} day interval · ${w.lapses || 0} lapses`)
         : h("p", { class: "muted small center" }, "Not learned yet"),
@@ -1465,6 +1480,7 @@ async function settingsScreen() {
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),
       h("img", { class: "app-logo settings-logo", src: LOGO, alt: "" }),
       h("p", { class: "muted small center", style: { marginTop: "4px" } }, `${window.__appVersion ? `Bloomko ${window.__appVersion} · ` : ""}Stroke data: Hanzi Writer + Make Me a Hanzi (Arphic PL). ${window.__native ? "Everything runs on this phone." : window.__localApi ? "Your data stays in this browser." : "Runs entirely on your network."}`),
+      h("p", { class: "muted small center", style: { marginTop: "0" } }, "Character map: Make Me a Hanzi (LGPL-3.0) · KanjiVG (CC BY-SA 3.0) · KANJIDIC, EDRDG (CC BY-SA 4.0)"),
     ],
     "#/settings"
   );

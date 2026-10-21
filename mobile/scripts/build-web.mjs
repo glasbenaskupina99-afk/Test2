@@ -45,6 +45,8 @@ writeFileSync(join(www, "index.html"), html);
 cpSync(join(mobile, "..", "app", "data", "extras"), join(www, "extras"), { recursive: true });
 cpSync(join(mobile, "..", "app", "data", "grammar"), join(www, "grammar"), { recursive: true });
 cpSync(join(mobile, "..", "app", "data", "stories"), join(www, "stories"), { recursive: true });
+// Which parts every character is made of, for the character map.
+copyFileSync(join(mobile, "..", "app", "data", "charmap.json"), join(www, "charmap.json"));
 // Interface and content translations (French, Spanish, Japanese).
 cpSync(join(mobile, "..", "app", "data", "i18n"), join(www, "i18n"), { recursive: true, filter: (src) => !src.endsWith("ui-strings.json") });
 

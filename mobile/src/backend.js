@@ -432,6 +432,54 @@ function prebuilt(w) {
   return w.lang === "zh" && x.example_zh && !x.example_pinyin ? { ...x, example_pinyin: toPinyin(x.example_zh) } : x;
 }
 const extrasOf = (w) => w.extras || prebuilt(w);
+// Character map: which parts each character is built from (www/charmap.json), loaded the
+// first time the map is opened. CHILDREN is the reverse: the characters a part appears in.
+let CHARMAP = null;
+let CHILDREN = null;
+let charmapJob = null;
+function loadCharmap() {
+  charmapJob ||= fetch("charmap.json")
+    .then((r) => (r.ok ? r.json() : { chars: {} }))
+    .catch(() => ({ chars: {} }))
+    .then((x) => {
+      CHARMAP = x.chars || {};
+      CHILDREN = {};
+      for (const [ch, e] of Object.entries(CHARMAP)) for (const p of e[2] || "") (CHILDREN[p] ||= []).push(ch);
+      return CHARMAP;
+    });
+  return charmapJob;
+}
+const HAN_CHAR = /[\u3400-\u9fff\uf900-\ufaff]/;
+/** Course characters in path order, the ones you know, and the course words each appears in. */
+function charIndex() {
+  const ids = learnedIds();
+  const order = new Map();
+  const known = new Set();
+  const words = new Map();
+  for (const w of W().sort(byPosition)) {
+    for (const c of w.hanzi) {
+      if (!HAN_CHAR.test(c)) continue;
+      if (!order.has(c)) order.set(c, { i: order.size, section: w.section });
+      if (ids.has(w.id)) known.add(c);
+      if (!words.has(c)) words.set(c, []);
+      words.get(c).push(w);
+    }
+  }
+  return { order, known, words, ids };
+}
+function charNode(ch, idx) {
+  const e = CHARMAP[ch];
+  const ja = course() === "ja";
+  const own = (idx.words.get(ch) || []).find((w) => w.hanzi === ch);
+  return {
+    ch,
+    meaning: own?.english?.split(/[;,]/)[0] || (e ? (ja ? e[3] : e[0]) : ""),
+    reading: e ? (ja ? e[4] : e[1]) : "",
+    state: idx.known.has(ch) ? "known" : idx.order.has(ch) ? "course" : "part",
+  };
+}
+const charParts = (ch) => [...(CHARMAP[ch]?.[2] || "")];
+
 const cardsOf = (id) => db.cards.filter((c) => c.word_id === id);
 const learnedIds = () => new Set(C().map((c) => c.word_id));
 const byPosition = (a, b) => a.position - b.position || a.id - b.id;
@@ -1181,6 +1229,34 @@ const routes = {
   },
 
   // Look-alike characters (未/末, 己/已 …): groups with learned characters and past mistakes come first.
+  "GET /api/charmap": async (_, __, query) => {
+    await loadCharmap();
+    const idx = charIndex();
+    let ch = [...(query.get("ch") || "")].find((c) => HAN_CHAR.test(c));
+    if (!ch) ch = [...idx.order.keys()].filter((c) => idx.known.has(c)).pop() || idx.order.keys().next().value;
+    if (!ch) return { center: null };
+    const rank = (c) => (idx.known.has(c) ? 0 : idx.order.has(c) ? 1 : 2) * 1e6 + (idx.order.get(c)?.i ?? 9e5);
+    const parents = charParts(ch).map((p) => ({ ...charNode(p, idx), parents: charParts(p).slice(0, 3).map((g) => charNode(g, idx)) }));
+    // Characters built from this one: only those in your course (or ones you know), known first.
+    const kids = (CHILDREN[ch] || []).filter((c) => idx.order.has(c)).sort((a, b) => rank(a) - rank(b));
+    const words = (idx.words.get(ch) || []).map((w) => ({ ...pick(w), learned: idx.ids.has(w.id) }));
+    return {
+      center: charNode(ch, idx),
+      parents,
+      children: kids.slice(0, 8).map((c) => charNode(c, idx)),
+      more: kids.slice(8).map((c) => charNode(c, idx)),
+      words: words.sort((a, b) => b.learned - a.learned).slice(0, 12),
+      word_count: words.length,
+    };
+  },
+
+  "GET /api/charmap/all": async () => {
+    await loadCharmap();
+    const idx = charIndex();
+    const chars = [...idx.order.entries()].map(([ch, o]) => ({ ...charNode(ch, idx), section: o.section }));
+    return { chars, known: idx.known.size, total: chars.length };
+  },
+
   "GET /api/lookalikes/session": (_, __, query) => {
     const groups = LOOKALIKES[course()] || [];
     const n = Math.min(Number(query.get("n")) || 8, groups.length);

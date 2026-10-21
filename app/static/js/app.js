@@ -15,6 +15,7 @@ import { syncCard } from "./sync-ui.js";
 import { photoSheet, canReadPhotos } from "./photo.js";
 import { UI_LANGS, setUiLang, uiLang } from "./i18n.js";
 import { charMapScreen } from "./charmap.js";
+import { forestScreen, SEASON, fillChallenge } from "./forest.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -89,6 +90,7 @@ async function route() {
   try {
     if (hash.startsWith("#/words")) return await wordsScreen();
     if (hash.startsWith("#/map") && !isSl()) return await charMapScreen(shell, loading);
+    if (hash.startsWith("#/forest")) return await forestScreen(shell, loading, { water: (ids) => startFlow(() => flows.review({ ids })) });
     if (hash.startsWith("#/stats")) return await statsScreen();
     if (hash.startsWith("#/settings")) return await settingsScreen();
     if (hash.startsWith("#/gemma")) {
@@ -257,16 +259,40 @@ function gardenHero(home) {
   const plant = home.plant || "seed";
   const line =
     plant === "healthy" ? "Watered today. Your plant grew a little." : plant === "thirsty" ? "Your plant is thirsty. A short lesson waters it." : "Learn a few words to plant your seed.";
+  const f = home.forest || {};
+  const season = SEASON[f.season] || SEASON.summer;
   return h(
     "button",
-    { class: "garden-hero", onclick: () => gardenSheet() },
+    { class: `garden-hero season-${f.season || "summer"}`, onclick: () => (location.hash = "#/forest") },
     h("div", { class: "garden-ring" }, h("div", { class: "ring", html: ring }), plantArt(plant, "garden-plant")),
     h(
       "div",
       { class: "garden-text" },
       h("b", {}, home.streak ? `${home.streak}-day streak` : "Start your streak"),
       h("span", {}, line),
-      h("span", { class: "garden-goal" }, pct >= 1 ? `Daily goal reached · ${home.xp_today} XP` : `${home.xp_today} / ${home.daily_goal} XP today`)
+      h("span", { class: "garden-goal" }, pct >= 1 ? `Daily goal reached · ${home.xp_today} XP` : `${home.xp_today} / ${home.daily_goal} XP today`),
+      f.trees
+        ? h("span", { class: "garden-forest" }, h("span", {}, `${season.icon} `), h("span", {}, season.name), h("span", {}, " · "), h("span", {}, `${f.trees} trees`), f.wilting ? [h("span", {}, " · "), h("span", { class: "gf-wilt" }, `${f.wilting} wilting`)] : null)
+        : null
+    )
+  );
+}
+
+/** This week's challenges, small, on the home screen (tap for the forest). */
+function challengesPreview(list) {
+  if (!list?.length) return null;
+  return h(
+    "a",
+    { class: "card ch-preview", href: "#/forest" },
+    h("div", { class: "row" }, h("b", {}, "This week's challenges"), h("span", { class: "spacer" }), h("span", { class: "muted small" }, `${list.filter((c) => c.done).length} / ${list.length}`)),
+    list.map((c) =>
+      h(
+        "div",
+        { class: "chp" + (c.done ? " done" : "") },
+        h("span", { class: "chp-ico" }, c.done ? "🌸" : c.icon),
+        h("span", { class: "chp-title" }, fillChallenge(c.title, c.goal)),
+        h("span", { class: "chp-bar" }, h("i", { style: { width: `${Math.round((100 * c.value) / c.goal)}%` } }))
+      )
     )
   );
 }
@@ -355,6 +381,7 @@ async function homeScreen() {
       aiInviteCard(),
       h("div", { class: "home-label" }, "Also today"),
       h("div", { class: "tiles" }, tiles),
+      challengesPreview(home.challenges),
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week, home.saved_days),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),

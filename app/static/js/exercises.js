@@ -5,6 +5,7 @@
 import { api, h, icons, iconBtn, shuffle, toast } from "./util.js";
 import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder } from "./audio.js";
 import { writingPad, strokeDemo } from "./writer.js";
+import { noteWritePerfect } from "./forest.js";
 import { state, T, isJa, isSl, sayText } from "./state.js";
 
 const GENDER = { m: "masculine", ž: "feminine", s: "neuter", mn: "plural only" };
@@ -165,6 +166,7 @@ export function write(ctx, word, { pinyinHint = false } = {}) {
   pad.done.then((r) => {
     let grade = writeGrade(r);
     if (pinyinPeeked) grade = Math.min(grade, 2);
+    if (grade === 3) noteWritePerfect([...word.hanzi].length);
     speak(sayText(word));
     const ok = grade >= 1;
     const title = grade === 3 ? "Perfect!" : grade === 2 ? "Great job!" : grade === 1 ? "Got there!" : "Keep practising";
@@ -333,7 +335,10 @@ export function spell(ctx, word, { hint = false } = {}) {
     async check() {
       const r = await api("/api/check/pinyin", { method: "POST", body: { answer: input.value, expected: word.hanzi } });
       speak(word.hanzi);
-      if (r.result === "correct") return { ok: true, grade: 2, title: "Correct!", detail: solution(word) };
+      if (r.result === "correct") {
+        noteWritePerfect(1);
+        return { ok: true, grade: 2, title: "Correct!", detail: solution(word) };
+      }
       if (r.result === "tones_wrong") return { ok: true, grade: 1, title: "Almost — mind č, š, ž", detail: solution(word) };
       return { ok: false, grade: 0, title: "Correct spelling:", detail: solution(word, `You wrote: ${input.value}`) };
     },

@@ -490,6 +490,118 @@ function charNode(ch, idx) {
 const charParts = (ch) => [...(CHARMAP[ch]?.[2] || "")];
 
 const cardsOf = (id) => db.cards.filter((c) => c.word_id === id);
+
+// ------------------------------------------------------------------ forest (1.10)
+// Every learned word is a tree. A tree whose reviews are overdue starts to wilt, and practising
+// the word brings it back. The season follows how regularly you practise, and three weekly
+// challenges (instead of points for points) each plant a flowering tree in your glade.
+
+/** Monday of this week, as a day key: weekly challenges run Monday to Sunday. */
+function weekKey(d = new Date()) {
+  const x = new Date(d);
+  x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+  return dayKey(x);
+}
+function forestDb() {
+  db.forest ||= { weeks: {}, glade: [] };
+  return db.forest;
+}
+function weekStats(k = weekKey()) {
+  return (forestDb().weeks[k] ||= { write_perfect: 0, revived: 0, revived_ids: [], spoken: 0, finished: 0 });
+}
+function forestBump(kind, n = 1) {
+  const w = weekStats();
+  w[kind] = (w[kind] || 0) + n;
+  checkChallenges();
+  persist();
+}
+
+/** Health from the most overdue card (healthy · thirsty · wilting), size from how well the word is known (0–3). */
+function treeOf(cards, nowMs = Date.now()) {
+  let worst = -Infinity;
+  let strength = 0;
+  for (const c of cards) {
+    const due = new Date(String(c.due).replace(" ", "T")).getTime();
+    worst = Math.max(worst, (nowMs - due) / (Math.max(c.interval || 0, 1) * DAY));
+    strength += c.interval || 0;
+  }
+  strength /= Math.max(cards.length, 1);
+  return {
+    health: worst < 0 ? "healthy" : worst < 1 ? "thirsty" : "wilting",
+    size: strength < 3 ? 0 : strength < 10 ? 1 : strength < 30 ? 2 : 3,
+  };
+}
+
+/** Practise on 11 of the last 14 days for summer, 7 for spring, 3 for autumn; fewer is winter. */
+function season() {
+  let days = 0;
+  for (let i = 0; i < 14; i++) {
+    const k = dayKey(shiftDay(new Date(), -i));
+    if (practiced(k) || db.garden.saved.includes(k)) days++;
+  }
+  const name = days >= 11 ? "summer" : days >= 7 ? "spring" : days >= 3 ? "autumn" : "winter";
+  const nextAt = { winter: 3, autumn: 7, spring: 11 }[name];
+  return { name, days, next: nextAt ? nextAt - days : 0 };
+}
+
+const latinCourse = () => course() === "sl";
+const CHALLENGES = {
+  write_perfect: () => (latinCourse() ? { goal: 30, title: "Spell {0} words without a mistake", icon: "✍️" } : { goal: 50, title: "Write {0} characters without a mistake", icon: "✍️" }),
+  revived: () => ({ goal: 15, title: "Bring {0} wilting trees back to life", icon: "💧" }),
+  days: () => ({ goal: 5, title: "Practise on {0} days this week", icon: "📅" }),
+  planted: () => ({ goal: 25, title: "Plant {0} new trees", icon: "🌱" }),
+  spoken: () => ({ goal: 20, title: "Say {0} words out loud", icon: "🗣️" }),
+  finished: () => ({ goal: 2, title: "Finish {0} stories or chats", icon: "📖" }),
+};
+const ROTATING = ["revived", "days", "planted", "spoken", "finished"];
+
+/** This week's three challenges: writing every week, plus two that change from week to week. */
+function weekChallenges(wk = weekKey()) {
+  const n = Number(wk.replace(/-/g, "")) / 7;
+  const a = Math.floor(n) % ROTATING.length;
+  const kinds = ["write_perfect", ROTATING[a], ROTATING[(a + 2) % ROTATING.length]];
+  const w = weekStats(wk);
+  const monday = new Date(wk + "T00:00:00");
+  let days = 0;
+  let planted = 0;
+  for (let i = 0; i < 7; i++) {
+    const k = dayKey(shiftDay(monday, i));
+    if (practiced(k)) days++;
+    planted += db.activity[k]?.new_words || 0;
+  }
+  const value = { write_perfect: w.write_perfect, revived: w.revived, days, planted, spoken: w.spoken, finished: w.finished };
+  return kinds.map((kind) => {
+    const c = CHALLENGES[kind]();
+    const v = Math.min(value[kind] || 0, c.goal);
+    return { kind, ...c, value: v, done: v >= c.goal };
+  });
+}
+
+/** Finished challenges plant a flowering tree in the glade (once per challenge and week). */
+function checkChallenges() {
+  const wk = weekKey();
+  const f = forestDb();
+  for (const c of weekChallenges(wk)) {
+    if (c.done && !f.glade.some((g) => g.week === wk && g.kind === c.kind && g.lang === course())) {
+      f.glade.push({ week: wk, kind: c.kind, lang: course(), at: fmt(now()) });
+    }
+  }
+}
+
+function forestSummary() {
+  const nowMs = Date.now();
+  const byWord = new Map();
+  for (const c of C()) {
+    if (!byWord.has(c.word_id)) byWord.set(c.word_id, []);
+    byWord.get(c.word_id).push(c);
+  }
+  const counts = { trees: 0, healthy: 0, thirsty: 0, wilting: 0 };
+  for (const cs of byWord.values()) {
+    counts.trees++;
+    counts[treeOf(cs, nowMs).health]++;
+  }
+  return { ...counts, season: season().name };
+}
 const learnedIds = () => new Set(C().map((c) => c.word_id));
 const byPosition = (a, b) => a.position - b.position || a.id - b.id;
 const pick = ({ id, hanzi, pinyin, english, source }) => ({ id, hanzi, pinyin, english, source });
@@ -808,6 +920,8 @@ const routes = {
     const notice = db.garden.notice;
     if (notice) { db.garden.notice = null; persist(); }
     return {
+      forest: forestSummary(),
+      challenges: weekChallenges(),
       streak: streak(),
       plant: plantState(),
       raindrops: db.garden.raindrops,
@@ -1029,8 +1143,13 @@ const routes = {
     const size = settingsAll().review_size;
     const n = fmt(now());
     const only = (query.get("skills") || "").split(",").filter(Boolean);
-    const pool = only.length ? SC().filter((c) => only.includes(c.skill)) : SC();
-    const cards = query.get("extra")
+    // Watering the forest: practise exactly these words (their overdue cards first).
+    const ids = new Set((query.get("ids") || "").split(",").map(Number).filter(Boolean));
+    const base = ids.size ? C().filter((c) => ids.has(c.word_id)) : SC();
+    const pool = only.length ? base.filter((c) => only.includes(c.skill)) : base;
+    const cards = ids.size
+      ? pool.sort((a, b) => (a.due < b.due ? -1 : 1)).filter((c, i, arr) => c.due <= n || arr.findIndex((x) => x.word_id === c.word_id) === i).slice(0, size * 2)
+      : query.get("extra")
       ? pool.sort((a, b) => b.lapses * 2 - b.interval - (a.lapses * 2 - a.interval) || (a.due < b.due ? -1 : 1)).slice(0, size)
       : pool.filter((c) => c.due <= n).sort((a, b) => (a.due < b.due ? -1 : 1)).slice(0, size);
     const items = shuffled(cards.map((c) => ({ skill: c.skill, word: getWord(c.word_id) })));
@@ -1048,10 +1167,41 @@ const routes = {
     const grade = Math.max(0, Math.min(3, Number(body.grade)));
     const card = db.cards.find((c) => c.word_id === body.word_id && c.skill === body.skill);
     if (!card) throw new HttpError(404, "card not found");
+    // A wilting tree that gets practised comes back to life (counted once a week per word).
+    const wk = weekStats();
+    if (grade >= 1 && !wk.revived_ids.includes(card.word_id) && treeOf(cardsOf(card.word_id)).health === "wilting") {
+      wk.revived++;
+      wk.revived_ids.push(card.word_id);
+    }
+    if (card.skill === "speak" && grade >= 2) wk.spoken++;
     Object.assign(card, schedule(card, grade));
+    checkChallenges();
     const xp = grade >= 2 ? 3 : 1;
     addActivity({ xp, reviews: 1 });
     return { xp, ...card };
+  },
+
+  "GET /api/forest": () => {
+    const nowMs = Date.now();
+    const byWord = new Map();
+    for (const c of C()) {
+      if (!byWord.has(c.word_id)) byWord.set(c.word_id, []);
+      byWord.get(c.word_id).push(c);
+    }
+    const trees = W()
+      .filter((w) => byWord.has(w.id))
+      .sort(byPosition)
+      .map((w) => ({ id: w.id, t: w.hanzi, r: w.pinyin, m: w.english, unit: w.unit, section: w.section, ...treeOf(byWord.get(w.id), nowMs) }));
+    checkChallenges();
+    const glade = forestDb().glade.filter((g) => g.lang === course());
+    return { ...forestSummary(), trees, season: season(), week: weekKey(), challenges: weekChallenges(), glade, latin: latinCourse() };
+  },
+
+  // Words written (or, in Latin-script courses, spelled) with no mistake, for the weekly challenge.
+  "POST /api/forest/event": (_, body) => {
+    if (body.kind !== "write_perfect") throw new HttpError(400, "unknown event");
+    forestBump("write_perfect", Math.max(1, Math.min(10, Number(body.n) || 1)));
+    return { ok: true };
   },
 
   "GET /api/reminder-info": () => {
@@ -1205,7 +1355,9 @@ const routes = {
     const st = (db.stories[id] ||= { done: false, best: 0 });
     st.done = true;
     st.best = Math.max(st.best || 0, score);
+    weekStats().finished++;
     addActivity({ xp: body.xp || 5 });
+    checkChallenges();
     persist();
     return { ok: true, streak: streak() };
   },
@@ -1408,7 +1560,9 @@ const routes = {
     const turns = Math.max(0, Math.min(20, Number(body.turns) || 0));
     const good = Math.max(0, Math.min(turns, Number(body.good) || 0));
     const xp = turns * 3 + good * 2;
+    if (turns) weekStats().finished++;
     if (xp) addActivity({ xp, sentences: turns });
+    checkChallenges();
     persist();
     return { xp };
   },

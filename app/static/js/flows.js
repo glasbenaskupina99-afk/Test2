@@ -368,12 +368,13 @@ export function storyQuestions(story) {
 
 // ------------------------------------------------------------------ practice old words
 
-export async function review({ extra = false, writing = true } = {}) {
+export async function review({ extra = false, writing = true, ids = null } = {}) {
   // Choice-only practice reviews (and reschedules) just the recall cards; writing and
   // speaking reviews stay due until you practise them for real.
   const qs = new URLSearchParams();
   if (extra) qs.set("extra", "1");
   if (!writing) qs.set("skills", "recall");
+  if (ids?.length) qs.set("ids", ids.join(","));
   const { items, pool } = await api("/api/review/session" + (qs.toString() ? `?${qs}` : ""));
   const grammarSteps = await grammarReviewSteps(extra);
   if (!items.length && !grammarSteps.length) {
@@ -406,7 +407,7 @@ export async function review({ extra = false, writing = true } = {}) {
 
   // Unlocked grammar comes back in practice too, spread among the words.
   for (const g of grammarSteps) steps.splice(Math.floor(Math.random() * (steps.length + 1)), 0, g);
-  return runLesson({ steps, endTitle: extra ? "Extra practice done!" : "Practice complete!" });
+  return runLesson({ steps, endTitle: ids?.length ? "Your trees are watered!" : extra ? "Extra practice done!" : "Practice complete!" });
 }
 
 // ------------------------------------------------------------------ sentences

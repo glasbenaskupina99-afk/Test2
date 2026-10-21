@@ -85,6 +85,7 @@ export function snapshot(db) {
     grammar: db.grammar,
     stories: db.stories || {},
     storiesAi: db.storiesAi || [],
+    forest: db.forest || { weeks: {}, glade: [] },
     settings: Object.fromEntries(SYNCED_SETTINGS.filter((k) => k in (db.settings || {})).map((k) => [k, db.settings[k]])),
   };
 }
@@ -156,6 +157,18 @@ export function merge(db, r) {
   for (const [id, c] of Object.entries(r.grammar?.learned || {})) {
     const mine = db.grammar.learned[id];
     if (!mine || later(c.last_review, mine.last_review)) db.grammar.learned[id] = c;
+  }
+  // Forest: weekly counters take the higher value, flowering trees from both devices are kept.
+  if (r.forest) {
+    db.forest ||= { weeks: {}, glade: [] };
+    for (const [wk, w] of Object.entries(r.forest.weeks || {})) {
+      const mine = (db.forest.weeks[wk] ||= { write_perfect: 0, revived: 0, revived_ids: [], spoken: 0, finished: 0 });
+      for (const k of ["write_perfect", "revived", "spoken", "finished"]) mine[k] = Math.max(mine[k] || 0, w[k] || 0);
+      mine.revived_ids = [...new Set([...(mine.revived_ids || []), ...(w.revived_ids || [])])];
+    }
+    const key = (g) => `${g.week}|${g.kind}|${g.lang}`;
+    const have = new Set(db.forest.glade.map(key));
+    for (const g of r.forest.glade || []) if (!have.has(key(g))) db.forest.glade.push(g);
   }
   db.stories ||= {};
   for (const [id, s] of Object.entries(r.stories || {})) {

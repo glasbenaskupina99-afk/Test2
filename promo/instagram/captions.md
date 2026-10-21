@@ -102,3 +102,9 @@ Chinese characters aren't random. They're built from pieces 🧩
 Bloomko's character map shows how every character connects, so one piece unlocks dozens of new ones.
 Save this for your next study session 📌 Early access → link in bio (bloomko.eu)
 #learnchinese #chinesecharacters #hanzi #中文 #mandarin #hsk #languagelearning #studygram #reels
+
+## Caption: cozy study (EN) · `cozy-study.mp4`
+rainy night, warm tea, one new character at a time ☕🌧️
+tonight: 茶 chá (tea) and 书 shū (book). Trace it, write it from memory, quick quiz, and my little plant bloomed 🌸
+study with me? Early access → link in bio (bloomko.eu)
+#studywithme #lofi #cozystudy #learnchinese #chinesecharacters #hanzi #studygram #languagelearning #reels

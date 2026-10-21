@@ -19,7 +19,7 @@
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
         <item name="android:background">@drawable/splash</item>
-        <item name="windowSplashScreenBackground">#1C3026</item>
+        <item name="windowSplashScreenBackground">@color/bloomko_bg</item>
         <item name="android:windowBackground">@color/bloomko_bg</item>
     </style>
 </resources>

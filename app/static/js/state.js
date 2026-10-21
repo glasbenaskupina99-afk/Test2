@@ -5,7 +5,10 @@ export const state = {
 };
 
 /** Which course is active: "zh" (Mandarin), "ja" (Japanese kanji) or "sl" (Slovenian). */
-export const course = () => (["ja", "sl"].includes(state.settings?.course) ? state.settings.course : "zh");
+/** "east" = Bloomko East (Chinese, Japanese) · "heritage" = Bloomko Heritage (lesser-known languages). */
+export const EDITION = window.__edition === "heritage" ? "heritage" : "east";
+export const isHeritage = () => EDITION === "heritage";
+export const course = () => (["zh", "ja", "sl"].includes(state.settings?.course) ? state.settings.course : EDITION === "heritage" ? "sl" : "zh");
 export const isJa = () => course() === "ja";
 /** Slovenian uses the Latin alphabet: spelling instead of stroke-order handwriting. */
 export const isSl = () => course() === "sl";

@@ -1,5 +1,5 @@
 import { api, h, iconBtn, toast, confirmDialog, enhanceSelects } from "./util.js";
-import { state, T, isJa, isSl, sayText, applyCourse } from "./state.js";
+import { state, T, isJa, isSl, sayText, applyCourse, EDITION, isHeritage } from "./state.js";
 import { speak, stopSpeaking, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
@@ -18,14 +18,20 @@ import { charMapScreen } from "./charmap.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
-const LOGO = `${window.__localApi ? "" : "/static/"}icons/logo.png`;
+const LOGO = `${window.__localApi ? "" : "/static/"}icons/${isHeritage() ? "heritage-logo" : "logo"}.png`;
+/** "Bloomko East" / "Bloomko Heritage" */
+const APP_NAME = isHeritage() ? "Bloomko Heritage" : "Bloomko East";
 const UNIT_COLORS = ["#6f8f6c", "#557389", "#a9643f", "#8a6d3b", "#6b5b7b", "#3f7065", "#9a5a55", "#5c6e3a", "#7a6a55", "#4f5f7a"];
 
 // ------------------------------------------------------------------ theme
 
+/** Bloomko East: forest green and ink · Bloomko Heritage: linen, rust and ink blue. */
+const DEFAULT_THEME = isHeritage() ? "heritage" : "forest";
 function applyTheme() {
   let t = "auto";
-  try { t = localStorage.getItem("theme") || "forest"; } catch { /* ignore */ }
+  try { t = localStorage.getItem("theme") || DEFAULT_THEME; } catch { /* ignore */ }
+  // Each app has its own look; a theme saved by the other app falls back to this app's.
+  if (t === (isHeritage() ? "forest" : "heritage")) t = DEFAULT_THEME;
   if (t === "auto") document.documentElement.removeAttribute("data-theme");
   else document.documentElement.setAttribute("data-theme", t);
 }
@@ -114,11 +120,13 @@ async function startFlow(fn) {
 
 // ------------------------------------------------------------------ home
 
-const COURSES = {
-  zh: { flag: "🇨🇳", name: "Chinese", script: "汉字", sub: "Mandarin · HSK 1–3" },
-  ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kana & kanji · JLPT N5–N3" },
-  sl: { flag: "🇸🇮", name: "Slovenian", script: "Aa", sub: "A1 · first words" },
+const ALL_COURSES = {
+  zh: { flag: "🇨🇳", name: "Chinese", script: "汉字", sub: "Mandarin · HSK 1–3", edition: "east" },
+  ja: { flag: "🇯🇵", name: "Japanese", script: "漢字", sub: "Kana & kanji · JLPT N5–N3", edition: "east" },
+  sl: { flag: "🇸🇮", name: "Slovenian", script: "Aa", sub: "A1 · first words", edition: "heritage" },
 };
+// Only this app's courses (Bloomko East or Bloomko Heritage).
+const COURSES = Object.fromEntries(Object.entries(ALL_COURSES).filter(([, c]) => c.edition === EDITION));
 
 const LEVEL_INFO = {
   "HSK 1": "Beginner · official HSK 3.0 level 1",
@@ -207,153 +215,146 @@ function courseSheet(home, startWith = null) {
 }
 
 /** "JLPT N5" → "N5", "HSK 1" → "HSK 1" (fits next to the flag). */
-const shortLevel = (name) => String(name || "").replace(/^JLPT\s*/, "");
 
-function topbar(home) {
+/** Greeting with the course switch, and small pills for the streak plant and the AI. */
+function homeHeader(home) {
   const ai = state.aiStatus;
+  const hour = new Date().getHours();
+  const hello = hour < 5 ? "Good evening" : hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  const name = (state.settings.display_name || "").trim();
   return h(
     "div",
-    { class: "topbar" },
-    home.courses
-      ? h(
-          "button",
-          { class: "stat course-btn", title: "Switch language or level", onclick: () => courseSheet(home) },
-          h("span", { class: "ico" }, COURSES[home.course].flag),
-          home.sections?.length > 1 ? h("span", { class: "course-level" }, shortLevel(home.section)) : null
-        )
-      : null,
+    { class: "home-head" },
     h(
-      "button",
-      { class: `stat streak-plant ${home.plant || "seed"}`, title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => gardenSheet() },
-      plantArt(home.plant || "seed", "ico"),
-      home.streak
+      "div",
+      { class: "home-hello" },
+      h("h1", {}, name ? `${hello}, ${name}` : hello),
+      home.courses
+        ? h(
+            "button",
+            { class: "course-pill", title: "Switch language or level", onclick: () => courseSheet(home) },
+            h("span", { class: "flag" }, COURSES[home.course].flag),
+            h("span", {}, home.sections?.length > 1 ? home.section : COURSES[home.course].name),
+            h("span", { class: "caret", html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>' })
+          )
+        : null
     ),
-    h("div", { class: "stat gem" }, h("span", { class: "ico" }, "📚"), `${home.learned}`),
-    h("div", { class: "stat xp" }, h("span", { class: "ico" }, "⚡"), home.xp_today),
     h(
-      "a",
-      { class: "stat", href: "#/settings", title: ai?.message || "AI status", style: { textDecoration: "none", color: "var(--muted)", fontSize: "14px" } },
-      h("span", { class: "status-dot" + (ai?.ok ? " ok" : "") }),
-      "AI"
+      "div",
+      { class: "home-pills" },
+      h("button", { class: "pill streak-pill", title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => gardenSheet() }, h("span", { class: "pill-ico", html: SVG.leafFill }), home.streak),
+      h("a", { class: "pill", href: "#/settings", title: ai?.message || "AI status" }, h("span", { class: "status-dot" + (ai?.ok ? " ok" : "") }), "AI")
     )
+  );
+}
+
+/** The plant in the middle of the home screen: today's goal as a ring around it, the streak beside it. */
+function gardenHero(home) {
+  const pct = Math.min(1, home.xp_today / Math.max(home.daily_goal, 1));
+  const R = 52;
+  const C = 2 * Math.PI * R;
+  const ring = `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" fill="none" class="ring-bg" stroke-width="7"/><circle cx="60" cy="60" r="${R}" fill="none" class="ring-fg" stroke-width="7" stroke-linecap="round" stroke-dasharray="${(C * pct).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 60 60)"/></svg>`;
+  const plant = home.plant || "seed";
+  const line =
+    plant === "healthy" ? "Watered today. Your plant grew a little." : plant === "thirsty" ? "Your plant is thirsty. A short lesson waters it." : "Learn a few words to plant your seed.";
+  return h(
+    "button",
+    { class: "garden-hero", onclick: () => gardenSheet() },
+    h("div", { class: "garden-ring" }, h("div", { class: "ring", html: ring }), plantArt(plant, "garden-plant")),
+    h(
+      "div",
+      { class: "garden-text" },
+      h("b", {}, home.streak ? `${home.streak}-day streak` : "Start your streak"),
+      h("span", {}, line),
+      h("span", { class: "garden-goal" }, pct >= 1 ? `Daily goal reached · ${home.xp_today} XP` : `${home.xp_today} / ${home.daily_goal} XP today`)
+    )
+  );
+}
+
+/** A small card on the home screen for one way to practise. */
+function tile({ icon, title, sub, badge, onclick, href, soft }) {
+  return h(
+    href ? "a" : "button",
+    { class: "tile" + (soft ? " soft" : ""), onclick, href },
+    h("div", { class: "tile-top" }, h("span", { class: "tile-ico", html: icon }), badge != null && badge !== "" ? h("span", { class: "tile-badge" }, badge) : null),
+    h("b", {}, title),
+    sub ? h("small", {}, sub) : null
   );
 }
 
 async function homeScreen() {
   shell(loading(), "#/");
   const [home, next] = await Promise.all([api("/api/home"), api("/api/learn/next")]);
-  const goalPct = Math.min(100, Math.round((100 * home.xp_today) / Math.max(home.daily_goal, 1)));
-  const preview = next.words.map((w) => w.hanzi).join(" ");
+  const multi = home.sections?.length > 1;
 
-  const learnCard = h(
-    "button",
-    { class: "mode" + (next.words.length ? "" : " done"), onclick: async () => {
-      if (!next.words.length) return;
-      const m = await flows.pickStudyMode({
-        title: "Learn new words",
-        writingSub: "See, trace and write each word, then a mixed quiz",
-        choiceSub: "See each word, then pick meanings, readings and sounds",
-      });
-      if (m) startFlow(() => flows.learnNew(m));
-    } },
-    h("div", { class: "badge-ico", html: SVG.sprout }),
-    h(
-      "div",
-      {},
-      h("h3", {}, "Learn new words", home.sections?.length > 1 ? h("span", { class: "level-tag" }, home.section) : null),
-      next.words.length
-        ? h("div", { class: "preview" }, preview)
-        : h("p", {}, home.sections?.length > 1 ? `${home.section} complete — tap the flag to pick another level` : "All words learned — add more!")
-    )
-  );
-  const reviewCard = h(
-    "button",
-    { class: "mode blue" + (home.learned ? "" : " done"), onclick: async () => {
-      if (!home.learned) return;
-      const d = home.due_by_skill || {};
-      const m = await flows.pickStudyMode({
-        title: "Practice",
-        writingSub: home.due ? `All reviews: writing, speaking, recall · ${home.due} due` : "Nothing due — extra writing practice",
-        choiceSub: d.recall ? `Recognise characters & meanings · ${d.recall} due` : "Nothing due — extra recognition practice",
-        extraNote: "Choice-only practice doesn't count as writing practice — writing reviews stay due until you write them.",
-      });
-      if (m) startFlow(() => flows.review({ writing: m.writing, extra: m.writing ? home.due === 0 : !d.recall }));
-    } },
-    h("div", { class: "badge-ico", html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/><path d="M12 8v4l3 2"/></svg>' }),
-    h(
-      "div",
-      {},
-      h("h3", {}, "Practice"),
-      h("p", {}, !home.learned ? "Learn a few words first" : home.due ? (home.sections?.length > 1 ? `${home.section} words ready for review` : "Words ready for review") : `All caught up${home.sections?.length > 1 ? ` in ${home.section}` : ""}! ${nextDueText(home.next_due)} Tap for extra practice`)
-    ),
-    home.due + (home.grammar?.due || 0) ? h("div", { class: "count" }, home.due + (home.grammar?.due || 0)) : null
-  );
+  const learn = async () => {
+    const m = await flows.pickStudyMode({
+      title: "Learn new words",
+      writingSub: "See, trace and write each word, then a mixed quiz",
+      choiceSub: "See each word, then pick meanings, readings and sounds",
+    });
+    if (m) startFlow(() => flows.learnNew(m));
+  };
+  const practice = async () => {
+    const d = home.due_by_skill || {};
+    const m = await flows.pickStudyMode({
+      title: "Practice",
+      writingSub: home.due ? `All reviews: writing, speaking, recall · ${home.due} due` : "Nothing due — extra writing practice",
+      choiceSub: d.recall ? `Recognise characters & meanings · ${d.recall} due` : "Nothing due — extra recognition practice",
+      extraNote: "Choice-only practice doesn't count as writing practice — writing reviews stay due until you write them.",
+    });
+    if (m) startFlow(() => flows.review({ writing: m.writing, extra: m.writing ? home.due === 0 : !d.recall }));
+  };
+
+  // One clear next step: new words while there are any, otherwise practice.
+  const due = home.due + (home.grammar?.due || 0);
+  const primary = next.words.length
+    ? { title: "Continue learning", sub: [`${next.words.length} new word${next.words.length === 1 ? "" : "s"}`, multi ? home.section : null, home.plan?.minutes ? `about ${Math.max(1, home.plan.minutes)} min` : null], go: learn }
+    : home.learned
+      ? { title: due ? "Review your words" : "Extra practice", sub: due ? `${due} ready for review` : multi ? `${home.section} complete — tap the flag to pick another level` : "All caught up — keep them fresh", go: practice }
+      : null;
+
   const g = home.grammar;
-  const grammarCard = g?.available
-    ? h(
-        "button",
-        { class: "mode teal" + (g.unlocked ? "" : " soft"), onclick: () => (g.unlocked ? startFlow(flows.grammarLesson) : grammarBook()) },
-        h("div", { class: "badge-ico", html: SVG.book }),
-        h(
-          "div",
-          {},
-          h("h3", {}, "Grammar"),
-          h(
-            "p",
-            {},
-            g.unlocked
-              ? `Lesson ${g.lesson} of ${g.lessons} · 3 new grammar points`
-              : g.finished
-                ? `All ${g.total} ${home.section} grammar points learned · tap to look them up`
-                : `Learn ${g.words_to_next} more word${g.words_to_next === 1 ? "" : "s"} to unlock lesson ${g.lesson}${g.learned ? " · tap for your grammar book" : ""}`
-          )
-        ),
-        g.unlocked ? h("div", { class: "count" }, "NEW") : h("div", { class: "lock-ico", html: SVG.lock })
-      )
-    : null;
-
-  const listenCard = h(
-    "button",
-    { class: "mode sky", onclick: () => listenSheet(home) },
-    h("div", { class: "badge-ico", html: SVG.ear }),
-    h("div", {}, h("h3", {}, "Listen, read & talk"), h("p", {}, home.course === "zh" ? "Dictation, stories, tones and chats with Gemma" : home.course === "sl" ? "Dictation and chats with Gemma" : "Dictation, stories and chats with Gemma"))
-  );
-
-  const sentenceCard = h(
-    "button",
-    { class: "mode purple", onclick: () => startFlow(flows.sentences) },
-    h("div", { class: "badge-ico", html: SVG.chat }),
-    h("div", {}, h("h3", {}, "Sentences"), h("p", {}, state.settings.ai_enabled ? "Write, type & say AI-made sentences" : "Write, type & say sentences"))
-  );
-
-  const lookalikeCard = home.lookalikes
-    ? h(
-        "button",
-        { class: "mode orange", onclick: () => startFlow(flows.lookalikes) },
-        h("div", { class: "badge-ico", html: SVG.twins }),
-        h("div", {}, h("h3", {}, "Look-alikes"), h("p", {}, home.course === "ja" ? "未 or 末? 待, 持 or 特? Tell similar kanji apart" : "未 or 末? 己 or 已? Tell similar characters apart"))
-      )
-    : null;
+  const tiles = [
+    next.words.length && home.learned
+      ? tile({ icon: SVG.review, title: "Practice", sub: home.due ? `${home.due} word${home.due === 1 ? "" : "s"} due` : nextDueText(home.next_due) || "All caught up", badge: due || null, onclick: practice })
+      : null,
+    !next.words.length && home.learned
+      ? tile({ icon: SVG.sprout, title: "New words", sub: multi ? `${home.section} complete` : "All words learned", soft: true, onclick: () => courseSheet(home) })
+      : null,
+    g?.available
+      ? tile({
+          icon: SVG.book,
+          title: "Grammar",
+          sub: g.unlocked ? `Lesson ${g.lesson} of ${g.lessons}` : g.finished ? "All learned · look them up" : `Unlocks after ${g.words_to_next} more word${g.words_to_next === 1 ? "" : "s"}`,
+          badge: g.unlocked ? "new" : null,
+          soft: !g.unlocked,
+          onclick: () => (g.unlocked ? startFlow(flows.grammarLesson) : grammarBook()),
+        })
+      : null,
+    tile({ icon: SVG.ear, title: "Listen & talk", sub: home.course === "zh" ? "Stories, tones, chats" : "Stories and chats", onclick: () => listenSheet(home) }),
+    tile({ icon: SVG.chat, title: "Sentences", sub: "Write, type & say", onclick: () => startFlow(flows.sentences) }),
+    home.lookalikes ? tile({ icon: SVG.twins, title: "Look-alikes", sub: home.course === "ja" ? "未 or 末? 待 or 持?" : "未 or 末? 己 or 已?", onclick: () => startFlow(flows.lookalikes) }) : null,
+    isSl() ? null : tile({ icon: SVG.map, title: "Character map", sub: "How characters connect", href: "#/map" }),
+  ].filter(Boolean);
 
   const units = await unitsView(home.units);
 
   shell(
     [
-      topbar(home),
-      h(
-        "div",
-        { class: "card goal-card" },
-        h("div", { class: "goal-icon" }, goalPct >= 100 ? "🏆" : "🎯"),
-        h(
-          "div",
-          { style: { flex: 1 } },
-          h("div", { class: "row" }, h("h3", {}, "Daily goal"), h("span", { class: "spacer" }), h("span", { class: "muted small" }, `${home.xp_today} / ${home.daily_goal} XP`)),
-          h("div", { class: "progress yellow", style: { marginTop: "8px" } }, h("i", { style: { width: goalPct + "%" } }))
-        )
-      ),
-      planCard(home.plan),
+      homeHeader(home),
+      gardenHero(home),
+      primary
+        ? h(
+            "button",
+            { class: "primary-go", onclick: primary.go },
+            h("div", {}, h("div", { class: "pg-title" }, primary.title), h("div", { class: "pg-sub" }, [].concat(primary.sub).filter(Boolean).flatMap((x, i) => (i ? [h("span", {}, " · "), h("span", {}, x)] : [h("span", {}, x)])))),
+            h("span", { class: "pg-arrow", html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' })
+          )
+        : null,
       aiInviteCard(),
-      h("div", { class: "modes" }, learnCard, grammarCard, reviewCard, listenCard, sentenceCard, lookalikeCard),
+      h("div", { class: "home-label" }, "Also today"),
+      h("div", { class: "tiles" }, tiles),
       h("h2", { class: "section-title" }, "This week"),
       weekChart(home.week, home.saved_days),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
@@ -362,42 +363,6 @@ async function homeScreen() {
     "#/"
   );
   gardenNotice(home.garden_notice);
-}
-
-/** Today's plan: what's left to keep the garden growing, with a time estimate. */
-function planCard(plan) {
-  if (!plan) return null;
-  const rows = [
-    ["Reviews", plan.reviews_done, plan.reviews_left],
-    ["New words", plan.new_done, plan.new_left],
-  ];
-  const left = plan.reviews_left + plan.new_left;
-  return h(
-    "div",
-    { class: "card plan-card" + (left ? "" : " done") },
-    h(
-      "div",
-      { class: "row" },
-      h("h3", {}, left ? "🌿 Today's plan" : "🌳 All done for today"),
-      h("span", { class: "spacer" }),
-      left ? h("span", { class: "plan-time" }, `≈ ${Math.max(1, plan.minutes)} min`) : null
-    ),
-    h(
-      "div",
-      { class: "plan-rows" },
-      rows.map(([label, done, rest]) =>
-        h(
-          "div",
-          { class: "plan-row" + (rest ? "" : done ? " ok" : " none") },
-          h("span", { class: "plan-check" }, rest || !done ? "" : "✓"),
-          h("span", {}, label),
-          h("span", { class: "spacer" }),
-          h("b", {}, rest ? `${done} / ${done + rest}` : done ? `${done} done` : label === "Reviews" ? "nothing due" : "—")
-        )
-      )
-    ),
-    left ? null : h("p", { class: "small muted", style: { margin: "6px 0 0" } }, "Your garden is watered. Extra practice is always welcome.")
-  );
 }
 
 /** Home card inviting learners without a model to download Gemma (Android app only). */
@@ -1036,6 +1001,9 @@ function addWordSheet() {
 // ------------------------------------------------------------------ stats
 
 const SVG = {
+  leafFill: '<svg viewBox="0 0 24 24"><path d="M5 19C5 10 11 5 20 4c0 9-5 15-14 15z" fill="currentColor"/><path d="M5.5 18.5l7.5-7.5" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  review: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/><path d="M12 8v4l3 2"/></svg>',
+  map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="9" width="6" height="6" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><path d="M9 12h3V6h3M12 12v6h3"/></svg>',
   leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#3d5a40" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6-1-10-6-14 7 0 12 4 12 10-2 1-4 2-6 4z"/><path d="M12 21c-1-4-2-7-5-10M9 15H6M11 18H7"/></svg>',
   hourglass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3h12M6 21h12M7 3c0 5 10 6 10 9s-10 4-10 9M17 3c0 5-10 6-10 9s10 4 10 9"/></svg>',
   book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/><path d="M12 9c1-2 2-3 4-3.5M12 9c-1-2-2-3-4-3.5"/></svg>',
@@ -1365,12 +1333,12 @@ async function settingsScreen() {
   };
 
   let theme = "auto";
-  try { theme = localStorage.getItem("theme") || "forest"; } catch { /* ignore */ }
+  try { theme = localStorage.getItem("theme") || DEFAULT_THEME; } catch { /* ignore */ }
   const soundToggle = h("input", { type: "checkbox", class: "toggle", checked: soundsOn(), onchange: (e) => { setSounds(e.target.checked); if (e.target.checked) playCorrect(); } });
   const themeSel = h(
     "select",
     { onchange: (e) => { try { localStorage.setItem("theme", e.target.value); } catch { /* ignore */ } applyTheme(); } },
-    [["forest", "Naravni eko (forest)"], ["auto", "Classic · match system"], ["light", "Classic light"], ["dark", "Classic dark"]].map(([v, l]) => h("option", { value: v, selected: v === theme }, l))
+    [isHeritage() ? ["heritage", "Heritage · linen"] : ["forest", "East · forest"], ["auto", "Classic · match system"], ["light", "Classic light"], ["dark", "Classic dark"]].map(([v, l]) => h("option", { value: v, selected: v === theme }, l))
   );
 
   const langSel = h(
@@ -1534,7 +1502,7 @@ function reminderCard(s) {
 
 function welcomeScreen(gemmaNext) {
   return new Promise(async (resolve) => {
-    let chosen = state.settings.course === "ja" ? "ja" : "zh";
+    let chosen = isHeritage() ? "sl" : state.settings.course === "ja" ? "ja" : "zh";
     let level = null;
     // Levels of each course (JLPT N5, N3 …), so a course with several can be started at the right one.
     const courses = (await api("/api/home").catch(() => ({}))).courses || [];
@@ -1611,7 +1579,7 @@ function welcomeScreen(gemmaNext) {
         gemmaNext ? h("div", { class: "gsetup-step" }, h("i", { class: "on" }), h("i"), "Step 1 of 2") : null,
         h("img", { class: "app-logo welcome-logo", src: LOGO, alt: "" }),
         h("div", { class: "welcome-langs", role: "group", "aria-label": "Language" }, langBtns),
-        h("h1", {}, "Welcome to Bloomko"),
+        h("h1", {}, `Welcome to ${APP_NAME}`),
         h("p", { class: "muted" }, "Learn a new language — write, read and speak it, without wasting paper."),
         h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),
         h("div", { class: "small muted", style: { alignSelf: "flex-start", margin: "6px 0 8px" } }, "What do you want to learn?"),

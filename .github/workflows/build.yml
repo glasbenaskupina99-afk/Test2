@@ -1,9 +1,10 @@
 name: Build app (Android + web)
 
-# Every push: builds the Android APK, publishes it as a release and replaces
-# .../Bloomko.apk on the website (LanguageMaster.apk is kept as an alias for old links). The web app itself is left unchanged.
-# The new web app goes to .../preview/ behind an access code (not indexed, not linked anywhere),
-# so it can be checked before release.
+# Every push: builds both Android apps — Bloomko East (Bloomko.apk) and Bloomko Heritage
+# (BloomkoHeritage.apk) — publishes them as a release and replaces the downloads on the website
+# (LanguageMaster.apk is kept as an alias for old links). The web app itself is left unchanged.
+# The new web apps go to .../preview/ (East) and .../preview-heritage/ (Heritage) behind an
+# access code (not indexed, not linked anywhere), so they can be checked before release.
 #
 # To also publish the web app (https://<owner>.github.io/<repo>/), run this
 # workflow manually (Actions → Run workflow) with "Publish web app" ticked.
@@ -53,59 +54,80 @@ jobs:
           java-version: 21
           cache: gradle
 
-      - name: Build web assets
+      # Two apps from one code base: Bloomko East (Chinese, Japanese) and Bloomko Heritage (Slovenian).
+      - name: Build web assets (East)
         working-directory: mobile
         run: |
           npm ci
           npm run build
+          rm -rf ../www-east && cp -r www ../www-east
           npx cap sync android
 
-      - name: Build APK
+      - name: Build APK (East)
         working-directory: mobile/android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
-          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/Bloomko.apk"
+          ./gradlew assembleEastDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/east/debug/app-east-debug.apk "$GITHUB_WORKSPACE/Bloomko.apk"
+
+      - name: Build web assets (Heritage)
+        working-directory: mobile
+        run: |
+          EDITION=heritage npm run build
+          rm -rf ../www-heritage && cp -r www ../www-heritage
+          npx cap sync android
+
+      - name: Build APK (Heritage)
+        working-directory: mobile/android
+        run: |
+          ./gradlew assembleHeritageDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/heritage/debug/app-heritage-debug.apk "$GITHUB_WORKSPACE/BloomkoHeritage.apk"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: Bloomko-apk
-          path: Bloomko.apk
+          name: Bloomko-apks
+          path: |
+            Bloomko.apk
+            BloomkoHeritage.apk
 
       # Only when asked for: replace the whole website with the new web app (+ APK).
       - name: Prepare web app
         if: github.event_name == 'workflow_dispatch' && inputs.publish_web
         run: |
-          cp Bloomko.apk mobile/www/Bloomko.apk
-          cp Bloomko.apk mobile/www/LanguageMaster.apk
-          touch mobile/www/.nojekyll
+          # East at the root, Heritage at /heritage/
+          cp -r www-heritage www-east/heritage
+          cp Bloomko.apk www-east/Bloomko.apk
+          cp Bloomko.apk www-east/LanguageMaster.apk
+          cp BloomkoHeritage.apk www-east/BloomkoHeritage.apk
+          touch www-east/.nojekyll
 
       - name: Publish web app + APK
         if: github.event_name == 'workflow_dispatch' && inputs.publish_web
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: mobile/www
+          publish_dir: www-east
           publish_branch: gh-pages
           force_orphan: true
           commit_message: "Publish Bloomko 1.8.${{ env.APP_VERSION }} (web + app)"
 
       # Default: the new web app only as a locked preview (asks for an access code) at .../preview/.
-      - name: Prepare locked web preview
+      - name: Prepare locked web previews
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
         working-directory: mobile
-        run: node scripts/make-preview.mjs www ../preview-out
+        run: |
+          node scripts/make-preview.mjs ../www-east ../preview-out/preview
+          node scripts/make-preview.mjs ../www-heritage ../preview-out/preview-heritage
 
-      - name: Publish locked web preview
+      - name: Publish locked web previews
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.publish_web) }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: preview-out
-          destination_dir: preview
           publish_branch: gh-pages
           keep_files: true
-          commit_message: "Locked web preview 1.8.${{ env.APP_VERSION }}"
+          commit_message: "Locked web previews 1.8.${{ env.APP_VERSION }}"
 
       # Default: update only the APK download, keep the published web app as it is.
       - name: Prepare APK-only update
@@ -113,6 +135,7 @@ jobs:
         run: |
           mkdir -p apk-only
           cp Bloomko.apk apk-only/Bloomko.apk
+          cp BloomkoHeritage.apk apk-only/BloomkoHeritage.apk
           # Old download link keeps working
           cp Bloomko.apk apk-only/LanguageMaster.apk
 
@@ -134,8 +157,11 @@ jobs:
           name: Bloomko 1.8.${{ env.APP_VERSION }}
           target_commitish: ${{ github.sha }}
           make_latest: true
-          files: Bloomko.apk
+          files: |
+            Bloomko.apk
+            BloomkoHeritage.apk
           body: |
-            Install on your phone: download **Bloomko.apk** below and open it
+            **Bloomko East** (Chinese, Japanese): Bloomko.apk · **Bloomko Heritage** (Slovenian): BloomkoHeritage.apk
+            Install on your phone: download the APK below and open it
             (allow "install unknown apps" for your browser when asked).
             Built from ${{ github.sha }}.

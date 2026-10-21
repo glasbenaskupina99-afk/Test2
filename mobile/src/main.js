@@ -27,6 +27,8 @@ const storage = isNative
 
 // Chinese and Japanese stroke orders differ, so each course has its own stroke data.
 window.__appVersion = __APP_VERSION__;
+// Bloomko East (Chinese, Japanese) or Bloomko Heritage (lesser-known languages).
+window.__edition = __EDITION__;
 window.__charDataUrl = (c) => `${window.__course === "ja" ? "chars-ja" : "chars"}/${encodeURIComponent(c)}.json`;
 
 function recognize(language = "zh-CN") {

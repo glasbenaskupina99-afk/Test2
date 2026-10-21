@@ -21,6 +21,18 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    // Two apps from one code base. East keeps the original id so installed apps update.
+    flavorDimensions = ["edition"]
+    productFlavors {
+        east {
+            dimension = "edition"
+            applicationId = "com.hanzihome.app"
+        }
+        heritage {
+            dimension = "edition"
+            applicationId = "eu.bloomko.heritage"
+        }
+    }
     signingConfigs {
         // A fixed key committed to the repo so every CI build can update the
         // previously installed app (a random debug key per build would not).

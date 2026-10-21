@@ -1,4 +1,4 @@
-// Duolingo-style lesson runner: progress bar, exercise, check/continue footer, end screen.
+// Lesson runner: leaf progress, exercise, check/continue footer, end screen.
 import { api, h, confirmDialog } from "./util.js";
 import { stopSpeaking } from "./audio.js";
 import { playCorrect, playWrong, playComplete } from "./sounds.js";
@@ -50,7 +50,11 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
   let combo = 0;
   const started = Date.now();
 
-  const bar = h("i", { style: { width: "0%" } });
+  // Progress as a row of leaves that fill in as the lesson goes on.
+  const LEAVES = 10;
+  const leafSvg = '<svg viewBox="0 0 24 24"><path d="M5 19C5 10 11 5 20 4c0 9-5 15-14 15z"/></svg>';
+  const leaves = Array.from({ length: LEAVES }, () => h("span", { class: "lp-leaf", html: leafSvg }));
+  const bar = h("div", { class: "leaf-progress", role: "progressbar", "aria-valuemin": "0", "aria-valuemax": "100" }, leaves);
   const comboEl = h("div", { class: "stat fire", style: { minWidth: "48px", justifyContent: "flex-end" } });
   const body = h("div", { class: "lesson-body" });
   const footInner = h("div", { class: "inner" });
@@ -62,7 +66,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
       "div",
       { class: "lesson-top" },
       h("button", { class: "icon-btn", "aria-label": "Quit", onclick: quit }, "✕"),
-      h("div", { class: "progress" }, bar),
+      bar,
       comboEl
     ),
     body,
@@ -75,7 +79,10 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
   const finished = new Promise((r) => (resolveLesson = r));
 
   function updateBar() {
-    bar.style.width = `${Math.round((100 * pos) / Math.max(queue.length, 1))}%`;
+    const pct = Math.round((100 * pos) / Math.max(queue.length, 1));
+    const filled = Math.round((LEAVES * pos) / Math.max(queue.length, 1));
+    leaves.forEach((l, i) => l.classList.toggle("on", i < filled));
+    bar.setAttribute("aria-valuenow", String(pct));
     comboEl.textContent = combo >= 3 ? `🔥${combo}` : "";
   }
 
@@ -204,7 +211,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
       )
     );
     setFoot(finishBtn);
-    bar.style.width = "100%";
+    leaves.forEach((l) => l.classList.add("on"));
     if (onDone) Promise.resolve().then(() => onDone(summary)).catch((e) => console.warn(e));
   }
 

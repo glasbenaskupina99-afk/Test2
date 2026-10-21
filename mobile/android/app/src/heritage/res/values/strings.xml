@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Bloomko Heritage</string>
+    <string name="title_activity_main">Bloomko Heritage</string>
+    <string name="package_name">eu.bloomko.heritage</string>
+    <string name="custom_url_scheme">eu.bloomko.heritage</string>
+</resources>

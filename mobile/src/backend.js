@@ -21,8 +21,13 @@ import LOOKALIKES from "../../app/data/lookalikes.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
 
+// Two apps from one code base: Bloomko East (Chinese, Japanese) and Bloomko Heritage
+// (lesser-known languages, for now Slovenian). The build picks one (__EDITION__).
+export const EDITION = typeof __EDITION__ !== "undefined" ? __EDITION__ : "east";
+const EDITION_LANGS = EDITION === "heritage" ? ["sl"] : ["zh", "ja"];
+
 // Built-in word lists. Each is a "section" of its course (e.g. JLPT N5 / JLPT N3).
-const SEED_SETS = [
+const ALL_SEED_SETS = [
   { lang: "zh", data: seedZh, section: "HSK 1", source: "hsk1", base: 0 },
   { lang: "zh", data: seedZh2, section: "HSK 2", source: "hsk2", base: 1000 },
   { lang: "zh", data: seedZh3, section: "HSK 3", source: "hsk3", base: 2000 },
@@ -32,7 +37,8 @@ const SEED_SETS = [
   { lang: "ja", data: seedJaN3, section: "JLPT N3", source: "n3", base: 10000 },
   { lang: "sl", data: seedSl, section: "A1", source: "sl_a1", base: 0 },
 ];
-const SECTION_OF_SOURCE = Object.fromEntries(SEED_SETS.map((x) => [x.source, x.section]));
+const SEED_SETS = ALL_SEED_SETS.filter((x) => EDITION_LANGS.includes(x.lang));
+const SECTION_OF_SOURCE = Object.fromEntries(ALL_SEED_SETS.map((x) => [x.source, x.section]));
 const MY_WORDS = "My words";
 // Fallback sentences as [english, text, reading]
 const keyed = (rows, file) => rows.map((r, i) => Object.assign([...r], { key: `${file}|${i}` }));
@@ -47,7 +53,7 @@ const FALLBACK = new Proxy({}, { get: (_, lang) => (FALLBACK_EN[lang] || []).map
 const SKILLS = ["write", "speak", "recall"];
 
 const DEFAULTS = {
-  course: "zh", // "zh" Mandarin (hanzi) or "ja" Japanese (kanji)
+  course: EDITION_LANGS[0], // "zh" Mandarin, "ja" Japanese (East) · "sl" Slovenian (Heritage)
   section_zh: "", // section chosen for "Learn new words" ("" = first unfinished)
   section_ja: "",
   section_sl: "",
@@ -273,7 +279,10 @@ function flush() {
 // ------------------------------------------------------------------ helpers
 
 function settingsAll() {
-  return { ...DEFAULTS, ...db.settings };
+  const s = { ...DEFAULTS, ...db.settings };
+  // A course from the other app (e.g. Slovenian in an old East save) falls back to this app's first.
+  if (!EDITION_LANGS.includes(s.course)) s.course = EDITION_LANGS[0];
+  return s;
 }
 
 function settingsUpdate(values) {
@@ -773,7 +782,7 @@ const routes = {
     const cards = SC();
     const future = cards.filter((c) => c.due > n).map((c) => c.due).sort();
     const all = new Set(db.cards.map((c) => c.word_id));
-    const courses = ["zh", "ja", "sl"].map((lang) => {
+    const courses = EDITION_LANGS.map((lang) => {
       const ws = db.words.filter((w) => w.lang === lang).sort(byPosition);
       // Levels of this course (e.g. JLPT N5, N3) for the level step after picking a language.
       const levels = [];

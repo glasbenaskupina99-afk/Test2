@@ -274,12 +274,24 @@ export async function grammarLesson() {
 }
 
 /** Grammar questions due for practice, as lesson steps. */
-async function grammarReviewSteps(extra) {
+async function grammarReviewSteps(extra, ids = null) {
   let g;
   try {
-    g = await api(`/api/grammar/review?n=${extra ? 2 : 3}${extra ? "&extra=1" : ""}`);
+    g = await api(ids ? `/api/grammar/review?ids=${encodeURIComponent(ids.join(","))}` : `/api/grammar/review?n=${extra ? 2 : 3}${extra ? "&extra=1" : ""}`);
   } catch {
     return [];
+  }
+  // Practising one weak grammar point: all three kinds of question (only the first is graded).
+  if (ids) {
+    return g.items.flatMap((p) =>
+      [1, 2, 3].map((kind, i) => {
+        const make = grammarQuestion(p, [], g.others, kind);
+        return step(make, async (res) => {
+          const r = i === 0 ? await api("/api/grammar/answer", { method: "POST", body: { id: p.id, grade: res.grade } }) : { xp: res.grade >= 2 ? 1 : 0 };
+          return { xp: r.xp, requeue: res.grade === 0 ? step(make, async () => ({ xp: 0 })) : null };
+        }, `${p.id}-${kind}`);
+      })
+    );
   }
   return g.items.map((p) => {
     const make = grammarQuestion(p, [], g.others, 1 + Math.floor(Math.random() * 3));
@@ -368,15 +380,17 @@ export function storyQuestions(story) {
 
 // ------------------------------------------------------------------ practice old words
 
-export async function review({ extra = false, writing = true, ids = null } = {}) {
+export async function review({ extra = false, writing = true, ids = null, skill = null, grammarIds = null, title = null } = {}) {
   // Choice-only practice reviews (and reschedules) just the recall cards; writing and
   // speaking reviews stay due until you practise them for real.
   const qs = new URLSearchParams();
   if (extra) qs.set("extra", "1");
   if (!writing) qs.set("skills", "recall");
+  if (skill) qs.set("skills", skill);
   if (ids?.length) qs.set("ids", ids.join(","));
-  const { items, pool } = await api("/api/review/session" + (qs.toString() ? `?${qs}` : ""));
-  const grammarSteps = await grammarReviewSteps(extra);
+  // Weak spots practise only their own group: just these words, or just these grammar points.
+  const { items, pool } = grammarIds ? { items: [], pool: [] } : await api("/api/review/session" + (qs.toString() ? `?${qs}` : ""));
+  const grammarSteps = grammarIds ? await grammarReviewSteps(false, grammarIds) : skill ? [] : await grammarReviewSteps(extra);
   if (!items.length && !grammarSteps.length) {
     toast(extra ? "No learned words at this level yet — learn some first!" : "Nothing due — nice work!");
     return null;
@@ -407,7 +421,7 @@ export async function review({ extra = false, writing = true, ids = null } = {})
 
   // Unlocked grammar comes back in practice too, spread among the words.
   for (const g of grammarSteps) steps.splice(Math.floor(Math.random() * (steps.length + 1)), 0, g);
-  return runLesson({ steps, endTitle: ids?.length ? "Your trees are watered!" : extra ? "Extra practice done!" : "Practice complete!" });
+  return runLesson({ steps, endTitle: title || (ids?.length ? "Your trees are watered!" : extra ? "Extra practice done!" : "Practice complete!") });
 }
 
 // ------------------------------------------------------------------ sentences

@@ -86,6 +86,8 @@ export function snapshot(db) {
     stories: db.stories || {},
     storiesAi: db.storiesAi || [],
     forest: db.forest || { weeks: {}, glade: [] },
+    exams: db.exams || [],
+    placement: db.placement || {},
     settings: Object.fromEntries(SYNCED_SETTINGS.filter((k) => k in (db.settings || {})).map((k) => [k, db.settings[k]])),
   };
 }
@@ -169,6 +171,14 @@ export function merge(db, r) {
     const key = (g) => `${g.week}|${g.kind}|${g.lang}`;
     const have = new Set(db.forest.glade.map(key));
     for (const g of r.forest.glade || []) if (!have.has(key(g))) db.forest.glade.push(g);
+  }
+  if (r.placement) db.placement = { ...r.placement, ...(db.placement || {}) };
+  // Mock exam results from both devices.
+  if (r.exams?.length) {
+    db.exams ||= [];
+    const have = new Set(db.exams.map((e) => `${e.lang}|${e.level}|${e.at}`));
+    for (const e of r.exams) if (!have.has(`${e.lang}|${e.level}|${e.at}`)) db.exams.push(e);
+    db.exams = db.exams.sort((a, b) => String(a.at).localeCompare(String(b.at))).slice(-50);
   }
   db.stories ||= {};
   for (const [id, s] of Object.entries(r.stories || {})) {

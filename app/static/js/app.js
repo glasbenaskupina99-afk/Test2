@@ -16,6 +16,9 @@ import { photoSheet, canReadPhotos } from "./photo.js";
 import { UI_LANGS, setUiLang, uiLang } from "./i18n.js";
 import { charMapScreen } from "./charmap.js";
 import { forestScreen, SEASON, fillChallenge } from "./forest.js";
+import { examsScreen } from "./exam.js";
+import { weakScreen, practiseGroup } from "./weak.js";
+import { placementCard } from "./placement.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -91,6 +94,8 @@ async function route() {
     if (hash.startsWith("#/words")) return await wordsScreen();
     if (hash.startsWith("#/map") && !isSl()) return await charMapScreen(shell, loading);
     if (hash.startsWith("#/forest")) return await forestScreen(shell, loading, { water: (ids) => startFlow(() => flows.review({ ids })) });
+    if (hash.startsWith("#/exams")) return await examsScreen(shell, loading);
+    if (hash.startsWith("#/weak")) return await weakScreen(shell, loading, { practise: (g) => startFlow(() => practiseGroup(flows, g)) });
     if (hash.startsWith("#/stats")) return await statsScreen();
     if (hash.startsWith("#/settings")) return await settingsScreen();
     if (hash.startsWith("#/gemma")) {
@@ -362,6 +367,8 @@ async function homeScreen() {
     tile({ icon: SVG.chat, title: "Sentences", sub: "Write, type & say", onclick: () => startFlow(flows.sentences) }),
     home.lookalikes ? tile({ icon: SVG.twins, title: "Look-alikes", sub: home.course === "ja" ? "未 or 末? 待 or 持?" : "未 or 末? 己 or 已?", onclick: () => startFlow(flows.lookalikes) }) : null,
     isSl() ? null : tile({ icon: SVG.map, title: "Character map", sub: "How characters connect", href: "#/map" }),
+    home.exams ? tile({ icon: SVG.exam, title: "Mock exam", sub: home.course === "ja" ? "JLPT format, timed" : "HSK format, timed", href: "#/exams" }) : null,
+    home.learned >= 8 ? tile({ icon: SVG.target, title: "Weak spots", sub: isSl() ? "Cases, genders, topics" : home.course === "ja" ? "Kanji parts, scripts, grammar" : "Parts, tones, grammar", href: "#/weak" }) : null,
   ].filter(Boolean);
 
   const units = await unitsView(home.units);
@@ -378,6 +385,7 @@ async function homeScreen() {
             h("span", { class: "pg-arrow", html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' })
           )
         : null,
+      home.placement ? placementCard(home.placement, route) : null,
       aiInviteCard(),
       h("div", { class: "home-label" }, "Also today"),
       h("div", { class: "tiles" }, tiles),
@@ -1028,6 +1036,8 @@ function addWordSheet() {
 // ------------------------------------------------------------------ stats
 
 const SVG = {
+  exam: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12l2 2 4-4M9 17h6"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6" fill="currentColor"/></svg>',
   leafFill: '<svg viewBox="0 0 24 24"><path d="M5 19C5 10 11 5 20 4c0 9-5 15-14 15z" fill="currentColor"/><path d="M5.5 18.5l7.5-7.5" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round"/></svg>',
   review: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/><path d="M12 8v4l3 2"/></svg>',
   map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="9" width="6" height="6" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><path d="M9 12h3V6h3M12 12v6h3"/></svg>',

@@ -109,7 +109,7 @@ jobs:
           publish_dir: www-east
           publish_branch: gh-pages
           force_orphan: true
-          commit_message: "Publish Bloomko 1.10.${{ env.APP_VERSION }} (web + app)"
+          commit_message: "Publish Bloomko 1.11.${{ env.APP_VERSION }} (web + app)"
 
       # Default: the new web app only as a locked preview (asks for an access code) at .../preview/.
       - name: Prepare locked web previews
@@ -127,7 +127,7 @@ jobs:
           publish_dir: preview-out
           publish_branch: gh-pages
           keep_files: true
-          commit_message: "Locked web previews 1.10.${{ env.APP_VERSION }}"
+          commit_message: "Locked web previews 1.11.${{ env.APP_VERSION }}"
 
       # Default: update only the APK download, keep the published web app as it is.
       - name: Prepare APK-only update
@@ -147,14 +147,14 @@ jobs:
           publish_dir: apk-only
           publish_branch: gh-pages
           keep_files: true
-          commit_message: "Update Android app 1.10.${{ env.APP_VERSION }}"
+          commit_message: "Update Android app 1.11.${{ env.APP_VERSION }}"
 
       - name: Publish release
         continue-on-error: true
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.10.${{ env.APP_VERSION }}
-          name: Bloomko 1.10.${{ env.APP_VERSION }}
+          tag_name: v1.11.${{ env.APP_VERSION }}
+          name: Bloomko 1.11.${{ env.APP_VERSION }}
           target_commitish: ${{ github.sha }}
           make_latest: true
           files: |

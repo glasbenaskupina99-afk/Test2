@@ -16,6 +16,7 @@ import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as sync from "./sync.js";
 import * as locale from "./locale.js";
+import { EXAMS, makePaper, scorePaper } from "./exams.js";
 import * as fsrs from "./fsrs.js";
 import LOOKALIKES from "../../app/data/lookalikes.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
@@ -872,6 +873,113 @@ function looksLikeReading(x) {
 
 // ------------------------------------------------------------------ routes
 
+// ------------------------------------------------------------------ weak spots & placement (1.9)
+// Weak spots: words (and grammar points) grouped by what they share — a character part, a tone,
+// a script, a gender, a topic or a skill — and ranked by how much trouble they give you, from
+// lapses (forgotten after learning) and the scheduler's difficulty estimate.
+
+/** 0 (easy) … 1 (keeps slipping) for one card or grammar point; null if never reviewed. */
+function trouble(c) {
+  if (!c || !(c.reps || c.lapses)) return null;
+  const slips = Math.min(1, (c.lapses || 0) / ((c.reps || 0) + 1));
+  const diff = c.difficulty ? Math.max(0, Math.min(1, (c.difficulty - 1) / 9)) : 0.3;
+  return +(0.6 * slips + 0.4 * diff).toFixed(3);
+}
+const TONE_MARK = { "̄": 1, "́": 2, "̌": 3, "̀": 4 };
+/** Tones of a pinyin string ("nǐ hǎo" → [3, 3]); neutral syllables are 5. */
+function tonesOf(py) {
+  return String(py || "")
+    .normalize("NFD")
+    .toLowerCase()
+    .split(/[\s'’-]+/)
+    .filter((s) => /[a-zü]/.test(s))
+    .map((s) => [...s].map((c) => TONE_MARK[c]).find(Boolean) || 5);
+}
+const TONE_NAME = { 1: "1st tone ā", 2: "2nd tone á", 3: "3rd tone ǎ", 4: "4th tone à", 5: "Neutral tone" };
+const GENDER_NAME = { m: "Masculine nouns", ž: "Feminine nouns", s: "Neuter nouns", mn: "Plural-only nouns" };
+const SKILL_NAME = { write: ["✍️", "Writing"], speak: ["🗣️", "Speaking"], recall: ["👁️", "Recognising"] };
+const scriptOf = (w) => (w.source === "kana" ? "kana" : HAN_CHAR.test(w.hanzi) ? "kanji" : /[ァ-ヺ]/.test(w.hanzi) ? "katakana" : "hiragana");
+const SCRIPT_NAME = { kana: "The kana themselves", kanji: "Words with kanji", katakana: "Katakana words", hiragana: "Words in hiragana only" };
+
+async function weakSpots() {
+  const lang = course();
+  const words = W();
+  const byWord = new Map();
+  for (const c of C()) (byWord.get(c.word_id) || byWord.set(c.word_id, []).get(c.word_id)).push(c);
+  const scoreOf = (id, skill) => {
+    const cs = (byWord.get(id) || []).filter((c) => !skill || c.skill === skill);
+    const t = cs.map(trouble).filter((x) => x != null);
+    return t.length ? Math.max(...t) : null;
+  };
+  const reviewed = words.filter((w) => scoreOf(w.id) != null);
+  if (lang !== "sl") await loadCharmap();
+  const idx = lang !== "sl" ? charIndex() : null;
+
+  const groups = new Map(); // key → {cat, label, sub, ch, ids:Set, skill}
+  const add = (key, info, w) => {
+    let g = groups.get(key);
+    if (!g) groups.set(key, (g = { key, ...info, ids: new Set() }));
+    g.ids.add(w.id);
+  };
+  for (const w of reviewed) {
+    if (lang !== "sl") {
+      const parts = new Set([...w.hanzi].filter((c) => HAN_CHAR.test(c)).flatMap((c) => [c, ...charParts(c)]));
+      for (const p of parts) add(`part:${p}`, { cat: "parts", ch: p, label: charNode(p, idx).meaning || "" }, w);
+    }
+    if (lang === "zh") for (const t of new Set(tonesOf(w.pinyin))) add(`tone:${t}`, { cat: "sounds", label: TONE_NAME[t] }, w);
+    if (lang === "ja") add(`script:${scriptOf(w)}`, { cat: "sounds", label: SCRIPT_NAME[scriptOf(w)] }, w);
+    if (lang === "sl" && w.gender) add(`gender:${w.gender}`, { cat: "forms", label: GENDER_NAME[w.gender] || w.gender }, w);
+    add(`unit:${w.section}|${w.unit}`, { cat: "topics", label: w.unit, sub: sections().list.length > 1 ? w.section : "" }, w);
+  }
+  for (const s of SKILLS) for (const w of reviewed) if (scoreOf(w.id, s) != null) add(`skill:${s}`, { cat: "skills", icon: SKILL_NAME[s][0], label: SKILL_NAME[s][1], skill: s }, w);
+
+  const out = [];
+  for (const g of groups.values()) {
+    const ids = [...g.ids];
+    if (ids.length < (g.cat === "parts" ? 3 : 4)) continue;
+    if (g.cat === "parts" && ids.length === reviewed.length) continue; // a part in every word says nothing
+    const scored = ids.map((id) => [id, scoreOf(id, g.skill)]).sort((a, b) => b[1] - a[1]);
+    const score = scored.reduce((a, x) => a + x[1], 0) / scored.length;
+    const tricky = scored.filter((x) => x[1] >= 0.35);
+    out.push({
+      key: g.key, cat: g.cat, label: g.label, sub: g.sub || "", ch: g.ch || null, icon: g.icon || null, skill: g.skill || null,
+      score: +score.toFixed(3), words: ids.length, tricky: tricky.length,
+      ids: scored.slice(0, 15).map((x) => x[0]),
+      examples: scored.slice(0, 4).map((x) => wordById(x[0])?.hanzi).filter(Boolean),
+    });
+  }
+
+  // Grammar points (and, for Slovenian, cases) of every level you've studied.
+  const grammar = [];
+  for (const sec of [...new Set(W().map((w) => w.section))]) {
+    const points = await loadGrammar(sec);
+    for (const p of points || []) {
+      const t = trouble(db.grammar.learned[p.id]);
+      if (t != null) grammar.push({ key: `grammar:${p.id}`, cat: "grammar", label: p.title.replace(/[[\]]/g, ""), sub: p.short, gid: p.id, score: t, words: 1, tricky: t >= 0.35 ? 1 : 0, examples: [p.examples?.[0]?.mark || ""].filter(Boolean) });
+    }
+  }
+  out.push(...grammar);
+
+  const CATS = lang === "sl"
+    ? [["grammar", "Cases & grammar"], ["forms", "Gender"], ["topics", "Topics"], ["skills", "Skills"]]
+    : [["parts", lang === "ja" ? "Kanji parts" : "Character parts"], ["sounds", lang === "zh" ? "Tones" : "Scripts & readings"], ["grammar", "Grammar"], ["topics", "Topics"], ["skills", "Skills"]];
+  const cats = CATS.map(([id, title]) => ({
+    id, title,
+    groups: out.filter((g) => g.cat === id).sort((a, b) => b.score - a.score || b.words - a.words).slice(0, id === "parts" ? 24 : 12),
+  })).filter((c) => c.groups.length);
+  const worst = [...out].filter((g) => g.score >= 0.3 && (g.cat !== "parts" || g.words >= 4)).sort((a, b) => b.score - a.score).slice(0, 3);
+  return { enough: reviewed.length >= 8, reviewed: reviewed.length, cats, worst };
+}
+
+const placeKey = (sec) => `${course()}|${sec}`;
+/** Offer a placement test when you open a level you haven't started (once per level). */
+function placementOffer(secs) {
+  const sec = secs.list.find((x) => x.name === secs.current);
+  if (!sec || sec.custom || sec.learned > 0 || sec.total < 20) return null;
+  if ((db.placement || {})[placeKey(sec.name)]) return null;
+  return { section: sec.name, total: sec.total };
+}
+
 const routes = {
   "GET /api/home": async () => {
     waterMissedDays();
@@ -922,6 +1030,8 @@ const routes = {
     return {
       forest: forestSummary(),
       challenges: weekChallenges(),
+      placement: placementOffer(secs),
+      exams: W().some((w) => EXAMS[w.section]),
       streak: streak(),
       plant: plantState(),
       raindrops: db.garden.raindrops,
@@ -1204,6 +1314,95 @@ const routes = {
     return { ok: true };
   },
 
+  // ---------------------------------------------------------------- 1.9: mock exams
+  "GET /api/exams": () => {
+    const levels = [...new Set(W().map((w) => w.section))].filter((sec) => EXAMS[sec]);
+    const ids = learnedIds();
+    return {
+      exams: levels.map((sec) => {
+        const ws = W().filter((w) => w.section === sec);
+        const spec = EXAMS[sec];
+        return {
+          level: sec, name: spec.name, total: spec.total, pass: spec.pass,
+          minutes: spec.sections.reduce((a, x) => a + x.minutes, 0),
+          sections: spec.sections.map((x) => x.title),
+          learned: ws.filter((w) => ids.has(w.id)).length, words: ws.length,
+          best: (db.exams || []).filter((e) => e.level === sec && e.lang === course()).reduce((b, e) => (!b || e.total / e.max > b.total / b.max ? e : b), null),
+        };
+      }),
+      history: (db.exams || []).filter((e) => e.lang === course()).slice(-10).reverse(),
+    };
+  },
+
+  "GET /api/exams/paper": async (_, __, query) => {
+    const level = query.get("level");
+    if (!EXAMS[level]) throw new HttpError(404, "no mock exam for this level");
+    const lang = EXAMS[level].lang;
+    const ws = db.words.filter((w) => w.lang === lang && w.section === level);
+    const ready = await loadReady(lang);
+    const examples = [];
+    for (const w of ws) {
+      const x = ready[w.hanzi];
+      if (!x?.example_zh) continue;
+      examples.push({ text: x.example_zh, reading: x.example_pinyin || (lang === "zh" ? toPinyin(x.example_zh) : ""), en: x.example_en, word: { hanzi: w.hanzi, pinyin: w.pinyin } });
+    }
+    const grammar = (await loadGrammar(level)) || [];
+    return makePaper(level, { words: ws.map(pick), examples, grammar }, { short: query.get("short") === "1" });
+  },
+
+  "POST /api/exams/result": (_, body) => {
+    const paper = body.paper;
+    if (!paper || !EXAMS[paper.level]) throw new HttpError(400, "unknown exam");
+    const r = scorePaper(paper, body.answers || []);
+    db.exams ||= [];
+    db.exams.push({ level: paper.level, lang: course(), short: !!paper.short, at: fmt(now()), total: r.total, max: r.max, passed: r.passed, parts: r.parts });
+    if (db.exams.length > 50) db.exams = db.exams.slice(-50);
+    addActivity({ xp: paper.short ? 15 : 40 });
+    return r;
+  },
+
+  "GET /api/weak": () => weakSpots(),
+
+  // Placement test: a few words from evenly spaced points of the level; you stop where you stop knowing them.
+  "GET /api/placement": async (_, __, query) => {
+    const sec = query.get("section") || sections().current;
+    const ws = W().filter((w) => w.section === sec).sort(byPosition);
+    if (!ws.length) throw new HttpError(404, "unknown level");
+    const blocks = Math.min(8, Math.floor(ws.length / 6));
+    const size = ws.length / blocks;
+    const out = [];
+    for (let b = 0; b < blocks; b++) {
+      const slice = ws.slice(Math.floor(b * size), Math.floor((b + 1) * size));
+      const qs = shuffled(slice).slice(0, 3).map((w) => {
+        const wrong = shuffled(ws.filter((x) => x.id !== w.id && x.english !== w.english)).slice(0, 3).map((x) => x.english);
+        const options = shuffled([w.english, ...wrong]);
+        return { id: w.id, hanzi: w.hanzi, pinyin: w.pinyin, gender: w.gender, options, answer: options.indexOf(w.english) };
+      });
+      out.push({ upto: Math.floor((b + 1) * size), questions: qs });
+    }
+    return { section: sec, total: ws.length, blocks: out };
+  },
+
+  "POST /api/placement/apply": (_, body) => {
+    const sec = body.section;
+    const ws = W().filter((w) => w.section === sec).sort(byPosition);
+    const known = Math.max(0, Math.min(ws.length, Number(body.known) || 0));
+    const have = new Set(db.cards.map((c) => `${c.word_id}|${c.skill}`));
+    // Words you already know count as learned, with first reviews spread over the next weeks
+    // (earliest words latest), so a placement doesn't bury you in reviews tomorrow.
+    ws.slice(0, known).forEach((w, i) => {
+      const days = 3 + Math.round(25 * (1 - i / Math.max(known, 1))) + Math.random() * 2;
+      for (const skill of SKILLS) {
+        if (have.has(`${w.id}|${skill}`)) continue;
+        db.cards.push({ word_id: w.id, skill, ease: 2.5, interval: +days.toFixed(2), due: fmt(addMs(days * DAY)), reps: 1, lapses: 0, last_review: fmt(now()) });
+      }
+    });
+    db.placement ||= {};
+    db.placement[placeKey(sec)] = { at: fmt(now()), known };
+    persist();
+    return { ok: true, known };
+  },
+
   "GET /api/reminder-info": () => {
     const st = settingsAll();
     return { on: st.reminder_on, time: st.reminder_time, streak: streak(), practiced_today: practiced(dayKey()), due: SC().filter((c) => c.due <= fmt(now())).length };
@@ -1258,6 +1457,14 @@ const routes = {
     const known = knownChars();
     const learned = points.filter((p) => db.grammar.learned[p.id]);
     const due = learned.filter((p) => db.grammar.learned[p.id].due <= n).sort((a, b) => (db.grammar.learned[a.id].due < db.grammar.learned[b.id].due ? -1 : 1));
+    // Weak spots: exactly these points, from any level you've studied.
+    const only = (query.get("ids") || "").split(",").filter(Boolean);
+    if (only.length) {
+      const all = [];
+      for (const sec of [...new Set(W().map((w) => w.section))]) all.push(...((await loadGrammar(sec)) || []));
+      const chosen = all.filter((p) => only.includes(p.id) && db.grammar.learned[p.id]);
+      return { items: chosen.map((p) => grammarPoint(p, known)), others: all.map((p) => ({ id: p.id, short: p.short, mark: p.examples[0].mark, learned: !!db.grammar.learned[p.id] })) };
+    }
     const pool = query.get("extra") ? shuffled(learned) : due;
     const items = pool.slice(0, Number(query.get("n")) || 3).map((p) => grammarPoint(p, known));
     const others = points.map((p) => ({ id: p.id, short: p.short, mark: p.examples[0].mark, learned: !!db.grammar.learned[p.id] }));

@@ -1576,3 +1576,69 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .wk-examples { display: flex; flex-wrap: wrap; gap: 8px; font-size: 22px; }
 .wk-examples span { padding: 4px 10px; border-radius: 10px; background: var(--surface-2); color: var(--text-strong); }
 .wk-sheet .row .btn { flex: 1; }
+
+/* ------------------------------------------------------------ tutorial: Bloomko in 5 steps */
+.tutorial { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column; padding: calc(14px + env(safe-area-inset-top, 0px)) 18px calc(18px + var(--safe-bottom)); }
+.tutorial > * { width: 100%; max-width: 520px; margin-left: auto; margin-right: auto; }
+.tut-top { display: flex; align-items: center; gap: 12px; }
+.tut-top .link-btn { margin: 0 0 0 auto; }
+.tut-brand { font-size: 13px; font-weight: 900; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.tut-card { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 0; }
+.tut-card.in { animation: tutIn .35s ease-out; }
+@keyframes tutIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+.tut-stage { width: 100%; display: flex; justify-content: center; margin-bottom: 22px; }
+.tut-title { font-size: 26px; margin: 0 0 10px; color: var(--text-strong); }
+.tut-text { font-size: 16.5px; line-height: 1.5; color: var(--muted); margin: 0; max-width: 420px; }
+.tut-dots { display: flex; justify-content: center; gap: 8px; margin: 16px auto; }
+.tut-dots i { width: 8px; height: 8px; border-radius: 99px; background: var(--border-dark); transition: all .25s; }
+.tut-dots i.on { background: var(--green); }
+.tut-dots i.cur { width: 24px; }
+.tut-foot .foot-row .btn { flex: 1 1 0; width: auto; }
+.tut-choice { display: flex; flex-direction: column; gap: 10px; }
+.tut-art { width: 100%; max-width: 340px; min-height: 210px; border-radius: 26px; background: var(--surface); border: 1.5px solid var(--border); padding: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; box-shadow: var(--soft-shadow, 0 10px 30px rgba(0,0,0,.12)); }
+.tut-art .pad-wrap .btn { display: none; }
+.tw-hook { font-size: 17px; font-weight: 800; color: var(--text-strong); }
+.tw-hook .hz { font-size: 22px; }
+.tw-word { font-size: 46px; font-weight: 900; color: var(--text-strong); letter-spacing: 2px; }
+.tw-word span { display: inline-block; opacity: 0; animation: tutPop .3s ease-out forwards; }
+@keyframes tutPop { from { opacity: 0; transform: translateY(10px) scale(.8); } to { opacity: 1; transform: none; } }
+.tw-meta { display: flex; gap: 10px; align-items: center; }
+.tw-say { font-weight: 800; color: var(--blue); }
+.tw-en { font-size: 18px; color: var(--muted); font-weight: 700; }
+.tut-review { align-items: stretch; }
+.tr-row { display: flex; align-items: center; gap: 10px; opacity: 0; animation: tutPop .35s ease-out forwards; }
+.tr-bar { height: 12px; border-radius: 99px; background: linear-gradient(90deg, var(--green-light), var(--green)); }
+.tr-row small { color: var(--muted); font-weight: 800; white-space: nowrap; }
+.tr-skills { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; font-size: 13px; font-weight: 800; color: var(--text-strong); margin-top: 4px; }
+.tr-skills span { padding: 4px 10px; border-radius: 99px; background: var(--surface-2); }
+.tg-sent { font-size: 38px; color: var(--text-strong); }
+.tg-sent span { display: inline-block; opacity: 0; animation: tutPop .3s ease-out forwards; }
+.tg-en { color: var(--muted); font-weight: 700; }
+.tg-pattern { padding: 6px 14px; border-radius: 12px; border: 2px dashed var(--border); font-weight: 800; color: var(--text-strong); }
+.tg-row { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: baseline; width: 100%; font-size: 30px; opacity: 0; animation: tutPop .35s ease-out forwards; text-align: left; }
+.tg-row b { color: var(--text-strong); }
+.tg-pre { color: var(--muted); font-weight: 800; font-size: 22px; }
+.tg-row small { font-size: 14px; color: var(--muted); font-weight: 800; }
+.tg-svg { width: 260px; height: 110px; display: block; }
+.tg-ground { fill: var(--green-light); opacity: .6; }
+.tt circle { fill: var(--green); }
+.tt { transform-box: fill-box; opacity: 0; animation: tutPop .4s ease-out forwards; }
+.tt.wilt circle { animation: revive 3s 1.2s ease-in-out infinite; fill: #b9a26a; }
+@keyframes revive { 0%, 30% { fill: #b9a26a; } 55%, 100% { fill: var(--green); } }
+.tg-can { animation: tilt 3s 1.2s ease-in-out infinite; transform-origin: 188px 18px; }
+@keyframes tilt { 0%, 100% { transform: rotate(0); } 20%, 45% { transform: rotate(-22deg); } }
+.tg-drops circle { fill: #7fb3e0; opacity: 0; animation: drip 3s 1.2s linear infinite; }
+@keyframes drip { 0%, 18% { opacity: 0; transform: translateY(0); } 25% { opacity: 1; } 45% { opacity: 0; transform: translateY(26px); } 100% { opacity: 0; } }
+.tgd-row { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 800; color: var(--text-strong); text-align: left; }
+.tut-ai { align-items: stretch; gap: 10px; }
+.ta-badge { align-self: center; font-size: 12px; font-weight: 900; padding: 4px 10px; border-radius: 99px; background: var(--surface-2); color: var(--muted); }
+.ta-msg, .ta-fix { padding: 10px 14px; border-radius: 18px; font-size: 19px; max-width: 85%; opacity: 0; animation: tutPop .35s ease-out forwards; }
+.ta-msg.me { align-self: flex-end; background: var(--accent); color: var(--on-accent); border-bottom-right-radius: 6px; }
+.ta-fix { align-self: flex-end; font-size: 15px; font-weight: 800; background: var(--surface-2); color: var(--text-strong); border: 1.5px dashed var(--green); }
+.ta-msg.ai { align-self: flex-start; background: var(--surface-2); color: var(--text-strong); border-bottom-left-radius: 6px; }
+.tut-ready { min-height: 160px; }
+.tut-ready-ic { font-size: 84px; animation: tutPop .5s ease-out; }
+.help-pill { font-weight: 900; min-width: 38px; justify-content: center; }
+.tut-open { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: inherit; color: var(--text-strong); cursor: pointer; margin-bottom: 14px; }
+.tut-open small { display: block; margin-top: 2px; }
+.tut-open-ic { font-size: 26px; }

@@ -19,6 +19,7 @@ import { forestScreen, SEASON, fillChallenge } from "./forest.js";
 import { examsScreen } from "./exam.js";
 import { weakScreen, practiseGroup } from "./weak.js";
 import { placementCard } from "./placement.js";
+import { showTutorial } from "./tutorial.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -250,7 +251,8 @@ function homeHeader(home) {
       "div",
       { class: "home-pills" },
       h("button", { class: "pill streak-pill", title: "Your streak plant", "aria-label": `${home.streak}-day streak`, onclick: () => gardenSheet() }, h("span", { class: "pill-ico", html: SVG.leafFill }), home.streak),
-      h("a", { class: "pill", href: "#/settings", title: ai?.message || "AI status" }, h("span", { class: "status-dot" + (ai?.ok ? " ok" : "") }), "AI")
+      h("a", { class: "pill", href: "#/settings", title: ai?.message || "AI status" }, h("span", { class: "status-dot" + (ai?.ok ? " ok" : "") }), "AI"),
+      h("button", { class: "pill help-pill", title: "How Bloomko works", "aria-label": "How Bloomko works", onclick: () => showTutorial({ onDone: route }) }, "?")
     )
   );
 }
@@ -1439,6 +1441,7 @@ async function settingsScreen() {
   shell(
     [
       h("div", { class: "topbar" }, h("h2", {}, "Settings")),
+      h("button", { class: "card tut-open", onclick: () => showTutorial({ onDone: route }) }, h("span", { class: "tut-open-ic" }, "🌱"), h("span", {}, h("b", {}, "How Bloomko works"), h("small", { class: "muted" }, "The 5-step tour: words, practice, grammar, garden, AI")), h("span", { class: "spacer" }), "›"),
       h("h2", { class: "section-title", style: { marginTop: 0 } }, isApp ? "✨ Gemma on this phone" : "✨ Gemma AI"),
       aiCard,
       h("h2", { class: "section-title" }, "🎤 Pronunciation"),
@@ -1651,6 +1654,8 @@ enhanceSelects();
     const offerGemma = hasGemmaSupport() && !(await window.__native.gemma.status().catch(() => ({}))).hasModel;
     await welcomeScreen(offerGemma);
     if (offerGemma) await gemmaSetupScreen({ step: "2 of 2" });
+    // The 5-step tour, ending with the placement test or "complete beginner".
+    await showTutorial({ first: true, onDone: route });
   }
   route();
   if (canRemind()) {

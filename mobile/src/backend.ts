@@ -488,7 +488,10 @@ function plantState() {
 
 const course = () => settingsAll().course;
 /** Words / cards of the course being studied. */
-const W = () => db.words.filter((w) => w.lang === course());
+const W = () => {
+  const lang = course(); // once, not for every word (settingsAll() builds a new object each time)
+  return db.words.filter((w) => w.lang === lang);
+};
 /** Sections of the current course in path order, with the one picked for new words. */
 function sections() {
   const ids = learnedIds();
@@ -707,7 +710,8 @@ function gardenBeds(byWord = null, nowMs = Date.now()) {
       byWord.get(c.word_id).push(c);
     }
   }
-  const next = W().filter((w) => !byWord.has(w.id) && w.section === sections().current).sort(byPosition)[0];
+  const current = sections().current; // once: it walks every word
+  const next = W().filter((w) => !byWord.has(w.id) && w.section === current).sort(byPosition)[0];
   const beds = [];
   for (const w of W().sort(byPosition)) {
     const key = `${w.section}|${w.unit}`;

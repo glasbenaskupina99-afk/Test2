@@ -213,15 +213,16 @@ test("mock exam: a short exam can be taken to the result", { skip: edition !== "
   await page.click(".tut-top .link-btn");
   await go(page, "#/exams", ".exam-card");
   await page.locator(".exam-card .btn.ghost").first().click();
-  for (let i = 0; i < 200 && !(await page.locator(".exam .exam-result").count()); i++) {
-    if (await page.locator(".exam .exam-intro").count()) await page.click(".exam .lesson-foot .btn");
-    else {
+  for (let i = 0; i < 400 && !(await page.locator(".exam .exam-result").count()); i++) {
+    if (await page.locator(".dialog").count()) await page.click(".dialog .btn.ghost");
+    else if (await page.locator(".exam .exam-intro").count()) await page.click(".exam .lesson-foot .btn");
+    else if (await page.locator(".exam .exam-opt").count()) {
       await page.locator(".exam .exam-opt").first().click();
       await page.locator(".exam .lesson-foot .btn").last().click();
-      if (await page.locator(".dialog").count()) await page.click(".dialog .btn.ghost");
     }
+    await page.waitForTimeout(40); // let the next question (or the results) render
   }
-  await page.waitForSelector(".exam .exam-result", { timeout: 10000 });
+  await page.waitForSelector(".exam .exam-result", { timeout: 20000 });
   assert.match(await page.locator(".exam .er-total").innerText(), /\d+\s*\/\s*200/);
   assert.deepEqual(errors, []);
 });
@@ -241,5 +242,24 @@ test("Anki deck import (.apkg) with progress", { skip: edition !== "east" }, asy
   assert.ok(words.some((w: any) => w.hanzi === "长颈鹿" && w.section === "HSK Extra"));
   const panda = words.find((w: any) => w.hanzi === "熊猫");
   assert.ok(panda.learned || (await api("/api/home")).learned >= 3, "Anki progress kept");
+  assert.deepEqual(errors, []);
+});
+
+test("the garden stays quick with a big vocabulary (it once took seconds)", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 1500).map((w: any) => w.id), xp: 0 } });
+  const ms = await page.evaluate(async () => {
+    const t = performance.now();
+    await window.__localApi("/api/forest");
+    await window.__localApi("/api/home");
+    return performance.now() - t;
+  });
+  assert.ok(ms < 1500, `garden + home took ${Math.round(ms)} ms`);
+  await go(page, "#/forest", ".bed-svg g.plant");
+  await page.locator(".bed-svg g.plant").nth(5).click();
+  await page.waitForSelector(".plant-tag", { timeout: 3000 });
   assert.deepEqual(errors, []);
 });

@@ -33,6 +33,20 @@ Also included: HSK 1–3 following the official HSK 3.0 (2021) word lists (508 +
 | Sentence generation, translation grading, memory hooks, auto-filling new words | **Gemma** |
 | Pronunciation | Your choice: phone speech recognition (compared syllable by syllable, tones included), **Gemma audio**, or record yourself and compare against the native voice. |
 
+**2.0:** the code is **TypeScript** (the in-app backend in `mobile/src`, the UI in `app/static/js`); **encrypted cloud backup** (Settings → Cloud backup: a backup key, a copy encrypted on the device about once a day, the last 10 kept on bloomko.eu; on a new phone use *Restore from a backup* on the welcome screen); **Anki import** (Words → Import → *Import an Anki deck (.apkg)*, with field mapping and optionally your Anki progress); and **automatic tests** that run on every push before anything is built or published.
+
+### Development
+
+```bash
+cd mobile
+npm ci
+npm run typecheck     # TypeScript, whole app
+npm test              # unit tests (scheduler, mock exams, sync, backup, Anki, bloomko.eu endpoints)
+npm run build         # East → mobile/www   (EDITION=heritage npm run build for Heritage)
+npm run test:e2e      # the built app in Chromium (Playwright)
+npm run build:server  # UI bundle for the self-hosted Python server (python run.py)
+```
+
 ## 💻 On a computer (in the browser)
 
 Open **https://glasbenaskupina99-afk.github.io/Test2/** in Chrome or Edge. Nothing to install or host:

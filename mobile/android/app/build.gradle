@@ -9,7 +9,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode((System.getenv("APP_VERSION") ?: "1").toInteger())
-        versionName "1.11.${System.getenv("APP_VERSION") ?: "0"}"
+        versionName "2.0.${System.getenv("APP_VERSION") ?: "0"}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // Phones are arm64; skipping x86_64 (emulators) saves ~25 MB of LiteRT-LM native code.
         ndk {
@@ -70,7 +70,7 @@ kotlin {
 dependencies {
     // On-device Gemma 4 (LiteRT-LM)
     implementation "com.google.ai.edge.litertlm:litertlm-android:latest.release"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:2.0.0"
     // Reading text from photos (ML Kit through Google Play services: the models download on the phone)
     implementation "com.google.android.gms:play-services-mlkit-text-recognition:19.0.1"
     implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:16.0.1"

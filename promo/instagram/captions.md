@@ -108,3 +108,15 @@ rainy night, warm tea, one new character at a time ☕🌧️
 tonight: 茶 chá (tea) and 书 shū (book). Trace it, write it from memory, quick quiz, and my little plant bloomed 🌸
 study with me? Early access → link in bio (bloomko.eu)
 #studywithme #lofi #cozystudy #learnchinese #chinesecharacters #hanzi #studygram #languagelearning #reels
+
+## Caption: tutorial East (EN) · `tutorial-east.mp4`
+How Bloomko works, in 5 steps 🌱
+1 new words: watch, trace, write ✍️ · 2 practice at just the right time · 3 grammar, step by step · 4 every word you learn is a tree 🌳 · 5 talk with an AI tutor, even offline 💬
+New? Take the placement test or start as a complete beginner. Early access → link in bio (bloomko.eu)
+#learnchinese #learnjapanese #hanzi #kanji #languagelearning #studygram #howto #reels
+
+## Caption: tutorial Heritage (EN) · `tutorial-heritage.mp4`
+How Bloomko Heritage works, in 5 steps 🌱
+Words with gender and sound, practice at the right time, coloured case endings, a forest that grows with you, and an AI tutor that works offline. Starting with Slovenian 🇸🇮, more lesser-known languages coming.
+Early access → link in bio (bloomko.eu)
+#learnslovenian #slovenščina #languagelearning #minoritylanguages #studygram #reels

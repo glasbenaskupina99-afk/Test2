@@ -892,10 +892,13 @@ function tombstone(words) {
 // ------------------------------------------------------------------ your own words
 
 /** A word you add yourself (one at a time or from an imported list). Throws with a readable reason. */
+/** The word as it's stored for the current course (only characters, normalised spelling …). */
+const normWord = (text) => (course() === "sl" ? normSl(text) : course() === "ja" ? writable(text) : hanziOnly(text));
+
 function makeWord(text, readingIn, englishIn, list = MY_WORDS, seen = new Set()) {
   const ja = course() === "ja";
   const sl = course() === "sl";
-  const hanzi = sl ? normSl(text) : ja ? writable(text) : hanziOnly(text);
+  const hanzi = normWord(text);
   const english = String(englishIn || "").trim();
   if (!hanzi) throw new HttpError(400, sl ? "No Slovenian word" : `No ${ja ? "Japanese" : "Chinese characters"} found`);
   if (!english) throw new HttpError(400, "Missing the English meaning");
@@ -1166,6 +1169,30 @@ const routes = {
       persist();
     }
     return { list, added: added.map(pick), skipped };
+  },
+
+  // After an Anki import: words you had studied in Anki count as learned, scheduled from Anki's intervals.
+  "POST /api/words/anki-progress": (_, body) => {
+    const list = String(body.list || "");
+    // The imported list first; words that were already in the course (and so not imported again) too.
+    const byHanzi = new Map(W().map((w) => [w.hanzi, w]));
+    for (const w of W()) if (w.section === list && w.source === "custom") byHanzi.set(w.hanzi, w);
+    const have = new Set(db.cards.map((c) => `${c.word_id}|${c.skill}`));
+    let learned = 0;
+    for (const it of Array.isArray(body.items) ? body.items : []) {
+      const w = byHanzi.get(normWord(String(it.word || "")));
+      if (!w || !(Number(it.type) > 0 || Number(it.ivl) > 0)) continue;
+      const ivl = Math.max(1, Math.min(3650, Number(it.ivl) || 1));
+      // Spread the first reviews over the interval, so a big deck doesn't all come due at once.
+      const days = Math.max(1, ivl * (0.3 + 0.7 * Math.random()));
+      for (const skill of SKILLS) {
+        if (have.has(`${w.id}|${skill}`)) continue;
+        db.cards.push({ word_id: w.id, skill, ease: 2.5, interval: ivl, stability: ivl, difficulty: 5, due: fmt(addMs(days * DAY)), reps: Math.max(1, Number(it.reps) || 1), lapses: Math.max(0, Number(it.lapses) || 0), last_review: fmt(now()) });
+      }
+      learned++;
+    }
+    persist();
+    return { learned };
   },
 
   // Words found in a photo's text (read on the phone): which you know, which are in the course, which are new.

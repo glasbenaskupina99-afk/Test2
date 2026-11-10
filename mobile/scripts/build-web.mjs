@@ -19,6 +19,8 @@ for (const item of ["css", "vendor", "icons", "icon.svg", "manifest.webmanifest"
   cpSync(join(staticDir, item), join(www, item), { recursive: true });
 }
 copyFileSync(join(mobile, "web", "sw.js"), join(www, "sw.js"));
+// SQLite in WebAssembly, loaded only when an Anki deck (.apkg) is imported.
+for (const f of ["sql-wasm.js", "sql-wasm.wasm"]) copyFileSync(join(mobile, "node_modules", "sql.js", "dist", f), join(www, "vendor", f));
 
 // Fonts bundled so the app looks right offline.
 const fontDir = join(mobile, "node_modules", "@fontsource", "nunito", "files");

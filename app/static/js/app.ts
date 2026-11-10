@@ -21,6 +21,7 @@ import { examsScreen } from "./exam.js";
 import { weakScreen, practiseGroup } from "./weak.js";
 import { placementCard } from "./placement.js";
 import { showTutorial } from "./tutorial.js";
+import { ankiImport } from "./anki-ui.js";
 
 const app = document.getElementById("app");
 // The app build serves static files from its root; the Python server under /static/.
@@ -887,10 +888,12 @@ function importSheet() {
   const text = h("textarea", { class: "input import-text", rows: 7, placeholder: IMPORT_EXAMPLE[lang], spellcheck: "false" });
   const report = h("div", { class: "import-report small" });
   const go = h("button", { class: "btn", disabled: true }, "Import");
-  const file = h("input", { type: "file", accept: ".txt,.csv,.tsv,text/plain,text/csv", hidden: true });
+  const file = h("input", { type: "file", accept: ".txt,.csv,.tsv,.apkg,text/plain,text/csv", hidden: true });
+  const ankiDone = (list: string) => { wordSection = list; route(); };
   file.onchange = async () => {
     const f = file.files[0];
     if (!f) return;
+    if (/\.(apkg|colpkg)$/i.test(f.name)) { bg.remove(); ankiImport(ankiDone, f); return; }
     text.value = await f.text();
     if (!name.value) name.value = f.name.replace(/\.[^.]+$/, "").slice(0, 40);
     preview();
@@ -958,6 +961,7 @@ function importSheet() {
       h("div", { class: "field" }, h("label", {}, "List name"), name),
       h("div", { class: "field" }, h("label", {}, "Words"), text),
       h("button", { class: "link-btn", onclick: () => file.click() }, "📁 Or choose a .txt / .csv file"),
+      h("button", { class: "link-btn anki-link", onclick: () => { bg.remove(); ankiImport(ankiDone); } }, "🃏 Import an Anki deck (.apkg)"),
       file,
       report,
       go

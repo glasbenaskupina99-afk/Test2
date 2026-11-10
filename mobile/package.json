@@ -2,6 +2,7 @@
   "name": "hanzi-home-mobile",
   "private": true,
   "version": "1.0.0",
+  "type": "module",
   "description": "Bloomko as an offline Android app",
   "scripts": {
     "build": "node scripts/build-web.mjs",
@@ -20,7 +21,10 @@
     "@capacitor/preferences": "8.0.1",
     "@capacitor/share": "8.0.3",
     "@k1low/hanzi-writer-data-jp": "0.8.0",
+    "fflate": "^0.8.2",
+    "fzstd": "^0.1.1",
     "pinyin-pro": "3.29.5",
+    "sql.js": "^1.12.0",
     "wanakana": "5.3.1"
   },
   "devDependencies": {
@@ -28,8 +32,10 @@
     "@fontsource/lora": "5.3.0",
     "@fontsource/nunito": "^5.2.7",
     "@fontsource/shippori-mincho": "5.3.0",
+    "@types/sql.js": "^1.4.9",
     "esbuild": "0.28.2",
     "hanzi-writer-data": "2.0.1",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   }
 }

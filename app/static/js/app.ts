@@ -12,6 +12,7 @@ import { genderTag, withEndings, richText } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
 import { syncCard } from "./sync-ui.js";
+import { cloudBackupCard, restoreFlow } from "./backup-ui.js";
 import { photoSheet, canReadPhotos } from "./photo.js";
 import { UI_LANGS, setUiLang, uiLang } from "./i18n.js";
 import { charMapScreen } from "./charmap.js";
@@ -1484,7 +1485,9 @@ async function settingsScreen() {
         : null,
       window.__localApi ? h("h2", { class: "section-title" }, "🔄 Sync between devices") : null,
       window.__localApi ? syncCard() : null,
-      window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup") : null,
+      window.__localApi ? h("h2", { class: "section-title" }, "☁️ Cloud backup") : null,
+      window.__localApi ? cloudBackupCard() : null,
+      window.__localApi ? h("h2", { class: "section-title" }, "💾 Backup file") : null,
       window.__localApi ? backupCard() : null,
       h("div", { style: { marginTop: "20px" } }, h("button", { class: "btn", onclick: () => save() }, "Save settings")),
       h("img", { class: "app-logo settings-logo", src: LOGO, alt: "" }),
@@ -1627,7 +1630,8 @@ function welcomeScreen(gemmaNext: boolean) {
         h("div", { class: "welcome-courses" }, courseBtns),
         levelBox,
         h("div", { style: { width: "100%", marginTop: "18px" } }, go),
-        h("p", { class: "muted small" }, "Everything stays on this device. You can change this later in Settings.")
+        h("p", { class: "muted small" }, "Everything stays on this device. You can change this later in Settings."),
+        window.__localApi ? h("button", { class: "link-btn welcome-restore", onclick: () => restoreFlow() }, "☁️ New phone? Restore from a backup") : null
       );
     };
     app.replaceChildren(screen());

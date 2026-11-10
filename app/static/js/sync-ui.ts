@@ -1,5 +1,5 @@
 // Settings card for syncing progress between devices with a sync code (no account needed).
-import { api, h, toast, confirmDialog } from "./util.js";
+import { api, h, toast, confirmDialog, fill } from "./util.js";
 
 const ago = (iso) => {
   if (!iso) return "never";
@@ -30,7 +30,7 @@ export function syncCard() {
     const s = await api("/api/sync");
     if (!s.on) {
       const codeIn = h("input", { class: "input", placeholder: "XXXX-XXXX-XXXX-XXXX", autocapitalize: "characters", spellcheck: "false" });
-      card.replaceChildren(
+      fill(card,
         h("p", { class: "small muted", style: { marginTop: 0 } }, "Keep your progress on several devices — phone and computer, or an old and a new phone. No account: you get a code, and every device with that code shares the same progress. It's encrypted on your device, so nobody else can read it."),
         h("button", {
           class: "btn",
@@ -55,7 +55,7 @@ export function syncCard() {
       return;
     }
     const codeEl = h("b", { class: "sync-code" }, s.code);
-    card.replaceChildren(
+    fill(card,
       h("div", { class: "row", style: { alignItems: "center" } }, h("span", { class: "sync-dot" + (s.error ? " bad" : "") }), h("b", {}, s.error ? "Sync problem" : "Sync is on"), h("span", { class: "spacer" }), h("small", { class: "muted" }, `Last sync: ${ago(s.last)}`)),
       s.error ? h("p", { class: "small", style: { color: "var(--red)" } }, s.error) : null,
       h("div", { class: "small muted", style: { margin: "12px 0 4px" } }, "Your sync code — enter it on your other device (Settings → Sync):"),

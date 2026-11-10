@@ -24,6 +24,11 @@ export function h<K extends keyof HTMLElementTagNameMap>(tag: K, attrs: Attrs = 
   return el;
 }
 
+/** Like el.replaceChildren(), but skips null/false and flattens arrays (as h() does). */
+export function fill(el: Element, ...children: Child[]) {
+  el.replaceChildren(...(children as unknown[]).flat(Infinity).filter((c) => c != null && c !== false).map((c) => (c instanceof Node ? c : String(c))));
+}
+
 /** An error from the backend, with its HTTP status (and whether the AI caused it). */
 export class ApiError extends Error {
   status = 500;

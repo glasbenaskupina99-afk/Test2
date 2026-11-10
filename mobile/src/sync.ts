@@ -6,7 +6,7 @@
 import type { Db } from "./types.js";
 
 export const SYNC_URL = () => window.__syncUrl || "https://bloomko.eu/api/sync";
-const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"; // no 0/O, 1/I
+export const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"; // no 0/O, 1/I
 const SYNCED_SETTINGS = ["section_zh", "section_ja", "section_sl", "display_name", "daily_goal", "new_per_lesson", "review_size", "sentence_count", "leniency", "hint_after_misses", "tts_rate"];
 
 export function newCode() {
@@ -22,8 +22,8 @@ export function cleanCode(input) {
   return s.match(/.{4}/g).join("-");
 }
 
-const enc = new TextEncoder();
-const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+export const enc = new TextEncoder();
+export const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
 const b64 = (bytes) => {
   let s = "";
   for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
@@ -35,10 +35,11 @@ async function idOf(code) {
   return hex(await crypto.subtle.digest("SHA-256", enc.encode(`bloomko-sync:${code}`)));
 }
 
-async function keyOf(code) {
+/** AES key from a code (sync code or backup key); the salt keeps sync and backup keys apart. */
+async function keyOf(code: string, salt = "bloomko-sync-v1") {
   const base = await crypto.subtle.importKey("raw", enc.encode(code), "PBKDF2", false, ["deriveKey"]);
   return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: enc.encode("bloomko-sync-v1"), iterations: 100000, hash: "SHA-256" },
+    { name: "PBKDF2", salt: enc.encode(salt), iterations: 100000, hash: "SHA-256" },
     base,
     { name: "AES-GCM", length: 256 },
     false,
@@ -50,19 +51,20 @@ async function pipe(bytes, stream) {
   return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer());
 }
 
-async function seal(code, obj) {
+/** Compress and encrypt: the result is base64 of IV + AES-GCM ciphertext. */
+export async function seal(code: string, obj: unknown, salt?: string): Promise<string> {
   const zipped = await pipe(enc.encode(JSON.stringify(obj)), new CompressionStream("gzip"));
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, await keyOf(code), zipped));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, await keyOf(code, salt), zipped));
   const out = new Uint8Array(iv.length + ct.length);
   out.set(iv);
   out.set(ct, iv.length);
   return b64(out);
 }
 
-async function open(code, data) {
+export async function open(code: string, data: string, salt?: string): Promise<any> {
   const bytes = unb64(data);
-  const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes.slice(0, 12) }, await keyOf(code), bytes.slice(12));
+  const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes.slice(0, 12) }, await keyOf(code, salt), bytes.slice(12));
   return JSON.parse(new TextDecoder().decode(await pipe(new Uint8Array(plain), new DecompressionStream("gzip"))));
 }
 

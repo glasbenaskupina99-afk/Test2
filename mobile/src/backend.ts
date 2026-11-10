@@ -16,6 +16,7 @@ import type { Activity, Card, Db, Extras, Lang, Settings, Skill } from "./types.
 import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as sync from "./sync.js";
+import * as cloud from "./backup.js";
 import * as locale from "./locale.js";
 import { EXAMS, makePaper, scorePaper } from "./exams.js";
 import * as fsrs from "./fsrs.js";
@@ -183,11 +184,65 @@ export async function init(storage) {
     if (document.visibilityState === "hidden") {
       flush();
       autoSync();
+      autoBackup();
     } else if (db.sync?.code && Date.now() - Date.parse(db.sync.last || "0") > 5 * 60 * 1000) {
       autoSync();
     }
   });
   if (db.sync?.code) setTimeout(autoSync, 2500);
+  if (db.backup?.key) setTimeout(autoBackup, 8000);
+}
+
+// ------------------------------------------------------------------ encrypted cloud backup (2.0)
+
+const BACKUP_EVERY = 20 * 3600 * 1000; // about once a day, when you open or leave the app
+let backingUp: Promise<unknown> | null = null;
+
+function backupInfo() {
+  const b = db.backup;
+  return b?.key ? { on: true, key: b.key, last: b.last, error: b.error || "", auto: b.auto !== false } : { on: false };
+}
+
+/** Which kind of device made a backup, so the list can say "Android · 3 Nov". */
+const deviceName = () => {
+  const ua = navigator.userAgent || "";
+  return /Android/.test(ua) ? "Android" : /iPhone|iPad/.test(ua) ? "iPhone" : /Windows/.test(ua) ? "Windows" : /Mac/.test(ua) ? "Mac" : /Linux/.test(ua) ? "Linux" : "Browser";
+};
+
+function runBackup() {
+  if (!db.backup?.key) return Promise.reject(new HttpError(400, "Cloud backup is off"));
+  if (!navigator.onLine) return Promise.reject(new HttpError(503, "No internet connection"));
+  backingUp ||= cloud
+    .upload(db.backup.key, db, {
+      at: new Date().toISOString(),
+      edition: EDITION,
+      learned: new Set(db.cards.map((c) => c.word_id)).size,
+      streak: streak(),
+      device: deviceName(),
+      version: window.__appVersion || "",
+    })
+    .then(
+      (r) => {
+        db.backup.last = new Date().toISOString();
+        db.backup.error = "";
+        flush();
+        return r;
+      },
+      (e) => {
+        db.backup.error = e.message;
+        flush();
+        throw e;
+      }
+    )
+    .finally(() => (backingUp = null));
+  return backingUp;
+}
+
+function autoBackup() {
+  const b = db.backup;
+  if (!b?.key || b.auto === false || !navigator.onLine) return;
+  if (b.last && Date.now() - Date.parse(b.last) < BACKUP_EVERY) return;
+  runBackup().catch((e) => console.warn("backup", e.message));
 }
 
 // ------------------------------------------------------------------ sync between devices
@@ -1868,14 +1923,81 @@ const routes = {
     return syncInfo();
   },
 
-  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, sync: null, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
+  "GET /api/cloud-backup": () => backupInfo(),
+
+  // Turn on cloud backup: a new key, and the first backup right away.
+  "POST /api/cloud-backup/enable": async () => {
+    db.backup = { key: cloud.newKey(), last: null, auto: true };
+    try {
+      await runBackup();
+    } catch (e) {
+      db.backup = null;
+      flush();
+      throw new HttpError(503, `Backup failed: ${e.message}`);
+    }
+    return backupInfo();
+  },
+
+  "POST /api/cloud-backup/now": async () => {
+    try {
+      await runBackup();
+    } catch (e) {
+      throw e instanceof HttpError ? e : new HttpError(503, `Backup failed: ${e.message}`);
+    }
+    return backupInfo();
+  },
+
+  "POST /api/cloud-backup/auto": (_, body) => {
+    if (db.backup) db.backup.auto = !!body.auto;
+    flush();
+    return backupInfo();
+  },
+
+  "POST /api/cloud-backup/disable": () => {
+    db.backup = null;
+    flush();
+    return backupInfo();
+  },
+
+  // The backups stored under a key (this device's or one typed in on a new phone).
+  "POST /api/cloud-backup/list": async (_, body) => {
+    const key = cloud.cleanKey(body.key);
+    if (!key) throw new HttpError(400, "That doesn't look like a backup key (24 letters and numbers)");
+    try {
+      return { key, backups: await cloud.list(key) };
+    } catch (e) {
+      throw new HttpError(503, e.message);
+    }
+  },
+
+  // Replace everything on this device with a backup, and keep backing up under the same key.
+  "POST /api/cloud-backup/restore": async (_, body) => {
+    const key = cloud.cleanKey(body.key);
+    if (!key) throw new HttpError(400, "That doesn't look like a backup key (24 letters and numbers)");
+    let p;
+    try {
+      p = await cloud.download(key, Number(body.n));
+    } catch (e) {
+      throw new HttpError(503, e.message);
+    }
+    if (p.edition && p.edition !== EDITION) throw new HttpError(400, `This backup is from Bloomko ${p.edition === "heritage" ? "Heritage" : "East"} — restore it in that app`);
+    const token = db.settings.hf_token;
+    db = { ...freshDb(), ...p.db, sync: null, backup: { key, last: p.at || null, auto: true }, settings: { ...p.db.settings, hf_token: token || "" } };
+    migrate();
+    db.garden ||= freshGarden();
+    await applyLocale();
+    flush();
+    return { ok: true, learned: new Set(db.cards.map((c) => c.word_id)).size };
+  },
+
+  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, sync: null, backup: null, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
 
   "POST /api/backup/restore": async (_, body) => {
     if (!body || body.app !== "hanzi-home" || !Array.isArray(body.words) || !Array.isArray(body.cards)) throw new HttpError(400, "That isn't a Hanzi Home backup");
     const token = db.settings.hf_token;
     const { app: _a, exported_at: _e, ...rest } = body;
     const keepSync = db.sync || null;
-    db = { ...freshDb(), ...rest, sync: keepSync, settings: { ...rest.settings, hf_token: token || "" } };
+    db = { ...freshDb(), ...rest, sync: keepSync, backup: db.backup || null, settings: { ...rest.settings, hf_token: token || "" } };
     if (keepSync) keepSync.changed_at = new Date().toISOString();
     migrate();
     await applyLocale();

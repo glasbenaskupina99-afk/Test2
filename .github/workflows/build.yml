@@ -1,6 +1,7 @@
 name: Build app (Android + web)
 
-# Every push: builds both Android apps — Bloomko East (Bloomko.apk) and Bloomko Heritage
+# Every push: first the automatic tests (type check, unit tests, and the whole app in a browser for
+# both editions) — nothing is built or published unless they pass. Then it builds both Android apps — Bloomko East (Bloomko.apk) and Bloomko Heritage
 # (BloomkoHeritage.apk) — publishes them as a release and replaces the downloads on the website
 # (LanguageMaster.apk is kept as an alias for old links). The web app itself is left unchanged.
 # The new web apps go to .../preview/ (East) and .../preview-heritage/ (Heritage) behind an
@@ -15,6 +16,7 @@ on:
     paths:
       - "app/**"
       - "mobile/**"
+      - "worker/**"
       - ".github/workflows/build.yml"
   workflow_dispatch:
     inputs:
@@ -31,7 +33,44 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Type check (TypeScript)
+        run: npm run typecheck
+
+      - name: Unit tests (scheduler, mock exams, sync, backup, Anki, server)
+        run: npm test
+
+      - name: Browser for end-to-end tests
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end tests (Bloomko East)
+        run: |
+          npm run build
+          npm run test:e2e
+
+      - name: End-to-end tests (Bloomko Heritage)
+        run: |
+          EDITION=heritage npm run build
+          npm run test:e2e
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     env:
       # Must keep increasing so installed apps accept updates (old workflow got to 6).

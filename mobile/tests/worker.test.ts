@@ -1,0 +1,95 @@
+// The bloomko.eu sync / backup endpoints (worker/sync.js), run in Node with an in-memory Durable Object.
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { build } from "esbuild";
+import { mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+
+const dir = mkdtempSync(join(tmpdir(), "bloomko-worker-"));
+writeFileSync(join(dir, "stub.js"), "export class DurableObject { constructor(ctx, env) { this.ctx = ctx; this.env = env; } }");
+await build({
+  entryPoints: [new URL("../../worker/sync.js", import.meta.url).pathname],
+  bundle: true,
+  format: "esm",
+  platform: "neutral",
+  outfile: join(dir, "sync.mjs"),
+  alias: { "cloudflare:workers": join(dir, "stub.js") },
+  logLevel: "silent",
+});
+const { SyncStore, handleBackup, handleSync } = await import(pathToFileURL(join(dir, "sync.mjs")).href);
+
+/** Durable Object storage in memory (get/put/delete with single keys, arrays and objects). */
+function memoryStorage() {
+  const m = new Map<string, any>();
+  return {
+    async get(k: any) {
+      if (Array.isArray(k)) return new Map(k.filter((x) => m.has(x)).map((x) => [x, structuredClone(m.get(x))]));
+      return structuredClone(m.get(k));
+    },
+    async put(k: any, v?: any) {
+      if (typeof k === "object") for (const [a, b] of Object.entries(k)) m.set(a, structuredClone(b));
+      else m.set(k, structuredClone(v));
+    },
+    async delete(k: any) {
+      for (const x of [].concat(k)) m.delete(x);
+    },
+    size: () => m.size,
+  };
+}
+
+function env() {
+  const objects = new Map<string, any>();
+  return {
+    SYNC: {
+      idFromName: (name: string) => name,
+      get: (id: string) => {
+        if (!objects.has(id)) objects.set(id, new SyncStore({ storage: memoryStorage() }, {}));
+        return objects.get(id);
+      },
+    },
+    objects,
+  };
+}
+
+const ID = "a".repeat(64);
+const req = (method: string, body?: unknown) => new Request("https://bloomko.eu/x", { method, body: body ? JSON.stringify(body) : undefined, headers: { "Content-Type": "application/json" } });
+const call = async (r: Response) => ({ status: r.status, body: await r.json() });
+
+test("backups: store, list, fetch one; only the newest 10 are kept", async () => {
+  const e = env();
+  assert.deepEqual((await call(await handleBackup(req("GET"), e, ID))).body, { backups: [] });
+  for (let i = 1; i <= 12; i++) {
+    const r = await call(await handleBackup(req("POST", { data: btoa(`backup ${i}`), meta: btoa("m") }), e, ID));
+    assert.equal(r.status, 200);
+    assert.equal(r.body.n, i);
+  }
+  const listed = (await call(await handleBackup(req("GET"), e, ID))).body.backups;
+  assert.deepEqual(listed.map((b: any) => b.n), [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  const one = await call(await handleBackup(req("GET"), e, `${ID}/12`));
+  assert.equal(atob(one.body.data), "backup 12");
+  assert.equal((await handleBackup(req("GET"), e, `${ID}/1`)).status, 404, "the oldest was dropped");
+  // Old chunks are deleted, not left behind.
+  const storage = e.objects.get(`backup:${ID}`).ctx.storage;
+  assert.equal(storage.size(), 10 + 2, "10 one-chunk backups + index + counter");
+});
+
+test("backups: bad ids and bad data are refused", async () => {
+  const e = env();
+  assert.equal((await handleBackup(req("GET"), e, "nope")).status, 400);
+  assert.equal((await handleBackup(req("POST", { data: "not base64!" }), e, ID)).status, 400);
+  assert.equal((await handleBackup(req("POST", {}), e, ID)).status, 400);
+  assert.equal((await handleBackup(req("DELETE"), e, ID)).status, 405);
+});
+
+test("sync and backup with the same id don't touch each other", async () => {
+  const e = env();
+  await handleBackup(req("POST", { data: btoa("b") }), e, ID);
+  const s = await call(await handleSync(req("GET"), e, ID));
+  assert.deepEqual(s.body, { version: 0 });
+  const put = await call(await handleSync(req("PUT", { base: 0, data: btoa("s") }), e, ID));
+  assert.equal(put.body.version, 1);
+  const conflict = await handleSync(req("PUT", { base: 0, data: btoa("s2") }), e, ID);
+  assert.equal(conflict.status, 409, "a stale base version is a conflict");
+});

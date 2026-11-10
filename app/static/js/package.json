@@ -1,0 +1,4 @@
+{
+  "//": "The UI is ES modules (lets the tests in mobile/tests import it).",
+  "type": "module"
+}

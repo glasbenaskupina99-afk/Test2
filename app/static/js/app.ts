@@ -282,10 +282,41 @@ function gardenHero(home) {
       h("span", {}, line),
       h("span", { class: "garden-goal" }, pct >= 1 ? `Daily goal reached · ${home.xp_today} XP` : `${home.xp_today} / ${home.daily_goal} XP today`),
       f.trees
-        ? h("span", { class: "garden-forest" }, h("span", {}, `${season.icon} `), h("span", {}, season.name), h("span", {}, " · "), h("span", {}, `${f.trees} trees`), f.wilting ? [h("span", {}, " · "), h("span", { class: "gf-wilt" }, `${f.wilting} wilting`)] : null)
+        ? h("span", { class: "garden-forest" }, h("span", {}, `${season.icon} `), h("span", {}, season.name), h("span", {}, " · "), h("span", {}, `${f.trees} plants`), f.wilting ? [h("span", {}, " · "), h("span", { class: "gf-wilt" }, `${f.wilting} wilting`)] : null)
         : null
     )
   );
+}
+
+/** Friends who watered your garden (2.1): a gentle nudge, especially if you haven't practised yet. */
+function friendWaterCard(home) {
+  const list = home.friend_waterings || [];
+  if (!list.length) return null;
+  const names = [...new Set(list.map((w) => w.name))];
+  const who = names.length === 1 ? names[0] : names.length === 2 ? `${names[0]} and ${names[1]}` : `${names[0]} and ${names.length - 1} friends`;
+  const done = home.xp_today > 0;
+  const card = h(
+    "div",
+    { class: "card friend-water" },
+    h("div", { class: "fw-art" }, "🌧️"),
+    h(
+      "div",
+      { class: "fw-text" },
+      h("b", {}, `${who} watered your garden`),
+      h("div", { class: "small muted" }, done ? "Your plants say thank you 🌱" : home.streak ? `Keep your ${home.streak}-day streak growing — a short lesson today?` : "A short lesson today would make your garden grow.")
+    ),
+    h("button", {
+      class: "icon-btn",
+      "aria-label": "OK",
+      onclick: (e) => {
+        e.stopPropagation();
+        card.remove();
+        api("/api/friends/seen", { method: "POST" }).catch(() => {});
+      },
+    }, "✓")
+  );
+  card.onclick = () => (location.hash = "#/forest");
+  return card;
 }
 
 /** This week's challenges, small, on the home screen (tap for the forest). */
@@ -383,6 +414,7 @@ async function homeScreen() {
     [
       homeHeader(home),
       gardenHero(home),
+      friendWaterCard(home),
       primary
         ? h(
             "button",

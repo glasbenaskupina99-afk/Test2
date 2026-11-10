@@ -91,6 +91,7 @@ export function snapshot(db: Db) {
     storiesAi: db.storiesAi || [],
     forest: db.forest || { weeks: {}, glade: [] },
     exams: db.exams || [],
+    friends: db.friends ? { code: db.friends.code, secret: db.friends.secret, list: db.friends.list } : null,
     placement: db.placement || {},
     settings: Object.fromEntries(SYNCED_SETTINGS.filter((k) => k in (db.settings || {})).map((k) => [k, db.settings[k]])),
   };
@@ -175,6 +176,12 @@ export function merge(db: Db, r: any) {
     const key = (g) => `${g.week}|${g.kind}|${g.lang}`;
     const have = new Set(db.forest.glade.map(key));
     for (const g of r.forest.glade || []) if (!have.has(key(g))) db.forest.glade.push(g);
+  }
+  // Friends: the same friend code on every device, and everyone you added anywhere.
+  if (r.friends?.code) {
+    db.friends ||= { code: r.friends.code, secret: r.friends.secret, list: [], watered: {}, inbox: [] };
+    const have = new Set(db.friends.list.map((x) => x.code));
+    for (const x of r.friends.list || []) if (!have.has(x.code) && x.code !== db.friends.code) db.friends.list.push(x);
   }
   if (r.placement) db.placement = { ...r.placement, ...(db.placement || {}) };
   // Mock exam results from both devices.

@@ -19,6 +19,7 @@ interface Window {
   __syncUrl?: string;
   __backupUrl?: string;
   __accountUrl?: string;
+  __friendsUrl?: string;
   __splashAudio?: AudioContext;
   __gemmaMock?: any;
   __notifyMock?: any;

@@ -18,6 +18,7 @@ import * as ai from "./ai.js";
 import * as sync from "./sync.js";
 import * as cloud from "./backup.js";
 import * as account from "./account.js";
+import * as friends from "./friends.js";
 import * as locale from "./locale.js";
 import { EXAMS, makePaper, scorePaper } from "./exams.js";
 import * as fsrs from "./fsrs.js";
@@ -186,12 +187,52 @@ export async function init(storage) {
       flush();
       autoSync();
       autoBackup();
+      autoFriends(true);
     } else if (db.sync?.code && Date.now() - Date.parse(db.sync.last || "0") > 5 * 60 * 1000) {
       autoSync();
     }
   });
   if (db.sync?.code) setTimeout(autoSync, 2500);
   if (db.backup?.key) setTimeout(autoBackup, 8000);
+  if (db.friends?.code) setTimeout(() => autoFriends(true), 1500);
+  document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && autoFriends(false));
+}
+
+// ------------------------------------------------------------------ friends (2.1)
+
+/** Your public garden card: name, streak, practised today, and how the garden looks. */
+function friendCard() {
+  const beds = gardenBeds();
+  return {
+    name: String(settingsAll().display_name || "").trim().slice(0, 40) || "A friend",
+    streak: streak(),
+    today: practiced(dayKey()),
+    plants: forestSummary().trees,
+    season: season().name,
+    lang: course(),
+    edition: EDITION,
+    beds: beds.slice(0, 60).map((b) => ({ n: b.name, s: friends.encodeBed(b.spots, course()) })),
+  };
+}
+
+let friending: Promise<unknown> | null = null;
+/** Publish your card (and collect who watered your garden). `force`: also right after a change. */
+function autoFriends(force: boolean) {
+  const f = db.friends;
+  if (!f?.code || !navigator.onLine || friending) return friending;
+  if (!force && f.published && Date.now() - Date.parse(f.published) < 2 * 60 * 1000) return null;
+  friending = friends
+    .publish(f.code, f.secret, friendCard())
+    .then((r) => {
+      f.published = new Date().toISOString();
+      const known = new Set((f.inbox || []).map((w) => `${w.name}|${w.at}`));
+      const fresh = (r.inbox || []).filter((w) => !known.has(`${w.name}|${w.at}`));
+      if (fresh.length) f.inbox = [...(f.inbox || []), ...fresh.map((w) => ({ name: w.name, at: w.at, seen: false }))].slice(-30);
+      flush();
+    })
+    .catch((e) => console.warn("friends", e.message))
+    .finally(() => (friending = null));
+  return friending;
 }
 
 // ------------------------------------------------------------------ encrypted cloud backup (2.0)
@@ -575,18 +616,25 @@ function forestBump(kind, n = 1) {
   persist();
 }
 
-/** Health from the most overdue card (healthy · thirsty · wilting), size from how well the word is known (0–3). */
+/**
+ * Health from the most overdue card, size from how well the word is known (0–3).
+ * healthy → thirsty (due) → wilting (overdue, or just forgotten) → gone (long forgotten: the
+ * plant has disappeared from the garden until you practise the word again).
+ */
+const GONE_AFTER = 3; // overdue by three times its interval: the plant is gone
 function treeOf(cards, nowMs = Date.now()) {
   let worst = -Infinity;
   let strength = 0;
+  let forgotten = false;
   for (const c of cards) {
+    if (c.lapses > 0 && (c.interval || 0) < 0.05) forgotten = true; // answered wrong last time
     const due = new Date(String(c.due).replace(" ", "T")).getTime();
     worst = Math.max(worst, (nowMs - due) / (Math.max(c.interval || 0, 1) * DAY));
     strength += c.interval || 0;
   }
   strength /= Math.max(cards.length, 1);
   return {
-    health: worst < 0 ? "healthy" : worst < 1 ? "thirsty" : "wilting",
+    health: worst >= GONE_AFTER ? "gone" : worst >= 1 || forgotten ? "wilting" : worst >= 0 ? "thirsty" : "healthy",
     size: strength < 3 ? 0 : strength < 10 ? 1 : strength < 30 ? 2 : 3,
   };
 }
@@ -647,6 +695,32 @@ function checkChallenges() {
   }
 }
 
+/**
+ * The garden (2.1): one bed per unit you've started (and the one you're on), a spot for every word
+ * of it. Learned words grow there; words not learned yet, or long forgotten, leave bare soil.
+ */
+function gardenBeds(byWord = null, nowMs = Date.now()) {
+  if (!byWord) {
+    byWord = new Map();
+    for (const c of C()) {
+      if (!byWord.has(c.word_id)) byWord.set(c.word_id, []);
+      byWord.get(c.word_id).push(c);
+    }
+  }
+  const next = W().filter((w) => !byWord.has(w.id) && w.section === sections().current).sort(byPosition)[0];
+  const beds = [];
+  for (const w of W().sort(byPosition)) {
+    const key = `${w.section}|${w.unit}`;
+    let bed = beds.at(-1);
+    if (!bed || bed.key !== key) beds.push((bed = { key, name: w.unit || w.section, section: w.section, spots: [], learned: 0, current: false }));
+    if (next && next.id === w.id) bed.current = true;
+    const cs = byWord.get(w.id);
+    if (cs) bed.learned++;
+    bed.spots.push(cs ? { id: w.id, t: w.hanzi, r: w.pinyin, m: w.english, ...treeOf(cs, nowMs) } : { id: w.id, health: "empty" });
+  }
+  return beds.filter((b) => b.learned || b.current).map(({ key: _k, ...b }) => b);
+}
+
 function forestSummary() {
   const nowMs = Date.now();
   const byWord = new Map();
@@ -654,10 +728,11 @@ function forestSummary() {
     if (!byWord.has(c.word_id)) byWord.set(c.word_id, []);
     byWord.get(c.word_id).push(c);
   }
-  const counts = { trees: 0, healthy: 0, thirsty: 0, wilting: 0 };
+  const counts = { trees: 0, healthy: 0, thirsty: 0, wilting: 0, gone: 0 };
   for (const cs of byWord.values()) {
-    counts.trees++;
-    counts[treeOf(cs, nowMs).health]++;
+    const health = treeOf(cs, nowMs).health;
+    counts[health]++;
+    if (health !== "gone") counts.trees++;
   }
   return { ...counts, season: season().name };
 }
@@ -1092,6 +1167,7 @@ const routes = {
       forest: forestSummary(),
       challenges: weekChallenges(),
       placement: placementOffer(secs),
+      friend_waterings: (db.friends?.inbox || []).filter((w) => !w.seen),
       exams: W().some((w) => EXAMS[w.section]),
       streak: streak(),
       plant: plantState(),
@@ -1364,7 +1440,7 @@ const routes = {
     if (!card) throw new HttpError(404, "card not found");
     // A wilting tree that gets practised comes back to life (counted once a week per word).
     const wk = weekStats();
-    if (grade >= 1 && !wk.revived_ids.includes(card.word_id) && treeOf(cardsOf(card.word_id)).health === "wilting") {
+    if (grade >= 1 && !wk.revived_ids.includes(card.word_id) && ["wilting", "gone"].includes(treeOf(cardsOf(card.word_id)).health)) {
       wk.revived++;
       wk.revived_ids.push(card.word_id);
     }
@@ -1387,9 +1463,10 @@ const routes = {
       .filter((w) => byWord.has(w.id))
       .sort(byPosition)
       .map((w) => ({ id: w.id, t: w.hanzi, r: w.pinyin, m: w.english, unit: w.unit, section: w.section, ...treeOf(byWord.get(w.id), nowMs) }));
+    const garden = gardenBeds(byWord, nowMs);
     checkChallenges();
     const glade = forestDb().glade.filter((g) => g.lang === course());
-    return { ...forestSummary(), trees, season: season(), week: weekKey(), challenges: weekChallenges(), glade, latin: latinCourse() };
+    return { ...forestSummary(), lang: course(), trees, beds: garden, multi: sections().list.length > 1, season: season(), week: weekKey(), challenges: weekChallenges(), glade, latin: latinCourse() };
   },
 
   // Words written (or, in Latin-script courses, spelled) with no mistake, for the weekly challenge.
@@ -2029,6 +2106,90 @@ const routes = {
     db.sync = null;
     flush();
     return { signed_in: false };
+  },
+
+  // ---------------------------------------------------------------- friends (2.1)
+  "GET /api/friends": async () => {
+    const f = db.friends;
+    if (!f?.code) return { on: false, name: settingsAll().display_name || "" };
+    const today = dayKey();
+    // Each friend's card, fetched fresh (a friend whose card can't be fetched is still listed).
+    const list = await Promise.all(
+      f.list.map(async (x) => {
+        try {
+          const g = await friends.fetchGarden(x.code);
+          return { ...x, name: g.profile?.name || x.name, profile: g.profile, updated: g.updated, watered: f.watered[x.code] === today };
+        } catch (e) {
+          return { ...x, error: e.message, watered: f.watered[x.code] === today };
+        }
+      })
+    );
+    return { on: true, code: f.code, name: settingsAll().display_name || "", list, inbox: (f.inbox || []).slice(-10).reverse() };
+  },
+
+  "POST /api/friends/enable": async () => {
+    db.friends ||= { code: friends.newFriendCode(), secret: friends.newSecret(), list: [], watered: {}, inbox: [] };
+    flush();
+    await autoFriends(true);
+    if (!db.friends.published) throw new HttpError(503, "Couldn't reach bloomko.eu — try again when you're online");
+    return { on: true, code: db.friends.code };
+  },
+
+  "POST /api/friends/add": async (_, body) => {
+    const f = db.friends;
+    if (!f?.code) throw new HttpError(400, "Turn on friends first");
+    const code = friends.cleanFriendCode(body.code);
+    if (!code) throw new HttpError(400, "That doesn't look like a friend code (8 letters and numbers)");
+    if (code === f.code) throw new HttpError(400, "That's your own code — share it with a friend instead");
+    let g;
+    try {
+      g = await friends.fetchGarden(code);
+    } catch (e) {
+      throw new HttpError(e.status === 404 ? 404 : 503, e.message);
+    }
+    if (!f.list.some((x) => x.code === code)) f.list.push({ code, name: g.profile?.name || "A friend" });
+    flush();
+    return { ok: true, name: g.profile?.name || "A friend" };
+  },
+
+  "POST /api/friends/remove": (_, body) => {
+    if (db.friends) db.friends.list = db.friends.list.filter((x) => x.code !== body.code);
+    flush();
+    return { ok: true };
+  },
+
+  "GET /api/friends/garden": async (_, __, query) => {
+    const code = friends.cleanFriendCode(query.get("code"));
+    if (!code) throw new HttpError(400, "That isn't a friend code");
+    try {
+      const g = await friends.fetchGarden(code);
+      const p = g.profile || {};
+      return { ...p, code, updated: g.updated, watered: db.friends?.watered?.[code] === dayKey(), beds: (p.beds || []).map((b) => ({ name: b.n, spots: friends.decodeBed(b.s) })) };
+    } catch (e) {
+      throw new HttpError(e.status === 404 ? 404 : 503, e.message);
+    }
+  },
+
+  // Water a friend's garden: once a day per friend, and it shows up on their home screen.
+  "POST /api/friends/water": async (_, body) => {
+    const f = db.friends;
+    if (!f?.code) throw new HttpError(400, "Turn on friends first");
+    const code = friends.cleanFriendCode(body.code);
+    if (f.watered[code] === dayKey()) throw new HttpError(409, "You've already watered this garden today");
+    try {
+      await friends.water(code, f.code, String(settingsAll().display_name || "").trim() || "A friend");
+    } catch (e) {
+      if (e.status !== 409) throw new HttpError(503, e.message);
+    }
+    f.watered = { ...Object.fromEntries(Object.entries(f.watered).filter(([, d]) => d === dayKey())), [code]: dayKey() };
+    flush();
+    return { ok: true };
+  },
+
+  "POST /api/friends/seen": () => {
+    for (const w of db.friends?.inbox || []) w.seen = true;
+    flush();
+    return { ok: true };
   },
 
   "GET /api/cloud-backup": () => backupInfo(),

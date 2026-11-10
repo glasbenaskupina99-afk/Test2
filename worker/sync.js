@@ -112,6 +112,38 @@ export class SyncStore extends DurableObject {
     return { ok: true };
   }
 
+  // Friends (2.1): a public garden card (name, streak, the look of the garden) that friends can
+  // visit with your friend code, and an inbox of who watered your garden. Only the owner (with the
+  // secret made on their device) can change the card or read the inbox.
+  async friendGet() {
+    const f = await this.ctx.storage.get("friend");
+    return f ? { profile: f.profile, updated: f.updated } : null;
+  }
+
+  async friendPut(secret, profile) {
+    const f = (await this.ctx.storage.get("friend")) || null;
+    const hash = toHex(await crypto.subtle.digest("SHA-256", enc.encode(secret)));
+    if (f && !same(f.owner, hash)) return { forbidden: true };
+    const inbox = (f?.inbox || []).slice(-30);
+    await this.ctx.storage.put("friend", { owner: hash, profile, updated: new Date().toISOString(), inbox, waters: f?.waters || {} });
+    // The latest waterings; the app keeps track of which it has already shown.
+    return { ok: true, inbox: inbox.map(({ name, at }) => ({ name, at })) };
+  }
+
+  async friendWater(from, name) {
+    const f = await this.ctx.storage.get("friend");
+    if (!f) return { missing: true };
+    const day = new Date().toISOString().slice(0, 10);
+    f.waters ||= {};
+    if (f.waters[from] === day) return { already: true };
+    f.waters[from] = day;
+    // Forget who watered on earlier days, so the list stays small.
+    for (const [k, d] of Object.entries(f.waters)) if (d !== day) delete f.waters[k];
+    f.inbox = [...(f.inbox || []), { name, at: new Date().toISOString() }].slice(-30);
+    await this.ctx.storage.put("friend", f);
+    return { ok: true };
+  }
+
   // Cloud backups (2.0): numbered snapshots, the newest BACKUPS kept. Each one is an encrypted
   // blob plus a small encrypted summary (date, words learned …) shown when choosing what to restore.
   async listBackups() {
@@ -232,4 +264,45 @@ export async function handleAccount(request, env, action) {
   if (action === "update") return answer(await stub.update(auth, newAuth, vault));
   if (action === "delete") return answer(await stub.remove(auth));
   return json(404, { error: "unknown action" });
+}
+
+const FRIEND = /^[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}$/;
+
+/**
+ * /api/friends/<code>: GET a friend's garden card; PUT { secret, profile } to update your own
+ * (returns who watered it since last time). /api/friends/<code>/water: POST { from, name }.
+ */
+export async function handleFriends(request, env, path) {
+  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
+  if (!env.SYNC) return json(503, { error: "friends aren't set up on the server" });
+  const [code, action] = path.split("/");
+  if (!FRIEND.test(code || "")) return json(400, { error: "That isn't a friend code" });
+  const stub = env.SYNC.get(env.SYNC.idFromName(`friend:${code}`));
+  let body = {};
+  if (request.method !== "GET") {
+    try {
+      body = await request.json();
+    } catch {
+      return json(400, { error: "invalid request" });
+    }
+  }
+  if (request.method === "GET" && !action) {
+    const f = await stub.friendGet();
+    return f ? json(200, f) : json(404, { error: "No garden with this friend code" });
+  }
+  if (request.method === "PUT" && !action) {
+    const secret = String(body.secret || "");
+    const profile = body.profile;
+    if (!/^[0-9a-f]{32,64}$/.test(secret) || !profile || typeof profile !== "object" || JSON.stringify(profile).length > 40000) return json(400, { error: "invalid data" });
+    const r = await stub.friendPut(secret, profile);
+    return r.forbidden ? json(403, { error: "not your garden" }) : json(200, r);
+  }
+  if (request.method === "POST" && action === "water") {
+    const from = String(body.from || "");
+    const name = String(body.name || "").trim().slice(0, 40) || "A friend";
+    if (!FRIEND.test(from) || from === code) return json(400, { error: "invalid request" });
+    const r = await stub.friendWater(from, name);
+    return r.missing ? json(404, { error: "No garden with this friend code" }) : r.already ? json(409, { error: "Already watered today" }) : json(200, r);
+  }
+  return json(405, { error: "not allowed" });
 }

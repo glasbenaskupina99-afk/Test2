@@ -178,7 +178,7 @@ await build({
   loader: { ".json": "json" },
   logLevel: "warning",
   define: {
-    __APP_VERSION__: JSON.stringify(process.env.APP_VERSION ? `2.0.${process.env.APP_VERSION}` : "2.0-dev"),
+    __APP_VERSION__: JSON.stringify(process.env.APP_VERSION ? `2.1.${process.env.APP_VERSION}` : "2.1-dev"),
     __EDITION__: JSON.stringify(EDITION),
   },
 });

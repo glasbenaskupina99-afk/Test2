@@ -105,7 +105,7 @@ async function answer(page: Page, words: any[]) {
 }
 
 async function finishLesson(page: Page, words: any[], end: RegExp) {
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < 160; i++) {
     if (await page.locator(".lesson", { hasText: end }).count()) return;
     if (!(await page.locator(".lesson").count())) break;
     await answer(page, words);
@@ -193,6 +193,13 @@ test("every main screen opens without errors", async () => {
   const screens: [string, string][] = [["#/words", ".topbar"], ["#/stats", ".screen"], ["#/settings", ".sync-card"], ["#/forest", ".season-banner"], ["#/weak", ".screen h2"], ["#/", ".home-head"]];
   if (edition === "east") screens.push(["#/map", ".cm"], ["#/exams", ".exam-card"]);
   for (const [hash, sel] of screens) await go(page, hash, sel);
+  // The garden: a plant for every learned word; tapping one shows its name.
+  await go(page, "#/forest", ".bed-svg");
+  assert.ok((await page.locator(".bed-svg g.plant").count()) >= 50, "learned words grow as plants");
+  await page.locator(".bed-svg g.plant").first().click();
+  await page.waitForSelector(".plant-tag");
+  await page.click(".garden-tabs button:nth-child(2)");
+  await page.waitForSelector(".friends-intro, .my-code");
   // Grammar opens once enough words are known.
   await go(page, "#/", ".home-head");
   await page.locator(".tile", { hasText: "Grammar" }).first().click();

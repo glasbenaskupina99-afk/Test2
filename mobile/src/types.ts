@@ -152,5 +152,14 @@ export interface Db {
   backup?: BackupState | null;
   /** Signed in with an account (2.0): only the email is kept on the device. */
   account?: { email: string; since: string } | null;
+  /** Friends (2.1): your friend code, the secret that lets you update your garden card, your friends. */
+  friends?: {
+    code: string;
+    secret: string;
+    list: { code: string; name: string }[];
+    watered: Record<string, string>;
+    inbox: { name: string; at: string; seen?: boolean }[];
+    published?: string;
+  } | null;
   [key: string]: unknown;
 }

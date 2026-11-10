@@ -95,7 +95,7 @@ function artGarden() {
     "div",
     { class: "tut-art tut-garden" },
     h("div", { html: svg }),
-    h("div", { class: "tgd-row" }, h("span", {}, "🌱 a plant that grows every day"), h("span", {}, "💧 raindrops save your streak"), h("span", {}, "🌳 every word is a tree"))
+    h("div", { class: "tgd-row" }, h("span", {}, "🌱 a plant that grows every day"), h("span", {}, "💧 raindrops save your streak"), h("span", {}, "🌷 every word is a plant in your garden"), h("span", {}, "👥 friends water each other's gardens"))
   );
 }
 
@@ -137,8 +137,8 @@ const STEPS = () => [
   },
   {
     art: artGarden,
-    title: "4 · Your garden and forest",
-    text: "Each day you learn waters your plant. Every word you learn becomes a tree — skip its reviews and it wilts, practise it and it comes back. Seasons follow how regularly you learn.",
+    title: "4 · Your garden",
+    text: "Each day you learn waters your plant. Every word you learn grows into a real plant in your garden — skip its reviews and it wilts, forget it for long and it disappears, practise it and it comes back. Friends can visit and water your garden.",
   },
   {
     art: artAI,

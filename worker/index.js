@@ -5,7 +5,7 @@
 // emailed to the owner.
 import { EmailMessage } from "cloudflare:email";
 import { seo } from "./seo.js";
-import { handleAccount, handleBackup, handleSync } from "./sync.js";
+import { handleAccount, handleBackup, handleFriends, handleSync } from "./sync.js";
 
 // Durable Object class for app sync (bound as SYNC in wrangler.jsonc).
 export { SyncStore } from "./sync.js";
@@ -110,6 +110,7 @@ export default {
     if (url.pathname.startsWith("/api/sync/")) return handleSync(request, env, url.pathname.slice(10));
     if (url.pathname.startsWith("/api/backup/")) return handleBackup(request, env, url.pathname.slice(12));
     if (url.pathname.startsWith("/api/account/")) return handleAccount(request, env, url.pathname.slice(13));
+    if (url.pathname.startsWith("/api/friends/")) return handleFriends(request, env, url.pathname.slice(13));
     if (url.pathname === "/api/notify") {
       if (request.method !== "POST") return json(405, { error: "use POST" });
       return notify(request, env, ctx);

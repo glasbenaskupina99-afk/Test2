@@ -5,9 +5,10 @@ import * as ex from "./exercises.js";
 import { state, T, isSl } from "./state.js";
 
 /** Handwriting exercise for the course: stroke-order writing, or spelling for Slovenian. */
-const writeEx = (ctx, w, opts) => (isSl() ? ex.spell(ctx, w, { hint: !!opts?.pinyinHint }) : ex.write(ctx, w, opts));
+const writeEx = (ctx, w, opts?) => (isSl() ? ex.spell(ctx, w, { hint: !!opts?.pinyinHint }) : ex.write(ctx, w, opts));
 
-const step = (make, after, key) => ({ make, after, key });
+/** One exercise in a lesson: how to show it, what to do with the answer, and a key for repeats. */
+const step = (make, after?, key?) => ({ make, after, key });
 
 /** After-handler for a repeat: a wrong answer comes back at the end again, until it's right. */
 const untilRight = (make, key) => async (res) => ({ xp: res.ok ? 1 : 0, requeue: res.ok ? null : step(make, untilRight(make, key), key) });
@@ -17,8 +18,8 @@ const learnAfter = (make, key) => async (res) => ({ xp: res.ok ? 2 : 1, requeue:
 // ------------------------------------------------------------------ study mode picker
 
 /** Ask whether to study with handwriting or with choice-only exercises. Resolves { writing } or null. */
-export function pickStudyMode({ title, writingSub, choiceSub, extraNote = "" }) {
-  return new Promise((resolve) => {
+export function pickStudyMode({ title, writingSub, choiceSub, extraNote = "" }: { title: string; writingSub: string; choiceSub: string; extraNote?: string }) {
+  return new Promise<{ writing: boolean } | null>((resolve) => {
     let last = "writing";
     try { last = localStorage.getItem("studyMode") || "writing"; } catch { /* ignore */ }
     const choose = (mode) => {
@@ -208,7 +209,7 @@ function spreadOut(steps) {
 // ------------------------------------------------------------------ grammar
 
 /** Answer options for a grammar quiz: the right point plus up to three others with different labels. */
-function grammarOptions(p, lesson, others, kind, x) {
+function grammarOptions(p, lesson, others, kind, x?) {
   const label = (q) => (kind === "mark" ? (q.mark || q.examples?.[0]?.mark || []).join(" … ") : q.short);
   // For the gap quiz the right answer is what's missing from this very example.
   const mine = kind === "mark" ? (x.mark || []).join(" … ") : p.short;
@@ -427,7 +428,7 @@ export async function review({ extra = false, writing = true, ids = null, skill 
 // ------------------------------------------------------------------ sentences
 
 export function pickSentenceMode() {
-  return new Promise((resolve) => {
+  return new Promise<{ mode: string; useAI: boolean } | null>((resolve) => {
     let mode = localStorage.getItem("sentenceMode") || "mixed";
     let useAI = state.settings?.ai_enabled && localStorage.getItem("sentenceAI") !== "0";
     const opts = [

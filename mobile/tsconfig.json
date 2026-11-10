@@ -1,0 +1,18 @@
+{
+  // Type-checks the whole app (the in-app backend in src/ and the UI in app/static/js).
+  // esbuild builds it; `npm run typecheck` (tsc) only checks it.
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "strict": false,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": []
+  },
+  "include": ["src", "../app/static/js", "types"]
+}

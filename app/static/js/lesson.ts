@@ -40,7 +40,7 @@ function gardenArt(mood) {
  * steps: [{ make(ctx) -> exercise, after?(result) -> Promise<{xp?, requeue?: step}> }]
  * Returns a promise resolving with a summary when the lesson ends (or null if quit).
  */
-export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete!", onDone }) {
+export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete!", onDone }: { steps: any[]; title?: string; endTitle?: string; onDone?: (stats: any) => unknown }) {
   const queue = steps.slice();
   let pos = 0;
   let current = null;

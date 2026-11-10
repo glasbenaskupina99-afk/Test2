@@ -148,7 +148,7 @@ const STEPS = () => [
 ];
 
 /** The tour. `first`: shown on first start; ends with the placement test or "complete beginner". */
-export function showTutorial({ first = false, onDone = () => {} } = {}) {
+export function showTutorial({ first = false, onDone = (_action?: string) => {} }: { first?: boolean; onDone?: (action?: string) => void } = {}) {
   return new Promise(async (resolve) => {
     const steps = STEPS();
     // Where the learner starts: offer the placement test for a level they haven't started.
@@ -164,7 +164,7 @@ export function showTutorial({ first = false, onDone = () => {} } = {}) {
     document.body.append(root);
     document.body.style.overflow = "hidden";
 
-    function finish(action) {
+    function finish(action?: string) {
       markSeen();
       root.remove();
       document.body.style.overflow = "";

@@ -1,4 +1,5 @@
 // On-device Gemma prompts (JS port of app/ai.py). Inference runs in the native GemmaPlugin.
+import type { Settings } from "./types.js";
 import { hanziOnly } from "./pinyin.js";
 import { normKana, writable } from "./japanese.js";
 import { normSl } from "./slovenian.js";
@@ -32,21 +33,23 @@ export function isEnglish(text) {
 }
 
 export class AIError extends Error {
-  constructor(msg) {
+  aiError: boolean;
+  status: number;
+  constructor(msg: string) {
     super(msg);
     this.aiError = true;
     this.status = 503;
   }
 }
 
-let getSettings = () => ({});
+let getSettings: () => Partial<Settings> = () => ({});
 // The learner's interface language: Gemma explains and translates in it (prompts are written in English).
 const UI_NAMES = { fr: "French", es: "Spanish", ja: "Japanese" };
 const uiLang = () => (UI_NAMES[getSettings().ui_lang] ? getSettings().ui_lang : "en");
 /** Swaps "English" in a prompt for the learner's language (keys like "example_en" stay as they are). */
 export const localize = (text) => (uiLang() === "en" || !text ? text : String(text).replace(/\bEnglish\b/g, UI_NAMES[uiLang()]));
 const lang = () => (["ja", "sl"].includes(getSettings().course) ? getSettings().course : "zh");
-export function configure(settingsFn) {
+export function configure(settingsFn: () => Partial<Settings>) {
   getSettings = settingsFn;
 }
 
@@ -78,7 +81,7 @@ export function parseJson(text) {
 async function webGenerate({ prompt, system, temperature, json = true }) {
   const s = getSettings();
   const url = s.llm_base_url.replace(/\/+$/, "") + "/chat/completions";
-  const headers = { "Content-Type": "application/json" };
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (s.llm_api_key) headers.Authorization = `Bearer ${s.llm_api_key}`;
   const body = {
     model: s.llm_model,
@@ -305,7 +308,7 @@ Reply with JSON only:
 
 Example (hvala, thank you): {"sounds_like": "HVA-la ≈ value", "mnemonic": "You value their help, so you say HVALA: thank you!", "components": "interjection · 'thank you very much' = najlepša hvala", "example_en": "Thank you for the coffee.", "example_zh": "Hvala za kavo."}`;
   const d = await chat(prompt, { temperature: 0.5 });
-  const out = {};
+  const out: Record<string, string> = {};
   for (const k of ["sounds_like", "mnemonic", "components", "example_zh", "example_en"]) out[k] = String((d && d[k]) || "").trim();
   if (!out.mnemonic && !out.example_zh) throw new AIError("Gemma didn't manage a memory hook — try again");
   return out;

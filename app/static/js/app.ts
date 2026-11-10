@@ -1,4 +1,4 @@
-import { api, h, iconBtn, toast, confirmDialog, enhanceSelects } from "./util.js";
+import { api, h, iconBtn, toast, confirmDialog, enhanceSelects, type Child } from "./util.js";
 import { state, T, isJa, isSl, sayText, applyCourse, EDITION, isHeritage } from "./state.js";
 import { speak, stopSpeaking, canRecognize, canRecord } from "./audio.js";
 import { strokeDemo } from "./writer.js";
@@ -169,7 +169,7 @@ function levelCards(levels, current, onPick) {
 function courseSheet(home, startWith = null) {
   const sheet = h("div", { class: "sheet" });
   const bg = h("div", { class: "sheet-bg", onclick: (e) => e.target === bg && bg.remove() }, sheet);
-  const choose = async (lang, level) => {
+  const choose = async (lang: string, level?: string) => {
     const body = { course: lang };
     if (level) body[`section_${lang}`] = level;
     state.settings = await api("/api/settings", { method: "PUT", body });
@@ -305,7 +305,8 @@ function challengesPreview(list) {
 }
 
 /** A small card on the home screen for one way to practise. */
-function tile({ icon, title, sub, badge, onclick, href, soft }) {
+interface TileOptions { icon: string; title: string; sub?: string; badge?: string | number | null; onclick?: () => unknown; href?: string; soft?: boolean }
+function tile({ icon, title, sub, badge, onclick, href, soft }: TileOptions) {
   return h(
     href ? "a" : "button",
     { class: "tile" + (soft ? " soft" : ""), onclick, href },
@@ -432,7 +433,7 @@ function aiInviteCard() {
 
 function nextDueText(nextDue) {
   if (!nextDue) return "";
-  const mins = Math.round((new Date(nextDue.replace(" ", "T")) - new Date()) / 60000);
+  const mins = Math.round((new Date(nextDue.replace(" ", "T")).getTime() - Date.now()) / 60000);
   if (mins < 60) return `Next review in ${Math.max(1, mins)} min.`;
   if (mins < 60 * 24) return `Next review in ${Math.round(mins / 60)} h.`;
   return `Next review in ${Math.round(mins / 1440)} d.`;
@@ -828,7 +829,7 @@ async function wordsScreen() {
   const fbtns = filters.map(([k, label]) =>
     h("button", { class: k === wordFilter ? "on" : "", onclick: () => { wordFilter = k; fbtns.forEach((b, i) => b.classList.toggle("on", filters[i][0] === k)); render(); } }, label)
   );
-  const levels = [["all", "All levels"], ...sections.map((x) => [x, x])];
+  const levels: string[][] = [["all", "All levels"], ...sections.map((x: string) => [x, x])];
   const lbtns = levels.map(([k, label]) =>
     h("button", { class: k === wordSection ? "on" : "", onclick: () => { wordSection = k; lbtns.forEach((b, i) => b.classList.toggle("on", levels[i][0] === k)); render(); } }, label)
   );
@@ -1123,9 +1124,9 @@ function monotonePath(pts) {
 }
 
 const NSVG = "http://www.w3.org/2000/svg";
-const sv = (tag, attrs = {}, text) => {
+const sv = (tag: string, attrs: Record<string, string | number> = {}, text?: string) => {
   const el = document.createElementNS(NSVG, tag);
-  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v));
   if (text != null) el.textContent = text;
   return el;
 };
@@ -1174,7 +1175,7 @@ function progressChart(pts, onPick) {
   svg.insertBefore(sel, svg.firstChild);
   const pick = (i) => {
     bars.forEach((b, k) => b.classList.toggle("on", k === i));
-    sel.setAttribute("x", padL + slot * i);
+    sel.setAttribute("x", String(padL + slot * i));
     onPick(pts[i]);
   };
   pts.forEach((_, i) => {
@@ -1339,14 +1340,14 @@ async function statsScreen() {
 async function settingsScreen() {
   shell(loading(), "#/settings");
   const s = await api("/api/settings");
-  const f = {};
+  const f: Record<string, HTMLInputElement | HTMLSelectElement> = {};
   const input = (key, attrs = {}) => (f[key] = h("input", { class: "input", value: s[key], ...attrs }));
   const select = (key, options) => {
     const el = h("select", {}, options.map(([v, label]) => h("option", { value: v, selected: String(s[key]) === String(v) }, label)));
     f[key] = el;
     return el;
   };
-  const field = (label, el, hint) => h("div", { class: "field" }, h("label", {}, label), el, hint ? h("div", { class: "hint", style: { marginTop: 0 } }, hint) : null);
+  const field = (label: string, el: Node, hint?: Child) => h("div", { class: "field" }, h("label", {}, label), el, hint ? h("div", { class: "hint", style: { marginTop: 0 } }, hint) : null);
 
   const aiToggle = h("input", { type: "checkbox", class: "toggle" });
   aiToggle.checked = s.ai_enabled;
@@ -1540,8 +1541,8 @@ function reminderCard(s) {
 
 // ------------------------------------------------------------------ welcome (first start)
 
-function welcomeScreen(gemmaNext) {
-  return new Promise(async (resolve) => {
+function welcomeScreen(gemmaNext: boolean) {
+  return new Promise<void>(async (resolve) => {
     let chosen = isHeritage() ? "sl" : state.settings.course === "ja" ? "ja" : "zh";
     let level = null;
     // Levels of each course (JLPT N5, N3 …), so a course with several can be started at the right one.

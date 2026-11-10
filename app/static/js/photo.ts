@@ -12,7 +12,7 @@ export const canReadPhotos = () => !!window.__native?.ocr;
 async function shrink(file, max = 1800) {
   const url = URL.createObjectURL(file);
   try {
-    const img = await new Promise((resolve, reject) => {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
       const i = new Image();
       i.onload = () => resolve(i);
       i.onerror = () => reject(new Error("Couldn't open the photo"));

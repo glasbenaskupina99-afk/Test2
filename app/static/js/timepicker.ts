@@ -14,7 +14,7 @@ const OUTER = 100;
 const INNER = 64;
 
 /** Opens the picker; resolves with "HH:MM" or null if cancelled. */
-export function pickTime(value = "19:00", title = "Reminder time") {
+export function pickTime(value = "19:00", title = "Reminder time"): Promise<string | null> {
   return new Promise((resolve) => {
     let [hh, mm] = String(value).split(":").map(Number);
     if (!(hh >= 0 && hh < 24)) hh = 19;

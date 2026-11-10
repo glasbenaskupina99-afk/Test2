@@ -52,7 +52,7 @@ export async function recordPitch(ms = 1600, onFrame) {
     const buf = new Float32Array(an.fftSize);
     const frames = [];
     const t0 = performance.now();
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       const tick = () => {
         an.getFloatTimeDomainData(buf);
         const f = detect(buf, ctx.sampleRate);

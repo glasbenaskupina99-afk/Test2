@@ -60,7 +60,7 @@ function grove(name, trees, cols, onTap) {
   });
   const svg = h("div", { class: "grove-svg", html: `<svg viewBox="0 -4 ${w} ${hgt}" width="100%" preserveAspectRatio="xMinYMin meet">${body}</svg>` });
   svg.addEventListener("click", (e) => {
-    const g = e.target.closest("g.tree");
+    const g = (e.target as Element).closest<SVGGElement>("g.tree");
     if (g) onTap(trees[Number(g.dataset.i)]);
   });
   const wilting = trees.filter((t) => t.health === "wilting").length;

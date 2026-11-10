@@ -12,6 +12,7 @@ import FALLBACK_JA from "../../app/data/japanese_sentences.json";
 import FALLBACK_JA_N3 from "../../app/data/japanese_n3_sentences.json";
 import seedSl from "../../app/data/slovenian_a1.json";
 import FALLBACK_SL from "../../app/data/slovenian_sentences.json";
+import type { Activity, Card, Db, Extras, Lang, Settings, Skill } from "./types.js";
 import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as sync from "./sync.js";
@@ -25,7 +26,7 @@ import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./
 // Two apps from one code base: Bloomko East (Chinese, Japanese) and Bloomko Heritage
 // (lesser-known languages, for now Slovenian). The build picks one (__EDITION__).
 export const EDITION = typeof __EDITION__ !== "undefined" ? __EDITION__ : "east";
-const EDITION_LANGS = EDITION === "heritage" ? ["sl"] : ["zh", "ja"];
+const EDITION_LANGS: Lang[] = EDITION === "heritage" ? ["sl"] : ["zh", "ja"];
 
 // Built-in word lists. Each is a "section" of its course (e.g. JLPT N5 / JLPT N3).
 const ALL_SEED_SETS = [
@@ -38,7 +39,7 @@ const ALL_SEED_SETS = [
   { lang: "ja", data: seedJaN3, section: "JLPT N3", source: "n3", base: 10000 },
   { lang: "sl", data: seedSl, section: "A1", source: "sl_a1", base: 0 },
 ];
-const SEED_SETS = ALL_SEED_SETS.filter((x) => EDITION_LANGS.includes(x.lang));
+const SEED_SETS = ALL_SEED_SETS.filter((x) => EDITION_LANGS.includes(x.lang as Lang));
 const SECTION_OF_SOURCE = Object.fromEntries(ALL_SEED_SETS.map((x) => [x.source, x.section]));
 const MY_WORDS = "My words";
 // Fallback sentences as [english, text, reading]
@@ -51,10 +52,10 @@ const FALLBACK_EN = {
 /** Built-in sentences with the translation in the interface language. */
 const FALLBACK = new Proxy({}, { get: (_, lang) => (FALLBACK_EN[lang] || []).map((r) => Object.assign([locale.sentence(r.key) || r[0], r[1], r[2]], { key: r.key })) });
 
-const SKILLS = ["write", "speak", "recall"];
+const SKILLS: Skill[] = ["write", "speak", "recall"];
 
 const DEFAULTS = {
-  course: EDITION_LANGS[0], // "zh" Mandarin, "ja" Japanese (East) · "sl" Slovenian (Heritage)
+  course: EDITION_LANGS[0] as Lang, // "zh" Mandarin, "ja" Japanese (East) · "sl" Slovenian (Heritage)
   section_zh: "", // section chosen for "Learn new words" ("" = first unfinished)
   section_ja: "",
   section_sl: "",
@@ -83,7 +84,8 @@ const DEFAULTS = {
 };
 
 class HttpError extends Error {
-  constructor(status, msg) {
+  status: number;
+  constructor(status: number, msg: string) {
     super(msg);
     this.status = status;
   }
@@ -100,7 +102,7 @@ const DAY = 86400000;
 
 // ------------------------------------------------------------------ storage
 
-let db = null;
+let db: Db = null;
 let store = null;
 let saveTimer = null;
 
@@ -181,7 +183,7 @@ export async function init(storage) {
     if (document.visibilityState === "hidden") {
       flush();
       autoSync();
-    } else if (db.sync?.code && Date.now() - Date.parse(db.sync.last || 0) > 5 * 60 * 1000) {
+    } else if (db.sync?.code && Date.now() - Date.parse(db.sync.last || "0") > 5 * 60 * 1000) {
       autoSync();
     }
   });
@@ -279,8 +281,8 @@ function flush() {
 
 // ------------------------------------------------------------------ helpers
 
-function settingsAll() {
-  const s = { ...DEFAULTS, ...db.settings };
+function settingsAll(): Settings {
+  const s = { ...DEFAULTS, ...db.settings } as Settings;
   // A course from the other app (e.g. Slovenian in an old East save) falls back to this app's first.
   if (!EDITION_LANGS.includes(s.course)) s.course = EDITION_LANGS[0];
   return s;
@@ -327,10 +329,10 @@ function streak() {
 /** Longest streak ever (days saved by raindrops bridge the gap but don't count). */
 function bestStreak() {
   const keys = [...new Set([...Object.keys(db.activity).filter(practiced), ...db.garden.saved])].sort();
-  let best = 0, run = 0, prev = null;
+  let best = 0, run = 0, prev: Date | null = null;
   for (const k of keys) {
     const d = new Date(k + "T12:00:00");
-    if (!(prev && Math.round((d - prev) / DAY) === 1)) run = 0;
+    if (!(prev && Math.round((d.getTime() - prev.getTime()) / DAY) === 1)) run = 0;
     if (practiced(k)) run++;
     best = Math.max(best, run);
     prev = d;
@@ -424,11 +426,11 @@ const READY = {};
 const readyJobs = {};
 function loadReady(lang) {
   readyJobs[lang] ||= Promise.all([
-    fetch(`extras/${lang}.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+    fetch(`extras/${lang}.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})) as Promise<Record<string, any>>,
     locale.overlay(`extras-${lang}`),
   ]).then(([x, ov]) => {
     if (ov) {
-      for (const [word, e] of Object.entries(x)) {
+      for (const [word, e] of Object.entries<any>(x)) {
         x[word] = { ...e, mnemonic: ov[`${word}|m`] || e.mnemonic, components: ov[`${word}|c`] || e.components, example_en: ov[`${word}|e`] || e.example_en };
       }
     }
@@ -512,7 +514,7 @@ function weekStats(k = weekKey()) {
 }
 function forestBump(kind, n = 1) {
   const w = weekStats();
-  w[kind] = (w[kind] || 0) + n;
+  w[kind] = (Number(w[kind]) || 0) + n;
   checkChallenges();
   persist();
 }
@@ -624,9 +626,9 @@ function schedule(card, grade) {
   const rating = grade + 1;
   let { reps = 0, lapses = 0 } = card;
   // Cards reviewed with the old SM-2 scheduler carry over their interval and ease.
-  const prev = card.stability ? card : card.reps > 0 ? fsrs.fromSm2(card) : {};
+  const prev: any = card.stability ? card : card.reps > 0 ? fsrs.fromSm2(card) : {};
   const last = card.last_review ? new Date(card.last_review.replace(" ", "T")) : null;
-  const elapsed = last ? (Date.now() - last) / DAY : 0;
+  const elapsed = last ? (Date.now() - last.getTime()) / DAY : 0;
   const { stability, difficulty } = fsrs.next(prev, rating, elapsed);
   let interval;
   let due;
@@ -906,7 +908,7 @@ async function weakSpots() {
   const words = W();
   const byWord = new Map();
   for (const c of C()) (byWord.get(c.word_id) || byWord.set(c.word_id, []).get(c.word_id)).push(c);
-  const scoreOf = (id, skill) => {
+  const scoreOf = (id: number, skill?: string) => {
     const cs = (byWord.get(id) || []).filter((c) => !skill || c.skill === skill);
     const t = cs.map(trouble).filter((x) => x != null);
     return t.length ? Math.max(...t) : null;
@@ -1014,10 +1016,10 @@ const routes = {
       }
       return { lang, total: ws.length, learned: ws.filter((w) => all.has(w.id)).length, levels, level: lang === course() ? secs.current : s[`section_${lang}`] || "" };
     });
-    const today = db.activity[dayKey()] || {};
+    const today: Partial<Activity> = db.activity[dayKey()] || {};
     const due = cards.filter((c) => c.due <= n).length;
     const newLeft = W().filter((w) => !ids.has(w.id) && w.section === secs.current).length;
-    const plan = {
+    const plan: Record<string, number> = {
       reviews_done: today.reviews || 0,
       reviews_left: due,
       new_done: today.new_words || 0,
@@ -1218,7 +1220,7 @@ const routes = {
       const ready = prebuilt(w);
       if (ready) return ready;
     }
-    const d = await ai.wordExtras(w);
+    const d: Extras = await ai.wordExtras(w);
     if (d.example_zh && course() === "zh") d.example_pinyin = toPinyin(d.example_zh);
     w.extras = d;
     persist();
@@ -1316,7 +1318,7 @@ const routes = {
 
   // ---------------------------------------------------------------- 1.9: mock exams
   "GET /api/exams": () => {
-    const levels = [...new Set(W().map((w) => w.section))].filter((sec) => EXAMS[sec]);
+    const levels = [...new Set<string>(W().map((w) => w.section))].filter((sec) => EXAMS[sec]);
     const ids = learnedIds();
     return {
       exams: levels.map((sec) => {
@@ -1665,7 +1667,7 @@ const routes = {
     const known = learnedWords();
     const knownChars = new Set(known.flatMap((w) => [...w.hanzi]));
     const recent = db.sentenceLog.filter((r) => r.lang === course()).slice(-40).map((r) => r.hanzi).reverse();
-    const lapsesBy = {};
+    const lapsesBy: Record<number, number> = {};
     for (const c of C()) lapsesBy[c.word_id] = (lapsesBy[c.word_id] || 0) + c.lapses;
     const focus = Object.entries(lapsesBy).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([id]) => pick(wordById(Number(id))));
     let note = null;
@@ -1731,7 +1733,7 @@ const routes = {
   "POST /api/speech/assess": async (_, body) => {
     const expected = String(body.expected || "");
     const reading = course() === "zh" ? toPinyin(expected) : String(body.reading || "");
-    const res = await ai.assessSpeech(String(body.audio || ""), expected, reading);
+    const res: any = await ai.assessSpeech(String(body.audio || ""), expected, reading);
     if (res.heard) {
       res.compare = course() === "sl"
         ? compareSpokenSl(res.heard, expected)
@@ -1749,7 +1751,7 @@ const routes = {
     if (words.length < 10) throw new HttpError(409, "Learn at least 10 words first");
     const known = shuffled(words).slice(0, 30).map((w) => w.hanzi);
     const history = (Array.isArray(body.history) ? body.history : []).map((m) => ({ who: m.who === "me" ? "me" : "gemma", text: String(m.text || "") }));
-    const r = await ai.talkTurn(topic, known, history, String(body.answer || ""));
+    const r: any = await ai.talkTurn(topic, known, history, String(body.answer || ""));
     if (course() === "zh") {
       r.reading = toPinyin(r.reply);
       r.ideas = r.ideas.map((x) => ({ ...x, reading: toPinyin(x.text) }));
@@ -1889,7 +1891,7 @@ const compiled = Object.entries(routes).map(([key, fn]) => {
   return { method, re, names, fn };
 });
 
-export async function handle(url, { method = "GET", body } = {}) {
+export async function handle(url: string, { method = "GET", body }: { method?: string; body?: any } = {}) {
   const u = new URL(url, "http://local");
   for (const r of compiled) {
     if (r.method !== method) continue;

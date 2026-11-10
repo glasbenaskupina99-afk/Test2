@@ -1,32 +1,47 @@
 // Tiny DOM + API helpers. No framework, no build step.
 
-export function h(tag, attrs = {}, ...children) {
+/** Attributes for h(): class, style (string or object), on<event> handlers, html, or any attribute. */
+export type Attrs = Record<string, any> | null | undefined;
+export type Child = Node | string | number | boolean | null | undefined | Child[];
+
+export function h<K extends keyof HTMLElementTagNameMap>(tag: K, attrs: Attrs = {}, ...children: Child[]): HTMLElementTagNameMap[K] {
   const el = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs || {})) {
     if (v == null || v === false) continue;
     if (k === "class") el.className = v;
     else if (k === "style" && typeof v === "object") {
-      for (const [sk, sv] of Object.entries(v)) sk.startsWith("--") ? el.style.setProperty(sk, sv) : (el.style[sk] = sv);
+      for (const [sk, sv] of Object.entries(v)) sk.startsWith("--") ? el.style.setProperty(sk, sv as string) : (el.style[sk] = sv);
     }
     else if (k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2).toLowerCase(), v);
     else if (k === "html") el.innerHTML = v;
     else if (v === true) el.setAttribute(k, "");
     else el.setAttribute(k, v);
   }
-  for (const c of children.flat(Infinity)) {
+  for (const c of (children as unknown[]).flat(Infinity)) {
     if (c == null || c === false) continue;
     el.append(c instanceof Node ? c : document.createTextNode(String(c)));
   }
   return el;
 }
 
-export async function api(path, { method = "GET", body } = {}) {
+/** An error from the backend, with its HTTP status (and whether the AI caused it). */
+export class ApiError extends Error {
+  status = 500;
+  aiError = false;
+}
+
+export interface ApiOptions {
+  method?: string;
+  body?: unknown;
+}
+
+export async function api<T = any>(path: string, { method = "GET", body }: ApiOptions = {}): Promise<T> {
   // In the Android app there is no server: requests are answered by the local backend.
   if (window.__localApi) {
     try {
       return await window.__localApi(path, { method, body: body ? JSON.parse(JSON.stringify(body)) : undefined });
     } catch (e) {
-      const err = new Error(e.message || String(e));
+      const err = new ApiError(e.message || String(e));
       err.status = e.status || 500;
       err.aiError = !!e.aiError;
       throw err;
@@ -40,7 +55,7 @@ export async function api(path, { method = "GET", body } = {}) {
   let data = null;
   try { data = await res.json(); } catch { /* empty body */ }
   if (!res.ok) {
-    const err = new Error((data && data.detail) || `${res.status} ${res.statusText}`);
+    const err = new ApiError((data && data.detail) || `${res.status} ${res.statusText}`);
     err.status = res.status;
     err.aiError = data && data.ai_error;
     throw err;
@@ -48,8 +63,8 @@ export async function api(path, { method = "GET", body } = {}) {
   return data;
 }
 
-let toastTimer;
-export function toast(msg, ms = 2600) {
+let toastTimer: ReturnType<typeof setTimeout>;
+export function toast(msg: string, ms = 2600) {
   const t = document.getElementById("toast");
   t.textContent = msg;
   t.hidden = false;
@@ -57,7 +72,7 @@ export function toast(msg, ms = 2600) {
   toastTimer = setTimeout(() => (t.hidden = true), ms);
 }
 
-export function shuffle(arr) {
+export function shuffle<T = any>(arr: T[]): T[] {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -66,7 +81,7 @@ export function shuffle(arr) {
   return a;
 }
 
-export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+export const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
 
 export const icons = {
   speaker: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/><path d="M14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>`,
@@ -76,14 +91,23 @@ export const icons = {
   play: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`,
 };
 
-export function iconBtn(name, cls, onClick, title) {
+export function iconBtn(name: keyof typeof icons, cls: string, onClick: (e: MouseEvent) => void, title?: string) {
   const b = h("button", { class: cls, onclick: onClick, title, "aria-label": title });
   b.innerHTML = icons[name];
   return b;
 }
 
 /** In-app replacement for window.confirm(), styled like the rest of the app. Resolves true/false. */
-export function confirmDialog({ title, message = "", icon = "", confirmLabel = "OK", cancelLabel = "Cancel", danger = false } = {}) {
+export interface ConfirmOptions {
+  title?: string;
+  message?: string;
+  icon?: string | Node;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  danger?: boolean;
+}
+
+export function confirmDialog({ title, message = "", icon = "", confirmLabel = "OK", cancelLabel = "Cancel", danger = false }: ConfirmOptions = {}): Promise<boolean> {
   return new Promise((resolve) => {
     const done = (v) => { bg.remove(); document.removeEventListener("keydown", onKey); resolve(v); };
     const onKey = (e) => { if (e.key === "Escape") done(false); };
@@ -100,7 +124,7 @@ export function confirmDialog({ title, message = "", icon = "", confirmLabel = "
     );
     document.addEventListener("keydown", onKey);
     document.body.append(bg);
-    bg.querySelector(".btn").focus();
+    bg.querySelector<HTMLElement>(".btn").focus();
   });
 }
 
@@ -109,7 +133,7 @@ export function confirmDialog({ title, message = "", icon = "", confirmLabel = "
  * app's style. The <select> stays in the page (hidden) as the source of truth, so code that
  * reads .value or listens for "change" keeps working.
  */
-function enhanceSelect(sel) {
+function enhanceSelect(sel: HTMLSelectElement) {
   if (sel.dataset.enhanced) return;
   sel.dataset.enhanced = "1";
   const split = (text) => {
@@ -159,14 +183,14 @@ function enhanceSelect(sel) {
   new MutationObserver(sync).observe(sel, { attributes: true, attributeFilter: ["hidden"] });
 }
 
-export function enhanceSelects(root = document.body) {
-  root.querySelectorAll("select:not([data-enhanced])").forEach(enhanceSelect);
+export function enhanceSelects(root: HTMLElement = document.body) {
+  root.querySelectorAll<HTMLSelectElement>("select:not([data-enhanced])").forEach(enhanceSelect);
   new MutationObserver((muts) => {
     for (const m of muts)
       for (const n of m.addedNodes) {
         if (n.nodeType !== 1) continue;
-        if (n.tagName === "SELECT") enhanceSelect(n);
-        else n.querySelectorAll?.("select:not([data-enhanced])").forEach(enhanceSelect);
+        if (n instanceof HTMLSelectElement) enhanceSelect(n);
+        else if (n instanceof Element) n.querySelectorAll<HTMLSelectElement>("select:not([data-enhanced])").forEach(enhanceSelect);
       }
   }).observe(root, { childList: true, subtree: true });
 }

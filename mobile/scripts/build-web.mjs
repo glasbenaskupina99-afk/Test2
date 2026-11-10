@@ -79,7 +79,7 @@ html = html
   .replace(/<link rel="stylesheet" href="https:\/\/fonts[^>]*>/, '<link rel="stylesheet" href="fonts.css">')
   .replace(/\/static\//g, "")
   .replace('href="/manifest.webmanifest"', 'href="manifest.webmanifest"')
-  .replace('<script type="module" src="js/app.js"></script>', '<script type="module" src="app.js"></script>')
+  .replace('<script type="module" src="dist/app.js"></script>', '<script type="module" src="app.js"></script>')
   .replace("<title>Bloomko</title>", `<title>${EAST ? "Bloomko East" : "Bloomko Heritage"}</title>`)
   .replace('<html lang="en">', `<html lang="en" data-edition="${EDITION}">`)
   .replace('<meta name="theme-color" content="#1c3026">', `<meta name="theme-color" content="${EAST ? "#1c3026" : "#f6efe3"}">`)
@@ -167,7 +167,7 @@ for (const f of EAST ? readdirSync(jaSrc) : []) {
 }
 
 await build({
-  entryPoints: [join(mobile, "src", "main.js")],
+  entryPoints: [join(mobile, "src", "main.ts")],
   bundle: true,
   format: "esm",
   target: "es2022",

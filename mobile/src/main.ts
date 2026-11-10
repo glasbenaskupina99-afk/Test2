@@ -9,7 +9,7 @@ import { LocalNotifications } from "@capacitor/local-notifications";
 import * as backend from "./backend.js";
 
 const isNative = Capacitor.isNativePlatform();
-const Gemma = registerPlugin("Gemma");
+const Gemma = registerPlugin<any>("Gemma");
 const Widget = registerPlugin("Widget");
 const Ocr = registerPlugin("Ocr");
 const KEY = "hanzi-db";
@@ -32,7 +32,7 @@ window.__edition = __EDITION__;
 window.__charDataUrl = (c) => `${window.__course === "ja" ? "chars-ja" : "chars"}/${encodeURIComponent(c)}.json`;
 
 function recognize(language = "zh-CN") {
-  const p = (async () => {
+  const p: Promise<string[]> & { stop?: () => void } = (async () => {
     let perm = await SpeechRecognition.checkPermissions();
     if (perm.speechRecognition !== "granted") perm = await SpeechRecognition.requestPermissions();
     if (perm.speechRecognition !== "granted") throw new Error("Microphone permission denied");

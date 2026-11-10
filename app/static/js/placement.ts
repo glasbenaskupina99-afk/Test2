@@ -20,7 +20,7 @@ export function placementCard(offer, done) {
   );
 }
 
-export async function runPlacement(section, done) {
+export async function runPlacement(section: string, done: () => void) {
   let d;
   try {
     d = await api(`/api/placement?section=${encodeURIComponent(section)}`);

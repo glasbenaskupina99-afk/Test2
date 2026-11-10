@@ -136,7 +136,7 @@ function translateTree(root) {
   if (root.nodeType !== 1 || skip(root)) return;
   translateAttrs(root);
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
-    acceptNode: (n) => (n.nodeType === 1 && (n.getAttribute("translate") === "no" || n.classList.contains("hz") || n.tagName === "SCRIPT" || n.tagName === "STYLE" || n.tagName === "TEXTAREA") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+    acceptNode: (n: any) => (n.nodeType === 1 && (n.getAttribute("translate") === "no" || n.classList.contains("hz") || n.tagName === "SCRIPT" || n.tagName === "STYLE" || n.tagName === "TEXTAREA") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
   });
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
     if (n.nodeType === 3) translateText(n);

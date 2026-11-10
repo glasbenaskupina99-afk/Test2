@@ -11,7 +11,7 @@ const SKIP = /npu|qualcomm|qnn|mediatek|mtk|sm8\d|intel|tpu|web|ios|apple/i;
 export const mb = (b) => (b >= 1e9 ? `${(b / 1e9).toFixed(1)} GB` : `${Math.round(b / 1e6)} MB`);
 
 /** The plain (non chip-specific) .litertlm file of a repo, smallest first. */
-export const pickFile = (files) => files.slice().sort((a, b) => SKIP.test(a.path) - SKIP.test(b.path) || a.size - b.size)[0];
+export const pickFile = (files) => files.slice().sort((a, b) => Number(SKIP.test(a.path)) - Number(SKIP.test(b.path)) || a.size - b.size)[0];
 
 /** Settings only expose a masked token; the real one is read from the local backend. */
 export async function hfToken(value) {
@@ -25,7 +25,7 @@ export const hasGemmaSupport = () => !!gemma();
 // ---------------------------------------------------------------- download manager
 
 export const dl = { state: "idle", received: 0, total: 0, error: "", t0: 0, b0: null, speed: 0 };
-const subs = new Set();
+const subs = new Set<(d: typeof dl) => void>();
 const emit = () => { subs.forEach((f) => f(dl)); updatePill(); };
 export const onDownload = (f) => (subs.add(f), () => subs.delete(f));
 
@@ -106,11 +106,11 @@ function updatePill() {
  * Full-screen guided setup. Resolves when the learner continues (download running or done) or skips.
  * `step` ("2 of 2") is shown on first start, right after the welcome screen.
  */
-export function gemmaSetupScreen({ step } = {}) {
+export function gemmaSetupScreen({ step }: { step?: string } = {}) {
   const root = document.getElementById("app");
-  return new Promise(async (resolve) => {
+  return new Promise<void>(async (resolve) => {
     let choice = MODELS.find((m) => m.repo === state.settings?.hf_repo) || MODELS[0];
-    let st = {};
+    let st: any = {};
     try { st = await gemma().status(); } catch { /* ignore */ }
     if (st.hasModel && dl.state === "idle") dl.state = "done";
     if (st.downloading && dl.state === "idle") Object.assign(dl, { state: "downloading" });

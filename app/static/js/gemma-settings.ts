@@ -13,7 +13,7 @@ const mb = (b) => (b >= 1e9 ? `${(b / 1e9).toFixed(2)} GB` : `${Math.round(b / 1
 
 export function gemmaCard(s, fields, save) {
   const G = window.__native.gemma;
-  const card = h("div", { class: "card" });
+  const card: HTMLDivElement & { cleanup?: () => void } = h("div", { class: "card" });
   const statusEl = h("div", { class: "row small", style: { flexWrap: "wrap" } });
   const progress = h("div", { hidden: true }, h("div", { class: "progress", style: { margin: "8px 0" } }, h("i", { style: { width: "0%" } })), h("div", { class: "small muted" }));
   const files = h("div", { style: { margin: "10px 0" } });

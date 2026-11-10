@@ -28,7 +28,7 @@ export function speak(text, { slow = false } = {}) {
   if (native()?.speak) return native().speak(text, slow ? Math.max(0.4, rate0 - 0.35) : rate0, lang).catch(() => {});
   if (!("speechSynthesis" in window)) return Promise.resolve();
   speechSynthesis.cancel();
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = lang;
     const voice = pickVoice(lang);
@@ -57,11 +57,11 @@ export function recognize() {
   rec.maxAlternatives = 4;
   rec.continuous = false;
   let finish;
-  const promise = new Promise((resolve, reject) => {
-    let results = [];
+  const promise: Promise<string[]> & { stop?: () => void } = new Promise<string[]>((resolve, reject) => {
+    let results: string[] = [];
     rec.onresult = (e) => {
       const r = e.results[e.results.length - 1];
-      results = Array.from(r).map((a) => a.transcript);
+      results = Array.from(r as ArrayLike<{ transcript: string }>).map((a) => a.transcript);
     };
     rec.onerror = (e) => {
       if (e.error === "no-speech" || e.error === "aborted") resolve([]);
@@ -78,6 +78,11 @@ export function recognize() {
 // ---------------------------------------------------------------- recording
 
 export class Recorder {
+  stream: MediaStream;
+  chunks: Blob[];
+  mr: MediaRecorder;
+  done: Promise<unknown>;
+
   async start() {
     this.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
     this.chunks = [];

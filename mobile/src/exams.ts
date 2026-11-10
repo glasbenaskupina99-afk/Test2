@@ -204,7 +204,7 @@ export function scorePaper(paper, answers) {
     });
   });
   const parts = spec.groups
-    ? Object.entries(spec.groups).map(([id, g]) => ({ id, title: g.title, max: g.score, min: g.min, score: Math.round(((right[id] || 0) / Math.max(count[id] || 1, 1)) * g.score) }))
+    ? Object.entries(spec.groups as Record<string, { title: string; score: number; min: number }>).map(([id, g]) => ({ id, title: g.title, max: g.score, min: g.min, score: Math.round(((right[id] || 0) / Math.max(count[id] || 1, 1)) * g.score) }))
     : spec.sections.map((s) => ({ id: s.id, title: s.title, max: s.score, min: null, score: Math.round(((right[s.id] || 0) / Math.max(count[s.id] || 1, 1)) * s.score) }));
   const total = parts.reduce((a, p) => a + p.score, 0);
   const sectionsOk = parts.every((p) => p.min == null || p.score >= p.min);

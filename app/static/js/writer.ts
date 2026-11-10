@@ -63,7 +63,7 @@ export function writingPad(chars, { showSlots = true } = {}) {
   let charStats = null;
   let destroyed = false;
   let resolveDone;
-  const done = new Promise((r) => (resolveDone = r));
+  const done = new Promise<any>((r) => (resolveDone = r));
 
   function setStatus(text, cls = "") {
     status.textContent = text;
@@ -200,7 +200,7 @@ export function writingPad(chars, { showSlots = true } = {}) {
 }
 
 /** Stroke-order animation for a word (each character animates in turn). */
-export function strokeDemo(word, { size } = {}) {
+export function strokeDemo(word: string, { size }: { size?: number } = {}) {
   const chars = [...word];
   const each = size || Math.min(chars.length > 1 ? 150 : 220, Math.floor((window.innerWidth - 60) / chars.length));
   const writers = [];

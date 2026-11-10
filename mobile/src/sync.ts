@@ -3,6 +3,8 @@
 // then stored on bloomko.eu under a hash of that code — the server can't read it. Every device
 // with the same code merges the copy into its own data, so nothing is lost on either side.
 
+import type { Db } from "./types.js";
+
 export const SYNC_URL = () => window.__syncUrl || "https://bloomko.eu/api/sync";
 const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"; // no 0/O, 1/I
 const SYNCED_SETTINGS = ["section_zh", "section_ja", "section_sl", "display_name", "daily_goal", "new_per_lesson", "review_size", "sentence_count", "leniency", "hint_after_misses", "tts_rate"];
@@ -70,7 +72,7 @@ export const wordKey = (w) => `${w.lang}|${w.hanzi}|${w.source === "custom" ? `c
 const later = (a, b) => String(a || "") > String(b || "");
 
 /** The parts of the database that are your progress, with words referenced by content (ids differ per device). */
-export function snapshot(db) {
+export function snapshot(db: Db) {
   const byId = new Map(db.words.map((w) => [w.id, w]));
   return {
     v: 1,
@@ -93,7 +95,7 @@ export function snapshot(db) {
 }
 
 /** Merges another device's snapshot into db (in place). Newer reviews win; nothing is dropped. */
-export function merge(db, r) {
+export function merge(db: Db, r: any) {
   if (!r || r.v !== 1) return;
   const deleted = new Set([...(db.sync.deleted || []), ...(r.deleted || [])]);
   db.sync.deleted = [...deleted].slice(-500);
@@ -135,7 +137,7 @@ export function merge(db, r) {
   }
 
   // Daily activity: the higher number per day (the same day may have been synced before).
-  for (const [day, a] of Object.entries(r.activity || {})) {
+  for (const [day, a] of Object.entries<any>(r.activity || {})) {
     const mine = (db.activity[day] ||= { xp: 0, new_words: 0, reviews: 0, sentences: 0 });
     for (const [f, v] of Object.entries(a)) if (typeof v === "number") mine[f] = Math.max(mine[f] || 0, v);
   }
@@ -151,21 +153,21 @@ export function merge(db, r) {
     db.garden.awarded = [...new Set([...db.garden.awarded, ...(r.garden.awarded || [])])].sort();
     if (newer && typeof r.garden.raindrops === "number") db.garden.raindrops = r.garden.raindrops;
   }
-  for (const [k, v] of Object.entries(r.lookalikes || {})) {
+  for (const [k, v] of Object.entries<any>(r.lookalikes || {})) {
     const mine = (db.lookalikes[k] ||= { seen: 0, wrong: 0 });
     mine.seen = Math.max(mine.seen, v.seen || 0);
     mine.wrong = Math.max(mine.wrong, v.wrong || 0);
   }
-  for (const [id, c] of Object.entries(r.grammar?.learned || {})) {
+  for (const [id, c] of Object.entries<any>(r.grammar?.learned || {})) {
     const mine = db.grammar.learned[id];
     if (!mine || later(c.last_review, mine.last_review)) db.grammar.learned[id] = c;
   }
   // Forest: weekly counters take the higher value, flowering trees from both devices are kept.
   if (r.forest) {
     db.forest ||= { weeks: {}, glade: [] };
-    for (const [wk, w] of Object.entries(r.forest.weeks || {})) {
+    for (const [wk, w] of Object.entries<any>(r.forest.weeks || {})) {
       const mine = (db.forest.weeks[wk] ||= { write_perfect: 0, revived: 0, revived_ids: [], spoken: 0, finished: 0 });
-      for (const k of ["write_perfect", "revived", "spoken", "finished"]) mine[k] = Math.max(mine[k] || 0, w[k] || 0);
+      for (const k of ["write_perfect", "revived", "spoken", "finished"]) mine[k] = Math.max(Number(mine[k]) || 0, Number(w[k]) || 0);
       mine.revived_ids = [...new Set([...(mine.revived_ids || []), ...(w.revived_ids || [])])];
     }
     const key = (g) => `${g.week}|${g.kind}|${g.lang}`;
@@ -181,7 +183,7 @@ export function merge(db, r) {
     db.exams = db.exams.sort((a, b) => String(a.at).localeCompare(String(b.at))).slice(-50);
   }
   db.stories ||= {};
-  for (const [id, s] of Object.entries(r.stories || {})) {
+  for (const [id, s] of Object.entries<any>(r.stories || {})) {
     const mine = (db.stories[id] ||= { done: false, best: 0 });
     mine.done = mine.done || !!s.done;
     mine.best = Math.max(mine.best || 0, s.best || 0);
@@ -190,12 +192,12 @@ export function merge(db, r) {
   for (const s of r.storiesAi || []) if (!ai.has(s.id)) ai.set(s.id, s);
   db.storiesAi = [...ai.values()].sort((a, b) => String(b.id).localeCompare(String(a.id))).slice(0, 6);
 
-  if (newer) for (const [k, v] of Object.entries(r.settings || {})) db.settings[k] = v;
+  if (newer) for (const [k, v] of Object.entries<any>(r.settings || {})) db.settings[k] = v;
 }
 
 // ------------------------------------------------------------------ talking to bloomko.eu
 
-async function request(method, id, body) {
+async function request(method: string, id: string, body?: unknown) {
   const r = await fetch(`${SYNC_URL()}/${id}`, {
     method,
     headers: body ? { "Content-Type": "application/json" } : {},
@@ -211,7 +213,7 @@ async function request(method, id, body) {
  * Pull, merge, push. Returns { changed } — true when the other device brought something new.
  * `db.sync` holds { code, version, hash, last, changed_at, deleted }.
  */
-export async function syncNow(db) {
+export async function syncNow(db: Db) {
   const s = db.sync;
   if (!s?.code) throw new Error("Sync is off");
   const id = await idOf(s.code);

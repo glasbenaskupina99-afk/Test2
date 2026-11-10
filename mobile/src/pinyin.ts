@@ -6,7 +6,7 @@ const HANZI_RE = /[㐀-鿿豈-﫿]/g;
 
 export const hanziOnly = (text) => ((text || "").match(HANZI_RE) || []).join("");
 
-export function splitTones(text) {
+export function splitTones(text: string): [string, number[]] {
   const letters = [];
   const tones = [];
   for (const ch of (text || "").toLowerCase().normalize("NFD")) {
@@ -47,7 +47,7 @@ export function compareSpoken(heard, expected) {
   for (let i = n - 1; i >= 0; i--)
     for (let j = m - 1; j >= 0; j--)
       dp[i][j] = base(exp[i]) === base(got[j]) ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
-  const result = exp.map((s) => ({ expected: s, status: "missing" }));
+  const result: { expected: string; status: string; heard?: string }[] = exp.map((s) => ({ expected: s, status: "missing" }));
   let i = 0;
   let j = 0;
   while (i < n && j < m) {

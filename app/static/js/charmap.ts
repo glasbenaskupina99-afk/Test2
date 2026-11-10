@@ -81,8 +81,8 @@ function graph(d) {
   const svgNS = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(svgNS, "svg");
   svg.setAttribute("class", "cm-lines");
-  svg.setAttribute("width", W);
-  svg.setAttribute("height", H);
+  svg.setAttribute("width", String(W));
+  svg.setAttribute("height", String(H));
   // Known links last, so they are drawn on top of the dim ones they share a line with.
   for (const [dPath, c2] of lines.sort((a, b) => (a[1] > b[1] ? 1 : -1))) {
     const path = document.createElementNS(svgNS, "path");

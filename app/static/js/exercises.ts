@@ -20,14 +20,14 @@ const kanaOf = (w) => (w.source === "kana" ? (/[ァ-ヺ]/.test(w.hanzi) ? "katak
 /** Japanese vocabulary written only in kana (コーヒー, ちょっと): quizzed on meaning and sound, not reading/writing. */
 export const noKanji = (w) => isJa() && w.source !== "kana" && !/[㐀-鿿豈-﫿々]/.test(w.hanzi);
 /** Kana are quizzed against other kana of the same script, not against kanji words. */
-function samePool(word, pool) {
+function samePool(word, pool: any[]): any[] {
   const k = kanaOf(word);
   if (!k) return pool;
   const same = pool.filter((w) => kanaOf(w) === k);
   return same.length >= 3 ? same : pool;
 }
 
-function solution(word, extra) {
+function solution(word, extra?) {
   return h(
     "div",
     {},
@@ -574,7 +574,7 @@ export function speakWord(ctx, word, { showPinyin = true } = {}) {
 
 // ------------------------------------------------------------------ sentences
 
-function sentenceSolution(s, extra) {
+function sentenceSolution(s, extra?) {
   return h(
     "div",
     {},
@@ -584,7 +584,7 @@ function sentenceSolution(s, extra) {
   );
 }
 
-function sentencePrompt(s, kicker, cls) {
+function sentencePrompt(s, kicker, cls?) {
   return [
     h("div", { class: `ex-kicker ${cls}` }, kicker, s.source === "ai" ? h("span", { class: "tag" }, "✨ AI") : null),
     h("div", { class: "prompt-bubble" }, h("div", { class: "mascot" }, "🐼"), h("div", { class: "bubble" }, s.en)),
@@ -698,7 +698,7 @@ export function sentenceSpeakRecall(ctx, s) {
  *   meaning — see one of them, choose its meaning
  * After checking, all of them are shown side by side with what tells them apart.
  */
-export function lookalike(ctx, item, kind) {
+export function lookalike(ctx, item: { chars: any[]; hint?: string }, kind) {
   const target = item.chars[Math.floor(Math.random() * item.chars.length)];
   const say = (c) => speak(isJa() ? c.reading || c.c : c.c);
   const options = shuffle(item.chars.slice());
@@ -973,7 +973,7 @@ export function dictation(ctx, item) {
   const play = () => speak(item.text);
   setTimeout(play, 400);
   const audio = h("div", { class: "row", style: { justifyContent: "center", margin: "6px 0 14px" } }, speakerBtn(item.text), slowBtn(item.text));
-  const solutionEl = (extra) => h("div", {}, h("div", { class: "hz" }, item.text), item.reading && item.reading !== item.text ? h("div", { class: "small" }, item.reading) : null, h("div", { class: "small" }, item.en), extra ? h("div", { class: "small" }, extra) : null);
+  const solutionEl = (extra?) => h("div", {}, h("div", { class: "hz" }, item.text), item.reading && item.reading !== item.text ? h("div", { class: "small" }, item.reading) : null, h("div", { class: "small" }, item.en), extra ? h("div", { class: "small" }, extra) : null);
   if (isSl()) {
     const input = h("input", { class: "input", autocomplete: "off", autocapitalize: "off", spellcheck: "false", placeholder: "Type what you hear", oninput: () => ctx.setReady(!!input.value.trim()), onkeydown: (e) => e.key === "Enter" && input.value.trim() && ctx.submit() });
     return {

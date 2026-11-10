@@ -3,6 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { cleanCode, newCode, open, seal, merge, snapshot } from "../src/sync.js";
 import { cleanKey, newKey, upload, list, download } from "../src/backup.js";
+import { loginKey, register, login, changePassword } from "../src/account.js";
 
 test("sync codes and backup keys: generated, cleaned, and typos refused", () => {
   const code = newCode();
@@ -72,6 +73,38 @@ test("cloud backup: upload, list with summaries, restore — against a fake serv
     assert.equal(back.db.sync, undefined, "this device's sync code isn't in the backup");
     assert.deepEqual(await list(newKey()), [], "another key sees nothing");
     for (const [, items2] of store) for (const b of items2) assert.ok(!b.data.includes("Ana") && !atob(b.data).includes("Ana"), "the server only sees ciphertext");
+  } finally {
+    globalThis.fetch = realFetch;
+    delete (globalThis as any).window;
+  }
+});
+
+test("account: the password never leaves the device; the vault opens only with it", async () => {
+  const k1 = await loginKey("Ana@Example.com ", "kava-in-caj-123");
+  assert.equal(k1, await loginKey("ana@example.com", "kava-in-caj-123"), "email case and spaces don't matter");
+  assert.notEqual(k1, await loginKey("ana@example.com", "kava-in-caj-124"));
+  const sent: any[] = [];
+  const accounts = new Map<string, any>();
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async (url: string, init: any) => {
+    const action = String(url).split("/").pop();
+    const body = JSON.parse(init.body);
+    sent.push(init.body);
+    const a = accounts.get(body.email);
+    if (action === "register") accounts.set(body.email, { auth: body.auth, vault: body.vault });
+    else if (!a || a.auth !== body.auth) return new Response(JSON.stringify({ error: "Wrong email or password" }), { status: 401 });
+    else if (action === "update") accounts.set(body.email, { auth: body.new_auth, vault: body.vault });
+    return new Response(JSON.stringify({ ok: true, vault: accounts.get(body.email)?.vault }));
+  }) as typeof fetch;
+  (globalThis as any).window = { __accountUrl: "https://test/api/account" };
+  try {
+    await register("ana@example.com", "kava-in-caj-123", { sync: "ABCD-EFGH-JKLM-NPQR" });
+    assert.deepEqual(await login("ana@example.com", "kava-in-caj-123"), { sync: "ABCD-EFGH-JKLM-NPQR" });
+    await assert.rejects(login("ana@example.com", "wrong-password"), /Wrong/);
+    await changePassword("ana@example.com", "kava-in-caj-123", "nova-gesla-456");
+    assert.equal((await login("ana@example.com", "nova-gesla-456")).sync, "ABCD-EFGH-JKLM-NPQR");
+    await assert.rejects(register("ana@example.com", "short", { sync: "x" }), /at least 8/);
+    assert.ok(sent.every((b) => !b.includes("kava-in-caj-123") && !b.includes("nova-gesla-456") && !b.includes("ABCD-EFGH")), "no password or sync code is ever sent");
   } finally {
     globalThis.fetch = realFetch;
     delete (globalThis as any).window;

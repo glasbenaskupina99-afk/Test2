@@ -62,7 +62,7 @@ async function fresh(): Promise<{ page: Page; errors: string[]; api: (path: stri
 
 async function start(page: Page, name = "Ana") {
   await page.fill(".welcome input", name);
-  await page.click(".welcome .btn");
+  await page.click(".welcome-go");
   await page.waitForSelector(".tutorial");
 }
 

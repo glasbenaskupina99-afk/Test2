@@ -13,6 +13,7 @@ import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
 import { syncCard } from "./sync-ui.js";
 import { cloudBackupCard, restoreFlow } from "./backup-ui.js";
+import { accountCard, accountSheet } from "./account-ui.js";
 import { photoSheet, canReadPhotos } from "./photo.js";
 import { UI_LANGS, setUiLang, uiLang } from "./i18n.js";
 import { charMapScreen } from "./charmap.js";
@@ -1487,6 +1488,8 @@ async function settingsScreen() {
       isWeb
         ? h("a", { class: "btn ghost", href: "Bloomko.apk", download: "Bloomko.apk", style: { marginTop: "20px", textDecoration: "none" } }, "📱 Download the Android app")
         : null,
+      window.__localApi ? h("h2", { class: "section-title" }, "👤 Account") : null,
+      window.__localApi ? accountCard() : null,
       window.__localApi ? h("h2", { class: "section-title" }, "🔄 Sync between devices") : null,
       window.__localApi ? syncCard() : null,
       window.__localApi ? h("h2", { class: "section-title" }, "☁️ Cloud backup") : null,
@@ -1601,7 +1604,7 @@ function welcomeScreen(gemmaNext: boolean) {
     const go = h(
       "button",
       {
-        class: "btn",
+        class: "btn welcome-go",
         disabled: true,
         onclick: async () => {
           const body = { display_name: name.value.trim(), course: chosen, ui_lang: uiLang() };
@@ -1629,6 +1632,7 @@ function welcomeScreen(gemmaNext: boolean) {
         h("div", { class: "welcome-langs", role: "group", "aria-label": "Language" }, langBtns),
         h("h1", {}, `Welcome to ${APP_NAME}`),
         h("p", { class: "muted" }, "Learn a new language — write, read and speak it, without wasting paper."),
+        window.__localApi ? h("button", { class: "btn ghost small welcome-signin", onclick: () => accountSheet("login") }, "👤 I have an account — sign in") : null,
         h("label", { class: "field", style: { width: "100%", textAlign: "left" } }, h("span", { class: "small muted" }, "What should we call you?"), name),
         h("div", { class: "small muted", style: { alignSelf: "flex-start", margin: "6px 0 8px" } }, "What do you want to learn?"),
         h("div", { class: "welcome-courses" }, courseBtns),

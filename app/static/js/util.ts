@@ -110,9 +110,11 @@ export interface ConfirmOptions {
   confirmLabel?: string;
   cancelLabel?: string;
   danger?: boolean;
+  /** Extra content under the message (e.g. a password field). */
+  content?: Node;
 }
 
-export function confirmDialog({ title, message = "", icon = "", confirmLabel = "OK", cancelLabel = "Cancel", danger = false }: ConfirmOptions = {}): Promise<boolean> {
+export function confirmDialog({ title, message = "", icon = "", confirmLabel = "OK", cancelLabel = "Cancel", danger = false, content }: ConfirmOptions = {}): Promise<boolean> {
   return new Promise((resolve) => {
     const done = (v) => { bg.remove(); document.removeEventListener("keydown", onKey); resolve(v); };
     const onKey = (e) => { if (e.key === "Escape") done(false); };
@@ -121,6 +123,7 @@ export function confirmDialog({ title, message = "", icon = "", confirmLabel = "
         icon ? h("div", { class: "dialog-icon" + (icon instanceof Node ? " art" : "") }, icon) : null,
         h("h2", {}, title),
         message ? h("p", { class: "muted" }, message) : null,
+        content || null,
         h("div", { class: "dialog-actions" },
           cancelLabel ? h("button", { class: "btn", onclick: () => done(false) }, cancelLabel) : null,
           h("button", { class: cancelLabel ? `btn ghost${danger ? " danger" : ""}` : "btn", onclick: () => done(true) }, confirmLabel),

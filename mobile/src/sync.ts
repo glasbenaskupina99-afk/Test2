@@ -194,7 +194,8 @@ export function merge(db: Db, r: any) {
   for (const s of r.storiesAi || []) if (!ai.has(s.id)) ai.set(s.id, s);
   db.storiesAi = [...ai.values()].sort((a, b) => String(b.id).localeCompare(String(a.id))).slice(0, 6);
 
-  if (newer) for (const [k, v] of Object.entries<any>(r.settings || {})) db.settings[k] = v;
+  // Settings: the newer device wins; on a fresh device, anything not set here yet comes across.
+  for (const [k, v] of Object.entries<any>(r.settings || {})) if (newer || (db.settings[k] == null || db.settings[k] === "")) db.settings[k] = v;
 }
 
 // ------------------------------------------------------------------ talking to bloomko.eu

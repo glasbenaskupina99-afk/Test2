@@ -150,5 +150,7 @@ export interface Db {
   placement?: Record<string, { at: string; known: number }>;
   sync?: SyncState | null;
   backup?: BackupState | null;
+  /** Signed in with an account (2.0): only the email is kept on the device. */
+  account?: { email: string; since: string } | null;
   [key: string]: unknown;
 }

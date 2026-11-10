@@ -18,6 +18,7 @@ interface Window {
   __charDataUrl?: (c: string) => string;
   __syncUrl?: string;
   __backupUrl?: string;
+  __accountUrl?: string;
   __splashAudio?: AudioContext;
   __gemmaMock?: any;
   __notifyMock?: any;

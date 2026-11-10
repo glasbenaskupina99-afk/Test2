@@ -17,6 +17,7 @@ import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as sync from "./sync.js";
 import * as cloud from "./backup.js";
+import * as account from "./account.js";
 import * as locale from "./locale.js";
 import { EXAMS, makePaper, scorePaper } from "./exams.js";
 import * as fsrs from "./fsrs.js";
@@ -1946,8 +1947,88 @@ const routes = {
 
   "POST /api/sync/disable": () => {
     db.sync = null;
+    db.account = null; // an account is sync: turning sync off signs you out here
     flush();
     return syncInfo();
+  },
+
+  // ---------------------------------------------------------------- accounts (2.0)
+  // An account keeps the sync code in an encrypted vault: signing in anywhere turns on sync with
+  // that code, so all your devices and both apps share the same progress.
+  "GET /api/account": () => (db.account?.email ? { signed_in: true, email: db.account.email, sync_error: db.sync?.error || "", last: db.sync?.last || null } : { signed_in: false }),
+
+  "POST /api/account/register": async (_, body) => {
+    const email = account.cleanEmail(body.email);
+    const password = String(body.password || "");
+    if (!account.validEmail(email)) throw new HttpError(400, "That doesn't look like an email address");
+    if (password.length < account.MIN_PASSWORD) throw new HttpError(400, `Use a password of at least ${account.MIN_PASSWORD} characters`);
+    // Your progress goes up first (sync with this device's code, or a new one), then the account.
+    const before = db.sync;
+    if (!db.sync?.code) db.sync = { code: sync.newCode(), version: 0, hash: "", last: null, changed_at: new Date().toISOString(), deleted: [] };
+    try {
+      await runSync();
+      await account.register(email, password, { sync: db.sync.code });
+    } catch (e) {
+      if (!before) db.sync = null;
+      flush();
+      throw new HttpError(/already an account/.test(e.message) ? 409 : 503, e.message);
+    }
+    db.account = { email, since: new Date().toISOString() };
+    flush();
+    return { signed_in: true, email };
+  },
+
+  "POST /api/account/login": async (_, body) => {
+    const email = account.cleanEmail(body.email);
+    let vault;
+    try {
+      vault = await account.login(email, String(body.password || ""));
+    } catch (e) {
+      throw new HttpError(/Wrong|Too many/.test(e.message) ? 401 : 503, e.message);
+    }
+    // This device joins the account's sync: what's here is merged with what's already there.
+    const keep = db.sync?.code === vault.sync ? db.sync : null;
+    db.sync = keep || { code: vault.sync, version: 0, hash: "", last: null, changed_at: new Date().toISOString(), deleted: [] };
+    db.account = { email, since: new Date().toISOString() };
+    flush();
+    let changed = false;
+    try {
+      changed = (await runSync()).changed;
+    } catch (e) {
+      throw new HttpError(503, `Signed in, but sync failed: ${e.message}`);
+    }
+    return { signed_in: true, email, changed };
+  },
+
+  // Signing out stops syncing; what you learned stays on this device.
+  "POST /api/account/logout": () => {
+    db.account = null;
+    db.sync = null;
+    flush();
+    return { signed_in: false };
+  },
+
+  "POST /api/account/password": async (_, body) => {
+    if (!db.account?.email) throw new HttpError(400, "Not signed in");
+    try {
+      await account.changePassword(db.account.email, String(body.old || ""), String(body.password || ""));
+    } catch (e) {
+      throw new HttpError(/Wrong|Too many|at least/.test(e.message) ? 400 : 503, e.message);
+    }
+    return { ok: true };
+  },
+
+  "POST /api/account/delete": async (_, body) => {
+    if (!db.account?.email) throw new HttpError(400, "Not signed in");
+    try {
+      await account.remove(db.account.email, String(body.password || ""));
+    } catch (e) {
+      throw new HttpError(/Wrong|Too many/.test(e.message) ? 400 : 503, e.message);
+    }
+    db.account = null;
+    db.sync = null;
+    flush();
+    return { signed_in: false };
   },
 
   "GET /api/cloud-backup": () => backupInfo(),
@@ -2017,7 +2098,7 @@ const routes = {
     return { ok: true, learned: new Set(db.cards.map((c) => c.word_id)).size };
   },
 
-  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, sync: null, backup: null, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
+  "GET /api/backup": () => ({ app: "hanzi-home", exported_at: fmt(now()), ...db, sync: null, backup: null, account: null, settings: { ...db.settings, hf_token: "", llm_api_key: "" } }),
 
   "POST /api/backup/restore": async (_, body) => {
     if (!body || body.app !== "hanzi-home" || !Array.isArray(body.words) || !Array.isArray(body.cards)) throw new HttpError(400, "That isn't a Hanzi Home backup");

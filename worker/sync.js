@@ -7,6 +7,24 @@ const MAX = 8 * 1024 * 1024; // 8 MB of base64 is far more than a big course nee
 const CHUNK = 1000 * 1000; // stored in pieces under the per-value size limit
 const BACKUPS = 10; // cloud backups kept per backup key (the oldest go first)
 const B64 = /^[A-Za-z0-9+/=]+$/;
+const LOCK_AFTER = 8; // wrong passwords in a row …
+const LOCK_MS = 15 * 60 * 1000; // … lock the account for 15 minutes
+
+const enc = new TextEncoder();
+const toHex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+const randomHex = (n) => toHex(crypto.getRandomValues(new Uint8Array(n)));
+/** The stored verifier: the login key (already stretched on the device) stretched again here. */
+async function verify(auth, salt) {
+  const base = await crypto.subtle.importKey("raw", enc.encode(auth), "PBKDF2", false, ["deriveBits"]);
+  return toHex(await crypto.subtle.deriveBits({ name: "PBKDF2", salt: enc.encode(salt), iterations: 10000, hash: "SHA-256" }, base, 256));
+}
+/** Compare without leaking where the first difference is. */
+function same(a, b) {
+  if (a.length !== b.length) return false;
+  let d = 0;
+  for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return d === 0;
+}
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, PUT, POST, OPTIONS",
@@ -37,6 +55,61 @@ export class SyncStore extends DurableObject {
     const stale = Array.from({ length: Math.max(0, meta.chunks - chunks) }, (_, i) => `c${chunks + i}`);
     if (stale.length) await this.ctx.storage.delete(stale);
     return { version: next.version };
+  }
+
+  // Accounts (2.0): one object per email (by hash). Holds a verifier for the login key and the
+  // "vault" — the sync code, encrypted on the device with a key from the password. The password
+  // itself never reaches the server, so the server can't open the vault either.
+  async account() {
+    return (await this.ctx.storage.get("account")) || null;
+  }
+
+  async register(auth, vault) {
+    if (await this.account()) return { exists: true };
+    const salt = randomHex(16);
+    await this.ctx.storage.put("account", { salt, verifier: await verify(auth, salt), vault, created: new Date().toISOString(), fails: 0, lockedUntil: 0 });
+    return { ok: true };
+  }
+
+  /** Checks the login key; too many wrong tries lock the account for a while. */
+  async check(auth) {
+    const a = await this.account();
+    if (!a) return { missing: true };
+    if (a.lockedUntil > Date.now()) return { locked: Math.ceil((a.lockedUntil - Date.now()) / 60000) };
+    if (!same(await verify(auth, a.salt), a.verifier)) {
+      a.fails = (a.fails || 0) + 1;
+      if (a.fails >= LOCK_AFTER) Object.assign(a, { fails: 0, lockedUntil: Date.now() + LOCK_MS });
+      await this.ctx.storage.put("account", a);
+      return { wrong: true };
+    }
+    if (a.fails) await this.ctx.storage.put("account", { ...a, fails: 0 });
+    return { ok: true, account: a };
+  }
+
+  async login(auth) {
+    const r = await this.check(auth);
+    return r.ok ? { vault: r.account.vault } : r;
+  }
+
+  /** New password (new login key and re-encrypted vault) or just a new vault. */
+  async update(auth, newAuth, vault) {
+    const r = await this.check(auth);
+    if (!r.ok) return r;
+    const a = r.account;
+    if (newAuth) {
+      a.salt = randomHex(16);
+      a.verifier = await verify(newAuth, a.salt);
+    }
+    if (vault) a.vault = vault;
+    await this.ctx.storage.put("account", a);
+    return { ok: true };
+  }
+
+  async remove(auth) {
+    const r = await this.check(auth);
+    if (!r.ok) return r;
+    await this.ctx.storage.delete("account");
+    return { ok: true };
   }
 
   // Cloud backups (2.0): numbered snapshots, the newest BACKUPS kept. Each one is an encrypted
@@ -118,4 +191,45 @@ export async function handleBackup(request, env, path) {
     return json(200, await stub.putBackup(data, meta));
   }
   return json(405, { error: "use GET or POST" });
+}
+
+const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
+const HEX64 = /^[0-9a-f]{64}$/;
+
+/**
+ * /api/account/register | login | update | delete — POST { email, auth, vault?, new_auth? }.
+ * `auth` is a key the app derives from the password; `vault` is encrypted on the device.
+ */
+export async function handleAccount(request, env, action) {
+  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
+  if (request.method !== "POST") return json(405, { error: "use POST" });
+  if (!env.SYNC) return json(503, { error: "accounts aren't set up on the server" });
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json(400, { error: "invalid request" });
+  }
+  const email = String(body?.email || "").trim().toLowerCase();
+  const auth = String(body?.auth || "");
+  const vault = body?.vault == null ? "" : String(body.vault);
+  const newAuth = body?.new_auth == null ? "" : String(body.new_auth);
+  if (!EMAIL.test(email)) return json(400, { error: "That doesn't look like an email address" });
+  if (!HEX64.test(auth) || (newAuth && !HEX64.test(newAuth))) return json(400, { error: "invalid request" });
+  if (vault.length > 4000 || (vault && !B64.test(vault))) return json(400, { error: "invalid data" });
+  const id = toHex(await crypto.subtle.digest("SHA-256", enc.encode(`bloomko-account:${email}`)));
+  const stub = env.SYNC.get(env.SYNC.idFromName(`account:${id}`));
+  const answer = (r) =>
+    r.exists ? json(409, { error: "There's already an account with this email — sign in instead" })
+    : r.missing || r.wrong ? json(401, { error: "Wrong email or password" })
+    : r.locked ? json(429, { error: `Too many wrong passwords — try again in ${r.locked} min` })
+    : json(200, r);
+  if (action === "register") {
+    if (!vault) return json(400, { error: "invalid data" });
+    return answer(await stub.register(auth, vault));
+  }
+  if (action === "login") return answer(await stub.login(auth));
+  if (action === "update") return answer(await stub.update(auth, newAuth, vault));
+  if (action === "delete") return answer(await stub.remove(auth));
+  return json(404, { error: "unknown action" });
 }

@@ -32,7 +32,7 @@ async function idOf(key: string): Promise<string> {
 
 /** What a backup contains: everything except secrets and this device's sync/backup settings. */
 export function payload(db: Db, edition: string) {
-  const { sync: _s, backup: _b, ...rest } = db;
+  const { sync: _s, backup: _b, account: _a, ...rest } = db;
   return { format: FORMAT, edition, at: new Date().toISOString(), db: { ...rest, settings: { ...db.settings, hf_token: "", llm_api_key: "" } } };
 }
 

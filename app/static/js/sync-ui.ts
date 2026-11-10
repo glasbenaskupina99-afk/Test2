@@ -27,6 +27,11 @@ export function syncCard() {
   };
 
   async function render() {
+    // Signed in: the account takes care of sync (see the Account card).
+    if ((await api("/api/account")).signed_in) {
+      fill(card, h("p", { class: "small muted", style: { margin: 0 } }, "👤 You're signed in, so your progress syncs with your account automatically."));
+      return;
+    }
     const s = await api("/api/sync");
     if (!s.on) {
       const codeIn = h("input", { class: "input", placeholder: "XXXX-XXXX-XXXX-XXXX", autocapitalize: "characters", spellcheck: "false" });

@@ -18,7 +18,7 @@ await build({
   alias: { "cloudflare:workers": join(dir, "stub.js") },
   logLevel: "silent",
 });
-const { SyncStore, handleBackup, handleSync } = await import(pathToFileURL(join(dir, "sync.mjs")).href);
+const { SyncStore, handleAccount, handleBackup, handleSync } = await import(pathToFileURL(join(dir, "sync.mjs")).href);
 
 /** Durable Object storage in memory (get/put/delete with single keys, arrays and objects). */
 function memoryStorage() {
@@ -92,4 +92,31 @@ test("sync and backup with the same id don't touch each other", async () => {
   assert.equal(put.body.version, 1);
   const conflict = await handleSync(req("PUT", { base: 0, data: btoa("s2") }), e, ID);
   assert.equal(conflict.status, 409, "a stale base version is a conflict");
+});
+
+test("accounts: register, sign in, wrong password, lock-out, new password, delete", async () => {
+  const e = env();
+  const auth = "1".repeat(64);
+  const other = "2".repeat(64);
+  const post = (action: string, body: unknown) => handleAccount(req("POST", body), e, action).then(call);
+  assert.equal((await post("register", { email: "Ana@Example.com", auth, vault: btoa("v1") })).status, 200);
+  assert.equal((await post("register", { email: "ana@example.com", auth, vault: btoa("v") })).status, 409, "one account per email (case doesn't matter)");
+  const ok = await post("login", { email: "ana@example.com", auth });
+  assert.equal(ok.status, 200);
+  assert.equal(atob(ok.body.vault), "v1");
+  assert.equal((await post("login", { email: "ana@example.com", auth: other })).status, 401);
+  assert.equal((await post("login", { email: "nobody@example.com", auth })).status, 401, "same answer for an unknown email");
+  for (let i = 0; i < 7; i++) await post("login", { email: "ana@example.com", auth: other });
+  assert.equal((await post("login", { email: "ana@example.com", auth })).status, 429, "8 wrong tries lock the account");
+  // A fresh account to check password change and deletion.
+  await post("register", { email: "bo@example.com", auth, vault: btoa("v2") });
+  assert.equal((await post("update", { email: "bo@example.com", auth, new_auth: other, vault: btoa("v3") })).status, 200);
+  assert.equal((await post("login", { email: "bo@example.com", auth })).status, 401, "the old password no longer works");
+  assert.equal(atob((await post("login", { email: "bo@example.com", auth: other })).body.vault), "v3");
+  assert.equal((await post("delete", { email: "bo@example.com", auth: other })).status, 200);
+  assert.equal((await post("login", { email: "bo@example.com", auth: other })).status, 401);
+  assert.equal((await post("login", { email: "not-an-email", auth })).status, 400);
+  // The server never stores the login key itself.
+  const stored = JSON.stringify([...e.objects.values()].map((o: any) => o.ctx.storage));
+  assert.ok(!stored.includes(auth));
 });

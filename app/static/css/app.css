@@ -1663,3 +1663,11 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .anki-row b { font-size: 20px; color: var(--text-strong); }
 .anki-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .anki-link { margin-top: 0; }
+
+/* ------------------------------------------------------------ 2.0 accounts */
+.account-sheet .input { width: 100%; }
+.account-card .row > div { min-width: 0; }
+.account-card b { word-break: break-all; }
+.danger-link { color: var(--red); margin-top: 12px; }
+.welcome-signin { width: auto; margin: 0 0 14px; }
+.dialog .input { width: 100%; margin-top: 8px; }

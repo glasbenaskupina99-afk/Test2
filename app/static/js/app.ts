@@ -495,7 +495,7 @@ function weekChart(week, saved = []) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    days.push({ label: d.toLocaleDateString(document.documentElement.lang || undefined, { weekday: "narrow" }), xp: byDay[key] || 0, saved: saved.includes(key) });
+    days.push({ label: d.toLocaleDateString(uiLang(), { weekday: "narrow" }), xp: byDay[key] || 0, saved: saved.includes(key) });
   }
   const max = Math.max(30, ...days.map((d) => d.xp));
   return h(
@@ -1122,7 +1122,7 @@ const svgEl = (markup, attrs = {}) => {
 /** Smooth line through points (Catmull-Rom → cubic Bézier). */
 const dkey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const shiftDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
-const fmtDate = (d, opts) => d.toLocaleDateString("en-GB", opts);
+const fmtDate = (d, opts) => d.toLocaleDateString(uiLang() === "en" ? "en-GB" : uiLang(), opts);
 
 const PERIODS = {
   week: { label: "Week", days: 7, unit: "day" },
@@ -1277,7 +1277,10 @@ function progressCard(s) {
     const { svg, pick } = progressChart(pts, (p) => {
       detail.replaceChildren(
         h("b", {}, p.tip),
-        p.xp || p.words ? ` · ${p.xp} XP · ${p.words} new ${p.words === 1 ? "word" : "words"}${p.secs ? ` · ${mins(p.secs)} min` : ""}` : p.saved ? " · saved by a raindrop 🍂" : " · no practice"
+        // Separate pieces, so each one is translated on its own.
+        ...(p.xp || p.words
+          ? [" · ", h("span", {}, `${p.xp} XP`), " · ", h("span", {}, `${p.words} new ${p.words === 1 ? "word" : "words"}`), p.secs ? " · " : "", p.secs ? h("span", {}, `${mins(p.secs)} min`) : ""]
+          : [p.saved ? " · saved by a raindrop 🍂" : " · no practice"])
       );
     });
     chartBox.replaceChildren(svg);
@@ -1322,7 +1325,7 @@ function achievements(s, learned, best, sentences, level) {
         "div",
         {},
         h("b", {}, a.title),
-        h("span", {}, locked ? `${Math.min(a.have, a.goal)} / ${a.goal}${a.unit ? " " + a.unit : ""}` : a.active ? "Active" : a.date ? `Completed ${new Date(a.date).toLocaleDateString(document.documentElement.lang || undefined, { day: "numeric", month: "short" })}` : "Completed")
+        h("span", {}, locked ? `${Math.min(a.have, a.goal)} / ${a.goal}${a.unit ? " " + a.unit : ""}` : a.active ? "Active" : a.date ? `Completed ${new Date(a.date).toLocaleDateString(uiLang(), { day: "numeric", month: "short" })}` : "Completed")
       )
     );
   return [...done.reverse().map((a) => row(a, false)), ...next.map((a) => row(a, true))];
@@ -1349,7 +1352,7 @@ async function statsScreen() {
         { class: "journey-head" },
         // Your streak plant, the same one as next to the streak count on the home screen.
         h("button", { class: "journey-avatar journey-plant", title: "Your streak plant", "aria-label": "Your streak plant", onclick: () => gardenSheet() }, plantArt(s.plant || "seed", "journey-plant-art")),
-        h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, `Level ${level} · ${totalXp} XP · 🌱 ${s.streak || 0}-day streak`))
+        h("div", {}, h("div", { class: "journey-name" }, name || "Learner"), h("div", { class: "journey-level" }, h("span", {}, `Level ${level}`), ` · ${totalXp} XP · 🌱 `, h("span", {}, `${s.streak || 0}-day streak`)))
       ),
       h(
         "div",

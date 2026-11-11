@@ -292,7 +292,7 @@ export async function forestScreen(shell, loading, { water }) {
 
   const show = () => {
     tabs.querySelectorAll("button").forEach((b, i) => b.classList.toggle("on", (i === 0) === (tab === "mine")));
-    body.replaceChildren(...(tab === "mine" ? mine() : [friendsPanel({ season: d.season.name })]));
+    body.replaceChildren(...(tab === "mine" ? mine() : [friendsPanel({ season: d.season.name })]).filter(Boolean)); // (a null child would show as "null")
   };
 
   shell(

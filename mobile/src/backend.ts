@@ -562,7 +562,9 @@ const extrasOf = (w) => w.extras || prebuilt(w);
 let CHARMAP = null;
 let CHILDREN = null;
 let charmapJob = null;
-function loadCharmap() {
+let CHAR_OV: Record<string, string> = {}; // character meanings in the interface language (i18n/<lang>/charmap.json)
+async function loadCharmap() {
+  CHAR_OV = (await locale.overlay("charmap")) || {};
   charmapJob ||= fetch("charmap.json")
     .then((r) => (r.ok ? r.json() : { chars: {} }))
     .catch(() => ({ chars: {} }))
@@ -598,7 +600,7 @@ function charNode(ch, idx) {
   const own = (idx.words.get(ch) || []).find((w) => w.hanzi === ch);
   return {
     ch,
-    meaning: own?.english?.split(/[;,]/)[0] || (e ? (ja ? e[3] : e[0]) : ""),
+    meaning: own?.english?.split(/[;,；]/)[0] || CHAR_OV[`${ja ? "ja" : "zh"}|${ch}`] || (e ? (ja ? e[3] : e[0]) : ""),
     reading: e ? (ja ? e[4] : e[1]) : "",
     state: idx.known.has(ch) ? "known" : idx.order.has(ch) ? "course" : "part",
   };
@@ -1814,8 +1816,9 @@ const routes = {
     return { chars, known: idx.known.size, total: chars.length };
   },
 
-  "GET /api/lookalikes/session": (_, __, query) => {
+  "GET /api/lookalikes/session": async (_, __, query) => {
     const groups = LOOKALIKES[course()] || [];
+    const ov = (await locale.overlay("lookalikes")) || {}; // meanings and hints in the interface language
     const n = Math.min(Number(query.get("n")) || 8, groups.length);
     const known = new Set(learnedWords().flatMap((w) => [...w.hanzi]));
     const scored = groups.map((g, i) => {
@@ -1824,10 +1827,10 @@ const routes = {
       const knownN = g.chars.filter((c) => known.has(c[0])).length;
       return { g, key, score: knownN * 2 + st.wrong * 3 - st.seen * 0.5 + Math.random() * 2, i };
     });
-    const items = scored.sort((a, b) => b.score - a.score).slice(0, n).map(({ g, key }) => ({
+    const items = scored.sort((a, b) => b.score - a.score).slice(0, n).map(({ g, key, i }) => ({
       key,
-      hint: g.hint,
-      chars: g.chars.map(([c, meaning, reading]) => ({ c, meaning, reading: course() === "zh" ? toPinyin(c) : reading || "", known: known.has(c) })),
+      hint: ov[`${course()}|${i}|hint`] || g.hint,
+      chars: g.chars.map(([c, meaning, reading], j) => ({ c, meaning: ov[`${course()}|${i}|${j}`] || meaning, reading: course() === "zh" ? toPinyin(c) : reading || "", known: known.has(c) })),
     }));
     return { items: shuffled(items) };
   },

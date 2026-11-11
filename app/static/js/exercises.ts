@@ -434,7 +434,7 @@ function speakPanel(ctx, target, solutionNode, reading = "") {
   const handleScore = (score, extraNodes) => {
     attempts++;
     best = Math.max(best, score);
-    resultEl.replaceChildren(...extraNodes);
+    resultEl.replaceChildren(...extraNodes.filter((n) => n != null));
     if (score >= 80) {
       mic.disabled = true;
       setTimeout(() => finish(score, score >= 95 ? "Excellent pronunciation!" : "Sounds good!"), 900);

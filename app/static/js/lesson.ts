@@ -106,7 +106,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
 
   function setFoot(...nodes) {
     foot.className = "lesson-foot";
-    footInner.replaceChildren(...nodes);
+    footInner.replaceChildren(...nodes.filter((n) => n != null));
   }
 
   function show() {

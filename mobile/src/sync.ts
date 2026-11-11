@@ -80,7 +80,10 @@ export function snapshot(db: Db) {
     v: 1,
     at: db.sync?.changed_at || "",
     words: db.words.filter((w) => w.source === "custom" || w.extras).map(({ id: _id, ...w }) => (w.source === "custom" ? w : { lang: w.lang, hanzi: w.hanzi, source: w.source, extras: w.extras })),
-    cards: db.cards.filter((c) => byId.has(c.word_id)).map(({ word_id, ...c }) => ({ ...c, w: wordKey(byId.get(word_id)) })),
+    cards: [
+      ...db.cards.filter((c) => byId.has(c.word_id)).map(({ word_id, ...c }) => ({ ...c, w: wordKey(byId.get(word_id)) })),
+      ...Object.values(db.sync?.foreign || {}),
+    ],
     deleted: db.sync?.deleted || [],
     activity: db.activity,
     sentenceLog: db.sentenceLog,
@@ -91,7 +94,7 @@ export function snapshot(db: Db) {
     storiesAi: db.storiesAi || [],
     forest: db.forest || { weeks: {}, glade: [] },
     exams: db.exams || [],
-    friends: db.friends ? { code: db.friends.code, secret: db.friends.secret, list: db.friends.list } : null,
+    friends: db.friends ? { code: db.friends.code, secret: db.friends.secret, list: db.friends.list, removed: db.friends.removed || [] } : null,
     placement: db.placement || {},
     settings: Object.fromEntries(SYNCED_SETTINGS.filter((k) => k in (db.settings || {})).map((k) => [k, db.settings[k]])),
   };
@@ -100,14 +103,25 @@ export function snapshot(db: Db) {
 /** Merges another device's snapshot into db (in place). Newer reviews win; nothing is dropped. */
 export function merge(db: Db, r: any) {
   if (!r || r.v !== 1) return;
-  const deleted = new Set([...(db.sync.deleted || []), ...(r.deleted || [])]);
-  db.sync.deleted = [...deleted].slice(-500);
+  // Deleted words ("key\ttime"): the latest deletion of each key counts; a word added after it stays.
+  const when = new Map<string, string>();
+  for (const t of [...(db.sync.deleted || []), ...(r.deleted || [])]) {
+    const [k, at = ""] = String(t).split("\t");
+    if (!when.has(k) || at > when.get(k)) when.set(k, at);
+  }
+  db.sync.deleted = [...when].map(([k, at]) => (at ? `${k}\t${at}` : k)).slice(-5000);
+  const isDeleted = (w) => {
+    const k = wordKey(w);
+    if (!when.has(k)) return false;
+    const at = when.get(k);
+    return !at || !w.created_at || at >= w.created_at;
+  };
 
   // Words: your own words from the other device are added; memory hooks are kept.
   const local = new Map(db.words.map((w) => [wordKey(w), w]));
   for (const w of r.words || []) {
     const k = wordKey(w);
-    if (deleted.has(k)) continue;
+    if (isDeleted(w)) continue;
     const mine = local.get(k);
     if (mine) {
       if (w.extras && !mine.extras) mine.extras = w.extras;
@@ -117,7 +131,7 @@ export function merge(db: Db, r: any) {
       local.set(k, nw);
     }
   }
-  const gone = new Set(db.words.filter((w) => deleted.has(wordKey(w))).map((w) => w.id));
+  const gone = new Set(db.words.filter((w) => w.source === "custom" && isDeleted(w)).map((w) => w.id));
   if (gone.size) {
     db.words = db.words.filter((w) => !gone.has(w.id));
     db.cards = db.cards.filter((c) => !gone.has(c.word_id));
@@ -125,9 +139,17 @@ export function merge(db: Db, r: any) {
 
   // Review cards: the one reviewed more recently wins.
   const cards = new Map(db.cards.map((c) => [`${c.word_id}|${c.skill}`, c]));
+  db.sync.foreign ||= {};
   for (const { w, ...c } of r.cards || []) {
     const word = local.get(w);
-    if (!word || gone.has(word.id)) continue;
+    if (!word) {
+      // A word this app doesn't have (the other app's language): keep its card for the next sync.
+      const fk = `${w}|${c.skill}`;
+      const prev = db.sync.foreign[fk];
+      if (!prev || later(c.last_review, prev.last_review)) db.sync.foreign[fk] = { ...c, w };
+      continue;
+    }
+    if (gone.has(word.id)) continue;
     const k = `${word.id}|${c.skill}`;
     const mine = cards.get(k);
     if (!mine) {
@@ -180,8 +202,12 @@ export function merge(db: Db, r: any) {
   // Friends: the same friend code on every device, and everyone you added anywhere.
   if (r.friends?.code) {
     db.friends ||= { code: r.friends.code, secret: r.friends.secret, list: [], watered: {}, inbox: [] };
+    // Removed friends stay removed on every device.
+    const removed = new Set([...(db.friends.removed || []), ...(r.friends.removed || [])]);
+    db.friends.removed = [...removed].slice(-200);
     const have = new Set(db.friends.list.map((x) => x.code));
     for (const x of r.friends.list || []) if (!have.has(x.code) && x.code !== db.friends.code) db.friends.list.push(x);
+    db.friends.list = db.friends.list.filter((x) => !removed.has(x.code));
   }
   if (r.placement) db.placement = { ...r.placement, ...(db.placement || {}) };
   // Mock exam results from both devices.
@@ -219,6 +245,11 @@ async function request(method: string, id: string, body?: unknown) {
   return data;
 }
 
+/** Delete the synced copy on bloomko.eu (when the account is deleted). */
+export async function wipe(code: string) {
+  await request("DELETE", await idOf(code));
+}
+
 /**
  * Pull, merge, push. Returns { changed } — true when the other device brought something new.
  * `db.sync` holds { code, version, hash, last, changed_at, deleted }.
@@ -228,9 +259,10 @@ export async function syncNow(db: Db) {
   if (!s?.code) throw new Error("Sync is off");
   const id = await idOf(s.code);
   let changed = false;
+  let done = false;
   for (let attempt = 0; attempt < 3; attempt++) {
     const remote = await request("GET", id);
-    if (remote.data && remote.version !== s.version) {
+    if (remote.data && remote.version !== s.version && !s.replace) {
       let snap;
       try {
         snap = await open(s.code, remote.data);
@@ -244,14 +276,17 @@ export async function syncNow(db: Db) {
     const snap = snapshot(db);
     const json = JSON.stringify(snap);
     const hash = hex(await crypto.subtle.digest("SHA-256", enc.encode(json)));
-    if (remote.version && hash === s.hash && remote.version === s.version) break; // nothing new on either side
-    if (remote.version && hash === s.hash) { s.version = remote.version; break; }
+    if (!s.replace && remote.version && hash === s.hash && remote.version === s.version) { done = true; break; } // nothing new on either side
+    if (!s.replace && remote.version && hash === s.hash) { s.version = remote.version; done = true; break; }
     const put = await request("PUT", id, { base: remote.version || 0, data: await seal(s.code, snap) });
     if (put.conflict) continue; // another device synced in between: merge again
     s.version = put.version;
     s.hash = hash;
+    s.replace = false;
+    done = true;
     break;
   }
+  if (!done) throw new Error("Other devices kept syncing at the same time — try again in a moment");
   s.last = new Date().toISOString();
   return { changed };
 }

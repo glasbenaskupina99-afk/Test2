@@ -1267,8 +1267,9 @@ select.select-native { display: none !important; }
 
 .cm-progress { margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
 .cm-progress .row { align-items: baseline; gap: 8px; }
-.cm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 6px; }
-.cm-grid-sec { grid-column: 1 / -1; font-size: 12px; font-weight: 900; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 10px 0 2px; }
+.cm-grid { display: block; }
+.cm-block { display: grid; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 6px; margin-bottom: 6px; content-visibility: auto; contain-intrinsic-size: auto 400px; }
+.cm-grid-sec { font-size: 12px; font-weight: 900; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 10px 0 2px; }
 .cm-cell {
   aspect-ratio: 1; border-radius: 10px; cursor: pointer; padding: 0; display: grid; place-items: center;
   background: var(--surface); border: 2px solid var(--green); border-bottom-width: 3px;
@@ -1749,3 +1750,4 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .fw-text { flex: 1; min-width: 0; }
 .my-code .row .btn { width: auto; flex: none; }
 .my-code .row > .input { flex: 1 1 auto; width: auto; }
+.bed-placeholder { width: 100%; }

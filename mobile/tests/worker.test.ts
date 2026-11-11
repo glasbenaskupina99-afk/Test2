@@ -80,7 +80,11 @@ test("backups: bad ids and bad data are refused", async () => {
   assert.equal((await handleBackup(req("GET"), e, "nope")).status, 400);
   assert.equal((await handleBackup(req("POST", { data: "not base64!" }), e, ID)).status, 400);
   assert.equal((await handleBackup(req("POST", {}), e, ID)).status, 400);
-  assert.equal((await handleBackup(req("DELETE"), e, ID)).status, 405);
+  assert.equal((await handleBackup(req("PATCH"), e, ID)).status, 405);
+  // Deleting removes every backup of the key.
+  await handleBackup(req("POST", { data: btoa("x") }), e, ID);
+  assert.equal((await handleBackup(req("DELETE"), e, ID)).status, 200);
+  assert.deepEqual((await call(await handleBackup(req("GET"), e, ID))).body, { backups: [] });
 });
 
 test("sync and backup with the same id don't touch each other", async () => {
@@ -130,10 +134,18 @@ test("friends: publish a garden card, visit it, water it once a day, see who wat
   assert.equal((await call2("PUT", code, { secret, profile: { name: "Ana", streak: 3 } })).status, 200);
   assert.equal((await call2("PUT", code, { secret: "1".repeat(32), profile: { name: "Mallory" } })).status, 403, "only the owner can change the card");
   assert.equal((await call2("GET", code)).body.profile.name, "Ana");
-  assert.equal((await call2("POST", `${code}/water`, { from: "JKLM-NPQR", name: "Bo" })).status, 200);
-  assert.equal((await call2("POST", `${code}/water`, { from: "JKLM-NPQR", name: "Bo" })).status, 409, "once a day per friend");
+  // Bo has a card of his own; only he (with his secret) can water in its name.
+  const bo = "2".repeat(32);
+  await call2("PUT", "JKLM-NPQR", { secret: bo, profile: { name: "Bo" } });
+  assert.equal((await call2("POST", `${code}/water`, { from: "JKLM-NPQR", name: "Bo", secret: "3".repeat(32) })).status, 403, "can't water in someone else's name");
+  assert.equal((await call2("POST", `${code}/water`, { from: "KLMN-PQRS", name: "Ghost", secret: bo })).status, 403, "the sender's garden must exist");
+  assert.equal((await call2("POST", `${code}/water`, { from: "JKLM-NPQR", name: "Bo", secret: bo })).status, 200);
+  assert.equal((await call2("POST", `${code}/water`, { from: "JKLM-NPQR", name: "Bo", secret: bo })).status, 409, "once a day per friend");
   assert.equal((await call2("POST", `${code}/water`, { from: code, name: "Ana" })).status, 400, "not your own garden");
   const r = await call2("PUT", code, { secret, profile: { name: "Ana", streak: 4 } });
   assert.deepEqual(r.body.inbox.map((w: any) => w.name), ["Bo"]);
   assert.equal((await call2("GET", "nope")).status, 400);
+  assert.equal((await call2("DELETE", code, { secret: "1".repeat(32) })).status, 403);
+  assert.equal((await call2("DELETE", code, { secret })).status, 200);
+  assert.equal((await call2("GET", code)).status, 404, "the card is gone");
 });

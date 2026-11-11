@@ -1,6 +1,7 @@
 // Accounts (2.0): create one, sign in (also from the welcome screen), sign out, change password.
 // Signing in on another device or in the other app brings everything you've done along.
 import { api, h, toast, confirmDialog, fill } from "./util.js";
+import { replaceServerCopy } from "./sync-ui.js";
 
 async function busy(btn: HTMLButtonElement, label: string, fn: () => Promise<unknown>) {
   const old = btn.textContent;
@@ -101,6 +102,7 @@ export function accountCard() {
     fill(
       card,
       h("div", { class: "row", style: { alignItems: "center" } }, h("span", { class: "sync-dot" + (a.sync_error ? " bad" : "") }), h("div", {}, h("b", {}, a.email), h("div", { class: "small muted" }, a.sync_error ? a.sync_error : "Signed in · progress synced with your account"))),
+      a.sync_error && /Couldn't read/.test(a.sync_error) ? replaceServerCopy(render) : null,
       h(
         "div",
         { class: "row", style: { gap: "8px", marginTop: "12px", flexWrap: "wrap" } },

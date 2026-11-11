@@ -100,8 +100,13 @@ export interface SyncState {
   hash: string;
   last: string | null;
   changed_at: string;
+  /** Deleted words: "key\tdeleted-at" (older entries have no time). */
   deleted: string[];
   error?: string;
+  /** Review cards of words this app doesn't have (e.g. Japanese cards seen by Bloomko Heritage), kept so they aren't lost for the other app. */
+  foreign?: Record<string, any>;
+  /** After restoring a backup: the next sync replaces the copy on the server instead of merging into it. */
+  replace?: boolean;
 }
 
 /** Encrypted cloud backup: the key stays on the device (and with you), the server only sees ciphertext. */
@@ -159,6 +164,7 @@ export interface Db {
     list: { code: string; name: string }[];
     watered: Record<string, string>;
     inbox: { name: string; at: string; seen?: boolean }[];
+    removed?: string[];
     published?: string;
   } | null;
   [key: string]: unknown;

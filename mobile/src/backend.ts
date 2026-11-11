@@ -126,6 +126,18 @@ function freshGarden() {
   return { raindrops: 1, saved: [], awarded: [], notice: null, lostNoticed: null };
 }
 
+/** Parts an older save (or an older backup) may not have yet. */
+function ensureShape() {
+  db.garden ||= freshGarden();
+  db.lookalikes ||= {};
+  db.grammar ||= { learned: {} };
+  db.grammar.learned ||= {};
+  db.stories ||= {};
+  db.activity ||= {};
+  db.sentenceLog ||= [];
+  db.settings ||= {};
+}
+
 function freshDb() {
   return { version: 3, nextId: 1, words: [], cards: [], activity: {}, sentenceLog: [], settings: {}, garden: freshGarden(), lookalikes: {}, grammar: { learned: {} } };
 }
@@ -176,10 +188,7 @@ export async function init(storage) {
   }
   if (!db || !Array.isArray(db.words)) db = freshDb();
   migrate();
-  db.garden ||= freshGarden();
-  db.lookalikes ||= {};
-  db.grammar ||= { learned: {} };
-  db.stories ||= {};
+  ensureShape();
   ai.configure(settingsAll);
   await applyLocale();
   document.addEventListener("visibilitychange", () => {
@@ -476,7 +485,7 @@ function waterMissedDays() {
   } else if (g.lostNoticed !== dayKey(last)) {
     g.lostNoticed = dayKey(last);
     g.notice = { kind: "lost", streak: before, raindrops: g.raindrops };
-  }
+  } else return; // nothing changed: don't rewrite the whole database
   persist();
 }
 
@@ -526,9 +535,13 @@ const READY = {};
 const readyJobs = {};
 function loadReady(lang) {
   readyJobs[lang] ||= Promise.all([
-    fetch(`extras/${lang}.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})) as Promise<Record<string, any>>,
+    fetch(`extras/${lang}.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null) as Promise<Record<string, any>>,
     locale.overlay(`extras-${lang}`),
   ]).then(([x, ov]) => {
+    if (!x) {
+      delete readyJobs[lang]; // try again next time instead of keeping an empty list
+      return {};
+    }
     if (ov) {
       for (const [word, e] of Object.entries<any>(x)) {
         x[word] = { ...e, mnemonic: ov[`${word}|m`] || e.mnemonic, components: ov[`${word}|c`] || e.components, example_en: ov[`${word}|e`] || e.example_en };
@@ -667,8 +680,8 @@ const ROTATING = ["revived", "days", "planted", "spoken", "finished"];
 
 /** This week's three challenges: writing every week, plus two that change from week to week. */
 function weekChallenges(wk = weekKey()) {
-  const n = Number(wk.replace(/-/g, "")) / 7;
-  const a = Math.floor(n) % ROTATING.length;
+  const n = Math.floor(new Date(wk + "T12:00:00").getTime() / (7 * DAY)); // a real week counter
+  const a = n % ROTATING.length;
   const kinds = ["write_perfect", ROTATING[a], ROTATING[(a + 2) % ROTATING.length]];
   const w = weekStats(wk);
   const monday = new Date(wk + "T00:00:00");
@@ -966,7 +979,8 @@ function knownShare(story, lex) {
 /** Remembers deleted words so sync doesn't bring them back from another device. */
 function tombstone(words) {
   if (!db.sync?.code || !words.length) return;
-  db.sync.deleted = [...(db.sync.deleted || []), ...words.map(sync.wordKey)].slice(-500);
+  const at = fmt(now());
+  db.sync.deleted = [...(db.sync.deleted || []), ...words.map((w) => `${sync.wordKey(w)}\t${at}`)].slice(-5000);
 }
 
 // ------------------------------------------------------------------ your own words
@@ -1052,6 +1066,8 @@ async function weakSpots() {
     return t.length ? Math.max(...t) : null;
   };
   const reviewed = words.filter((w) => scoreOf(w.id) != null);
+  const multi = sections().list.length > 1; // once, not for every word
+  const byId = new Map(words.map((w) => [w.id, w]));
   if (lang !== "sl") await loadCharmap();
   const idx = lang !== "sl" ? charIndex() : null;
 
@@ -1064,12 +1080,12 @@ async function weakSpots() {
   for (const w of reviewed) {
     if (lang !== "sl") {
       const parts = new Set([...w.hanzi].filter((c) => HAN_CHAR.test(c)).flatMap((c) => [c, ...charParts(c)]));
-      for (const p of parts) add(`part:${p}`, { cat: "parts", ch: p, label: charNode(p, idx).meaning || "" }, w);
+      for (const p of parts) if (!groups.has(`part:${p}`)) add(`part:${p}`, { cat: "parts", ch: p, label: charNode(p, idx).meaning || "" }, w); else groups.get(`part:${p}`).ids.add(w.id);
     }
     if (lang === "zh") for (const t of new Set(tonesOf(w.pinyin))) add(`tone:${t}`, { cat: "sounds", label: TONE_NAME[t] }, w);
     if (lang === "ja") add(`script:${scriptOf(w)}`, { cat: "sounds", label: SCRIPT_NAME[scriptOf(w)] }, w);
     if (lang === "sl" && w.gender) add(`gender:${w.gender}`, { cat: "forms", label: GENDER_NAME[w.gender] || w.gender }, w);
-    add(`unit:${w.section}|${w.unit}`, { cat: "topics", label: w.unit, sub: sections().list.length > 1 ? w.section : "" }, w);
+    add(`unit:${w.section}|${w.unit}`, { cat: "topics", label: w.unit, sub: multi ? w.section : "" }, w);
   }
   for (const s of SKILLS) for (const w of reviewed) if (scoreOf(w.id, s) != null) add(`skill:${s}`, { cat: "skills", icon: SKILL_NAME[s][0], label: SKILL_NAME[s][1], skill: s }, w);
 
@@ -1085,7 +1101,7 @@ async function weakSpots() {
       key: g.key, cat: g.cat, label: g.label, sub: g.sub || "", ch: g.ch || null, icon: g.icon || null, skill: g.skill || null,
       score: +score.toFixed(3), words: ids.length, tricky: tricky.length,
       ids: scored.slice(0, 15).map((x) => x[0]),
-      examples: scored.slice(0, 4).map((x) => wordById(x[0])?.hanzi).filter(Boolean),
+      examples: scored.slice(0, 4).map((x) => byId.get(x[0])?.hanzi).filter(Boolean),
     });
   }
 
@@ -1266,11 +1282,13 @@ const routes = {
       const ivl = Math.max(1, Math.min(3650, Number(it.ivl) || 1));
       // Spread the first reviews over the interval, so a big deck doesn't all come due at once.
       const days = Math.max(1, ivl * (0.3 + 0.7 * Math.random()));
+      let added = 0;
       for (const skill of SKILLS) {
         if (have.has(`${w.id}|${skill}`)) continue;
         db.cards.push({ word_id: w.id, skill, ease: 2.5, interval: ivl, stability: ivl, difficulty: 5, due: fmt(addMs(days * DAY)), reps: Math.max(1, Number(it.reps) || 1), lapses: Math.max(0, Number(it.lapses) || 0), last_review: fmt(now()) });
+        added++;
       }
-      learned++;
+      if (added) learned++;
     }
     persist();
     return { learned };
@@ -1403,14 +1421,18 @@ const routes = {
 
   "POST /api/learn/complete": (_, body) => {
     const firstDue = fmt(addMs(20 * 3600000));
-    for (const wid of body.word_ids || []) {
+    const have = new Set(db.cards.map((c) => `${c.word_id}|${c.skill}`));
+    const exists = new Set(db.words.map((w) => w.id));
+    const ids = (body.word_ids || []).filter((wid) => exists.has(wid)); // no cards for unknown words
+    for (const wid of ids) {
       for (const skill of SKILLS) {
-        if (!db.cards.some((c) => c.word_id === wid && c.skill === skill)) {
+        if (!have.has(`${wid}|${skill}`)) {
           db.cards.push({ word_id: wid, skill, ease: 2.5, interval: 0.8, due: firstDue, reps: 0, lapses: 0, last_review: null });
         }
       }
     }
-    addActivity({ xp: body.xp || 0, new_words: (body.word_ids || []).length });
+    addActivity({ xp: body.xp || 0, new_words: ids.length });
+    checkChallenges(); // e.g. "plant 25 trees" can be finished right here
     return { ok: true, streak: streak() };
   },
 
@@ -1450,9 +1472,9 @@ const routes = {
     }
     if (card.skill === "speak" && grade >= 2) wk.spoken++;
     Object.assign(card, schedule(card, grade));
-    checkChallenges();
     const xp = grade >= 2 ? 3 : 1;
     addActivity({ xp, reviews: 1 });
+    checkChallenges(); // after the activity, so today's practice counts
     return { xp, ...card };
   },
 
@@ -1667,8 +1689,9 @@ const routes = {
     const sl = course() === "sl";
     const seen = new Set();
     const pool = [];
+    const byId = new Map(W().map((w) => [w.id, w]));
     for (const w of shuffled(learnedWords())) {
-      const full = wordById(w.id);
+      const full = byId.get(w.id);
       const x = extrasOf(full);
       if (!x?.example_zh || !x.example_en || seen.has(x.example_zh)) continue;
       const writable = [...x.example_zh].filter((c) => WRITABLE_CHAR.test(c));
@@ -1963,13 +1986,17 @@ const routes = {
   "GET /api/stats": () => {
     // Enough history for the 3-month progress chart (and the period before it, for comparison).
     const days = Object.entries(db.activity).sort((a, b) => (a[0] < b[0] ? 1 : -1)).slice(0, 200).map(([day, a]) => ({ day, ...a }));
+    const cards = C();
     const skills = SKILLS.map((skill) => {
-      const cs = C().filter((c) => c.skill === skill);
+      const cs = cards.filter((c) => c.skill === skill);
       return { skill, n: cs.length, avg_interval: cs.length ? cs.reduce((a, c) => a + c.interval, 0) / cs.length : 0, lapses: cs.reduce((a, c) => a + c.lapses, 0) };
     }).filter((k) => k.n);
+    // Lapses per word in one pass over the cards (not a search of every card for every word).
+    const lapsesOf = new Map<number, number>();
+    for (const c of cards) if (c.lapses) lapsesOf.set(c.word_id, (lapsesOf.get(c.word_id) || 0) + c.lapses);
     const hardest = W()
-      .map((w) => ({ ...pick(w), lapses: cardsOf(w.id).reduce((a, c) => a + c.lapses, 0) }))
-      .filter((w) => w.lapses > 0)
+      .filter((w) => lapsesOf.has(w.id))
+      .map((w) => ({ ...pick(w), lapses: lapsesOf.get(w.id) }))
       .sort((a, b) => b.lapses - a.lapses)
       .slice(0, 10);
     // "My journey" figures
@@ -2006,7 +2033,8 @@ const routes = {
   "POST /api/sync/enable": async (_, body) => {
     const code = body.code ? sync.cleanCode(body.code) : sync.newCode();
     if (!code) throw new HttpError(400, "That doesn't look like a sync code (16 letters and numbers)");
-    db.sync = { code, version: 0, hash: "", last: null, changed_at: new Date().toISOString(), deleted: [] };
+    // A device joining with someone else's code starts as "older", so it doesn't overwrite their settings.
+    db.sync = { code, version: 0, hash: "", last: null, changed_at: body.code ? "" : new Date().toISOString(), deleted: db.sync?.deleted || [] };
     flush();
     try {
       await runSync();
@@ -2024,6 +2052,18 @@ const routes = {
     } catch (e) {
       throw e instanceof HttpError ? e : new HttpError(503, `Sync failed: ${e.message}`);
     }
+  },
+
+  // When the copy on the server can't be read (damaged, or from a newer app): replace it with this device's.
+  "POST /api/sync/replace": async () => {
+    if (!db.sync?.code) throw new HttpError(400, "Sync is off");
+    db.sync.replace = true;
+    try {
+      await runSync();
+    } catch (e) {
+      throw new HttpError(503, `Sync failed: ${e.message}`);
+    }
+    return syncInfo();
   },
 
   "POST /api/sync/disable": () => {
@@ -2069,7 +2109,7 @@ const routes = {
     }
     // This device joins the account's sync: what's here is merged with what's already there.
     const keep = db.sync?.code === vault.sync ? db.sync : null;
-    db.sync = keep || { code: vault.sync, version: 0, hash: "", last: null, changed_at: new Date().toISOString(), deleted: [] };
+    db.sync = keep || { code: vault.sync, version: 0, hash: "", last: null, changed_at: "", deleted: db.sync?.deleted || [] };
     db.account = { email, since: new Date().toISOString() };
     flush();
     let changed = false;
@@ -2106,6 +2146,10 @@ const routes = {
     } catch (e) {
       throw new HttpError(/Wrong|Too many/.test(e.message) ? 400 : 503, e.message);
     }
+    // Also take your synced progress and garden card off bloomko.eu (this device keeps everything).
+    if (db.sync?.code) await sync.wipe(db.sync.code).catch((e) => console.warn("wipe sync", e.message));
+    if (db.friends?.code) await friends.removeCard(db.friends.code, db.friends.secret).catch((e) => console.warn("wipe friends", e.message));
+    db.friends = null;
     db.account = null;
     db.sync = null;
     flush();
@@ -2152,12 +2196,16 @@ const routes = {
       throw new HttpError(e.status === 404 ? 404 : 503, e.message);
     }
     if (!f.list.some((x) => x.code === code)) f.list.push({ code, name: g.profile?.name || "A friend" });
+    f.removed = (f.removed || []).filter((c) => c !== code);
     flush();
     return { ok: true, name: g.profile?.name || "A friend" };
   },
 
   "POST /api/friends/remove": (_, body) => {
-    if (db.friends) db.friends.list = db.friends.list.filter((x) => x.code !== body.code);
+    if (db.friends) {
+      db.friends.list = db.friends.list.filter((x) => x.code !== body.code);
+      db.friends.removed = [...new Set([...(db.friends.removed || []), body.code])].slice(-200);
+    }
     flush();
     return { ok: true };
   },
@@ -2181,7 +2229,7 @@ const routes = {
     const code = friends.cleanFriendCode(body.code);
     if (f.watered[code] === dayKey()) throw new HttpError(409, "You've already watered this garden today");
     try {
-      await friends.water(code, f.code, String(settingsAll().display_name || "").trim() || "A friend");
+      await friends.water(code, f.code, String(settingsAll().display_name || "").trim() || "A friend", f.secret);
     } catch (e) {
       if (e.status !== 409) throw new HttpError(503, e.message);
     }
@@ -2226,6 +2274,19 @@ const routes = {
     return backupInfo();
   },
 
+  // Delete the backups stored on bloomko.eu for this device's key.
+  "POST /api/cloud-backup/wipe": async () => {
+    if (!db.backup?.key) throw new HttpError(400, "Cloud backup is off");
+    try {
+      await cloud.wipe(db.backup.key);
+    } catch (e) {
+      throw new HttpError(503, e.message);
+    }
+    db.backup = null;
+    flush();
+    return backupInfo();
+  },
+
   "POST /api/cloud-backup/disable": () => {
     db.backup = null;
     flush();
@@ -2255,9 +2316,12 @@ const routes = {
     }
     if (p.edition && p.edition !== EDITION) throw new HttpError(400, `This backup is from Bloomko ${p.edition === "heritage" ? "Heritage" : "East"} — restore it in that app`);
     const token = db.settings.hf_token;
-    db = { ...freshDb(), ...p.db, sync: null, backup: { key, last: p.at || null, auto: true }, settings: { ...p.db.settings, hf_token: token || "" } };
+    const llmKey = db.settings.llm_api_key;
+    // Stay signed in and keep syncing: the next sync puts the restored copy on the server (instead of merging the old one back in).
+    const keepSync = db.sync?.code ? { ...db.sync, version: 0, hash: "", replace: true } : null;
+    db = { ...freshDb(), ...p.db, sync: keepSync, account: db.account || null, backup: { key, last: p.at || null, auto: true }, settings: { ...p.db.settings, hf_token: token || "", llm_api_key: llmKey || "" } };
     migrate();
-    db.garden ||= freshGarden();
+    ensureShape();
     await applyLocale();
     flush();
     return { ok: true, learned: new Set(db.cards.map((c) => c.word_id)).size };
@@ -2270,9 +2334,11 @@ const routes = {
     const token = db.settings.hf_token;
     const { app: _a, exported_at: _e, ...rest } = body;
     const keepSync = db.sync || null;
-    db = { ...freshDb(), ...rest, sync: keepSync, backup: db.backup || null, settings: { ...rest.settings, hf_token: token || "" } };
-    if (keepSync) keepSync.changed_at = new Date().toISOString();
+    const llmKey = db.settings.llm_api_key;
+    db = { ...freshDb(), ...rest, sync: keepSync, backup: db.backup || null, account: db.account || null, settings: { ...rest.settings, hf_token: token || "", llm_api_key: rest.settings?.llm_api_key || llmKey || "" } };
+    if (keepSync) Object.assign(keepSync, { changed_at: new Date().toISOString(), version: 0, hash: "", replace: true }); // the restored copy wins on the server too
     migrate();
+    ensureShape();
     await applyLocale();
     flush();
     return { ok: true };

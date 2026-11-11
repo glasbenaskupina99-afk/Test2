@@ -3,7 +3,8 @@
 // the app encrypts before uploading, the server can't read it.
 import { DurableObject } from "cloudflare:workers";
 
-const MAX = 8 * 1024 * 1024; // 8 MB of base64 is far more than a big course needs
+const MAX = 3 * 1024 * 1024; // 3 MB of base64: a big course is a few hundred KB
+const BACKUPS_PER_DAY = 24; // more than this in a day is not a person backing up
 const CHUNK = 1000 * 1000; // stored in pieces under the per-value size limit
 const BACKUPS = 10; // cloud backups kept per backup key (the oldest go first)
 const B64 = /^[A-Za-z0-9+/=]+$/;
@@ -27,10 +28,21 @@ function same(a, b) {
 }
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, PUT, POST, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Max-Age": "86400",
 };
+
+/** The request's JSON body, refusing anything bigger than a backup could be. */
+async function readJson(request) {
+  if (Number(request.headers.get("Content-Length") || 0) > MAX + 20000) return null;
+  try {
+    return await request.json();
+  } catch {
+    return null;
+  }
+}
+const ipOf = async (request) => toHex(await crypto.subtle.digest("SHA-256", enc.encode(`ip:${request.headers.get("CF-Connecting-IP") || ""}`))).slice(0, 16);
 
 const json = (status, body) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", ...CORS } });
@@ -57,6 +69,14 @@ export class SyncStore extends DurableObject {
     return { version: next.version };
   }
 
+  /** Delete the synced copy (when its account is deleted). */
+  async syncWipe() {
+    const meta = await this.ctx.storage.get("meta");
+    const keys = ["meta", ...Array.from({ length: meta?.chunks || 0 }, (_, i) => `c${i}`)];
+    await this.ctx.storage.delete(keys);
+    return { ok: true };
+  }
+
   // Accounts (2.0): one object per email (by hash). Holds a verifier for the login key and the
   // "vault" — the sync code, encrypted on the device with a key from the password. The password
   // itself never reaches the server, so the server can't open the vault either.
@@ -72,28 +92,40 @@ export class SyncStore extends DurableObject {
   }
 
   /** Checks the login key; too many wrong tries lock the account for a while. */
-  async check(auth) {
+  /**
+   * Checks the login key. Wrong tries lock out the address they come from (not the account), so
+   * someone guessing from elsewhere can't lock the owner out.
+   */
+  async check(auth, ip = "") {
     const a = await this.account();
     if (!a) return { missing: true };
-    if (a.lockedUntil > Date.now()) return { locked: Math.ceil((a.lockedUntil - Date.now()) / 60000) };
+    a.ips ||= {};
+    const rec = a.ips[ip] || { n: 0, until: 0 };
+    if (rec.until > Date.now()) return { locked: Math.ceil((rec.until - Date.now()) / 60000) };
     if (!same(await verify(auth, a.salt), a.verifier)) {
-      a.fails = (a.fails || 0) + 1;
-      if (a.fails >= LOCK_AFTER) Object.assign(a, { fails: 0, lockedUntil: Date.now() + LOCK_MS });
+      rec.n++;
+      if (rec.n >= LOCK_AFTER) Object.assign(rec, { n: 0, until: Date.now() + LOCK_MS });
+      a.ips[ip] = rec;
+      const keys = Object.keys(a.ips);
+      if (keys.length > 200) for (const k of keys.slice(0, keys.length - 200)) delete a.ips[k];
       await this.ctx.storage.put("account", a);
       return { wrong: true };
     }
-    if (a.fails) await this.ctx.storage.put("account", { ...a, fails: 0 });
+    if (a.ips[ip]) {
+      delete a.ips[ip];
+      await this.ctx.storage.put("account", a);
+    }
     return { ok: true, account: a };
   }
 
-  async login(auth) {
-    const r = await this.check(auth);
+  async login(auth, ip) {
+    const r = await this.check(auth, ip);
     return r.ok ? { vault: r.account.vault } : r;
   }
 
   /** New password (new login key and re-encrypted vault) or just a new vault. */
-  async update(auth, newAuth, vault) {
-    const r = await this.check(auth);
+  async update(auth, newAuth, vault, ip) {
+    const r = await this.check(auth, ip);
     if (!r.ok) return r;
     const a = r.account;
     if (newAuth) {
@@ -105,8 +137,8 @@ export class SyncStore extends DurableObject {
     return { ok: true };
   }
 
-  async remove(auth) {
-    const r = await this.check(auth);
+  async remove(auth, ip) {
+    const r = await this.check(auth, ip);
     if (!r.ok) return r;
     await this.ctx.storage.delete("account");
     return { ok: true };
@@ -130,6 +162,18 @@ export class SyncStore extends DurableObject {
     return { ok: true, inbox: inbox.map(({ name, at }) => ({ name, at })) };
   }
 
+  /** Is this the secret of this card's owner? (Used to check who is watering.) */
+  async friendOwns(secret) {
+    const f = await this.ctx.storage.get("friend");
+    return !!f && same(toHex(await crypto.subtle.digest("SHA-256", enc.encode(secret))), f.owner);
+  }
+
+  async friendDelete(secret) {
+    if (!(await this.friendOwns(secret))) return { forbidden: true };
+    await this.ctx.storage.delete("friend");
+    return { ok: true };
+  }
+
   async friendWater(from, name) {
     const f = await this.ctx.storage.get("friend");
     if (!f) return { missing: true };
@@ -139,6 +183,7 @@ export class SyncStore extends DurableObject {
     f.waters[from] = day;
     // Forget who watered on earlier days, so the list stays small.
     for (const [k, d] of Object.entries(f.waters)) if (d !== day) delete f.waters[k];
+    if (Object.keys(f.waters).length > 500) return { already: true };
     f.inbox = [...(f.inbox || []), { name, at: new Date().toISOString() }].slice(-30);
     await this.ctx.storage.put("friend", f);
     return { ok: true };
@@ -150,6 +195,14 @@ export class SyncStore extends DurableObject {
     return ((await this.ctx.storage.get("bindex")) || []).map(({ n, at, size, meta }) => ({ n, at, size, meta }));
   }
 
+  /** Delete every backup for this key. */
+  async backupWipe() {
+    const index = (await this.ctx.storage.get("bindex")) || [];
+    const keys = ["bindex", "bnext", ...index.flatMap((b) => Array.from({ length: b.chunks }, (_, i) => `b${b.n}c${i}`))];
+    await this.ctx.storage.delete(keys);
+    return { ok: true };
+  }
+
   async getBackup(n) {
     const item = ((await this.ctx.storage.get("bindex")) || []).find((b) => b.n === n);
     if (!item) return null;
@@ -159,6 +212,8 @@ export class SyncStore extends DurableObject {
 
   async putBackup(data, meta) {
     const index = (await this.ctx.storage.get("bindex")) || [];
+    const today = new Date().toISOString().slice(0, 10);
+    if (index.filter((b) => b.at.startsWith(today)).length >= BACKUPS_PER_DAY) return { tooMany: true };
     const n = ((await this.ctx.storage.get("bnext")) || 0) + 1;
     const chunks = Math.ceil(data.length / CHUNK) || 1;
     const entries = {};
@@ -180,18 +235,16 @@ export async function handleSync(request, env, id) {
   const stub = env.SYNC.get(env.SYNC.idFromName(id));
   if (request.method === "GET") return json(200, await stub.get());
   if (request.method === "PUT") {
-    let body;
-    try {
-      body = await request.json();
-    } catch {
-      return json(400, { error: "invalid request" });
-    }
+    const body = await readJson(request);
+    if (!body) return json(400, { error: "invalid request" });
     const data = String(body?.data || "");
     if (!data || data.length > MAX || !/^[A-Za-z0-9+/=]+$/.test(data)) return json(400, { error: "invalid data" });
     const r = await stub.put(Number(body.base) || 0, data);
     return r.conflict ? json(409, r) : json(200, r);
   }
-  return json(405, { error: "use GET or PUT" });
+  // Knowing the id means knowing the sync code (it's a hash of it).
+  if (request.method === "DELETE") return json(200, await stub.syncWipe());
+  return json(405, { error: "use GET, PUT or DELETE" });
 }
 
 /**
@@ -211,18 +264,16 @@ export async function handleBackup(request, env, path) {
   }
   if (request.method === "GET") return json(200, { backups: await stub.listBackups() });
   if (request.method === "POST" && !num) {
-    let body;
-    try {
-      body = await request.json();
-    } catch {
-      return json(400, { error: "invalid request" });
-    }
+    const body = await readJson(request);
+    if (!body) return json(400, { error: "invalid request" });
     const data = String(body?.data || "");
     const meta = String(body?.meta || "");
     if (!data || data.length > MAX || !B64.test(data) || meta.length > 4000 || (meta && !B64.test(meta))) return json(400, { error: "invalid data" });
-    return json(200, await stub.putBackup(data, meta));
+    const r = await stub.putBackup(data, meta);
+    return r.tooMany ? json(429, { error: "Too many backups today — try again tomorrow" }) : json(200, r);
   }
-  return json(405, { error: "use GET or POST" });
+  if (request.method === "DELETE" && !num) return json(200, await stub.backupWipe());
+  return json(405, { error: "use GET, POST or DELETE" });
 }
 
 const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
@@ -236,12 +287,9 @@ export async function handleAccount(request, env, action) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
   if (request.method !== "POST") return json(405, { error: "use POST" });
   if (!env.SYNC) return json(503, { error: "accounts aren't set up on the server" });
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return json(400, { error: "invalid request" });
-  }
+  const body = await readJson(request);
+  if (!body) return json(400, { error: "invalid request" });
+  const ip = await ipOf(request);
   const email = String(body?.email || "").trim().toLowerCase();
   const auth = String(body?.auth || "");
   const vault = body?.vault == null ? "" : String(body.vault);
@@ -260,9 +308,9 @@ export async function handleAccount(request, env, action) {
     if (!vault) return json(400, { error: "invalid data" });
     return answer(await stub.register(auth, vault));
   }
-  if (action === "login") return answer(await stub.login(auth));
-  if (action === "update") return answer(await stub.update(auth, newAuth, vault));
-  if (action === "delete") return answer(await stub.remove(auth));
+  if (action === "login") return answer(await stub.login(auth, ip));
+  if (action === "update") return answer(await stub.update(auth, newAuth, vault, ip));
+  if (action === "delete") return answer(await stub.remove(auth, ip));
   return json(404, { error: "unknown action" });
 }
 
@@ -280,11 +328,8 @@ export async function handleFriends(request, env, path) {
   const stub = env.SYNC.get(env.SYNC.idFromName(`friend:${code}`));
   let body = {};
   if (request.method !== "GET") {
-    try {
-      body = await request.json();
-    } catch {
-      return json(400, { error: "invalid request" });
-    }
+    body = await readJson(request);
+    if (!body) return json(400, { error: "invalid request" });
   }
   if (request.method === "GET" && !action) {
     const f = await stub.friendGet();
@@ -297,10 +342,17 @@ export async function handleFriends(request, env, path) {
     const r = await stub.friendPut(secret, profile);
     return r.forbidden ? json(403, { error: "not your garden" }) : json(200, r);
   }
+  if (request.method === "DELETE" && !action) {
+    const r = await stub.friendDelete(String(body.secret || ""));
+    return r.forbidden ? json(403, { error: "not your garden" }) : json(200, r);
+  }
   if (request.method === "POST" && action === "water") {
     const from = String(body.from || "");
     const name = String(body.name || "").trim().slice(0, 40) || "A friend";
     if (!FRIEND.test(from) || from === code) return json(400, { error: "invalid request" });
+    // Only the owner of the "from" garden can water in its name.
+    const sender = env.SYNC.get(env.SYNC.idFromName(`friend:${from}`));
+    if (!(await sender.friendOwns(String(body.secret || "")))) return json(403, { error: "Turn on friends first" });
     const r = await stub.friendWater(from, name);
     return r.missing ? json(404, { error: "No garden with this friend code" }) : r.already ? json(409, { error: "Already watered today" }) : json(200, r);
   }

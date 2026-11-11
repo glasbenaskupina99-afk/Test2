@@ -73,6 +73,7 @@ export function tagPlant(garden: HTMLElement, el: Element, p, open?: () => void)
 }
 
 const COLS = 7; // spots in a row of a bed
+const EAGER = 4; // beds drawn straight away; the others when they come near the screen
 const SPOT_W = 48;
 const SPOT_H = 40;
 const SIZE_K = [0.62, 0.78, 0.92, 1.05];
@@ -133,7 +134,29 @@ export function gardenEl(beds, { onTap, newIds = new Set<number>(), season = "su
     wrap.append(h("div", { class: "card center" }, h("p", {}, "🌱"), h("p", { class: "muted" }, "Learn your first words and every one of them grows here as a plant.")));
     return wrap;
   }
-  beds.forEach((b, i) => wrap.append(bedEl(b, i, onTap, newIds)));
+  // Big gardens: the first beds are drawn at once, the rest just before they scroll into view.
+  const lazy = typeof IntersectionObserver !== "undefined" && beds.length > EAGER;
+  const io = lazy
+    ? new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            io.unobserve(e.target);
+            const i = Number((e.target as HTMLElement).dataset.bed);
+            e.target.replaceWith(bedEl(beds[i], i, onTap, newIds));
+          }
+        },
+        { rootMargin: "800px 0px" }
+      )
+    : null;
+  beds.forEach((b, i) => {
+    if (!io || i < EAGER) return wrap.append(bedEl(b, i, onTap, newIds));
+    // A placeholder of about the bed's height, so the page doesn't jump.
+    const rows = Math.ceil(b.spots.length / COLS);
+    const ph = h("div", { class: "bed-placeholder", "data-bed": String(i), style: { aspectRatio: `${COLS * SPOT_W + 16} / ${rows * SPOT_H + 40 + 40}` } });
+    wrap.append(ph);
+    io.observe(ph);
+  });
   return wrap;
 }
 

@@ -103,8 +103,14 @@ export function cloudBackupCard() {
         h("button", {
           class: "btn ghost",
           onclick: async () => {
-            if (!(await confirmDialog({ icon: "☁️", title: "Turn off cloud backup?", message: "Backups already made stay on bloomko.eu for this key. New ones won't be made.", confirmLabel: "Turn off", cancelLabel: "Cancel" }))) return;
-            await api("/api/cloud-backup/disable", { method: "POST" });
+            if (!(await confirmDialog({ icon: "☁️", title: "Turn off cloud backup?", message: "New backups won't be made.", confirmLabel: "Turn off", cancelLabel: "Cancel" }))) return;
+            const wipe = await confirmDialog({ icon: "🗑️", title: "Delete the backups on bloomko.eu too?", message: "Keep them if you may want to restore one later (you need your backup key for that).", confirmLabel: "Delete them", cancelLabel: "Keep them", danger: true });
+            try {
+              await api(wipe ? "/api/cloud-backup/wipe" : "/api/cloud-backup/disable", { method: "POST" });
+              if (wipe) toast("🗑️ Backups deleted from bloomko.eu");
+            } catch (e) {
+              toast(e.message, 5000);
+            }
             showKey = false;
             render();
           },

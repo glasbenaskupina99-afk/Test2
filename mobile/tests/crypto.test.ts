@@ -110,3 +110,25 @@ test("account: the password never leaves the device; the vault opens only with i
     delete (globalThis as any).window;
   }
 });
+
+test("sync: a word deleted on one device and added again later stays", () => {
+  const a = db([word(1, "好"), { ...word(2, "猫", "custom"), created_at: "2026-01-05 10:00:00" }], []);
+  const b = db([word(7, "好")], []);
+  b.sync.deleted = ["zh|猫|c:Mine\t2026-01-03 10:00:00"]; // deleted before it was added again
+  merge(a, { v: 1, ...snapshot(b) });
+  assert.ok(a.words.some((w: any) => w.hanzi === "猫"), "re-added word survives an older deletion");
+  b.sync.deleted = ["zh|猫|c:Mine\t2026-01-09 10:00:00"]; // deleted afterwards
+  merge(a, { v: 1, ...snapshot(b) });
+  assert.ok(!a.words.some((w: any) => w.hanzi === "猫"), "a later deletion wins");
+});
+
+test("sync: cards of the other app's words are kept, not lost (East ↔ Heritage)", () => {
+  const east = db([word(1, "好")], [card(1, "2026-01-02 10:00:00", 30)]);
+  const heritage = db([{ ...word(5, "hiša"), lang: "sl" }], [card(5, "2026-01-02 10:00:00", 4)]);
+  merge(heritage, { v: 1, ...snapshot(east) });
+  const passedOn = snapshot(heritage).cards;
+  assert.ok(passedOn.some((c: any) => c.w === "zh|好|b" && c.interval === 30), "Heritage passes the Chinese card on");
+  const freshEast = db([word(9, "好")], []);
+  merge(freshEast, { v: 1, ...snapshot(heritage) });
+  assert.equal(freshEast.cards.find((c: any) => c.word_id === 9)?.interval, 30, "a new East phone gets it back");
+});

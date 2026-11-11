@@ -111,7 +111,9 @@ export function makePaper(level, src, { short = false } = {}) {
     listen_word_tf() {
       const w = take(words, (x) => "w" + x.hanzi);
       const right = Math.random() < 0.5;
-      const shown = right ? firstMeaning(w.english) : firstMeaning(take(words.filter((x) => firstMeaning(x.english) !== firstMeaning(w.english)), (x) => "d" + x.hanzi).english);
+      const other = take(words.filter((x) => firstMeaning(x.english) !== firstMeaning(w.english)), (x) => "d" + x.hanzi);
+      const shown = right || !other ? firstMeaning(w.english) : firstMeaning(other.english);
+      if (!other) return { type: "listen_word_tf", audio: w.hanzi, reading: w.pinyin, prompt: shown, options: ["True", "False"], answer: 0, solution: `${w.hanzi} · ${w.pinyin} · ${w.english}` };
       return { type: "listen_word_tf", audio: w.hanzi, reading: w.pinyin, prompt: shown, options: ["True", "False"], answer: right ? 0 : 1, solution: `${w.hanzi} · ${w.pinyin} · ${w.english}` };
     },
     read_word_tf() {
@@ -129,6 +131,8 @@ export function makePaper(level, src, { short = false } = {}) {
     },
     listen_sent() {
       const e = take(examples, (x) => "e" + x.text);
+      // No example sentences (e.g. they didn't load): ask about a word instead of failing.
+      if (!e || examples.length < nOpt) return { ...make.listen_word(), type: "listen_word" };
       const [options, answer] = withDistractors(e.en, examples.map((x) => x.en), nOpt);
       return { type: "listen_sent", audio: e.text, reading: e.reading, options, answer, solution: `${e.text} · ${e.en}` };
     },

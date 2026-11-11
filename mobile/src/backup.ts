@@ -92,6 +92,11 @@ export async function list(key: string): Promise<BackupItem[]> {
   return out.sort((a, b) => b.n - a.n);
 }
 
+/** Delete every backup stored for this key. */
+export async function wipe(key: string): Promise<void> {
+  await call("DELETE", await idOf(key));
+}
+
 /** Download and decrypt one backup; returns the stored database. */
 export async function download(key: string, n: number): Promise<{ edition: string; at: string; db: Db }> {
   const id = await idOf(key);

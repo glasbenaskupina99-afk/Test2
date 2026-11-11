@@ -180,18 +180,31 @@ let mapFilter = "all";
 async function overview() {
   const d = await api("/api/charmap/all");
   const grid = h("div", { class: "cm-grid" });
+  // A thousand characters or more: built as one piece of HTML, with one click handler for all.
+  const esc = (t: string) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  grid.addEventListener("click", (e) => {
+    const cell = (e.target as Element).closest<HTMLElement>(".cm-cell");
+    if (cell) go(cell.dataset.ch);
+  });
   const draw = () => {
     const list = d.chars.filter((c) => mapFilter === "all" || (mapFilter === "known" ? c.state === "known" : c.state !== "known"));
-    const out = [];
+    if (!list.length) return grid.replaceChildren(h("p", { class: "muted small" }, "Nothing here yet."));
+    // Blocks of 60: the browser lays out and paints only the ones near the screen (content-visibility).
+    let html = "";
     let sec = null;
+    let n = 0;
     for (const c of list) {
-      if (c.section !== sec) {
+      if (c.section !== sec || n === 60) {
+        if (sec !== null) html += "</div>";
+        if (c.section !== sec) html += `<div class="cm-grid-sec">${esc(c.section)}</div>`;
+        html += `<div class="cm-block">`;
         sec = c.section;
-        out.push(h("div", { class: "cm-grid-sec" }, sec));
+        n = 0;
       }
-      out.push(h("button", { class: `cm-cell ${c.state}`, onclick: () => go(c.ch), title: c.meaning }, h("span", { class: "hz" }, c.ch)));
+      html += `<button class="cm-cell ${c.state}" data-ch="${esc(c.ch)}" title="${esc(c.meaning)}"><span class="hz">${esc(c.ch)}</span></button>`;
+      n++;
     }
-    grid.replaceChildren(...(out.length ? out : [h("p", { class: "muted small" }, "Nothing here yet.")]));
+    grid.innerHTML = html + "</div>";
   };
   const tab = (key, label) => h("button", { class: mapFilter === key ? "on" : "", onclick: (e) => { mapFilter = key; e.currentTarget.parentElement.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b === e.currentTarget)); draw(); } }, label);
   const search = h("input", {

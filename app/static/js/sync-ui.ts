@@ -63,6 +63,7 @@ export function syncCard() {
     fill(card,
       h("div", { class: "row", style: { alignItems: "center" } }, h("span", { class: "sync-dot" + (s.error ? " bad" : "") }), h("b", {}, s.error ? "Sync problem" : "Sync is on"), h("span", { class: "spacer" }), h("small", { class: "muted" }, `Last sync: ${ago(s.last)}`)),
       s.error ? h("p", { class: "small", style: { color: "var(--red)" } }, s.error) : null,
+      s.error && /Couldn't read/.test(s.error) ? replaceServerCopy(render) : null,
       h("div", { class: "small muted", style: { margin: "12px 0 4px" } }, "Your sync code — enter it on your other device (Settings → Sync):"),
       h("div", { class: "row sync-code-row" }, codeEl, h("button", {
         class: "btn ghost small",
@@ -99,4 +100,21 @@ export function syncCard() {
   }
   render().catch((e) => card.replaceChildren(h("p", { class: "small muted" }, e.message)));
   return card;
+}
+
+/** When the copy on bloomko.eu can't be read: offer to replace it with this device's progress. */
+export function replaceServerCopy(onDone: () => void) {
+  return h("button", {
+    class: "btn ghost small",
+    onclick: async () => {
+      if (!(await confirmDialog({ icon: "🔄", title: "Replace the synced copy?", message: "The copy on bloomko.eu will be replaced with the progress on this device. Your other devices then sync from it.", confirmLabel: "Replace", cancelLabel: "Cancel" }))) return;
+      try {
+        await api("/api/sync/replace", { method: "POST" });
+        toast("🔄 Synced copy replaced");
+      } catch (e) {
+        toast(e.message, 5000);
+      }
+      onDone();
+    },
+  }, "Replace the synced copy with this device");
 }

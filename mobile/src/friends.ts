@@ -77,4 +77,8 @@ export const publish = (code: string, secret: string, profile: unknown): Promise
 
 export const fetchGarden = (code: string): Promise<{ profile: any; updated: string }> => call("GET", code);
 
-export const water = (code: string, from: string, name: string) => call("POST", `${code}/water`, { from, name });
+/** Water a friend's garden in the name of your own (proved with your card's secret). */
+export const water = (code: string, from: string, name: string, secret: string) => call("POST", `${code}/water`, { from, name, secret });
+
+/** Take your garden card off bloomko.eu. */
+export const removeCard = (code: string, secret: string) => call("DELETE", code, { secret });

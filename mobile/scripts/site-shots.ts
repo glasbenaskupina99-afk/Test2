@@ -92,7 +92,7 @@ async function shoot(lang: string) {
   await page.evaluate(() => (location.hash = "#/forest"));
   await page.waitForSelector(".bed-svg g.gplant", { timeout: 15000 });
   await page.waitForTimeout(2500);
-  const plant = page.locator(".bed-svg g.gplant").nth(edition === "east" ? 4 : 0);
+  const plant = page.locator(".bed-svg g.gplant").nth(4);
   await plant.scrollIntoViewIfNeeded();
   await page.evaluate(() => window.scrollBy(0, 120));
   await plant.click();

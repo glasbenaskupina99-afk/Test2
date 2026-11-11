@@ -2,7 +2,6 @@
   "meta.name": "Español",
   "meta.locale": "es_ES",
   "meta.suggest": "Esta página también está en español",
-
   "c.soon": "Muy pronto",
   "c.nav_faq": "Preguntas",
   "c.email_ph": "tu@email.com",
@@ -58,7 +57,6 @@
   "c.perks": "<li>🌱 Sé de los primeros en probarla</li><li>💬 Dinos qué construir después</li><li>🎁 Descarga gratuita</li>",
   "c.note_final": "Te escribiremos cuando empiecen las pruebas y cuando salga Bloomko. Tu dirección no se usa para nada más.",
   "c.contact": "¿Preguntas, ideas o ganas de probarla?",
-
   "t.invalid": "Introduce un correo electrónico válido.",
   "t.thanks": "🌱 ¡Gracias! Estás en la lista: te escribiremos cuando Bloomko florezca.",
   "t.on_list": "🌸 Estás en la lista. ¡Sigue escribiendo!",
@@ -74,7 +72,6 @@
   "t.perfect": "¡Perfecto! ✨",
   "t.win_one": "🌸 ¡Precioso! Acabas de escribir tu primer carácter a mano. Imagina miles más; consigue Bloomko antes que nadie:",
   "t.win_many": "🌸 ¡Precioso! Acabas de escribir {0} caracteres a mano. Imagina miles más; consigue Bloomko antes que nadie:",
-
   "e.title": "Bloomko — aprende chino y japonés escribiendo a mano, con un tutor de IA sin conexión y un jardín que crece",
   "e.description": "Bloomko es una app gratuita y tranquila para chino y japonés: escribe los caracteres a mano con corrección trazo a trazo, conversa con un tutor de IA que funciona sin conexión en tu móvil, lee historias graduadas y mira cómo cada palabra que aprendes crece como una planta de verdad. Prueba a escribir un carácter en esta misma página.",
   "e.og_title": "Bloomko — mira florecer tus idiomas",
@@ -101,8 +98,18 @@
   "e.try_write": "Escribir",
   "e.try_show": "Ver",
   "e.try_listen": "Escuchar",
-  "e.try_zh": ["tú", "bueno; bien", "amor; amar", "té"],
-  "e.try_ja": ["el primer kana: «a»", "sol; día", "libro; origen", "montaña"],
+  "e.try_zh": [
+    "tú",
+    "bueno; bien",
+    "amor; amar",
+    "té"
+  ],
+  "e.try_ja": [
+    "el primer kana: «a»",
+    "sol; día",
+    "libro; origen",
+    "montaña"
+  ],
   "e.steps_h2": "Cómo funciona Bloomko, en cinco pasos",
   "e.steps_p": "Diez o quince minutos al día. Bloomko te dice exactamente qué toca; tú solo tienes que aparecer.",
   "e.s1": "Aprende palabras",
@@ -158,7 +165,6 @@
   "e.faq": "<details><summary>¿Cuándo podré tener Bloomko?</summary><p>Bloomko está en la recta final de pruebas. Primero Android, después iPhone. Deja tu correo y serás de los primeros en probarlo.</p></details><details><summary>¿Es gratis?</summary><p>Sí: Bloomko se descarga gratis y no tiene anuncios.</p></details><details><summary>¿Necesito una cuenta?</summary><p>No. Todo funciona sin ella y tu progreso se queda en tu móvil. La cuenta es opcional: mantiene tu progreso a salvo e igual en todos tus dispositivos, cifrado antes de salir del móvil.</p></details><details><summary>¿Funciona sin conexión?</summary><p>Sí. Lecciones, repasos, historias e incluso el tutor de IA (Gemma) funcionan en tu móvil, en un avión o en la montaña. Solo necesitas internet para la descarga única de la IA y, si quieres, para sincronizar y hacer copias.</p></details><details><summary>¿Qué niveles cubre?</summary><p>Chino: los niveles oficiales HSK 3.0 1–3 (2270 palabras). Japonés: kana y JLPT N5–N3 (3500 palabras). Además, más de 500 puntos de gramática, 48 historias graduadas y simulacros con el formato real.</p></details><details><summary>¿Puedo usar mis propias listas de palabras?</summary><p>Sí: añade palabras tú mismo, pega una lista o importa un mazo de Anki (.apkg) y conserva el progreso que hiciste en Anki.</p></details><details><summary>¿Cómo funciona el jardín?</summary><p>Cada palabra que aprendes se convierte en una planta, una de 28 especies reales, siempre la misma para la misma palabra. Repásala a tiempo y crece; sáltate sus repasos y se marchita; olvídala mucho tiempo y desaparece hasta que la vuelvas a practicar. Tus amigos pueden visitar y regar tu jardín.</p></details>",
   "e.final_p": "Bloomko está casi listo. Deja tu correo y serás de los primeros en probarlo en Android; iPhone vendrá después. Cada palabra empieza como una semilla; las tuyas florecerán pronto.",
   "e.strokes_credit": "Datos del orden de trazos: Make Me a Hanzi y animCJK (Arphic Public License)",
-
   "h.title": "Bloomko Heritage — aprende idiomas menos conocidos: esloveno ya, islandés pronto",
   "h.description": "Bloomko Heritage es una app tranquila para los idiomas que casi todas las apps olvidan. Empieza con el esloveno: gramática explicada paso a paso, terminaciones en color, pronunciación con el acento, un jardín donde cada palabra crece como una planta y un tutor de IA que funciona sin conexión.",
   "h.og_title": "Bloomko Heritage — idiomas pequeños, aprendidos con cariño",
@@ -210,6 +216,6 @@
   "h.your_lang_p": "Galés, maltés, euskera, estonio… cuéntanoslo",
   "h.east_note": "¿Buscas chino o japonés? Viven en <a href=\"{{@home}}\">Bloomko East</a>.",
   "h.east_short": "Chino y japonés",
-  "h.faq": "<details><summary>¿Cuándo podré tener Bloomko Heritage?</summary><p>Está en la recta final de pruebas. Primero Android, después iPhone. Deja tu correo y serás de los primeros en probarlo.</p></details><details><summary>¿Es gratis?</summary><p>Sí: Bloomko Heritage se descarga gratis y no tiene anuncios.</p></details><details><summary>¿El curso de esloveno está en español?</summary><p>La app (menús, ejercicios, jardín) está en español, y las primeras palabras también. Por ahora, las lecciones de gramática del esloveno se explican en inglés; su traducción está en marcha.</p></details><details><summary>¿Necesito saber algo de esloveno?</summary><p>No. El curso empieza desde cero: saludos, «yo soy», números, familia… y llega a los casos paso a paso. Si ya sabes algo, avanza más rápido.</p></details><details><summary>¿Funciona sin conexión?</summary><p>Sí. Lecciones, repasos e incluso el tutor de IA funcionan en tu móvil. Solo necesitas internet para la descarga única de la IA y, si quieres, para sincronizar y hacer copias.</p></details><details><summary>¿Cómo funciona el jardín?</summary><p>Cada palabra que aprendes se convierte en una planta, una de 28 especies reales. Repásala a tiempo y crece; sáltate sus repasos y se marchita; olvídala mucho tiempo y desaparece hasta que la vuelvas a practicar. Tus amigos pueden visitar y regar tu jardín.</p></details>",
+  "h.faq": "<details><summary>¿Cuándo podré tener Bloomko Heritage?</summary><p>Está en la recta final de pruebas. Primero Android, después iPhone. Deja tu correo y serás de los primeros en probarlo.</p></details><details><summary>¿Es gratis?</summary><p>Sí: Bloomko Heritage se descarga gratis y no tiene anuncios.</p></details><details><summary>¿El curso de esloveno está en español?</summary><p>La app está en español, igual que el significado de las 564 palabras y las frases de práctica. Por ahora, las lecciones de gramática del esloveno se explican en inglés; su traducción está en marcha.</p></details><details><summary>¿Necesito saber algo de esloveno?</summary><p>No. El curso empieza desde cero: saludos, «yo soy», números, familia… y llega a los casos paso a paso. Si ya sabes algo, avanza más rápido.</p></details><details><summary>¿Funciona sin conexión?</summary><p>Sí. Lecciones, repasos e incluso el tutor de IA funcionan en tu móvil. Solo necesitas internet para la descarga única de la IA y, si quieres, para sincronizar y hacer copias.</p></details><details><summary>¿Cómo funciona el jardín?</summary><p>Cada palabra que aprendes se convierte en una planta, una de 28 especies reales. Repásala a tiempo y crece; sáltate sus repasos y se marchita; olvídala mucho tiempo y desaparece hasta que la vuelvas a practicar. Tus amigos pueden visitar y regar tu jardín.</p></details>",
   "h.final_p": "Bloomko Heritage está casi listo. Deja tu correo y serás de los primeros en probarlo en Android."
 }

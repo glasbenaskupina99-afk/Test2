@@ -61,7 +61,7 @@ async function talkScreen(topic) {
 
   const log = h("div", { class: "talk-log" });
   const ideasEl = h("div", { class: "talk-ideas" });
-  const input = h("input", { class: "input talk-input", placeholder: isSl() ? "Write your answer…" : "Type or speak your answer…", enterkeyhint: "send", onkeydown: (e) => e.key === "Enter" && send() });
+  const input = h("input", { class: "input talk-input", placeholder: isSl() ? "Write your answer…" : "Type or speak your answer…", enterkeyhint: "send", onkeydown: (e) => e.key === "Enter" && !e.isComposing && send() });
   const sendBtn = h("button", { class: "btn talk-send", onclick: () => send(), "aria-label": "Send" }, "➤");
   const mic = canRecognize() ? h("button", { class: "mic talk-mic", "aria-label": "Speak", html: icons.mic, onclick: () => listen() }) : null;
   const counter = h("small", { class: "muted" }, "");
@@ -221,7 +221,10 @@ async function talkScreen(topic) {
           "button",
           {
             class: "btn",
-            onclick: async () => {
+            onclick: async (e) => {
+              const b = e.currentTarget as HTMLButtonElement;
+              if (b.disabled) return;
+              b.disabled = true;
               const r = await api("/api/talk/done", { method: "POST", body: { turns, good } }).catch(() => ({ xp: 0 }));
               playComplete();
               close();

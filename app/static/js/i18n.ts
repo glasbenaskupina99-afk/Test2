@@ -37,16 +37,18 @@ function compile(src, dst) {
 }
 
 /** Loads the dictionary for a language ("en" = no translation). */
+let loading = 0;
 export async function setUiLang(next) {
-  lang = UI_LANGS.some(([k]) => k === next) ? next : "en";
-  document.documentElement.lang = lang;
-  exact = new Map();
-  byFirst = new Map();
-  loose = [];
-  if (lang !== "en") {
+  const want = UI_LANGS.some(([k]) => k === next) ? next : "en";
+  const token = ++loading; // a quicker later choice wins; an older download is dropped
+  // Build the new dictionary aside, then switch to it in one go.
+  const exactNew = new Map();
+  const byFirstNew = new Map();
+  const looseNew = [];
+  if (want !== "en") {
     let dict = {};
     try {
-      dict = await (await fetch(`i18n/${lang}/ui.json`)).json();
+      dict = await (await fetch(`i18n/${want}/ui.json`)).json();
     } catch (e) {
       console.warn("i18n", e);
     }
@@ -56,19 +58,25 @@ export async function setUiLang(next) {
         const p = compile(src, dst);
         const first = src.match(/^([^\s{]+)/)?.[1];
         if (first) {
-          if (!byFirst.has(first)) byFirst.set(first, []);
-          byFirst.get(first).push(p);
+          if (!byFirstNew.has(first)) byFirstNew.set(first, []);
+          byFirstNew.get(first).push(p);
         } else {
-          loose.push(p);
+          looseNew.push(p);
         }
       } else {
-        exact.set(src, dst);
+        exactNew.set(src, dst);
       }
     }
     // Longer patterns first, so "Lesson {0} of {1}" wins over "Lesson {0}".
-    for (const list of byFirst.values()) list.sort((a, b) => b.re.source.length - a.re.source.length);
-    loose.sort((a, b) => b.re.source.length - a.re.source.length);
+    for (const list of byFirstNew.values()) list.sort((a, b) => b.re.source.length - a.re.source.length);
+    looseNew.sort((a, b) => b.re.source.length - a.re.source.length);
   }
+  if (token !== loading) return;
+  lang = want;
+  document.documentElement.lang = lang;
+  exact = exactNew;
+  byFirst = byFirstNew;
+  loose = looseNew;
   if (document.body) translateTree(document.body);
   startObserver();
 }
@@ -113,8 +121,10 @@ function translateText(node) {
   if (out != null && out !== raw) node.data = out;
 }
 
+// Never translated: learning content (words, readings, meanings, answer options), only the interface is.
+const SKIP = "[translate='no'], .hz, script, style, textarea, .notranslate, .en, .py, .txt:not(.ui), .fs-meaning, .cm-m";
 function skip(el) {
-  return el.closest?.("[translate='no'], .hz, script, style, textarea, .notranslate");
+  return el.closest?.(SKIP);
 }
 
 function translateAttrs(el) {
@@ -136,7 +146,7 @@ function translateTree(root) {
   if (root.nodeType !== 1 || skip(root)) return;
   translateAttrs(root);
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
-    acceptNode: (n: any) => (n.nodeType === 1 && (n.getAttribute("translate") === "no" || n.classList.contains("hz") || n.tagName === "SCRIPT" || n.tagName === "STYLE" || n.tagName === "TEXTAREA") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+    acceptNode: (n: any) => (n.nodeType === 1 && n.matches(SKIP) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
   });
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
     if (n.nodeType === 3) translateText(n);

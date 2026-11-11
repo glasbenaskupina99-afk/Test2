@@ -42,7 +42,7 @@ export function accountSheet(mode: "login" | "register" = "login"): Promise<bool
       pw2.placeholder = "Repeat the password";
       const go = h("button", { class: "btn" }, mode === "login" ? "Sign in" : "Create account");
       const submit = () =>
-        busy(go, mode === "login" ? "Signing in…" : "Creating…", async () => {
+        !go.disabled && busy(go, mode === "login" ? "Signing in…" : "Creating…", async () => {
           if (mode === "register" && pw.value !== pw2.value) throw new Error("The passwords aren't the same");
           const r = await api(`/api/account/${mode}`, { method: "POST", body: { email: email.value, password: pw.value } });
           toast(mode === "login" ? (r.changed ? "👤 Signed in — your progress is here" : "👤 Signed in") : "👤 Account created — your progress is saved to it", 4000);

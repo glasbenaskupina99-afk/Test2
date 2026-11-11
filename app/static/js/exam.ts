@@ -24,7 +24,11 @@ const KICKER = {
 const sayQ = (q) => speak(isJa() && q.reading ? q.reading : q.audio);
 
 /** #/exams: the mock exams of this course with your best results. */
+let shellRef;
+let loadingRef;
 export async function examsScreen(shell, loading) {
+  shellRef = shell;
+  loadingRef = loading;
   shell(loading(), "#/");
   const d = await api("/api/exams");
   const card = (e) =>
@@ -71,7 +75,10 @@ export async function runExam(level, short) {
   let qi = 0;
   let timer = null;
   let left = 0;
+  let deadline = 0; // the clock counts down to a fixed time, so a paused phone doesn't stop it
   let plays = 0;
+  let playTimer = null;
+  let finished = false;
   const body = h("div", { class: "lesson-body exam-body" });
   const clock = h("b", { class: "exam-clock" }, "");
   const head = h("div", { class: "exam-head" });
@@ -82,6 +89,7 @@ export async function runExam(level, short) {
 
   function close() {
     clearInterval(timer);
+    clearTimeout(playTimer);
     stopSpeaking();
     root.remove();
     document.body.style.overflow = "";
@@ -112,9 +120,11 @@ export async function runExam(level, short) {
   function startSection() {
     qi = 0;
     left = paper.sections[si].minutes * 60;
+    deadline = Date.now() + left * 1000;
     clock.textContent = mmss(left);
+    clearInterval(timer);
     timer = setInterval(() => {
-      left--;
+      left = Math.max(0, Math.round((deadline - Date.now()) / 1000));
       clock.textContent = mmss(left);
       clock.classList.toggle("low", left <= 60);
       if (left <= 0) {
@@ -138,7 +148,7 @@ export async function runExam(level, short) {
           e.currentTarget.parentElement.querySelectorAll(".exam-opt").forEach((b, k) => b.classList.toggle("selected", k === i));
           dots.children[qi].classList.add("on");
         },
-      }, h("span", { class: q.type === "kanji_reading" || q.type === "orthography" || q.type.startsWith("cloze") || q.type === "pinyin_char" ? "txt hz" : "txt" }, q.type.endsWith("_tf") ? (i === 0 ? "✓ True" : "✗ False") : o))
+      }, h("span", { class: q.type === "kanji_reading" || q.type === "orthography" || q.type.startsWith("cloze") || q.type === "pinyin_char" ? "txt hz" : q.type.endsWith("_tf") ? "txt ui" : "txt" }, q.type.endsWith("_tf") ? (i === 0 ? "✓ True" : "✗ False") : o))
     );
     const play = LISTEN.has(q.type)
       ? h("button", { class: "speaker exam-play", "aria-label": "Play again", onclick: (e) => { if (plays >= 2) return; plays++; sayQ(q); if (plays >= 2) e.currentTarget.disabled = true; } }, "🔊")
@@ -157,7 +167,8 @@ export async function runExam(level, short) {
       h("div", { class: "choices exam-choices" + (q.options.length > 3 || q.type.endsWith("_tf") ? "" : " one-col") }, opts),
       dots
     );
-    if (play) setTimeout(() => { plays = 1; sayQ(q); }, 350);
+    clearTimeout(playTimer);
+    if (play) playTimer = setTimeout(() => { if (root.isConnected && plays === 0) { plays = 1; sayQ(q); } }, 350);
     const last = qi === s.questions.length - 1;
     foot.replaceChildren(
       h(
@@ -174,20 +185,26 @@ export async function runExam(level, short) {
   }
 
   async function confirmEnd() {
+    const part = si;
     const open = answers[si].filter((a) => a == null).length;
     if (open && !(await confirmDialog({ icon: "📝", title: `${open} question${open === 1 ? "" : "s"} unanswered`, message: "Finish this part anyway?", cancelLabel: "Go back", confirmLabel: "Finish part" }))) return;
+    if (part !== si || !root.isConnected) return; // time ran out while the question was open
     endSection();
   }
 
   function endSection() {
     clearInterval(timer);
+    clearTimeout(playTimer);
     stopSpeaking();
+    document.querySelector(".dialog-bg")?.remove(); // a "Finish part?" question still open is answered by the clock
     si++;
     if (si < paper.sections.length) sectionIntro();
     else results();
   }
 
   async function results() {
+    if (finished) return; // only ever scored once
+    finished = true;
     head.replaceChildren(h("span", {}, paper.name));
     clock.textContent = "";
     body.replaceChildren(h("div", { class: "spinner" }));
@@ -196,8 +213,10 @@ export async function runExam(level, short) {
     try {
       r = await api("/api/exams/result", { method: "POST", body: { paper, answers } });
     } catch (e) {
-      toast(e.message, 4000);
-      return close();
+      // Don't throw the exam away: keep the answers and let the learner try again.
+      body.replaceChildren(h("div", { class: "exam-intro" }, h("h2", {}, "Couldn't score the exam"), h("p", { class: "muted" }, e.message)));
+      foot.replaceChildren(h("div", { class: "inner" }, h("button", { class: "btn", onclick: () => { finished = false; results(); } }, "Try again")));
+      return;
     }
     const toGo = Math.max(0, r.pass - r.total);
     const wrong = [];
@@ -238,7 +257,7 @@ export async function runExam(level, short) {
       h(
         "div",
         { class: "inner" },
-        h("div", { class: "foot-row" }, h("button", { class: "btn ghost", onclick: () => { close(); location.hash = "#/weak"; } }, "Weak spots"), h("button", { class: "btn", onclick: () => { close(); location.hash = "#/exams"; } }, "Done"))
+        h("div", { class: "foot-row" }, h("button", { class: "btn ghost", onclick: () => { close(); location.hash = "#/weak"; } }, "Weak spots"), h("button", { class: "btn", onclick: () => { close(); examsScreen(shellRef, loadingRef); } }, "Done"))
       )
     );
   }

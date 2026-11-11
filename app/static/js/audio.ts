@@ -138,3 +138,29 @@ async function toWavBase64(blob) {
   for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
   return btoa(bin);
 }
+
+// ---------------------------------------------------------------- the microphone in use
+// A speaking exercise registers how to stop its recording / recognition, so leaving the exercise
+// (Continue, Skip, Quit) always turns the microphone off.
+let activeMic: (() => void) | null = null;
+let generation = 0; // goes up whenever an exercise ends
+
+export function setActiveMic(stop: (() => void) | null) {
+  activeMic = stop;
+}
+export function stopMic() {
+  generation++;
+  const stop = activeMic;
+  activeMic = null;
+  try {
+    stop?.();
+  } catch {
+    /* already stopped */
+  }
+}
+
+/** Say something a moment after an exercise appears — unless it has already been left. */
+export function speakSoon(text: () => string, ms: number) {
+  const g = generation;
+  setTimeout(() => g === generation && speak(text()), ms);
+}

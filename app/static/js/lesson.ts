@@ -1,6 +1,6 @@
 // Lesson runner: leaf progress, exercise, check/continue footer, end screen.
 import { api, h, confirmDialog } from "./util.js";
-import { stopSpeaking } from "./audio.js";
+import { stopSpeaking, stopMic } from "./audio.js";
 import { playCorrect, playWrong, playComplete } from "./sounds.js";
 
 const END_MSG = {
@@ -88,6 +88,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
 
   function close(result) {
     current?.destroy?.();
+    stopMic();
     stopSpeaking();
     root.remove();
     document.body.style.overflow = "";
@@ -110,7 +111,11 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
 
   function show() {
     current?.destroy?.();
+    stopMic();
     updateBar();
+    // A quick double tap on Continue mustn't also press the next step's button in the same place.
+    footInner.style.pointerEvents = "none";
+    setTimeout(() => (footInner.style.pointerEvents = ""), 300);
     if (pos >= queue.length) return end();
     const step = queue[pos];
     let checkBtn = null;
@@ -157,6 +162,7 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
 
   async function feedback(step, res) {
     const extra = step.after ? (await step.after(res).catch(() => null)) || {} : {};
+    if (!root.isConnected) return; // the lesson was closed meanwhile
     graded++;
     if (res.ok) { correct++; combo++; } else combo = 0;
     (res.ok ? playCorrect : playWrong)();
@@ -165,7 +171,8 @@ export function runLesson({ steps, title = "Lesson", endTitle = "Lesson complete
     updateBar();
 
     foot.className = "lesson-foot " + (res.ok ? "ok" : "bad");
-    const cont = h("button", { class: "btn", onclick: next }, "Continue");
+    let advanced = false;
+    const cont = h("button", { class: "btn", onclick: () => !advanced && ((advanced = true), next()) }, "Continue");
     footInner.replaceChildren(
       h(
         "div",

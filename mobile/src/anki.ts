@@ -46,7 +46,8 @@ const rows = (db: Database, sql: string): any[][] => {
 export function parseApkg(bytes: Uint8Array, SQL: SqlJsStatic): AnkiDeck {
   let files: Record<string, Uint8Array>;
   try {
-    files = unzipSync(bytes);
+    // Only the collection: decks often carry hundreds of MB of pictures and sounds we don't need.
+    files = unzipSync(bytes, { filter: (f) => /^collection\.anki2/.test(f.name) });
   } catch {
     throw new Error("That file isn't an Anki deck (.apkg)");
   }
@@ -115,7 +116,11 @@ export function cleanField(html: string): string {
     .replace(/\[sound:[^\]]*\]/g, "")
     .replace(/<br\s*\/?>|<\/(div|p|li)>/gi, "\n")
     .replace(/<[^>]+>/g, "")
-    .replace(/&(#x?[0-9a-f]+|\w+);/gi, (m, e) => (e[0] === "#" ? String.fromCodePoint(e[1].toLowerCase() === "x" ? parseInt(e.slice(2), 16) : Number(e.slice(1))) : ENTITIES[e.toLowerCase()] ?? m))
+    .replace(/&(#x?[0-9a-f]+|\w+);/gi, (m, e) => {
+      if (e[0] !== "#") return ENTITIES[e.toLowerCase()] ?? m;
+      const n = e[1].toLowerCase() === "x" ? parseInt(e.slice(2), 16) : Number(e.slice(1));
+      return Number.isInteger(n) && n > 0 && n <= 0x10ffff ? String.fromCodePoint(n) : m; // a broken entity stays as it is
+    })
     .replace(/\{\{c\d+::(.*?)(::[^}]*)?\}\}/g, "$1")
     .split("\n")
     .map((l) => l.replace(/\s+/g, " ").trim())

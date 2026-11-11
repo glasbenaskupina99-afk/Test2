@@ -62,6 +62,9 @@ function nameTag(wrap: HTMLElement, x: number, y: number, p, open?: () => void) 
   wrap.querySelector(".plant-tag")?.remove();
   const tag = h("button", { class: "plant-tag", style: { left: `${x}px`, top: `${y}px` }, onclick: (e) => { e.stopPropagation(); tag.remove(); open?.(); } }, h("b", {}, speciesOf(p.plant).name), p.t ? h("span", { class: "hz" }, ` · ${p.t}`) : null, p.m ? h("small", {}, ` ${p.m}`) : null);
   wrap.append(tag);
+  // Keep the whole tag inside the garden (it is centred on the plant).
+  const half = tag.offsetWidth / 2;
+  tag.style.left = `${Math.min(Math.max(x, half + 4), wrap.clientWidth - half - 4)}px`;
   setTimeout(() => tag.remove(), 4000);
 }
 
@@ -106,7 +109,7 @@ function bedEl(bed, i: number, onTap: (p, el: Element) => void, newIds: Set<numb
       return;
     }
     const k2 = SIZE_K[p.size] || SIZE_K[0];
-    plants += `<g class="plant ${p.health}${newIds.has(p.id) ? " new" : ""}" data-k="${k}" transform="translate(${(x + 14 - 20 * k2).toFixed(1)} ${(y + 38 - 46 * k2).toFixed(1)}) scale(${k2})"><rect x="4" y="4" width="32" height="44" fill="transparent"/><use href="#pl-${p.plant}"/></g>`;
+    plants += `<g class="gplant ${p.health}${newIds.has(p.id) ? " new" : ""}" data-k="${k}" transform="translate(${(x + 14 - 20 * k2).toFixed(1)} ${(y + 38 - 46 * k2).toFixed(1)}) scale(${k2})"><rect x="0" y="0" width="40" height="48" fill="transparent"/><use href="#pl-${p.plant}"/></g>`;
   });
   const wrap = h("div", { class: `bed${bed.current && !bed.learned ? " upcoming" : ""}` });
   const svg = h("div", {
@@ -114,7 +117,7 @@ function bedEl(bed, i: number, onTap: (p, el: Element) => void, newIds: Set<numb
     html: `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMin meet"><rect x="2" y="12" width="${W - 4}" height="${H - 14}" rx="14" class="soil"/><rect x="2" y="12" width="${W - 4}" height="${H - 14}" rx="14" class="edge"/>${soil}${plants}</svg>`,
   });
   svg.addEventListener("click", (e) => {
-    const g = (e.target as Element).closest<SVGGElement>("g.plant");
+    const g = (e.target as Element).closest<SVGGElement>("g.gplant");
     if (g) onTap(bed.spots[Number(g.dataset.k)], g);
   });
   const n = bed.spots.filter(alive).length;
@@ -161,18 +164,20 @@ export function gardenEl(beds, { onTap, newIds = new Set<number>(), season = "su
 }
 
 /** Plants that weren't there on your last visit pop up with a little animation. */
-function newSinceLastVisit(beds): Set<number> {
+function newSinceLastVisit(beds, lang: string): Set<number> {
+  const key = `gardenSeen:${lang}`; // one list per course
   let seen: number[] = [];
   try {
-    seen = JSON.parse(localStorage.getItem("gardenSeen") || "[]");
+    seen = JSON.parse(localStorage.getItem(key) || "[]");
   } catch {}
   const now = beds.flatMap((b) => b.spots.filter(alive).map((p) => p.id));
   try {
-    localStorage.setItem("gardenSeen", JSON.stringify(now));
+    localStorage.setItem(key, JSON.stringify(now));
   } catch {}
   if (!seen.length) return new Set();
   const before = new Set(seen);
-  return new Set(now.filter((id) => !before.has(id)));
+  const fresh = now.filter((id) => !before.has(id));
+  return fresh.length > 40 ? new Set() : new Set(fresh); // a big jump (e.g. a placement test): no fireworks
 }
 
 function challengesCard(list, gladeCount) {
@@ -250,7 +255,7 @@ export async function forestScreen(shell, loading, { water }) {
   const mine = () => {
     const garden = gardenEl(d.beds, {
       season: d.season.name,
-      newIds: newSinceLastVisit(d.beds),
+      newIds: newSinceLastVisit(d.beds, d.lang),
       onTap: (p, el) => tagPlant(garden, el, p, () => plantSheet(p, onWater)),
     });
     return [

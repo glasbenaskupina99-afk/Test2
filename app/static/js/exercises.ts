@@ -3,7 +3,7 @@
 // ctx: { setReady(bool), finish(result), skip() }
 // result: { ok: true|false, grade: 0..3, title?, detail? }
 import { api, h, icons, iconBtn, shuffle, toast } from "./util.js";
-import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder } from "./audio.js";
+import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder, setActiveMic, speakSoon } from "./audio.js";
 import { writingPad, strokeDemo } from "./writer.js";
 import { noteWritePerfect } from "./forest.js";
 import { state, T, isJa, isSl, sayText } from "./state.js";
@@ -33,7 +33,7 @@ function solution(word, extra?) {
     {},
     h("span", { class: "hz" }, word.hanzi),
     word.pinyin && word.pinyin !== word.hanzi ? [" · ", word.pinyin] : null,
-    h("div", {}, word.english),
+    h("div", { class: "notranslate" }, word.english),
     extra ? h("div", { class: "small" }, extra) : null
   );
 }
@@ -41,6 +41,8 @@ function solution(word, extra?) {
 /** Map handwriting results to an SRS grade. */
 export function writeGrade(r) {
   if (r.gaveUp || r.hints >= 2) return 0;
+  // Characters without stroke data were skipped, not written: no "Perfect" for them.
+  if (r.skipped) return r.perChar?.length ? Math.min(2, r.mistakes > 0 ? 1 : 2) : 1;
   if (r.hints === 1 || r.mistakes >= 4) return 1;
   if (r.mistakes > 0) return 2;
   return 3;
@@ -132,7 +134,7 @@ export function intro(ctx, word) {
       : null,
     ai
   );
-  setTimeout(() => speak(sayText(word)), 400);
+  speakSoon(() => sayText(word), 400);
   return { el, mode: "continue" };
 }
 
@@ -276,7 +278,7 @@ export function choice(ctx, word, pool, kind) {
 
   let prompt;
   if (kind === "listen") {
-    setTimeout(() => speak(sayText(word)), 350);
+    speakSoon(() => sayText(word), 350);
     prompt = [
       h("div", { class: "ex-kicker blue" }, "👂 Listen"),
       h("h2", { class: "ex-title" }, "Which character do you hear?"),
@@ -455,6 +457,7 @@ function speakPanel(ctx, target, solutionNode, reading = "") {
 
   if (mode === "browser") {
     let listening = null;
+    setActiveMic(() => listening?.stop?.());
     mic.onclick = async () => {
       if (listening) { listening.stop(); return; }
       stopSpeaking();
@@ -482,17 +485,27 @@ function speakPanel(ctx, target, solutionNode, reading = "") {
 
   // Recording-based modes (ai, self)
   let rec = null;
+  let starting = false;
+  setActiveMic(() => {
+    rec?.stream?.getTracks().forEach((t) => t.stop());
+    rec = null;
+  });
   mic.onclick = async () => {
+    if (starting) return; // still asking for the microphone
     if (!rec) {
       stopSpeaking();
       rec = new Recorder();
+      starting = true;
       try {
         await rec.start();
       } catch (e) {
         rec = null;
         statusEl.textContent = "Microphone unavailable: " + e.message;
         return;
+      } finally {
+        starting = false;
       }
+      if (!out.isConnected) { rec?.stream?.getTracks().forEach((t) => t.stop()); rec = null; return; } // left the exercise meanwhile
       mic.classList.add("rec");
       mic.innerHTML = icons.stop;
       statusEl.textContent = "Recording… tap to stop";
@@ -877,7 +890,7 @@ export function grammarIntro(ctx, p, i, n) {
     ),
     moreBox
   );
-  setTimeout(() => speak(plainText(p.examples[0].text)), 400);
+  speakSoon(() => plainText(p.examples[0].text), 400);
   return { el, mode: "continue" };
 }
 
@@ -1014,7 +1027,7 @@ export function listenChoose(ctx, item, others) {
   const wrong = shuffle([...new Set(others.filter((e) => e !== item.en))]).slice(0, 3);
   const options = shuffle([item.en, ...wrong]);
   let picked = null;
-  setTimeout(() => speak(item.text), 400);
+  speakSoon(() => item.text, 400);
   const tiles = options.map((o) => {
     const t = h("button", { class: "choice text", onclick: () => { picked = o; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } }, h("span", { class: "txt" }, o));
     return t;
@@ -1072,7 +1085,7 @@ export function toneListen(ctx, w) {
   const options = shuffle(opts);
   const label = (ts) => w.syllables.map((s, i) => withTone(s, ts[i])).join(" ");
   let picked = null;
-  setTimeout(() => speak(w.hanzi), 400);
+  speakSoon(() => w.hanzi, 400);
   const tiles = options.map((o) => {
     const t = h("button", { class: "choice text", onclick: () => { picked = o; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } }, h("span", { class: "txt py" }, label(o)), h("small", { class: "tone-nums" }, o.join(" · ")));
     return t;

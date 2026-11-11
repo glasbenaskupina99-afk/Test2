@@ -1700,14 +1700,12 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .bed-svg .mound.gone { fill: #5a4434; opacity: .7; }
 .bed-svg .gone-mark { fill: none; stroke: #c9a46e; stroke-width: 1.4; stroke-linecap: round; opacity: .8; }
 .season-winter .bed-svg .soil { fill: #e9eef0; }
-.plant { cursor: pointer; transition: filter .2s; }
-.plant use { transform-box: fill-box; transform-origin: 50% 100%; }
-.plant.thirsty use { filter: saturate(.55) brightness(1.04); transform: rotate(-3deg); }
-.plant.wilting use { filter: sepia(.75) saturate(.6) brightness(.9); transform: rotate(-9deg) scaleY(.86); }
-.plant.new use { animation: sprout 1.1s cubic-bezier(.3, 1.5, .5, 1) both; }
+.gplant { cursor: pointer; transition: filter .2s; }
+.gplant use { transform-box: fill-box; transform-origin: 50% 100%; }
+.gplant.thirsty use { filter: saturate(.55) brightness(1.04); transform: rotate(-3deg); }
+.gplant.wilting use { filter: sepia(.75) saturate(.6) brightness(.9); transform: rotate(-9deg) scaleY(.86); }
+.gplant.new use { animation: sprout 1.1s cubic-bezier(.3, 1.5, .5, 1) both; }
 @keyframes sprout { 0% { transform: scale(0); } 60% { transform: scale(1.1); } 100% { transform: scale(1); } }
-.season-autumn .plant.healthy use { filter: saturate(.85) hue-rotate(-12deg); }
-.season-winter .plant.healthy use { filter: saturate(.7) brightness(1.06); }
 .plant-tag { position: absolute; z-index: 5; transform: translate(-50%, -100%); white-space: nowrap; padding: 6px 12px; border-radius: 12px; border: 0;
   background: #fffaf0; color: #33241b; font: inherit; font-size: 13px; box-shadow: 0 6px 16px rgba(0, 0, 0, .25); cursor: pointer; animation: tutPop .2s ease-out; }
 .plant-tag::after { content: ""; position: absolute; left: 50%; bottom: -6px; margin-left: -6px; border: 6px solid transparent; border-top-color: #fffaf0; border-bottom: 0; }

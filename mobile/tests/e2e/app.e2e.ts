@@ -195,8 +195,8 @@ test("every main screen opens without errors", async () => {
   for (const [hash, sel] of screens) await go(page, hash, sel);
   // The garden: a plant for every learned word; tapping one shows its name.
   await go(page, "#/forest", ".bed-svg");
-  assert.ok((await page.locator(".bed-svg g.plant").count()) >= 50, "learned words grow as plants");
-  await page.locator(".bed-svg g.plant").first().click();
+  assert.ok((await page.locator(".bed-svg g.gplant").count()) >= 50, "learned words grow as plants");
+  await page.locator(".bed-svg g.gplant").first().click();
   await page.waitForSelector(".plant-tag");
   await page.click(".garden-tabs button:nth-child(2)");
   await page.waitForSelector(".friends-intro, .my-code");
@@ -258,8 +258,8 @@ test("the garden stays quick with a big vocabulary (it once took seconds)", asyn
     return performance.now() - t;
   });
   assert.ok(ms < 1500, `garden + home took ${Math.round(ms)} ms`);
-  await go(page, "#/forest", ".bed-svg g.plant");
-  await page.locator(".bed-svg g.plant").nth(5).click();
+  await go(page, "#/forest", ".bed-svg g.gplant");
+  await page.locator(".bed-svg g.gplant").nth(5).click();
   await page.waitForSelector(".plant-tag", { timeout: 3000 });
   assert.deepEqual(errors, []);
 });

@@ -67,11 +67,18 @@ const tabs = () => ALL_TABS.filter(([href]) => href !== "#/map" || !isSl());
 // The last drawn screen of each tab: shown instantly when you come back, then refreshed.
 const screenCache = new Map();
 
+/** The tab a hash belongs to (screens without a tab of their own belong to Learn). */
+const tabOf = (hash: string) => tabs().find(([href]) => href !== "#/" && hash.startsWith(href))?.[0] || "#/";
+
 function shell(content, active) {
   const waiting = content?.classList?.contains("spinner");
-  if (waiting && screenCache.has(active)) {
-    // Coming back to a tab: show it as it was while fresh data loads (no spinner flash).
-    const cached = screenCache.get(active);
+  // A slow screen that finishes after you've moved to another tab doesn't replace it.
+  const here = location.hash || "#/";
+  if (tabOf(here) !== active && !waiting) return;
+  const cacheKey = here.split("?")[0];
+  if (waiting && screenCache.has(cacheKey)) {
+    // Coming back to a screen: show it as it was while fresh data loads (no spinner flash).
+    const cached = screenCache.get(cacheKey);
     if (!cached.isConnected) app.replaceChildren(...cached.nodes);
     return;
   }
@@ -82,7 +89,7 @@ function shell(content, active) {
   );
   const screen = h("div", { class: "screen" }, content);
   app.replaceChildren(screen, tabbar);
-  if (!waiting) screenCache.set(active, { nodes: [screen, tabbar], get isConnected() { return screen.isConnected; } });
+  if (!waiting) screenCache.set(cacheKey, { nodes: [screen, tabbar], get isConnected() { return screen.isConnected; } });
 }
 
 function loading() {
@@ -109,23 +116,29 @@ async function route() {
     }
     return await homeScreen();
   } catch (e) {
-    shell(h("div", { class: "empty" }, h("div", { class: "e" }, "😵"), h("h2", {}, "Something went wrong"), h("p", { class: "muted" }, e.message)), hash);
+    shell(h("div", { class: "empty" }, h("div", { class: "e" }, "😵"), h("h2", {}, "Something went wrong"), h("p", { class: "muted" }, e.message)), tabOf(location.hash || "#/"));
   }
 }
 window.addEventListener("hashchange", route);
 // Sync brought progress from another device: redraw (unless a lesson is open).
 window.addEventListener("bloomko-synced", () => {
   screenCache.clear();
-  if (!document.querySelector(".lesson")) route();
+  if (!document.querySelector(".lesson, .welcome, .tutorial")) route();
 });
 
+let flowBusy = false;
+/** Start a lesson or practice; a second tap while one is starting does nothing. */
 async function startFlow(fn) {
+  if (flowBusy) return;
+  flowBusy = true;
   try {
     const result = await fn();
     if (result !== undefined) route();
     scheduleReminders();
   } catch (e) {
     toast(e.message, 4000);
+  } finally {
+    flowBusy = false;
   }
 }
 
@@ -409,6 +422,7 @@ async function homeScreen() {
   ].filter(Boolean);
 
   const units = await unitsView(home.units);
+  if (!["", "#", "#/"].includes(location.hash)) return; // you've gone to another screen meanwhile
 
   shell(
     [
@@ -670,18 +684,22 @@ async function storyReader(id) {
     );
   });
   let playing = false;
+  let run = 0; // each Play starts a new run; an older loop stops as soon as it notices
   const playAll = h(
     "button",
     {
       class: "btn ghost small auto",
       onclick: async () => {
         playing = !playing;
+        const mine = ++run;
         playAll.textContent = playing ? "■ Stop" : "▶ Listen to the story";
+        if (!playing) return stopSpeaking();
         for (const x of st.sentences) {
-          if (!playing) break;
+          if (!playing || mine !== run) return;
           await speak(x.text);
           await new Promise((r) => setTimeout(r, 350));
         }
+        if (mine !== run) return;
         playing = false;
         playAll.textContent = "▶ Listen to the story";
       },
@@ -852,7 +870,7 @@ async function wordsScreen() {
     wordsObserver = observer;
     list.replaceChildren(sentinel);
     more();
-    if (sentinel.isConnected) observer.observe(sentinel);
+    if (drawn < shown.length) observer.observe(sentinel); // works even before the list is on the page
   };
   const filters = [
     ["all", "All"],

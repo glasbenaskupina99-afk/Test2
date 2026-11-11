@@ -151,7 +151,11 @@ export function friendsPanel({ season }: { season?: string } = {}) {
                   "aria-label": "Remove friend",
                   onclick: async () => {
                     if (!(await confirmDialog({ icon: "👥", title: `Remove ${f.name}?`, message: "You can add them again with their friend code.", confirmLabel: "Remove", cancelLabel: "Keep" }))) return;
-                    await api("/api/friends/remove", { method: "POST", body: { code: f.code } });
+                    try {
+                      await api("/api/friends/remove", { method: "POST", body: { code: f.code } });
+                    } catch (e) {
+                      toast(e.message, 5000);
+                    }
                     render();
                   },
                 }, "×")

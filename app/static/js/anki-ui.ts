@@ -43,7 +43,12 @@ async function openDeck(file: File, done: (list: string) => void) {
     fill(body, h("p", { class: "bad" }, e.message), h("button", { class: "btn ghost", onclick: () => bg.remove() }, "Close"));
     return;
   }
-  setup(deck, body, bg, done);
+  try {
+    if (!deck.types.length) throw new Error("This deck's note types are missing — export it again from Anki");
+    setup(deck, body, bg, done);
+  } catch (e) {
+    fill(body, h("p", { class: "bad" }, e.message), h("button", { class: "btn ghost", onclick: () => bg.remove() }, "Close"));
+  }
 }
 
 function setup(deck: AnkiDeck, body: HTMLElement, bg: HTMLElement, done: (list: string) => void) {
@@ -60,8 +65,20 @@ function setup(deck: AnkiDeck, body: HTMLElement, bg: HTMLElement, done: (list: 
   const go = h("button", { class: "btn", disabled: true }, "Import");
   const selects = h("div", { class: "anki-roles" });
   const notes = () => deck.notes.filter((n) => n.typeId === type.id);
-  const words = () => notes().map((n) => ({ n, w: noteToWord(n, roles) })).filter((x) => x.w[0] && x.w[2]);
+  // The converted words, worked out once per note type and field choice (not on every keystroke).
+  let cache = null;
+  let cacheKey = "";
+  const words = () => {
+    const k = `${type.id}|${roles.word}|${roles.reading}|${roles.meaning}`;
+    if (k !== cacheKey) {
+      cacheKey = k;
+      cache = notes().map((n) => ({ n, w: noteToWord(n, roles) })).filter((x) => x.w[0] && x.w[2]);
+    }
+    return cache;
+  };
   let timer: ReturnType<typeof setTimeout>;
+  let previewId = 0;
+  let importing = false;
 
   const select = (label: string, key: keyof FieldRoles, optional: boolean) => {
     const s = h("select", {}, optional ? h("option", { value: "-1" }, "— none —") : null, type.fields.map((f, i) => h("option", { value: String(i) }, `${f}${notes()[0] ? ` — ${cleanField(notes()[0].fields[i] || "").slice(0, 24)}` : ""}`)));
@@ -93,8 +110,10 @@ function setup(deck: AnkiDeck, body: HTMLElement, bg: HTMLElement, done: (list: 
     fill(table, sample.map(({ w }) => h("div", { class: "anki-row" }, h("b", { class: "hz" }, w[0]), h("span", { class: "muted" }, w[1]), h("span", {}, w[2]))));
     clearTimeout(timer);
     timer = setTimeout(async () => {
+      const id = ++previewId;
       try {
         const r = await api("/api/words/import", { method: "POST", body: { text: lines(), list: name.value, preview: true } });
+        if (id !== previewId || importing) return; // a newer preview (or the import) took over
         const n = r.added.length;
         // Words already in the course aren't added twice, but their Anki progress can still be kept.
         const known = r.skipped.filter((x) => /already in your words/.test(x.reason));
@@ -120,6 +139,9 @@ function setup(deck: AnkiDeck, body: HTMLElement, bg: HTMLElement, done: (list: 
   name.oninput = refresh;
 
   go.onclick = async () => {
+    if (importing) return;
+    importing = true;
+    clearTimeout(timer);
     go.disabled = true;
     go.textContent = "Importing…";
     try {
@@ -135,6 +157,7 @@ function setup(deck: AnkiDeck, body: HTMLElement, bg: HTMLElement, done: (list: 
       done(r.list);
     } catch (e) {
       toast(e.message, 5000);
+      importing = false;
       go.disabled = false;
     }
   };

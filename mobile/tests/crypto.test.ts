@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { cleanCode, newCode, open, seal, merge, snapshot } from "../src/sync.js";
-import { cleanKey, newKey, upload, list, download } from "../src/backup.js";
+import { cleanKey, newKey, upload, list, download, payload } from "../src/backup.js";
 import { loginKey, register, login, changePassword } from "../src/account.js";
 
 test("sync codes and backup keys: generated, cleaned, and typos refused", () => {
@@ -131,4 +131,13 @@ test("sync: cards of the other app's words are kept, not lost (East ↔ Heritage
   const freshEast = db([word(9, "好")], []);
   merge(freshEast, { v: 1, ...snapshot(heritage) });
   assert.equal(freshEast.cards.find((c: any) => c.word_id === 9)?.interval, 30, "a new East phone gets it back");
+});
+
+test("cloud backup: untouched built-in words are left out (the app has them), progress is kept", () => {
+  const builtin = (id: number, hz: string, extras: unknown = null) => ({ ...word(id, hz), source: "hsk1", extras });
+  const mine = db([builtin(1, "好"), builtin(2, "你"), builtin(3, "我", { mnemonic: "my own hook" }), { ...word(4, "猫"), source: "custom" }], [card(1, "2026-01-02 10:00:00", 5)]);
+  const p = payload(mine, "east");
+  assert.deepEqual(p.db.words.map((w: any) => w.hanzi).sort(), ["好", "我", "猫"], "learned, with a hook of its own, or your own word");
+  assert.equal(p.db.cards.length, 1);
+  assert.equal(mine.words.length, 4, "the device's own data isn't changed");
 });

@@ -30,10 +30,17 @@ async function idOf(key: string): Promise<string> {
   return hex(await crypto.subtle.digest("SHA-256", enc.encode(`bloomko-backup:${key}`)));
 }
 
-/** What a backup contains: everything except secrets and this device's sync/backup settings. */
+/**
+ * What a backup contains: everything except secrets and this device's sync/backup settings.
+ * Built-in words you haven't touched (no cards, no memory hook of your own) are left out: the app
+ * ships them and puts them back when a backup is restored, so a backup holds only your progress —
+ * a few KB instead of ~200 KB.
+ */
 export function payload(db: Db, edition: string) {
   const { sync: _s, backup: _b, account: _a, ...rest } = db;
-  return { format: FORMAT, edition, at: new Date().toISOString(), db: { ...rest, settings: { ...db.settings, hf_token: "", llm_api_key: "" } } };
+  const studied = new Set(db.cards.map((c) => c.word_id));
+  const words = db.words.filter((w) => w.source === "custom" || studied.has(w.id) || w.extras);
+  return { format: FORMAT, edition, at: new Date().toISOString(), db: { ...rest, words, settings: { ...db.settings, hf_token: "", llm_api_key: "" } } };
 }
 
 /** The little summary shown in the list of backups (also encrypted). */

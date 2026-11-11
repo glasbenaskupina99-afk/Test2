@@ -263,3 +263,55 @@ test("the garden stays quick with a big vocabulary (it once took seconds)", asyn
   await page.waitForSelector(".plant-tag", { timeout: 3000 });
   assert.deepEqual(errors, []);
 });
+
+test("cloud backup holds only your progress, and restores all of it on a new phone", async () => {
+  // A stand-in for bloomko.eu/api/backup, shared by both "phones".
+  const stored = new Map<string, any[]>();
+  const fakeServer = async (page: Page) => {
+    await page.evaluate(() => ((window as any).__backupUrl = "https://backup.test/api/backup"));
+    await page.route("https://backup.test/**", async (route) => {
+      const req = route.request();
+      const [id, n] = new URL(req.url()).pathname.split("/api/backup/")[1].split("/");
+      const items = stored.get(id) || [];
+      let body: any;
+      if (req.method() === "POST") {
+        const b = JSON.parse(req.postData() || "{}");
+        items.push({ n: items.length + 1, at: new Date().toISOString(), size: b.data.length, meta: b.meta, data: b.data });
+        stored.set(id, items);
+        body = { n: items.length };
+      } else body = n ? items.find((x) => x.n === Number(n)) : { backups: items.map(({ data: _d, ...x }) => x) };
+      await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify(body) });
+    });
+  };
+
+  // Phone 1: some words learned, one of your own, then cloud backup on.
+  const a = await fresh();
+  await start(a.page, "Ana");
+  await a.page.click(".tut-top .link-btn");
+  await fakeServer(a.page);
+  const words = await a.api("/api/words");
+  await a.api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 40).map((w: any) => w.id), xp: 20 } });
+  const own = edition === "east" ? { hanzi: "考拉", pinyin: "kǎo lā", english: "koala" } : { hanzi: "pingvin", pinyin: "", english: "penguin" };
+  await a.api("/api/words", { method: "POST", body: own });
+  await a.api("/api/cloud-backup/enable", { method: "POST" });
+  const { key } = await a.api("/api/cloud-backup");
+  const sent = [...stored.values()][0][0];
+  assert.ok(sent.size < 40000, `a backup is small now (${sent.size} bytes, was ~200 KB with every built-in word)`);
+  const before = await a.api("/api/words");
+  const learnedA = before.filter((w: any) => w.cards).map((w: any) => w.hanzi).sort();
+
+  // Phone 2: a new install restores it.
+  const b = await fresh();
+  await start(b.page, "Someone");
+  await b.page.click(".tut-top .link-btn");
+  await fakeServer(b.page);
+  const { backups } = await b.api("/api/cloud-backup/list", { method: "POST", body: { key } });
+  await b.api("/api/cloud-backup/restore", { method: "POST", body: { key, n: backups[0].n } });
+  const after = await b.api("/api/words");
+  assert.equal(after.length, before.length, "every built-in word is there again");
+  assert.deepEqual(after.filter((w: any) => w.cards).map((w: any) => w.hanzi).sort(), learnedA, "the same words learned");
+  const back = after.find((w: any) => w.hanzi === own.hanzi);
+  assert.ok(back && back.english === own.english, "your own word came back");
+  assert.equal((await b.api("/api/settings")).display_name, "Ana");
+  assert.deepEqual([...a.errors, ...b.errors], []);
+});

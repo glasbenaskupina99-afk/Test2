@@ -85,7 +85,7 @@ The APK is signed with `mobile/android/app/hanzi.keystore`, a key committed to t
 
 ## 🌐 Website (bloomko.eu)
 
-`site/` is the static "coming soon" landing page. It's plain HTML with no build step, served by a **Cloudflare Worker** with static assets (`wrangler.jsonc` at the repo root; deploy command `npx wrangler deploy`). Alternatively with **Cloudflare Pages**:
+`site/` is the static "coming soon" landing page, served by a **Cloudflare Worker** with static assets (`wrangler.jsonc` at the repo root; deploy command `npx wrangler deploy`; it deploys by itself on every push). The landing pages (East and Heritage, in English, French, Spanish and Japanese: `/`, `/fr/`, `/es/`, `/ja/` and `…/heritage/`) are generated: edit `site-src/east.html`, `site-src/heritage.html` and the texts in `site-src/i18n/<lang>.json`, then run `cd mobile && npm run build:site` and commit the result. The app screenshots in `site/img/<lang>/` come from `npx tsx scripts/site-shots.ts` (after `npm run build`, or `EDITION=heritage npm run build`), converted to WebP. Alternatively with **Cloudflare Pages**:
 Pages → *Connect to Git* → this repo → build command: *(none)* → build output directory: `site` → then *Custom domains* → `bloomko.eu`.
 Pushing changes under `site/` doesn't trigger the Android build.
 "Notify me" sign-ups are handled by `worker/index.js` and stored in a Workers KV namespace bound as `NOTIFY` (created automatically on the first deploy). To see them: Cloudflare dashboard → *Storage & Databases → KV* → the namespace → each key is an email address.

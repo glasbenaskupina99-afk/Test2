@@ -9,6 +9,7 @@
     "sync": "npm run build && npx cap sync android",
     "apk": "npm run sync && cd android && ./gradlew assembleDebug",
     "build:server": "node scripts/build-server.mjs",
+    "build:site": "tsx scripts/build-site.ts",
     "typecheck": "tsc -p .",
     "test": "tsx --test tests/*.test.ts",
     "test:e2e": "tsx --test --test-concurrency=1 tests/e2e/*.e2e.ts"

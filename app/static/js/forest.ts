@@ -214,7 +214,7 @@ function seasonBanner(s) {
       "div",
       { class: "sb-text" },
       h("div", { class: "sb-title" }, h("span", {}, `${info.icon} `), h("span", {}, `${info.name} in your garden`)),
-      h("div", { class: "sb-line" }, h("span", {}, `${info.line}.`), " ", h("span", {}, `You practised on ${s.days} of the last 14 days.`)),
+      h("div", { class: "sb-line" }, h("span", {}, info.line), " · ", h("span", {}, `You practised on ${s.days} of the last 14 days.`)),
       next
         ? h("div", { class: "sb-next" }, h("span", {}, `Practise on ${s.next} more day${s.next === 1 ? "" : "s"} to reach ${SEASON[next].name.toLowerCase()}`), h("span", {}, ` ${SEASON[next].icon}`))
         : h("div", { class: "sb-next" }, h("span", {}, "Keep it up to stay in summer"), h("span", {}, " ☀️"))

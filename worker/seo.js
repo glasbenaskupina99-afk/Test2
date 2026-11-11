@@ -262,7 +262,7 @@ function langPage(key) {
 }
 
 function sitemap() {
-  const urls = ["/", "/heritage/", "/chinese/", "/japanese/"];
+  const urls = ["/", "/heritage/", "/fr/", "/fr/heritage/", "/es/", "/es/heritage/", "/ja/", "/ja/heritage/", "/chinese/", "/japanese/"];
   for (const [key, L] of Object.entries(LANGS)) {
     for (const lv of L.levels) urls.push(levelUrl(key, lv));
     for (const e of WORDS[key].values()) urls.push(wordUrl(e));

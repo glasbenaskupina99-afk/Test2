@@ -55,6 +55,7 @@ async function mailOwner(env, email, info, total) {
     `Country:   ${info.country ? countryName(info.country) : "unknown"}`,
     `Languages: ${info.languages || "unknown"}`,
     `App:       ${info.edition === "heritage" ? "Bloomko Heritage" : "Bloomko East"}`,
+    `Page:      ${info.site || "en"}`,
     total ? `Total sign-ups so far: ${total}` : ``,
   ];
   const raw = [
@@ -92,6 +93,8 @@ async function notify(request, env, ctx) {
       languages: languages(request.headers.get("Accept-Language")),
       // Which app the sign-up came from: Bloomko East (Chinese, Japanese) or Bloomko Heritage.
       edition: data.edition === "heritage" ? "heritage" : "east",
+      // The language of the page they signed up on (en, fr, es, ja).
+      site: ["en", "fr", "es", "ja"].includes(data.lang) ? data.lang : "en",
     };
     await env.NOTIFY.put(email, JSON.stringify(info));
     ctx.waitUntil(

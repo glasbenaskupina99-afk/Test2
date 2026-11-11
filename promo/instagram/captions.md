@@ -120,3 +120,34 @@ How Bloomko Heritage works, in 5 steps 🌱
 Words with gender and sound, practice at the right time, coloured case endings, a forest that grows with you, and an AI tutor that works offline. Starting with Slovenian 🇸🇮, more lesser-known languages coming.
 Early access → link in bio (bloomko.eu)
 #learnslovenian #slovenščina #languagelearning #minoritylanguages #studygram #reels
+
+## Funny reels (2.1)
+- `fun-skip.mp4` (20 s): POV: you skipped your reviews for a week — the garden wilts day by day, words disappear, 5 minutes of practice and they grow back
+- `fun-dual.mp4` (20 s): Slovenian has a grammar form just for couples — "Midva sva prijatelja" → a third person shows up → "Mi smo prijatelji"
+- `fun-sounds.mp4` (26 s): Japanese has a sound for everything — ドキドキ, ペコペコ, ゴロゴロ, キラキラ… and シーン, the sound of silence
+- `fun-streak.mp4` (19 s): Me at 11:58 PM remembering my streak — friend's watering nudge, speedrun-writing 你好, saved at 23:59:58
+- Source: `fun-*.html` from `tools/make_fun2.py`, rendered with `tools/render.mjs` (sound: `tools/quiz_sfx.py`)
+
+### fun-skip
+POV: you skipped your reviews for a week 🥀💀
+In Bloomko every word you learn is a real plant in your garden. Skip its reviews and it wilts… forget it for long and it's gone. 5 minutes of practice and it grows right back 🌱
+Early access → bloomko.eu (link in bio)
+#learnchinese #chinese #中文 #hsk #studygram #languagelearning #duolingo #streak #relatable #reels
+
+### fun-dual
+Slovenian grammar knows when you're third-wheeling 😅🇸🇮
+"Midva sva prijatelja" = we TWO are friends. Add one more person and every word changes: "Mi smo prijatelji". Slovenian is one of the few languages that still has a dual 💞
+Learn Slovenian with Bloomko Heritage → bloomko.eu
+#slovenian #slovenščina #learnslovenian #slovenia #ljubljana #grammar #languagelearning #linguistics #polyglot #reels
+
+### fun-sounds
+Japanese has a sound for EVERYTHING 🔊 Even silence: シーン 🦗
+ドキドキ (heart pounding) · ペコペコ (starving) · ゴロゴロ (lazing around) · キラキラ (sparkling)
+Which one is your favourite? 👇 Learn Japanese with Bloomko → bloomko.eu
+#learnjapanese #japanese #日本語 #onomatopoeia #katakana #jlpt #anime #studygram #languagelearning #reels
+
+### fun-streak
+Me at 11:58 PM remembering my streak 😱🔥
+(Bloomko tip: a raindrop 💧 saves a busy day — and friends can water your garden as a gentle reminder 🌷)
+Early access → bloomko.eu
+#streak #relatable #learnchinese #chinese #studygram #languagelearning #duolingo #studymotivation #reels

@@ -28,6 +28,17 @@ for s in ev.get("bigtick", []): add(tick(.3, 1400), s)
 for s in ev.get("brush", []): add(brush(), s, .4 + .2 * rng.random())
 for s in ev.get("reveal", []):
     for j, f in enumerate([784.0, 987.8, 1174.7, 1568.0]): add(pluck(f, 1.4, .17), s + j * .06, .35 + .1 * j)
+for s in ev.get("sad", []):     # a little descending "aww"
+    for j, f in enumerate([392.0, 349.2, 311.1]): add(pluck(f, 1.0, .12), s + j * .18, .5)
+for s in ev.get("poof", []):
+    add(brush(.25, .12), s, .5)
+for s in ev.get("rain", []):
+    for j in range(14): add(pluck(1400 + 300 * rng.random(), .25, .05), s + j * .09 + .05 * rng.random(), rng.random())
+for s in ev.get("whoosh", []):
+    add(brush(.45, .16), s, .7)
+for s in ev.get("cricket", []):
+    for j in range(6):
+        tt = np.arange(int(.12 * sr)) / sr; add(np.sin(2*np.pi*4200*tt) * (np.sin(2*np.pi*60*tt) > 0) * np.exp(-tt * 8) * .07, s + j * .25, .6)
 for s in ev.get("chime", []):
     for j, f in enumerate([523.3, 784.0, 1046.5]): add(pluck(f, 2.0, .14), s + j * .08, .35 + .15 * j)
 fade = np.minimum(1, t / .15) * np.minimum(1, (D - t) / .8)

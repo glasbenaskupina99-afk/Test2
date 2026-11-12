@@ -18,6 +18,8 @@ const slowBtn = (text) => iconBtn("slow", "speaker sm", () => speak(text, { slow
 /** "hiragana" / "katakana" for words of the kana course, else null. */
 const kanaOf = (w) => (w.source === "kana" ? (/[ァ-ヺ]/.test(w.hanzi) ? "katakana" : "hiragana") : null);
 /** Japanese vocabulary written only in kana (コーヒー, ちょっと): quizzed on meaning and sound, not reading/writing. */
+/** The little helper in prompts: a panda for Chinese, a fox (kitsune) for Japanese, a Carniolan bee for Slovenian. */
+const mascot = () => (isSl() ? "🐝" : isJa() ? "🦊" : "🐼");
 export const noKanji = (w) => isJa() && w.source !== "kana" && !/[㐀-鿿豈-﫿々]/.test(w.hanzi);
 /** Kana are quizzed against other kana of the same script, not against kanji words. */
 function samePool(word, pool: any[]): any[] {
@@ -183,7 +185,7 @@ export function write(ctx, word, { pinyinHint = false } = {}) {
       h(
         "div",
         { class: "prompt-bubble" },
-        h("div", { class: "mascot" }, "🐼"),
+        h("div", { class: "mascot" }, mascot()),
         h("div", { class: "bubble" }, kanaOf(word) ? `“${word.english}” in ${kanaOf(word)}` : `“${word.english}”`, h("div", { class: "small muted row", style: { marginTop: "4px" } }, pyEl, pinyinHint ? null : peek))
       ),
       pad.el
@@ -600,7 +602,7 @@ function sentenceSolution(s, extra?) {
 function sentencePrompt(s, kicker, cls?) {
   return [
     h("div", { class: `ex-kicker ${cls}` }, kicker, s.source === "ai" ? h("span", { class: "tag" }, "✨ AI") : null),
-    h("div", { class: "prompt-bubble" }, h("div", { class: "mascot" }, "🐼"), h("div", { class: "bubble" }, s.en)),
+    h("div", { class: "prompt-bubble" }, h("div", { class: "mascot" }, mascot()), h("div", { class: "bubble" }, s.en)),
   ];
 }
 

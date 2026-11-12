@@ -864,6 +864,10 @@ function loadGrammar(section) {
   return grammarJobs[file];
 }
 const PER_LESSON = 3;
+/** What a grammar example highlights: its marked words, or its [bracketed] parts (Slovenian). */
+const exMark = (x) => (x?.mark?.length ? x.mark : [...String(x?.text ?? "").matchAll(/\[([^\]]*)\]/g)].map((m) => m[1]));
+/** Whether that highlight is a word ending (hiš[a]) rather than a whole word ([Kje]). */
+const exEnding = (x) => /\p{L}\[/u.test(String(x?.text ?? ""));
 
 /** Where grammar stands at the current level: lessons unlock as you learn the level's words. */
 async function grammarStatus() {
@@ -1618,7 +1622,7 @@ const routes = {
     const known = knownChars();
     const next = points.filter((p) => !db.grammar.learned[p.id]).slice(0, PER_LESSON).map((p) => grammarPoint(p, known));
     // Other points of the level (learned first) as wrong answers in the quiz.
-    const others = points.filter((p) => !next.some((n) => n.id === p.id)).map((p) => ({ id: p.id, short: p.short, mark: p.examples[0].mark }));
+    const others = points.filter((p) => !next.some((n) => n.id === p.id)).map((p) => ({ id: p.id, short: p.short, mark: exMark(p.examples[0]), ending: exEnding(p.examples[0]) }));
     return { lesson: st.lesson, points: next, others };
   },
 
@@ -1653,11 +1657,11 @@ const routes = {
       const all = [];
       for (const sec of [...new Set(W().map((w) => w.section))]) all.push(...((await loadGrammar(sec)) || []));
       const chosen = all.filter((p) => only.includes(p.id) && db.grammar.learned[p.id]);
-      return { items: chosen.map((p) => grammarPoint(p, known)), others: all.map((p) => ({ id: p.id, short: p.short, mark: p.examples[0].mark, learned: !!db.grammar.learned[p.id] })) };
+      return { items: chosen.map((p) => grammarPoint(p, known)), others: all.map((p) => ({ id: p.id, short: p.short, mark: exMark(p.examples[0]), ending: exEnding(p.examples[0]), learned: !!db.grammar.learned[p.id] })) };
     }
     const pool = query.get("extra") ? shuffled(learned) : due;
     const items = pool.slice(0, Number(query.get("n")) || 3).map((p) => grammarPoint(p, known));
-    const others = points.map((p) => ({ id: p.id, short: p.short, mark: p.examples[0].mark, learned: !!db.grammar.learned[p.id] }));
+    const others = points.map((p) => ({ id: p.id, short: p.short, mark: exMark(p.examples[0]), ending: exEnding(p.examples[0]), learned: !!db.grammar.learned[p.id] }));
     return { items, others };
   },
 

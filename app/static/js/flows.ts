@@ -208,20 +208,30 @@ function spreadOut(steps) {
 
 // ------------------------------------------------------------------ grammar
 
-/** Answer options for a grammar quiz: the right point plus up to three others with different labels. */
+/**
+ * Answer options for a grammar quiz: the right one plus up to three others with different labels.
+ * "short": which grammar point it is. "mark": what's missing from this very example — the other
+ * options come first from the same point's other examples (Slovenian: hiš＿ → a / o / e / i).
+ */
 function grammarOptions(p, lesson, others, kind, x?) {
-  const label = (q) => (kind === "mark" ? (q.mark || q.examples?.[0]?.mark || []).join(" … ") : q.short);
-  // For the gap quiz the right answer is what's missing from this very example.
-  const mine = kind === "mark" ? (x.mark || []).join(" … ") : p.short;
+  const mine = kind === "mark" ? ex.marksOf(x).join(" … ") : p.short;
   const seen = new Set([mine]);
-  const out = [{ id: p.id, label: mine }];
-  const pool = [...lesson.filter((q) => q.id !== p.id), ...shuffle(others.filter((q) => q.learned)), ...shuffle(others)];
-  for (const q of pool) {
-    if (out.length === 4) break;
-    const l = label(q);
-    if (!l || seen.has(l) || q.id === p.id) continue;
+  const out = [{ id: p.id, label: mine, correct: true }];
+  const add = (id, l) => {
+    if (out.length === 4 || !l || seen.has(l)) return;
     seen.add(l);
-    out.push({ id: q.id, label: l });
+    out.push({ id, label: l, correct: false });
+  };
+  const pool = [...lesson.filter((q) => q.id !== p.id), ...shuffle(others.filter((q) => q.learned)), ...shuffle(others)];
+  if (kind === "mark") {
+    // A missing ending (hiš＿) gets other endings to choose from, a missing word other words.
+    const ending = (e) => /\p{L}\[/u.test(String(e?.text ?? ""));
+    const mineEnding = ending(x);
+    for (const e of shuffle(p.examples.filter((e) => e !== x && ending(e) === mineEnding))) add(p.id, ex.marksOf(e).join(" … "));
+    for (const q of pool) if (q.id !== p.id && !!q.ending === mineEnding) add(q.id, (q.mark || ex.marksOf(q.examples?.[0])).join(" … "));
+    for (const q of pool) if (q.id !== p.id && out.length < 2) add(q.id, (q.mark || ex.marksOf(q.examples?.[0])).join(" … "));
+  } else {
+    for (const q of pool) if (q.id !== p.id) add(q.id, q.short);
   }
   return shuffle(out);
 }
@@ -235,7 +245,7 @@ function grammarQuestion(p, lesson, others, n = 1) {
     const d = drills[n % drills.length];
     return (ctx) => ex.grammarDrill(ctx, p, d);
   }
-  return Math.random() < 0.5 || !(x.mark || []).length
+  return Math.random() < 0.5 || !ex.marksOf(x).length
     ? (ctx) => ex.grammarWhich(ctx, p, x, grammarOptions(p, lesson, others, "short"))
     : (ctx) => ex.grammarGap(ctx, p, x, grammarOptions(p, lesson, others, "mark", x));
 }
@@ -259,6 +269,8 @@ export async function grammarLesson() {
     const which = (ctx) => ex.grammarWhich(ctx, p, x1, grammarOptions(p, points, others, "short"));
     const gap = drills.length
       ? (ctx) => ex.grammarDrill(ctx, p, drills[0])
+      : !ex.marksOf(x2).length
+      ? (ctx) => ex.grammarWhich(ctx, p, x2, grammarOptions(p, points, others, "short"))
       : (ctx) => ex.grammarGap(ctx, p, x2, grammarOptions(p, points, others, "mark", x2));
     quiz.push(step(which, learnAfter(which, p.id), p.id), step(gap, learnAfter(gap, p.id), p.id));
     if (drills.length > 1) {

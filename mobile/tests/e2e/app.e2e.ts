@@ -315,3 +315,42 @@ test("cloud backup holds only your progress, and restores all of it on a new pho
   assert.equal((await b.api("/api/settings")).display_name, "Ana");
   assert.deepEqual([...a.errors, ...b.errors], []);
 });
+
+test("grammar quizzes: every gap has a blank and choices, every 'highlighted part' is highlighted", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 600).map((w: any) => w.id), xp: 0 } });
+  let gaps = 0, which = 0;
+  for (let lesson = 0; lesson < 4; lesson++) {
+    await go(page, "#/", ".home-head");
+    await page.locator(".tile", { hasText: "Grammar" }).first().click();
+    await page.waitForSelector(".lesson");
+    for (let i = 0; i < 120 && (await page.locator(".lesson").count()); i++) {
+      const title = (await page.locator(".lesson .ex-title").first().innerText().catch(() => "")).trim();
+      if (title === "Fill in the gap") {
+        gaps++;
+        assert.ok(await page.locator(".lesson .g-example .g-gap").count(), "the sentence has a blank");
+        assert.ok((await page.locator(".lesson .choice").count()) >= 2, "there are answers to choose from");
+        for (const t of await page.locator(".lesson .choice").allInnerTexts()) assert.ok(t.trim(), "no empty answer");
+      }
+      if (title === "What does the highlighted part do?") {
+        which++;
+        assert.ok(await page.locator(".lesson .g-example .g-end, .lesson .g-example .g-mark").count(), "something is highlighted");
+      }
+      const choice = page.locator(".lesson .choice").first();
+      if (await choice.isVisible().catch(() => false)) await choice.click();
+      const btn = page.locator(".lesson .lesson-foot .btn").last();
+      if (await btn.isVisible().catch(() => false)) await btn.click().catch(() => {});
+      await page.waitForTimeout(80);
+    }
+    if (await page.locator(".lesson").count()) {
+      await page.reload();
+      await page.waitForSelector(".home-head, #app", { timeout: 20000 });
+      await page.evaluate(() => document.getElementById("splash")?.remove());
+    }
+  }
+  assert.ok(gaps + which > 0, "grammar questions were shown");
+  assert.deepEqual(errors, []);
+});

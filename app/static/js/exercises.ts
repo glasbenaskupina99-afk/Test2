@@ -786,6 +786,8 @@ export function withEndings(text) {
 }
 /** The sentence without the [ending] marks (for speech and comparing). */
 export const plainText = (t) => String(t ?? "").replace(/[[\]]/g, "");
+/** What an example highlights: its marked words (Chinese, Japanese) or its [bracketed] parts (Slovenian). */
+export const marksOf = (x) => ((x?.mark || []).filter(Boolean).length ? x.mark.filter(Boolean) : [...String(x?.text ?? "").matchAll(/\[([^\]]*)\]/g)].map((m) => m[1]));
 
 /** Grammar explanation: paragraphs (blank line), "• " bullet lists, **bold** and [endings] in colour. */
 export function richText(text, cls = "g-explain") {
@@ -819,6 +821,8 @@ function markedSentence(x, { gap = false } = {}) {
       const [before, after] = [x.text.slice(0, m.index), x.text.slice(m.index + m[0].length)];
       return h("span", {}, withEndings(before), h("span", { class: "g-gap" }, "＿＿"), h("span", { class: "g-base" }, ` (${x.drill.base})`), withEndings(after));
     }
+    // Fill the gap: every [highlighted] part becomes a blank.
+    if (gap) return h("span", {}, String(x.text).split(/\[[^\]]*\]/).flatMap((part, i) => (i ? [h("span", { class: "g-gap" }, "＿＿"), part] : [part])));
     return h("span", {}, withEndings(x.text));
   }
   const marks = (x.mark || []).filter(Boolean);
@@ -908,9 +912,9 @@ function grammarChoice(ctx, p, x, options, { kicker, title, gap }) {
     el: h("div", {}, h("div", { class: "ex-kicker blue" }, kicker), h("h2", { class: "ex-title" }, title), grammarExampleBox(x, { gap, showReading: !gap }), h("div", { class: "choices" }, tiles)),
     mode: "check",
     async check() {
-      const ok = picked.id === p.id;
+      const ok = !!picked.correct;
       tiles.forEach((t, i) => {
-        if (options[i].id === p.id) t.classList.add("correct");
+        if (options[i].correct) t.classList.add("correct");
         else if (options[i] === picked) t.classList.add("wrong");
       });
       speak(plainText(x.text));
@@ -926,7 +930,7 @@ function grammarChoice(ctx, p, x, options, { kicker, title, gap }) {
 
 /** Quiz: which grammar point does this sentence use? */
 export const grammarWhich = (ctx, p, x, options) =>
-  grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: "What does the highlighted part do?", gap: false });
+  grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: marksOf(x).length ? "What does the highlighted part do?" : "Which grammar does this sentence show?", gap: false });
 
 /** Quiz: fill the gap with the right grammar. */
 export const grammarGap = (ctx, p, x, options) =>

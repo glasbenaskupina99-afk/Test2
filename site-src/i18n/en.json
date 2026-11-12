@@ -227,5 +227,8 @@
   "c.learn_free": "Learn for free",
   "c.res_zh": "Chinese words & grammar",
   "c.res_ja": "Japanese words & grammar",
-  "c.res_sl": "Slovenian words, grammar & stories"
+  "c.res_sl": "Slovenian words, grammar & stories",
+  "c.nav_zh_words": "Chinese words",
+  "c.nav_ja_words": "Japanese words",
+  "c.nav_sl_words": "Slovenian words"
 }

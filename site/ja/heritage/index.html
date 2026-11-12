@@ -73,6 +73,8 @@
     .langmenu a[aria-current] { color: var(--rust); }
     .langmenu a small { color: var(--muted); font-weight: 700; }
     .pill { font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 7px 12px; border-radius: 99px; border: 2px solid var(--rust); color: var(--rust); white-space: nowrap; }
+    html { overflow-x: clip; }
+    @media (max-width: 1340px) { .navlink.ext { display: none; } }
     @media (max-width: 980px) { .navlinks { display: none; } .langmenu { margin-left: auto; } }
     @media (max-width: 560px) { nav .pill { display: none; } nav .brand { font-size: 20px; } nav .logo { width: 36px; height: 36px; } .ed { padding: 5px 10px; font-size: 13px; } }
     @media (max-width: 400px) { nav .brand { display: none; } }
@@ -308,6 +310,7 @@
         <a class="navlink" href="#garden">庭</a>
         <a class="navlink" href="#grammar">文法</a>
         <a class="navlink" href="#faq">よくある質問</a>
+        <a class="navlink ext" href="/slovenian/">スロベニア語の単語</a>
       </div>
       <details class="langmenu"><summary aria-label="JA · 言語"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>JA</summary><ul><li><a href="/heritage/" hreflang="en" lang="en">English<small>EN</small></a></li><li><a href="/fr/heritage/" hreflang="fr" lang="fr">Français<small>FR</small></a></li><li><a href="/es/heritage/" hreflang="es" lang="es">Español<small>ES</small></a></li><li><a href="/ja/heritage/" hreflang="ja" lang="ja" aria-current="page">日本語<small>JA</small></a></li></ul></details>
       <span class="pill">近日公開</span>

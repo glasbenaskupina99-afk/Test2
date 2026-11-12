@@ -227,5 +227,8 @@
   "c.learn_free": "Apprendre gratuitement",
   "c.res_zh": "Mots et grammaire chinois",
   "c.res_ja": "Mots et grammaire japonais",
-  "c.res_sl": "Mots, grammaire et histoires slovènes"
+  "c.res_sl": "Mots, grammaire et histoires slovènes",
+  "c.nav_zh_words": "Mots chinois",
+  "c.nav_ja_words": "Mots japonais",
+  "c.nav_sl_words": "Mots slovènes"
 }

@@ -18,7 +18,11 @@ const get = async (path: string) => {
 
 test("every page in the sitemap renders, with a title and no leftovers", async () => {
   const urls = [...(await get("/sitemap.xml")).body.matchAll(/<loc>https:\/\/bloomko\.eu([^<]+)<\/loc>/g)].map((m) => m[1]).filter((u) => /^\/(chinese|japanese|slovenian)\//.test(u));
-  assert.ok(urls.length > 6500, `${urls.length} pages`);
+  assert.ok(urls.length > 6000, `${urls.length} pages`);
+  const n = (re: RegExp) => urls.filter((u) => re.test(u)).length;
+  assert.equal(n(/^\/chinese\/grammar\/./), 6, "2 grammar points per HSK level");
+  assert.equal(n(/^\/japanese\/stories\/./), 3, "1 story per JLPT level");
+  assert.equal(n(/^\/slovenian\/stories\/./), 2);
   for (const kind of ["/slovenian/grammar/", "/chinese/grammar/", "/japanese/stories/", "/slovenian/stories/"]) assert.ok(urls.some((u) => u.startsWith(kind) && u !== kind), kind);
   for (const u of urls) {
     const { status, body } = await get(u);
@@ -32,8 +36,10 @@ test("Slovenian word, grammar and story pages", async () => {
   const word = await get("/slovenian/dober-dan/");
   assert.match(word.body, /DO-ber DAN/);
   assert.match(word.body, /Memory trick/);
-  const g = await get("/slovenian/grammar/sl-negation/");
-  assert.match(g.body, /<mark>nisem<\/mark>/, "the grammar part is highlighted");
+  const g = await get("/slovenian/grammar/sl-biti/");
+  assert.match(g.body, /<mark>[^<]+<\/mark>/, "the grammar part is highlighted");
+  assert.equal((await get("/slovenian/grammar/sl-negation/")).status, 404, "only a few grammar points are on the site");
+  assert.equal((await get("/slovenian/stories/sl-s3/")).status, 404, "and only a few stories");
   const st = await get("/slovenian/stories/sl-s1/");
   assert.match(st.body, /class="tok"[^>]*data-t="[^"]*café/, "tap a word for its meaning");
   assert.match(st.body, /class="q" data-answer="1"/, "the quiz is there");

@@ -69,6 +69,8 @@ const GENDER = { m: "masculine noun", ž: "feminine noun", s: "neuter noun", mn:
 const WORDS = {}; // "chinese" → Map(word → entry)
 const WITH_CHAR = {}; // "chinese" → Map(character → entries)
 const SLUGS = {}; // "slovenian" → Map(slug → entry)
+const GRAMMAR_SAMPLE = 2; // grammar points per level on the site
+const STORY_SAMPLE = 1; // stories per level on the site (2 for a language with one level)
 for (const [key, L] of Object.entries(LANGS)) {
   const map = new Map();
   for (const level of L.levels) {
@@ -94,8 +96,15 @@ for (const [key, L] of Object.entries(LANGS)) {
   }
   SLUGS[key] = slugs;
   // Grammar points and stories, with their level.
-  L.points = (L.grammar || []).flatMap((g) => g.data.points.map((pt, i, all) => ({ ...pt, levelName: g.name, prev: all[i - 1], next: all[i + 1] })));
-  L.storyList = (L.stories || []).flatMap((g) => g.data.stories.map((st) => ({ ...st, levelName: g.name })));
+  // Only a taste of the grammar and stories goes on the site (the rest is in the app):
+  // the first grammar points and stories of each level. Every word gets a page.
+  const one = (L.grammar || []).length === 1;
+  L.allPoints = (L.grammar || []).reduce((n, g) => n + g.data.points.length, 0);
+  L.allStories = (L.stories || []).reduce((n, g) => n + g.data.stories.length, 0);
+  for (const g of L.grammar || []) g.shown = g.data.points.slice(0, GRAMMAR_SAMPLE);
+  for (const g of L.stories || []) g.shown = g.data.stories.slice(0, one ? 2 : STORY_SAMPLE);
+  L.points = (L.grammar || []).flatMap((g) => g.shown.map((pt, i, all) => ({ ...pt, levelName: g.name, prev: all[i - 1], next: all[i + 1] })));
+  L.storyList = (L.stories || []).flatMap((g) => g.shown.map((st) => ({ ...st, levelName: g.name })));
   // Character → words that contain it (for "Words with 爱").
   const byChar = new Map();
   for (const e of map.values()) for (const c of new Set(e.word)) {
@@ -303,8 +312,8 @@ function langPage(key) {
   const total = L.levels.reduce((n, lv) => n + lv.count, 0);
   const sl = L.lang === "sl";
   const more = [
-    L.points.length ? `<a class="card level" href="${grammarUrl(key)}"><h2>📘 ${esc(L.name)} grammar</h2><p>${L.points.length} grammar points explained in plain English, each with example sentences.</p><p class="sample">${L.points.slice(0, 4).map((pt) => esc(plain(pt.title))).join(" · ")}</p><span class="muted">All grammar ›</span></a>` : "",
-    L.storyList.length ? `<a class="card level" href="${storyUrl(key)}"><h2>📖 ${esc(L.name)} stories</h2><p>${L.storyList.length} short graded stories: tap any word for its meaning, read the translation, then answer a few questions.</p><p class="sample" lang="${L.htmlLang}">${L.storyList.slice(0, 4).map((st) => esc(st.title)).join(" · ")}</p><span class="muted">All stories ›</span></a>` : "",
+    L.points.length ? `<a class="card level" href="${grammarUrl(key)}"><h2>📘 ${esc(L.name)} grammar</h2><p>Grammar explained in plain English, with example sentences — a few examples here, all ${L.allPoints} points in the app.</p><p class="sample">${L.points.slice(0, 4).map((pt) => esc(plain(pt.title))).join(" · ")}</p><span class="muted">Grammar examples ›</span></a>` : "",
+    L.storyList.length ? `<a class="card level" href="${storyUrl(key)}"><h2>📖 ${esc(L.name)} stories</h2><p>Short graded stories: tap any word for its meaning, read the translation, then answer a few questions. Try ${L.storyList.length === 1 ? "one" : L.storyList.length} here — ${L.allStories} in the app.</p><p class="sample" lang="${L.htmlLang}">${L.storyList.slice(0, 4).map((st) => esc(st.title)).join(" · ")}</p><span class="muted">Read a story ›</span></a>` : "",
   ].join("");
   return page({
     title: sl ? `Learn Slovenian: A1 words, grammar & short stories for beginners | Bloomko` : `Learn ${L.name} words: stroke order, meanings & memory tricks (${total} words) | Bloomko`,
@@ -366,16 +375,18 @@ ${siblings ? `<section class="card"><h2>More words: ${esc(e.unit.name)}</h2><div
   });
 }
 
+const moreInApp = (title, text) => `<section class="card more"><h2>🌱 ${esc(title)}</h2><p class="muted">${esc(text)} Bloomko is a free Android app, coming soon — sign up below to hear when it launches.</p></section>`;
+
 function grammarIndex(key) {
   const L = LANGS[key];
-  const sections = (L.grammar || []).map((g) => `<section class="card"><h2>${esc(g.data.level || g.name)}</h2><ul class="glist">${g.data.points.map((pt) => `<li><a href="${grammarUrl(key, pt)}"><b>${rich(pt.title)}</b><small>${esc(plain(pt.short))}</small></a></li>`).join("")}</ul></section>`).join("");
+  const sections = (L.grammar || []).map((g) => `<section class="card"><h2>${esc(g.data.level || g.name)}</h2><ul class="glist">${g.shown.map((pt) => `<li><a href="${grammarUrl(key, pt)}"><b>${rich(pt.title)}</b><small>${esc(plain(pt.short))}</small></a></li>`).join("")}</ul></section>`).join("");
   const levels = (L.grammar || []).map((g) => g.name).join(", ");
   return page({
-    title: `${L.name} grammar for beginners: ${L.points.length} points explained with examples (${levels}) | Bloomko`,
-    description: `Free ${L.name} grammar (${levels}): ${L.points.length} grammar points, each explained in plain English with example sentences and translations.`,
+    title: `${L.name} grammar for beginners, explained with examples (${levels}) | Bloomko`,
+    description: `${L.name} grammar (${levels}) explained in plain English with example sentences and translations — a few examples from Bloomko, which has all ${L.allPoints} grammar points with exercises.`,
     canonical: grammarUrl(key),
     breadcrumbs: [{ name: "Bloomko", url: "/" }, { name: L.name, url: `/${key}/` }, { name: "Grammar", url: grammarUrl(key) }],
-    body: `<div class="card hero"><div class="tag">${L.flag} ${esc(L.name)}</div><h1>${esc(L.name)} grammar</h1><p class="meaning">${L.points.length} grammar points in plain English, from the very first sentence.</p><p class="muted">Each one has the pattern, a short explanation and example sentences with the grammar part highlighted.</p></div>${sections}`,
+    body: `<div class="card hero"><div class="tag">${L.flag} ${esc(L.name)}</div><h1>${esc(L.name)} grammar</h1><p class="meaning">Grammar in plain English, from the very first sentence.</p><p class="muted">A few examples of how Bloomko explains grammar: the pattern, a short explanation and example sentences with the grammar part highlighted.</p></div>${sections}${moreInApp(`All ${L.allPoints} grammar points are in the app`, "Each with quizzes that pick the right form, fill the gap or find the grammar in a sentence — and they come back for review until they stick.")}`,
   });
 }
 
@@ -388,7 +399,7 @@ function grammarPage(key, pt) {
 <div class="card hero"><div class="tag">${L.flag} ${esc(L.name)} grammar · ${esc(pt.levelName)}</div><h1 class="gtitle">${rich(pt.title)}</h1>${pt.pattern ? `<p class="pattern" lang="${L.htmlLang}">${rich(pt.pattern)}</p>` : ""}<p class="meaning">${esc(plain(pt.short))}</p></div>
 <section class="card explain"><h2>Explanation</h2>${paras(pt.explain)}</section>
 ${exs ? `<section class="card"><h2>Examples</h2><ul class="exs">${exs}</ul></section>` : ""}
-<nav class="pager">${pt.prev ? `<a href="${grammarUrl(key, pt.prev)}">‹ ${esc(plain(pt.prev.title).slice(0, 34))}</a>` : "<span></span>"}<a href="${grammarUrl(key)}">All grammar</a>${pt.next ? `<a href="${grammarUrl(key, pt.next)}">${esc(plain(pt.next.title).slice(0, 34))} ›</a>` : "<span></span>"}</nav>
+<nav class="pager">${pt.prev ? `<a href="${grammarUrl(key, pt.prev)}">‹ ${esc(plain(pt.prev.title).slice(0, 34))}</a>` : "<span></span>"}<a href="${grammarUrl(key)}">Grammar</a>${pt.next ? `<a href="${grammarUrl(key, pt.next)}">${esc(plain(pt.next.title).slice(0, 34))} ›</a>` : "<span></span>"}</nav>
 </article>`;
   const ex0 = (pt.examples || [])[0];
   return page({
@@ -403,13 +414,13 @@ ${exs ? `<section class="card"><h2>Examples</h2><ul class="exs">${exs}</ul></sec
 
 function storiesIndex(key) {
   const L = LANGS[key];
-  const sections = (L.stories || []).map((g) => `<section class="card"><h2>${esc(g.name)}</h2><div class="grid">${g.data.stories.map((st) => `<a href="${storyUrl(key, st)}"><b lang="${L.htmlLang}">${esc(st.title)}</b><small>${esc(st.title_en)}</small></a>`).join("")}</div></section>`).join("");
+  const sections = (L.stories || []).map((g) => `<section class="card"><h2>${esc(g.name)}</h2><div class="grid">${g.shown.map((st) => `<a href="${storyUrl(key, st)}"><b lang="${L.htmlLang}">${esc(st.title)}</b><small>${esc(st.title_en)}</small></a>`).join("")}</div></section>`).join("");
   return page({
     title: `${L.name} short stories for beginners with translation (${(L.stories || []).map((g) => g.name).join(", ")}) | Bloomko`,
-    description: `${L.storyList.length} free graded ${L.name} stories for beginners: tap any word for its meaning, read the English translation and test yourself with a short quiz.`,
+    description: `Free graded ${L.name} stories for beginners: tap any word for its meaning, read the English translation and test yourself with a short quiz.`,
     canonical: storyUrl(key),
     breadcrumbs: [{ name: "Bloomko", url: "/" }, { name: L.name, url: `/${key}/` }, { name: "Stories", url: storyUrl(key) }],
-    body: `<div class="card hero"><div class="tag">${L.flag} ${esc(L.name)}</div><h1>${esc(L.name)} stories</h1><p class="meaning">Short graded stories for beginners.</p><p class="muted">Tap any word to see what it means, open the translation of each sentence, and answer a few questions at the end.</p></div>${sections}`,
+    body: `<div class="card hero"><div class="tag">${L.flag} ${esc(L.name)}</div><h1>${esc(L.name)} stories</h1><p class="meaning">Short graded stories for beginners.</p><p class="muted">Tap any word to see what it means, open the translation of each sentence, and answer a few questions at the end.</p></div>${sections}${moreInApp(`${L.allStories} stories in the app`, "Made of the words you already know, read aloud, with new ones as you learn more.")}`,
   });
 }
 
@@ -445,7 +456,7 @@ function storyPage(key, st) {
 <section class="card">${sentences}<div class="tip" role="status" hidden></div></section>
 ${quiz ? `<section class="card"><h2>Did you understand it?</h2>${quiz}<p class="score muted"></p></section>` : ""}
 ${vocab.length ? `<section class="card"><h2>Words from this story</h2><div class="grid">${vocab.map((w) => `<a href="${wordUrl(w)}"><b lang="${L.htmlLang}">${esc(w.word)}</b><small>${esc(w.english)}</small></a>`).join("")}</div></section>` : ""}
-<nav class="pager">${prev ? `<a href="${storyUrl(key, prev)}">‹ <span lang="${L.htmlLang}">${esc(prev.title)}</span></a>` : "<span></span>"}<a href="${storyUrl(key)}">All stories</a>${next ? `<a href="${storyUrl(key, next)}"><span lang="${L.htmlLang}">${esc(next.title)}</span> ›</a>` : "<span></span>"}</nav>
+<nav class="pager">${prev ? `<a href="${storyUrl(key, prev)}">‹ <span lang="${L.htmlLang}">${esc(prev.title)}</span></a>` : "<span></span>"}<a href="${storyUrl(key)}">Stories</a>${next ? `<a href="${storyUrl(key, next)}"><span lang="${L.htmlLang}">${esc(next.title)}</span> ›</a>` : "<span></span>"}</nav>
 </article>`;
   return page({
     title: `${st.title} (${st.title_en}) – ${L.name} story for beginners, ${st.levelName}, with translation | Bloomko`,

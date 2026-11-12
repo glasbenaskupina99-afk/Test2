@@ -1,6 +1,6 @@
 import { api, h, iconBtn, toast, confirmDialog, enhanceSelects, type Child } from "./util.js";
 import { state, T, isJa, isSl, sayText, applyCourse, EDITION, isHeritage } from "./state.js";
-import { speak, stopSpeaking, canRecognize, canRecord } from "./audio.js";
+import { speak, stopSpeaking, canRecognize, canRecord, voiceAvailable, canInstallVoice, installVoice } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
 import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
@@ -1492,7 +1492,19 @@ async function settingsScreen() {
     ? [["browser", "Browser speech recognition (Chrome / Edge)"], ["self", "Record & compare myself"]]
     : [["browser", "Phone speech recognition (fast)"], ["ai", "Gemma audio (needs audio-capable server)"], ["self", "Record & compare myself"]];
 
-  const speechSupport = isApp ? [`Tip: for offline recognition, install the ${isJa() ? "Japanese" : "Chinese (Mandarin)"} offline speech pack in Android settings → Google → Voice.`] : [
+  // Shown when the phone has no voice for the course's language (common for Slovenian).
+  const voiceNote = h("div", { class: "hint", style: { display: "none" } });
+  voiceAvailable().then((ok) => {
+    if (ok) return;
+    voiceNote.style.display = "";
+    voiceNote.replaceChildren(
+      h("div", {}, "🔇 This device has no voice for this language yet, so words can't be read aloud."),
+      canInstallVoice()
+        ? h("button", { class: "btn ghost small", style: { marginTop: "8px" }, onclick: () => installVoice() }, "Install a voice")
+        : h("div", {}, "Add one in your system's speech settings, or try Chrome or Edge.")
+    );
+  });
+  const speechSupport = isApp ? [`Tip: for offline recognition, install the ${isSl() ? "Slovenian" : isJa() ? "Japanese" : "Chinese (Mandarin)"} offline speech pack in Android settings → Google → Voice.`] : [
     `Browser speech recognition: ${canRecognize() ? "✅ available" : "❌ not available"}`,
     `Recording: ${canRecord() ? "✅ available" : "❌ not available"}`,
     window.isSecureContext ? "" : "⚠️ Not on HTTPS — the microphone is blocked. Use the https:// address.",
@@ -1515,7 +1527,8 @@ async function settingsScreen() {
         ),
         h("div", { class: "hint", style: { marginTop: 0 } }, speechSupport.map((t) => h("div", {}, t))),
         field("Voice speed", select("tts_rate", [["0.6", "Slow"], ["0.8", "Normal"], ["1", "Native"]])),
-        h("button", { class: "btn ghost small", onclick: () => { save(true).then(() => speak(isJa() ? "こんにちは、勉強を始めましょう" : "你好，我们开始学习吧")); } }, "🔊 Test voice")
+        h("button", { class: "btn ghost small", onclick: () => { save(true).then(() => speak(isSl() ? "Pozdravljeni, začnimo se učiti." : isJa() ? "こんにちは、勉強を始めましょう" : "你好，我们开始学习吧")); } }, "🔊 Test voice"),
+        voiceNote
       ),
       h("h2", { class: "section-title" }, "✍️ Handwriting"),
       h(

@@ -26,7 +26,7 @@
   <script>document.documentElement.classList.add("js")</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:wght@700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:wght@700&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:wght@700&display=swap" rel="stylesheet"></noscript>
   <style>
     :root {
       --bg: #1c3026; --bg-2: #16271e; --surface: #233a2e; --surface-2: #2a4235; --border: #36503f;
@@ -361,7 +361,7 @@
   <div class="suggest" id="suggest"><div><span id="suggest-text"></span><button type="button" aria-label="×" id="suggest-close">×</button></div></div>
   <div class="wrap">
     <nav>
-      <a href="/ja/"><img class="logo" src="/img/logo.png" alt=""></a>
+      <a href="/ja/" aria-label="Bloomko"><img class="logo" src="/img/logo.png" alt=""></a>
       <a class="brand" href="/ja/">Bloomko</a>
       <div class="editions" role="tablist" aria-label="Bloomko apps">
         <a class="ed on" href="/ja/" role="tab" aria-selected="true">East</a>
@@ -373,7 +373,7 @@
         <a class="navlink" href="#try">試してみる</a>
         <a class="navlink" href="#faq">よくある質問</a>
       </div>
-      <details class="langmenu"><summary aria-label="言語"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>JA</summary><ul><li><a href="/" hreflang="en" lang="en">English<small>EN</small></a></li><li><a href="/fr/" hreflang="fr" lang="fr">Français<small>FR</small></a></li><li><a href="/es/" hreflang="es" lang="es">Español<small>ES</small></a></li><li><a href="/ja/" hreflang="ja" lang="ja" aria-current="page">日本語<small>JA</small></a></li></ul></details>
+      <details class="langmenu"><summary aria-label="JA · 言語"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>JA</summary><ul><li><a href="/" hreflang="en" lang="en">English<small>EN</small></a></li><li><a href="/fr/" hreflang="fr" lang="fr">Français<small>FR</small></a></li><li><a href="/es/" hreflang="es" lang="es">Español<small>ES</small></a></li><li><a href="/ja/" hreflang="ja" lang="ja" aria-current="page">日本語<small>JA</small></a></li></ul></details>
       <span class="pill">近日公開</span>
     </nav>
 
@@ -432,7 +432,7 @@
         </div>
       </div>
       <div class="bedwrap reveal" data-garden>
-        <div class="gtabs" role="tablist"><button class="on" data-glang="zh">🇨🇳 中国語</button><button data-glang="ja">🇯🇵 日本語</button></div>
+        <div class="gtabs" role="group"><button class="on" data-glang="zh">🇨🇳 中国語</button><button data-glang="ja">🇯🇵 日本語</button></div>
         <div class="bed-sign"><span data-gname></span> <small data-gcount></small></div>
         <div class="bed" data-bed></div>
         <div class="gcontrols">
@@ -453,12 +453,12 @@
         <p class="try-more">4つとも書いて、感触を確かめてください。アプリには覚え方のヒントや音声、ちょうどいいタイミングの復習とともに、何千もの文字があります。</p>
       </div>
       <div class="try-card reveal" data-try>
-        <div class="try-tabs" role="tablist">
+        <div class="try-tabs" role="group">
           <button class="on" data-lang="zh">🇨🇳 中国語</button>
           <button data-lang="ja">🇯🇵 日本語</button>
         </div>
         <div class="try-main">
-          <div class="try-box" id="try-box" aria-label="書く場所"></div>
+          <div class="try-box" id="try-box" role="img" aria-label="書く場所"></div>
           <div class="try-info">
             <div class="meaning" id="try-meaning"></div>
             <div class="reading" id="try-reading"></div>
@@ -627,6 +627,7 @@
     <div class="wrap">
       <span>© 2026 Bloomko · <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></span>
       <nav aria-label="言語"><a href="/" hreflang="en" lang="en">English</a><a href="/fr/" hreflang="fr" lang="fr">Français</a><a href="/es/" hreflang="es" lang="es">Español</a><a href="/ja/" hreflang="ja" lang="ja">日本語</a></nav>
+      <nav aria-label="無料で学ぶ">無料で学ぶ: <a href="/chinese/">中国語の単語と文法</a> · <a href="/japanese/">日本語の単語と文法</a> · <a href="/slovenian/">スロベニア語の単語・文法・物語</a></nav>
       <span>書き順データ：Make Me a Hanzi・animCJK（Arphic Public License）</span>
     </div>
   </footer>

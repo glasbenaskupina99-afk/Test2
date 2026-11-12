@@ -24,7 +24,7 @@
   <script>document.documentElement.classList.add("js")</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:ital,wght@0,600;0,700;1,700&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet"></noscript>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Bloomko Heritage","operatingSystem":"Android","applicationCategory":"EducationalApplication",
    "description":"Learn lesser-known languages: Slovenian now, Icelandic soon. Slovenian A1: 564 words, 30 grammar lessons with endings in colour, pronunciation with stress, a garden where every learned word grows into a real plant, and an offline AI tutor.",
@@ -33,8 +33,8 @@
   <style>
     :root {
       --bg: #f6efe3; --surface: #fffaf1; --surface-2: #f1e6d3; --border: #e4d4ba;
-      --text: #4a3628; --strong: #33241b; --muted: #8c7764;
-      --rust: #a8462f; --rust-dark: #80331f; --ink: #2c4a6e; --honey: #d39b32; --moss: #5f7f4a;
+      --text: #4a3628; --strong: #33241b; --muted: #76614f;
+      --rust: #a8462f; --rust-dark: #80331f; --ink: #2c4a6e; --honey: #d39b32; --moss: #56743f;
       --radius: 22px;
     }
     * { box-sizing: border-box; }
@@ -168,7 +168,7 @@
     .life i { font-style: normal; font-size: 22px; line-height: 1.2; }
     .bedwrap { border-radius: 30px; padding: 22px 20px 18px; background: linear-gradient(180deg, #c6dfa9 0%, #a3c97f 40%, #93bd6d 100%); box-shadow: 0 30px 60px rgba(80,50,30,.22), inset 0 -6px 0 rgba(0,0,0,.06); position: relative; }
     .bed-sign { display: inline-flex; gap: 10px; align-items: center; font-weight: 900; padding: 6px 14px; border-radius: 12px; background: #fffaf1; color: #33241b; border: 2px solid #e4d4ba; font-size: 15px; margin: 0 0 12px 6px; }
-    .bed-sign small { color: #8c7764; font-weight: 800; }
+    .bed-sign small { color: #76614f; font-weight: 800; }
     .bed { position: relative; border-radius: 22px; background: #8a6446; border: 5px solid #a77d58; padding: 16px 10px 8px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px 2px; min-height: 230px; }
     .spot { position: relative; display: flex; justify-content: center; align-items: flex-end; height: 92px; cursor: pointer; background: none; border: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     .spot::after { content: ""; position: absolute; bottom: 4px; left: 50%; width: 40px; height: 9px; margin-left: -20px; border-radius: 50%; background: rgba(0,0,0,.18); }
@@ -181,7 +181,7 @@
     .ptag { position: absolute; left: 50%; bottom: calc(100% - 6px); transform: translateX(-50%); z-index: 4; white-space: nowrap; background: #fffaf1; color: #33241b; border-radius: 12px; padding: 6px 12px; font-size: 14px; font-weight: 800; box-shadow: 0 8px 20px rgba(0,0,0,.2); pointer-events: none; }
     .ptag::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -6px; border: 6px solid transparent; border-top-color: #fffaf1; }
     .ptag .w { font-size: 16px; margin: 0 4px; }
-    .ptag small { color: #8c7764; font-weight: 700; }
+    .ptag small { color: #76614f; font-weight: 700; }
     .gcontrols { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; justify-content: center; }
     .gcontrols button { font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; border-radius: 99px; border: 0; background: rgba(51, 36, 27, .78); color: #fffaf1; padding: 9px 16px; }
     .gcontrols button:hover { background: #33241b; }
@@ -297,7 +297,7 @@
   <div class="suggest" id="suggest"><div><span id="suggest-text"></span><button type="button" aria-label="×" id="suggest-close">×</button></div></div>
   <div class="wrap">
     <nav>
-      <a href="/es/heritage/"><img class="logo" src="/img/heritage-logo.png" alt=""></a>
+      <a href="/es/heritage/" aria-label="Bloomko Heritage"><img class="logo" src="/img/heritage-logo.png" alt=""></a>
       <a class="brand" href="/es/heritage/">Bloomko</a>
       <div class="editions" role="tablist" aria-label="Bloomko apps">
         <a class="ed" href="/es/" role="tab" aria-selected="false">East</a>
@@ -309,7 +309,7 @@
         <a class="navlink" href="#grammar">Gramática</a>
         <a class="navlink" href="#faq">Preguntas</a>
       </div>
-      <details class="langmenu"><summary aria-label="Idioma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>ES</summary><ul><li><a href="/heritage/" hreflang="en" lang="en">English<small>EN</small></a></li><li><a href="/fr/heritage/" hreflang="fr" lang="fr">Français<small>FR</small></a></li><li><a href="/es/heritage/" hreflang="es" lang="es" aria-current="page">Español<small>ES</small></a></li><li><a href="/ja/heritage/" hreflang="ja" lang="ja">日本語<small>JA</small></a></li></ul></details>
+      <details class="langmenu"><summary aria-label="ES · Idioma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>ES</summary><ul><li><a href="/heritage/" hreflang="en" lang="en">English<small>EN</small></a></li><li><a href="/fr/heritage/" hreflang="fr" lang="fr">Français<small>FR</small></a></li><li><a href="/es/heritage/" hreflang="es" lang="es" aria-current="page">Español<small>ES</small></a></li><li><a href="/ja/heritage/" hreflang="ja" lang="ja">日本語<small>JA</small></a></li></ul></details>
       <span class="pill">Muy pronto</span>
     </nav>
 
@@ -502,6 +502,7 @@
     <div class="wrap">
       <span>© 2026 Bloomko · <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></span>
       <nav aria-label="Idioma"><a href="/heritage/" hreflang="en" lang="en">English</a><a href="/fr/heritage/" hreflang="fr" lang="fr">Français</a><a href="/es/heritage/" hreflang="es" lang="es">Español</a><a href="/ja/heritage/" hreflang="ja" lang="ja">日本語</a></nav>
+      <nav aria-label="Aprende gratis">Aprende gratis: <a href="/chinese/">Palabras y gramática del chino</a> · <a href="/japanese/">Palabras y gramática del japonés</a> · <a href="/slovenian/">Palabras, gramática e historias en esloveno</a></nav>
       <span><a href="/es/">Bloomko East</a> · Chino y japonés</span>
     </div>
   </footer>

@@ -56,6 +56,8 @@ if (isNative) {
     notifications: LocalNotifications,
     speak: (text, rate, lang = "zh-CN") => TextToSpeech.speak({ text, lang, rate: rate / 0.8, pitch: 1, volume: 1, category: "playback" }),
     stopSpeaking: () => TextToSpeech.stop().catch(() => {}),
+    voiceSupported: (lang: string) => TextToSpeech.isLanguageSupported({ lang }).then((r) => r.supported).catch(() => true),
+    installVoice: () => TextToSpeech.openInstall().catch(() => {}),
     recognize,
     shareFile: async (name, text) => {
       const r = await Filesystem.writeFile({ path: name, data: text, directory: Directory.Cache, encoding: Encoding.UTF8 });

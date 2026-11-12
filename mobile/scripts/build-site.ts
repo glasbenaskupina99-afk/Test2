@@ -65,7 +65,7 @@ function render(page: "east" | "heritage", lang: string) {
   const url = SITE + path;
   const pageOf = (l: string) => prefix(l) + (page === "heritage" ? "heritage/" : "");
   const alternates = [...LANGS.map((l) => `  <link rel="alternate" hreflang="${l}" href="${SITE}${pageOf(l)}">`), `  <link rel="alternate" hreflang="x-default" href="${SITE}${pageOf("en")}">`].join("\n");
-  const langmenu = `      <details class="langmenu"><summary aria-label="${esc(S["c.lang_label"])}">${GLOBE}${lang.toUpperCase()}</summary><ul>${LANGS.map((l) => `<li><a href="${pageOf(l)}" hreflang="${l}" lang="${l}"${l === lang ? ' aria-current="page"' : ""}>${STR[l]["meta.name"]}<small>${l.toUpperCase()}</small></a></li>`).join("")}</ul></details>`;
+  const langmenu = `      <details class="langmenu"><summary aria-label="${lang.toUpperCase()} · ${esc(S["c.lang_label"])}">${GLOBE}${lang.toUpperCase()}</summary><ul>${LANGS.map((l) => `<li><a href="${pageOf(l)}" hreflang="${l}" lang="${l}"${l === lang ? ' aria-current="page"' : ""}>${STR[l]["meta.name"]}<small>${l.toUpperCase()}</small></a></li>`).join("")}</ul></details>`;
   const footlangs = LANGS.map((l) => `<a href="${pageOf(l)}" hreflang="${l}" lang="${l}">${STR[l]["meta.name"]}</a>`).join("");
   const uilangs = LANGS.map((l) => `<a href="${pageOf(l)}" hreflang="${l}" lang="${l}">${STR[l]["meta.name"]}</a>`).join("");
   const t = Object.fromEntries(Object.entries(S).filter(([k]) => k.startsWith("t.")).map(([k, v]) => [k.slice(2), v]));

@@ -426,3 +426,64 @@ test("first start: the account step is optional, and typing in the account form 
   await page.waitForSelector(".tutorial");
   assert.deepEqual(errors, []);
 });
+
+test("sync: two phones learn offline, then both end up with everything", async () => {
+  // A stand-in for bloomko.eu/api/sync (versioned, like the real one), shared by both phones.
+  const store = new Map<string, { version: number; data: string }>();
+  let online = true;
+  const fakeSync = async (page: Page) => {
+    await page.evaluate(() => ((window as any).__syncUrl = "https://sync.test/api/sync"));
+    await page.route("https://sync.test/**", async (route) => {
+      const req = route.request();
+      const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET, PUT, DELETE", "Access-Control-Allow-Headers": "Content-Type" };
+      if (req.method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
+      if (!online) return route.abort("internetdisconnected");
+      const id = new URL(req.url()).pathname.split("/").pop()!;
+      const cur = store.get(id);
+      let status = 200, body: any = cur ? { version: cur.version, data: cur.data } : { version: 0 };
+      if (req.method() === "PUT") {
+        const b = JSON.parse(req.postData() || "{}");
+        if (b.base !== (cur?.version || 0)) [status, body] = [409, { conflict: true, version: cur?.version || 0 }];
+        else { store.set(id, { version: (cur?.version || 0) + 1, data: b.data }); body = { version: (cur?.version || 0) + 1 }; }
+      }
+      await route.fulfill({ status, contentType: "application/json", headers: cors, body: JSON.stringify(body) });
+    });
+  };
+  const learned = async (api: any) => (await api("/api/words")).filter((w: any) => w.cards).map((w: any) => w.hanzi).sort();
+
+  const a = await fresh();
+  await start(a.page, "Ana");
+  await a.page.click(".tut-top .link-btn");
+  await fakeSync(a.page);
+  const words = await a.api("/api/words");
+  const ids = (from: number, to: number) => words.slice(from, to).map((w: any) => w.id);
+  await a.api("/api/learn/complete", { method: "POST", body: { word_ids: ids(0, 20), xp: 20 } });
+  const { code } = await a.api("/api/sync/enable", { method: "POST", body: {} });
+  assert.ok(code, "phone A has a sync code");
+
+  const b = await fresh();
+  await start(b.page, "Someone");
+  await b.page.click(".tut-top .link-btn");
+  await fakeSync(b.page);
+  await b.api("/api/sync/enable", { method: "POST", body: { code } });
+  assert.equal((await learned(b.api)).length, 20, "phone B got phone A's words");
+
+  // Both phones go offline and learn different words; B adds a word of its own.
+  online = false;
+  await a.api("/api/learn/complete", { method: "POST", body: { word_ids: ids(20, 30), xp: 10 } });
+  await b.api("/api/learn/complete", { method: "POST", body: { word_ids: ids(30, 45), xp: 15 } });
+  const own = edition === "east" ? { hanzi: "考拉", pinyin: "kǎo lā", english: "koala" } : { hanzi: "pingvin", pinyin: "", english: "penguin" };
+  await b.api("/api/words", { method: "POST", body: own });
+  await a.page.waitForTimeout(500);
+
+  // Back online: each syncs (A, B, then A again picks up B's part).
+  online = true;
+  await a.api("/api/sync/now", { method: "POST" });
+  await b.api("/api/sync/now", { method: "POST" });
+  await a.api("/api/sync/now", { method: "POST" });
+  const want = words.slice(0, 45).map((w: any) => w.hanzi).sort();
+  assert.deepEqual(await learned(a.api), want, "phone A has every word learned on both phones");
+  assert.deepEqual(await learned(b.api), want, "phone B has every word learned on both phones");
+  assert.ok((await a.api("/api/words")).some((w: any) => w.hanzi === own.hanzi), "phone B's own word reached phone A");
+  assert.deepEqual([...a.errors, ...b.errors].filter((e) => !/sync|Failed to fetch|internet/i.test(e)), []);
+});

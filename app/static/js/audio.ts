@@ -1,5 +1,6 @@
 // Text-to-speech, speech recognition and WAV recording — all in the browser.
 import { state, T } from "./state.js";
+import { toast } from "./util.js";
 
 function pickVoice(lang) {
   const voices = speechSynthesis.getVoices();
@@ -25,6 +26,7 @@ export function stopSpeaking() {
 export function speak(text, { slow = false } = {}) {
   const rate0 = Number(state.settings?.tts_rate || 0.8);
   const lang = T.speechLang();
+  warnNoVoice();
   if (native()?.speak) return native().speak(text, slow ? Math.max(0.4, rate0 - 0.35) : rate0, lang).catch(() => {});
   if (!("speechSynthesis" in window)) return Promise.resolve();
   speechSynthesis.cancel();
@@ -39,6 +41,30 @@ export function speak(text, { slow = false } = {}) {
     speechSynthesis.speak(u);
   });
 }
+
+/** Is there a voice for the course's language on this device? (true when it can't be told) */
+export async function voiceAvailable(): Promise<boolean> {
+  const lang = T.speechLang();
+  if (native()?.voiceSupported) return native().voiceSupported(lang);
+  if (!("speechSynthesis" in window)) return false;
+  let voices = speechSynthesis.getVoices();
+  if (!voices.length) {
+    await new Promise((r) => { speechSynthesis.addEventListener("voiceschanged", r, { once: true }); setTimeout(r, 1500); });
+    voices = speechSynthesis.getVoices();
+  }
+  return !voices.length || !!pickVoice(lang);
+}
+export const canInstallVoice = () => !!native()?.installVoice;
+export const installVoice = () => native()?.installVoice?.();
+
+// The first time a word is read aloud without a voice for its language, say so (once per run).
+let warned = false;
+async function warnNoVoice() {
+  if (warned) return;
+  warned = true;
+  if (!(await voiceAvailable())) toast(NO_VOICE, 6000);
+}
+export const NO_VOICE = "🔇 This device has no voice for this language yet, so words can't be read aloud. You can add one in Settings → Pronunciation.";
 
 export const hasTTS = () => !!native()?.speak || "speechSynthesis" in window;
 

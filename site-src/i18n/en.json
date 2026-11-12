@@ -223,5 +223,9 @@
   "c.video_h2": "One minute with Bloomko",
   "c.video_note": "Video in English · no sound",
   "e.video_p": "A real look at the app: a new word with its memory hook, writing it stroke by stroke, the garden where your words grow, and a story you can tap your way through.",
-  "h.video_p": "A real look at the app: a new Slovenian word with its stressed syllable, practising it, the garden where your words grow, and a story where every word can be tapped."
+  "h.video_p": "A real look at the app: a new Slovenian word with its stressed syllable, practising it, the garden where your words grow, and a story where every word can be tapped.",
+  "c.learn_free": "Learn for free",
+  "c.res_zh": "Chinese words & grammar",
+  "c.res_ja": "Japanese words & grammar",
+  "c.res_sl": "Slovenian words, grammar & stories"
 }

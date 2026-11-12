@@ -223,5 +223,9 @@
   "c.video_h2": "Une minute avec Bloomko",
   "c.video_note": "Vidéo en anglais · sans son",
   "e.video_p": "Un vrai aperçu de l'appli : un nouveau mot avec son astuce de mémoire, son écriture trait par trait, le jardin où poussent tes mots et une histoire où chaque mot se touche.",
-  "h.video_p": "Un vrai aperçu de l'appli : un nouveau mot slovène avec sa syllabe accentuée, l'exercice, le jardin où poussent tes mots et une histoire où chaque mot se touche."
+  "h.video_p": "Un vrai aperçu de l'appli : un nouveau mot slovène avec sa syllabe accentuée, l'exercice, le jardin où poussent tes mots et une histoire où chaque mot se touche.",
+  "c.learn_free": "Apprendre gratuitement",
+  "c.res_zh": "Mots et grammaire chinois",
+  "c.res_ja": "Mots et grammaire japonais",
+  "c.res_sl": "Mots, grammaire et histoires slovènes"
 }

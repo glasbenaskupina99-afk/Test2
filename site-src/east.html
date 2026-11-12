@@ -21,7 +21,7 @@
   <script>document.documentElement.classList.add("js")</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:wght@700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:wght@700&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:wght@700&display=swap" rel="stylesheet"></noscript>
   <style>
     :root {
       --bg: #1c3026; --bg-2: #16271e; --surface: #233a2e; --surface-2: #2a4235; --border: #36503f;
@@ -356,7 +356,7 @@
   <div class="suggest" id="suggest"><div><span id="suggest-text"></span><button type="button" aria-label="×" id="suggest-close">×</button></div></div>
   <div class="wrap">
     <nav>
-      <a href="{{@home}}"><img class="logo" src="/img/logo.png" alt=""></a>
+      <a href="{{@home}}" aria-label="Bloomko"><img class="logo" src="/img/logo.png" alt=""></a>
       <a class="brand" href="{{@home}}">Bloomko</a>
       <div class="editions" role="tablist" aria-label="Bloomko apps">
         <a class="ed on" href="{{@home}}" role="tab" aria-selected="true">East</a>
@@ -427,7 +427,7 @@
         </div>
       </div>
       <div class="bedwrap reveal" data-garden>
-        <div class="gtabs" role="tablist"><button class="on" data-glang="zh">🇨🇳 {{e.chinese}}</button><button data-glang="ja">🇯🇵 {{e.japanese}}</button></div>
+        <div class="gtabs" role="group"><button class="on" data-glang="zh">🇨🇳 {{e.chinese}}</button><button data-glang="ja">🇯🇵 {{e.japanese}}</button></div>
         <div class="bed-sign"><span data-gname></span> <small data-gcount></small></div>
         <div class="bed" data-bed></div>
         <div class="gcontrols">
@@ -448,12 +448,12 @@
         <p class="try-more">{{e.try_p2}}</p>
       </div>
       <div class="try-card reveal" data-try>
-        <div class="try-tabs" role="tablist">
+        <div class="try-tabs" role="group">
           <button class="on" data-lang="zh">🇨🇳 {{e.chinese}}</button>
           <button data-lang="ja">🇯🇵 {{e.japanese}}</button>
         </div>
         <div class="try-main">
-          <div class="try-box" id="try-box" aria-label="{{e.try_area}}"></div>
+          <div class="try-box" id="try-box" role="img" aria-label="{{e.try_area}}"></div>
           <div class="try-info">
             <div class="meaning" id="try-meaning"></div>
             <div class="reading" id="try-reading"></div>
@@ -622,6 +622,7 @@
     <div class="wrap">
       <span>© 2026 Bloomko · <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></span>
       <nav aria-label="{{c.lang_label}}">{{@footlangs}}</nav>
+      <nav aria-label="{{c.learn_free}}">{{c.learn_free}}: <a href="/chinese/">{{c.res_zh}}</a> · <a href="/japanese/">{{c.res_ja}}</a> · <a href="/slovenian/">{{c.res_sl}}</a></nav>
       <span>{{e.strokes_credit}}</span>
     </div>
   </footer>

@@ -86,7 +86,7 @@ h1, h2, h3 { color: var(--text-strong); margin: 0; font-weight: 800; }
 .screen { max-width: 640px; margin: 0 auto; padding: 0 16px calc(96px + var(--safe-bottom)); }
 .topbar {
   position: sticky; top: 0; z-index: 5;
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
   padding: 14px 4px 12px; background: var(--bg);
   border-bottom: 2px solid var(--border);
   margin: 0 -4px 18px;

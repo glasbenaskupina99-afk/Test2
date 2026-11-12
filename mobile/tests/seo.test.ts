@@ -38,8 +38,9 @@ test("Slovenian word, grammar and story pages", async () => {
   assert.match(word.body, /Memory trick/);
   const g = await get("/slovenian/grammar/sl-biti/");
   assert.match(g.body, /<mark>[^<]+<\/mark>/, "the grammar part is highlighted");
-  assert.equal((await get("/slovenian/grammar/sl-negation/")).status, 404, "only a few grammar points are on the site");
-  assert.equal((await get("/slovenian/stories/sl-s3/")).status, 404, "and only a few stories");
+  assert.equal((await get("/slovenian/grammar/sl-negation/")).status, 301, "only a few grammar points are on the site; old links go to the list");
+  assert.equal((await get("/slovenian/stories/sl-s3/")).status, 301, "and only a few stories");
+  assert.equal((await get("/slovenian/grammar/nope/")).status, 404);
   const st = await get("/slovenian/stories/sl-s1/");
   assert.match(st.body, /class="tok"[^>]*data-t="[^"]*café/, "tap a word for its meaning");
   assert.match(st.body, /class="q" data-answer="1"/, "the quiz is there");

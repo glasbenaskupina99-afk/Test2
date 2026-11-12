@@ -523,12 +523,17 @@ export function seo(url) {
   if (rawSlug === "grammar" && L.points.length) {
     if (!rawSub) return html(grammarIndex(key));
     const pt = L.points.find((x) => x.id === rawSub);
-    return pt ? html(grammarPage(key, pt)) : null;
+    if (pt) return html(grammarPage(key, pt));
+    // A grammar point that is only in the app now: send old links to the grammar list.
+    if ((L.grammar || []).some((g) => g.data.points.some((x) => x.id === rawSub))) return Response.redirect(`${url.origin}${grammarUrl(key)}`, 301);
+    return null;
   }
   if (rawSlug === "stories" && L.storyList.length) {
     if (!rawSub) return html(storiesIndex(key));
     const st = L.storyList.find((x) => x.id === rawSub);
-    return st ? html(storyPage(key, st)) : null;
+    if (st) return html(storyPage(key, st));
+    if ((L.stories || []).some((g) => g.data.stories.some((x) => x.id === rawSub))) return Response.redirect(`${url.origin}${storyUrl(key)}`, 301);
+    return null;
   }
   if (rawSub) return null;
   let slug;

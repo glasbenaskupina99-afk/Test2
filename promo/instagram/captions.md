@@ -15,6 +15,7 @@
 - `fun-literal.mp4`: 24 s: 熊猫 bear+cat, 电脑 electric+brain, 火车 fire+vehicle, 长颈鹿 long+neck+deer
 - `fun-shapes.mp4`: 28 s: 凸 凹 傘 回 drawn in full, guess from the shape, bonus 凸凹 (dekoboko)
 - `fun-jiong.mp4`: 18 s: 囧 the meme character, bonus 呆 + 呆 = 槑
+- `fun-kusa.mp4`: 30 s: 笑 → w → wwwww looks like grass → 草 = lol, bonus orz (from `tools/make_fun3.py`)
 - Source: `promo.html` and `reel.html` (rendered with Playwright)
 
 ## Carousel caption (EN)
@@ -89,6 +90,11 @@ Kanji that make sense → bloomko.eu
 This 3,000-year-old character became an internet meme 😳 Can you see the face? 囧
 Bonus: 呆 + 呆 = 槑 😂 Learn Chinese the fun way → bloomko.eu
 #learnchinese #中文 #囧 #chinesecharacters #internetslang #languagefacts #memes #studygram #reels
+
+## Caption: 草 (EN) · `fun-kusa.mp4`
+Why do Japanese people write "grass" when something is funny? 🌱😂 笑 → w → wwwww… and wwwww looks like grass, so 草 (kusa) now means LOL.
+Bonus: orz 🙇 Learn Japanese the fun way → bloomko.eu
+#learnjapanese #japanese #日本語 #草 #kanji #internetslang #japaneseslang #languagefacts #memes #studygram #reels
 
 ## Opis (SL)
 Opazuj, kako tvoji jeziki cvetijo 🌱

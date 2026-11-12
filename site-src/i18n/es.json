@@ -217,5 +217,11 @@
   "h.east_note": "¿Buscas chino o japonés? Viven en <a href=\"{{@home}}\">Bloomko East</a>.",
   "h.east_short": "Chino y japonés",
   "h.faq": "<details><summary>¿Cuándo podré tener Bloomko Heritage?</summary><p>Está en la recta final de pruebas. Primero Android, después iPhone. Deja tu correo y serás de los primeros en probarlo.</p></details><details><summary>¿Es gratis?</summary><p>Sí: Bloomko Heritage se descarga gratis y no tiene anuncios.</p></details><details><summary>¿El curso de esloveno está en español?</summary><p>Sí. La app, el significado de las 564 palabras, las frases de práctica y las 30 lecciones de gramática están en español.</p></details><details><summary>¿Necesito saber algo de esloveno?</summary><p>No. El curso empieza desde cero: saludos, «yo soy», números, familia… y llega a los casos paso a paso. Si ya sabes algo, avanza más rápido.</p></details><details><summary>¿Funciona sin conexión?</summary><p>Sí. Lecciones, repasos e incluso el tutor de IA funcionan en tu móvil. Solo necesitas internet para la descarga única de la IA y, si quieres, para sincronizar y hacer copias.</p></details><details><summary>¿Cómo funciona el jardín?</summary><p>Cada palabra que aprendes se convierte en una planta, una de 28 especies reales. Repásala a tiempo y crece; sáltate sus repasos y se marchita; olvídala mucho tiempo y desaparece hasta que la vuelvas a practicar. Tus amigos pueden visitar y regar tu jardín.</p></details>",
-  "h.final_p": "Bloomko Heritage está casi listo. Deja tu correo y serás de los primeros en probarlo en Android."
+  "h.final_p": "Bloomko Heritage está casi listo. Deja tu correo y serás de los primeros en probarlo en Android.",
+  "c.nav_video": "Vídeo",
+  "c.video_eyebrow": "Mírala en acción",
+  "c.video_h2": "Un minuto con Bloomko",
+  "c.video_note": "Vídeo en inglés · sin sonido",
+  "e.video_p": "Así es la app de verdad: una palabra nueva con su truco de memoria, cómo escribirla trazo a trazo, el jardín donde crecen tus palabras y una historia en la que puedes tocar cada palabra.",
+  "h.video_p": "Así es la app de verdad: una palabra eslovena nueva con su sílaba tónica, la práctica, el jardín donde crecen tus palabras y una historia en la que puedes tocar cada palabra."
 }

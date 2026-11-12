@@ -148,6 +148,15 @@
     .stat b { display: block; font-size: 28px; font-weight: 900; color: var(--strong); line-height: 1.1; }
     .stat span { font-size: 13px; font-weight: 800; color: var(--muted); }
 
+
+    /* the demo video */
+    .demo { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+    .demo .phone { position: static; transform: none; width: 300px; aspect-ratio: 390 / 844; }
+    .demo video { display: block; width: 100%; height: 100%; object-fit: cover; background: #0f1a14; }
+    .demo h2 { font-size: clamp(30px, 3.6vw, 42px); font-weight: 900; margin-bottom: 16px; }
+    .demo p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .demo .note { font-size: 14px; }
+    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; justify-items: center; text-align: center; } .demo .phone { width: 270px; } }
     /* the garden demo */
     .garden { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
     .garden h2 { font-size: clamp(32px, 4vw, 46px); font-weight: 900; margin-bottom: 16px; }
@@ -359,6 +368,7 @@
         <a class="ed" href="/heritage/" role="tab" aria-selected="false">Heritage</a>
       </div>
       <div class="navlinks">
+        <a class="navlink" href="#demo">Video</a>
         <a class="navlink" href="#garden">The garden</a>
         <a class="navlink" href="#try">Try it</a>
         <a class="navlink" href="#faq">FAQ</a>
@@ -395,6 +405,18 @@
       <div class="stat"><b>100%</b><span>offline AI tutor</span></div>
     </div>
   </div>
+
+  <section id="demo">
+    <div class="wrap demo">
+      <div class="text reveal">
+        <div class="eyebrow">🎬 See it in action</div>
+        <h2>One minute with Bloomko</h2>
+        <p>A real look at the app: a new word with its memory hook, writing it stroke by stroke, the garden where your words grow, and a story you can tap your way through.</p>
+        <p class="note muted">Video in English · no sound</p>
+      </div>
+      <div class="phone reveal"><video src="/video/east-demo.mp4" poster="/video/east-demo.jpg" controls playsinline muted preload="none" aria-label="One minute with Bloomko"></video></div>
+    </div>
+  </section>
 
   <section id="garden">
     <div class="wrap garden">
@@ -526,7 +548,7 @@
         <p>Recognising a character is easy. Writing it from nothing is what makes it yours. Bloomko shows you the stroke order, lets you trace, and then asks you to write it from memory — and every mistake comes back until you get it right.</p>
         <ul><li>Animated stroke order for thousands of characters</li><li>Trace first, then write it all by yourself</li><li>Wrong answers repeat until they're right</li></ul>
       </div>
-      <div class="shot reveal"><div class="phone"><img src="/img/learn.webp" alt="Learning a new word in Bloomko with stroke order" loading="lazy" width="280" height="606"></div></div>
+      <div class="shot reveal"><div class="phone"><img src="/img/en/east-learn.webp" alt="Learning a new word in Bloomko with stroke order" loading="lazy" width="280" height="606"></div></div>
     </div>
   </section>
 

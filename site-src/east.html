@@ -143,6 +143,15 @@
     .stat b { display: block; font-size: 28px; font-weight: 900; color: var(--strong); line-height: 1.1; }
     .stat span { font-size: 13px; font-weight: 800; color: var(--muted); }
 
+
+    /* the demo video */
+    .demo { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+    .demo .phone { position: static; transform: none; width: 300px; aspect-ratio: 390 / 844; }
+    .demo video { display: block; width: 100%; height: 100%; object-fit: cover; background: #0f1a14; }
+    .demo h2 { font-size: clamp(30px, 3.6vw, 42px); font-weight: 900; margin-bottom: 16px; }
+    .demo p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .demo .note { font-size: 14px; }
+    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; justify-items: center; text-align: center; } .demo .phone { width: 270px; } }
     /* the garden demo */
     .garden { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
     .garden h2 { font-size: clamp(32px, 4vw, 46px); font-weight: 900; margin-bottom: 16px; }
@@ -354,6 +363,7 @@
         <a class="ed" href="{{@home}}heritage/" role="tab" aria-selected="false">Heritage</a>
       </div>
       <div class="navlinks">
+        <a class="navlink" href="#demo">{{c.nav_video}}</a>
         <a class="navlink" href="#garden">{{e.nav_garden}}</a>
         <a class="navlink" href="#try">{{e.nav_try}}</a>
         <a class="navlink" href="#faq">{{c.nav_faq}}</a>
@@ -390,6 +400,18 @@
       <div class="stat"><b>100%</b><span>{{c.stat_ai}}</span></div>
     </div>
   </div>
+
+  <section id="demo">
+    <div class="wrap demo">
+      <div class="text reveal">
+        <div class="eyebrow">🎬 {{c.video_eyebrow}}</div>
+        <h2>{{c.video_h2}}</h2>
+        <p>{{e.video_p}}</p>
+        <p class="note muted">{{c.video_note}}</p>
+      </div>
+      <div class="phone reveal"><video src="/video/east-demo.mp4" poster="/video/east-demo.jpg" controls playsinline muted preload="none" aria-label="{{c.video_h2}}"></video></div>
+    </div>
+  </section>
 
   <section id="garden">
     <div class="wrap garden">
@@ -521,7 +543,7 @@
         <p>{{e.hand_p}}</p>
         <ul>{{e.hand_list}}</ul>
       </div>
-      <div class="shot reveal"><div class="phone"><img src="/img/learn.webp" alt="{{e.hand_alt}}" loading="lazy" width="280" height="606"></div></div>
+      <div class="shot reveal"><div class="phone"><img src="/img/{{@lang}}/east-learn.webp" alt="{{e.hand_alt}}" loading="lazy" width="280" height="606"></div></div>
     </div>
   </section>
 

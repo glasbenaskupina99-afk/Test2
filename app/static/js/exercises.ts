@@ -104,8 +104,9 @@ export function intro(ctx, word) {
       const x = await fetchExtras(word, refresh);
       ai.replaceChildren(extrasBox(x, () => loadAI(true)));
     } catch (e) {
+      // No technical error here: say where hooks come from and where to set up the AI.
       ai.replaceChildren(
-        h("div", { class: "ai-box" }, "AI hints unavailable: ", e.message, " ", h("button", { class: "reveal", onclick: () => loadAI(true) }, "Try again"))
+        h("div", { class: "ai-box small muted", title: e.message }, "💡 No memory hook for this word yet — they come from the AI tutor, which isn't reachable right now. You can set it up in Settings → AI.", " ", h("button", { class: "reveal", onclick: () => loadAI(true) }, "Try again"))
       );
     }
   };

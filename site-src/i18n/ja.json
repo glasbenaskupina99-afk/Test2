@@ -217,5 +217,11 @@
   "h.east_note": "中国語や日本語をお探しなら、<a href=\"{{@home}}\">Bloomko East</a>へどうぞ。",
   "h.east_short": "中国語・日本語",
   "h.faq": "<details><summary>Bloomko Heritageはいつ使えますか？</summary><p>最終テストの段階です。まずAndroid、その後iPhoneに対応します。メールアドレスを登録すると、いち早く試せます。</p></details><details><summary>無料ですか？</summary><p>はい。Bloomko Heritageは無料でダウンロードでき、広告もありません。</p></details><details><summary>スロベニア語のコースは日本語ですか？</summary><p>はい。アプリ、564語すべての意味、練習用の例文、30の文法レッスンがすべて日本語です。</p></details><details><summary>スロベニア語の知識は必要ですか？</summary><p>いいえ。コースはゼロから始まります。あいさつ、「〜です」、数字、家族…そして格へと一歩ずつ進みます。少し知っている人は先に進めます。</p></details><details><summary>オフラインで使えますか？</summary><p>はい。レッスン、復習、AI先生までスマホの中で動きます。インターネットが必要なのは、最初の一度きりのAIダウンロードと、使う場合の同期・バックアップだけです。</p></details><details><summary>庭はどういう仕組みですか？</summary><p>覚えた言葉はそれぞれ植物になります（28種類）。時間どおりに復習すると育ち、復習をサボるとしおれ、長く忘れると消えてしまいます — もう一度練習するまで。友達があなたの庭に水をあげに来ることもできます。</p></details>",
-  "h.final_p": "Bloomko Heritageはもうすぐ完成です。メールアドレスを登録すると、Androidでいち早く試せます。"
+  "h.final_p": "Bloomko Heritageはもうすぐ完成です。メールアドレスを登録すると、Androidでいち早く試せます。",
+  "c.nav_video": "動画",
+  "c.video_eyebrow": "実際の使い方",
+  "c.video_h2": "Bloomkoの1分間",
+  "c.video_note": "動画は英語です · 音声なし",
+  "e.video_p": "アプリの実際の画面です。覚え方のヒントつきの新しい単語、一画ずつの手書き、言葉が育つ庭、そしてどの単語もタップできるストーリー。",
+  "h.video_p": "アプリの実際の画面です。アクセントつきの新しいスロベニア語の単語、練習、言葉が育つ庭、そしてどの単語もタップできるストーリー。"
 }

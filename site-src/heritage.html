@@ -143,6 +143,15 @@
     .split li::before { content: "✕"; position: absolute; left: 4px; color: var(--rust); font-size: 13px; top: 3px; }
     .example { margin-top: 18px; padding: 16px 20px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); font-family: "Lora", Georgia, serif; font-size: 22px; color: var(--strong); line-height: 1.7; }
 
+
+    /* the demo video */
+    .demo { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+    .demo .phone { position: static; transform: none; width: 300px; aspect-ratio: 390 / 844; }
+    .demo video { display: block; width: 100%; height: 100%; object-fit: cover; background: #3a2a20; }
+    .demo h2 { font-size: clamp(30px, 3.6vw, 42px); margin-bottom: 16px; }
+    .demo p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .demo .note { font-size: 14px; }
+    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; justify-items: center; text-align: center; } .demo .phone { width: 270px; } }
     /* the demo garden */
     .garden { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
     .garden h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 16px; }
@@ -290,6 +299,7 @@
         <a class="ed on" href="{{@home}}heritage/" role="tab" aria-selected="true">Heritage</a>
       </div>
       <div class="navlinks">
+        <a class="navlink" href="#demo">{{c.nav_video}}</a>
         <a class="navlink" href="#garden">{{h.nav_garden}}</a>
         <a class="navlink" href="#grammar">{{h.nav_grammar}}</a>
         <a class="navlink" href="#faq">{{c.nav_faq}}</a>
@@ -327,6 +337,18 @@
     </div>
   </div>
 
+  <section id="demo">
+    <div class="wrap demo">
+      <div class="text reveal">
+        <div class="eyebrow">🎬 {{c.video_eyebrow}}</div>
+        <h2>{{c.video_h2}}</h2>
+        <p>{{h.video_p}}</p>
+        <p class="note muted">{{c.video_note}}</p>
+      </div>
+      <div class="phone reveal"><video src="/video/heritage-demo.mp4" poster="/video/heritage-demo.jpg" controls playsinline muted preload="none" aria-label="{{c.video_h2}}"></video></div>
+    </div>
+  </section>
+
   <section id="grammar">
     <div class="wrap split">
       <div class="text reveal">
@@ -335,7 +357,7 @@
         <div class="example">hiš<span class="end">a</span> → v hiš<span class="end">i</span> → brez hiš<span class="end">e</span><br>Grem v trgovin<span class="end">o</span>.</div>
         <ul>{{h.gram_list}}</ul>
       </div>
-      <div class="shot reveal"><div class="phone"><img src="/img/heritage-drill.webp" alt="{{h.drill_alt}}" loading="lazy" width="280" height="606"></div></div>
+      <div class="shot reveal"><div class="phone"><img src="/img/{{@lang}}/heritage-drill.webp" alt="{{h.drill_alt}}" loading="lazy" width="280" height="606"></div></div>
     </div>
   </section>
 

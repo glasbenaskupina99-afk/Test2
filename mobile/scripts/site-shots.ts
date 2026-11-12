@@ -106,6 +106,30 @@ async function shoot(lang: string) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(400);
   await snap("words");
+
+  // East: a new word in a lesson, with its stroke order. Heritage: an ending drill in a grammar lesson.
+  await page.evaluate(() => (location.hash = "#/"));
+  await page.waitForSelector(".home-head");
+  if (edition === "east") {
+    await page.click(".primary-go");
+    await page.locator(".sheet .mode").first().click(); // the full lesson, with writing
+    await page.waitForSelector(".lesson", { timeout: 15000 });
+    await page.waitForTimeout(4500); // the stroke-order animation draws the character
+    await snap("learn");
+  } else {
+    await page.locator(".tile").nth(1).click(); // Grammar (second tile: Practice, Grammar, …)
+    await page.waitForSelector(".lesson", { timeout: 15000 });
+    // Through the grammar intros to the first ending drill (the gap with its basic form).
+    for (let i = 0; i < 40 && !(await page.locator(".lesson .g-base").count()); i++) {
+      const c = page.locator(".lesson .choice").first();
+      if (await c.isVisible().catch(() => false)) await c.click();
+      const b = page.locator(".lesson .lesson-foot .btn").last();
+      if (await b.isVisible().catch(() => false)) await b.click().catch(() => {});
+      await page.waitForTimeout(250);
+    }
+    await page.waitForTimeout(600);
+    await snap("drill");
+  }
   await ctx.close();
   console.log(edition, lang, "ok");
 }

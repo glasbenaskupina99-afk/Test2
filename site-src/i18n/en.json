@@ -2,7 +2,6 @@
   "meta.name": "English",
   "meta.locale": "en_GB",
   "meta.suggest": "This page is also in English",
-
   "c.soon": "Coming soon",
   "c.nav_faq": "FAQ",
   "c.email_ph": "your@email.com",
@@ -58,7 +57,6 @@
   "c.perks": "<li>🌱 Be one of the first testers</li><li>💬 Tell us what to build next</li><li>🎁 Free to download</li>",
   "c.note_final": "We'll email you when testing starts and when Bloomko launches. Your address is used for nothing else.",
   "c.contact": "Questions, ideas or want to help test?",
-
   "t.invalid": "Please enter a valid email address.",
   "t.thanks": "🌱 Thank you! You're on the list — we'll write when Bloomko blooms.",
   "t.on_list": "🌸 You're on the list. Keep writing!",
@@ -74,7 +72,6 @@
   "t.perfect": "Perfect! ✨",
   "t.win_one": "🌸 Beautiful! You just wrote your first character by hand. Imagine thousands more — get Bloomko first:",
   "t.win_many": "🌸 Beautiful! You just wrote {0} characters by hand. Imagine thousands more — get Bloomko first:",
-
   "e.title": "Bloomko — learn Chinese & Japanese with handwriting, an offline AI tutor and a garden that grows",
   "e.description": "Bloomko is a free, calm app for Chinese and Japanese: write characters by hand with stroke-by-stroke checking, chat with an AI tutor that runs offline on your phone, read graded stories, and watch every word you learn grow into a real plant. Try writing a character right on this page.",
   "e.og_title": "Bloomko — watch your languages bloom",
@@ -101,8 +98,18 @@
   "e.try_write": "Write it",
   "e.try_show": "Show me",
   "e.try_listen": "Listen",
-  "e.try_zh": ["you", "good", "love", "tea"],
-  "e.try_ja": ["the first kana: “a”", "sun; day", "book; origin", "mountain"],
+  "e.try_zh": [
+    "you",
+    "good",
+    "love",
+    "tea"
+  ],
+  "e.try_ja": [
+    "the first kana: “a”",
+    "sun; day",
+    "book; origin",
+    "mountain"
+  ],
   "e.steps_h2": "How Bloomko works, in five steps",
   "e.steps_p": "Ten or fifteen minutes a day. Bloomko tells you exactly what's next — you just show up.",
   "e.s1": "Learn new words",
@@ -158,7 +165,6 @@
   "e.faq": "<details><summary>When can I get Bloomko?</summary><p>Bloomko is in its last stretch of testing. Android comes first, iPhone follows. Leave your email and you'll be among the first to try it.</p></details><details><summary>Is it free?</summary><p>Yes — Bloomko is free to download, with no ads.</p></details><details><summary>Do I need an account?</summary><p>No. Everything works without one and your progress stays on your phone. An account is optional: it keeps your progress safe and the same on all your devices, encrypted before it leaves your phone.</p></details><details><summary>Does it work offline?</summary><p>Yes. Lessons, reviews, stories and even the AI tutor (Gemma) run on your phone, on a plane or a mountain. You only need the internet for the one-time AI download and, if you want them, sync and backups.</p></details><details><summary>Which levels does it cover?</summary><p>Chinese: the official HSK 3.0 levels 1–3 (2,270 words). Japanese: kana and JLPT N5–N3 (3,500 words). Plus 500+ grammar points, 48 graded stories and mock exams in the real format.</p></details><details><summary>Can I use my own word lists?</summary><p>Yes — add words yourself, paste a list, or import an Anki deck (.apkg) and keep the progress you made in Anki.</p></details><details><summary>How does the garden work?</summary><p>Every word you learn becomes a plant — one of 28 real species, always the same plant for the same word. Review it on time and it grows; skip its reviews and it wilts; forget it for long and it disappears until you practise it again. Friends can visit and water your garden.</p></details>",
   "e.final_p": "Bloomko is almost ready. Leave your email and you'll be among the first to try it on Android — iPhone follows. Every word starts as a seed; yours will bloom soon.",
   "e.strokes_credit": "Stroke order data: Make Me a Hanzi & animCJK (Arphic Public License)",
-
   "h.title": "Bloomko Heritage — learn lesser-known languages: Slovenian now, Icelandic soon",
   "h.description": "Bloomko Heritage is a calm language app for the languages most apps skip. Start with Slovenian: grammar explained step by step, word endings shown in colour, pronunciation with stress, a garden where every word grows into a plant, and an AI tutor that works offline.",
   "h.og_title": "Bloomko Heritage — small languages, learned with love",
@@ -211,5 +217,11 @@
   "h.east_note": "Looking for Chinese or Japanese? They live in <a href=\"{{@home}}\">Bloomko East</a>.",
   "h.east_short": "Chinese & Japanese",
   "h.faq": "<details><summary>When can I get Bloomko Heritage?</summary><p>It's in its last stretch of testing. Android comes first, iPhone follows. Leave your email and you'll be among the first to try it.</p></details><details><summary>Is it free?</summary><p>Yes — Bloomko Heritage is free to download, with no ads.</p></details><details><summary>Do I need to know any Slovenian?</summary><p>No. The course starts at zero: greetings, “I am”, numbers, family — and builds up to the cases one step at a time. If you already know some, skip ahead.</p></details><details><summary>Does it work offline?</summary><p>Yes. Lessons, reviews and even the AI tutor run on your phone. You only need the internet for the one-time AI download and, if you want them, sync and backups.</p></details><details><summary>Do I need an account?</summary><p>No. Your progress stays on your phone. An account is optional and keeps your progress the same on all your devices, encrypted before it leaves your phone.</p></details><details><summary>How does the garden work?</summary><p>Every word you learn becomes a plant — one of 28 real species. Review it on time and it grows; skip its reviews and it wilts; forget it for long and it disappears until you practise it again. Friends can visit and water your garden.</p></details>",
-  "h.final_p": "Bloomko Heritage is almost ready. Leave your email and you'll be among the first to try it on Android."
+  "h.final_p": "Bloomko Heritage is almost ready. Leave your email and you'll be among the first to try it on Android.",
+  "c.nav_video": "Video",
+  "c.video_eyebrow": "See it in action",
+  "c.video_h2": "One minute with Bloomko",
+  "c.video_note": "Video in English · no sound",
+  "e.video_p": "A real look at the app: a new word with its memory hook, writing it stroke by stroke, the garden where your words grow, and a story you can tap your way through.",
+  "h.video_p": "A real look at the app: a new Slovenian word with its stressed syllable, practising it, the garden where your words grow, and a story where every word can be tapped."
 }

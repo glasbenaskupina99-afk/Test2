@@ -148,6 +148,15 @@
     .stat b { display: block; font-size: 28px; font-weight: 900; color: var(--strong); line-height: 1.1; }
     .stat span { font-size: 13px; font-weight: 800; color: var(--muted); }
 
+
+    /* the demo video */
+    .demo { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+    .demo .phone { position: static; transform: none; width: 300px; aspect-ratio: 390 / 844; }
+    .demo video { display: block; width: 100%; height: 100%; object-fit: cover; background: #0f1a14; }
+    .demo h2 { font-size: clamp(30px, 3.6vw, 42px); font-weight: 900; margin-bottom: 16px; }
+    .demo p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .demo .note { font-size: 14px; }
+    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; justify-items: center; text-align: center; } .demo .phone { width: 270px; } }
     /* the garden demo */
     .garden { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
     .garden h2 { font-size: clamp(32px, 4vw, 46px); font-weight: 900; margin-bottom: 16px; }
@@ -359,6 +368,7 @@
         <a class="ed" href="/fr/heritage/" role="tab" aria-selected="false">Heritage</a>
       </div>
       <div class="navlinks">
+        <a class="navlink" href="#demo">Vidéo</a>
         <a class="navlink" href="#garden">Le jardin</a>
         <a class="navlink" href="#try">Essayer</a>
         <a class="navlink" href="#faq">FAQ</a>
@@ -395,6 +405,18 @@
       <div class="stat"><b>100%</b><span>tuteur IA hors ligne</span></div>
     </div>
   </div>
+
+  <section id="demo">
+    <div class="wrap demo">
+      <div class="text reveal">
+        <div class="eyebrow">🎬 Voir l'appli en action</div>
+        <h2>Une minute avec Bloomko</h2>
+        <p>Un vrai aperçu de l'appli : un nouveau mot avec son astuce de mémoire, son écriture trait par trait, le jardin où poussent tes mots et une histoire où chaque mot se touche.</p>
+        <p class="note muted">Vidéo en anglais · sans son</p>
+      </div>
+      <div class="phone reveal"><video src="/video/east-demo.mp4" poster="/video/east-demo.jpg" controls playsinline muted preload="none" aria-label="Une minute avec Bloomko"></video></div>
+    </div>
+  </section>
 
   <section id="garden">
     <div class="wrap garden">
@@ -526,7 +548,7 @@
         <p>Reconnaître un caractère, c'est facile. L'écrire de rien, c'est ce qui le rend tien. Bloomko te montre l'ordre des traits, te laisse tracer, puis te demande de l'écrire de mémoire — et chaque erreur revient jusqu'à ce que ce soit juste.</p>
         <ul><li>Ordre des traits animé pour des milliers de caractères</li><li>D'abord tracer, puis écrire tout seul</li><li>Les mauvaises réponses reviennent jusqu'à être justes</li></ul>
       </div>
-      <div class="shot reveal"><div class="phone"><img src="/img/learn.webp" alt="Apprendre un nouveau mot dans Bloomko avec l'ordre des traits" loading="lazy" width="280" height="606"></div></div>
+      <div class="shot reveal"><div class="phone"><img src="/img/fr/east-learn.webp" alt="Apprendre un nouveau mot dans Bloomko avec l'ordre des traits" loading="lazy" width="280" height="606"></div></div>
     </div>
   </section>
 

@@ -148,6 +148,15 @@
     .split li::before { content: "✕"; position: absolute; left: 4px; color: var(--rust); font-size: 13px; top: 3px; }
     .example { margin-top: 18px; padding: 16px 20px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); font-family: "Lora", Georgia, serif; font-size: 22px; color: var(--strong); line-height: 1.7; }
 
+
+    /* the demo video */
+    .demo { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+    .demo .phone { position: static; transform: none; width: 300px; aspect-ratio: 390 / 844; }
+    .demo video { display: block; width: 100%; height: 100%; object-fit: cover; background: #3a2a20; }
+    .demo h2 { font-size: clamp(30px, 3.6vw, 42px); margin-bottom: 16px; }
+    .demo p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .demo .note { font-size: 14px; }
+    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; justify-items: center; text-align: center; } .demo .phone { width: 270px; } }
     /* the demo garden */
     .garden { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
     .garden h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 16px; }
@@ -295,6 +304,7 @@
         <a class="ed on" href="/ja/heritage/" role="tab" aria-selected="true">Heritage</a>
       </div>
       <div class="navlinks">
+        <a class="navlink" href="#demo">動画</a>
         <a class="navlink" href="#garden">庭</a>
         <a class="navlink" href="#grammar">文法</a>
         <a class="navlink" href="#faq">よくある質問</a>
@@ -332,6 +342,18 @@
     </div>
   </div>
 
+  <section id="demo">
+    <div class="wrap demo">
+      <div class="text reveal">
+        <div class="eyebrow">🎬 実際の使い方</div>
+        <h2>Bloomkoの1分間</h2>
+        <p>アプリの実際の画面です。アクセントつきの新しいスロベニア語の単語、練習、言葉が育つ庭、そしてどの単語もタップできるストーリー。</p>
+        <p class="note muted">動画は英語です · 音声なし</p>
+      </div>
+      <div class="phone reveal"><video src="/video/heritage-demo.mp4" poster="/video/heritage-demo.jpg" controls playsinline muted preload="none" aria-label="Bloomkoの1分間"></video></div>
+    </div>
+  </section>
+
   <section id="grammar">
     <div class="wrap split">
       <div class="text reveal">
@@ -340,7 +362,7 @@
         <div class="example">hiš<span class="end">a</span> → v hiš<span class="end">i</span> → brez hiš<span class="end">e</span><br>Grem v trgovin<span class="end">o</span>.</div>
         <ul><li>30のレッスン：性、「biti」、動詞のグループ、すべての格、双数、過去形、未来形</li><li>語尾ドリル：正しい形を選び、その理由がわかる</li><li>いつでも調べられる文法ブック</li></ul>
       </div>
-      <div class="shot reveal"><div class="phone"><img src="/img/heritage-drill.webp" alt="Bloomko Heritageの語尾ドリル" loading="lazy" width="280" height="606"></div></div>
+      <div class="shot reveal"><div class="phone"><img src="/img/ja/heritage-drill.webp" alt="Bloomko Heritageの語尾ドリル" loading="lazy" width="280" height="606"></div></div>
     </div>
   </section>
 

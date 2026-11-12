@@ -217,5 +217,11 @@
   "h.east_note": "Tu cherches le chinois ou le japonais ? Ils vivent dans <a href=\"{{@home}}\">Bloomko East</a>.",
   "h.east_short": "Chinois & japonais",
   "h.faq": "<details><summary>Quand pourrai-je avoir Bloomko Heritage ?</summary><p>Il est dans sa dernière ligne droite de tests. Android d'abord, l'iPhone ensuite. Laisse ton e-mail et tu seras parmi les premiers à l'essayer.</p></details><details><summary>C'est gratuit ?</summary><p>Oui — Bloomko Heritage est gratuit à télécharger, sans publicité.</p></details><details><summary>Le cours de slovène est-il en français ?</summary><p>Oui. L'appli, le sens des 564 mots, les phrases d'exercice et les 30 leçons de grammaire sont en français.</p></details><details><summary>Faut-il déjà connaître le slovène ?</summary><p>Non. Le cours part de zéro : salutations, « je suis », nombres, famille — puis aborde les cas pas à pas. Si tu en sais déjà un peu, avance plus vite.</p></details><details><summary>Ça marche hors ligne ?</summary><p>Oui. Leçons, révisions et même le tuteur IA fonctionnent sur ton téléphone. Internet ne sert qu'au téléchargement unique de l'IA et, si tu le veux, à la synchro et aux sauvegardes.</p></details><details><summary>Comment fonctionne le jardin ?</summary><p>Chaque mot appris devient une plante — parmi 28 espèces réelles. Révise-le à temps et elle grandit ; saute ses révisions et elle fane ; oublie-le longtemps et elle disparaît jusqu'à ce que tu le révises. Tes amis peuvent venir arroser ton jardin.</p></details>",
-  "h.final_p": "Bloomko Heritage est presque prêt. Laisse ton e-mail et tu seras parmi les premiers à l'essayer sur Android."
+  "h.final_p": "Bloomko Heritage est presque prêt. Laisse ton e-mail et tu seras parmi les premiers à l'essayer sur Android.",
+  "c.nav_video": "Vidéo",
+  "c.video_eyebrow": "Voir l'appli en action",
+  "c.video_h2": "Une minute avec Bloomko",
+  "c.video_note": "Vidéo en anglais · sans son",
+  "e.video_p": "Un vrai aperçu de l'appli : un nouveau mot avec son astuce de mémoire, son écriture trait par trait, le jardin où poussent tes mots et une histoire où chaque mot se touche.",
+  "h.video_p": "Un vrai aperçu de l'appli : un nouveau mot slovène avec sa syllabe accentuée, l'exercice, le jardin où poussent tes mots et une histoire où chaque mot se touche."
 }

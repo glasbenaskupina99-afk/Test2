@@ -148,6 +148,15 @@
     .split li::before { content: "✕"; position: absolute; left: 4px; color: var(--rust); font-size: 13px; top: 3px; }
     .example { margin-top: 18px; padding: 16px 20px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); font-family: "Lora", Georgia, serif; font-size: 22px; color: var(--strong); line-height: 1.7; }
 
+
+    /* the demo video */
+    .demo { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+    .demo .phone { position: static; transform: none; width: 300px; aspect-ratio: 390 / 844; }
+    .demo video { display: block; width: 100%; height: 100%; object-fit: cover; background: #3a2a20; }
+    .demo h2 { font-size: clamp(30px, 3.6vw, 42px); margin-bottom: 16px; }
+    .demo p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .demo .note { font-size: 14px; }
+    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; justify-items: center; text-align: center; } .demo .phone { width: 270px; } }
     /* the demo garden */
     .garden { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
     .garden h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 16px; }
@@ -295,6 +304,7 @@
         <a class="ed on" href="/heritage/" role="tab" aria-selected="true">Heritage</a>
       </div>
       <div class="navlinks">
+        <a class="navlink" href="#demo">Video</a>
         <a class="navlink" href="#garden">The garden</a>
         <a class="navlink" href="#grammar">Grammar</a>
         <a class="navlink" href="#faq">FAQ</a>
@@ -332,6 +342,18 @@
     </div>
   </div>
 
+  <section id="demo">
+    <div class="wrap demo">
+      <div class="text reveal">
+        <div class="eyebrow">🎬 See it in action</div>
+        <h2>One minute with Bloomko</h2>
+        <p>A real look at the app: a new Slovenian word with its stressed syllable, practising it, the garden where your words grow, and a story where every word can be tapped.</p>
+        <p class="note muted">Video in English · no sound</p>
+      </div>
+      <div class="phone reveal"><video src="/video/heritage-demo.mp4" poster="/video/heritage-demo.jpg" controls playsinline muted preload="none" aria-label="One minute with Bloomko"></video></div>
+    </div>
+  </section>
+
   <section id="grammar">
     <div class="wrap split">
       <div class="text reveal">
@@ -340,7 +362,7 @@
         <div class="example">hiš<span class="end">a</span> → v hiš<span class="end">i</span> → brez hiš<span class="end">e</span><br>Grem v trgovin<span class="end">o</span>.</div>
         <ul><li>30 lessons: gender, “biti”, the verb groups, every case, dual, past, future</li><li>Ending drills: pick the right form and see why</li><li>A grammar book you can look things up in any time</li></ul>
       </div>
-      <div class="shot reveal"><div class="phone"><img src="/img/heritage-drill.webp" alt="An ending drill in Bloomko Heritage" loading="lazy" width="280" height="606"></div></div>
+      <div class="shot reveal"><div class="phone"><img src="/img/en/heritage-drill.webp" alt="An ending drill in Bloomko Heritage" loading="lazy" width="280" height="606"></div></div>
     </div>
   </section>
 

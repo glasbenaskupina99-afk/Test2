@@ -1749,3 +1749,12 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .my-code .row .btn { width: auto; flex: none; }
 .my-code .row > .input { flex: 1 1 auto; width: auto; }
 .bed-placeholder { width: 100%; }
+
+/* First start, step 2 (optional): an account keeps the progress safe */
+.account-step .acc-hero { font-size: 64px; line-height: 1; margin: 6px 0 4px; }
+.acc-perks { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 8px; text-align: left; }
+.acc-perk { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: var(--surface); border: 2px solid var(--border); }
+.acc-perk .acc-ico { font-size: 24px; line-height: 1.2; }
+.acc-perk b { display: block; }
+.acc-perk small { display: block; margin-top: 2px; line-height: 1.35; }
+.account-step .acc-skip { margin-top: 12px; font-weight: 800; }

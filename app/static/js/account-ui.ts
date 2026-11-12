@@ -25,7 +25,7 @@ const passwordInput = (autocomplete: string) => h("input", { class: "input", typ
  * The sign-in / create-account sheet. Resolves true when signed in (the app then reloads, so
  * everything synced from the account shows up).
  */
-export function accountSheet(mode: "login" | "register" = "login"): Promise<boolean> {
+export function accountSheet(mode: "login" | "register" = "login", { reload = true }: { reload?: boolean } = {}): Promise<boolean> {
   return new Promise((resolve) => {
     const close = (v: boolean) => {
       bg.remove();
@@ -47,10 +47,14 @@ export function accountSheet(mode: "login" | "register" = "login"): Promise<bool
           const r = await api(`/api/account/${mode}`, { method: "POST", body: { email: email.value, password: pw.value } });
           toast(mode === "login" ? (r.changed ? "👤 Signed in — your progress is here" : "👤 Signed in") : "👤 Account created — your progress is saved to it", 4000);
           close(true);
-          setTimeout(() => location.reload(), 700);
+          // Signing in brings the account's progress, so the app reloads to show it. A new account
+          // made during the first start just carries on (with the progress already on this device).
+          if (reload || mode === "login") setTimeout(() => location.reload(), 700);
         });
       go.onclick = submit;
-      [email, pw, pw2].forEach((i) => (i.onkeydown = (e) => e.key === "Enter" && submit()));
+      // (Not "onkeydown = … && submit()": a handler property that returns false cancels the key,
+      // so Backspace didn't delete anything.)
+      [email, pw, pw2].forEach((i) => i.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.isComposing) submit(); }));
       fill(
         body,
         h("h2", {}, mode === "login" ? "Sign in" : "Create an account"),

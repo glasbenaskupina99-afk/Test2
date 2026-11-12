@@ -125,7 +125,8 @@ export function gemmaSetupScreen({ step }: { step?: string } = {}) {
     };
     const unsub = onDownload(() => render());
 
-    const stepTag = step ? h("div", { class: "gsetup-step" }, h("i", { class: "on" }), h("i", { class: "on" }), `Step ${step}`) : null;
+    const [at, of] = String(step || "").split(" of ").map(Number);
+    const stepTag = step ? h("div", { class: "gsetup-step" }, Array.from({ length: of || 2 }, (_, i) => h("i", { class: i < (at || 2) ? "on" : "" })), `Step ${step}`) : null;
     const features = h(
       "div",
       { class: "gsetup-feats" },

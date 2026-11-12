@@ -63,6 +63,9 @@ async function fresh(): Promise<{ page: Page; errors: string[]; api: (path: stri
 async function start(page: Page, name = "Ana") {
   await page.fill(".welcome input", name);
   await page.click(".welcome-go");
+  // Step 2 (optional): an account — not now.
+  await page.waitForSelector(".account-step, .tutorial");
+  if (await page.locator(".account-step").count()) await page.click(".account-step .acc-skip");
   await page.waitForSelector(".tutorial");
 }
 
@@ -390,5 +393,24 @@ test("stories: tap a word for its meaning, then a short quiz", async () => {
     if (!(await page.locator(".lesson").count())) break;
   }
   assert.ok((await api("/api/stories")).stories.some((s: any) => s.done), "the story counts as read");
+  assert.deepEqual(errors, []);
+});
+
+test("first start: the account step is optional, and typing in the account form can be corrected", async () => {
+  const { page, errors } = await fresh();
+  await page.fill(".welcome input", "Ana");
+  await page.click(".welcome-go");
+  await page.waitForSelector(".account-step");
+  assert.match(await page.locator(".account-step").innerText(), /Keep your progress safe/);
+  await page.click(".account-step .btn:not(.ghost)");
+  await page.waitForSelector(".account-sheet input[type=email]");
+  const email = page.locator(".account-sheet input[type=email]");
+  await email.click();
+  await page.keyboard.type("anaa");
+  await page.keyboard.press("Backspace");
+  assert.equal(await email.inputValue(), "ana", "Backspace deletes a letter");
+  await page.mouse.click(5, 5); // close the sheet: still on the account step
+  await page.click(".account-step .acc-skip");
+  await page.waitForSelector(".tutorial");
   assert.deepEqual(errors, []);
 });

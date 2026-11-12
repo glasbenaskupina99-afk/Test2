@@ -1605,7 +1605,40 @@ function reminderCard(s) {
 
 // ------------------------------------------------------------------ welcome (first start)
 
-function welcomeScreen(gemmaNext: boolean) {
+/** "Step 2 of 3" with dots, on the first-start screens. */
+const stepTag = (at: number, of: number) => (of > 1 ? h("div", { class: "gsetup-step" }, Array.from({ length: of }, (_, i) => h("i", { class: i < at ? "on" : "" })), `Step ${at} of ${of}`) : null);
+
+/** First start, optional: an account keeps your progress safe and on all your devices. */
+function accountStepScreen(at: number, of: number) {
+  return new Promise<void>((resolve) => {
+    const perk = (ico, title, sub) => h("div", { class: "acc-perk" }, h("span", { class: "acc-ico" }, ico), h("div", {}, h("b", {}, title), h("small", { class: "muted" }, sub)));
+    app.replaceChildren(
+      h(
+        "div",
+        { class: "welcome account-step" },
+        stepTag(at, of),
+        h("div", { class: "acc-hero" }, "☁️"),
+        h("h1", {}, "Keep your progress safe"),
+        h("p", { class: "muted" }, "Create a free account — it's optional, and takes a few seconds."),
+        h(
+          "div",
+          { class: "acc-perks" },
+          perk("📱", "New or lost phone? Nothing is lost", "Sign in and your words, garden and streak are all back."),
+          perk("🔄", "The same progress everywhere", "On your phone, your computer and in the other Bloomko app."),
+          perk("☁️", "Saved by itself", "Your progress is kept with your account as you learn — nothing to remember."),
+          perk("🔒", "Private", "Encrypted on this device before it's sent. Only you can read it — not even we can.")
+        ),
+        h("div", { style: { width: "100%", marginTop: "18px" } },
+          h("button", { class: "btn", onclick: async () => { if (await accountSheet("register", { reload: false })) resolve(); } }, "Create a free account")),
+        h("button", { class: "btn ghost", style: { width: "100%", marginTop: "10px" }, onclick: () => accountSheet("login") }, "I already have one — sign in"),
+        h("button", { class: "link-btn acc-skip", onclick: () => resolve() }, "Not now"),
+        h("p", { class: "muted small" }, "Without an account everything stays on this device. You can create one any time in Settings → Account.")
+      )
+    );
+  });
+}
+
+function welcomeScreen(gemmaNext: boolean, steps = gemmaNext ? 2 : 1) {
   return new Promise<void>(async (resolve) => {
     let chosen = isHeritage() ? "sl" : state.settings.course === "ja" ? "ja" : "zh";
     let level = null;
@@ -1681,7 +1714,7 @@ function welcomeScreen(gemmaNext: boolean) {
       return h(
         "div",
         { class: "welcome" },
-        gemmaNext ? h("div", { class: "gsetup-step" }, h("i", { class: "on" }), h("i"), "Step 1 of 2") : null,
+        stepTag(1, steps),
         h("img", { class: "app-logo welcome-logo", src: LOGO, alt: "" }),
         h("div", { class: "welcome-langs", role: "group", "aria-label": "Language" }, langBtns),
         h("h1", {}, `Welcome to ${APP_NAME}`),
@@ -1719,8 +1752,12 @@ enhanceSelects();
   if ("display_name" in state.settings && !String(state.settings.display_name || "").trim()) {
     // Android app: step 2 sets up the on-device AI right away (skippable).
     const offerGemma = hasGemmaSupport() && !(await window.__native.gemma.status().catch(() => ({}))).hasModel;
-    await welcomeScreen(offerGemma);
-    if (offerGemma) await gemmaSetupScreen({ step: "2 of 2" });
+    // Step 2 (optional): an account, so the progress is safe — unless you signed in already.
+    const offerAccount = !!window.__localApi && !(await api("/api/account").catch(() => ({ signed_in: true }))).signed_in;
+    const steps = 1 + (offerAccount ? 1 : 0) + (offerGemma ? 1 : 0);
+    await welcomeScreen(offerGemma || offerAccount, steps);
+    if (offerAccount) await accountStepScreen(2, steps);
+    if (offerGemma) await gemmaSetupScreen({ step: `${steps} of ${steps}` });
     // The 5-step tour, ending with the placement test or "complete beginner".
     await showTutorial({ first: true, onDone: route });
   }

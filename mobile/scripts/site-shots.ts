@@ -51,6 +51,8 @@ async function shoot(lang: string) {
   const api = (p: string, o?: any) => page.evaluate(([p, o]) => window.__localApi(p, o), [p, o] as const);
   await page.fill(".welcome input", NAMES[lang]);
   await page.click(".welcome-go");
+  await page.waitForSelector(".account-step, .tutorial");
+  if (await page.locator(".account-step").count()) await page.click(".account-step .acc-skip");
   await page.waitForSelector(".tutorial");
   await page.click(".tut-top .link-btn");
 

@@ -70,8 +70,10 @@
     .langmenu a small { color: var(--muted); font-weight: 700; }
     .pill { font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 7px 12px; border-radius: 99px; border: 2px solid var(--gold); color: var(--gold); white-space: nowrap; }
     html { overflow-x: clip; }
-    @media (max-width: 1340px) { .navlink.ext { display: none; } }
-    @media (max-width: 980px) { .navlinks { display: none; } .langmenu { margin-left: auto; } }
+    nav { flex-wrap: wrap; }
+    .navlink.ext { color: var(--strong); }
+    @media (max-width: 1240px) { .navlink:not(.ext) { display: none; } }
+    @media (max-width: 980px) { .navlinks { order: 10; width: 100%; margin: 0; justify-content: center; gap: 22px; } .langmenu { margin-left: auto; } }
     @media (max-width: 560px) { nav .pill { display: none; } nav .brand { font-size: 20px; } nav .logo { width: 36px; height: 36px; } .ed { padding: 5px 10px; font-size: 13px; } }
     @media (max-width: 400px) { nav .brand { display: none; } }
 
@@ -374,8 +376,9 @@
         <a class="navlink" href="#garden">El jardín</a>
         <a class="navlink" href="#try">Pruébalo</a>
         <a class="navlink" href="#faq">Preguntas</a>
-        <a class="navlink ext" href="/chinese/">Palabras en chino</a>
-        <a class="navlink ext" href="/japanese/">Palabras en japonés</a>
+        <a class="navlink ext" href="/chinese/">Chino</a>
+        <a class="navlink ext" href="/japanese/">Japonés</a>
+        <a class="navlink ext" href="/slovenian/">Esloveno</a>
       </div>
       <details class="langmenu"><summary aria-label="ES · Idioma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>ES</summary><ul><li><a href="/" hreflang="en" lang="en">English<small>EN</small></a></li><li><a href="/fr/" hreflang="fr" lang="fr">Français<small>FR</small></a></li><li><a href="/es/" hreflang="es" lang="es" aria-current="page">Español<small>ES</small></a></li><li><a href="/ja/" hreflang="ja" lang="ja">日本語<small>JA</small></a></li></ul></details>
       <span class="pill">Muy pronto</span>

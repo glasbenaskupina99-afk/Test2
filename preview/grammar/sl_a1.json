@@ -9,7 +9,7 @@
    "explain": "In Slovenian every noun is **masculine (m)**, **feminine (ž)** or **neuter (s)**. This isn't about meaning — a chair is masculine and a house is feminine — but it matters a lot, because adjectives, words like \"my\" and later the case endings all change with the gender.\n\nThe good news: in most cases the **last letter** of the word tells you the gender:\n• ends in a **consonant** → usually masculine: stol, kruh, avto (exception: avto, kino, radio end in -o but are masculine)\n• ends in **-a** → usually feminine: hiš[a], kav[a], mam[a]\n• ends in **-o** or **-e** → usually neuter: mest[o], mlek[o], morj[e], sonc[e]\n\nA few useful exceptions to keep in mind: words for men are masculine even when they end in -a or -e (oče, ati, vodja), and some feminine words end in a consonant (noč, pot, sol, stvar, jesen).\n\nIn the app you'll see a small tag next to every noun: **m**, **ž** or **s**. Say the word together with its gender in your head (\"ta hiša, ta stol, to mesto\") and the gender will stick by itself.",
    "examples": [
     {
-     "text": "To je stol.",
+     "text": "To je [stol].",
      "en": "This is a chair."
     },
     {
@@ -108,15 +108,15 @@
    "explain": "The personal pronouns in Slovenian:\n• **jaz** — I\n• **ti** — you (one person you know well)\n• **on** — he · **ona** — she · **ono** — it (for neuter things)\n• **mi** — we\n• **vi** — you (several people — or one person, politely)\n• **oni** — they (men, or a mixed group) · **one** — they (only women or only feminine things)\n\nTwo things are different from English:\n\n**1. \"It\" follows the gender.** A chair (stol, m) is **on**, a house (hiša, ž) is **ona**, a town (mesto, s) is **ono**: \"Kje je hiša? Ona je tam.\" — \"Where is the house? It is there.\"\n\n**2. Pronouns are usually dropped.** The verb ending already says who does it: \"Govori[m] slovensko.\" = I speak Slovenian. You add the pronoun only for emphasis or contrast: \"**Jaz** pijem kavo, **on** pa čaj.\"",
    "examples": [
     {
-     "text": "On je učitelj, ona je zdravnica.",
+     "text": "[On] je učitelj, [ona] je zdravnica.",
      "en": "He is a teacher, she is a doctor."
     },
     {
-     "text": "Kje je hiša? Ona je tam.",
+     "text": "Kje je hiša? [Ona] je tam.",
      "en": "Where is the house? It is over there."
     },
     {
-     "text": "Mi smo iz Ljubljane.",
+     "text": "[Mi] smo iz Ljubljane.",
      "en": "We are from Ljubljana."
     },
     {
@@ -172,7 +172,7 @@
      }
     },
     {
-     "text": "Ne razumem.",
+     "text": "[Ne] razumem.",
      "en": "I don't understand."
     }
    ]
@@ -185,19 +185,19 @@
    "explain": "**Yes/no questions** are easy: keep the normal word order and either raise your voice at the end, or put **ali** at the beginning (a bit more careful, written style):\n• \"Si utrujen?\" or \"**Ali** si utrujen?\" — Are you tired?\n• \"Ali govoriš angleško?\" — Do you speak English?\n\n**Question words** go at the beginning:\n• **kdo** — who · **kaj** — what\n• **kje** — where (location) · **kam** — where to · **od kod** — where from\n• **kdaj** — when · **kako** — how · **zakaj** — why\n• **koliko** — how much / how many\n\nNote that Slovenian separates **kje** (where something is) and **kam** (where you're going): \"Kje si?\" (Where are you?) but \"Kam greš?\" (Where are you going?). This difference will matter a lot when you learn cases.\n\nPolite request: \"Ali mi lahko pomagate?\" — Can you help me?",
    "examples": [
     {
-     "text": "Kje je postaja?",
+     "text": "[Kje] je postaja?",
      "en": "Where is the station?"
     },
     {
-     "text": "Kam greš?",
+     "text": "[Kam] greš?",
      "en": "Where are you going?"
     },
     {
-     "text": "Ali govoriš angleško?",
+     "text": "[Ali] govoriš angleško?",
      "en": "Do you speak English?"
     },
     {
-     "text": "Koliko stane kava?",
+     "text": "[Koliko] stane kava?",
      "en": "How much does the coffee cost?"
     }
    ]
@@ -262,7 +262,7 @@
      }
     },
     {
-     "text": "Mama kuha kosilo.",
+     "text": "Mama kuha kosil[o].",
      "en": "Mom is cooking lunch."
     }
    ]
@@ -327,7 +327,7 @@
      }
     },
     {
-     "text": "Brat spi.",
+     "text": "Brat sp[i].",
      "en": "My brother is sleeping."
     }
    ]
@@ -791,7 +791,7 @@
      }
     },
     {
-     "text": "Jem kruh in pijem mleko.",
+     "text": "Jem [kruh] in pijem [mleko].",
      "en": "I eat bread and drink milk."
     }
    ]
@@ -856,7 +856,7 @@
      }
     },
     {
-     "text": "Poleti gremo na morje.",
+     "text": "Poleti gremo na morj[e].",
      "en": "In summer we go to the seaside."
     }
    ]
@@ -1051,7 +1051,7 @@
      }
     },
     {
-     "text": "Kilogram jabolk stane dva evra.",
+     "text": "Kilogram jabol[k] stane dva evra.",
      "en": "A kilo of apples costs two euros."
     }
    ]
@@ -1311,7 +1311,7 @@
      }
     },
     {
-     "text": "Ta film mi je všeč.",
+     "text": "Ta film [mi] je všeč.",
      "en": "I like this film."
     }
    ]
@@ -1337,7 +1337,7 @@
      }
     },
     {
-     "text": "Rad kuham.",
+     "text": "[Rad] kuham.",
      "en": "I like cooking. (a man)"
     },
     {
@@ -1367,7 +1367,7 @@
      }
     },
     {
-     "text": "Ta film mi je všeč.",
+     "text": "Ta film [mi] je všeč.",
      "en": "I like this film."
     }
    ]
@@ -1380,19 +1380,19 @@
    "explain": "Some verbs are followed by another verb in its **dictionary form** (infinitive, ending in **-ti** or **-či**):\n• **morati** (must, have to) → \"Moram delati.\" (I have to work.)\n• **hoteti** (want) → \"Hočem spati.\" (I want to sleep.)\n• **želeti** (wish, would like — more polite) → \"Želim plačati.\" (I'd like to pay.)\n• **znati** (know how to) → \"Znam plavati.\" (I can swim.)\n\n**Can / may** is usually expressed with the little word **lahko** + the normal present tense: \"Lahko pridem jutri.\" (I can come tomorrow.) \"Ali lahko plačam s kartico?\" (Can I pay by card?) \"Lahko noč\" (good night) uses the same word.\n\nNegatives: **ne morem** = I can't (from moči): \"Ne morem priti.\" — but **ne moram** = I don't have to, **nočem** = ne + hočem (I don't want), **ni treba** = you don't have to: \"Ni treba plačati.\"\n\nThe infinitive form never changes: \"Mi moramo delati.\" \"Ona hoče delati.\" Only the first verb changes for the person.",
    "examples": [
     {
-     "text": "Danes moram delati.",
+     "text": "Danes [moram] delati.",
      "en": "Today I have to work."
     },
     {
-     "text": "Ali lahko plačam s kartico?",
+     "text": "Ali [lahko] plačam s kartico?",
      "en": "Can I pay by card?"
     },
     {
-     "text": "Hočem spati.",
+     "text": "[Hočem] spati.",
      "en": "I want to sleep."
     },
     {
-     "text": "Ne morem priti, ker sem bolan.",
+     "text": "[Ne morem] priti, ker sem bolan.",
      "en": "I can't come because I'm ill."
     }
    ]
@@ -1431,11 +1431,11 @@
      }
     },
     {
-     "text": "Imenujem se Luka.",
+     "text": "Imenujem [se] Luka.",
      "en": "My name is Luka."
     },
     {
-     "text": "Jutri se vrnemo domov.",
+     "text": "Jutri [se] vrnemo domov.",
      "en": "Tomorrow we're coming back home."
     }
    ]
@@ -1500,7 +1500,7 @@
      }
     },
     {
-     "text": "Včeraj sem šel v kino.",
+     "text": "Včeraj sem [šel] v kino.",
      "en": "Yesterday I went to the cinema. (a man)"
     }
    ]
@@ -1552,7 +1552,7 @@
      }
     },
     {
-     "text": "Ne bom pil kave.",
+     "text": "Ne [bom] pil kave.",
      "en": "I won't drink coffee."
     }
    ]
@@ -1608,7 +1608,7 @@
      }
     },
     {
-     "text": "Daj mi kozarec vode.",
+     "text": "[Daj] mi kozarec vode.",
      "en": "Give me a glass of water."
     }
    ]
@@ -1629,11 +1629,11 @@
      "en": "Yesterday I studied. (a man)"
     },
     {
-     "text": "Kava mi je všeč.",
+     "text": "Kava [mi je] všeč.",
      "en": "I like the coffee."
     },
     {
-     "text": "Jutri se vidimo!",
+     "text": "Jutri [se] vidimo!",
      "en": "See you tomorrow!"
     }
    ]

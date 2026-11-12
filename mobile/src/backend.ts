@@ -913,7 +913,7 @@ function loadStories(section) {
   if (!file) return Promise.resolve(null);
   storyJobs[file] ||= Promise.all([
     fetch(`stories/${file}.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-    locale.overlay(`stories-${["hsk1", "hsk2", "hsk3"].includes(file) ? "zh" : "ja"}`),
+    locale.overlay(`stories-${["hsk1", "hsk2", "hsk3"].includes(file) ? "zh" : file === "sl_a1" ? "sl" : "ja"}`),
   ]).then(([d, ov]) => {
     const stories = d?.stories || null;
     if (stories && ov) {
@@ -933,7 +933,7 @@ function loadStories(section) {
   });
   return storyJobs[file];
 }
-const isPunct = (c) => /^[\s。、，！？!?,.:;：；「」『』（）()…—"“”'‘’·・]+$/.test(c);
+const isPunct = (c) => /^[\s。、，！？!?,.:;：；「」『』（）()…—"“”„'‘’·・»«]+$/.test(c);
 const WRITABLE_CHAR = /[㐀-鿿ぁ-ヿー]/;
 
 /** Words of this course by spelling, for glossing text (longest match first). */
@@ -970,16 +970,18 @@ function tokenize(text, lex) {
   return out;
 }
 /** Tokens annotated with whether the word is in the course and learned (for tap-to-look-up). */
+/** The course word a story token belongs to (Slovenian tokens name their basic form: kavo → kava). */
+const tokenWord = (lex, t, r) => lex.get(t) || (course() === "sl" ? lex.get(t.toLowerCase()) || (r ? lex.get(r) : null) : null);
 function annotate(tokens, lex) {
   return tokens.map(([t, r, m]) => {
-    const w = lex.get(t) || (course() === "sl" ? lex.get(t.toLowerCase()) : null);
+    const w = tokenWord(lex, t, r);
     return { t, r, m: m || w?.meaning || "", punct: isPunct(t), word_id: w?.id || null, learned: !!w?.learned, level: w?.level || null };
   });
 }
 function knownShare(story, lex) {
   const toks = story.sentences.flatMap((s) => s.tokens).filter(([t]) => !isPunct(t));
   if (!toks.length) return 0;
-  return Math.round((100 * toks.filter(([t]) => lex.get(t)?.learned).length) / toks.length);
+  return Math.round((100 * toks.filter(([t, r]) => tokenWord(lex, t, r)?.learned).length) / toks.length);
 }
 
 /** Remembers deleted words so sync doesn't bring them back from another device. */

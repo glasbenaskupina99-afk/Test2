@@ -354,3 +354,41 @@ test("grammar quizzes: every gap has a blank and choices, every 'highlighted par
   assert.ok(gaps + which > 0, "grammar questions were shown");
   assert.deepEqual(errors, []);
 });
+
+test("stories: tap a word for its meaning, then a short quiz", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 80).map((w: any) => w.id), xp: 0 } });
+  const list = await api("/api/stories");
+  assert.ok(list.stories.length >= 8, "ready-made stories for this level");
+  await go(page, "#/", ".home-head");
+  await page.locator(".tile", { hasText: "Listen" }).first().click();
+  await page.locator(".mode-opt", { hasText: "Stories" }).click();
+  await page.locator(".story-item").first().click();
+  await page.waitForSelector(".story-reader .tok");
+  // Every word can be tapped and has a meaning.
+  const toks = page.locator(".story-reader .tok");
+  for (let i = 0; i < Math.min(await toks.count(), 12); i++) {
+    await toks.nth(i).click();
+    const meaning = (await page.locator(".word-pop .wp-mean").innerText()).trim();
+    assert.ok(meaning && meaning !== "—", `“${await toks.nth(i).innerText()}” has a meaning`);
+  }
+  if (edition === "heritage") {
+    // A word in another form shows its basic form: kavo ← kava.
+    await page.locator(".story-reader .tok", { hasText: /^Kavo$/ }).first().click();
+    assert.match(await page.locator(".word-pop").innerText(), /← kava/);
+  }
+  await page.click(".story-reader .lesson-foot .btn");
+  for (let i = 0; i < 20 && !(await page.locator(".lesson-done, .done-screen, .lesson .end").count()); i++) {
+    const c = page.locator(".lesson .choice").first();
+    if (await c.isVisible().catch(() => false)) await c.click();
+    const b = page.locator(".lesson .lesson-foot .btn").last();
+    if (await b.isVisible().catch(() => false)) await b.click().catch(() => {});
+    await page.waitForTimeout(80);
+    if (!(await page.locator(".lesson").count())) break;
+  }
+  assert.ok((await api("/api/stories")).stories.some((s: any) => s.done), "the story counts as read");
+  assert.deepEqual(errors, []);
+});

@@ -572,7 +572,7 @@ function listenSheet(home) {
       h("h2", { style: { margin: "0 0 4px" } }, "Listen, read & talk"),
       h("p", { class: "muted small", style: { margin: "0 0 14px" } }, "Train your ear, read little stories and have a real chat — all with the words you know."),
       option("🎧", "Dictation & listening", isSl() ? "Hear a sentence, type it — or pick what it means" : "Hear a sentence, write it by hand — or pick what it means", () => startFlow(flows.listening)),
-      home.course !== "sl" ? option("📖", "Stories", `Short graded stories for ${home.section} — tap any word`, () => storiesSheet()) : null,
+      option("📖", "Stories", `Short graded stories for ${home.section} — tap any word`, () => storiesSheet()),
       home.course === "zh" ? option("🎵", "Tones", "Hear the tones — and see the pitch of your own voice", () => startFlow(flows.tones)) : null,
       option("💬", "Talk", state.settings.ai_enabled ? "Chat with Gemma — at a café, in a shop, asking the way…" : "Chat with Gemma (turn on AI in Settings)", () => talkSheet())
     )
@@ -640,7 +640,7 @@ async function storyReader(id) {
     el.classList.add("on");
     const status = tok.word_id ? (tok.learned ? "✓ learned" : `in ${tok.level}`) : "not in your course";
     pop.replaceChildren(
-      h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, h("b", { class: "hz wp-word" }, tok.t), h("span", { class: "py" }, tok.r), h("span", { class: "spacer" }), iconBtn("speaker", "speaker sm", () => speak(tok.t), "Listen")),
+      h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, h("b", { class: "hz wp-word" }, tok.t), isSl() ? (tok.r && tok.r !== tok.t ? h("span", { class: "muted small" }, `← ${tok.r}`) : null) : h("span", { class: "py" }, tok.r), h("span", { class: "spacer" }), iconBtn("speaker", "speaker sm", () => speak(tok.t), "Listen")),
       h("div", { class: "wp-mean" }, tok.m || "—"),
       h(
         "div",
@@ -654,7 +654,8 @@ async function storyReader(id) {
                 class: "btn ghost small",
                 onclick: async (e) => {
                   try {
-                    await api("/api/words", { method: "POST", body: { hanzi: tok.t, pinyin: tok.r, english: tok.m } });
+                    // Slovenian: add the basic form (kava, not kavo).
+                    await api("/api/words", { method: "POST", body: isSl() ? { hanzi: tok.r || tok.t.toLowerCase(), pinyin: "", english: tok.m } : { hanzi: tok.t, pinyin: tok.r, english: tok.m } });
                     tok.word_id = -1;
                     e.currentTarget.replaceWith(h("small", { class: "good" }, "✓ Added to My words"));
                   } catch (err) {
@@ -714,7 +715,7 @@ async function storyReader(id) {
     h(
       "div",
       { class: "lesson-body st-body", onclick: (e) => { if (!e.target.closest(".tok, .word-pop")) { pop.hidden = true; document.querySelectorAll(".tok.on").forEach((x) => x.classList.remove("on")); } } },
-      h("p", { class: "muted small" }, "Tap any word to see its reading and meaning. Words in yellow you haven't learned yet."),
+      h("p", { class: "muted small" }, isSl() ? "Tap any word to see what it means and its basic form. Words in yellow you haven't learned yet." : "Tap any word to see its reading and meaning. Words in yellow you haven't learned yet."),
       playAll,
       sentences
     ),

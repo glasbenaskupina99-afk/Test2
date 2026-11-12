@@ -1,0 +1,3653 @@
+{
+ "level": "A1",
+ "stories": [
+  {
+   "id": "sl-s1",
+   "title": "V kavarni",
+   "title_en": "At the café",
+   "sentences": [
+    {
+     "text": "Ana in Luka sta v kavarni.",
+     "en": "Ana and Luka are at a café.",
+     "tokens": [
+      [
+       "Ana",
+       "",
+       "Ana (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Luka",
+       "",
+       "Luka (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sta",
+       "biti",
+       "are (the two of them)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "v",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "kavarni",
+       "kavarna",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Natakar vpraša: »Kaj želite?«",
+     "en": "The waiter asks: “What would you like?”",
+     "tokens": [
+      [
+       "Natakar",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vpraša",
+       "vprašati",
+       ""
+      ],
+      [
+       ":",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Kaj",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "želite",
+       "želeti",
+       "would you like (polite)"
+      ],
+      [
+       "?",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Ana reče: »Kavo z mlekom, prosim.«",
+     "en": "Ana says: “A coffee with milk, please.”",
+     "tokens": [
+      [
+       "Ana",
+       "",
+       "Ana (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "reče",
+       "reči",
+       ""
+      ],
+      [
+       ":",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Kavo",
+       "kava",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "z",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mlekom",
+       "mleko",
+       "with milk"
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "prosim",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Luka je lačen.",
+     "en": "Luka is hungry.",
+     "tokens": [
+      [
+       "Luka",
+       "",
+       "Luka (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "lačen",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "On želi čaj in kos torte.",
+     "en": "He wants tea and a piece of cake.",
+     "tokens": [
+      [
+       "On",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "želi",
+       "želeti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "čaj",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "kos",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "torte",
+       "torta",
+       "of cake"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "»Račun, prosim!« reče Luka.",
+     "en": "“The bill, please!” says Luka.",
+     "tokens": [
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Račun",
+       "",
+       ""
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "prosim",
+       "",
+       ""
+      ],
+      [
+       "!",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "reče",
+       "reči",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Luka",
+       "",
+       "Luka (name)"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Kava in torta sta dobri, pa tudi poceni.",
+     "en": "The coffee and the cake are good, and cheap too.",
+     "tokens": [
+      [
+       "Kava",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "torta",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sta",
+       "biti",
+       "are (the two of them)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "dobri",
+       "dober",
+       ""
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "pa",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "tudi",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "poceni",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where are Ana and Luka?",
+     "options": [
+      "At home",
+      "At a café",
+      "At school",
+      "At the station"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What does Ana order?",
+     "options": [
+      "Tea",
+      "Coffee with milk",
+      "Water",
+      "Juice"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Who is hungry?",
+     "options": [
+      "Ana",
+      "The waiter",
+      "Luka",
+      "Nobody"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "sl-s2",
+   "title": "Moja družina",
+   "title_en": "My family",
+   "sentences": [
+    {
+     "text": "Ime mi je Maja.",
+     "en": "My name is Maja.",
+     "tokens": [
+      [
+       "Ime",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mi",
+       "",
+       "(to) me"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Maja",
+       "",
+       "Maja (name)"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Imam veliko družino.",
+     "en": "I have a big family.",
+     "tokens": [
+      [
+       "Imam",
+       "imeti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "veliko",
+       "velik",
+       "big"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "družino",
+       "družina",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Moj oče je zdravnik, moja mama je učiteljica.",
+     "en": "My father is a doctor, my mother is a teacher.",
+     "tokens": [
+      [
+       "Moj",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "oče",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zdravnik",
+       "",
+       ""
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "moja",
+       "moj",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mama",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "učiteljica",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Imam brata in sestro.",
+     "en": "I have a brother and a sister.",
+     "tokens": [
+      [
+       "Imam",
+       "imeti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "brata",
+       "brat",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sestro",
+       "sestra",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Brat je star deset let.",
+     "en": "My brother is ten years old.",
+     "tokens": [
+      [
+       "Brat",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "star",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "deset",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "let",
+       "leto",
+       "years"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Sestra je študentka v Ljubljani.",
+     "en": "My sister is a student in Ljubljana.",
+     "tokens": [
+      [
+       "Sestra",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "študentka",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "v",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Ljubljani",
+       "Ljubljana",
+       "in Ljubljana"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Ob nedeljah smo vsi doma in skupaj kosimo.",
+     "en": "On Sundays we're all at home and have lunch together.",
+     "tokens": [
+      [
+       "Ob",
+       "",
+       "on (days)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "nedeljah",
+       "nedelja",
+       "Sundays"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "smo",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vsi",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "doma",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "skupaj",
+       "",
+       "together"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "kosimo",
+       "kositi",
+       "we have lunch"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What does Maja's father do?",
+     "options": [
+      "He's a teacher",
+      "He's a doctor",
+      "He's a waiter",
+      "He's a driver"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "How old is her brother?",
+     "options": [
+      "Five",
+      "Ten",
+      "Twenty",
+      "Twelve"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Where does her sister study?",
+     "options": [
+      "In Maribor",
+      "In Koper",
+      "In Ljubljana",
+      "In Vienna"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "sl-s3",
+   "title": "Na tržnici",
+   "title_en": "At the market",
+   "sentences": [
+    {
+     "text": "Danes je sobota.",
+     "en": "Today is Saturday.",
+     "tokens": [
+      [
+       "Danes",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sobota",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Peter gre na tržnico.",
+     "en": "Peter goes to the market.",
+     "tokens": [
+      [
+       "Peter",
+       "",
+       "Peter (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "gre",
+       "iti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "na",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "tržnico",
+       "tržnica",
+       "to the market"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Kupi jabolka, krompir in sir.",
+     "en": "He buys apples, potatoes and cheese.",
+     "tokens": [
+      [
+       "Kupi",
+       "kupiti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "jabolka",
+       "jabolko",
+       "apples"
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "krompir",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sir",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "»Koliko stane kilogram jabolk?« vpraša.",
+     "en": "“How much is a kilo of apples?” he asks.",
+     "tokens": [
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Koliko",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "stane",
+       "stati",
+       "costs"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "kilogram",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "jabolk",
+       "jabolko",
+       "of apples"
+      ],
+      [
+       "?",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vpraša",
+       "vprašati",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "»Dva evra,« reče prodajalec.",
+     "en": "“Two euros,” says the seller.",
+     "tokens": [
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Dva",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "evra",
+       "evro",
+       "euros"
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "reče",
+       "reči",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "prodajalec",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Peter plača z gotovino.",
+     "en": "Peter pays in cash.",
+     "tokens": [
+      [
+       "Peter",
+       "",
+       "Peter (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "plača",
+       "plačati",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "z",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "gotovino",
+       "gotovina",
+       "with cash"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Doma skuha dobro juho.",
+     "en": "At home he cooks a good soup.",
+     "tokens": [
+      [
+       "Doma",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "skuha",
+       "skuhati",
+       "cooks"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "dobro",
+       "dober",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "juho",
+       "juha",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What day is it?",
+     "options": [
+      "Monday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "How much is a kilo of apples?",
+     "options": [
+      "One euro",
+      "Two euros",
+      "Five euros",
+      "Ten euros"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What does Peter cook at home?",
+     "options": [
+      "Pizza",
+      "Soup",
+      "Cake",
+      "Rice"
+     ],
+     "answer": 1
+    }
+   ]
+  },
+  {
+   "id": "sl-s4",
+   "title": "Dežuje",
+   "title_en": "It's raining",
+   "sentences": [
+    {
+     "text": "Danes je mrzlo in dežuje.",
+     "en": "Today it's cold and it's raining.",
+     "tokens": [
+      [
+       "Danes",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mrzlo",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "dežuje",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Nina ne gre v park.",
+     "en": "Nina isn't going to the park.",
+     "tokens": [
+      [
+       "Nina",
+       "",
+       "Nina (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ne",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "gre",
+       "iti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "v",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "park",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Doma bere knjigo in pije topel čaj.",
+     "en": "At home she reads a book and drinks warm tea.",
+     "tokens": [
+      [
+       "Doma",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "bere",
+       "brati",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "knjigo",
+       "knjiga",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "pije",
+       "piti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "topel",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "čaj",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Njena mačka spi na postelji.",
+     "en": "Her cat is sleeping on the bed.",
+     "tokens": [
+      [
+       "Njena",
+       "njen",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mačka",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "spi",
+       "spati",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "na",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "postelji",
+       "postelja",
+       "on the bed"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Popoldne pokliče prijateljico.",
+     "en": "In the afternoon she calls her friend.",
+     "tokens": [
+      [
+       "Popoldne",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "pokliče",
+       "poklicati",
+       "calls (on the phone)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "prijateljico",
+       "prijateljica",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "»Jutri bo sončno,« reče prijateljica.",
+     "en": "“Tomorrow it'll be sunny,” says her friend.",
+     "tokens": [
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Jutri",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "bo",
+       "biti",
+       "will be"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sončno",
+       "",
+       ""
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "reče",
+       "reči",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "prijateljica",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "»Potem greva jutri na sprehod!«",
+     "en": "“Then let's go for a walk tomorrow, the two of us!”",
+     "tokens": [
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Potem",
+       "",
+       "then"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "greva",
+       "iti",
+       "let's go (we two)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "jutri",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "na",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sprehod",
+       "",
+       ""
+      ],
+      [
+       "!",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What's the weather like today?",
+     "options": [
+      "Sunny",
+      "Snowy",
+      "Cold and rainy",
+      "Warm"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Where is the cat sleeping?",
+     "options": [
+      "On the chair",
+      "On the bed",
+      "In the garden",
+      "On the sofa"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What will they do tomorrow?",
+     "options": [
+      "Go for a walk",
+      "Go to the cinema",
+      "Cook together",
+      "Go skiing"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "sl-s5",
+   "title": "Nova služba",
+   "title_en": "A new job",
+   "sentences": [
+    {
+     "text": "Tomaž ima novo službo.",
+     "en": "Tomaž has a new job.",
+     "tokens": [
+      [
+       "Tomaž",
+       "",
+       "Tomaž (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ima",
+       "imeti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "novo",
+       "nov",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "službo",
+       "služba",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Vsak dan vstane zgodaj.",
+     "en": "Every day he gets up early.",
+     "tokens": [
+      [
+       "Vsak",
+       "",
+       "every"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "dan",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vstane",
+       "vstati",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zgodaj",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "V službo gre z avtobusom.",
+     "en": "He goes to work by bus.",
+     "tokens": [
+      [
+       "V",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "službo",
+       "služba",
+       "to work"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "gre",
+       "iti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "z",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "avtobusom",
+       "avtobus",
+       "by bus"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Njegova pisarna je v centru mesta.",
+     "en": "His office is in the city centre.",
+     "tokens": [
+      [
+       "Njegova",
+       "njegov",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "pisarna",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "v",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "centru",
+       "center",
+       "in the centre"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mesta",
+       "mesto",
+       "of the city"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Sodelavci so prijazni.",
+     "en": "His colleagues are friendly.",
+     "tokens": [
+      [
+       "Sodelavci",
+       "sodelavec",
+       "colleagues"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "so",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "prijazni",
+       "prijazen",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Šef je včasih slabe volje.",
+     "en": "The boss is sometimes in a bad mood.",
+     "tokens": [
+      [
+       "Šef",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "včasih",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "slabe",
+       "",
+       "bad"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "volje",
+       "",
+       "mood (slabe volje = in a bad mood)"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Ampak Tomaž je vesel, ker ima zanimivo delo.",
+     "en": "But Tomaž is happy, because he has interesting work.",
+     "tokens": [
+      [
+       "Ampak",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Tomaž",
+       "",
+       "Tomaž (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vesel",
+       "",
+       ""
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ker",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ima",
+       "imeti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zanimivo",
+       "zanimiv",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "delo",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How does Tomaž get to work?",
+     "options": [
+      "By car",
+      "On foot",
+      "By bus",
+      "By train"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Where is his office?",
+     "options": [
+      "In the city centre",
+      "At home",
+      "By the sea",
+      "In a village"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "Why is Tomaž happy?",
+     "options": [
+      "His boss is always nice",
+      "His work is interesting",
+      "It's the weekend",
+      "He has a new car"
+     ],
+     "answer": 1
+    }
+   ]
+  },
+  {
+   "id": "sl-s6",
+   "title": "Izlet na Bled",
+   "title_en": "A trip to Bled",
+   "sentences": [
+    {
+     "text": "V nedeljo gremo na izlet na Bled.",
+     "en": "On Sunday we're going on a trip to Bled.",
+     "tokens": [
+      [
+       "V",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "nedeljo",
+       "nedelja",
+       "on Sunday"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "gremo",
+       "iti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "na",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "izlet",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "na",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Bled",
+       "",
+       "Bled (a town by a lake)"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Gremo z vlakom, ker nimamo avta.",
+     "en": "We go by train, because we don't have a car.",
+     "tokens": [
+      [
+       "Gremo",
+       "iti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "z",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vlakom",
+       "vlak",
+       "by train"
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ker",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "nimamo",
+       "",
+       "we don't have"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "avta",
+       "avto",
+       "a car"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Bled je majhno mesto ob jezeru.",
+     "en": "Bled is a small town by a lake.",
+     "tokens": [
+      [
+       "Bled",
+       "",
+       "Bled"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "majhno",
+       "majhen",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mesto",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ob",
+       "",
+       "by; next to"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "jezeru",
+       "jezero",
+       "the lake"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Na jezeru je otok s cerkvijo.",
+     "en": "On the lake there's an island with a church.",
+     "tokens": [
+      [
+       "Na",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "jezeru",
+       "jezero",
+       "on the lake"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "otok",
+       "",
+       "island"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "s",
+       "z",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "cerkvijo",
+       "cerkev",
+       "with a church"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Na gradu jemo kremno rezino.",
+     "en": "At the castle we eat a cream slice.",
+     "tokens": [
+      [
+       "Na",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "gradu",
+       "grad",
+       "at the castle"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "jemo",
+       "jesti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "kremno",
+       "",
+       "cream"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "rezino",
+       "",
+       "slice (kremna rezina: Bled's famous cream cake)"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Vreme je lepo in sonce sije.",
+     "en": "The weather is nice and the sun is shining.",
+     "tokens": [
+      [
+       "Vreme",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "lepo",
+       "lep",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sonce",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sije",
+       "",
+       "shines"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Zvečer smo utrujeni, ampak zelo veseli.",
+     "en": "In the evening we're tired, but very happy.",
+     "tokens": [
+      [
+       "Zvečer",
+       "",
+       "in the evening"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "smo",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "utrujeni",
+       "utrujen",
+       ""
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ampak",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zelo",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "veseli",
+       "vesel",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How do they get to Bled?",
+     "options": [
+      "By car",
+      "By train",
+      "By bus",
+      "On foot"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What is on the lake?",
+     "options": [
+      "A bridge",
+      "An island with a church",
+      "A hotel",
+      "A castle"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What do they eat at the castle?",
+     "options": [
+      "Potica",
+      "Pizza",
+      "A cream slice",
+      "Soup"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "sl-s7",
+   "title": "Pri zdravniku",
+   "title_en": "At the doctor's",
+   "sentences": [
+    {
+     "text": "Marko je bolan.",
+     "en": "Marko is ill.",
+     "tokens": [
+      [
+       "Marko",
+       "",
+       "Marko (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "bolan",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Boli ga glava in grlo.",
+     "en": "His head and throat hurt.",
+     "tokens": [
+      [
+       "Boli",
+       "",
+       "hurts"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ga",
+       "",
+       "him"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "glava",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "grlo",
+       "",
+       "throat"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Gre k zdravniku.",
+     "en": "He goes to the doctor.",
+     "tokens": [
+      [
+       "Gre",
+       "iti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "k",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zdravniku",
+       "zdravnik",
+       "to the doctor"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Zdravnica ga vpraša: »Kaj vas boli?«",
+     "en": "The doctor asks him: “What hurts?”",
+     "tokens": [
+      [
+       "Zdravnica",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ga",
+       "",
+       "him"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vpraša",
+       "vprašati",
+       ""
+      ],
+      [
+       ":",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Kaj",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vas",
+       "",
+       "you (polite)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "boli",
+       "",
+       "hurts"
+      ],
+      [
+       "?",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "»Glava in grlo. Zelo sem utrujen.«",
+     "en": "“My head and throat. I'm very tired.”",
+     "tokens": [
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Glava",
+       "glava",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "grlo",
+       "",
+       "throat"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Zelo",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "sem",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "utrujen",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Zdravnica mu da zdravilo.",
+     "en": "The doctor gives him medicine.",
+     "tokens": [
+      [
+       "Zdravnica",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "mu",
+       "",
+       "(to) him"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "da",
+       "dati",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zdravilo",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "»Pijte veliko čaja in spite!«",
+     "en": "“Drink lots of tea and sleep!”",
+     "tokens": [
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Pijte",
+       "piti",
+       "drink! (polite)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "veliko",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "čaja",
+       "čaj",
+       "of tea"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "spite",
+       "spati",
+       "sleep! (polite)"
+      ],
+      [
+       "!",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What hurts Marko?",
+     "options": [
+      "His leg and back",
+      "His head and throat",
+      "His stomach",
+      "A tooth"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What does the doctor give him?",
+     "options": [
+      "Tea",
+      "Medicine",
+      "Water",
+      "Nothing"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What should Marko do?",
+     "options": [
+      "Go to work",
+      "Drink tea and sleep",
+      "Eat a lot",
+      "Go skiing"
+     ],
+     "answer": 1
+    }
+   ]
+  },
+  {
+   "id": "sl-s8",
+   "title": "Rojstni dan",
+   "title_en": "A birthday",
+   "sentences": [
+    {
+     "text": "Jutri ima Eva rojstni dan.",
+     "en": "Tomorrow it's Eva's birthday.",
+     "tokens": [
+      [
+       "Jutri",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "ima",
+       "imeti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Eva",
+       "",
+       "Eva (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "rojstni dan",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Stara bo dvajset let.",
+     "en": "She'll be twenty.",
+     "tokens": [
+      [
+       "Stara",
+       "star",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "bo",
+       "biti",
+       "will be"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "dvajset",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "let",
+       "leto",
+       "years"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Njeni prijatelji pripravijo zabavo.",
+     "en": "Her friends get a party ready.",
+     "tokens": [
+      [
+       "Njeni",
+       "njen",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "prijatelji",
+       "prijatelj",
+       "friends"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "pripravijo",
+       "pripraviti",
+       "get ready"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zabavo",
+       "zabava",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Kupijo torto in rože.",
+     "en": "They buy a cake and flowers.",
+     "tokens": [
+      [
+       "Kupijo",
+       "kupiti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "torto",
+       "torta",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "rože",
+       "roža",
+       "flowers"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Zvečer pride Eva domov.",
+     "en": "In the evening Eva comes home.",
+     "tokens": [
+      [
+       "Zvečer",
+       "",
+       "in the evening"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "pride",
+       "priti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "Eva",
+       "",
+       "Eva (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "domov",
+       "",
+       ""
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Vsi zakličejo: »Vse najboljše!«",
+     "en": "Everyone shouts: “Happy birthday!”",
+     "tokens": [
+      [
+       "Vsi",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zakličejo",
+       "",
+       "shout"
+      ],
+      [
+       ":",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "»",
+       "",
+       ""
+      ],
+      [
+       "Vse",
+       "",
+       "everything"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "najboljše",
+       "",
+       "the best (vse najboljše = happy birthday!)"
+      ],
+      [
+       "!",
+       "",
+       ""
+      ],
+      [
+       "«",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "Eva je zelo vesela, plešejo in pojejo do polnoči.",
+     "en": "Eva is very happy; they dance and sing until midnight.",
+     "tokens": [
+      [
+       "Eva",
+       "",
+       "Eva (name)"
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "je",
+       "biti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "zelo",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "vesela",
+       "vesel",
+       ""
+      ],
+      [
+       ",",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "plešejo",
+       "plesati",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "in",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "pojejo",
+       "peti",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "do",
+       "",
+       ""
+      ],
+      [
+       " ",
+       "",
+       ""
+      ],
+      [
+       "polnoči",
+       "",
+       "midnight"
+      ],
+      [
+       ".",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How old will Eva be?",
+     "options": [
+      "Ten",
+      "Twenty",
+      "Thirty",
+      "Twelve"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What do her friends buy?",
+     "options": [
+      "A cake and flowers",
+      "A book",
+      "A car",
+      "Wine"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "Until when do they dance and sing?",
+     "options": [
+      "Until midnight",
+      "Until noon",
+      "For an hour",
+      "Until morning"
+     ],
+     "answer": 0
+    }
+   ]
+  }
+ ]
+}

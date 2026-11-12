@@ -100,7 +100,7 @@ writeFileSync(join(www, "manifest.webmanifest"), JSON.stringify(manifest, null, 
 // Ready-made memory hooks, one file per language, loaded by the app when needed.
 cpSync(join(mobile, "..", "app", "data", "extras"), join(www, "extras"), { recursive: true });
 cpSync(join(mobile, "..", "app", "data", "grammar"), join(www, "grammar"), { recursive: true });
-cpSync(join(mobile, "..", "app", "data", "stories"), join(www, "stories"), { recursive: true });
+cpSync(join(mobile, "..", "app", "data", "stories"), join(www, "stories"), { recursive: true, filter: (src) => !src.endsWith(".py") });
 // Which parts every character is made of, for the character map.
 if (EAST) copyFileSync(join(mobile, "..", "app", "data", "charmap.json"), join(www, "charmap.json"));
 // Interface and content translations (French, Spanish, Japanese).

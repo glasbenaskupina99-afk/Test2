@@ -58,6 +58,13 @@ function gardenWords(c: "zh" | "ja" | "sl", lang: string) {
 }
 const plants = (lang: string) => Object.fromEntries(SPECIES.map((s) => [s.key, { name: UI[lang][s.name] || s.name, svg: s.svg }]));
 
+// ------------------------------------------------------------------ the questions & answers, for search engines
+function faqLd(faq: string, lang: string) {
+  const strip = (h: string) => h.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+  const qa = [...faq.matchAll(/<summary>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>/g)].map(([, q, a]) => ({ "@type": "Question", name: strip(q), acceptedAnswer: { "@type": "Answer", text: strip(a) } }));
+  return `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", inLanguage: lang, mainEntity: qa }).replace(/</g, "\\u003c")}</script>`;
+}
+
 // ------------------------------------------------------------------ one page
 function render(page: "east" | "heritage", lang: string) {
   const S = STR[lang];
@@ -100,6 +107,7 @@ function render(page: "east" | "heritage", lang: string) {
     footlangs,
     uilangs,
     data: JSON.stringify(data).replace(/</g, "\\u003c"),
+    faqld: faqLd(S[page === "east" ? "e.faq" : "h.faq"], lang),
   };
   html = html.replace(/\{\{@([a-z]+)\}\}/g, (m, k) => {
     if (!(k in vals)) throw new Error(`${page}: unknown value ${k}`);

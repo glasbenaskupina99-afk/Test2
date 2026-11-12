@@ -107,7 +107,7 @@ async function notify(request, env, ctx) {
   return json(200, { ok: true });
 }
 
-const VERSION = "2026-11-12 e — menu: East = Chinese · Japanese, Heritage = Slovenian; grammar and stories: a few examples";
+const VERSION = "2026-11-12 f — Learn Slovenian / Learn Chinese & Japanese titles and FAQ; menu: East = Chinese · Japanese, Heritage = Slovenian; grammar and stories: a few examples";
 
 export default {
   async fetch(request, env, ctx) {

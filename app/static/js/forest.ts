@@ -61,10 +61,17 @@ function plantSheet(p, onWater) {
 function nameTag(wrap: HTMLElement, x: number, y: number, p, open?: () => void) {
   wrap.querySelector(".plant-tag")?.remove();
   const tag = h("button", { class: "plant-tag", style: { left: `${x}px`, top: `${y}px` }, onclick: (e) => { e.stopPropagation(); tag.remove(); open?.(); } }, h("b", {}, speciesOf(p.plant).name), p.t ? h("span", { class: "hz" }, ` · ${p.t}`) : null, p.m ? h("small", {}, ` ${p.m}`) : null);
+  // Never wider than the garden (a long meaning wraps onto a second line), and always inside it:
+  // the tag is centred on the plant when there's room, else pushed in from the edge, with its
+  // little arrow still pointing at the plant.
+  const room = wrap.clientWidth - 12;
+  tag.style.maxWidth = `${room}px`;
   wrap.append(tag);
-  // Keep the whole tag inside the garden (it is centred on the plant).
-  const half = tag.offsetWidth / 2;
-  tag.style.left = `${Math.min(Math.max(x, half + 4), wrap.clientWidth - half - 4)}px`;
+  if (tag.scrollWidth > room) tag.classList.add("wrap");
+  const half = Math.min(tag.offsetWidth, room) / 2;
+  const left = Math.min(Math.max(x, half + 6), wrap.clientWidth - half - 6);
+  tag.style.left = `${left}px`;
+  tag.style.setProperty("--ax", `${Math.max(-half + 14, Math.min(half - 14, x - left))}px`);
   setTimeout(() => tag.remove(), 4000);
 }
 
@@ -72,7 +79,7 @@ function nameTag(wrap: HTMLElement, x: number, y: number, p, open?: () => void) 
 export function tagPlant(garden: HTMLElement, el: Element, p, open?: () => void) {
   const g = garden.getBoundingClientRect();
   const r = el.getBoundingClientRect();
-  nameTag(garden, Math.min(Math.max(r.left - g.left + r.width / 2, 70), g.width - 70), r.top - g.top - 6, p, open);
+  nameTag(garden, r.left - g.left + r.width / 2, r.top - g.top - 6, p, open);
 }
 
 const COLS = 7; // spots in a row of a bed

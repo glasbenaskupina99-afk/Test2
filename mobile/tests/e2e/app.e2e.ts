@@ -264,6 +264,18 @@ test("the garden stays quick with a big vocabulary (it once took seconds)", asyn
   await go(page, "#/forest", ".bed-svg g.gplant");
   await page.locator(".bed-svg g.gplant").nth(5).click();
   await page.waitForSelector(".plant-tag", { timeout: 3000 });
+  // Plants at the edges: the name tag stays fully inside the garden (it used to slide off the side).
+  const plants = page.locator(".bed-svg g.gplant");
+  const n = await plants.count();
+  for (const i of [0, 6, 7, 13, n - 1]) {
+    await plants.nth(i).scrollIntoViewIfNeeded();
+    await plants.nth(i).click();
+    const tag = await page.locator(".plant-tag").boundingBox();
+    const garden = await page.locator(".plant-tag").evaluate((t) => t.parentElement.getBoundingClientRect().toJSON());
+    await page.waitForTimeout(300);
+    const t2 = await page.locator(".plant-tag").boundingBox();
+    assert.ok(t2.x >= garden.x - 1 && t2.x + t2.width <= garden.x + garden.width + 1, `tag of plant ${i} is inside the garden`);
+  }
   assert.deepEqual(errors, []);
 });
 

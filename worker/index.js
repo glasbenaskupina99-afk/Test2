@@ -107,6 +107,8 @@ async function notify(request, env, ctx) {
   return json(200, { ok: true });
 }
 
+const VERSION = "2026-11-12 c — menu: Chinese · Japanese · Slovenian; grammar and stories: a few examples";
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -118,6 +120,8 @@ export default {
       if (request.method !== "POST") return json(405, { error: "use POST" });
       return notify(request, env, ctx);
     }
+    // Which version of the site is live (bump with every site change).
+    if (url.pathname === "/version") return new Response(`${VERSION}\n`, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } });
     // www.bloomko.eu → bloomko.eu
     if (url.hostname === "www.bloomko.eu") {
       url.hostname = "bloomko.eu";

@@ -505,13 +505,13 @@ function sitemap() {
 // ------------------------------------------------------------------ routing
 
 const html = (body, status = 200) =>
-  new Response(body, { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=3600, s-maxage=86400" } });
+  new Response(body, { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" } });
 
 /** A page for this URL, or null when it isn't one of ours. */
 export function seo(url) {
   const path = url.pathname;
   if (path === "/sitemap.xml") {
-    return new Response(sitemap(), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+    return new Response(sitemap(), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=300" } });
   }
   const m = path.match(/^\/(chinese|japanese|slovenian)(?:\/([^/]+))?(?:\/([^/]+))?\/?$/);
   if (!m) return null;

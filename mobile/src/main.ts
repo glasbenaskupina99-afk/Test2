@@ -77,6 +77,7 @@ if (!isNative && "serviceWorker" in navigator && location.protocol === "https:")
 await backend.init(storage);
 window.__localApi = backend.handle;
 backend.setOnSynced(() => window.dispatchEvent(new Event("bloomko-synced")));
+backend.setOnAi(() => window.dispatchEvent(new Event("bloomko-ai")));
 
 // Load Gemma in the background shortly after start, so the first AI answer doesn't
 // have to wait for the model to load (can be turned off in Settings).

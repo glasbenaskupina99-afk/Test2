@@ -12,7 +12,8 @@
     "build:site": "tsx scripts/build-site.ts",
     "typecheck": "tsc -p .",
     "test": "tsx --test tests/*.test.ts",
-    "test:e2e": "tsx --test --test-concurrency=1 tests/e2e/*.e2e.ts"
+    "test:e2e": "tsx --test --test-concurrency=1 tests/e2e/*.e2e.ts",
+    "audit": "tsx scripts/audit.ts"
   },
   "dependencies": {
     "@capacitor-community/speech-recognition": "7.0.1",

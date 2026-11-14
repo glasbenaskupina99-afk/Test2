@@ -487,3 +487,38 @@ test("sync: two phones learn offline, then both end up with everything", async (
   assert.ok((await a.api("/api/words")).some((w: any) => w.hanzi === own.hanzi), "phone B's own word reached phone A");
   assert.deepEqual([...a.errors, ...b.errors].filter((e) => !/sync|Failed to fetch|internet/i.test(e)), []);
 });
+
+test("AI: offered only when it can really answer (a model server that responds)", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  // A new learner has the AI switch on, but no model and no model server: no AI in the app.
+  let s = await api("/api/settings");
+  assert.equal(s.ai_wanted, true, "the switch is on by default");
+  assert.equal(s.ai_enabled, false, "but the AI isn't offered while nothing can answer");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 30).map((w: any) => w.id), xp: 0 } });
+  const session = await api("/api/sentences/session?use_ai=1");
+  assert.ok(session.sentences.length, "built-in sentences are used");
+  assert.equal(session.note, null, "without a complaint about the AI");
+  await go(page, "#/", ".home-head");
+  await page.locator(".primary-go").click();
+  await page.locator(".sheet .mode").last().click();
+  await page.waitForSelector(".lesson .ex-kicker");
+  assert.equal(await page.locator(".lesson", { hasText: "Memory hook & example" }).count(), 0, "no AI button on a new word");
+  await page.reload();
+  await page.waitForSelector(".home-head", { timeout: 20000 });
+  await page.evaluate(() => document.getElementById("splash")?.remove());
+
+  // A model server appears (as with Ollama on a computer): now the AI is on.
+  await page.route("http://ai.test/**", (route) =>
+    route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ data: [{ id: "gemma" }] }) })
+  );
+  s = await api("/api/settings", { method: "PUT", body: { ai_enabled: true, llm_base_url: "http://ai.test/v1", llm_model: "gemma" } });
+  assert.equal(s.ai_enabled, true, "a model server that answers turns the AI on");
+  // Switched off by hand: off, whatever the server says.
+  s = await api("/api/settings", { method: "PUT", body: { ai_enabled: false } });
+  assert.equal(s.ai_enabled, false);
+  assert.equal(s.ai_wanted, false);
+  assert.deepEqual(errors, []);
+});

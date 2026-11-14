@@ -126,6 +126,16 @@ window.addEventListener("bloomko-synced", () => {
   if (!document.querySelector(".lesson, .welcome, .tutorial")) route();
 });
 
+// The AI became available (the model finished downloading, the model server answered) or went away.
+window.addEventListener("bloomko-ai", async () => {
+  try {
+    state.settings = await api("/api/settings");
+  } catch {
+    return;
+  }
+  if (!document.querySelector(".lesson, .welcome, .tutorial, .sheet-bg") && ["", "#", "#/"].includes(location.hash)) route();
+});
+
 let flowBusy = false;
 /** Start a lesson or practice; a second tap while one is starting does nothing. */
 async function startFlow(fn) {
@@ -1375,7 +1385,7 @@ async function statsScreen() {
                 "div",
                 { class: "list-item" },
                 h("div", { style: { fontSize: "28px" } }, skillNames[k.skill]?.[0] || "•"),
-                h("div", { class: "meta" }, h("div", {}, skillNames[k.skill]?.[1] || k.skill), h("div", { class: "en" }, `${k.n} words · avg interval ${k.avg_interval.toFixed(1)} days · ${k.lapses} lapses`))
+                h("div", { class: "meta" }, h("div", {}, skillNames[k.skill]?.[1] || k.skill), h("div", { class: "en ui" }, `${k.n} words · avg interval ${k.avg_interval.toFixed(1)} days · ${k.lapses} lapses`))
               )
             )
           : h("div", { class: "list-item muted" }, "Learn some words to see skill stats.")
@@ -1410,13 +1420,14 @@ async function settingsScreen() {
   const field = (label: string, el: Node, hint?: Child) => h("div", { class: "field" }, h("label", {}, label), el, hint ? h("div", { class: "hint", style: { marginTop: 0 } }, hint) : null);
 
   const aiToggle = h("input", { type: "checkbox", class: "toggle" });
-  aiToggle.checked = s.ai_enabled;
+  aiToggle.checked = s.ai_wanted ?? s.ai_enabled;
   const statusEl = h("div", { class: "row small" }, h("span", { class: "status-dot" + (state.aiStatus?.ok ? " ok" : "") }), state.aiStatus?.message || "");
 
   const testAI = async () => {
     await save(true);
     statusEl.replaceChildren("Testing…");
     state.aiStatus = await api("/api/ai/status");
+    state.settings = await api("/api/settings");
     const st = state.aiStatus;
     statusEl.replaceChildren(
       h("span", { class: "status-dot" + (st.ok ? " ok" : "") }),

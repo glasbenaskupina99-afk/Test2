@@ -13,7 +13,7 @@ export function placementCard(offer, done) {
     h("div", { class: "row" }, h("span", { class: "place-ic" }, "🧭"), h("div", {}, h("b", {}, `New to ${offer.section}?`), h("div", { class: "muted small" }, `If you already know some of its ${offer.total} words, a 2-minute test skips them.`))),
     h(
       "div",
-      { class: "row", style: { gap: "8px", marginTop: "10px" } },
+      { class: "row place-actions", style: { gap: "8px", marginTop: "10px" } },
       h("button", { class: "btn small", onclick: () => runPlacement(offer.section, done) }, "Placement test"),
       h("button", { class: "btn ghost small", onclick: async () => { await api("/api/placement/apply", { method: "POST", body: { section: offer.section, known: 0 } }); done(); } }, "I'm a complete beginner")
     )

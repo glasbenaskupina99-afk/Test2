@@ -122,7 +122,7 @@ function translateText(node) {
 }
 
 // Never translated: learning content (words, readings, meanings, answer options), only the interface is.
-const SKIP = "[translate='no'], .hz, script, style, textarea, .notranslate, .en, .py, .txt:not(.ui), .fs-meaning, .cm-m";
+const SKIP = "[translate='no'], .hz, script, style, textarea, .notranslate, .en:not(.ui), .py, .txt:not(.ui), .fs-meaning, .cm-m";
 function skip(el) {
   return el.closest?.(SKIP);
 }

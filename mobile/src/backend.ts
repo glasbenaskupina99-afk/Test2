@@ -191,6 +191,8 @@ export async function init(storage) {
   ensureShape();
   ai.configure(settingsAll);
   await applyLocale();
+  // Don't hold up the start for a model server that takes its time to (not) answer.
+  await Promise.race([checkAi(), new Promise((r) => setTimeout(r, 700))]);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
       flush();
@@ -302,6 +304,30 @@ let syncing = null;
 /** Called when sync merged something new from another device (the app redraws the screen). */
 export let onSynced = () => {};
 export function setOnSynced(fn) { onSynced = fn; }
+
+// ------------------------------------------------------------------ is the AI really there?
+// The AI counts as "on" only when it can answer: switched on in Settings AND a model on the phone
+// (Android app) or a model server that responds (browser). Without this the app offers AI
+// buttons that can only fail — for everyone who skipped the Gemma download.
+let aiReady = false;
+let aiSeq = 0;
+let onAi = () => {};
+export function setOnAi(fn) { onAi = fn; }
+const aiOn = () => !!settingsAll().ai_enabled && aiReady;
+async function checkAi(known?: { ok?: boolean }) {
+  const seq = ++aiSeq;
+  let ok = false;
+  try {
+    ok = settingsAll().ai_enabled ? !!(known || (await ai.status())).ok : false;
+  } catch {
+    ok = false;
+  }
+  if (seq !== aiSeq) return aiReady; // a newer check is under way
+  const changed = ok !== aiReady;
+  aiReady = ok;
+  if (changed) onAi();
+  return ok;
+}
 
 function runSync() {
   if (!db.sync?.code) return Promise.reject(new HttpError(400, "Sync is off"));
@@ -1868,15 +1894,15 @@ const routes = {
     const focus = Object.entries(lapsesBy).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([id]) => pick(wordById(Number(id))));
     let note = null;
     let sentences = [];
-    if (useAI && s.ai_enabled && known.length >= 5) {
+    if (useAI && aiOn() && known.length >= 5) {
       try {
         const gen = await ai.generateSentences(known, focus, s.sentence_count, recent);
         sentences = gen.slice(0, s.sentence_count).map((x) => decorate(x, knownChars, "ai"));
       } catch (e) {
         console.warn(e);
-        note = `Gemma unavailable — using built-in sentences (${e.message})`;
+        note = "Gemma couldn't write sentences just now — using the built-in ones.";
       }
-    } else if (useAI && s.ai_enabled) {
+    } else if (useAI && aiOn()) {
       note = "Learn at least 5 words for AI sentences — using built-in ones for now.";
     }
     if (!sentences.length) sentences = fallbackSentences(knownChars, s.sentence_count, new Set(recent)).map((x) => decorate(x, knownChars, "builtin"));
@@ -1902,7 +1928,7 @@ const routes = {
       if (r.result === "correct") return { correct: true, score: 100, feedback: "Correct pinyin!", corrected: body.zh, by: "pinyin" };
       if (r.result === "tones_wrong") return { correct: false, score: 70, feedback: "Right syllables — check your tones.", corrected: body.zh, by: "pinyin" };
     }
-    if (ai.available()) {
+    if (aiOn()) {
       try {
         return { ...(await ai.gradeTranslation(body.en, body.zh, body.answer)), by: "ai" };
       } catch (e) {
@@ -1974,7 +2000,8 @@ const routes = {
 
   "GET /api/settings": () => {
     const s = settingsAll();
-    return { ...s, hf_token: s.hf_token ? "••••" : "", llm_api_key: s.llm_api_key ? "••••" : "" };
+    // ai_enabled: the AI can be used right now; ai_wanted: the switch in Settings.
+    return { ...s, ai_wanted: !!s.ai_enabled, ai_enabled: aiOn(), hf_token: s.hf_token ? "••••" : "", llm_api_key: s.llm_api_key ? "••••" : "" };
   },
 
   "PUT /api/settings": async (_, body) => {
@@ -1983,13 +2010,18 @@ const routes = {
     const before = settingsAll().ui_lang;
     settingsUpdate(body);
     if (settingsAll().ui_lang !== before) await applyLocale();
+    if (["ai_enabled", "llm_base_url", "llm_model", "llm_api_key", "hf_repo"].some((k) => k in body)) await checkAi();
     return routes["GET /api/settings"]();
   },
 
   // The settings screen only sees a masked token; the model download needs the real one.
   "GET /api/gemma/token": () => ({ token: db.settings.hf_token || "" }),
 
-  "GET /api/ai/status": () => ai.status(),
+  "GET /api/ai/status": async () => {
+    const st = await ai.status();
+    await checkAi(st);
+    return st;
+  },
   "POST /api/ai/test": () => ai.test(),
 
   "GET /api/stats": () => {

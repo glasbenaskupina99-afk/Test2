@@ -129,7 +129,7 @@ async function webStatus() {
   const s = getSettings();
   const headers = s.llm_api_key ? { Authorization: `Bearer ${s.llm_api_key}` } : {};
   try {
-    const r = await fetch(s.llm_base_url.replace(/\/+$/, "") + "/models", { headers });
+    const r = await fetch(s.llm_base_url.replace(/\/+$/, "") + "/models", { headers, signal: AbortSignal.timeout(2500) });
     const models = ((await r.json()).data || []).map((m) => m.id);
     const found = models.includes(s.llm_model) || models.some((m) => m && m.split(":")[0] === s.llm_model);
     return { ok: found, enabled: true, model: s.llm_model, models, message: found ? "Connected" : `Server is up but model '${s.llm_model}' isn't installed` };

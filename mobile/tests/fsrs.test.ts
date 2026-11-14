@@ -33,3 +33,10 @@ test("retrievability is 90% after exactly one stability", () => {
   assert.ok(Math.abs(retrievability(intervalFor(10), 10) - 0.9) < 1e-9);
   assert.equal(fromSm2({ interval: 12, ease: 2.5 }).stability, 12);
 });
+
+test("a card without a difficulty (old backup, import) is still scheduled", () => {
+  for (const rating of [1, 2, 3, 4] as const) {
+    const r = next({ stability: 6 } as any, rating, 5);
+    assert.ok(Number.isFinite(r.stability) && Number.isFinite(r.difficulty), `rating ${rating}: ${JSON.stringify(r)}`);
+  }
+});

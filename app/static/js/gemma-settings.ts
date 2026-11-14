@@ -19,7 +19,7 @@ export function gemmaCard(s, fields, save) {
   const files = h("div", { style: { margin: "10px 0" } });
 
   const aiToggle = h("input", { type: "checkbox", class: "toggle" });
-  aiToggle.checked = s.ai_enabled;
+  aiToggle.checked = s.ai_wanted ?? s.ai_enabled;
   fields.ai_enabled = { get value() { return aiToggle.checked; } };
 
   const known = REPOS.some(([r]) => r === s.hf_repo);
@@ -57,7 +57,11 @@ export function gemmaCard(s, fields, save) {
       st.lastError ? h("div", { style: { width: "100%", color: "var(--red)" } }, st.lastError) : null,
       ].filter(Boolean)
     );
-    state.aiStatus = { ok: st.hasModel && s.ai_enabled, message: st.hasModel ? "Gemma ready on device" : "No model downloaded" };
+    state.aiStatus = { ok: st.hasModel && aiToggle.checked, message: st.hasModel ? "Gemma ready on device" : "No model downloaded" };
+    // A model was added or removed here: the rest of the app should know whether the AI can be used.
+    if (!!state.settings?.ai_enabled !== (st.hasModel && (state.settings?.ai_wanted ?? true))) {
+      api("/api/ai/status").then(() => api("/api/settings")).then((x) => (state.settings = x)).catch(() => {});
+    }
     if (st.downloading) showProgress(true);
     return st;
   }

@@ -24,7 +24,9 @@ export const intervalFor = (s) => (s / FACTOR) * (Math.pow(RETENTION, 1 / DECAY)
  */
 export function next(card, rating, elapsed) {
   if (!card.stability) return { stability: W[rating - 1], difficulty: initD(rating) };
-  const { stability: s, difficulty: d } = card;
+  const s = card.stability;
+  // A card that came without a difficulty (an old backup, an import) starts from the default one.
+  const d = Number.isFinite(card.difficulty) ? card.difficulty : initD(3);
   const r = retrievability(Math.max(0, elapsed), s);
   const difficulty = clampD(W[7] * initD(3) + (1 - W[7]) * (d - W[6] * (rating - 3)));
   let stability;

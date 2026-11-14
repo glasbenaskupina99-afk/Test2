@@ -443,12 +443,14 @@ export function pickSentenceMode() {
   return new Promise<{ mode: string; useAI: boolean } | null>((resolve) => {
     let mode = localStorage.getItem("sentenceMode") || "mixed";
     let useAI = state.settings?.ai_enabled && localStorage.getItem("sentenceAI") !== "0";
+    // Slovenian is typed, not drawn stroke by stroke: no "Write" there.
     const opts = [
       ["mixed", "🔀", "Mixed"],
-      ["write", "✍️", "Write"],
+      ...(isSl() ? [] : [["write", "✍️", "Write"]]),
       ["type", "⌨️", "Type"],
       ["speak", "🎤", "Speak"],
     ];
+    if (!opts.some(([k]) => k === mode)) mode = "mixed";
     const buttons = opts.map(([key, e, label]) =>
       h("button", { class: key === mode ? "on" : "", onclick: () => { mode = key; buttons.forEach((b, i) => b.classList.toggle("on", opts[i][0] === key)); } }, h("span", { class: "e" }, e), label)
     );
@@ -462,7 +464,7 @@ export function pickSentenceMode() {
         "div",
         { class: "sheet" },
         h("h2", {}, "Sentence practice"),
-        h("p", { class: "muted" }, `Translate English sentences into ${T.lang()} — by hand, keyboard or voice.`),
+        h("p", { class: "muted" }, isSl() ? `Translate English sentences into ${T.lang()} — by keyboard or voice.` : `Translate English sentences into ${T.lang()} — by hand, keyboard or voice.`),
         h("div", { class: "mode-pick" }, buttons),
         h(
           "div",
@@ -500,9 +502,9 @@ export async function sentences() {
     loading.remove();
   }
   if (data.note) toast(data.note, 4500);
-  const cycle = ["write", "type", "speak"];
+  const cycle = isSl() ? ["type", "speak"] : ["write", "type", "speak"];
   const steps = data.sentences.map((s, i) => {
-    const m = choice.mode === "mixed" ? cycle[i % 3] : choice.mode;
+    const m = choice.mode === "mixed" ? cycle[i % cycle.length] : choice.mode;
     const make =
       m === "write" && !isSl() ? (ctx) => ex.sentenceWrite(ctx, s) : m === "type" || m === "write" ? (ctx) => ex.sentenceType(ctx, s) : (ctx) => ex.sentenceSpeakRecall(ctx, s);
     return step(make, async (res) => {

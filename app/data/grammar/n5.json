@@ -1,0 +1,3324 @@
+{
+ "level": "JLPT N5",
+ "points": [
+  {
+   "id": "ja5-wa-desu",
+   "title": "は … です — “A is B”",
+   "pattern": "A は B です",
+   "short": "A is B (topic + copula)",
+   "explain": "は marks the topic, and です works like “is / am / are” at the end of the sentence. Put the topic first, then what it is. Note: the particle は is pronounced “wa”, not “ha”.",
+   "examples": [
+    {
+     "text": "私は学生です。",
+     "reading": "わたしはがくせいです。",
+     "mark": [
+      "は",
+      "です"
+     ],
+     "en": "I am a student."
+    },
+    {
+     "text": "これは本です。",
+     "reading": "これはほんです。",
+     "mark": [
+      "は",
+      "です"
+     ],
+     "en": "This is a book."
+    },
+    {
+     "text": "父は先生です。",
+     "reading": "ちちはせんせいです。",
+     "mark": [
+      "は",
+      "です"
+     ],
+     "en": "My father is a teacher."
+    },
+    {
+     "text": "今日は月曜日です。",
+     "reading": "きょうはげつようびです。",
+     "mark": [
+      "は",
+      "です"
+     ],
+     "en": "Today is Monday."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ja-arimasen",
+   "title": "じゃありません — “A is not B”",
+   "pattern": "A は B じゃありません / ではありません",
+   "short": "A is not B (negative copula)",
+   "explain": "To say something is not B, replace です with じゃありません (spoken) or ではありません (more formal). じゃないです is also common in everyday polite speech. Don't put ません directly after a noun.",
+   "examples": [
+    {
+     "text": "私は先生じゃありません。",
+     "reading": "わたしはせんせいじゃありません。",
+     "mark": [
+      "じゃありません"
+     ],
+     "en": "I am not a teacher."
+    },
+    {
+     "text": "これはペンではありません。",
+     "reading": "これはぺんではありません。",
+     "mark": [
+      "ではありません"
+     ],
+     "en": "This is not a pen."
+    },
+    {
+     "text": "今日は休みじゃありません。",
+     "reading": "きょうはやすみじゃありません。",
+     "mark": [
+      "じゃありません"
+     ],
+     "en": "Today is not a day off."
+    },
+    {
+     "text": "あの人は日本人じゃないです。",
+     "reading": "あのひとはにほんじんじゃないです。",
+     "mark": [
+      "じゃないです"
+     ],
+     "en": "That person is not Japanese."
+    }
+   ]
+  },
+  {
+   "id": "ja5-deshita",
+   "title": "でした — “was / were”",
+   "pattern": "N でした / N じゃなかったです",
+   "short": "Was / was not (past copula)",
+   "explain": "でした is the past form of です: “was / were”. The past negative is じゃなかったです or じゃありませんでした. Use these with nouns and な-adjectives, not with い-adjectives.",
+   "examples": [
+    {
+     "text": "昨日は雨でした。",
+     "reading": "きのうはあめでした。",
+     "mark": [
+      "でした"
+     ],
+     "en": "It was rainy yesterday."
+    },
+    {
+     "text": "昨日は日曜日でした。",
+     "reading": "きのうはにちようびでした。",
+     "mark": [
+      "でした"
+     ],
+     "en": "Yesterday was Sunday."
+    },
+    {
+     "text": "父は先生でした。",
+     "reading": "ちちはせんせいでした。",
+     "mark": [
+      "でした"
+     ],
+     "en": "My father was a teacher."
+    },
+    {
+     "text": "昨日は休みじゃなかったです。",
+     "reading": "きのうはやすみじゃなかったです。",
+     "mark": [
+      "じゃなかったです"
+     ],
+     "en": "Yesterday was not a day off."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ka",
+   "title": "か — question marker",
+   "pattern": "Sentence + か",
+   "short": "Turns a sentence into a question",
+   "explain": "Add か to the end of a polite sentence to make it a question; the word order stays the same. Japanese writing often ends a か-question with 。, but ？ is also common. Answer with はい (yes) or いいえ (no).",
+   "examples": [
+    {
+     "text": "学生ですか？",
+     "reading": "がくせいですか？",
+     "mark": [
+      "か"
+     ],
+     "en": "Are you a student?"
+    },
+    {
+     "text": "これは何ですか。",
+     "reading": "これはなんですか。",
+     "mark": [
+      "か"
+     ],
+     "en": "What is this?"
+    },
+    {
+     "text": "トイレはどこですか。",
+     "reading": "といれはどこですか。",
+     "mark": [
+      "か"
+     ],
+     "en": "Where is the toilet?"
+    },
+    {
+     "text": "あの人は先生ですか。",
+     "reading": "あのひとはせんせいですか。",
+     "mark": [
+      "か"
+     ],
+     "en": "Is that person a teacher?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-no",
+   "title": "の — possession, linking nouns",
+   "pattern": "A の B",
+   "short": "Links nouns: A's B",
+   "explain": "の connects two nouns: A の B means “A's B” or “B of / about A”. The main noun always comes last. It also shows type or origin, as in 日本の車 (a Japanese car).",
+   "examples": [
+    {
+     "text": "これは私の本です。",
+     "reading": "これはわたしのほんです。",
+     "mark": [
+      "の"
+     ],
+     "en": "This is my book."
+    },
+    {
+     "text": "日本語の先生です。",
+     "reading": "にほんごのせんせいです。",
+     "mark": [
+      "の"
+     ],
+     "en": "(She) is a Japanese teacher."
+    },
+    {
+     "text": "母のかばんです。",
+     "reading": "ははのかばんです。",
+     "mark": [
+      "の"
+     ],
+     "en": "It's my mother's bag."
+    },
+    {
+     "text": "日本の車は高いです。",
+     "reading": "にほんのくるまはたかいです。",
+     "mark": [
+      "の"
+     ],
+     "en": "Japanese cars are expensive."
+    }
+   ]
+  },
+  {
+   "id": "ja5-mo",
+   "title": "も — “also, too”",
+   "pattern": "A も B です",
+   "short": "Also / too (replaces は, が, を)",
+   "explain": "も means “also” or “too” and replaces は, が or を. With に, で or へ it is added after them (にも, でも). In a negative sentence, も means “either”.",
+   "examples": [
+    {
+     "text": "私も学生です。",
+     "reading": "わたしもがくせいです。",
+     "mark": [
+      "も"
+     ],
+     "en": "I am a student too."
+    },
+    {
+     "text": "母も先生です。",
+     "reading": "ははもせんせいです。",
+     "mark": [
+      "も"
+     ],
+     "en": "My mother is also a teacher."
+    },
+    {
+     "text": "明日も雨です。",
+     "reading": "あしたもあめです。",
+     "mark": [
+      "も"
+     ],
+     "en": "It will rain tomorrow too."
+    },
+    {
+     "text": "これも私の本です。",
+     "reading": "これもわたしのほんです。",
+     "mark": [
+      "も"
+     ],
+     "en": "This is also my book."
+    }
+   ]
+  },
+  {
+   "id": "ja5-kore-sore-are",
+   "title": "これ・それ・あれ・どれ — this one, that one",
+   "pattern": "これ / それ / あれ / どれ",
+   "short": "This one / that one (stand alone)",
+   "explain": "これ is something near the speaker, それ is near the listener, and あれ is far from both. どれ asks “which one?” among three or more. These words stand alone; never put a noun right after them.",
+   "examples": [
+    {
+     "text": "これは何ですか。",
+     "reading": "これはなんですか。",
+     "mark": [
+      "これ"
+     ],
+     "en": "What is this?"
+    },
+    {
+     "text": "それは私のペンです。",
+     "reading": "それはわたしのぺんです。",
+     "mark": [
+      "それ"
+     ],
+     "en": "That is my pen."
+    },
+    {
+     "text": "あれは学校です。",
+     "reading": "あれはがっこうです。",
+     "mark": [
+      "あれ"
+     ],
+     "en": "That (over there) is a school."
+    },
+    {
+     "text": "どれがあなたのかばんですか。",
+     "reading": "どれがあなたのかばんですか。",
+     "mark": [
+      "どれ"
+     ],
+     "en": "Which one is your bag?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-kono-sono-ano",
+   "title": "この・その・あの・どの + noun",
+   "pattern": "この / その / あの / どの + N",
+   "short": "This / that + noun (before nouns)",
+   "explain": "この, その, あの and どの always come directly before a noun: この本 (this book). They follow the same near / far idea as これ・それ・あれ. Don't use them alone: say これは, not このは.",
+   "examples": [
+    {
+     "text": "この本は高いです。",
+     "reading": "このほんはたかいです。",
+     "mark": [
+      "この"
+     ],
+     "en": "This book is expensive."
+    },
+    {
+     "text": "その傘は私のです。",
+     "reading": "そのかさはわたしのです。",
+     "mark": [
+      "その"
+     ],
+     "en": "That umbrella is mine."
+    },
+    {
+     "text": "あの人は先生です。",
+     "reading": "あのひとはせんせいです。",
+     "mark": [
+      "あの"
+     ],
+     "en": "That person is a teacher."
+    },
+    {
+     "text": "どの電車に乗りますか。",
+     "reading": "どのでんしゃにのりますか。",
+     "mark": [
+      "どの"
+     ],
+     "en": "Which train will you take?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-koko-soko",
+   "title": "ここ・そこ・あそこ・どこ — places",
+   "pattern": "ここ / そこ / あそこ / どこ",
+   "short": "Here / there / over there / where",
+   "explain": "ここ means “here”, そこ “there (near you)”, あそこ “over there”, and どこ “where?”. Use them like place nouns: トイレはどこですか. More polite versions are こちら, そちら, あちら and どちら.",
+   "examples": [
+    {
+     "text": "ここは駅です。",
+     "reading": "ここはえきです。",
+     "mark": [
+      "ここ"
+     ],
+     "en": "This is the station."
+    },
+    {
+     "text": "トイレはあそこです。",
+     "reading": "といれはあそこです。",
+     "mark": [
+      "あそこ"
+     ],
+     "en": "The toilet is over there."
+    },
+    {
+     "text": "そこは私の学校です。",
+     "reading": "そこはわたしのがっこうです。",
+     "mark": [
+      "そこ"
+     ],
+     "en": "That place is my school."
+    },
+    {
+     "text": "郵便局はどこですか。",
+     "reading": "ゆうびんきょくはどこですか。",
+     "mark": [
+      "どこ"
+     ],
+     "en": "Where is the post office?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-wo",
+   "title": "を — direct object",
+   "pattern": "N を Verb",
+   "short": "Marks the direct object",
+   "explain": "を marks the thing an action is done to: 本を読みます (I read a book). It comes right before the verb. を is pronounced “o”.",
+   "examples": [
+    {
+     "text": "パンを食べます。",
+     "reading": "ぱんをたべます。",
+     "mark": [
+      "を"
+     ],
+     "en": "I eat bread."
+    },
+    {
+     "text": "コーヒーを飲みます。",
+     "reading": "こーひーをのみます。",
+     "mark": [
+      "を"
+     ],
+     "en": "I drink coffee."
+    },
+    {
+     "text": "本を読みます。",
+     "reading": "ほんをよみます。",
+     "mark": [
+      "を"
+     ],
+     "en": "I read a book."
+    },
+    {
+     "text": "テレビを見ます。",
+     "reading": "てれびをみます。",
+     "mark": [
+      "を"
+     ],
+     "en": "I watch TV."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ni-time",
+   "title": "に — at (a specific time)",
+   "pattern": "Time に Verb",
+   "short": "At a specific time (に)",
+   "explain": "に marks a specific point in time: 七時に (at 7), 日曜日に (on Sunday). Don't use に with relative time words like 今日, 明日, 毎日 or 今.",
+   "examples": [
+    {
+     "text": "七時に起きます。",
+     "reading": "しちじにおきます。",
+     "mark": [
+      "に"
+     ],
+     "en": "I get up at seven."
+    },
+    {
+     "text": "日曜日に休みます。",
+     "reading": "にちようびにやすみます。",
+     "mark": [
+      "に"
+     ],
+     "en": "I rest on Sunday."
+    },
+    {
+     "text": "九時に寝ます。",
+     "reading": "くじにねます。",
+     "mark": [
+      "に"
+     ],
+     "en": "I go to bed at nine."
+    },
+    {
+     "text": "四時に会いましょう。",
+     "reading": "よじにあいましょう。",
+     "mark": [
+      "に"
+     ],
+     "en": "Let's meet at four."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ni-he",
+   "title": "に / へ — to (destination)",
+   "pattern": "Place に / へ 行く・来る・帰る",
+   "short": "To a destination (に / へ)",
+   "explain": "With movement verbs like 行く, 来る and 帰る, に or へ marks the destination. They mean almost the same; へ stresses the direction. As a particle, へ is pronounced “e”.",
+   "examples": [
+    {
+     "text": "学校に行きます。",
+     "reading": "がっこうにいきます。",
+     "mark": [
+      "に"
+     ],
+     "en": "I go to school."
+    },
+    {
+     "text": "日本へ行きます。",
+     "reading": "にほんへいきます。",
+     "mark": [
+      "へ"
+     ],
+     "en": "I'm going to Japan."
+    },
+    {
+     "text": "明日、駅へ行きます。",
+     "reading": "あした、えきへいきます。",
+     "mark": [
+      "へ"
+     ],
+     "en": "I'll go to the station tomorrow."
+    },
+    {
+     "text": "七時にうちへ帰ります。",
+     "reading": "しちじにうちへかえります。",
+     "mark": [
+      "へ"
+     ],
+     "en": "I go home at seven."
+    }
+   ]
+  },
+  {
+   "id": "ja5-de-place",
+   "title": "で — place of an action",
+   "pattern": "Place で Verb",
+   "short": "Where an action happens (で)",
+   "explain": "で marks the place where an action happens: レストランで食べます. Compare に, which marks where something exists or where you go. Pitfall: say 駅で会います, not 駅に会います.",
+   "examples": [
+    {
+     "text": "レストランで食べます。",
+     "reading": "れすとらんでたべます。",
+     "mark": [
+      "で"
+     ],
+     "en": "I eat at a restaurant."
+    },
+    {
+     "text": "駅で友だちに会います。",
+     "reading": "えきでともだちにあいます。",
+     "mark": [
+      "で"
+     ],
+     "en": "I meet a friend at the station."
+    },
+    {
+     "text": "大学で日本語を学びます。",
+     "reading": "だいがくでにほんごをまなびます。",
+     "mark": [
+      "で"
+     ],
+     "en": "I study Japanese at university."
+    },
+    {
+     "text": "プールで泳ぎます。",
+     "reading": "ぷーるでおよぎます。",
+     "mark": [
+      "で"
+     ],
+     "en": "I swim at the pool."
+    }
+   ]
+  },
+  {
+   "id": "ja5-de-means",
+   "title": "で — by means of",
+   "pattern": "Tool / Transport で Verb",
+   "short": "By means of / using (で)",
+   "explain": "で also marks the means or tool: バスで (by bus), 箸で (with chopsticks), 日本語で (in Japanese). Put it right after the tool, before the verb.",
+   "examples": [
+    {
+     "text": "バスで学校に行きます。",
+     "reading": "ばすでがっこうにいきます。",
+     "mark": [
+      "で"
+     ],
+     "en": "I go to school by bus."
+    },
+    {
+     "text": "箸で食べます。",
+     "reading": "はしでたべます。",
+     "mark": [
+      "で"
+     ],
+     "en": "I eat with chopsticks."
+    },
+    {
+     "text": "日本語で話します。",
+     "reading": "にほんごではなします。",
+     "mark": [
+      "で"
+     ],
+     "en": "I speak in Japanese."
+    },
+    {
+     "text": "ペンで書きます。",
+     "reading": "ぺんでかきます。",
+     "mark": [
+      "で"
+     ],
+     "en": "I write with a pen."
+    }
+   ]
+  },
+  {
+   "id": "ja5-to-and",
+   "title": "と — “and” (nouns)",
+   "pattern": "A と B",
+   "short": "And (joining nouns only)",
+   "explain": "と joins nouns into a complete list: パンと牛乳 (bread and milk). It cannot join verbs, adjectives or sentences. For a partial list, use や instead.",
+   "examples": [
+    {
+     "text": "パンと牛乳を買います。",
+     "reading": "ぱんとぎゅうにゅうをかいます。",
+     "mark": [
+      "と"
+     ],
+     "en": "I buy bread and milk."
+    },
+    {
+     "text": "父と母は先生です。",
+     "reading": "ちちとはははせんせいです。",
+     "mark": [
+      "と"
+     ],
+     "en": "My father and mother are teachers."
+    },
+    {
+     "text": "コーヒーと紅茶があります。",
+     "reading": "こーひーとこうちゃがあります。",
+     "mark": [
+      "と"
+     ],
+     "en": "There is coffee and tea."
+    },
+    {
+     "text": "英語と日本語を話します。",
+     "reading": "えいごとにほんごをはなします。",
+     "mark": [
+      "と"
+     ],
+     "en": "I speak English and Japanese."
+    }
+   ]
+  },
+  {
+   "id": "ja5-to-with",
+   "title": "と — “with” (someone)",
+   "pattern": "Person と Verb",
+   "short": "Together with someone (と)",
+   "explain": "と after a person means “with”: 友だちと行きます. You can add いっしょに for “together”: 友だちといっしょに. To say “alone”, use ひとりで.",
+   "examples": [
+    {
+     "text": "友だちと行きます。",
+     "reading": "ともだちといきます。",
+     "mark": [
+      "と"
+     ],
+     "en": "I'll go with a friend."
+    },
+    {
+     "text": "母とデパートに行きます。",
+     "reading": "ははとでぱーとにいきます。",
+     "mark": [
+      "と"
+     ],
+     "en": "I go to the department store with my mother."
+    },
+    {
+     "text": "先生と話しました。",
+     "reading": "せんせいとはなしました。",
+     "mark": [
+      "と"
+     ],
+     "en": "I talked with the teacher."
+    },
+    {
+     "text": "友だちといっしょに食べます。",
+     "reading": "ともだちといっしょにたべます。",
+     "mark": [
+      "と",
+      "いっしょに"
+     ],
+     "en": "I eat together with friends."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ya-nado",
+   "title": "や … など — “A, B, and so on”",
+   "pattern": "A や B (など)",
+   "short": "A, B, etc. (sample list)",
+   "explain": "や lists a few examples from a longer list: パンや卵 (bread, eggs and so on). Add など at the end to stress “etc.”. Use と when the list is complete.",
+   "examples": [
+    {
+     "text": "パンや卵を買いました。",
+     "reading": "ぱんやたまごをかいました。",
+     "mark": [
+      "や"
+     ],
+     "en": "I bought bread, eggs and so on."
+    },
+    {
+     "text": "ケーキやお菓子が好きです。",
+     "reading": "けーきやおかしがすきです。",
+     "mark": [
+      "や"
+     ],
+     "en": "I like cake, sweets and such."
+    },
+    {
+     "text": "机の上に本やペンなどがあります。",
+     "reading": "つくえのうえにほんやぺんなどがあります。",
+     "mark": [
+      "や",
+      "など"
+     ],
+     "en": "There are books, pens, etc. on the desk."
+    },
+    {
+     "text": "テニスやサッカーをします。",
+     "reading": "てにすやさっかーをします。",
+     "mark": [
+      "や"
+     ],
+     "en": "I play tennis, soccer and the like."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ga-subject",
+   "title": "が — subject marker",
+   "pattern": "N が Verb / Adj",
+   "short": "Marks the subject (new info)",
+   "explain": "が marks the subject, especially new information or the answer to a question. Question words like だれ and 何 take が, never は: だれが来ますか. The answer keeps が: 先生が来ます.",
+   "examples": [
+    {
+     "text": "だれが来ますか。",
+     "reading": "だれがきますか。",
+     "mark": [
+      "が"
+     ],
+     "en": "Who is coming?"
+    },
+    {
+     "text": "先生が来ます。",
+     "reading": "せんせいがきます。",
+     "mark": [
+      "が"
+     ],
+     "en": "The teacher is coming."
+    },
+    {
+     "text": "明日は雨が降ります。",
+     "reading": "あしたはあめがふります。",
+     "mark": [
+      "が"
+     ],
+     "en": "It will rain tomorrow."
+    },
+    {
+     "text": "どれが安いですか。",
+     "reading": "どれがやすいですか。",
+     "mark": [
+      "が"
+     ],
+     "en": "Which one is cheap?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-ga-suki",
+   "title": "が好き / が嫌い — like / dislike",
+   "pattern": "N が 好きです / 嫌いです",
+   "short": "Like / dislike something",
+   "explain": "好き (like) and 嫌い (dislike) are な-adjectives, and the thing you like is marked with が, not を. 大好き means “love”. 嫌い can sound strong; あまり好きじゃない is softer.",
+   "examples": [
+    {
+     "text": "私は猫が好きです。",
+     "reading": "わたしはねこがすきです。",
+     "mark": [
+      "が好き"
+     ],
+     "en": "I like cats."
+    },
+    {
+     "text": "野球が大好きです。",
+     "reading": "やきゅうがだいすきです。",
+     "mark": [
+      "が大好き"
+     ],
+     "en": "I love baseball."
+    },
+    {
+     "text": "魚が嫌いです。",
+     "reading": "さかながきらいです。",
+     "mark": [
+      "が嫌い"
+     ],
+     "en": "I don't like fish."
+    },
+    {
+     "text": "何が好きですか。",
+     "reading": "なにがすきですか。",
+     "mark": [
+      "が好き"
+     ],
+     "en": "What do you like?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-ga-wakaru",
+   "title": "が分かります / が要ります",
+   "pattern": "N が 分かります / 要ります",
+   "short": "Understand / need something (が)",
+   "explain": "分かる (understand) and 要る (need) take が for the thing, not を. 分かりません is the polite way to say “I don't understand”. Pitfall: 日本語を分かります is wrong.",
+   "examples": [
+    {
+     "text": "日本語が分かります。",
+     "reading": "にほんごがわかります。",
+     "mark": [
+      "が分かります"
+     ],
+     "en": "I understand Japanese."
+    },
+    {
+     "text": "英語が分かりません。",
+     "reading": "えいごがわかりません。",
+     "mark": [
+      "が分かりません"
+     ],
+     "en": "I don't understand English."
+    },
+    {
+     "text": "答えが分かりますか。",
+     "reading": "こたえがわかりますか。",
+     "mark": [
+      "が分かります"
+     ],
+     "en": "Do you know the answer?"
+    },
+    {
+     "text": "お金が要ります。",
+     "reading": "おかねがいります。",
+     "mark": [
+      "が要ります"
+     ],
+     "en": "I need money."
+    }
+   ]
+  },
+  {
+   "id": "ja5-masu",
+   "title": "ます — polite present / future",
+   "pattern": "V-stem + ます",
+   "short": "Polite verb: do / will do",
+   "explain": "ます is the polite ending for verbs. It covers both habits (I eat every day) and future plans (I will go tomorrow). There is no separate future tense; time words show when.",
+   "examples": [
+    {
+     "text": "毎日パンを食べます。",
+     "reading": "まいにちぱんをたべます。",
+     "mark": [
+      "ます"
+     ],
+     "en": "I eat bread every day."
+    },
+    {
+     "text": "明日、学校に行きます。",
+     "reading": "あした、がっこうにいきます。",
+     "mark": [
+      "ます"
+     ],
+     "en": "I will go to school tomorrow."
+    },
+    {
+     "text": "毎朝コーヒーを飲みます。",
+     "reading": "まいあさこーひーをのみます。",
+     "mark": [
+      "ます"
+     ],
+     "en": "I drink coffee every morning."
+    },
+    {
+     "text": "毎晩テレビを見ます。",
+     "reading": "まいばんてれびをみます。",
+     "mark": [
+      "ます"
+     ],
+     "en": "I watch TV every evening."
+    }
+   ]
+  },
+  {
+   "id": "ja5-masen",
+   "title": "ません — polite negative",
+   "pattern": "V-stem + ません",
+   "short": "Polite verb: don't / won't",
+   "explain": "Change ます to ません to make a polite negative: 食べません (don't / won't eat). It is used for both present and future. Words like あまり and ぜんぜん often go with it.",
+   "examples": [
+    {
+     "text": "ビールを飲みません。",
+     "reading": "びーるをのみません。",
+     "mark": [
+      "ません"
+     ],
+     "en": "I don't drink beer."
+    },
+    {
+     "text": "明日は学校に行きません。",
+     "reading": "あしたはがっこうにいきません。",
+     "mark": [
+      "ません"
+     ],
+     "en": "I won't go to school tomorrow."
+    },
+    {
+     "text": "テレビを見ません。",
+     "reading": "てれびをみません。",
+     "mark": [
+      "ません"
+     ],
+     "en": "I don't watch TV."
+    },
+    {
+     "text": "今日はお風呂に入りません。",
+     "reading": "きょうはおふろにはいりません。",
+     "mark": [
+      "ません"
+     ],
+     "en": "I won't take a bath today."
+    }
+   ]
+  },
+  {
+   "id": "ja5-mashita",
+   "title": "ました — polite past",
+   "pattern": "V-stem + ました",
+   "short": "Polite verb: did",
+   "explain": "Change ます to ました for the polite past: 食べました (ate). Use it with past time words like 昨日 or 先月. With もう, it means “have already done”.",
+   "examples": [
+    {
+     "text": "昨日、友だちに会いました。",
+     "reading": "きのう、ともだちにあいました。",
+     "mark": [
+      "ました"
+     ],
+     "en": "I met a friend yesterday."
+    },
+    {
+     "text": "晩ご飯を食べました。",
+     "reading": "ばんごはんをたべました。",
+     "mark": [
+      "ました"
+     ],
+     "en": "I ate dinner."
+    },
+    {
+     "text": "先月、日本へ行きました。",
+     "reading": "せんげつ、にほんへいきました。",
+     "mark": [
+      "ました"
+     ],
+     "en": "I went to Japan last month."
+    },
+    {
+     "text": "メールを書きました。",
+     "reading": "めーるをかきました。",
+     "mark": [
+      "ました"
+     ],
+     "en": "I wrote an email."
+    }
+   ]
+  },
+  {
+   "id": "ja5-masen-deshita",
+   "title": "ませんでした — polite past negative",
+   "pattern": "V-stem + ませんでした",
+   "short": "Polite verb: didn't",
+   "explain": "Add でした to ません for the polite past negative: 食べませんでした (didn't eat). Don't say ましたじゃない. For “haven't done yet”, use まだ…ていません instead.",
+   "examples": [
+    {
+     "text": "昨日は学校に行きませんでした。",
+     "reading": "きのうはがっこうにいきませんでした。",
+     "mark": [
+      "ませんでした"
+     ],
+     "en": "I didn't go to school yesterday."
+    },
+    {
+     "text": "今日は何も食べませんでした。",
+     "reading": "きょうはなにもたべませんでした。",
+     "mark": [
+      "ませんでした"
+     ],
+     "en": "I didn't eat anything today."
+    },
+    {
+     "text": "テレビを見ませんでした。",
+     "reading": "てれびをみませんでした。",
+     "mark": [
+      "ませんでした"
+     ],
+     "en": "I didn't watch TV."
+    },
+    {
+     "text": "先生は来ませんでした。",
+     "reading": "せんせいはきませんでした。",
+     "mark": [
+      "ませんでした"
+     ],
+     "en": "The teacher didn't come."
+    }
+   ]
+  },
+  {
+   "id": "ja5-kara-made",
+   "title": "から … まで — from … to",
+   "pattern": "A から B まで",
+   "short": "From A until / to B",
+   "explain": "から marks a starting point and まで an end point, for time or place: 九時から五時まで. You can also use either one alone. まで means “until”, not “by (a deadline)”.",
+   "examples": [
+    {
+     "text": "九時から五時までです。",
+     "reading": "くじからごじまでです。",
+     "mark": [
+      "から",
+      "まで"
+     ],
+     "en": "It's from nine to five."
+    },
+    {
+     "text": "駅から学校までバスで行きます。",
+     "reading": "えきからがっこうまでばすでいきます。",
+     "mark": [
+      "から",
+      "まで"
+     ],
+     "en": "I take the bus from the station to school."
+    },
+    {
+     "text": "月曜日から休みです。",
+     "reading": "げつようびからやすみです。",
+     "mark": [
+      "から"
+     ],
+     "en": "The holiday starts on Monday."
+    },
+    {
+     "text": "七時まで寝ました。",
+     "reading": "しちじまでねました。",
+     "mark": [
+      "まで"
+     ],
+     "en": "I slept until seven."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ne",
+   "title": "ね — “right?”, “isn't it?”",
+   "pattern": "Sentence + ね",
+   "short": "Seeking agreement (right? / isn't it?)",
+   "explain": "ね at the end of a sentence asks for agreement or shows a shared feeling: いい天気ですね (nice weather, isn't it?). It makes speech sound friendly. Use it when you expect the listener to agree.",
+   "examples": [
+    {
+     "text": "いい天気ですね。",
+     "reading": "いいてんきですね。",
+     "mark": [
+      "ね"
+     ],
+     "en": "Nice weather, isn't it?"
+    },
+    {
+     "text": "このケーキ、おいしいですね。",
+     "reading": "このけーき、おいしいですね。",
+     "mark": [
+      "ね"
+     ],
+     "en": "This cake is delicious, isn't it?"
+    },
+    {
+     "text": "今日は涼しいですね。",
+     "reading": "きょうはすずしいですね。",
+     "mark": [
+      "ね"
+     ],
+     "en": "It's cool today, isn't it?"
+    },
+    {
+     "text": "明日は休みですね。",
+     "reading": "あしたはやすみですね。",
+     "mark": [
+      "ね"
+     ],
+     "en": "Tomorrow is a day off, right?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-yo",
+   "title": "よ — telling new information",
+   "pattern": "Sentence + よ",
+   "short": "Giving new info / emphasis (よ)",
+   "explain": "よ at the end tells the listener something they may not know: この店は安いですよ. It adds emphasis or a friendly warning. Using よ too often can sound pushy.",
+   "examples": [
+    {
+     "text": "この店は安いですよ。",
+     "reading": "このみせはやすいですよ。",
+     "mark": [
+      "よ"
+     ],
+     "en": "This shop is cheap, you know."
+    },
+    {
+     "text": "危ないですよ。",
+     "reading": "あぶないですよ。",
+     "mark": [
+      "よ"
+     ],
+     "en": "Watch out, it's dangerous!"
+    },
+    {
+     "text": "電車が来ましたよ。",
+     "reading": "でんしゃがきましたよ。",
+     "mark": [
+      "よ"
+     ],
+     "en": "The train has come!"
+    },
+    {
+     "text": "明日はテストですよ。",
+     "reading": "あしたはてすとですよ。",
+     "mark": [
+      "よ"
+     ],
+     "en": "There's a test tomorrow, you know."
+    }
+   ]
+  },
+  {
+   "id": "ja5-i-adj",
+   "title": "い-adjectives",
+   "pattern": "い-Adj です / い-Adj + N",
+   "short": "Describing with い-adjectives",
+   "explain": "い-adjectives end in い and can go before a noun (高い山) or before です (高いです). Keep the い and never add な. いい (good) is irregular in its other forms (よくない, よかった).",
+   "examples": [
+    {
+     "text": "この本は面白いです。",
+     "reading": "このほんはおもしろいです。",
+     "mark": [
+      "面白い"
+     ],
+     "en": "This book is interesting."
+    },
+    {
+     "text": "今日は涼しいです。",
+     "reading": "きょうはすずしいです。",
+     "mark": [
+      "涼しい"
+     ],
+     "en": "It's cool today."
+    },
+    {
+     "text": "大きい車です。",
+     "reading": "おおきいくるまです。",
+     "mark": [
+      "大きい"
+     ],
+     "en": "It's a big car."
+    },
+    {
+     "text": "このケーキはおいしいです。",
+     "reading": "このけーきはおいしいです。",
+     "mark": [
+      "おいしい"
+     ],
+     "en": "This cake is delicious."
+    }
+   ]
+  },
+  {
+   "id": "ja5-i-adj-neg",
+   "title": "い-adjective + くないです — not ~",
+   "pattern": "い-Adj (drop い) + くないです",
+   "short": "い-adjective: not ~ (くない)",
+   "explain": "To make an い-adjective negative, drop the final い and add くないです: 高い → 高くないです. くありません is a more formal version. いい becomes よくないです.",
+   "examples": [
+    {
+     "text": "この本は高くないです。",
+     "reading": "このほんはたかくないです。",
+     "mark": [
+      "くない"
+     ],
+     "en": "This book isn't expensive."
+    },
+    {
+     "text": "今日は忙しくないです。",
+     "reading": "きょうはいそがしくないです。",
+     "mark": [
+      "くない"
+     ],
+     "en": "I'm not busy today."
+    },
+    {
+     "text": "このカレーは辛くないです。",
+     "reading": "このかれーはからくないです。",
+     "mark": [
+      "くない"
+     ],
+     "en": "This curry isn't spicy."
+    },
+    {
+     "text": "天気はよくないです。",
+     "reading": "てんきはよくないです。",
+     "mark": [
+      "よくない"
+     ],
+     "en": "The weather isn't good."
+    }
+   ]
+  },
+  {
+   "id": "ja5-i-adj-past",
+   "title": "い-adjective + かったです — was ~",
+   "pattern": "い-Adj (drop い) + かったです",
+   "short": "い-adjective: was ~ (かった)",
+   "explain": "For the past, drop い and add かったです: 難しい → 難しかったです. The past negative is くなかったです. Pitfall: don't say 難しいでした.",
+   "examples": [
+    {
+     "text": "昨日は涼しかったです。",
+     "reading": "きのうはすずしかったです。",
+     "mark": [
+      "かった"
+     ],
+     "en": "It was cool yesterday."
+    },
+    {
+     "text": "テストは難しかったです。",
+     "reading": "てすとはむずかしかったです。",
+     "mark": [
+      "かった"
+     ],
+     "en": "The test was difficult."
+    },
+    {
+     "text": "パーティーは面白かったです。",
+     "reading": "ぱーてぃーはおもしろかったです。",
+     "mark": [
+      "かった"
+     ],
+     "en": "The party was fun."
+    },
+    {
+     "text": "ケーキはおいしくなかったです。",
+     "reading": "けーきはおいしくなかったです。",
+     "mark": [
+      "くなかった"
+     ],
+     "en": "The cake wasn't tasty."
+    }
+   ]
+  },
+  {
+   "id": "ja5-na-adj",
+   "title": "な-adjectives",
+   "pattern": "な-Adj です / な-Adj な + N",
+   "short": "Describing with な-adjectives",
+   "explain": "な-adjectives take な before a noun (静かな所) but not before です (静かです). Common ones are きれい, 静か, 元気 and 好き. Pitfall: きれい ends in い, but it is a な-adjective.",
+   "examples": [
+    {
+     "text": "ここは静かです。",
+     "reading": "ここはしずかです。",
+     "mark": [
+      "静か"
+     ],
+     "en": "It's quiet here."
+    },
+    {
+     "text": "きれいな花です。",
+     "reading": "きれいなはなです。",
+     "mark": [
+      "きれいな"
+     ],
+     "en": "It's a pretty flower."
+    },
+    {
+     "text": "静かな所が好きです。",
+     "reading": "しずかなところがすきです。",
+     "mark": [
+      "静かな"
+     ],
+     "en": "I like quiet places."
+    },
+    {
+     "text": "母は元気です。",
+     "reading": "はははげんきです。",
+     "mark": [
+      "元気"
+     ],
+     "en": "My mother is well."
+    }
+   ]
+  },
+  {
+   "id": "ja5-na-adj-forms",
+   "title": "な-adjective negative and past",
+   "pattern": "な-Adj じゃないです / でした / じゃなかったです",
+   "short": "な-adjective: not / was / wasn't",
+   "explain": "な-adjectives change like nouns: 静かじゃないです (not quiet), 静かでした (was quiet), 静かじゃなかったです (wasn't quiet). Don't use くない with them: きれいくない is wrong.",
+   "examples": [
+    {
+     "text": "この店は静かじゃないです。",
+     "reading": "このみせはしずかじゃないです。",
+     "mark": [
+      "じゃないです"
+     ],
+     "en": "This shop isn't quiet."
+    },
+    {
+     "text": "昨日は暇でした。",
+     "reading": "きのうはひまでした。",
+     "mark": [
+      "でした"
+     ],
+     "en": "I was free yesterday."
+    },
+    {
+     "text": "お祭りは賑やかでした。",
+     "reading": "おまつりはにぎやかでした。",
+     "mark": [
+      "でした"
+     ],
+     "en": "The festival was lively."
+    },
+    {
+     "text": "テストは大変じゃなかったです。",
+     "reading": "てすとはたいへんじゃなかったです。",
+     "mark": [
+      "じゃなかったです"
+     ],
+     "en": "The test wasn't hard."
+    }
+   ]
+  },
+  {
+   "id": "ja5-kute-de",
+   "title": "くて / で — joining adjectives",
+   "pattern": "い-Adj くて … / な-Adj で …",
+   "short": "Joining adjectives: ~ and ~",
+   "explain": "To join adjectives, change い to くて (安くて), and add で to な-adjectives (静かで). Only the last adjective shows the tense: 安くておいしかったです. いい becomes よくて.",
+   "examples": [
+    {
+     "text": "この店は安くておいしいです。",
+     "reading": "このみせはやすくておいしいです。",
+     "mark": [
+      "くて"
+     ],
+     "en": "This shop is cheap and good."
+    },
+    {
+     "text": "ここは静かできれいです。",
+     "reading": "ここはしずかできれいです。",
+     "mark": [
+      "静かで"
+     ],
+     "en": "It's quiet and clean here."
+    },
+    {
+     "text": "あの人は若くて元気です。",
+     "reading": "あのひとはわかくてげんきです。",
+     "mark": [
+      "くて"
+     ],
+     "en": "That person is young and lively."
+    },
+    {
+     "text": "このかばんは軽くて丈夫です。",
+     "reading": "このかばんはかるくてじょうぶです。",
+     "mark": [
+      "くて"
+     ],
+     "en": "This bag is light and strong."
+    }
+   ]
+  },
+  {
+   "id": "ja5-adverb",
+   "title": "く / に — adjectives as adverbs",
+   "pattern": "い-Adj く + V / な-Adj に + V",
+   "short": "Adjective → adverb (く / に)",
+   "explain": "Turn an い-adjective into an adverb by changing い to く (速い → 速く). For な-adjectives, add に (静か → 静かに). The adverb comes before the verb.",
+   "examples": [
+    {
+     "text": "もっと速く書いてください。",
+     "reading": "もっとはやくかいてください。",
+     "mark": [
+      "速く"
+     ],
+     "en": "Please write faster."
+    },
+    {
+     "text": "静かにしてください。",
+     "reading": "しずかにしてください。",
+     "mark": [
+      "静かに"
+     ],
+     "en": "Please be quiet."
+    },
+    {
+     "text": "皿をきれいに洗いました。",
+     "reading": "さらをきれいにあらいました。",
+     "mark": [
+      "きれいに"
+     ],
+     "en": "I washed the plates clean."
+    },
+    {
+     "text": "大きく書いてください。",
+     "reading": "おおきくかいてください。",
+     "mark": [
+      "大きく"
+     ],
+     "en": "Please write it big."
+    }
+   ]
+  },
+  {
+   "id": "ja5-amari",
+   "title": "あまり … ない — not very",
+   "pattern": "あまり + negative",
+   "short": "Not very / not much (あまり)",
+   "explain": "あまり + a negative means “not very” or “not much”: あまり高くないです. It softens a negative statement. Pitfall: あまり must be followed by a negative form.",
+   "examples": [
+    {
+     "text": "この本はあまり面白くないです。",
+     "reading": "このほんはあまりおもしろくないです。",
+     "mark": [
+      "あまり",
+      "くない"
+     ],
+     "en": "This book isn't very interesting."
+    },
+    {
+     "text": "あまりテレビを見ません。",
+     "reading": "あまりてれびをみません。",
+     "mark": [
+      "あまり",
+      "ません"
+     ],
+     "en": "I don't watch TV much."
+    },
+    {
+     "text": "魚はあまり好きじゃないです。",
+     "reading": "さかなはあまりすきじゃないです。",
+     "mark": [
+      "あまり",
+      "じゃない"
+     ],
+     "en": "I don't like fish very much."
+    },
+    {
+     "text": "今日はあまり忙しくないです。",
+     "reading": "きょうはあまりいそがしくないです。",
+     "mark": [
+      "あまり",
+      "くない"
+     ],
+     "en": "I'm not very busy today."
+    }
+   ]
+  },
+  {
+   "id": "ja5-zenzen",
+   "title": "ぜんぜん … ない — not at all",
+   "pattern": "ぜんぜん + negative",
+   "short": "Not at all (ぜんぜん)",
+   "explain": "ぜんぜん + a negative means “not at all”: ぜんぜん分かりません. It is stronger than あまり. In careful Japanese, always use it with a negative verb or adjective.",
+   "examples": [
+    {
+     "text": "ぜんぜん分かりません。",
+     "reading": "ぜんぜんわかりません。",
+     "mark": [
+      "ぜんぜん",
+      "ません"
+     ],
+     "en": "I don't understand at all."
+    },
+    {
+     "text": "ビールはぜんぜん飲みません。",
+     "reading": "びーるはぜんぜんのみません。",
+     "mark": [
+      "ぜんぜん",
+      "ません"
+     ],
+     "en": "I never drink beer."
+    },
+    {
+     "text": "テストはぜんぜん難しくなかったです。",
+     "reading": "てすとはぜんぜんむずかしくなかったです。",
+     "mark": [
+      "ぜんぜん",
+      "くなかった"
+     ],
+     "en": "The test wasn't difficult at all."
+    },
+    {
+     "text": "ぜんぜん眠くないです。",
+     "reading": "ぜんぜんねむくないです。",
+     "mark": [
+      "ぜんぜん",
+      "くない"
+     ],
+     "en": "I'm not sleepy at all."
+    }
+   ]
+  },
+  {
+   "id": "ja5-aru-iru",
+   "title": "あります / います — there is",
+   "pattern": "N が あります (things) / います (living)",
+   "short": "There is / have (things vs. living)",
+   "explain": "あります is for things and plants; います is for people and animals. The thing that exists is marked with が. Pitfall: use います for a cat, but あります for a tree.",
+   "examples": [
+    {
+     "text": "お金があります。",
+     "reading": "おかねがあります。",
+     "mark": [
+      "があります"
+     ],
+     "en": "I have money."
+    },
+    {
+     "text": "猫がいます。",
+     "reading": "ねこがいます。",
+     "mark": [
+      "がいます"
+     ],
+     "en": "There is a cat."
+    },
+    {
+     "text": "時間がありません。",
+     "reading": "じかんがありません。",
+     "mark": [
+      "ありません"
+     ],
+     "en": "I have no time."
+    },
+    {
+     "text": "妹さんがいますか。",
+     "reading": "いもうとさんがいますか。",
+     "mark": [
+      "がいます"
+     ],
+     "en": "Do you have a younger sister?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-ni-ga-aru",
+   "title": "Place に N が あります — what is there",
+   "pattern": "Place に N が あります / います",
+   "short": "At a place, there is X",
+   "explain": "To say what is in a place, use Place に N があります / います. に marks where something exists, not で. Position words connect with の: 机の上に (on the desk).",
+   "examples": [
+    {
+     "text": "机の上に本があります。",
+     "reading": "つくえのうえにほんがあります。",
+     "mark": [
+      "に",
+      "があります"
+     ],
+     "en": "There is a book on the desk."
+    },
+    {
+     "text": "池に魚がいます。",
+     "reading": "いけにさかながいます。",
+     "mark": [
+      "に",
+      "がいます"
+     ],
+     "en": "There are fish in the pond."
+    },
+    {
+     "text": "駅の前に交番があります。",
+     "reading": "えきのまえにこうばんがあります。",
+     "mark": [
+      "に",
+      "があります"
+     ],
+     "en": "There is a police box in front of the station."
+    },
+    {
+     "text": "ベッドの下に猫がいます。",
+     "reading": "べっどのしたにねこがいます。",
+     "mark": [
+      "に",
+      "がいます"
+     ],
+     "en": "There is a cat under the bed."
+    }
+   ]
+  },
+  {
+   "id": "ja5-wa-ni-aru",
+   "title": "N は Place に あります — where it is",
+   "pattern": "N は Place に あります / います",
+   "short": "X is located at a place",
+   "explain": "To say where a known thing is, make it the topic: 本は机の上にあります (the book is on the desk). Compare 机の上に本があります, which says what is there. You can also simply say 本は机の上です.",
+   "examples": [
+    {
+     "text": "トイレは二階にあります。",
+     "reading": "といれはにかいにあります。",
+     "mark": [
+      "は",
+      "にあります"
+     ],
+     "en": "The toilet is on the second floor."
+    },
+    {
+     "text": "猫はベッドの下にいます。",
+     "reading": "ねこはべっどのしたにいます。",
+     "mark": [
+      "は",
+      "にいます"
+     ],
+     "en": "The cat is under the bed."
+    },
+    {
+     "text": "郵便局は駅の隣にあります。",
+     "reading": "ゆうびんきょくはえきのとなりにあります。",
+     "mark": [
+      "は",
+      "にあります"
+     ],
+     "en": "The post office is next to the station."
+    },
+    {
+     "text": "父は会社にいます。",
+     "reading": "ちちはかいしゃにいます。",
+     "mark": [
+      "は",
+      "にいます"
+     ],
+     "en": "My father is at the office."
+    }
+   ]
+  },
+  {
+   "id": "ja5-counters",
+   "title": "Numbers and counters",
+   "pattern": "N を Number + Counter + Verb",
+   "short": "Counting things (つ, 人, 枚, 本)",
+   "explain": "Japanese puts a counter after numbers: つ (general items), 人 (people), 枚 (flat things), 本 (long things). The number usually comes right before the verb: 卵を三つ買います. Watch irregular readings like 一人 (ひとり) and 二人 (ふたり).",
+   "examples": [
+    {
+     "text": "卵を三つ買いました。",
+     "reading": "たまごをみっつかいました。",
+     "mark": [
+      "三つ"
+     ],
+     "en": "I bought three eggs."
+    },
+    {
+     "text": "学生が二人います。",
+     "reading": "がくせいがふたりいます。",
+     "mark": [
+      "二人"
+     ],
+     "en": "There are two students."
+    },
+    {
+     "text": "切手を五枚ください。",
+     "reading": "きってをごまいください。",
+     "mark": [
+      "五枚"
+     ],
+     "en": "Five stamps, please."
+    },
+    {
+     "text": "ペンが一本あります。",
+     "reading": "ぺんがいっぽんあります。",
+     "mark": [
+      "一本"
+     ],
+     "en": "I have one pen."
+    }
+   ]
+  },
+  {
+   "id": "ja5-dake",
+   "title": "だけ — only, just",
+   "pattern": "N だけ",
+   "short": "Only / just (だけ, positive verb)",
+   "explain": "だけ means “only” or “just” and comes right after the word it limits. It can replace が and を, or follow other particles. Unlike しか, it is used with a positive verb.",
+   "examples": [
+    {
+     "text": "水だけ飲みました。",
+     "reading": "みずだけのみました。",
+     "mark": [
+      "だけ"
+     ],
+     "en": "I only drank water."
+    },
+    {
+     "text": "一つだけください。",
+     "reading": "ひとつだけください。",
+     "mark": [
+      "だけ"
+     ],
+     "en": "Just one, please."
+    },
+    {
+     "text": "私だけ行きます。",
+     "reading": "わたしだけいきます。",
+     "mark": [
+      "だけ"
+     ],
+     "en": "Only I will go."
+    },
+    {
+     "text": "日曜日だけ休みです。",
+     "reading": "にちようびだけやすみです。",
+     "mark": [
+      "だけ"
+     ],
+     "en": "Only Sunday is a day off."
+    }
+   ]
+  },
+  {
+   "id": "ja5-shika",
+   "title": "しか … ない — nothing but",
+   "pattern": "N しか + negative",
+   "short": "Only (しか + negative verb)",
+   "explain": "しか also means “only”, but the verb must be negative: 千円しかありません (I have only 1,000 yen). It often suggests “not enough”. Pitfall: しか with a positive verb is wrong.",
+   "examples": [
+    {
+     "text": "千円しかありません。",
+     "reading": "せんえんしかありません。",
+     "mark": [
+      "しか",
+      "ません"
+     ],
+     "en": "I have only 1,000 yen."
+    },
+    {
+     "text": "水しか飲みません。",
+     "reading": "みずしかのみません。",
+     "mark": [
+      "しか",
+      "ません"
+     ],
+     "en": "I drink nothing but water."
+    },
+    {
+     "text": "学生が一人しかいません。",
+     "reading": "がくせいがひとりしかいません。",
+     "mark": [
+      "しか",
+      "ません"
+     ],
+     "en": "There is only one student."
+    },
+    {
+     "text": "平仮名しか分かりません。",
+     "reading": "ひらがなしかわかりません。",
+     "mark": [
+      "しか",
+      "ません"
+     ],
+     "en": "I can only read hiragana."
+    }
+   ]
+  },
+  {
+   "id": "ja5-nanimo",
+   "title": "何も / だれも / どこも + negative",
+   "pattern": "Question word + も + negative",
+   "short": "Nothing / nobody / nowhere (+ negative)",
+   "explain": "A question word + も with a negative verb means “no-”: 何も (nothing), だれも (nobody), どこも (nowhere). With に or へ, the particle goes before も: どこへも行きません. Pitfall: the verb must be negative.",
+   "examples": [
+    {
+     "text": "今日は何も買いませんでした。",
+     "reading": "きょうはなにもかいませんでした。",
+     "mark": [
+      "何も"
+     ],
+     "en": "I didn't buy anything today."
+    },
+    {
+     "text": "ここにはだれもいません。",
+     "reading": "ここにはだれもいません。",
+     "mark": [
+      "だれも"
+     ],
+     "en": "There is nobody here."
+    },
+    {
+     "text": "日曜日はどこへも行きませんでした。",
+     "reading": "にちようびはどこへもいきませんでした。",
+     "mark": [
+      "どこへも"
+     ],
+     "en": "I didn't go anywhere on Sunday."
+    },
+    {
+     "text": "何もありません。",
+     "reading": "なにもありません。",
+     "mark": [
+      "何も"
+     ],
+     "en": "There is nothing."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ka-indef",
+   "title": "何か / だれか / どこか — some-",
+   "pattern": "Question word + か",
+   "short": "Something / someone / somewhere",
+   "explain": "A question word + か makes an indefinite word: 何か (something), だれか (someone), どこか (somewhere). The particles が and を are usually dropped after them. Don't mix this up with 何も, which needs a negative.",
+   "examples": [
+    {
+     "text": "何か食べますか。",
+     "reading": "なにかたべますか。",
+     "mark": [
+      "何か"
+     ],
+     "en": "Will you eat something?"
+    },
+    {
+     "text": "だれか来ましたか。",
+     "reading": "だれかきましたか。",
+     "mark": [
+      "だれか"
+     ],
+     "en": "Did someone come?"
+    },
+    {
+     "text": "週末、どこか行きましたか。",
+     "reading": "しゅうまつ、どこかいきましたか。",
+     "mark": [
+      "どこか"
+     ],
+     "en": "Did you go somewhere on the weekend?"
+    },
+    {
+     "text": "何か飲みたいです。",
+     "reading": "なにかのみたいです。",
+     "mark": [
+      "何か"
+     ],
+     "en": "I want to drink something."
+    }
+   ]
+  },
+  {
+   "id": "ja5-goro-gurai",
+   "title": "ごろ / ぐらい — around, about",
+   "pattern": "Time + ごろ / Amount + ぐらい",
+   "short": "Around (time) / about (amount)",
+   "explain": "ごろ after a clock time or date means “around”: 七時ごろ. ぐらい (or くらい) after an amount means “about”: 一時間ぐらい. Pitfall: use ごろ for points in time and ぐらい for amounts.",
+   "examples": [
+    {
+     "text": "七時ごろ起きます。",
+     "reading": "しちじごろおきます。",
+     "mark": [
+      "ごろ"
+     ],
+     "en": "I get up around seven."
+    },
+    {
+     "text": "十時ごろ寝ます。",
+     "reading": "じゅうじごろねます。",
+     "mark": [
+      "ごろ"
+     ],
+     "en": "I go to bed around ten."
+    },
+    {
+     "text": "駅まで十分ぐらいです。",
+     "reading": "えきまでじゅっぷんぐらいです。",
+     "mark": [
+      "ぐらい"
+     ],
+     "en": "It's about ten minutes to the station."
+    },
+    {
+     "text": "毎日一時間ぐらい練習します。",
+     "reading": "まいにちいちじかんぐらいれんしゅうします。",
+     "mark": [
+      "ぐらい"
+     ],
+     "en": "I practice about an hour every day."
+    }
+   ]
+  },
+  {
+   "id": "ja5-te-kudasai",
+   "title": "てください — please do",
+   "pattern": "V-て + ください",
+   "short": "Please do ~ (polite request)",
+   "explain": "Use the て-form + ください to politely ask someone to do something: 見てください (please look). Make the て-form from the dictionary form, e.g. 書く → 書いて, 読む → 読んで. N をください means “please give me N”.",
+   "examples": [
+    {
+     "text": "ここに名前を書いてください。",
+     "reading": "ここになまえをかいてください。",
+     "mark": [
+      "てください"
+     ],
+     "en": "Please write your name here."
+    },
+    {
+     "text": "ゆっくり話してください。",
+     "reading": "ゆっくりはなしてください。",
+     "mark": [
+      "てください"
+     ],
+     "en": "Please speak slowly."
+    },
+    {
+     "text": "窓を閉めてください。",
+     "reading": "まどをしめてください。",
+     "mark": [
+      "てください"
+     ],
+     "en": "Please close the window."
+    },
+    {
+     "text": "この本を読んでください。",
+     "reading": "このほんをよんでください。",
+     "mark": [
+      "でください"
+     ],
+     "en": "Please read this book."
+    }
+   ]
+  },
+  {
+   "id": "ja5-naide-kudasai",
+   "title": "ないでください — please don't",
+   "pattern": "V-ない + でください",
+   "short": "Please don't ~",
+   "explain": "Use the ない-form + でください to ask someone not to do something: 見ないでください. Make the ない-form by changing the final u-sound to a + ない (書く → 書かない); る-verbs just drop る (食べる → 食べない).",
+   "examples": [
+    {
+     "text": "ここに入らないでください。",
+     "reading": "ここにはいらないでください。",
+     "mark": [
+      "ないでください"
+     ],
+     "en": "Please don't come in here."
+    },
+    {
+     "text": "忘れないでください。",
+     "reading": "わすれないでください。",
+     "mark": [
+      "ないでください"
+     ],
+     "en": "Please don't forget."
+    },
+    {
+     "text": "ドアを閉めないでください。",
+     "reading": "どあをしめないでください。",
+     "mark": [
+      "ないでください"
+     ],
+     "en": "Please don't close the door."
+    },
+    {
+     "text": "ここで泳がないでください。",
+     "reading": "ここでおよがないでください。",
+     "mark": [
+      "ないでください"
+     ],
+     "en": "Please don't swim here."
+    }
+   ]
+  },
+  {
+   "id": "ja5-te-iru",
+   "title": "ている — be doing (in progress)",
+   "pattern": "V-て + います",
+   "short": "Be doing ~ right now",
+   "explain": "The て-form + います describes an action in progress: 食べています (I am eating). It can also describe a repeated habit. In casual speech, the い often drops: 食べてる.",
+   "examples": [
+    {
+     "text": "今、テレビを見ています。",
+     "reading": "いま、てれびをみています。",
+     "mark": [
+      "ています"
+     ],
+     "en": "I'm watching TV now."
+    },
+    {
+     "text": "雨が降っています。",
+     "reading": "あめがふっています。",
+     "mark": [
+      "ています"
+     ],
+     "en": "It's raining."
+    },
+    {
+     "text": "母は電話で話しています。",
+     "reading": "はははでんわではなしています。",
+     "mark": [
+      "ています"
+     ],
+     "en": "My mother is talking on the phone."
+    },
+    {
+     "text": "何をしていますか。",
+     "reading": "なにをしていますか。",
+     "mark": [
+      "ています"
+     ],
+     "en": "What are you doing?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-te-iru-state",
+   "title": "ている — ongoing state",
+   "pattern": "V-て + います (state)",
+   "short": "Ongoing state (live, married, wear)",
+   "explain": "With some verbs, ている shows a lasting state, not an action: 住んでいます (live), 結婚しています (am married), 勤めています (work for). Pitfall: “I live in Japan” is 日本に住んでいます, not 住みます.",
+   "examples": [
+    {
+     "text": "日本に住んでいます。",
+     "reading": "にほんにすんでいます。",
+     "mark": [
+      "でいます"
+     ],
+     "en": "I live in Japan."
+    },
+    {
+     "text": "お姉さんは結婚しています。",
+     "reading": "おねえさんはけっこんしています。",
+     "mark": [
+      "ています"
+     ],
+     "en": "My older sister is married."
+    },
+    {
+     "text": "父は会社に勤めています。",
+     "reading": "ちちはかいしゃにつとめています。",
+     "mark": [
+      "ています"
+     ],
+     "en": "My father works for a company."
+    },
+    {
+     "text": "靴を履いています。",
+     "reading": "くつをはいています。",
+     "mark": [
+      "ています"
+     ],
+     "en": "I'm wearing shoes."
+    }
+   ]
+  },
+  {
+   "id": "ja5-te-sequence",
+   "title": "て-form — doing A, then B",
+   "pattern": "V1-て、V2",
+   "short": "Linking actions: do A, then B",
+   "explain": "The て-form joins actions in the order they happen: シャワーを浴びて、寝ます. Only the last verb shows tense and politeness. Keep the order the same as in real life.",
+   "examples": [
+    {
+     "text": "シャワーを浴びて、寝ます。",
+     "reading": "しゃわーをあびて、ねます。",
+     "mark": [
+      "て、"
+     ],
+     "en": "I take a shower and go to bed."
+    },
+    {
+     "text": "駅へ行って、電車に乗ります。",
+     "reading": "えきへいって、でんしゃにのります。",
+     "mark": [
+      "て、"
+     ],
+     "en": "I go to the station and get on the train."
+    },
+    {
+     "text": "パンを食べて、学校へ行きました。",
+     "reading": "ぱんをたべて、がっこうへいきました。",
+     "mark": [
+      "て、"
+     ],
+     "en": "I ate bread and went to school."
+    },
+    {
+     "text": "本を読んで、寝ました。",
+     "reading": "ほんをよんで、ねました。",
+     "mark": [
+      "で、"
+     ],
+     "en": "I read a book and went to sleep."
+    }
+   ]
+  },
+  {
+   "id": "ja5-te-kara",
+   "title": "てから — after doing",
+   "pattern": "V-て + から",
+   "short": "After doing A, then B (てから)",
+   "explain": "The て-form + から means “after doing A, then B”, stressing that A comes first: 手を洗ってから食べます. Pitfall: don't confuse it with から meaning “because”, which follows a plain or polite form.",
+   "examples": [
+    {
+     "text": "手を洗ってから食べます。",
+     "reading": "てをあらってからたべます。",
+     "mark": [
+      "てから"
+     ],
+     "en": "I wash my hands before eating."
+    },
+    {
+     "text": "シャワーを浴びてから寝ます。",
+     "reading": "しゃわーをあびてからねます。",
+     "mark": [
+      "てから"
+     ],
+     "en": "I go to bed after taking a shower."
+    },
+    {
+     "text": "晩ご飯を食べてから、テレビを見ます。",
+     "reading": "ばんごはんをたべてから、てれびをみます。",
+     "mark": [
+      "てから"
+     ],
+     "en": "After dinner, I watch TV."
+    },
+    {
+     "text": "日本に来てから一年です。",
+     "reading": "にほんにきてからいちねんです。",
+     "mark": [
+      "てから"
+     ],
+     "en": "It's been a year since I came to Japan."
+    }
+   ]
+  },
+  {
+   "id": "ja5-temo-ii",
+   "title": "てもいいです — may, it's okay to",
+   "pattern": "V-て + もいいです",
+   "short": "Permission: may I / you may",
+   "explain": "The て-form + もいいです gives permission: 帰ってもいいです (you may go home). Add か to ask: 入ってもいいですか (may I come in?). Answer “yes” with はい、どうぞ.",
+   "examples": [
+    {
+     "text": "入ってもいいですか。",
+     "reading": "はいってもいいですか。",
+     "mark": [
+      "てもいい"
+     ],
+     "en": "May I come in?"
+    },
+    {
+     "text": "ここに座ってもいいですか。",
+     "reading": "ここにすわってもいいですか。",
+     "mark": [
+      "てもいい"
+     ],
+     "en": "May I sit here?"
+    },
+    {
+     "text": "電気を消してもいいですか。",
+     "reading": "でんきをけしてもいいですか。",
+     "mark": [
+      "てもいい"
+     ],
+     "en": "May I turn off the light?"
+    },
+    {
+     "text": "もう帰ってもいいです。",
+     "reading": "もうかえってもいいです。",
+     "mark": [
+      "てもいい"
+     ],
+     "en": "You may go home now."
+    }
+   ]
+  },
+  {
+   "id": "ja5-tewa-ikenai",
+   "title": "てはいけません — must not",
+   "pattern": "V-て + はいけません",
+   "short": "Prohibition: you must not",
+   "explain": "The て-form + はいけません means “must not”: ここで泳いではいけません. It states a strong rule, as on signs or from teachers. To ask politely, use ないでください instead.",
+   "examples": [
+    {
+     "text": "ここで泳いではいけません。",
+     "reading": "ここでおよいではいけません。",
+     "mark": [
+      "ではいけません"
+     ],
+     "en": "You must not swim here."
+    },
+    {
+     "text": "ここに入ってはいけません。",
+     "reading": "ここにはいってはいけません。",
+     "mark": [
+      "てはいけません"
+     ],
+     "en": "You must not enter here."
+    },
+    {
+     "text": "ゲームをしてはいけません。",
+     "reading": "げーむをしてはいけません。",
+     "mark": [
+      "てはいけません"
+     ],
+     "en": "You must not play games."
+    },
+    {
+     "text": "ビールを飲んではいけません。",
+     "reading": "びーるをのんではいけません。",
+     "mark": [
+      "ではいけません"
+     ],
+     "en": "You must not drink beer."
+    }
+   ]
+  },
+  {
+   "id": "ja5-mou",
+   "title": "もう — already",
+   "pattern": "もう + V-ました",
+   "short": "Already done (もう)",
+   "explain": "もう with a past verb means “already”: もう食べました. Ask with もう…ましたか (have you … yet?). With a negative verb, もう means “not anymore”.",
+   "examples": [
+    {
+     "text": "もう食べました。",
+     "reading": "もうたべました。",
+     "mark": [
+      "もう",
+      "ました"
+     ],
+     "en": "I've already eaten."
+    },
+    {
+     "text": "もう晩ご飯を食べましたか。",
+     "reading": "もうばんごはんをたべましたか。",
+     "mark": [
+      "もう",
+      "ました"
+     ],
+     "en": "Have you eaten dinner yet?"
+    },
+    {
+     "text": "電車はもう出ました。",
+     "reading": "でんしゃはもうでました。",
+     "mark": [
+      "もう",
+      "ました"
+     ],
+     "en": "The train has already left."
+    },
+    {
+     "text": "もう十時です。",
+     "reading": "もうじゅうじです。",
+     "mark": [
+      "もう"
+     ],
+     "en": "It's already ten o'clock."
+    }
+   ]
+  },
+  {
+   "id": "ja5-mada",
+   "title": "まだ … ていません — not yet",
+   "pattern": "まだ + V-ていません",
+   "short": "Not yet done (まだ…ていません)",
+   "explain": "まだ + ていません means “not yet”: まだ食べていません. A short answer is いいえ、まだです. Pitfall: don't use ませんでした here; that means “didn't (at that time)”.",
+   "examples": [
+    {
+     "text": "まだ食べていません。",
+     "reading": "まだたべていません。",
+     "mark": [
+      "まだ",
+      "ていません"
+     ],
+     "en": "I haven't eaten yet."
+    },
+    {
+     "text": "いいえ、まだです。",
+     "reading": "いいえ、まだです。",
+     "mark": [
+      "まだ"
+     ],
+     "en": "No, not yet."
+    },
+    {
+     "text": "まだメールを書いていません。",
+     "reading": "まだめーるをかいていません。",
+     "mark": [
+      "まだ",
+      "ていません"
+     ],
+     "en": "I haven't written the email yet."
+    },
+    {
+     "text": "父はまだ会社にいます。",
+     "reading": "ちちはまだかいしゃにいます。",
+     "mark": [
+      "まだ"
+     ],
+     "en": "My father is still at the office."
+    }
+   ]
+  },
+  {
+   "id": "ja5-tai",
+   "title": "たい — want to do",
+   "pattern": "V-stem + たいです",
+   "short": "Want to do ~ (たい)",
+   "explain": "Add たい to the ます-stem to say what you want to do: 食べたいです (I want to eat). It changes like an い-adjective: 食べたくないです. Use it about yourself; asking superiors directly can sound blunt.",
+   "examples": [
+    {
+     "text": "日本へ行きたいです。",
+     "reading": "にほんへいきたいです。",
+     "mark": [
+      "たい"
+     ],
+     "en": "I want to go to Japan."
+    },
+    {
+     "text": "水が飲みたいです。",
+     "reading": "みずがのみたいです。",
+     "mark": [
+      "たい"
+     ],
+     "en": "I want to drink water."
+    },
+    {
+     "text": "何が食べたいですか。",
+     "reading": "なにがたべたいですか。",
+     "mark": [
+      "たい"
+     ],
+     "en": "What do you want to eat?"
+    },
+    {
+     "text": "今日は出かけたくないです。",
+     "reading": "きょうはでかけたくないです。",
+     "mark": [
+      "たくない"
+     ],
+     "en": "I don't want to go out today."
+    }
+   ]
+  },
+  {
+   "id": "ja5-hoshii",
+   "title": "がほしい — want (a thing)",
+   "pattern": "N が ほしいです",
+   "short": "Want a thing (ほしい)",
+   "explain": "ほしい means “want” for things: 車がほしいです. The thing you want is marked with が. For actions, use たい instead (行きたい), not ほしい.",
+   "examples": [
+    {
+     "text": "新しい車がほしいです。",
+     "reading": "あたらしいくるまがほしいです。",
+     "mark": [
+      "がほしい"
+     ],
+     "en": "I want a new car."
+    },
+    {
+     "text": "時間がほしいです。",
+     "reading": "じかんがほしいです。",
+     "mark": [
+      "がほしい"
+     ],
+     "en": "I want more time."
+    },
+    {
+     "text": "何がほしいですか。",
+     "reading": "なにがほしいですか。",
+     "mark": [
+      "がほしい"
+     ],
+     "en": "What do you want?"
+    },
+    {
+     "text": "今は何もほしくないです。",
+     "reading": "いまはなにもほしくないです。",
+     "mark": [
+      "ほしくない"
+     ],
+     "en": "I don't want anything now."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ni-iku",
+   "title": "V-stem に行く — go to do",
+   "pattern": "V-stem + に 行く / 来る",
+   "short": "Go / come in order to do",
+   "explain": "Put a verb's ます-stem before に and a movement verb to show purpose: 食べに行きます (go to eat). The destination is marked with へ or に: デパートへ服を買いに行きます. The movement verb carries the tense.",
+   "examples": [
+    {
+     "text": "晩ご飯を食べに行きます。",
+     "reading": "ばんごはんをたべにいきます。",
+     "mark": [
+      "に行きます"
+     ],
+     "en": "I'm going out to eat dinner."
+    },
+    {
+     "text": "デパートへ服を買いに行きました。",
+     "reading": "でぱーとへふくをかいにいきました。",
+     "mark": [
+      "に行きました"
+     ],
+     "en": "I went to the department store to buy clothes."
+    },
+    {
+     "text": "日本へ日本語を学びに来ました。",
+     "reading": "にほんへにほんごをまなびにきました。",
+     "mark": [
+      "に来ました"
+     ],
+     "en": "I came to Japan to study Japanese."
+    },
+    {
+     "text": "友だちが遊びに来ます。",
+     "reading": "ともだちがあそびにきます。",
+     "mark": [
+      "に来ます"
+     ],
+     "en": "A friend is coming over to hang out."
+    }
+   ]
+  },
+  {
+   "id": "ja5-mashou",
+   "title": "ましょう — let's",
+   "pattern": "V-stem + ましょう",
+   "short": "Let's do ~ (suggestion)",
+   "explain": "Change ます to ましょう to say “let's”: 行きましょう (let's go). Use it when you expect the other person to agree. To ask “shall we?”, add か: 行きましょうか.",
+   "examples": [
+    {
+     "text": "いっしょに行きましょう。",
+     "reading": "いっしょにいきましょう。",
+     "mark": [
+      "ましょう"
+     ],
+     "en": "Let's go together."
+    },
+    {
+     "text": "ちょっと休みましょう。",
+     "reading": "ちょっとやすみましょう。",
+     "mark": [
+      "ましょう"
+     ],
+     "en": "Let's take a short break."
+    },
+    {
+     "text": "駅で会いましょう。",
+     "reading": "えきであいましょう。",
+     "mark": [
+      "ましょう"
+     ],
+     "en": "Let's meet at the station."
+    },
+    {
+     "text": "さあ、食べましょう。",
+     "reading": "さあ、たべましょう。",
+     "mark": [
+      "ましょう"
+     ],
+     "en": "Well then, let's eat."
+    }
+   ]
+  },
+  {
+   "id": "ja5-masenka",
+   "title": "ませんか — won't you? (invitation)",
+   "pattern": "V-stem + ませんか",
+   "short": "Invitation: won't you ~?",
+   "explain": "A negative question with ませんか is a polite invitation: いっしょに行きませんか (would you like to go together?). It sounds softer than ましょう because it lets the other person decide.",
+   "examples": [
+    {
+     "text": "いっしょに行きませんか。",
+     "reading": "いっしょにいきませんか。",
+     "mark": [
+      "ませんか"
+     ],
+     "en": "Would you like to go together?"
+    },
+    {
+     "text": "コーヒーを飲みませんか。",
+     "reading": "こーひーをのみませんか。",
+     "mark": [
+      "ませんか"
+     ],
+     "en": "Won't you have some coffee?"
+    },
+    {
+     "text": "週末、テニスをしませんか。",
+     "reading": "しゅうまつ、てにすをしませんか。",
+     "mark": [
+      "ませんか"
+     ],
+     "en": "How about playing tennis this weekend?"
+    },
+    {
+     "text": "明日、いっしょに食べませんか。",
+     "reading": "あした、いっしょにたべませんか。",
+     "mark": [
+      "ませんか"
+     ],
+     "en": "Shall we eat together tomorrow?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-mashouka",
+   "title": "ましょうか — shall I? (offer)",
+   "pattern": "V-stem + ましょうか",
+   "short": "Offer: shall I ~? / shall we?",
+   "explain": "ましょうか offers help (“shall I …?”) or asks about a plan (“shall we …?”): 窓を閉めましょうか. Accept with はい、おねがいします, or decline with いいえ、だいじょうぶです.",
+   "examples": [
+    {
+     "text": "窓を閉めましょうか。",
+     "reading": "まどをしめましょうか。",
+     "mark": [
+      "ましょうか"
+     ],
+     "en": "Shall I close the window?"
+    },
+    {
+     "text": "電気を消しましょうか。",
+     "reading": "でんきをけしましょうか。",
+     "mark": [
+      "ましょうか"
+     ],
+     "en": "Shall I turn off the light?"
+    },
+    {
+     "text": "タクシーを呼びましょうか。",
+     "reading": "たくしーをよびましょうか。",
+     "mark": [
+      "ましょうか"
+     ],
+     "en": "Shall I call a taxi?"
+    },
+    {
+     "text": "何時に会いましょうか。",
+     "reading": "なんじにあいましょうか。",
+     "mark": [
+      "ましょうか"
+     ],
+     "en": "What time shall we meet?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-kara-because",
+   "title": "から — because",
+   "pattern": "Reason から、Result",
+   "short": "Because / so (reason first)",
+   "explain": "から after a sentence gives a reason: 雨ですから、行きません (it's raining, so I won't go). The reason comes first and the result second. After a noun or な-adjective, use です or だ before から.",
+   "examples": [
+    {
+     "text": "雨ですから、行きません。",
+     "reading": "あめですから、いきません。",
+     "mark": [
+      "から"
+     ],
+     "en": "It's raining, so I won't go."
+    },
+    {
+     "text": "眠いから、寝ます。",
+     "reading": "ねむいから、ねます。",
+     "mark": [
+      "から"
+     ],
+     "en": "I'm sleepy, so I'll go to bed."
+    },
+    {
+     "text": "時間がないから、急ぎます。",
+     "reading": "じかんがないから、いそぎます。",
+     "mark": [
+      "から"
+     ],
+     "en": "I have no time, so I'll hurry."
+    },
+    {
+     "text": "風邪ですから、休みます。",
+     "reading": "かぜですから、やすみます。",
+     "mark": [
+      "から"
+     ],
+     "en": "I have a cold, so I'll rest."
+    }
+   ]
+  },
+  {
+   "id": "ja5-kedo-ga",
+   "title": "けど / が — but (joining sentences)",
+   "pattern": "Sentence けど / が、Sentence",
+   "short": "But / although (けど, が)",
+   "explain": "けど and が join two sentences with “but”: 高いですが、おいしいです. が is a bit more formal; けど is common in speech. This が comes after a full sentence, so don't confuse it with the subject marker.",
+   "examples": [
+    {
+     "text": "高いですが、おいしいです。",
+     "reading": "たかいですが、おいしいです。",
+     "mark": [
+      "が、"
+     ],
+     "en": "It's expensive, but tasty."
+    },
+    {
+     "text": "日本語は難しいけど、面白いです。",
+     "reading": "にほんごはむずかしいけど、おもしろいです。",
+     "mark": [
+      "けど"
+     ],
+     "en": "Japanese is hard, but interesting."
+    },
+    {
+     "text": "行きたいけど、時間がありません。",
+     "reading": "いきたいけど、じかんがありません。",
+     "mark": [
+      "けど"
+     ],
+     "en": "I want to go, but I have no time."
+    },
+    {
+     "text": "すみませんが、駅はどこですか。",
+     "reading": "すみませんが、えきはどこですか。",
+     "mark": [
+      "が、"
+     ],
+     "en": "Excuse me, but where is the station?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-demo",
+   "title": "でも / しかし — however",
+   "pattern": "Sentence。でも、Sentence。",
+   "short": "However (starts a new sentence)",
+   "explain": "でも starts a new sentence with “but / however”: 高いです。でも、おいしいです. It links two separate sentences, unlike けど, which joins them into one. しかし is a more formal, written version.",
+   "examples": [
+    {
+     "text": "雨です。でも、行きます。",
+     "reading": "あめです。でも、いきます。",
+     "mark": [
+      "でも"
+     ],
+     "en": "It's raining. But I'll go."
+    },
+    {
+     "text": "小さいです。でも、高いです。",
+     "reading": "ちいさいです。でも、たかいです。",
+     "mark": [
+      "でも"
+     ],
+     "en": "It's small. But it's expensive."
+    },
+    {
+     "text": "眠いです。でも、寝ません。",
+     "reading": "ねむいです。でも、ねません。",
+     "mark": [
+      "でも"
+     ],
+     "en": "I'm sleepy. But I won't sleep."
+    },
+    {
+     "text": "難しいです。しかし、面白いです。",
+     "reading": "むずかしいです。しかし、おもしろいです。",
+     "mark": [
+      "しかし"
+     ],
+     "en": "It's hard. However, it's interesting."
+    }
+   ]
+  },
+  {
+   "id": "ja5-yori",
+   "title": "より — than",
+   "pattern": "A は B より Adj",
+   "short": "A is more ~ than B",
+   "explain": "より means “than”: 電車はバスより速いです (trains are faster than buses). The thing you compare against takes より. Japanese adjectives have no “-er” form; より does the work.",
+   "examples": [
+    {
+     "text": "電車はバスより速いです。",
+     "reading": "でんしゃはばすよりはやいです。",
+     "mark": [
+      "より"
+     ],
+     "en": "Trains are faster than buses."
+    },
+    {
+     "text": "今日は昨日より涼しいです。",
+     "reading": "きょうはきのうよりすずしいです。",
+     "mark": [
+      "より"
+     ],
+     "en": "Today is cooler than yesterday."
+    },
+    {
+     "text": "父は母より背が高いです。",
+     "reading": "ちちははよりせがたかいです。",
+     "mark": [
+      "より"
+     ],
+     "en": "My father is taller than my mother."
+    },
+    {
+     "text": "中国は日本より大きいです。",
+     "reading": "ちゅうごくはにほんよりおおきいです。",
+     "mark": [
+      "より"
+     ],
+     "en": "China is bigger than Japan."
+    }
+   ]
+  },
+  {
+   "id": "ja5-hou-ga",
+   "title": "どちら / のほうが — which of two",
+   "pattern": "A と B と どちらが …？ — A の ほうが …",
+   "short": "Which of two? / A is more",
+   "explain": "Ask about two things with A と B と どちらが …ですか. Answer with A のほうが …です (A is more …). You can add より: バスより電車のほうが速いです.",
+   "examples": [
+    {
+     "text": "コーヒーと紅茶とどちらが好きですか。",
+     "reading": "こーひーとこうちゃとどちらがすきですか。",
+     "mark": [
+      "どちらが"
+     ],
+     "en": "Which do you like better, coffee or tea?"
+    },
+    {
+     "text": "紅茶のほうが好きです。",
+     "reading": "こうちゃのほうがすきです。",
+     "mark": [
+      "のほうが"
+     ],
+     "en": "I like tea better."
+    },
+    {
+     "text": "バスより電車のほうが速いです。",
+     "reading": "ばすよりでんしゃのほうがはやいです。",
+     "mark": [
+      "より",
+      "のほうが"
+     ],
+     "en": "Trains are faster than buses."
+    },
+    {
+     "text": "猫のほうがかわいいです。",
+     "reading": "ねこのほうがかわいいです。",
+     "mark": [
+      "のほうが"
+     ],
+     "en": "Cats are cuter."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ichiban",
+   "title": "いちばん — the most",
+   "pattern": "(Group の中で) N が いちばん Adj",
+   "short": "The most ~ (superlative)",
+   "explain": "いちばん (一番) before an adjective means “the most”: いちばん好きです. Name the group with の中で. Question words (何, だれ, どこ) take が in these questions.",
+   "examples": [
+    {
+     "text": "だれがいちばん若いですか。",
+     "reading": "だれがいちばんわかいですか。",
+     "mark": [
+      "いちばん"
+     ],
+     "en": "Who is the youngest?"
+    },
+    {
+     "text": "果物の中で何がいちばん好きですか。",
+     "reading": "くだもののなかでなにがいちばんすきですか。",
+     "mark": [
+      "の中で",
+      "いちばん"
+     ],
+     "en": "Which fruit do you like best?"
+    },
+    {
+     "text": "サッカーがいちばん好きです。",
+     "reading": "さっかーがいちばんすきです。",
+     "mark": [
+      "いちばん"
+     ],
+     "en": "I like soccer the most."
+    },
+    {
+     "text": "この店が一番安いです。",
+     "reading": "このみせがいちばんやすいです。",
+     "mark": [
+      "一番"
+     ],
+     "en": "This shop is the cheapest."
+    }
+   ]
+  },
+  {
+   "id": "ja5-naru",
+   "title": "くなる / になる — become",
+   "pattern": "い-Adj く なる / な-Adj・N に なる",
+   "short": "Become ~ (change of state)",
+   "explain": "なる means “become”. い-adjectives change い to く (暖かくなる); な-adjectives and nouns take に (元気になる, 先生になる). Use なりました to say something has changed.",
+   "examples": [
+    {
+     "text": "暖かくなりました。",
+     "reading": "あたたかくなりました。",
+     "mark": [
+      "くなりました"
+     ],
+     "en": "It has become warm."
+    },
+    {
+     "text": "もう暗くなりました。",
+     "reading": "もうくらくなりました。",
+     "mark": [
+      "くなりました"
+     ],
+     "en": "It's already gotten dark."
+    },
+    {
+     "text": "元気になりました。",
+     "reading": "げんきになりました。",
+     "mark": [
+      "になりました"
+     ],
+     "en": "I got well."
+    },
+    {
+     "text": "先生になりたいです。",
+     "reading": "せんせいになりたいです。",
+     "mark": [
+      "になり"
+     ],
+     "en": "I want to become a teacher."
+    }
+   ]
+  },
+  {
+   "id": "ja5-toki",
+   "title": "とき — when",
+   "pattern": "Plain V / い-Adj / な-Adj な / N の + とき",
+   "short": "When / at the time of ~",
+   "explain": "とき means “when” or “at the time”: 子どものとき (when I was a child), 暇なとき (when I'm free). Use the plain form of verbs before it: 寝るとき. Nouns take の and な-adjectives take な.",
+   "examples": [
+    {
+     "text": "子どものとき、川で泳ぎました。",
+     "reading": "こどものとき、かわでおよぎました。",
+     "mark": [
+      "のとき"
+     ],
+     "en": "When I was a child, I swam in the river."
+    },
+    {
+     "text": "暇なとき、本を読みます。",
+     "reading": "ひまなとき、ほんをよみます。",
+     "mark": [
+      "なとき"
+     ],
+     "en": "When I'm free, I read books."
+    },
+    {
+     "text": "寝るとき、電気を消します。",
+     "reading": "ねるとき、でんきをけします。",
+     "mark": [
+      "とき"
+     ],
+     "en": "I turn off the light when I go to bed."
+    },
+    {
+     "text": "眠いとき、コーヒーを飲みます。",
+     "reading": "ねむいとき、こーひーをのみます。",
+     "mark": [
+      "とき"
+     ],
+     "en": "When I'm sleepy, I drink coffee."
+    }
+   ]
+  },
+  {
+   "id": "ja5-mae-ni",
+   "title": "まえに — before",
+   "pattern": "V (dictionary) まえに / N の まえに",
+   "short": "Before doing / before (an event)",
+   "explain": "まえに (前に) means “before”. Use the dictionary form of the verb before it, even in a past sentence: 寝るまえに歯を磨きました. With nouns, add の: 晩ご飯の前に.",
+   "examples": [
+    {
+     "text": "寝るまえに歯を磨きます。",
+     "reading": "ねるまえにはをみがきます。",
+     "mark": [
+      "まえに"
+     ],
+     "en": "I brush my teeth before bed."
+    },
+    {
+     "text": "食べる前に手を洗います。",
+     "reading": "たべるまえにてをあらいます。",
+     "mark": [
+      "前に"
+     ],
+     "en": "I wash my hands before eating."
+    },
+    {
+     "text": "日本に来る前に、日本語を学びました。",
+     "reading": "にほんにくるまえに、にほんごをまなびました。",
+     "mark": [
+      "前に"
+     ],
+     "en": "I studied Japanese before coming to Japan."
+    },
+    {
+     "text": "晩ご飯の前にお風呂に入ります。",
+     "reading": "ばんごはんのまえにおふろにはいります。",
+     "mark": [
+      "の前に"
+     ],
+     "en": "I take a bath before dinner."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ato-de",
+   "title": "あとで — after",
+   "pattern": "V-た あとで / N の あとで",
+   "short": "After doing / after (an event)",
+   "explain": "あとで (後で) means “after”. Use the past た-form of the verb before it, even for future events: 食べたあとで歯を磨きます. With nouns, add の. On its own, あとで means “later”.",
+   "examples": [
+    {
+     "text": "食べたあとで、歯を磨きます。",
+     "reading": "たべたあとで、はをみがきます。",
+     "mark": [
+      "たあとで"
+     ],
+     "en": "I brush my teeth after eating."
+    },
+    {
+     "text": "晩ご飯の後で散歩します。",
+     "reading": "ばんごはんのあとでさんぽします。",
+     "mark": [
+      "の後で"
+     ],
+     "en": "I take a walk after dinner."
+    },
+    {
+     "text": "テストのあとで、遊びましょう。",
+     "reading": "てすとのあとで、あそびましょう。",
+     "mark": [
+      "のあとで"
+     ],
+     "en": "Let's have fun after the test."
+    },
+    {
+     "text": "また、あとで電話します。",
+     "reading": "また、あとででんわします。",
+     "mark": [
+      "あとで"
+     ],
+     "en": "I'll call you again later."
+    }
+   ]
+  },
+  {
+   "id": "ja5-koto-ga-dekiru",
+   "title": "ことができる — can do",
+   "pattern": "V (dictionary) ことができます / N ができます",
+   "short": "Can / be able to do",
+   "explain": "The dictionary form + ことができます means “can do”: 泳ぐことができます. With nouns, just use ができます: テニスができます. The negative is ことができません.",
+   "examples": [
+    {
+     "text": "私は泳ぐことができます。",
+     "reading": "わたしはおよぐことができます。",
+     "mark": [
+      "ことができます"
+     ],
+     "en": "I can swim."
+    },
+    {
+     "text": "日本語を話すことができます。",
+     "reading": "にほんごをはなすことができます。",
+     "mark": [
+      "ことができます"
+     ],
+     "en": "I can speak Japanese."
+    },
+    {
+     "text": "父はテニスができます。",
+     "reading": "ちちはてにすができます。",
+     "mark": [
+      "ができます"
+     ],
+     "en": "My father can play tennis."
+    },
+    {
+     "text": "ピアノを弾くことができません。",
+     "reading": "ぴあのをひくことができません。",
+     "mark": [
+      "ことができません"
+     ],
+     "en": "I can't play the piano."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ta-koto-ga-aru",
+   "title": "たことがある — have done (experience)",
+   "pattern": "V-た ことがあります",
+   "short": "Have ever done (experience)",
+   "explain": "The た-form + ことがあります talks about life experience: 日本へ行ったことがあります (I have been to Japan). Ask with ことがありますか. Pitfall: don't use it for everyday actions or things done just now.",
+   "examples": [
+    {
+     "text": "日本へ行ったことがあります。",
+     "reading": "にほんへいったことがあります。",
+     "mark": [
+      "たことがあります"
+     ],
+     "en": "I have been to Japan."
+    },
+    {
+     "text": "すしを食べたことがありますか。",
+     "reading": "すしをたべたことがありますか。",
+     "mark": [
+      "たことがあります"
+     ],
+     "en": "Have you ever eaten sushi?"
+    },
+    {
+     "text": "飛行機に乗ったことがありません。",
+     "reading": "ひこうきにのったことがありません。",
+     "mark": [
+      "たことがありません"
+     ],
+     "en": "I have never been on a plane."
+    },
+    {
+     "text": "ピアノを弾いたことがあります。",
+     "reading": "ぴあのをひいたことがあります。",
+     "mark": [
+      "たことがあります"
+     ],
+     "en": "I have played the piano before."
+    }
+   ]
+  },
+  {
+   "id": "ja5-tari",
+   "title": "たり … たりする — things like A and B",
+   "pattern": "V1-たり V2-たり します",
+   "short": "Do things like A and B",
+   "explain": "Use the た-form + り to list sample actions, and end with する: 本を読んだり、テレビを見たりします. It suggests “among other things”. Don't forget the final します.",
+   "examples": [
+    {
+     "text": "本を読んだり、テレビを見たりします。",
+     "reading": "ほんをよんだり、てれびをみたりします。",
+     "mark": [
+      "だり",
+      "たりします"
+     ],
+     "en": "I read books, watch TV and so on."
+    },
+    {
+     "text": "週末は泳いだり、遊んだりします。",
+     "reading": "しゅうまつはおよいだり、あそんだりします。",
+     "mark": [
+      "だり",
+      "だりします"
+     ],
+     "en": "On weekends I swim, have fun and so on."
+    },
+    {
+     "text": "食べたり飲んだりしました。",
+     "reading": "たべたりのんだりしました。",
+     "mark": [
+      "たり",
+      "だりしました"
+     ],
+     "en": "We ate and drank."
+    },
+    {
+     "text": "日曜日は寝たり遊んだりします。",
+     "reading": "にちようびはねたりあそんだりします。",
+     "mark": [
+      "たり",
+      "だりします"
+     ],
+     "en": "On Sundays I sleep, play and so on."
+    }
+   ]
+  },
+  {
+   "id": "ja5-nagara",
+   "title": "ながら — while doing",
+   "pattern": "V-stem ながら V2",
+   "short": "While doing (two actions at once)",
+   "explain": "Add ながら to the ます-stem to do two actions at the same time: テレビを見ながら食べます. The main action comes last. Both actions must be done by the same person.",
+   "examples": [
+    {
+     "text": "テレビを見ながら食べます。",
+     "reading": "てれびをみながらたべます。",
+     "mark": [
+      "ながら"
+     ],
+     "en": "I eat while watching TV."
+    },
+    {
+     "text": "ラジオを聞きながら寝ます。",
+     "reading": "らじおをききながらねます。",
+     "mark": [
+      "ながら"
+     ],
+     "en": "I fall asleep listening to the radio."
+    },
+    {
+     "text": "コーヒーを飲みながら話しましょう。",
+     "reading": "こーひーをのみながらはなしましょう。",
+     "mark": [
+      "ながら"
+     ],
+     "en": "Let's talk over coffee."
+    },
+    {
+     "text": "ギターを弾きながら踊ります。",
+     "reading": "ぎたーをひきながらおどります。",
+     "mark": [
+      "ながら"
+     ],
+     "en": "I dance while playing the guitar."
+    }
+   ]
+  },
+  {
+   "id": "ja5-deshou",
+   "title": "でしょう — probably",
+   "pattern": "Plain form / N + でしょう",
+   "short": "Probably / I suppose (でしょう)",
+   "explain": "でしょう means “probably” or “I suppose”: 明日は雨でしょう. Verbs and い-adjectives use the plain form before it (来るでしょう, 高いでしょう). With rising intonation, でしょう？ asks for agreement.",
+   "examples": [
+    {
+     "text": "明日は雨でしょう。",
+     "reading": "あしたはあめでしょう。",
+     "mark": [
+      "でしょう"
+     ],
+     "en": "It will probably rain tomorrow."
+    },
+    {
+     "text": "先生はすぐ来るでしょう。",
+     "reading": "せんせいはすぐくるでしょう。",
+     "mark": [
+      "でしょう"
+     ],
+     "en": "The teacher will probably come soon."
+    },
+    {
+     "text": "あの店は高いでしょう。",
+     "reading": "あのみせはたかいでしょう。",
+     "mark": [
+      "でしょう"
+     ],
+     "en": "That shop is probably expensive."
+    },
+    {
+     "text": "この本、面白いでしょう？",
+     "reading": "このほん、おもしろいでしょう？",
+     "mark": [
+      "でしょう"
+     ],
+     "en": "This book is interesting, isn't it?"
+    }
+   ]
+  },
+  {
+   "id": "ja5-da",
+   "title": "だ — casual “is”",
+   "pattern": "N / な-Adj + だ / だった / じゃない",
+   "short": "Casual copula: is / was (だ)",
+   "explain": "だ is the casual form of です, used with friends and family: 学生だ. Its past is だった and its negative is じゃない. With い-adjectives, just drop です: 高い, not 高いだ.",
+   "examples": [
+    {
+     "text": "今日は休みだ。",
+     "reading": "きょうはやすみだ。",
+     "mark": [
+      "だ"
+     ],
+     "en": "Today is a day off."
+    },
+    {
+     "text": "明日は日曜日だ。",
+     "reading": "あしたはにちようびだ。",
+     "mark": [
+      "だ"
+     ],
+     "en": "Tomorrow is Sunday."
+    },
+    {
+     "text": "昨日は雨だった。",
+     "reading": "きのうはあめだった。",
+     "mark": [
+      "だった"
+     ],
+     "en": "It was rainy yesterday."
+    },
+    {
+     "text": "これは私の本じゃない。",
+     "reading": "これはわたしのほんじゃない。",
+     "mark": [
+      "じゃない"
+     ],
+     "en": "This isn't my book."
+    }
+   ]
+  },
+  {
+   "id": "ja5-nai-form",
+   "title": "ない-form — casual negative",
+   "pattern": "V-ない",
+   "short": "Casual negative: don't (ない)",
+   "explain": "The ない-form is the casual negative used with friends: 行かない (don't go). う-verbs change the final u-sound to a + ない (飲む → 飲まない); る-verbs drop る (食べる → 食べない). Irregular: する → しない, 来る → こない, ある → ない.",
+   "examples": [
+    {
+     "text": "明日は行かない。",
+     "reading": "あしたはいかない。",
+     "mark": [
+      "行かない"
+     ],
+     "en": "I'm not going tomorrow."
+    },
+    {
+     "text": "ビールは飲まない。",
+     "reading": "びーるはのまない。",
+     "mark": [
+      "飲まない"
+     ],
+     "en": "I don't drink beer."
+    },
+    {
+     "text": "今日は何も食べない。",
+     "reading": "きょうはなにもたべない。",
+     "mark": [
+      "食べない"
+     ],
+     "en": "I won't eat anything today."
+    },
+    {
+     "text": "時間がない。",
+     "reading": "じかんがない。",
+     "mark": [
+      "ない"
+     ],
+     "en": "I have no time."
+    }
+   ]
+  },
+  {
+   "id": "ja5-ta-form",
+   "title": "た-form — casual past",
+   "pattern": "V-た / V-なかった",
+   "short": "Casual past: did (た)",
+   "explain": "The た-form is the casual past: 食べた (ate), 行った (went). It is made like the て-form, with た / だ instead of て / で (読んで → 読んだ). The casual past negative is なかった: 食べなかった.",
+   "examples": [
+    {
+     "text": "昨日、デパートに行った。",
+     "reading": "きのう、でぱーとにいった。",
+     "mark": [
+      "行った"
+     ],
+     "en": "I went to the department store yesterday."
+    },
+    {
+     "text": "晩ご飯はもう食べた。",
+     "reading": "ばんごはんはもうたべた。",
+     "mark": [
+      "食べた"
+     ],
+     "en": "I already ate dinner."
+    },
+    {
+     "text": "本を読んだ。",
+     "reading": "ほんをよんだ。",
+     "mark": [
+      "読んだ"
+     ],
+     "en": "I read a book."
+    },
+    {
+     "text": "昨日は何もしなかった。",
+     "reading": "きのうはなにもしなかった。",
+     "mark": [
+      "しなかった"
+     ],
+     "en": "I didn't do anything yesterday."
+    }
+   ]
+  },
+  {
+   "id": "ja5-n-desu",
+   "title": "んです — explaining",
+   "pattern": "Plain form + んです (N / な-Adj + なんです)",
+   "short": "Explaining / asking reasons (んです)",
+   "explain": "んです after a plain form explains a situation or asks for an explanation: 痛いんです (the thing is, it hurts). どうしたんですか means “what's wrong?”. Nouns and な-adjectives take なんです.",
+   "examples": [
+    {
+     "text": "どうしたんですか。",
+     "reading": "どうしたんですか。",
+     "mark": [
+      "んです"
+     ],
+     "en": "What's wrong?"
+    },
+    {
+     "text": "おなかが痛いんです。",
+     "reading": "おなかがいたいんです。",
+     "mark": [
+      "んです"
+     ],
+     "en": "I have a stomachache, you see."
+    },
+    {
+     "text": "どこへ行くんですか。",
+     "reading": "どこへいくんですか。",
+     "mark": [
+      "んです"
+     ],
+     "en": "Where are you going?"
+    },
+    {
+     "text": "日本語が好きなんです。",
+     "reading": "にほんごがすきなんです。",
+     "mark": [
+      "なんです"
+     ],
+     "en": "I really like Japanese, you see."
+    }
+   ]
+  }
+ ]
+}

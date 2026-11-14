@@ -1,0 +1,5180 @@
+{
+ "level": "JLPT N4",
+ "stories": [
+  {
+   "id": "ja4-s1",
+   "title": "京都への旅行",
+   "title_en": "A Trip to Kyoto",
+   "sentences": [
+    {
+     "text": "先月、友だちと京都へ旅行に行きました。",
+     "reading": "せんげつ、ともだちときょうとへりょこうにいきました。",
+     "en": "Last month, I went on a trip to Kyoto with a friend.",
+     "tokens": [
+      [
+       "先月",
+       "せんげつ",
+       "last month"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "友だち",
+       "ともだち",
+       "friend"
+      ],
+      [
+       "と",
+       "と",
+       "with"
+      ],
+      [
+       "京都",
+       "きょうと",
+       "Kyoto"
+      ],
+      [
+       "へ",
+       "へ",
+       "to (direction)"
+      ],
+      [
+       "旅行",
+       "りょこう",
+       "trip"
+      ],
+      [
+       "に",
+       "に",
+       "for (purpose)"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "東京から新幹線に乗って、二時間ぐらいかかりました。",
+     "reading": "とうきょうからしんかんせんにのって、にじかんぐらいかかりました。",
+     "en": "We took the bullet train from Tokyo, and it took about two hours.",
+     "tokens": [
+      [
+       "東京",
+       "とうきょう",
+       "Tokyo"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "新幹線",
+       "しんかんせん",
+       "bullet train"
+      ],
+      [
+       "に",
+       "に",
+       "on"
+      ],
+      [
+       "乗って",
+       "のって",
+       "rode and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "二時間",
+       "にじかん",
+       "two hours"
+      ],
+      [
+       "ぐらい",
+       "ぐらい",
+       "about"
+      ],
+      [
+       "かかりました",
+       "かかりました",
+       "took"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "京都には古いお寺や神社がたくさんあります。",
+     "reading": "きょうとにはふるいおてらやじんじゃがたくさんあります。",
+     "en": "There are many old temples and shrines in Kyoto.",
+     "tokens": [
+      [
+       "京都",
+       "きょうと",
+       "Kyoto"
+      ],
+      [
+       "に",
+       "に",
+       "in"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "古い",
+       "ふるい",
+       "old"
+      ],
+      [
+       "お寺",
+       "おてら",
+       "temple"
+      ],
+      [
+       "や",
+       "や",
+       "and (etc.)"
+      ],
+      [
+       "神社",
+       "じんじゃ",
+       "shrine"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "たくさん",
+       "たくさん",
+       "many"
+      ],
+      [
+       "あります",
+       "あります",
+       "there are"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "私たちは朝早く起きて、有名なお寺を見に行きました。",
+     "reading": "わたしたちはあさはやくおきて、ゆうめいなおてらをみにいきました。",
+     "en": "We got up early in the morning and went to see a famous temple.",
+     "tokens": [
+      [
+       "私たち",
+       "わたしたち",
+       "we"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "朝",
+       "あさ",
+       "morning"
+      ],
+      [
+       "早く",
+       "はやく",
+       "early"
+      ],
+      [
+       "起きて",
+       "おきて",
+       "got up and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "有名な",
+       "ゆうめいな",
+       "famous"
+      ],
+      [
+       "お寺",
+       "おてら",
+       "temple"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "見に",
+       "みに",
+       "to see"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "雨が降っていましたが、とてもきれいでした。",
+     "reading": "あめがふっていましたが、とてもきれいでした。",
+     "en": "It was raining, but it was very beautiful.",
+     "tokens": [
+      [
+       "雨",
+       "あめ",
+       "rain"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "降って",
+       "ふって",
+       "falling"
+      ],
+      [
+       "いました",
+       "いました",
+       "was"
+      ],
+      [
+       "が",
+       "が",
+       "but"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "きれいでした",
+       "きれいでした",
+       "was beautiful"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "昼ご飯に、京都の有名な料理を食べてみました。",
+     "reading": "ひるごはんに、きょうとのゆうめいなりょうりをたべてみました。",
+     "en": "For lunch, we tried a famous Kyoto dish.",
+     "tokens": [
+      [
+       "昼ご飯",
+       "ひるごはん",
+       "lunch"
+      ],
+      [
+       "に",
+       "に",
+       "for"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "京都",
+       "きょうと",
+       "Kyoto"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "有名な",
+       "ゆうめいな",
+       "famous"
+      ],
+      [
+       "料理",
+       "りょうり",
+       "dish"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "食べて",
+       "たべて",
+       "eat"
+      ],
+      [
+       "みました",
+       "みました",
+       "tried"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "少し高かったですが、とてもおいしかったです。",
+     "reading": "すこしたかかったですが、とてもおいしかったです。",
+     "en": "It was a little expensive, but it was very delicious.",
+     "tokens": [
+      [
+       "少し",
+       "すこし",
+       "a little"
+      ],
+      [
+       "高かった",
+       "たかかった",
+       "was expensive"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "が",
+       "が",
+       "but"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "おいしかった",
+       "おいしかった",
+       "was delicious"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "夜はホテルの近くの店で、家族にお土産を買いました。",
+     "reading": "よるはほてるのちかくのみせで、かぞくにおみやげをかいました。",
+     "en": "At night, I bought souvenirs for my family at a shop near the hotel.",
+     "tokens": [
+      [
+       "夜",
+       "よる",
+       "night"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "ホテル",
+       "ほてる",
+       "hotel"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "近く",
+       "ちかく",
+       "near"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "店",
+       "みせ",
+       "shop"
+      ],
+      [
+       "で",
+       "で",
+       "at"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "家族",
+       "かぞく",
+       "family"
+      ],
+      [
+       "に",
+       "に",
+       "for"
+      ],
+      [
+       "お土産",
+       "おみやげ",
+       "souvenirs"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "買いました",
+       "かいました",
+       "bought"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "京都の人はみんな親切で、道を教えてくれました。",
+     "reading": "きょうとのひとはみんなしんせつで、みちをおしえてくれました。",
+     "en": "The people in Kyoto were all kind and showed us the way.",
+     "tokens": [
+      [
+       "京都",
+       "きょうと",
+       "Kyoto"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "人",
+       "ひと",
+       "people"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "みんな",
+       "みんな",
+       "all"
+      ],
+      [
+       "親切で",
+       "しんせつで",
+       "kind and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "道",
+       "みち",
+       "the way"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "教えて",
+       "おしえて",
+       "tell"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for us)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "また行きたいと思います。",
+     "reading": "またいきたいとおもいます。",
+     "en": "I think I want to go again.",
+     "tokens": [
+      [
+       "また",
+       "また",
+       "again"
+      ],
+      [
+       "行きたい",
+       "いきたい",
+       "want to go"
+      ],
+      [
+       "と",
+       "と",
+       "(quote)"
+      ],
+      [
+       "思います",
+       "おもいます",
+       "think"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How did they travel from Tokyo to Kyoto?",
+     "options": [
+      "By plane",
+      "By bullet train",
+      "By bus",
+      "By car"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What was the weather like when they visited the temple?",
+     "options": [
+      "It was raining",
+      "It was snowing",
+      "It was sunny",
+      "It was windy"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What did the writer buy at night?",
+     "options": [
+      "A new umbrella",
+      "Train tickets",
+      "Lunch",
+      "Souvenirs for the family"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "ja4-s2",
+   "title": "コンビニのアルバイト",
+   "title_en": "My Convenience Store Job",
+   "sentences": [
+    {
+     "text": "私は大学生で、去年からコンビニでアルバイトをしています。",
+     "reading": "わたしはだいがくせいで、きょねんからこんびにであるばいとをしています。",
+     "en": "I am a university student, and since last year I have been working part-time at a convenience store.",
+     "tokens": [
+      [
+       "私",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "大学生",
+       "だいがくせい",
+       "university student"
+      ],
+      [
+       "で",
+       "で",
+       "and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "去年",
+       "きょねん",
+       "last year"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "コンビニ",
+       "こんびに",
+       "convenience store"
+      ],
+      [
+       "で",
+       "で",
+       "at"
+      ],
+      [
+       "アルバイト",
+       "あるばいと",
+       "part-time job"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "して",
+       "して",
+       "doing"
+      ],
+      [
+       "います",
+       "います",
+       "am"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "店は駅の前にあるので、いつもお客さんが多いです。",
+     "reading": "みせはえきのまえにあるので、いつもおきゃくさんがおおいです。",
+     "en": "The store is in front of the station, so there are always many customers.",
+     "tokens": [
+      [
+       "店",
+       "みせ",
+       "store"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "前",
+       "まえ",
+       "in front"
+      ],
+      [
+       "に",
+       "に",
+       "at"
+      ],
+      [
+       "ある",
+       "ある",
+       "is"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "いつも",
+       "いつも",
+       "always"
+      ],
+      [
+       "お客さん",
+       "おきゃくさん",
+       "customers"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "多い",
+       "おおい",
+       "many"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "初めは仕事を覚えるのが大変でした。",
+     "reading": "はじめはしごとをおぼえるのがたいへんでした。",
+     "en": "At first, learning the work was hard.",
+     "tokens": [
+      [
+       "初め",
+       "はじめ",
+       "at first"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "仕事",
+       "しごと",
+       "work"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "覚える",
+       "おぼえる",
+       "learn"
+      ],
+      [
+       "の",
+       "の",
+       "(nominalizer)"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "大変でした",
+       "たいへんでした",
+       "was hard"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "レジの使い方がわからなくて、よく間違えてしまいました。",
+     "reading": "れじのつかいかたがわからなくて、よくまちがえてしまいました。",
+     "en": "I didn't understand how to use the register, and I often made mistakes.",
+     "tokens": [
+      [
+       "レジ",
+       "れじ",
+       "cash register"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "使い方",
+       "つかいかた",
+       "how to use"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "わからなくて",
+       "わからなくて",
+       "didn't understand and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "よく",
+       "よく",
+       "often"
+      ],
+      [
+       "間違えて",
+       "まちがえて",
+       "make mistakes"
+      ],
+      [
+       "しまいました",
+       "しまいました",
+       "(ended up)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "でも、店長がやさしく教えてくれました。",
+     "reading": "でも、てんちょうがやさしくおしえてくれました。",
+     "en": "But the manager taught me kindly.",
+     "tokens": [
+      [
+       "でも",
+       "でも",
+       "but"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "店長",
+       "てんちょう",
+       "store manager"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "やさしく",
+       "やさしく",
+       "kindly"
+      ],
+      [
+       "教えて",
+       "おしえて",
+       "teach"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for me)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "今は一人でレジができるようになりました。",
+     "reading": "いまはひとりでれじができるようになりました。",
+     "en": "Now I have become able to work the register by myself.",
+     "tokens": [
+      [
+       "今",
+       "いま",
+       "now"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "一人で",
+       "ひとりで",
+       "by myself"
+      ],
+      [
+       "レジ",
+       "れじ",
+       "register"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "できる",
+       "できる",
+       "can do"
+      ],
+      [
+       "ように",
+       "ように",
+       "(so that)"
+      ],
+      [
+       "なりました",
+       "なりました",
+       "became"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "土曜日は朝六時に起きなければなりません。",
+     "reading": "どようびはあさろくじにおきなければなりません。",
+     "en": "On Saturdays I have to get up at six in the morning.",
+     "tokens": [
+      [
+       "土曜日",
+       "どようび",
+       "Saturday"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "朝",
+       "あさ",
+       "morning"
+      ],
+      [
+       "六時",
+       "ろくじ",
+       "six o'clock"
+      ],
+      [
+       "に",
+       "に",
+       "at"
+      ],
+      [
+       "起きなければなりません",
+       "おきなければなりません",
+       "must get up"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "少し眠いですが、お金をためて、夏休みに外国へ行きたいです。",
+     "reading": "すこしねむいですが、おかねをためて、なつやすみにがいこくへいきたいです。",
+     "en": "I'm a little sleepy, but I want to save money and go abroad during summer vacation.",
+     "tokens": [
+      [
+       "少し",
+       "すこし",
+       "a little"
+      ],
+      [
+       "眠い",
+       "ねむい",
+       "sleepy"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "が",
+       "が",
+       "but"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "お金",
+       "おかね",
+       "money"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "ためて",
+       "ためて",
+       "save and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "夏休み",
+       "なつやすみ",
+       "summer vacation"
+      ],
+      [
+       "に",
+       "に",
+       "in"
+      ],
+      [
+       "外国",
+       "がいこく",
+       "abroad"
+      ],
+      [
+       "へ",
+       "へ",
+       "to (direction)"
+      ],
+      [
+       "行きたい",
+       "いきたい",
+       "want to go"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "いろいろな人と話せるので、アルバイトは楽しいです。",
+     "reading": "いろいろなひととはなせるので、あるばいとはたのしいです。",
+     "en": "I can talk with all kinds of people, so the job is fun.",
+     "tokens": [
+      [
+       "いろいろな",
+       "いろいろな",
+       "various"
+      ],
+      [
+       "人",
+       "ひと",
+       "people"
+      ],
+      [
+       "と",
+       "と",
+       "with"
+      ],
+      [
+       "話せる",
+       "はなせる",
+       "can talk"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "アルバイト",
+       "あるばいと",
+       "part-time job"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "楽しい",
+       "たのしい",
+       "fun"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why does the store always have many customers?",
+     "options": [
+      "It is very cheap",
+      "It is open all night",
+      "It is in front of the station",
+      "It is new"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What was difficult for the writer at first?",
+     "options": [
+      "Getting up early",
+      "Using the cash register",
+      "Talking to the manager",
+      "Finding the store"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What does the writer want to do with the money?",
+     "options": [
+      "Go abroad in summer vacation",
+      "Buy a car",
+      "Pay for university",
+      "Buy a new phone"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "ja4-s3",
+   "title": "かぜをひいた日",
+   "title_en": "The Day I Caught a Cold",
+   "sentences": [
+    {
+     "text": "先週の月曜日、朝起きたら、頭がとても痛かったです。",
+     "reading": "せんしゅうのげつようび、あさおきたら、あたまがとてもいたかったです。",
+     "en": "Last Monday, when I got up in the morning, my head hurt a lot.",
+     "tokens": [
+      [
+       "先週",
+       "せんしゅう",
+       "last week"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "月曜日",
+       "げつようび",
+       "Monday"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "朝",
+       "あさ",
+       "morning"
+      ],
+      [
+       "起きたら",
+       "おきたら",
+       "when I got up"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "頭",
+       "あたま",
+       "head"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "痛かった",
+       "いたかった",
+       "hurt"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "熱を測ったら、三十八度ありました。",
+     "reading": "ねつをはかったら、さんじゅうはちどありました。",
+     "en": "When I took my temperature, it was 38 degrees.",
+     "tokens": [
+      [
+       "熱",
+       "ねつ",
+       "temperature"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "測ったら",
+       "はかったら",
+       "when I measured"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "三十八度",
+       "さんじゅうはちど",
+       "38 degrees"
+      ],
+      [
+       "ありました",
+       "ありました",
+       "was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "会社に電話して、休むと言いました。",
+     "reading": "かいしゃにでんわして、やすむといいました。",
+     "en": "I called my company and said I would take the day off.",
+     "tokens": [
+      [
+       "会社",
+       "かいしゃ",
+       "company"
+      ],
+      [
+       "に",
+       "に",
+       "to; at"
+      ],
+      [
+       "電話して",
+       "でんわして",
+       "called and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "休む",
+       "やすむ",
+       "take the day off"
+      ],
+      [
+       "と",
+       "と",
+       "(quote)"
+      ],
+      [
+       "言いました",
+       "いいました",
+       "said"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "それから、近くの病院へ行きました。",
+     "reading": "それから、ちかくのびょういんへいきました。",
+     "en": "After that, I went to a nearby hospital.",
+     "tokens": [
+      [
+       "それから",
+       "それから",
+       "after that"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "近く",
+       "ちかく",
+       "nearby"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "病院",
+       "びょういん",
+       "hospital"
+      ],
+      [
+       "へ",
+       "へ",
+       "to (direction)"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "お医者さんに、薬を飲んでよく寝なければならないと言われました。",
+     "reading": "おいしゃさんに、くすりをのんでよくねなければならないといわれました。",
+     "en": "The doctor told me I had to take medicine and sleep well.",
+     "tokens": [
+      [
+       "お医者さん",
+       "おいしゃさん",
+       "doctor"
+      ],
+      [
+       "に",
+       "に",
+       "by"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "薬",
+       "くすり",
+       "medicine"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "飲んで",
+       "のんで",
+       "take and"
+      ],
+      [
+       "よく",
+       "よく",
+       "well"
+      ],
+      [
+       "寝なければならない",
+       "ねなければならない",
+       "must sleep"
+      ],
+      [
+       "と",
+       "と",
+       "(quote)"
+      ],
+      [
+       "言われました",
+       "いわれました",
+       "was told"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "家に帰って、薬を飲んでからすぐ寝ました。",
+     "reading": "いえにかえって、くすりをのんでからすぐねました。",
+     "en": "I went home, took the medicine, and went to sleep right away.",
+     "tokens": [
+      [
+       "家",
+       "いえ",
+       "home"
+      ],
+      [
+       "に",
+       "に",
+       "to; at"
+      ],
+      [
+       "帰って",
+       "かえって",
+       "went back and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "薬",
+       "くすり",
+       "medicine"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "飲んで",
+       "のんで",
+       "took"
+      ],
+      [
+       "から",
+       "から",
+       "after"
+      ],
+      [
+       "すぐ",
+       "すぐ",
+       "right away"
+      ],
+      [
+       "寝ました",
+       "ねました",
+       "slept"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "夜になって、母が心配して来てくれました。",
+     "reading": "よるになって、ははがしんぱいしてきてくれました。",
+     "en": "In the evening, my mother was worried and came to see me.",
+     "tokens": [
+      [
+       "夜",
+       "よる",
+       "night"
+      ],
+      [
+       "に",
+       "に",
+       "to; at"
+      ],
+      [
+       "なって",
+       "なって",
+       "became"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "母",
+       "はは",
+       "my mother"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "心配して",
+       "しんぱいして",
+       "worried"
+      ],
+      [
+       "来て",
+       "きて",
+       "come"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for me)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "母は果物とスープを持ってきてくれました。",
+     "reading": "はははくだものとすーぷをもってきてくれました。",
+     "en": "My mother brought me fruit and soup.",
+     "tokens": [
+      [
+       "母",
+       "はは",
+       "my mother"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "果物",
+       "くだもの",
+       "fruit"
+      ],
+      [
+       "と",
+       "と",
+       "and; with"
+      ],
+      [
+       "スープ",
+       "すーぷ",
+       "soup"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "持って",
+       "もって",
+       "bring"
+      ],
+      [
+       "きて",
+       "きて",
+       "come"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for me)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "三日後、やっと元気になりました。",
+     "reading": "みっかご、やっとげんきになりました。",
+     "en": "Three days later, I finally got better.",
+     "tokens": [
+      [
+       "三日後",
+       "みっかご",
+       "three days later"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "やっと",
+       "やっと",
+       "finally"
+      ],
+      [
+       "元気",
+       "げんき",
+       "healthy"
+      ],
+      [
+       "に",
+       "に",
+       "(become)"
+      ],
+      [
+       "なりました",
+       "なりました",
+       "became"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "これからは、寒い日は暖かい服を着るようにします。",
+     "reading": "これからは、さむいひはあたたかいふくをきるようにします。",
+     "en": "From now on, I will make sure to wear warm clothes on cold days.",
+     "tokens": [
+      [
+       "これから",
+       "これから",
+       "from now on"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "寒い",
+       "さむい",
+       "cold"
+      ],
+      [
+       "日",
+       "ひ",
+       "days"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "暖かい",
+       "あたたかい",
+       "warm"
+      ],
+      [
+       "服",
+       "ふく",
+       "clothes"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "着る",
+       "きる",
+       "wear"
+      ],
+      [
+       "ように",
+       "ように",
+       "(make a point to)"
+      ],
+      [
+       "します",
+       "します",
+       "will do"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What was the writer's temperature?",
+     "options": [
+      "38 degrees",
+      "36 degrees",
+      "37 degrees",
+      "39 degrees"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What did the doctor tell the writer to do?",
+     "options": [
+      "Go back to work",
+      "Eat more fruit",
+      "Come back tomorrow",
+      "Take medicine and sleep well"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "Who came to visit in the evening?",
+     "options": [
+      "A coworker",
+      "The doctor",
+      "The writer's mother",
+      "A friend"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "ja4-s4",
+   "title": "夏祭り",
+   "title_en": "The Summer Festival",
+   "sentences": [
+    {
+     "text": "八月に、町で夏祭りがありました。",
+     "reading": "はちがつに、まちでなつまつりがありました。",
+     "en": "In August, there was a summer festival in my town.",
+     "tokens": [
+      [
+       "八月",
+       "はちがつ",
+       "August"
+      ],
+      [
+       "に",
+       "に",
+       "in"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "町",
+       "まち",
+       "town"
+      ],
+      [
+       "で",
+       "で",
+       "in"
+      ],
+      [
+       "夏祭り",
+       "なつまつり",
+       "summer festival"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "ありました",
+       "ありました",
+       "there was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "私は初めて浴衣を着て、妹と一緒に行きました。",
+     "reading": "わたしははじめてゆかたをきて、いもうとといっしょにいきました。",
+     "en": "I wore a yukata for the first time and went with my younger sister.",
+     "tokens": [
+      [
+       "私",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "初めて",
+       "はじめて",
+       "for the first time"
+      ],
+      [
+       "浴衣",
+       "ゆかた",
+       "yukata"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "着て",
+       "きて",
+       "wore and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "妹",
+       "いもうと",
+       "younger sister"
+      ],
+      [
+       "と",
+       "と",
+       "with"
+      ],
+      [
+       "一緒に",
+       "いっしょに",
+       "together"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "神社の前の道に、店がたくさん並んでいました。",
+     "reading": "じんじゃのまえのみちに、みせがたくさんならんでいました。",
+     "en": "Many stalls were lined up on the street in front of the shrine.",
+     "tokens": [
+      [
+       "神社",
+       "じんじゃ",
+       "shrine"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "前",
+       "まえ",
+       "in front"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "道",
+       "みち",
+       "street"
+      ],
+      [
+       "に",
+       "に",
+       "on"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "店",
+       "みせ",
+       "stalls"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "たくさん",
+       "たくさん",
+       "many"
+      ],
+      [
+       "並んで",
+       "ならんで",
+       "lined up"
+      ],
+      [
+       "いました",
+       "いました",
+       "were"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "妹はりんごあめを買って、うれしそうに食べました。",
+     "reading": "いもうとはりんごあめをかって、うれしそうにたべました。",
+     "en": "My sister bought a candy apple and ate it happily.",
+     "tokens": [
+      [
+       "妹",
+       "いもうと",
+       "younger sister"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "りんごあめ",
+       "りんごあめ",
+       "candy apple"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "買って",
+       "かって",
+       "bought and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "うれしそうに",
+       "うれしそうに",
+       "happily"
+      ],
+      [
+       "食べました",
+       "たべました",
+       "ate"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "私は焼きそばを食べたり、ゲームをしたりしました。",
+     "reading": "わたしはやきそばをたべたり、げーむをしたりしました。",
+     "en": "I did things like eating fried noodles and playing games.",
+     "tokens": [
+      [
+       "私",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "焼きそば",
+       "やきそば",
+       "fried noodles"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "食べたり",
+       "たべたり",
+       "eating and such"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "ゲーム",
+       "げーむ",
+       "games"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "したり",
+       "したり",
+       "playing and such"
+      ],
+      [
+       "しました",
+       "しました",
+       "did"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "夜九時から、花火が始まりました。",
+     "reading": "よるくじから、はなびがはじまりました。",
+     "en": "At nine at night, the fireworks started.",
+     "tokens": [
+      [
+       "夜",
+       "よる",
+       "night"
+      ],
+      [
+       "九時",
+       "くじ",
+       "nine o'clock"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "花火",
+       "はなび",
+       "fireworks"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "始まりました",
+       "はじまりました",
+       "started"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "人が多すぎて、よく見えませんでした。",
+     "reading": "ひとがおおすぎて、よくみえませんでした。",
+     "en": "There were too many people, so we couldn't see well.",
+     "tokens": [
+      [
+       "人",
+       "ひと",
+       "people"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "多すぎて",
+       "おおすぎて",
+       "too many"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "よく",
+       "よく",
+       "well"
+      ],
+      [
+       "見えませんでした",
+       "みえませんでした",
+       "couldn't see"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "それで、私たちは近くの公園へ行くことにしました。",
+     "reading": "それで、わたしたちはちかくのこうえんへいくことにしました。",
+     "en": "So we decided to go to a nearby park.",
+     "tokens": [
+      [
+       "それで",
+       "それで",
+       "so"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "私たち",
+       "わたしたち",
+       "we"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "近く",
+       "ちかく",
+       "nearby"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "公園",
+       "こうえん",
+       "park"
+      ],
+      [
+       "へ",
+       "へ",
+       "to (direction)"
+      ],
+      [
+       "行く",
+       "いく",
+       "go"
+      ],
+      [
+       "こと",
+       "こと",
+       "(thing)"
+      ],
+      [
+       "に",
+       "に",
+       "(decide on)"
+      ],
+      [
+       "しました",
+       "しました",
+       "decided"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "公園からは、花火がきれいに見えました。",
+     "reading": "こうえんからは、はなびがきれいにみえました。",
+     "en": "From the park, we could see the fireworks beautifully.",
+     "tokens": [
+      [
+       "公園",
+       "こうえん",
+       "park"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "花火",
+       "はなび",
+       "fireworks"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "きれいに",
+       "きれいに",
+       "beautifully"
+      ],
+      [
+       "見えました",
+       "みえました",
+       "could be seen"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "来年も妹と一緒に来たいです。",
+     "reading": "らいねんもいもうとといっしょにきたいです。",
+     "en": "I want to come with my sister again next year.",
+     "tokens": [
+      [
+       "来年",
+       "らいねん",
+       "next year"
+      ],
+      [
+       "も",
+       "も",
+       "also"
+      ],
+      [
+       "妹",
+       "いもうと",
+       "younger sister"
+      ],
+      [
+       "と",
+       "と",
+       "with"
+      ],
+      [
+       "一緒に",
+       "いっしょに",
+       "together"
+      ],
+      [
+       "来たい",
+       "きたい",
+       "want to come"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Who did the writer go to the festival with?",
+     "options": [
+      "A friend",
+      "Her mother",
+      "Her older brother",
+      "Her younger sister"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "Why couldn't they see the fireworks well at first?",
+     "options": [
+      "It was raining",
+      "There were too many people",
+      "They were too late",
+      "The trees were in the way"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Where did they watch the fireworks in the end?",
+     "options": [
+      "At the shrine",
+      "From home",
+      "At a nearby park",
+      "From a stall"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "ja4-s5",
+   "title": "新しいアパート",
+   "title_en": "A New Apartment",
+   "sentences": [
+    {
+     "text": "来月から新しい会社で働くので、大阪に引っ越すことになりました。",
+     "reading": "らいげつからあたらしいかいしゃではたらくので、おおさかにひっこすことになりました。",
+     "en": "I will work at a new company from next month, so I am moving to Osaka.",
+     "tokens": [
+      [
+       "来月",
+       "らいげつ",
+       "next month"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "新しい",
+       "あたらしい",
+       "new"
+      ],
+      [
+       "会社",
+       "かいしゃ",
+       "company"
+      ],
+      [
+       "で",
+       "で",
+       "at"
+      ],
+      [
+       "働く",
+       "はたらく",
+       "work"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "大阪",
+       "おおさか",
+       "Osaka"
+      ],
+      [
+       "に",
+       "に",
+       "to"
+      ],
+      [
+       "引っ越す",
+       "ひっこす",
+       "move"
+      ],
+      [
+       "こと",
+       "こと",
+       "(thing)"
+      ],
+      [
+       "に",
+       "に",
+       "(come to)"
+      ],
+      [
+       "なりました",
+       "なりました",
+       "it was decided"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "引っ越しの前に、部屋をきれいに掃除しなければなりませんでした。",
+     "reading": "ひっこしのまえに、へやをきれいにそうじしなければなりませんでした。",
+     "en": "Before the move, I had to clean my room thoroughly.",
+     "tokens": [
+      [
+       "引っ越し",
+       "ひっこし",
+       "the move"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "前",
+       "まえ",
+       "before"
+      ],
+      [
+       "に",
+       "に",
+       "(time)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "部屋",
+       "へや",
+       "room"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "きれいに",
+       "きれいに",
+       "clean"
+      ],
+      [
+       "掃除しなければなりませんでした",
+       "そうじしなければなりませんでした",
+       "had to clean"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "本や服がたくさんあったので、箱に入れるのが大変でした。",
+     "reading": "ほんやふくがたくさんあったので、はこにいれるのがたいへんでした。",
+     "en": "I had a lot of books and clothes, so packing them into boxes was hard.",
+     "tokens": [
+      [
+       "本",
+       "ほん",
+       "books"
+      ],
+      [
+       "や",
+       "や",
+       "and (etc.)"
+      ],
+      [
+       "服",
+       "ふく",
+       "clothes"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "たくさん",
+       "たくさん",
+       "a lot"
+      ],
+      [
+       "あった",
+       "あった",
+       "there were"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "箱",
+       "はこ",
+       "boxes"
+      ],
+      [
+       "に",
+       "に",
+       "into"
+      ],
+      [
+       "入れる",
+       "いれる",
+       "put"
+      ],
+      [
+       "の",
+       "の",
+       "(nominalizer)"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "大変でした",
+       "たいへんでした",
+       "was hard"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "引っ越しの日は、友だちの田中さんが手伝ってくれました。",
+     "reading": "ひっこしのひは、ともだちのたなかさんがてつだってくれました。",
+     "en": "On moving day, my friend Mr. Tanaka helped me.",
+     "tokens": [
+      [
+       "引っ越し",
+       "ひっこし",
+       "moving"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "日",
+       "ひ",
+       "day"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "友だち",
+       "ともだち",
+       "friend"
+      ],
+      [
+       "の",
+       "の",
+       "(who is)"
+      ],
+      [
+       "田中さん",
+       "たなかさん",
+       "Mr. Tanaka"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "手伝って",
+       "てつだって",
+       "help"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for me)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "新しいアパートは駅から歩いて五分なので、とても便利です。",
+     "reading": "あたらしいあぱーとはえきからあるいてごふんなので、とてもべんりです。",
+     "en": "The new apartment is a five-minute walk from the station, so it is very convenient.",
+     "tokens": [
+      [
+       "新しい",
+       "あたらしい",
+       "new"
+      ],
+      [
+       "アパート",
+       "あぱーと",
+       "apartment"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "歩いて",
+       "あるいて",
+       "on foot"
+      ],
+      [
+       "五分",
+       "ごふん",
+       "five minutes"
+      ],
+      [
+       "な",
+       "な",
+       "(is)"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "便利",
+       "べんり",
+       "convenient"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "でも、前の部屋より少し狭いです。",
+     "reading": "でも、まえのへやよりすこしせまいです。",
+     "en": "But it is a little smaller than my old room.",
+     "tokens": [
+      [
+       "でも",
+       "でも",
+       "but"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "前",
+       "まえ",
+       "previous"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "部屋",
+       "へや",
+       "room"
+      ],
+      [
+       "より",
+       "より",
+       "than"
+      ],
+      [
+       "少し",
+       "すこし",
+       "a little"
+      ],
+      [
+       "狭い",
+       "せまい",
+       "small"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "次の日、となりの人にあいさつに行きました。",
+     "reading": "つぎのひ、となりのひとにあいさつにいきました。",
+     "en": "The next day, I went to say hello to my neighbor.",
+     "tokens": [
+      [
+       "次",
+       "つぎ",
+       "next"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "日",
+       "ひ",
+       "day"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "となり",
+       "となり",
+       "next door"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "人",
+       "ひと",
+       "person"
+      ],
+      [
+       "に",
+       "に",
+       "to"
+      ],
+      [
+       "あいさつ",
+       "あいさつ",
+       "greeting"
+      ],
+      [
+       "に",
+       "に",
+       "to (purpose)"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "となりに住んでいるのは、やさしいおばあさんでした。",
+     "reading": "となりにすんでいるのは、やさしいおばあさんでした。",
+     "en": "The person living next door was a kind old woman.",
+     "tokens": [
+      [
+       "となり",
+       "となり",
+       "next door"
+      ],
+      [
+       "に",
+       "に",
+       "in"
+      ],
+      [
+       "住んで",
+       "すんで",
+       "living"
+      ],
+      [
+       "いる",
+       "いる",
+       "is"
+      ],
+      [
+       "の",
+       "の",
+       "the one"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "やさしい",
+       "やさしい",
+       "kind"
+      ],
+      [
+       "おばあさん",
+       "おばあさん",
+       "old woman"
+      ],
+      [
+       "でした",
+       "でした",
+       "was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "おばあさんは、近くのおいしいパン屋を教えてくれました。",
+     "reading": "おばあさんは、ちかくのおいしいぱんやをおしえてくれました。",
+     "en": "She told me about a good bakery nearby.",
+     "tokens": [
+      [
+       "おばあさん",
+       "おばあさん",
+       "old woman"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "近く",
+       "ちかく",
+       "nearby"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "おいしい",
+       "おいしい",
+       "delicious"
+      ],
+      [
+       "パン屋",
+       "ぱんや",
+       "bakery"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "教えて",
+       "おしえて",
+       "tell"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for me)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "新しい町が少しずつ好きになってきました。",
+     "reading": "あたらしいまちがすこしずつすきになってきました。",
+     "en": "Little by little, I have come to like my new town.",
+     "tokens": [
+      [
+       "新しい",
+       "あたらしい",
+       "new"
+      ],
+      [
+       "町",
+       "まち",
+       "town"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "少しずつ",
+       "すこしずつ",
+       "little by little"
+      ],
+      [
+       "好き",
+       "すき",
+       "like"
+      ],
+      [
+       "に",
+       "に",
+       "(become)"
+      ],
+      [
+       "なって",
+       "なって",
+       "becoming"
+      ],
+      [
+       "きました",
+       "きました",
+       "have come to"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why is the writer moving to Osaka?",
+     "options": [
+      "To go to university",
+      "To start work at a new company",
+      "To live with family",
+      "Because the old room was small"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Who helped on moving day?",
+     "options": [
+      "The writer's mother",
+      "The neighbor",
+      "A friend, Mr. Tanaka",
+      "The new boss"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What is good about the new apartment?",
+     "options": [
+      "It is close to the station",
+      "It is very big",
+      "It is cheap",
+      "It is quiet"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "ja4-s6",
+   "title": "なくした傘",
+   "title_en": "The Lost Umbrella",
+   "sentences": [
+    {
+     "text": "昨日の朝は雨が降っていたので、傘を持って出かけました。",
+     "reading": "きのうのあさはあめがふっていたので、かさをもってでかけました。",
+     "en": "Yesterday morning it was raining, so I went out with an umbrella.",
+     "tokens": [
+      [
+       "昨日",
+       "きのう",
+       "yesterday"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "朝",
+       "あさ",
+       "morning"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "雨",
+       "あめ",
+       "rain"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "降って",
+       "ふって",
+       "falling"
+      ],
+      [
+       "いた",
+       "いた",
+       "was"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "傘",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "持って",
+       "もって",
+       "holding"
+      ],
+      [
+       "出かけました",
+       "でかけました",
+       "went out"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "電車の中で本を読んでいたら、降りる駅に着きました。",
+     "reading": "でんしゃのなかでほんをよんでいたら、おりるえきにつきました。",
+     "en": "While I was reading a book on the train, we arrived at my station.",
+     "tokens": [
+      [
+       "電車",
+       "でんしゃ",
+       "train"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "中",
+       "なか",
+       "inside"
+      ],
+      [
+       "で",
+       "で",
+       "in"
+      ],
+      [
+       "本",
+       "ほん",
+       "book"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "読んで",
+       "よんで",
+       "reading"
+      ],
+      [
+       "いたら",
+       "いたら",
+       "while"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "降りる",
+       "おりる",
+       "get off"
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "に",
+       "に",
+       "to; at"
+      ],
+      [
+       "着きました",
+       "つきました",
+       "arrived"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "急いで降りたので、傘を電車に忘れてしまいました。",
+     "reading": "いそいでおりたので、かさをでんしゃにわすれてしまいました。",
+     "en": "I got off in a hurry, so I left my umbrella on the train.",
+     "tokens": [
+      [
+       "急いで",
+       "いそいで",
+       "in a hurry"
+      ],
+      [
+       "降りた",
+       "おりた",
+       "got off"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "傘",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "電車",
+       "でんしゃ",
+       "train"
+      ],
+      [
+       "に",
+       "に",
+       "on"
+      ],
+      [
+       "忘れて",
+       "わすれて",
+       "forget"
+      ],
+      [
+       "しまいました",
+       "しまいました",
+       "(ended up)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "その傘は誕生日に父がくれた大切な傘でした。",
+     "reading": "そのかさはたんじょうびにちちがくれたたいせつなかさでした。",
+     "en": "It was a precious umbrella that my father gave me for my birthday.",
+     "tokens": [
+      [
+       "その",
+       "その",
+       "that"
+      ],
+      [
+       "傘",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "誕生日",
+       "たんじょうび",
+       "birthday"
+      ],
+      [
+       "に",
+       "に",
+       "on"
+      ],
+      [
+       "父",
+       "ちち",
+       "my father"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "くれた",
+       "くれた",
+       "gave me"
+      ],
+      [
+       "大切な",
+       "たいせつな",
+       "precious"
+      ],
+      [
+       "傘",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "でした",
+       "でした",
+       "was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "私はすぐ駅員さんに話しました。",
+     "reading": "わたしはすぐえきいんさんにはなしました。",
+     "en": "I spoke to a station attendant right away.",
+     "tokens": [
+      [
+       "私",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "すぐ",
+       "すぐ",
+       "right away"
+      ],
+      [
+       "駅員さん",
+       "えきいんさん",
+       "station staff"
+      ],
+      [
+       "に",
+       "に",
+       "to"
+      ],
+      [
+       "話しました",
+       "はなしました",
+       "talked"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "駅員さんは、終点の駅に電話をかけて聞いてくれました。",
+     "reading": "えきいんさんは、しゅうてんのえきにでんわをかけてきいてくれました。",
+     "en": "The attendant called the station at the end of the line and asked for me.",
+     "tokens": [
+      [
+       "駅員さん",
+       "えきいんさん",
+       "station staff"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "終点",
+       "しゅうてん",
+       "last stop"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "に",
+       "に",
+       "to; at"
+      ],
+      [
+       "電話",
+       "でんわ",
+       "phone"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "かけて",
+       "かけて",
+       "call and"
+      ],
+      [
+       "聞いて",
+       "きいて",
+       "ask"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for me)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "夕方、傘が見つかったと連絡がありました。",
+     "reading": "ゆうがた、かさがみつかったとれんらくがありました。",
+     "en": "In the evening, I got a message that the umbrella had been found.",
+     "tokens": [
+      [
+       "夕方",
+       "ゆうがた",
+       "evening"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "傘",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "見つかった",
+       "みつかった",
+       "was found"
+      ],
+      [
+       "と",
+       "と",
+       "(quote)"
+      ],
+      [
+       "連絡",
+       "れんらく",
+       "message"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "ありました",
+       "ありました",
+       "there was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "仕事の後で、その駅まで取りに行きました。",
+     "reading": "しごとのあとで、そのえきまでとりにいきました。",
+     "en": "After work, I went to that station to pick it up.",
+     "tokens": [
+      [
+       "仕事",
+       "しごと",
+       "work"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "後",
+       "あと",
+       "after"
+      ],
+      [
+       "で",
+       "で",
+       "(time)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "その",
+       "その",
+       "that"
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "まで",
+       "まで",
+       "to"
+      ],
+      [
+       "取り",
+       "とり",
+       "pick up"
+      ],
+      [
+       "に",
+       "に",
+       "to (purpose)"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "傘がもどってきて、本当にうれしかったです。",
+     "reading": "かさがもどってきて、ほんとうにうれしかったです。",
+     "en": "I was really happy that the umbrella came back.",
+     "tokens": [
+      [
+       "傘",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "もどって",
+       "もどって",
+       "return"
+      ],
+      [
+       "きて",
+       "きて",
+       "came and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "本当に",
+       "ほんとうに",
+       "really"
+      ],
+      [
+       "うれしかった",
+       "うれしかった",
+       "was happy"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "これからは、電車を降りる前に、忘れ物がないか確かめるようにします。",
+     "reading": "これからは、でんしゃをおりるまえに、わすれものがないかたしかめるようにします。",
+     "en": "From now on, I will check for forgotten items before getting off the train.",
+     "tokens": [
+      [
+       "これから",
+       "これから",
+       "from now on"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "電車",
+       "でんしゃ",
+       "train"
+      ],
+      [
+       "を",
+       "を",
+       "from"
+      ],
+      [
+       "降りる",
+       "おりる",
+       "get off"
+      ],
+      [
+       "前",
+       "まえ",
+       "before"
+      ],
+      [
+       "に",
+       "に",
+       "(time)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "忘れ物",
+       "わすれもの",
+       "forgotten items"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "ない",
+       "ない",
+       "there are not"
+      ],
+      [
+       "か",
+       "か",
+       "whether"
+      ],
+      [
+       "確かめる",
+       "たしかめる",
+       "check"
+      ],
+      [
+       "ように",
+       "ように",
+       "(make a point to)"
+      ],
+      [
+       "します",
+       "します",
+       "will do"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why did the writer forget the umbrella?",
+     "options": [
+      "He was sleeping",
+      "He was talking on the phone",
+      "He got off the train in a hurry",
+      "It stopped raining"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Who gave the writer the umbrella?",
+     "options": [
+      "His father",
+      "His mother",
+      "A friend",
+      "His boss"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "When did the writer go to get the umbrella?",
+     "options": [
+      "The next morning",
+      "Before work",
+      "At lunchtime",
+      "After work"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "ja4-s7",
+   "title": "友だちに料理を作る",
+   "title_en": "Cooking for Friends",
+   "sentences": [
+    {
+     "text": "土曜日に、友だちが三人うちに遊びに来ました。",
+     "reading": "どようびに、ともだちがさんにんうちにあそびにきました。",
+     "en": "On Saturday, three friends came over to my place.",
+     "tokens": [
+      [
+       "土曜日",
+       "どようび",
+       "Saturday"
+      ],
+      [
+       "に",
+       "に",
+       "on"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "友だち",
+       "ともだち",
+       "friends"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "三人",
+       "さんにん",
+       "three people"
+      ],
+      [
+       "うち",
+       "うち",
+       "my home"
+      ],
+      [
+       "に",
+       "に",
+       "to"
+      ],
+      [
+       "遊び",
+       "あそび",
+       "hang out"
+      ],
+      [
+       "に",
+       "に",
+       "to (purpose)"
+      ],
+      [
+       "来ました",
+       "きました",
+       "came"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "私はみんなのためにカレーを作ることにしました。",
+     "reading": "わたしはみんなのためにかれーをつくることにしました。",
+     "en": "I decided to make curry for everyone.",
+     "tokens": [
+      [
+       "私",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "みんな",
+       "みんな",
+       "everyone"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "ため",
+       "ため",
+       "sake"
+      ],
+      [
+       "に",
+       "に",
+       "for"
+      ],
+      [
+       "カレー",
+       "かれー",
+       "curry"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "作る",
+       "つくる",
+       "make"
+      ],
+      [
+       "こと",
+       "こと",
+       "(thing)"
+      ],
+      [
+       "に",
+       "に",
+       "(decide on)"
+      ],
+      [
+       "しました",
+       "しました",
+       "decided"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "朝、スーパーで肉と野菜を買ってきました。",
+     "reading": "あさ、すーぱーでにくとやさいをかってきました。",
+     "en": "In the morning, I bought meat and vegetables at the supermarket.",
+     "tokens": [
+      [
+       "朝",
+       "あさ",
+       "morning"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "スーパー",
+       "すーぱー",
+       "supermarket"
+      ],
+      [
+       "で",
+       "で",
+       "at"
+      ],
+      [
+       "肉",
+       "にく",
+       "meat"
+      ],
+      [
+       "と",
+       "と",
+       "and; with"
+      ],
+      [
+       "野菜",
+       "やさい",
+       "vegetables"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "買って",
+       "かって",
+       "buy"
+      ],
+      [
+       "きました",
+       "きました",
+       "(and came back)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "料理はあまり上手ではないので、母に作り方を聞きました。",
+     "reading": "りょうりはあまりじょうずではないので、ははにつくりかたをききました。",
+     "en": "I'm not very good at cooking, so I asked my mother how to make it.",
+     "tokens": [
+      [
+       "料理",
+       "りょうり",
+       "cooking"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "あまり",
+       "あまり",
+       "not very"
+      ],
+      [
+       "上手",
+       "じょうず",
+       "good at"
+      ],
+      [
+       "では",
+       "では",
+       "(is)"
+      ],
+      [
+       "ない",
+       "ない",
+       "not"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "母",
+       "はは",
+       "my mother"
+      ],
+      [
+       "に",
+       "に",
+       "from"
+      ],
+      [
+       "作り方",
+       "つくりかた",
+       "how to make it"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "聞きました",
+       "ききました",
+       "asked"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "野菜を切っているとき、指を少し切ってしまいました。",
+     "reading": "やさいをきっているとき、ゆびをすこしきってしまいました。",
+     "en": "While I was cutting vegetables, I accidentally cut my finger a little.",
+     "tokens": [
+      [
+       "野菜",
+       "やさい",
+       "vegetables"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "切って",
+       "きって",
+       "cutting"
+      ],
+      [
+       "いる",
+       "いる",
+       "am"
+      ],
+      [
+       "とき",
+       "とき",
+       "when"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "指",
+       "ゆび",
+       "finger"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "少し",
+       "すこし",
+       "a little"
+      ],
+      [
+       "切って",
+       "きって",
+       "cut"
+      ],
+      [
+       "しまいました",
+       "しまいました",
+       "(accidentally)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "でも、カレーは思ったよりおいしくできました。",
+     "reading": "でも、かれーはおもったよりおいしくできました。",
+     "en": "But the curry turned out more delicious than I expected.",
+     "tokens": [
+      [
+       "でも",
+       "でも",
+       "but"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "カレー",
+       "かれー",
+       "curry"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "思った",
+       "おもった",
+       "thought"
+      ],
+      [
+       "より",
+       "より",
+       "than"
+      ],
+      [
+       "おいしく",
+       "おいしく",
+       "deliciously"
+      ],
+      [
+       "できました",
+       "できました",
+       "turned out"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "友だちはケーキを持ってきてくれました。",
+     "reading": "ともだちはけーきをもってきてくれました。",
+     "en": "My friends brought a cake.",
+     "tokens": [
+      [
+       "友だち",
+       "ともだち",
+       "friends"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "ケーキ",
+       "けーき",
+       "cake"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "持って",
+       "もって",
+       "bring"
+      ],
+      [
+       "きて",
+       "きて",
+       "come"
+      ],
+      [
+       "くれました",
+       "くれました",
+       "(for me)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "みんなで食べながら、遅くまでいろいろな話をしました。",
+     "reading": "みんなでたべながら、おそくまでいろいろなはなしをしました。",
+     "en": "While eating together, we talked about many things until late.",
+     "tokens": [
+      [
+       "みんな",
+       "みんな",
+       "everyone"
+      ],
+      [
+       "で",
+       "で",
+       "together"
+      ],
+      [
+       "食べ",
+       "たべ",
+       "eat"
+      ],
+      [
+       "ながら",
+       "ながら",
+       "while"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "遅く",
+       "おそく",
+       "late"
+      ],
+      [
+       "まで",
+       "まで",
+       "until; to"
+      ],
+      [
+       "いろいろな",
+       "いろいろな",
+       "various"
+      ],
+      [
+       "話",
+       "はなし",
+       "talk"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "しました",
+       "しました",
+       "did"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "友だちに、また作ってほしいと言われました。",
+     "reading": "ともだちに、またつくってほしいといわれました。",
+     "en": "My friends told me they want me to make it again.",
+     "tokens": [
+      [
+       "友だち",
+       "ともだち",
+       "friends"
+      ],
+      [
+       "に",
+       "に",
+       "by"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "また",
+       "また",
+       "again"
+      ],
+      [
+       "作って",
+       "つくって",
+       "make"
+      ],
+      [
+       "ほしい",
+       "ほしい",
+       "want (you) to"
+      ],
+      [
+       "と",
+       "と",
+       "(quote)"
+      ],
+      [
+       "言われました",
+       "いわれました",
+       "was told"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "次は、もっと上手に作れるようになりたいです。",
+     "reading": "つぎは、もっとじょうずにつくれるようになりたいです。",
+     "en": "Next time, I want to be able to cook even better.",
+     "tokens": [
+      [
+       "次",
+       "つぎ",
+       "next time"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "もっと",
+       "もっと",
+       "more"
+      ],
+      [
+       "上手に",
+       "じょうずに",
+       "skillfully"
+      ],
+      [
+       "作れる",
+       "つくれる",
+       "can make"
+      ],
+      [
+       "ように",
+       "ように",
+       "(so that)"
+      ],
+      [
+       "なりたい",
+       "なりたい",
+       "want to become"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What did the writer cook?",
+     "options": [
+      "Curry",
+      "Fried noodles",
+      "Cake",
+      "Soup"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "Who did the writer ask about how to cook it?",
+     "options": [
+      "A friend",
+      "A shop clerk",
+      "The writer's mother",
+      "A cooking teacher"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What happened while the writer was cutting vegetables?",
+     "options": [
+      "The knife broke",
+      "The writer cut a finger",
+      "The friends arrived",
+      "The vegetables fell"
+     ],
+     "answer": 1
+    }
+   ]
+  },
+  {
+   "id": "ja4-s8",
+   "title": "新しい趣味",
+   "title_en": "A New Hobby",
+   "sentences": [
+    {
+     "text": "去年の春から、ギターを習い始めました。",
+     "reading": "きょねんのはるから、ぎたーをならいはじめました。",
+     "en": "I started learning the guitar last spring.",
+     "tokens": [
+      [
+       "去年",
+       "きょねん",
+       "last year"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "春",
+       "はる",
+       "spring"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "ギター",
+       "ぎたー",
+       "guitar"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "習い始めました",
+       "ならいはじめました",
+       "started learning"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "兄が古いギターをくれたので、やってみようと思いました。",
+     "reading": "あにがふるいぎたーをくれたので、やってみようとおもいました。",
+     "en": "My older brother gave me his old guitar, so I thought I would give it a try.",
+     "tokens": [
+      [
+       "兄",
+       "あに",
+       "my older brother"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "古い",
+       "ふるい",
+       "old"
+      ],
+      [
+       "ギター",
+       "ぎたー",
+       "guitar"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "くれた",
+       "くれた",
+       "gave me"
+      ],
+      [
+       "ので",
+       "ので",
+       "because"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "やって",
+       "やって",
+       "do"
+      ],
+      [
+       "みよう",
+       "みよう",
+       "let's try"
+      ],
+      [
+       "と",
+       "と",
+       "(quote)"
+      ],
+      [
+       "思いました",
+       "おもいました",
+       "thought"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "最初は指が痛くて、三十分も練習できませんでした。",
+     "reading": "さいしょはゆびがいたくて、さんじゅっぷんもれんしゅうできませんでした。",
+     "en": "At first my fingers hurt, and I couldn't even practice for thirty minutes.",
+     "tokens": [
+      [
+       "最初",
+       "さいしょ",
+       "at first"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "指",
+       "ゆび",
+       "fingers"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "痛くて",
+       "いたくて",
+       "hurt and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "三十分",
+       "さんじゅっぷん",
+       "thirty minutes"
+      ],
+      [
+       "も",
+       "も",
+       "even"
+      ],
+      [
+       "練習",
+       "れんしゅう",
+       "practice"
+      ],
+      [
+       "できませんでした",
+       "できませんでした",
+       "couldn't do"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "それで、駅の近くの音楽教室に通うことにしました。",
+     "reading": "それで、えきのちかくのおんがくきょうしつにかようことにしました。",
+     "en": "So I decided to go to a music school near the station.",
+     "tokens": [
+      [
+       "それで",
+       "それで",
+       "so"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "近く",
+       "ちかく",
+       "near"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "音楽教室",
+       "おんがくきょうしつ",
+       "music school"
+      ],
+      [
+       "に",
+       "に",
+       "to"
+      ],
+      [
+       "通う",
+       "かよう",
+       "attend"
+      ],
+      [
+       "こと",
+       "こと",
+       "(thing)"
+      ],
+      [
+       "に",
+       "に",
+       "(decide on)"
+      ],
+      [
+       "しました",
+       "しました",
+       "decided"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "先生は若い女の人で、教え方がとても上手です。",
+     "reading": "せんせいはわかいおんなのひとで、おしえかたがとてもじょうずです。",
+     "en": "The teacher is a young woman, and she is very good at teaching.",
+     "tokens": [
+      [
+       "先生",
+       "せんせい",
+       "teacher"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "若い",
+       "わかい",
+       "young"
+      ],
+      [
+       "女の人",
+       "おんなのひと",
+       "woman"
+      ],
+      [
+       "で",
+       "で",
+       "and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "教え方",
+       "おしえかた",
+       "way of teaching"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "上手",
+       "じょうず",
+       "skillful"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "毎週水曜日の夜、仕事が終わってから教室へ行きます。",
+     "reading": "まいしゅうすいようびのよる、しごとがおわってからきょうしつへいきます。",
+     "en": "Every Wednesday night, I go to the school after work.",
+     "tokens": [
+      [
+       "毎週",
+       "まいしゅう",
+       "every week"
+      ],
+      [
+       "水曜日",
+       "すいようび",
+       "Wednesday"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "夜",
+       "よる",
+       "night"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "仕事",
+       "しごと",
+       "work"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "終わって",
+       "おわって",
+       "finish"
+      ],
+      [
+       "から",
+       "から",
+       "after"
+      ],
+      [
+       "教室",
+       "きょうしつ",
+       "school"
+      ],
+      [
+       "へ",
+       "へ",
+       "to (direction)"
+      ],
+      [
+       "行きます",
+       "いきます",
+       "go"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "家でも毎日少しずつ練習するようにしています。",
+     "reading": "いえでもまいにちすこしずつれんしゅうするようにしています。",
+     "en": "At home, too, I make a point of practicing a little every day.",
+     "tokens": [
+      [
+       "家",
+       "いえ",
+       "home"
+      ],
+      [
+       "で",
+       "で",
+       "at"
+      ],
+      [
+       "も",
+       "も",
+       "also"
+      ],
+      [
+       "毎日",
+       "まいにち",
+       "every day"
+      ],
+      [
+       "少しずつ",
+       "すこしずつ",
+       "a little at a time"
+      ],
+      [
+       "練習する",
+       "れんしゅうする",
+       "practice"
+      ],
+      [
+       "ように",
+       "ように",
+       "(make a point to)"
+      ],
+      [
+       "して",
+       "して",
+       "doing"
+      ],
+      [
+       "います",
+       "います",
+       "am"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "半年ぐらいたって、簡単な歌がひけるようになりました。",
+     "reading": "はんとしぐらいたって、かんたんなうたがひけるようになりました。",
+     "en": "After about half a year, I became able to play easy songs.",
+     "tokens": [
+      [
+       "半年",
+       "はんとし",
+       "half a year"
+      ],
+      [
+       "ぐらい",
+       "ぐらい",
+       "about"
+      ],
+      [
+       "たって",
+       "たって",
+       "passed"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "簡単な",
+       "かんたんな",
+       "easy"
+      ],
+      [
+       "歌",
+       "うた",
+       "songs"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "ひける",
+       "ひける",
+       "can play"
+      ],
+      [
+       "ように",
+       "ように",
+       "(so that)"
+      ],
+      [
+       "なりました",
+       "なりました",
+       "became"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "先月は、家族の前で初めてギターをひきました。",
+     "reading": "せんげつは、かぞくのまえではじめてぎたーをひきました。",
+     "en": "Last month, I played the guitar in front of my family for the first time.",
+     "tokens": [
+      [
+       "先月",
+       "せんげつ",
+       "last month"
+      ],
+      [
+       "は",
+       "は",
+       "topic marker"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "家族",
+       "かぞく",
+       "family"
+      ],
+      [
+       "の",
+       "の",
+       "of; 's"
+      ],
+      [
+       "前",
+       "まえ",
+       "in front"
+      ],
+      [
+       "で",
+       "で",
+       "at"
+      ],
+      [
+       "初めて",
+       "はじめて",
+       "for the first time"
+      ],
+      [
+       "ギター",
+       "ぎたー",
+       "guitar"
+      ],
+      [
+       "を",
+       "を",
+       "object marker"
+      ],
+      [
+       "ひきました",
+       "ひきました",
+       "played"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "みんなが拍手してくれて、とてもうれしかったです。",
+     "reading": "みんながはくしゅしてくれて、とてもうれしかったです。",
+     "en": "Everyone clapped for me, and I was very happy.",
+     "tokens": [
+      [
+       "みんな",
+       "みんな",
+       "everyone"
+      ],
+      [
+       "が",
+       "が",
+       "subject marker"
+      ],
+      [
+       "拍手して",
+       "はくしゅして",
+       "clapped"
+      ],
+      [
+       "くれて",
+       "くれて",
+       "(for me) and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "うれしかった",
+       "うれしかった",
+       "was happy"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where did the writer's guitar come from?",
+     "options": [
+      "A music shop",
+      "A friend",
+      "The teacher",
+      "The writer's older brother"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "When does the writer go to the music school?",
+     "options": [
+      "Every Wednesday night",
+      "Every Saturday morning",
+      "Every day after lunch",
+      "Every Sunday"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What could the writer do after about half a year?",
+     "options": [
+      "Teach guitar",
+      "Play in a concert",
+      "Play easy songs",
+      "Practice for three hours"
+     ],
+     "answer": 2
+    }
+   ]
+  }
+ ]
+}

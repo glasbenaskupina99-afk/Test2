@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>fun-dual</title><style>
+@font-face{font-family:N;font-weight:700;src:url(src/nunito-latin-700-normal.woff2)}
+@font-face{font-family:N;font-weight:800;src:url(src/nunito-latin-800-normal.woff2)}
+@font-face{font-family:N;font-weight:900;src:url(src/nunito-latin-900-normal.woff2)}
+:root{--bg:#1c3026;--bg2:#16271e;--sage:#8cc06b;--gold:#d2ae52;--txt:#f4efe2;--mut:#a9b5a6}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg2)}
+body{font-family:N,"Noto Sans CJK JP",sans-serif;color:var(--txt);position:relative;
+  background:radial-gradient(1000px 900px at 80% 15%,#2c4a36 0%,transparent 60%),radial-gradient(900px 900px at 10% 95%,#24402f 0%,transparent 60%),linear-gradient(160deg,var(--bg),var(--bg2))}
+.zh{font-family:N,"Noto Sans CJK SC",sans-serif}.ja{font-family:N,"Noto Sans CJK JP",sans-serif}
+.a{opacity:0;animation-fill-mode:both}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:150px 70px 0;opacity:0}
+@keyframes win{0%{opacity:0}100%{opacity:1}}
+@keyframes wout{0%{opacity:1}100%{opacity:0}}
+@keyframes up{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.5)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+@keyframes dim{to{opacity:.35;transform:scale(.97)}}
+@keyframes right{to{background:#8cc06b;color:#16271e;border-color:#8cc06b;transform:scale(1.04)}}
+@keyframes bar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.k{display:inline-block;font-weight:900;font-size:36px;letter-spacing:3px;text-transform:uppercase;color:var(--bg2);background:var(--gold);padding:12px 30px;border-radius:999px}
+h2{font-weight:900;font-size:88px;line-height:1.05;letter-spacing:-1.5px;margin-top:28px}
+.hl{color:var(--sage)}.gd{color:var(--gold)}
+.sub{font-size:42px;font-weight:800;color:var(--mut)}
+.cta{display:inline-block;background:var(--sage);color:var(--bg2);font-weight:900;font-size:58px;padding:34px 66px;border-radius:999px;box-shadow:0 20px 60px rgba(140,192,107,.4)}
+.url{font-weight:900;font-size:92px;color:var(--gold)}
+
+body{font-family:N,"Noto Sans CJK JP","WenQuanYi Zen Hei",sans-serif}
+.zh,.ja{font-family:N,"WenQuanYi Zen Hei",sans-serif}
+.cap{position:absolute;left:60px;right:60px;text-align:center;font-weight:900;font-size:62px;line-height:1.15}
+.cap small{display:block;font-size:40px;font-weight:800;color:var(--mut);margin-top:12px}
+.tag{display:inline-block;font-size:40px;font-weight:900;color:var(--bg2);background:var(--gold);border-radius:999px;padding:10px 26px}
+.big{font-size:118px;font-weight:900;line-height:1.1}.big b{color:var(--sage)}
+.rd{font-size:50px;font-weight:800;color:var(--mut);margin-top:10px}
+.wbar{height:18px;border-radius:9px;background:rgba(244,239,226,.12);overflow:hidden;width:560px;margin:24px auto 0}
+.wbar i{display:block;height:100%;background:var(--gold);transform-origin:left}
+/* garden */
+.yard{position:absolute;left:70px;right:70px;top:560px;border-radius:44px;padding:34px 26px 26px;background:linear-gradient(180deg,#a9d38a,#8cc06b 40%,#7cb45d);box-shadow:0 40px 90px rgba(0,0,0,.45)}
+.bed{border-radius:30px;background:#8a6446;border:8px solid #a77d58;padding:30px 14px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px 0}
+.spot{position:relative;height:250px;display:flex;justify-content:center;align-items:flex-end}
+.spot:after{content:"";position:absolute;bottom:14px;left:50%;width:120px;height:24px;margin-left:-60px;border-radius:50%;background:rgba(0,0,0,.2)}
+.spot svg{position:relative;z-index:1;width:170px;height:auto;transform-origin:50% 100%;opacity:0}
+.spot .lab{position:absolute;bottom:-6px;left:0;right:0;text-align:center;font-size:38px;font-weight:800;color:#f6efe3;z-index:2;opacity:0}
+.soil{position:absolute;bottom:20px;left:50%;width:40px;height:16px;margin-left:-20px;border-radius:50%;background:#5f4330;opacity:0}
+@keyframes sprout{0%{opacity:0;transform:scale(0)}70%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+@keyframes wilt{to{opacity:1;filter:saturate(.15) brightness(.8) sepia(.5);transform:rotate(14deg) scale(.82)}}
+@keyframes poof{0%{opacity:1;filter:saturate(.15) brightness(.8) sepia(.5);transform:rotate(14deg) scale(.82)}100%{opacity:0;transform:scale(.1) translateY(40px)}}
+@keyframes regrow{0%{opacity:0;transform:scale(0);filter:none}70%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1);filter:none}}
+@keyframes fall{0%{opacity:0;transform:translateY(-200px)}15%{opacity:1}100%{opacity:0;transform:translateY(900px)}}
+@keyframes spark{0%{opacity:0;transform:scale(.3)}40%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(.8) translateY(-60px)}}
+@keyframes slidein{from{opacity:0;transform:translateX(500px)}to{opacity:1;transform:none}}
+@keyframes slideout{from{opacity:1;transform:none}to{opacity:0;transform:translateX(560px) rotate(6deg)}}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@keyframes jitter{0%,100%{transform:translate(0,0)}25%{transform:translate(-6px,4px)}50%{transform:translate(5px,-3px)}75%{transform:translate(-3px,-5px)}}
+@keyframes redpulse{0%,100%{color:#ff6b5e;transform:scale(1)}50%{color:#ffd0c8;transform:scale(1.06)}}
+
+</style></head><body>
+
+<section class="sc" style="animation:win .2s 0s both,wout .25s 16.20s forwards">
+  <span class="k a" style="animation:pop .4s .05s both">🇸🇮 Slovenian</span>
+  <h2 class="a" style="animation:up .4s .15s both">Slovenian has a grammar<br>form <span class="hl">just for couples</span></h2>
+  <div style="position:absolute;top:620px;left:0;right:0;display:flex;justify-content:center;align-items:flex-end;gap:24px;font-size:180px"><span class="a" style="animation:pop .4s 1.10s both">🧑</span><span class="a" style="font-size:110px;align-self:center;animation:pop .4s 1.30s both,beat 1s 1.70s 3,wout .2s 5.40s forwards,pop .4s 11.40s forwards">❤️</span><span class="a" style="animation:pop .4s 1.20s both">👩</span><span class="a" style="animation:slidein .5s 5.40s both,jitter .3s 6.50s 3,slideout .7s 10.60s forwards">🧍‍♂️</span></div><div class="tag a" style="position:absolute;top:580px;right:60px;animation:pop .3s 5.80s both,wout .25s 7.30s forwards">👋 hi guys!</div><div class="a" style="position:absolute;top:1000px;left:0;right:0;text-align:center;animation:pop .4s 1.90s both,wout .25s 6.50s forwards"><span class="big" style="font-size:96px"><b style="color:var(--sage)">Midva</b> <b style="color:var(--sage)">sva</b> prijatelj<b style="color:var(--sage)">a</b>.</span><div class="rd a" style="animation:up .4s 2.50s both">“we two are friends”</div><div class="a" style="margin-top:34px;animation:pop .4s 3.10s both"><span class="tag">DUAL · a form just for 2 people</span></div></div><div class="a" style="position:absolute;top:1000px;left:0;right:0;text-align:center;animation:pop .4s 6.50s both,wout .25s 10.80s forwards"><span class="big" style="font-size:96px"><b style="color:var(--gold)">Mi</b> <b style="color:var(--gold)">smo</b> prijatelj<b style="color:var(--gold)">i</b>.</span><div class="rd">“we (3 or more) are friends”</div></div><div class="cap a" style="top:1360px;animation:up .35s 7.40s both,wout .25s 10.80s forwards">a third person shows up →<br>every. word. changes. 😳</div><div class="a" style="position:absolute;top:1000px;left:0;right:0;text-align:center;animation:pop .4s 11.40s both"><span class="big" style="font-size:96px"><b style="color:var(--sage)">Midva</b> <b style="color:var(--sage)">sva</b> prijatelj<b style="color:var(--sage)">a</b>.</span><div class="rd">back to just the two of us 💞</div></div><div class="cap a" style="top:1360px;animation:up .4s 12.20s both">Slovenian grammar knows<br>when you're <span class="hl">third-wheeling</span> 🇸🇮<small>one of the few languages left with a dual</small></div>
+</section>
+<section class="sc" style="animation:win .3s 16.20s both;justify-content:center;padding-top:0;background:inherit">
+  <img class="a" src="src/heritage-logo.png" style="width:260px;height:260px;border-radius:66px;box-shadow:0 30px 120px rgba(140,192,107,.45);animation:pop .6s 16.25s both">
+  <div class="a" style="font-weight:900;font-size:76px;line-height:1.1;margin-top:60px;animation:up .5s 16.40s both">Small language,<br><span class="hl">big personality</span> 🇸🇮</div>
+  <div class="cta a" style="margin-top:70px;animation:pop .5s 16.65s both">Try it free</div>
+  <div class="url a" style="margin-top:50px;animation:up .5s 16.80s both">bloomko.eu</div>
+</section><script>window.seek=(ms)=>document.getAnimations().forEach(a=>{a.pause();a.currentTime=ms;});</script></body></html>

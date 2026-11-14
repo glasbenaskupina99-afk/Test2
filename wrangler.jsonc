@@ -1,0 +1,24 @@
+// Cloudflare Workers: the Bloomko website. Static files come from site/;
+// worker/index.js handles "Notify me" sign-ups (stored in the NOTIFY KV namespace).
+{
+  "name": "test2",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-01",
+  // Public test address <name>.<account>.workers.dev (bloomko.eu is added as a custom domain).
+  "workers_dev": true,
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // The Worker sees every request first: it renders the word pages (/chinese/…, /japanese/…)
+    // and the sitemap, and hands everything else to the static files.
+    "run_worker_first": true
+  },
+  // No id: Wrangler creates the namespace on the first deploy and reuses it afterwards.
+  "kv_namespaces": [{ "binding": "NOTIFY" }],
+  // App sync: one Durable Object (SQLite storage, available on the free plan) per sync code.
+  "durable_objects": { "bindings": [{ "name": "SYNC", "class_name": "SyncStore" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["SyncStore"] }],
+  // Email Routing: each new sign-up is emailed to this (verified) address.
+  "send_email": [{ "name": "MAIL", "destination_address": "thebloomko@gmail.com" }]
+}

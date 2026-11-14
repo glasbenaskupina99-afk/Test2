@@ -1,0 +1,1875 @@
+{
+ "level": "HSK 1",
+ "points": [
+  {
+   "id": "zh1-shi",
+   "title": "是 — “to be”",
+   "pattern": "A 是 B",
+   "short": "links two nouns: A is B",
+   "explain": "是 links two nouns and means “A is B”. Put it between the subject and the noun that describes it. Pitfall: do not use 是 before adjectives — say 我很忙, not 我是忙.",
+   "examples": [
+    {
+     "text": "我是学生。",
+     "mark": [
+      "是"
+     ],
+     "en": "I am a student."
+    },
+    {
+     "text": "他是我的老师。",
+     "mark": [
+      "是"
+     ],
+     "en": "He is my teacher."
+    },
+    {
+     "text": "这是我妈妈。",
+     "mark": [
+      "是"
+     ],
+     "en": "This is my mom."
+    },
+    {
+     "text": "她们是中国人。",
+     "mark": [
+      "是"
+     ],
+     "en": "They are Chinese."
+    }
+   ]
+  },
+  {
+   "id": "zh1-de",
+   "title": "的 — possession",
+   "pattern": "A 的 B",
+   "short": "shows possession: A's B",
+   "explain": "的 works like English “'s”: 我的书 is “my book”. The owner comes first, then 的, then the thing. With close family and friends, 的 is often dropped: 我妈妈.",
+   "examples": [
+    {
+     "text": "这是我的书。",
+     "mark": [
+      "的"
+     ],
+     "en": "This is my book."
+    },
+    {
+     "text": "那是老师的电脑。",
+     "mark": [
+      "的"
+     ],
+     "en": "That is the teacher's computer."
+    },
+    {
+     "text": "你的手机在这儿。",
+     "mark": [
+      "的"
+     ],
+     "en": "Your phone is here."
+    },
+    {
+     "text": "他是我的朋友。",
+     "mark": [
+      "的"
+     ],
+     "en": "He is my friend."
+    }
+   ]
+  },
+  {
+   "id": "zh1-ma",
+   "title": "吗 — yes/no questions",
+   "pattern": "statement + 吗？",
+   "short": "turns a statement into yes/no question",
+   "explain": "Add 吗 to the end of a statement to make a yes/no question. The word order does not change. Pitfall: don't use 吗 together with question words like 什么 or 谁.",
+   "examples": [
+    {
+     "text": "你是老师吗？",
+     "mark": [
+      "吗"
+     ],
+     "en": "Are you a teacher?"
+    },
+    {
+     "text": "你今天忙吗？",
+     "mark": [
+      "吗"
+     ],
+     "en": "Are you busy today?"
+    },
+    {
+     "text": "他是你哥哥吗？",
+     "mark": [
+      "吗"
+     ],
+     "en": "Is he your older brother?"
+    },
+    {
+     "text": "你喜欢喝茶吗？",
+     "mark": [
+      "吗"
+     ],
+     "en": "Do you like drinking tea?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-shenme-shui",
+   "title": "什么 / 谁 — what, who",
+   "pattern": "Subject + Verb + 什么 / 谁？",
+   "short": "asks “what” or “who”",
+   "explain": "什么 (what) and 谁 (who) stay in the same place as the answer would. 你叫什么名字？ — 我叫…. Do not add 吗 to these questions.",
+   "examples": [
+    {
+     "text": "你叫什么名字？",
+     "mark": [
+      "什么"
+     ],
+     "en": "What is your name?"
+    },
+    {
+     "text": "那个人是谁？",
+     "mark": [
+      "谁"
+     ],
+     "en": "Who is that person?"
+    },
+    {
+     "text": "你想吃什么？",
+     "mark": [
+      "什么"
+     ],
+     "en": "What do you want to eat?"
+    },
+    {
+     "text": "谁是你的老师？",
+     "mark": [
+      "谁"
+     ],
+     "en": "Who is your teacher?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-bu",
+   "title": "不 — “not”",
+   "pattern": "Subject + 不 + Verb / Adj",
+   "short": "negates present, future or habits",
+   "explain": "不 goes before a verb or adjective to make it negative. It is used for the present, the future and habits. Before a fourth tone, 不 is read bú (不是, 不去).",
+   "examples": [
+    {
+     "text": "我不是老师。",
+     "mark": [
+      "不"
+     ],
+     "en": "I am not a teacher."
+    },
+    {
+     "text": "他不喝茶。",
+     "mark": [
+      "不"
+     ],
+     "en": "He doesn't drink tea."
+    },
+    {
+     "text": "我明天不去学校。",
+     "mark": [
+      "不"
+     ],
+     "en": "I'm not going to school tomorrow."
+    },
+    {
+     "text": "今天不冷。",
+     "mark": [
+      "不"
+     ],
+     "en": "It isn't cold today."
+    }
+   ]
+  },
+  {
+   "id": "zh1-hen-adj",
+   "title": "很 + adjective",
+   "pattern": "Subject + 很 + Adj",
+   "short": "describes with an adjective, no 是",
+   "explain": "Adjectives can be the predicate directly, without 是. Usually 很 is put before the adjective; it often just links and is not a strong “very”. Pitfall: 我是忙 is wrong — say 我很忙.",
+   "examples": [
+    {
+     "text": "我今天很忙。",
+     "mark": [
+      "很"
+     ],
+     "en": "I am busy today."
+    },
+    {
+     "text": "今天很热。",
+     "mark": [
+      "很"
+     ],
+     "en": "It's hot today."
+    },
+    {
+     "text": "这个菜很好吃。",
+     "mark": [
+      "很"
+     ],
+     "en": "This dish is delicious."
+    },
+    {
+     "text": "她的房间很干净。",
+     "mark": [
+      "很"
+     ],
+     "en": "Her room is clean."
+    }
+   ]
+  },
+  {
+   "id": "zh1-zhe-na",
+   "title": "这 / 那 — this, that",
+   "pattern": "这 / 那 (+ 个) + Noun",
+   "short": "points: this (near) / that (far)",
+   "explain": "这 means “this” (near) and 那 means “that” (far). Before a noun, add a measure word: 这个人, 那本书. Plural forms are 这些 and 那些.",
+   "examples": [
+    {
+     "text": "这是什么？",
+     "mark": [
+      "这"
+     ],
+     "en": "What is this?"
+    },
+    {
+     "text": "那是我的书包。",
+     "mark": [
+      "那"
+     ],
+     "en": "That is my schoolbag."
+    },
+    {
+     "text": "这本书很好。",
+     "mark": [
+      "这"
+     ],
+     "en": "This book is good."
+    },
+    {
+     "text": "那些东西很贵。",
+     "mark": [
+      "那些"
+     ],
+     "en": "Those things are expensive."
+    }
+   ]
+  },
+  {
+   "id": "zh1-nar",
+   "title": "哪儿 / 哪 — where, which",
+   "pattern": "Subject + 在 + 哪儿？ / 哪 + MW + Noun",
+   "short": "asks “where” or “which”",
+   "explain": "哪儿 (or 哪里) asks “where”: 你在哪儿？ 哪 + measure word asks “which”: 哪个. Note the tone: 哪 (nǎ, which) vs 那 (nà, that).",
+   "examples": [
+    {
+     "text": "你去哪儿？",
+     "mark": [
+      "哪儿"
+     ],
+     "en": "Where are you going?"
+    },
+    {
+     "text": "洗手间在哪儿？",
+     "mark": [
+      "哪儿"
+     ],
+     "en": "Where is the restroom?"
+    },
+    {
+     "text": "你是哪国人？",
+     "mark": [
+      "哪"
+     ],
+     "en": "Which country are you from?"
+    },
+    {
+     "text": "你喜欢哪个？",
+     "mark": [
+      "哪个"
+     ],
+     "en": "Which one do you like?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-zai-verb",
+   "title": "在 — “to be at”",
+   "pattern": "Subject + 在 + Place",
+   "short": "says where something is",
+   "explain": "在 as a verb means “to be (located) at”. Put the place right after it. Pitfall: don't use 是 for location — say 他在家, not 他是家.",
+   "examples": [
+    {
+     "text": "我现在在家。",
+     "mark": [
+      "在"
+     ],
+     "en": "I am at home now."
+    },
+    {
+     "text": "妈妈在商店。",
+     "mark": [
+      "在"
+     ],
+     "en": "Mom is at the store."
+    },
+    {
+     "text": "你的书在桌子上。",
+     "mark": [
+      "在"
+     ],
+     "en": "Your book is on the table."
+    },
+    {
+     "text": "老师不在学校。",
+     "mark": [
+      "在"
+     ],
+     "en": "The teacher is not at school."
+    }
+   ]
+  },
+  {
+   "id": "zh1-you",
+   "title": "有 — “to have”",
+   "pattern": "Subject + 有 + Object",
+   "short": "says someone has something",
+   "explain": "有 means “to have”. Put the thing owned after it. Pitfall: the negative is 没有, never 不有.",
+   "examples": [
+    {
+     "text": "我有一个哥哥。",
+     "mark": [
+      "有"
+     ],
+     "en": "I have an older brother."
+    },
+    {
+     "text": "你有手机吗？",
+     "mark": [
+      "有"
+     ],
+     "en": "Do you have a phone?"
+    },
+    {
+     "text": "他有很多书。",
+     "mark": [
+      "有"
+     ],
+     "en": "He has many books."
+    },
+    {
+     "text": "我们有时间。",
+     "mark": [
+      "有"
+     ],
+     "en": "We have time."
+    }
+   ]
+  },
+  {
+   "id": "zh1-meiyou",
+   "title": "没有 — “not have”",
+   "pattern": "Subject + 没有 + Object",
+   "short": "negates 有: does not have",
+   "explain": "To say “don't have”, use 没有 (or just 没). 不 cannot be used with 有. 没有 is also a short answer meaning “no, I don't”.",
+   "examples": [
+    {
+     "text": "我没有钱。",
+     "mark": [
+      "没有"
+     ],
+     "en": "I don't have money."
+    },
+    {
+     "text": "他没有电脑。",
+     "mark": [
+      "没有"
+     ],
+     "en": "He doesn't have a computer."
+    },
+    {
+     "text": "今天我没有课。",
+     "mark": [
+      "没有"
+     ],
+     "en": "I have no class today."
+    },
+    {
+     "text": "我没有姐姐。",
+     "mark": [
+      "没有"
+     ],
+     "en": "I don't have an older sister."
+    }
+   ]
+  },
+  {
+   "id": "zh1-numbers",
+   "title": "Numbers 一 to 一百",
+   "pattern": "十 + digit / digit + 十 / 一百",
+   "short": "counting and saying numbers",
+   "explain": "Chinese numbers are built logically: 十一 is 11, 二十 is 20, 二十五 is 25, 一百 is 100. Read phone numbers digit by digit; 一 is often read yāo in phone numbers.",
+   "examples": [
+    {
+     "text": "我有十五本书。",
+     "mark": [
+      "十五"
+     ],
+     "en": "I have fifteen books."
+    },
+    {
+     "text": "我们班有三十个人。",
+     "mark": [
+      "三十"
+     ],
+     "en": "Our class has thirty people."
+    },
+    {
+     "text": "这本书一百块。",
+     "mark": [
+      "一百"
+     ],
+     "en": "This book costs a hundred kuai."
+    },
+    {
+     "text": "今天是十二号。",
+     "mark": [
+      "十二"
+     ],
+     "en": "Today is the 12th."
+    }
+   ]
+  },
+  {
+   "id": "zh1-measure",
+   "title": "Measure words 个 / 本 / 杯",
+   "pattern": "Number + MW + Noun",
+   "short": "number + measure word + noun",
+   "explain": "In Chinese you cannot put a number directly before a noun; a measure word goes in between. 个 is the most common one; 本 is for books and 杯 for cups. Also use it after 这/那: 这个.",
+   "examples": [
+    {
+     "text": "我有三个朋友。",
+     "mark": [
+      "个"
+     ],
+     "en": "I have three friends."
+    },
+    {
+     "text": "我买了两本书。",
+     "mark": [
+      "本"
+     ],
+     "en": "I bought two books."
+    },
+    {
+     "text": "请给我一杯水。",
+     "mark": [
+      "杯"
+     ],
+     "en": "Please give me a glass of water."
+    },
+    {
+     "text": "他家有五口人。",
+     "mark": [
+      "口"
+     ],
+     "en": "There are five people in his family."
+    }
+   ]
+  },
+  {
+   "id": "zh1-liang",
+   "title": "两 vs 二 — “two”",
+   "pattern": "两 + MW + Noun",
+   "short": "两 counts two things; 二 counts",
+   "explain": "Use 两 before a measure word to say “two of something”: 两个人. Use 二 when counting, in numbers like 十二, and for “second” (第二). Pitfall: 二个人 is wrong.",
+   "examples": [
+    {
+     "text": "我有两个妹妹。",
+     "mark": [
+      "两"
+     ],
+     "en": "I have two younger sisters."
+    },
+    {
+     "text": "我要两杯茶。",
+     "mark": [
+      "两"
+     ],
+     "en": "I want two cups of tea."
+    },
+    {
+     "text": "他十二岁。",
+     "mark": [
+      "二"
+     ],
+     "en": "He is twelve."
+    },
+    {
+     "text": "现在两点。",
+     "mark": [
+      "两"
+     ],
+     "en": "It's two o'clock now."
+    }
+   ]
+  },
+  {
+   "id": "zh1-ji-duoshao",
+   "title": "几 / 多少 — how many",
+   "pattern": "几 + MW + Noun？ / 多少 (+ Noun)？",
+   "short": "asks how many or how much",
+   "explain": "几 asks about small numbers (usually under 10) and needs a measure word: 几个. 多少 is for any number, often larger, and the measure word can be left out. Use 多少钱 for prices.",
+   "examples": [
+    {
+     "text": "你家有几口人？",
+     "mark": [
+      "几"
+     ],
+     "en": "How many people are in your family?"
+    },
+    {
+     "text": "你有几个孩子？",
+     "mark": [
+      "几"
+     ],
+     "en": "How many children do you have?"
+    },
+    {
+     "text": "你们学校有多少学生？",
+     "mark": [
+      "多少"
+     ],
+     "en": "How many students does your school have?"
+    },
+    {
+     "text": "这个多少钱？",
+     "mark": [
+      "多少"
+     ],
+     "en": "How much is this?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-sui",
+   "title": "Age with 岁",
+   "pattern": "Subject + Number + 岁",
+   "short": "tells someone's age",
+   "explain": "To say age, put the number and 岁 after the person, usually with no verb: 我二十岁. Ask a child 你几岁？ and an adult 你多大？ The negative needs 不是: 他不是十岁.",
+   "examples": [
+    {
+     "text": "我二十岁。",
+     "mark": [
+      "岁"
+     ],
+     "en": "I am twenty years old."
+    },
+    {
+     "text": "你女儿几岁？",
+     "mark": [
+      "岁"
+     ],
+     "en": "How old is your daughter?"
+    },
+    {
+     "text": "我弟弟八岁。",
+     "mark": [
+      "岁"
+     ],
+     "en": "My younger brother is eight."
+    },
+    {
+     "text": "爷爷八十岁了。",
+     "mark": [
+      "岁"
+     ],
+     "en": "Grandpa is eighty now."
+    }
+   ]
+  },
+  {
+   "id": "zh1-dates",
+   "title": "Dates: 年 月 号 星期",
+   "pattern": "年 + 月 + 号 + 星期",
+   "short": "says dates and weekdays",
+   "explain": "Dates go from big to small: year, month, day, weekday. Months are number + 月 (三月 = March); weekdays are 星期 + number, but Sunday is 星期天. Use 几 to ask: 今天几号？",
+   "examples": [
+    {
+     "text": "今天几月几号？",
+     "mark": [
+      "月",
+      "号"
+     ],
+     "en": "What's the date today?"
+    },
+    {
+     "text": "今天星期三。",
+     "mark": [
+      "星期"
+     ],
+     "en": "Today is Wednesday."
+    },
+    {
+     "text": "我的生日是五月八号。",
+     "mark": [
+      "月",
+      "号"
+     ],
+     "en": "My birthday is May 8th."
+    },
+    {
+     "text": "明天星期天。",
+     "mark": [
+      "星期"
+     ],
+     "en": "Tomorrow is Sunday."
+    }
+   ]
+  },
+  {
+   "id": "zh1-clock",
+   "title": "Clock time: 点 / 分 / 半",
+   "pattern": "Number + 点 (+ Number + 分 / 半)",
+   "short": "tells the clock time",
+   "explain": "Hours use 点 and minutes use 分: 八点十分 is 8:10. 半 means half past: 三点半 is 3:30. Two o'clock is 两点, not 二点.",
+   "examples": [
+    {
+     "text": "现在几点？",
+     "mark": [
+      "点"
+     ],
+     "en": "What time is it now?"
+    },
+    {
+     "text": "现在八点十分。",
+     "mark": [
+      "点",
+      "分"
+     ],
+     "en": "It is 8:10 now."
+    },
+    {
+     "text": "我七点半起床。",
+     "mark": [
+      "点半"
+     ],
+     "en": "I get up at 7:30."
+    },
+    {
+     "text": "我们下午三点上课。",
+     "mark": [
+      "点"
+     ],
+     "en": "We have class at 3 p.m."
+    }
+   ]
+  },
+  {
+   "id": "zh1-time-order",
+   "title": "Time words go before the verb",
+   "pattern": "Subject + Time + Verb",
+   "short": "time comes before the verb",
+   "explain": "Time words like 今天, 明天, 晚上 or 八点 go before the verb, either after the subject or at the start of the sentence. Pitfall: never put them at the end as in English (我去北京明天 is wrong).",
+   "examples": [
+    {
+     "text": "我明天去北京。",
+     "mark": [
+      "明天"
+     ],
+     "en": "I'm going to Beijing tomorrow."
+    },
+    {
+     "text": "他晚上看电视。",
+     "mark": [
+      "晚上"
+     ],
+     "en": "He watches TV in the evening."
+    },
+    {
+     "text": "今天我很忙。",
+     "mark": [
+      "今天"
+     ],
+     "en": "Today I'm busy."
+    },
+    {
+     "text": "我们八点上课。",
+     "mark": [
+      "八点"
+     ],
+     "en": "We start class at eight."
+    }
+   ]
+  },
+  {
+   "id": "zh1-zai-prep",
+   "title": "在 + place + verb",
+   "pattern": "Subject + 在 + Place + Verb",
+   "short": "says where an action happens",
+   "explain": "To say where you do something, put 在 + place before the verb. Pitfall: the place does not go at the end like in English (我学习在家 is wrong).",
+   "examples": [
+    {
+     "text": "我在家吃饭。",
+     "mark": [
+      "在"
+     ],
+     "en": "I eat at home."
+    },
+    {
+     "text": "他在学校学习。",
+     "mark": [
+      "在"
+     ],
+     "en": "He studies at school."
+    },
+    {
+     "text": "妈妈在医院工作。",
+     "mark": [
+      "在"
+     ],
+     "en": "Mom works at a hospital."
+    },
+    {
+     "text": "我们在饭店见面。",
+     "mark": [
+      "在"
+     ],
+     "en": "We meet at the restaurant."
+    }
+   ]
+  },
+  {
+   "id": "zh1-position",
+   "title": "Place words 上 / 里 / 边",
+   "pattern": "Noun + 上 / 里 / 前边…",
+   "short": "noun + 上/里: on, in, near",
+   "explain": "To say “on the table” or “in the room”, put the position word after the noun: 桌子上, 房间里. 前边, 后边, 旁边 etc. also work alone or after a noun. Pitfall: the order is the opposite of English.",
+   "examples": [
+    {
+     "text": "书在桌子上。",
+     "mark": [
+      "上"
+     ],
+     "en": "The book is on the table."
+    },
+    {
+     "text": "他在房间里。",
+     "mark": [
+      "里"
+     ],
+     "en": "He is in the room."
+    },
+    {
+     "text": "商店在学校旁边。",
+     "mark": [
+      "旁边"
+     ],
+     "en": "The store is next to the school."
+    },
+    {
+     "text": "我家前边有树。",
+     "mark": [
+      "前边"
+     ],
+     "en": "There are trees in front of my home."
+    }
+   ]
+  },
+  {
+   "id": "zh1-you-exist",
+   "title": "有 — “there is”",
+   "pattern": "Place + 有 + Thing",
+   "short": "says what exists in a place",
+   "explain": "Start with a place, then 有, then the thing: 桌子上有一本书 “there is a book on the table”. Compare 在, which starts with the thing: 书在桌子上. The negative is 没有.",
+   "examples": [
+    {
+     "text": "桌子上有一本书。",
+     "mark": [
+      "有"
+     ],
+     "en": "There is a book on the table."
+    },
+    {
+     "text": "房间里有人吗？",
+     "mark": [
+      "有"
+     ],
+     "en": "Is there anyone in the room?"
+    },
+    {
+     "text": "学校旁边有商店。",
+     "mark": [
+      "有"
+     ],
+     "en": "There is a store next to the school."
+    },
+    {
+     "text": "杯子里没有水。",
+     "mark": [
+      "没有"
+     ],
+     "en": "There is no water in the cup."
+    }
+   ]
+  },
+  {
+   "id": "zh1-ye",
+   "title": "也 — “also”",
+   "pattern": "Subject + 也 + Verb",
+   "short": "adds “also / too”",
+   "explain": "也 means “also, too”. It always goes after the subject and before the verb or adjective. Pitfall: never put 也 at the end of the sentence like English “too”.",
+   "examples": [
+    {
+     "text": "我也是学生。",
+     "mark": [
+      "也"
+     ],
+     "en": "I am a student too."
+    },
+    {
+     "text": "他也喜欢喝茶。",
+     "mark": [
+      "也"
+     ],
+     "en": "He also likes drinking tea."
+    },
+    {
+     "text": "我也不去。",
+     "mark": [
+      "也"
+     ],
+     "en": "I'm not going either."
+    },
+    {
+     "text": "今天也很冷。",
+     "mark": [
+      "也"
+     ],
+     "en": "It's cold today too."
+    }
+   ]
+  },
+  {
+   "id": "zh1-dou",
+   "title": "都 — “all, both”",
+   "pattern": "Subject (plural) + 都 + Verb",
+   "short": "sums up: all / both",
+   "explain": "都 means “all” or “both”. It refers to the people or things before it and goes before the verb. With 也, the order is 也都. 都不 means “none”.",
+   "examples": [
+    {
+     "text": "我们都是学生。",
+     "mark": [
+      "都"
+     ],
+     "en": "We are all students."
+    },
+    {
+     "text": "他们都很忙。",
+     "mark": [
+      "都"
+     ],
+     "en": "They are all busy."
+    },
+    {
+     "text": "我爸爸妈妈都是医生。",
+     "mark": [
+      "都"
+     ],
+     "en": "My dad and mom are both doctors."
+    },
+    {
+     "text": "我们都不喝茶。",
+     "mark": [
+      "都不"
+     ],
+     "en": "None of us drink tea."
+    }
+   ]
+  },
+  {
+   "id": "zh1-ne",
+   "title": "呢 — “and you?”",
+   "pattern": "Noun / Pronoun + 呢？",
+   "short": "asks “what about…?”",
+   "explain": "Put 呢 after a noun to ask the same question about it: 我很好，你呢？ It also asks where someone or something is: 我的手机呢？",
+   "examples": [
+    {
+     "text": "我很好，你呢？",
+     "mark": [
+      "呢"
+     ],
+     "en": "I'm fine, and you?"
+    },
+    {
+     "text": "我是学生，你呢？",
+     "mark": [
+      "呢"
+     ],
+     "en": "I'm a student; what about you?"
+    },
+    {
+     "text": "我的手机呢？",
+     "mark": [
+      "呢"
+     ],
+     "en": "Where's my phone?"
+    },
+    {
+     "text": "你爸爸呢？",
+     "mark": [
+      "呢"
+     ],
+     "en": "Where's your dad?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-ba",
+   "title": "吧 — suggestions",
+   "pattern": "Sentence + 吧",
+   "short": "softens: let's / suggestion",
+   "explain": "吧 at the end of a sentence makes a suggestion or soft request: 我们走吧 “let's go”. It can also ask for confirmation: 你是老师吧？ “you're a teacher, right?”",
+   "examples": [
+    {
+     "text": "我们走吧。",
+     "mark": [
+      "吧"
+     ],
+     "en": "Let's go."
+    },
+    {
+     "text": "我们一起吃饭吧！",
+     "mark": [
+      "吧"
+     ],
+     "en": "Let's eat together!"
+    },
+    {
+     "text": "你是新同学吧？",
+     "mark": [
+      "吧"
+     ],
+     "en": "You're the new classmate, right?"
+    },
+    {
+     "text": "你休息一下儿吧。",
+     "mark": [
+      "吧"
+     ],
+     "en": "Why don't you take a rest."
+    }
+   ]
+  },
+  {
+   "id": "zh1-a-bu-a",
+   "title": "Verb 不 Verb questions",
+   "pattern": "Subject + V 不 V + Object？",
+   "short": "asks yes/no as “V not V”",
+   "explain": "Another way to ask a yes/no question is to say the verb or adjective twice with 不 in between: 你去不去？ Pitfall: don't add 吗 to this kind of question.",
+   "examples": [
+    {
+     "text": "你是不是老师？",
+     "mark": [
+      "是不是"
+     ],
+     "en": "Are you a teacher or not?"
+    },
+    {
+     "text": "你去不去？",
+     "mark": [
+      "去不去"
+     ],
+     "en": "Are you going or not?"
+    },
+    {
+     "text": "这个菜好不好吃？",
+     "mark": [
+      "好不好吃"
+     ],
+     "en": "Is this dish tasty?"
+    },
+    {
+     "text": "你有没有时间？",
+     "mark": [
+      "有没有"
+     ],
+     "en": "Do you have time?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-haishi",
+   "title": "还是 — “or” in questions",
+   "pattern": "A 还是 B？",
+   "short": "asks “A or B?”",
+   "explain": "还是 means “or” in questions where the listener chooses: 你喝茶还是喝水？ Don't add 吗 to the end. It is for questions only.",
+   "examples": [
+    {
+     "text": "你喝茶还是喝水？",
+     "mark": [
+      "还是"
+     ],
+     "en": "Do you drink tea or water?"
+    },
+    {
+     "text": "他是老师还是学生？",
+     "mark": [
+      "还是"
+     ],
+     "en": "Is he a teacher or a student?"
+    },
+    {
+     "text": "你今天去还是明天去？",
+     "mark": [
+      "还是"
+     ],
+     "en": "Are you going today or tomorrow?"
+    },
+    {
+     "text": "这个大还是那个大？",
+     "mark": [
+      "还是"
+     ],
+     "en": "Is this one bigger or that one?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-he",
+   "title": "和 — “and” (nouns)",
+   "pattern": "A 和 B",
+   "short": "joins two nouns: “and”",
+   "explain": "和 links nouns or pronouns: 我和你 “you and me”. Pitfall: 和 does not join two sentences or verbs — don't use it like English “and then”.",
+   "examples": [
+    {
+     "text": "我和他是朋友。",
+     "mark": [
+      "和"
+     ],
+     "en": "He and I are friends."
+    },
+    {
+     "text": "我喜欢茶和水果。",
+     "mark": [
+      "和"
+     ],
+     "en": "I like tea and fruit."
+    },
+    {
+     "text": "爸爸和妈妈都在家。",
+     "mark": [
+      "和"
+     ],
+     "en": "Dad and Mom are both at home."
+    },
+    {
+     "text": "我有一个哥哥和一个妹妹。",
+     "mark": [
+      "和"
+     ],
+     "en": "I have an older brother and a younger sister."
+    }
+   ]
+  },
+  {
+   "id": "zh1-tai-le",
+   "title": "太…了 — “too / so”",
+   "pattern": "太 + Adj + 了",
+   "short": "exclaims: too… / so…!",
+   "explain": "太 + adjective + 了 shows a strong feeling: “too…” or “so…!” 太好了！ means “Great!” In the negative, 不太 means “not very” and has no 了.",
+   "examples": [
+    {
+     "text": "这个太好了！",
+     "mark": [
+      "太",
+      "了"
+     ],
+     "en": "This is great!"
+    },
+    {
+     "text": "这个太贵了。",
+     "mark": [
+      "太",
+      "了"
+     ],
+     "en": "This is too expensive."
+    },
+    {
+     "text": "今天太热了！",
+     "mark": [
+      "太",
+      "了"
+     ],
+     "en": "It's so hot today!"
+    },
+    {
+     "text": "我不太饿。",
+     "mark": [
+      "不太"
+     ],
+     "en": "I'm not very hungry."
+    }
+   ]
+  },
+  {
+   "id": "zh1-xiang-yao",
+   "title": "想 / 要 — want to",
+   "pattern": "Subject + 想 / 要 + Verb",
+   "short": "wants to do something",
+   "explain": "想 + verb means “would like to”; 要 + verb is stronger, “want to / am going to”. 要 can also be followed by a noun: 我要一杯茶. The negative is usually 不想.",
+   "examples": [
+    {
+     "text": "我想去中国。",
+     "mark": [
+      "想"
+     ],
+     "en": "I'd like to go to China."
+    },
+    {
+     "text": "我要喝水。",
+     "mark": [
+      "要"
+     ],
+     "en": "I want to drink water."
+    },
+    {
+     "text": "你想去哪儿？",
+     "mark": [
+      "想"
+     ],
+     "en": "Where would you like to go?"
+    },
+    {
+     "text": "我不想去。",
+     "mark": [
+      "不想"
+     ],
+     "en": "I don't want to go."
+    }
+   ]
+  },
+  {
+   "id": "zh1-hui",
+   "title": "会 — can (learned skill)",
+   "pattern": "Subject + 会 + Verb",
+   "short": "can: a learned skill",
+   "explain": "会 means “can” for skills you learned, like speaking a language or driving. Pitfall: for being allowed or physically able, use 能 instead.",
+   "examples": [
+    {
+     "text": "我会说汉语。",
+     "mark": [
+      "会"
+     ],
+     "en": "I can speak Chinese."
+    },
+    {
+     "text": "你会开车吗？",
+     "mark": [
+      "会"
+     ],
+     "en": "Can you drive?"
+    },
+    {
+     "text": "他不会写汉字。",
+     "mark": [
+      "不会"
+     ],
+     "en": "He can't write Chinese characters."
+    },
+    {
+     "text": "我妹妹会唱歌。",
+     "mark": [
+      "会"
+     ],
+     "en": "My younger sister can sing."
+    }
+   ]
+  },
+  {
+   "id": "zh1-neng",
+   "title": "能 — can (able, allowed)",
+   "pattern": "Subject + 能 + Verb",
+   "short": "can: able or allowed to",
+   "explain": "能 means “can” in the sense of being able or allowed. 我能进来吗？ asks permission. Compare 会, which is for learned skills.",
+   "examples": [
+    {
+     "text": "我能进来吗？",
+     "mark": [
+      "能"
+     ],
+     "en": "May I come in?"
+    },
+    {
+     "text": "明天你能来吗？",
+     "mark": [
+      "能"
+     ],
+     "en": "Can you come tomorrow?"
+    },
+    {
+     "text": "我今天不能去。",
+     "mark": [
+      "不能"
+     ],
+     "en": "I can't go today."
+    },
+    {
+     "text": "这里能打电话吗？",
+     "mark": [
+      "能"
+     ],
+     "en": "Can I make a call here?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-le",
+   "title": "了 — completed action",
+   "pattern": "Subject + Verb + 了 (+ Object)",
+   "short": "marks a completed action",
+   "explain": "了 after a verb shows that an action has happened or been completed. The negative uses 没 and drops 了: 我没去. Pitfall: 了 is not simply a past tense — don't use it for past habits or with 是.",
+   "examples": [
+    {
+     "text": "我吃饭了。",
+     "mark": [
+      "了"
+     ],
+     "en": "I've eaten."
+    },
+    {
+     "text": "他去医院了。",
+     "mark": [
+      "了"
+     ],
+     "en": "He went to the hospital."
+    },
+    {
+     "text": "我买了一本书。",
+     "mark": [
+      "了"
+     ],
+     "en": "I bought a book."
+    },
+    {
+     "text": "你看了那个电影吗？",
+     "mark": [
+      "了"
+     ],
+     "en": "Did you watch that movie?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-mei-verb",
+   "title": "没 — didn't",
+   "pattern": "Subject + 没 + Verb",
+   "short": "negates past: didn't do",
+   "explain": "没 (or 没有) before a verb means the action did not happen. Use it instead of 不 for the past. Pitfall: don't keep 了 after the verb in a 没 sentence.",
+   "examples": [
+    {
+     "text": "我没去学校。",
+     "mark": [
+      "没"
+     ],
+     "en": "I didn't go to school."
+    },
+    {
+     "text": "他昨天没来。",
+     "mark": [
+      "没"
+     ],
+     "en": "He didn't come yesterday."
+    },
+    {
+     "text": "我还没吃饭。",
+     "mark": [
+      "没"
+     ],
+     "en": "I haven't eaten yet."
+    },
+    {
+     "text": "你没看见他吗？",
+     "mark": [
+      "没"
+     ],
+     "en": "Didn't you see him?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-zhengzai",
+   "title": "正在…呢 — in progress",
+   "pattern": "Subject + 正在 + Verb (+ 呢)",
+   "short": "action in progress right now",
+   "explain": "正在 (or 在, or 正) before a verb shows an action is happening right now, like English “-ing”. 呢 is often added at the end. Pitfall: 是 and 有 cannot take 正在.",
+   "examples": [
+    {
+     "text": "我正在吃饭。",
+     "mark": [
+      "正在"
+     ],
+     "en": "I'm eating."
+    },
+    {
+     "text": "他正在看书呢。",
+     "mark": [
+      "正在",
+      "呢"
+     ],
+     "en": "He's reading."
+    },
+    {
+     "text": "妈妈在打电话。",
+     "mark": [
+      "在"
+     ],
+     "en": "Mom is on the phone."
+    },
+    {
+     "text": "他们正在上课呢。",
+     "mark": [
+      "正在",
+      "呢"
+     ],
+     "en": "They're in class right now."
+    }
+   ]
+  },
+  {
+   "id": "zh1-qing",
+   "title": "请 — please / invite",
+   "pattern": "请 + Verb / 请 + Person + Verb",
+   "short": "polite request: please do",
+   "explain": "请 at the start of a request means “please”: 请坐. With a person after it, it means “invite / ask someone to do”: 我请你吃饭 “I'll treat you to a meal”.",
+   "examples": [
+    {
+     "text": "请坐这儿。",
+     "mark": [
+      "请"
+     ],
+     "en": "Please sit here."
+    },
+    {
+     "text": "请您喝茶。",
+     "mark": [
+      "请"
+     ],
+     "en": "Please have some tea."
+    },
+    {
+     "text": "请你明天来。",
+     "mark": [
+      "请"
+     ],
+     "en": "Please come tomorrow."
+    },
+    {
+     "text": "我请你吃饭。",
+     "mark": [
+      "请"
+     ],
+     "en": "I'll treat you to a meal."
+    }
+   ]
+  },
+  {
+   "id": "zh1-bie",
+   "title": "别 — don't",
+   "pattern": "别 + Verb",
+   "short": "tells someone not to do",
+   "explain": "别 before a verb tells someone “don't”. It is like 不要. Add 了 for “stop doing”: 别说了.",
+   "examples": [
+    {
+     "text": "上课别说话！",
+     "mark": [
+      "别"
+     ],
+     "en": "Don't talk in class!"
+    },
+    {
+     "text": "你别走！",
+     "mark": [
+      "别"
+     ],
+     "en": "Don't go!"
+    },
+    {
+     "text": "你别生气。",
+     "mark": [
+      "别"
+     ],
+     "en": "Don't be angry."
+    },
+    {
+     "text": "别看电视了。",
+     "mark": [
+      "别"
+     ],
+     "en": "Stop watching TV."
+    }
+   ]
+  },
+  {
+   "id": "zh1-serial",
+   "title": "Two verbs in a row",
+   "pattern": "Subject + 去/来 + Place + Verb",
+   "short": "go somewhere to do something",
+   "explain": "Chinese can put two verb phrases one after another: first going somewhere, then the purpose. 我去商店买东西 means “I go to the store to buy things”. No word for “to” is needed.",
+   "examples": [
+    {
+     "text": "我去商店买东西。",
+     "mark": [
+      "去",
+      "买"
+     ],
+     "en": "I go to the store to buy things."
+    },
+    {
+     "text": "他来中国学汉语。",
+     "mark": [
+      "来",
+      "学"
+     ],
+     "en": "He came to China to study Chinese."
+    },
+    {
+     "text": "我们去饭店吃饭。",
+     "mark": [
+      "去",
+      "吃饭"
+     ],
+     "en": "We go to a restaurant to eat."
+    },
+    {
+     "text": "她坐飞机去北京。",
+     "mark": [
+      "坐",
+      "去"
+     ],
+     "en": "She goes to Beijing by plane."
+    }
+   ]
+  },
+  {
+   "id": "zh1-lai-qu",
+   "title": "来 / 去 — come & go",
+   "pattern": "Verb + 来 / 去",
+   "short": "direction: toward or away from speaker",
+   "explain": "来 means movement toward the speaker and 去 means away from the speaker. They can follow other verbs: 进来 “come in”, 回去 “go back”, 出去 “go out”.",
+   "examples": [
+    {
+     "text": "请你进来。",
+     "mark": [
+      "来"
+     ],
+     "en": "Please come in."
+    },
+    {
+     "text": "他回家去了。",
+     "mark": [
+      "去"
+     ],
+     "en": "He went back home."
+    },
+    {
+     "text": "你什么时候回来？",
+     "mark": [
+      "来"
+     ],
+     "en": "When will you come back?"
+    },
+    {
+     "text": "我们出去吧。",
+     "mark": [
+      "去"
+     ],
+     "en": "Let's go out."
+    }
+   ]
+  },
+  {
+   "id": "zh1-result",
+   "title": "Result complements 见 / 到 / 完",
+   "pattern": "Verb + 见 / 到 / 好",
+   "short": "verb + result: saw, found",
+   "explain": "A second word after a verb shows the result of the action: 看 “look” → 看见 “see”, 找 “look for” → 找到 “find”. The negative uses 没: 我没看见.",
+   "examples": [
+    {
+     "text": "我看见他了。",
+     "mark": [
+      "见"
+     ],
+     "en": "I saw him."
+    },
+    {
+     "text": "你听到了吗？",
+     "mark": [
+      "到"
+     ],
+     "en": "Did you hear it?"
+    },
+    {
+     "text": "我找到我的钱包了。",
+     "mark": [
+      "到"
+     ],
+     "en": "I found my wallet."
+    },
+    {
+     "text": "我没听见。",
+     "mark": [
+      "见"
+     ],
+     "en": "I didn't hear it."
+    }
+   ]
+  },
+  {
+   "id": "zh1-yixia",
+   "title": "Verb + 一下儿 / VV — “a bit”",
+   "pattern": "Verb + 一下儿 / Verb + Verb",
+   "short": "does something briefly, softly",
+   "explain": "Add 一下儿 after a verb, or say the verb twice, to mean “do it a little” or “give it a try”. It makes requests sound softer: 请等一下儿.",
+   "examples": [
+    {
+     "text": "请等一下儿。",
+     "mark": [
+      "一下儿"
+     ],
+     "en": "Please wait a moment."
+    },
+    {
+     "text": "我看看你的书。",
+     "mark": [
+      "看看"
+     ],
+     "en": "Let me look at your book."
+    },
+    {
+     "text": "你试一下儿。",
+     "mark": [
+      "一下儿"
+     ],
+     "en": "Give it a try."
+    },
+    {
+     "text": "我们休息一下儿吧。",
+     "mark": [
+      "一下儿"
+     ],
+     "en": "Let's take a little rest."
+    }
+   ]
+  },
+  {
+   "id": "zh1-gen-yiqi",
+   "title": "跟…一起 — together with",
+   "pattern": "A 跟 / 和 B 一起 + Verb",
+   "short": "does something together with someone",
+   "explain": "跟 (or 和) + person + 一起 + verb means “do something together with someone”. The whole phrase goes before the verb.",
+   "examples": [
+    {
+     "text": "我跟朋友一起去。",
+     "mark": [
+      "跟",
+      "一起"
+     ],
+     "en": "I'm going with a friend."
+    },
+    {
+     "text": "你跟我一起吃饭吧。",
+     "mark": [
+      "跟",
+      "一起"
+     ],
+     "en": "Eat with me."
+    },
+    {
+     "text": "他和妈妈一起看电视。",
+     "mark": [
+      "和",
+      "一起"
+     ],
+     "en": "He watches TV with his mom."
+    },
+    {
+     "text": "我们一起学习汉语。",
+     "mark": [
+      "一起"
+     ],
+     "en": "We study Chinese together."
+    }
+   ]
+  },
+  {
+   "id": "zh1-cong",
+   "title": "从 — “from”",
+   "pattern": "从 + Place / Time + Verb",
+   "short": "shows a starting point: from",
+   "explain": "从 means “from” for a place or a time. 从…到… means “from… to…”. The 从 phrase goes before the verb.",
+   "examples": [
+    {
+     "text": "我从北京来。",
+     "mark": [
+      "从"
+     ],
+     "en": "I come from Beijing."
+    },
+    {
+     "text": "他从家里出来了。",
+     "mark": [
+      "从"
+     ],
+     "en": "He came out of the house."
+    },
+    {
+     "text": "我们从八点上课。",
+     "mark": [
+      "从"
+     ],
+     "en": "Our class starts from eight."
+    },
+    {
+     "text": "从学校到我家很远。",
+     "mark": [
+      "从",
+      "到"
+     ],
+     "en": "It's far from school to my home."
+    }
+   ]
+  },
+  {
+   "id": "zh1-bi",
+   "title": "比 — comparisons",
+   "pattern": "A 比 B + Adj",
+   "short": "compares: A is more … than B",
+   "explain": "A 比 B + adjective means “A is more … than B”. Pitfall: don't put 很 before the adjective (他比我很高 is wrong). Add 一点儿 or 多了 after it for “a bit / much”.",
+   "examples": [
+    {
+     "text": "他比我高。",
+     "mark": [
+      "比"
+     ],
+     "en": "He is taller than me."
+    },
+    {
+     "text": "今天比昨天冷。",
+     "mark": [
+      "比"
+     ],
+     "en": "Today is colder than yesterday."
+    },
+    {
+     "text": "这个比那个贵。",
+     "mark": [
+      "比"
+     ],
+     "en": "This one is more expensive than that one."
+    },
+    {
+     "text": "哥哥比我大两岁。",
+     "mark": [
+      "比"
+     ],
+     "en": "My brother is two years older than me."
+    }
+   ]
+  },
+  {
+   "id": "zh1-zui",
+   "title": "最 — the most",
+   "pattern": "最 + Adj / Verb",
+   "short": "superlative: the most",
+   "explain": "最 before an adjective or verb means “the most”. 最好 means “best”, and 最喜欢 means “like best”.",
+   "examples": [
+    {
+     "text": "我最喜欢吃面条儿。",
+     "mark": [
+      "最"
+     ],
+     "en": "I like noodles best."
+    },
+    {
+     "text": "他是我们班最高的。",
+     "mark": [
+      "最"
+     ],
+     "en": "He is the tallest in our class."
+    },
+    {
+     "text": "这个最好吃。",
+     "mark": [
+      "最"
+     ],
+     "en": "This one is the tastiest."
+    },
+    {
+     "text": "今天最冷。",
+     "mark": [
+      "最"
+     ],
+     "en": "Today is the coldest."
+    }
+   ]
+  },
+  {
+   "id": "zh1-shi-de",
+   "title": "是…的 — when / how it happened",
+   "pattern": "Subject + 是 + Detail + Verb + 的",
+   "short": "stresses when, where, how (past)",
+   "explain": "Use 是…的 to talk about the details of something that already happened: when, where or how. Put the detail after 是 and 的 at the end. 是 can be dropped, but 的 cannot.",
+   "examples": [
+    {
+     "text": "你是什么时候来的？",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "When did you come?"
+    },
+    {
+     "text": "我是坐飞机来的。",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "I came by plane."
+    },
+    {
+     "text": "他是昨天到的。",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "He arrived yesterday."
+    },
+    {
+     "text": "这是在哪儿买的？",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "Where was this bought?"
+    }
+   ]
+  },
+  {
+   "id": "zh1-gei",
+   "title": "给 — to / for",
+   "pattern": "给 + Person + Verb / Verb + 给 + Person",
+   "short": "gives to; does for someone",
+   "explain": "As a verb, 给 means “to give”: 给我一本书. Before another verb it means “to / for someone”: 给妈妈打电话 “call Mom”.",
+   "examples": [
+    {
+     "text": "他给我一个面包。",
+     "mark": [
+      "给"
+     ],
+     "en": "He gives me a piece of bread."
+    },
+    {
+     "text": "我给妈妈打电话。",
+     "mark": [
+      "给"
+     ],
+     "en": "I call my mom."
+    },
+    {
+     "text": "他给我买了一本书。",
+     "mark": [
+      "给"
+     ],
+     "en": "He bought a book for me."
+    },
+    {
+     "text": "你给他写吧。",
+     "mark": [
+      "给"
+     ],
+     "en": "Write to him."
+    }
+   ]
+  },
+  {
+   "id": "zh1-yidianr",
+   "title": "一点儿 — a little",
+   "pattern": "Verb + 一点儿 / Adj + 一点儿",
+   "short": "a little (amount or degree)",
+   "explain": "一点儿 means “a little”. After a verb it is a small amount: 喝一点儿水. After an adjective it means “a bit more”: 快一点儿. Pitfall: don't put it before an adjective to mean “a bit” (一点儿贵 is wrong).",
+   "examples": [
+    {
+     "text": "我会说一点儿汉语。",
+     "mark": [
+      "一点儿"
+     ],
+     "en": "I can speak a little Chinese."
+    },
+    {
+     "text": "请喝一点儿水。",
+     "mark": [
+      "一点儿"
+     ],
+     "en": "Please drink a little water."
+    },
+    {
+     "text": "你快一点儿！",
+     "mark": [
+      "一点儿"
+     ],
+     "en": "Hurry up a bit!"
+    },
+    {
+     "text": "这个大一点儿。",
+     "mark": [
+      "一点儿"
+     ],
+     "en": "This one is a bit bigger."
+    }
+   ]
+  },
+  {
+   "id": "zh1-zenme",
+   "title": "怎么 — how",
+   "pattern": "怎么 + Verb？",
+   "short": "asks how to do something",
+   "explain": "怎么 + verb asks “how” to do something: 怎么去？ “how do I get there?” 怎么了？ asks “what's wrong?”",
+   "examples": [
+    {
+     "text": "这个字怎么读？",
+     "mark": [
+      "怎么"
+     ],
+     "en": "How do you read this character?"
+    },
+    {
+     "text": "去机场怎么走？",
+     "mark": [
+      "怎么"
+     ],
+     "en": "How do I get to the airport?"
+    },
+    {
+     "text": "你怎么了？",
+     "mark": [
+      "怎么"
+     ],
+     "en": "What's wrong with you?"
+    },
+    {
+     "text": "你怎么来学校？",
+     "mark": [
+      "怎么"
+     ],
+     "en": "How do you come to school?"
+    }
+   ]
+  }
+ ]
+}

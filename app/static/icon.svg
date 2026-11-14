@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<defs>
+ <radialGradient id="bg" cx="30%" cy="20%" r="90%"><stop offset="0" stop-color="#2b4a38"/><stop offset="1" stop-color="#16271e"/></radialGradient>
+ <linearGradient id="lf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9cfac"/><stop offset="1" stop-color="#8fae86"/></linearGradient>
+</defs>
+<rect width="1024" height="1024" rx="230" fill="url(#bg)"/>
+<g transform="translate(530,500) rotate(-40)">
+ <path d="M-340,0 Q-450,12 -490,70" fill="none" stroke="#d2ae52" stroke-width="16" stroke-linecap="round"/>
+ <path d="M-410,0 C-380,-170 -230,-268 -20,-268 C200,-268 330,-80 460,0 C330,80 200,268 -20,268 C-230,268 -380,170 -410,0 Z" fill="url(#lf)" stroke="#d2ae52" stroke-width="16" stroke-linejoin="round"/>
+ <clipPath id="lc"><path d="M-410,0 C-380,-170 -230,-268 -20,-268 C200,-268 330,-80 460,0 C330,80 200,268 -20,268 C-230,268 -380,170 -410,0 Z"/></clipPath>
+ <g fill="none" stroke="#6f8f6c" stroke-width="8" stroke-linecap="round" opacity=".5" clip-path="url(#lc)">
+  <path d="M-395,0 Q0,-8 400,0"/><path d="M-45,0 Q25,-90 105,-260"/><path d="M-45,0 Q25,90 105,260"/><path d="M225,0 Q295,-90 375,-260"/><path d="M225,0 Q295,90 375,260"/>
+ </g>
+ <g transform="translate(-175,-112) rotate(40) translate(-87.5,-87.5) scale(0.1708984375) translate(0,900) scale(1,-1)" fill="#2a4a35" stroke="#2a4a35" stroke-width="22" stroke-linejoin="round"><path d="M 420 777 Q 448 753 480 724 Q 498 708 517 710 Q 530 711 536 728 Q 540 747 528 783 Q 521 805 485 819 Q 400 846 384 836 Q 378 830 380 815 Q 386 802 420 777 Z"/><path d="M 528 568 Q 553 574 753 603 Q 766 602 776 616 Q 777 631 751 643 Q 709 670 625 641 Q 424 593 256 571 Q 225 568 193 562 Q 159 558 185 537 Q 224 507 258 515 Q 364 539 496 563 L 528 568 Z"/><path d="M 507 261 Q 553 339 576 447 Q 582 480 591 501 Q 598 514 588 525 Q 558 561 528 568 C 500 579 493 582 496 563 Q 495 560 496 555 Q 526 444 468 318 Q 464 311 461 302 L 442 267 Q 385 183 252 131 Q 204 115 137 95 Q 125 94 120 90 Q 113 86 123 79 Q 130 76 146 78 Q 261 85 347 123 Q 414 150 482 225 L 507 261 Z"/><path d="M 482 225 Q 525 164 676 38 Q 698 16 734 16 Q 842 17 928 32 Q 974 39 970 51 Q 969 58 922 69 Q 732 114 678 141 Q 612 172 507 261 L 461 302 Q 415 345 368 394 Q 326 437 288 437 Q 269 437 265 432 Q 264 425 280 412 Q 331 384 442 267 L 482 225 Z"/></g><text x="0" y="0" transform="translate(115,-108) rotate(40)" font-family="FreeSerif" font-weight="normal" font-size="165" stroke="#2a4a35" stroke-width="3" text-anchor="middle" dominant-baseline="central" fill="#2a4a35">ج</text><text x="0" y="0" transform="translate(-175,112) rotate(40)" font-family="FreeSerif" font-weight="normal" font-size="190" stroke="#2a4a35" stroke-width="3" text-anchor="middle" dominant-baseline="central" fill="#2a4a35">A</text><text x="0" y="0" transform="translate(115,108) rotate(40)" font-family="FreeSerif" font-weight="normal" font-size="180" stroke="#2a4a35" stroke-width="3" text-anchor="middle" dominant-baseline="central" fill="#2a4a35">Б</text>
+</g>
+</svg>

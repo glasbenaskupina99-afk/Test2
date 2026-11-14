@@ -1,0 +1,2929 @@
+{
+ "level": "JLPT N5",
+ "stories": [
+  {
+   "id": "ja5-s1",
+   "title": "あさ",
+   "title_en": "Morning",
+   "sentences": [
+    {
+     "text": "わたしは毎朝六時に起きます。",
+     "reading": "わたしはまいあさろくじにおきます。",
+     "en": "I get up at six every morning.",
+     "tokens": [
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "毎朝",
+       "まいあさ",
+       "every morning"
+      ],
+      [
+       "六時",
+       "ろくじ",
+       "six o'clock"
+      ],
+      [
+       "に",
+       "に",
+       "(at time)"
+      ],
+      [
+       "起きます",
+       "おきます",
+       "get up"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "まず顔を洗います。",
+     "reading": "まずかおをあらいます。",
+     "en": "First, I wash my face.",
+     "tokens": [
+      [
+       "まず",
+       "まず",
+       "first"
+      ],
+      [
+       "顔",
+       "かお",
+       "face"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "洗います",
+       "あらいます",
+       "wash"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "それから朝ごはんを食べます。",
+     "reading": "それからあさごはんをたべます。",
+     "en": "After that, I eat breakfast.",
+     "tokens": [
+      [
+       "それから",
+       "それから",
+       "after that"
+      ],
+      [
+       "朝ごはん",
+       "あさごはん",
+       "breakfast"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "食べます",
+       "たべます",
+       "eat"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "パンと卵を食べて、牛乳を飲みます。",
+     "reading": "ぱんとたまごをたべて、ぎゅうにゅうをのみます。",
+     "en": "I eat bread and an egg, and drink milk.",
+     "tokens": [
+      [
+       "パン",
+       "ぱん",
+       "bread"
+      ],
+      [
+       "と",
+       "と",
+       "and"
+      ],
+      [
+       "卵",
+       "たまご",
+       "egg"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "食べて",
+       "たべて",
+       "eat and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "牛乳",
+       "ぎゅうにゅう",
+       "milk"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "飲みます",
+       "のみます",
+       "drink"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "七時半に家を出ます。",
+     "reading": "しちじはんにいえをでます。",
+     "en": "I leave the house at half past seven.",
+     "tokens": [
+      [
+       "七時半",
+       "しちじはん",
+       "half past seven"
+      ],
+      [
+       "に",
+       "に",
+       "(at time)"
+      ],
+      [
+       "家",
+       "いえ",
+       "house"
+      ],
+      [
+       "を",
+       "を",
+       "(from)"
+      ],
+      [
+       "出ます",
+       "でます",
+       "leave"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "駅まで歩いて十分です。",
+     "reading": "えきまであるいてじゅっぷんです。",
+     "en": "It is ten minutes on foot to the station.",
+     "tokens": [
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "まで",
+       "まで",
+       "until; to"
+      ],
+      [
+       "歩いて",
+       "あるいて",
+       "on foot"
+      ],
+      [
+       "十分",
+       "じゅっぷん",
+       "ten minutes"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "電車で会社へ行きます。",
+     "reading": "でんしゃでかいしゃへいきます。",
+     "en": "I go to the office by train.",
+     "tokens": [
+      [
+       "電車",
+       "でんしゃ",
+       "train"
+      ],
+      [
+       "で",
+       "で",
+       "(by)"
+      ],
+      [
+       "会社",
+       "かいしゃ",
+       "company"
+      ],
+      [
+       "へ",
+       "へ",
+       "(to)"
+      ],
+      [
+       "行きます",
+       "いきます",
+       "go"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What time do I get up?",
+     "options": [
+      "Five o'clock",
+      "Six o'clock",
+      "Seven o'clock",
+      "Half past seven"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What do I drink at breakfast?",
+     "options": [
+      "Coffee",
+      "Tea",
+      "Juice",
+      "Milk"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "How do I go to the office?",
+     "options": [
+      "By train",
+      "By bus",
+      "By car",
+      "On foot"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "ja5-s2",
+   "title": "きっさてんで",
+   "title_en": "At the café",
+   "sentences": [
+    {
+     "text": "土曜日に、アンナさんと喫茶店へ行きました。",
+     "reading": "どようびに、あんなさんときっさてんへいきました。",
+     "en": "On Saturday, I went to a café with Anna.",
+     "tokens": [
+      [
+       "土曜日",
+       "どようび",
+       "Saturday"
+      ],
+      [
+       "に",
+       "に",
+       "(on)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "アンナ",
+       "あんな",
+       "Anna"
+      ],
+      [
+       "さん",
+       "さん",
+       "Ms."
+      ],
+      [
+       "と",
+       "と",
+       "with"
+      ],
+      [
+       "喫茶店",
+       "きっさてん",
+       "café"
+      ],
+      [
+       "へ",
+       "へ",
+       "(to)"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "その店はとても静かでした。",
+     "reading": "そのみせはとてもしずかでした。",
+     "en": "That café was very quiet.",
+     "tokens": [
+      [
+       "その",
+       "その",
+       "that"
+      ],
+      [
+       "店",
+       "みせ",
+       "shop"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "静か",
+       "しずか",
+       "quiet"
+      ],
+      [
+       "でした",
+       "でした",
+       "was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "わたしはコーヒーを、アンナさんは紅茶を飲みました。",
+     "reading": "わたしはこーひーを、あんなさんはこうちゃをのみました。",
+     "en": "I drank coffee, and Anna drank tea.",
+     "tokens": [
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "コーヒー",
+       "こーひー",
+       "coffee"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "アンナ",
+       "あんな",
+       "Anna"
+      ],
+      [
+       "さん",
+       "さん",
+       "Ms."
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "紅茶",
+       "こうちゃ",
+       "black tea"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "飲みました",
+       "のみました",
+       "drank"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "ケーキも二つ買いました。",
+     "reading": "けーきもふたつかいました。",
+     "en": "We also bought two pieces of cake.",
+     "tokens": [
+      [
+       "ケーキ",
+       "けーき",
+       "cake"
+      ],
+      [
+       "も",
+       "も",
+       "also"
+      ],
+      [
+       "二つ",
+       "ふたつ",
+       "two (things)"
+      ],
+      [
+       "買いました",
+       "かいました",
+       "bought"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "ケーキはとてもおいしかったです。",
+     "reading": "けーきはとてもおいしかったです。",
+     "en": "The cake was very delicious.",
+     "tokens": [
+      [
+       "ケーキ",
+       "けーき",
+       "cake"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "おいしかった",
+       "おいしかった",
+       "delicious (past)"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "わたしたちは一時間ぐらい話しました。",
+     "reading": "わたしたちはいちじかんぐらいはなしました。",
+     "en": "We talked for about an hour.",
+     "tokens": [
+      [
+       "わたしたち",
+       "わたしたち",
+       "we"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "一時間",
+       "いちじかん",
+       "one hour"
+      ],
+      [
+       "ぐらい",
+       "ぐらい",
+       "about"
+      ],
+      [
+       "話しました",
+       "はなしました",
+       "talked"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "楽しい午後でした。",
+     "reading": "たのしいごごでした。",
+     "en": "It was a fun afternoon.",
+     "tokens": [
+      [
+       "楽しい",
+       "たのしい",
+       "fun"
+      ],
+      [
+       "午後",
+       "ごご",
+       "afternoon"
+      ],
+      [
+       "でした",
+       "でした",
+       "was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Who did I go to the café with?",
+     "options": [
+      "Mr. Tanaka",
+      "My mother",
+      "Anna",
+      "Alone"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What did Anna drink?",
+     "options": [
+      "Tea",
+      "Coffee",
+      "Milk",
+      "Water"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "How long did we talk?",
+     "options": [
+      "Ten minutes",
+      "Thirty minutes",
+      "About two hours",
+      "About one hour"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "ja5-s3",
+   "title": "かいもの",
+   "title_en": "Shopping",
+   "sentences": [
+    {
+     "text": "きのう、デパートへ買い物に行きました。",
+     "reading": "きのう、でぱーとへかいものにいきました。",
+     "en": "Yesterday, I went shopping at a department store.",
+     "tokens": [
+      [
+       "きのう",
+       "きのう",
+       "yesterday"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "デパート",
+       "でぱーと",
+       "department store"
+      ],
+      [
+       "へ",
+       "へ",
+       "(to)"
+      ],
+      [
+       "買い物",
+       "かいもの",
+       "shopping"
+      ],
+      [
+       "に",
+       "に",
+       "(purpose)"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "新しいかばんがほしかったです。",
+     "reading": "あたらしいかばんがほしかったです。",
+     "en": "I wanted a new bag.",
+     "tokens": [
+      [
+       "新しい",
+       "あたらしい",
+       "new"
+      ],
+      [
+       "かばん",
+       "かばん",
+       "bag"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "ほしかった",
+       "ほしかった",
+       "wanted"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "黒いかばんと白いかばんがありました。",
+     "reading": "くろいかばんとしろいかばんがありました。",
+     "en": "There was a black bag and a white bag.",
+     "tokens": [
+      [
+       "黒い",
+       "くろい",
+       "black"
+      ],
+      [
+       "かばん",
+       "かばん",
+       "bag"
+      ],
+      [
+       "と",
+       "と",
+       "and"
+      ],
+      [
+       "白い",
+       "しろい",
+       "white"
+      ],
+      [
+       "かばん",
+       "かばん",
+       "bag"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "ありました",
+       "ありました",
+       "there were"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "黒いかばんは八千円でした。",
+     "reading": "くろいかばんははっせんえんでした。",
+     "en": "The black bag was 8,000 yen.",
+     "tokens": [
+      [
+       "黒い",
+       "くろい",
+       "black"
+      ],
+      [
+       "かばん",
+       "かばん",
+       "bag"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "八千円",
+       "はっせんえん",
+       "8,000 yen"
+      ],
+      [
+       "でした",
+       "でした",
+       "was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "白いかばんは少し高かったです。",
+     "reading": "しろいかばんはすこしたかかったです。",
+     "en": "The white bag was a little expensive.",
+     "tokens": [
+      [
+       "白い",
+       "しろい",
+       "white"
+      ],
+      [
+       "かばん",
+       "かばん",
+       "bag"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "少し",
+       "すこし",
+       "a little"
+      ],
+      [
+       "高かった",
+       "たかかった",
+       "expensive (past)"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "わたしは黒いかばんを買いました。",
+     "reading": "わたしはくろいかばんをかいました。",
+     "en": "I bought the black bag.",
+     "tokens": [
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "黒い",
+       "くろい",
+       "black"
+      ],
+      [
+       "かばん",
+       "かばん",
+       "bag"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "買いました",
+       "かいました",
+       "bought"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "それから、近くのレストランで昼ごはんを食べました。",
+     "reading": "それから、ちかくのれすとらんでひるごはんをたべました。",
+     "en": "After that, I ate lunch at a restaurant nearby.",
+     "tokens": [
+      [
+       "それから",
+       "それから",
+       "after that"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "近く",
+       "ちかく",
+       "nearby"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "レストラン",
+       "れすとらん",
+       "restaurant"
+      ],
+      [
+       "で",
+       "で",
+       "(at)"
+      ],
+      [
+       "昼ごはん",
+       "ひるごはん",
+       "lunch"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "食べました",
+       "たべました",
+       "ate"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where did I go shopping?",
+     "options": [
+      "A supermarket",
+      "A department store",
+      "A bookstore",
+      "A station shop"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "How much was the black bag?",
+     "options": [
+      "800 yen",
+      "5,000 yen",
+      "8,000 yen",
+      "10,000 yen"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Which bag did I buy?",
+     "options": [
+      "The white bag",
+      "Both bags",
+      "No bag",
+      "The black bag"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "ja5-s4",
+   "title": "しゅうまつ",
+   "title_en": "The weekend",
+   "sentences": [
+    {
+     "text": "たなかさんは日曜日に友だちと山へ行きました。",
+     "reading": "たなかさんはにちようびにともだちとやまへいきました。",
+     "en": "Mr. Tanaka went to the mountains with a friend on Sunday.",
+     "tokens": [
+      [
+       "たなか",
+       "たなか",
+       "Tanaka"
+      ],
+      [
+       "さん",
+       "さん",
+       "Mr."
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "日曜日",
+       "にちようび",
+       "Sunday"
+      ],
+      [
+       "に",
+       "に",
+       "(on)"
+      ],
+      [
+       "友だち",
+       "ともだち",
+       "friend"
+      ],
+      [
+       "と",
+       "と",
+       "with"
+      ],
+      [
+       "山",
+       "やま",
+       "mountain"
+      ],
+      [
+       "へ",
+       "へ",
+       "(to)"
+      ],
+      [
+       "行きました",
+       "いきました",
+       "went"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "朝、八時に駅で会いました。",
+     "reading": "あさ、はちじにえきであいました。",
+     "en": "They met at the station at eight in the morning.",
+     "tokens": [
+      [
+       "朝",
+       "あさ",
+       "morning"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "八時",
+       "はちじ",
+       "eight o'clock"
+      ],
+      [
+       "に",
+       "に",
+       "(at time)"
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "で",
+       "で",
+       "(at)"
+      ],
+      [
+       "会いました",
+       "あいました",
+       "met"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "天気がよくて、空は青かったです。",
+     "reading": "てんきがよくて、そらはあおかったです。",
+     "en": "The weather was good, and the sky was blue.",
+     "tokens": [
+      [
+       "天気",
+       "てんき",
+       "weather"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "よくて",
+       "よくて",
+       "good and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "空",
+       "そら",
+       "sky"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "青かった",
+       "あおかった",
+       "blue (past)"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "山の上で、お弁当を食べました。",
+     "reading": "やまのうえで、おべんとうをたべました。",
+     "en": "They ate boxed lunches at the top of the mountain.",
+     "tokens": [
+      [
+       "山",
+       "やま",
+       "mountain"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "上",
+       "うえ",
+       "top"
+      ],
+      [
+       "で",
+       "で",
+       "(at)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "お弁当",
+       "おべんとう",
+       "boxed lunch"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "食べました",
+       "たべました",
+       "ate"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "たくさん写真を撮りました。",
+     "reading": "たくさんしゃしんをとりました。",
+     "en": "They took a lot of photos.",
+     "tokens": [
+      [
+       "たくさん",
+       "たくさん",
+       "a lot"
+      ],
+      [
+       "写真",
+       "しゃしん",
+       "photo"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "撮りました",
+       "とりました",
+       "took"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "夕方、家へ帰りました。",
+     "reading": "ゆうがた、いえへかえりました。",
+     "en": "In the evening, they went home.",
+     "tokens": [
+      [
+       "夕方",
+       "ゆうがた",
+       "evening"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "家",
+       "いえ",
+       "home"
+      ],
+      [
+       "へ",
+       "へ",
+       "(to)"
+      ],
+      [
+       "帰りました",
+       "かえりました",
+       "returned"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "たなかさんは少し疲れましたが、とても楽しかったです。",
+     "reading": "たなかさんはすこしつかれましたが、とてもたのしかったです。",
+     "en": "Mr. Tanaka was a little tired, but it was a lot of fun.",
+     "tokens": [
+      [
+       "たなか",
+       "たなか",
+       "Tanaka"
+      ],
+      [
+       "さん",
+       "さん",
+       "Mr."
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "少し",
+       "すこし",
+       "a little"
+      ],
+      [
+       "疲れました",
+       "つかれました",
+       "got tired"
+      ],
+      [
+       "が",
+       "が",
+       "but"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "楽しかった",
+       "たのしかった",
+       "fun (past)"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where did Mr. Tanaka go on Sunday?",
+     "options": [
+      "To the mountains",
+      "To the sea",
+      "To a café",
+      "To school"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What time did they meet at the station?",
+     "options": [
+      "Six o'clock",
+      "Seven o'clock",
+      "Nine o'clock",
+      "Eight o'clock"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "What did they eat at the top of the mountain?",
+     "options": [
+      "Sushi",
+      "Boxed lunches",
+      "Bread",
+      "Cake"
+     ],
+     "answer": 1
+    }
+   ]
+  },
+  {
+   "id": "ja5-s5",
+   "title": "がっこう",
+   "title_en": "At school",
+   "sentences": [
+    {
+     "text": "アンナさんは大学の学生です。",
+     "reading": "あんなさんはだいがくのがくせいです。",
+     "en": "Anna is a university student.",
+     "tokens": [
+      [
+       "アンナ",
+       "あんな",
+       "Anna"
+      ],
+      [
+       "さん",
+       "さん",
+       "Ms."
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "大学",
+       "だいがく",
+       "university"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "学生",
+       "がくせい",
+       "student"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "月曜日から金曜日まで学校へ行きます。",
+     "reading": "げつようびからきんようびまでがっこうへいきます。",
+     "en": "She goes to school from Monday to Friday.",
+     "tokens": [
+      [
+       "月曜日",
+       "げつようび",
+       "Monday"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "金曜日",
+       "きんようび",
+       "Friday"
+      ],
+      [
+       "まで",
+       "まで",
+       "until"
+      ],
+      [
+       "学校",
+       "がっこう",
+       "school"
+      ],
+      [
+       "へ",
+       "へ",
+       "(to)"
+      ],
+      [
+       "行きます",
+       "いきます",
+       "go"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "毎日、日本語を勉強します。",
+     "reading": "まいにち、にほんごをべんきょうします。",
+     "en": "She studies Japanese every day.",
+     "tokens": [
+      [
+       "毎日",
+       "まいにち",
+       "every day"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "日本語",
+       "にほんご",
+       "Japanese"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "勉強します",
+       "べんきょうします",
+       "study"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "日本語の先生はやまだ先生です。",
+     "reading": "にほんごのせんせいはやまだせんせいです。",
+     "en": "Her Japanese teacher is Mr. Yamada.",
+     "tokens": [
+      [
+       "日本語",
+       "にほんご",
+       "Japanese"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "先生",
+       "せんせい",
+       "teacher"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "やまだ",
+       "やまだ",
+       "Yamada"
+      ],
+      [
+       "先生",
+       "せんせい",
+       "teacher (title)"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "やまだ先生はやさしくて、おもしろいです。",
+     "reading": "やまだせんせいはやさしくて、おもしろいです。",
+     "en": "Mr. Yamada is kind and interesting.",
+     "tokens": [
+      [
+       "やまだ",
+       "やまだ",
+       "Yamada"
+      ],
+      [
+       "先生",
+       "せんせい",
+       "teacher (title)"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "やさしくて",
+       "やさしくて",
+       "kind and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "おもしろい",
+       "おもしろい",
+       "interesting"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "昼休みに、友だちと食堂でごはんを食べます。",
+     "reading": "ひるやすみに、ともだちとしょくどうでごはんをたべます。",
+     "en": "At lunch break, she eats with friends in the cafeteria.",
+     "tokens": [
+      [
+       "昼休み",
+       "ひるやすみ",
+       "lunch break"
+      ],
+      [
+       "に",
+       "に",
+       "(at time)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "友だち",
+       "ともだち",
+       "friend"
+      ],
+      [
+       "と",
+       "と",
+       "with"
+      ],
+      [
+       "食堂",
+       "しょくどう",
+       "cafeteria"
+      ],
+      [
+       "で",
+       "で",
+       "(at)"
+      ],
+      [
+       "ごはん",
+       "ごはん",
+       "meal"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "食べます",
+       "たべます",
+       "eat"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "授業は四時に終わります。",
+     "reading": "じゅぎょうはよじにおわります。",
+     "en": "Classes end at four o'clock.",
+     "tokens": [
+      [
+       "授業",
+       "じゅぎょう",
+       "class"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "四時",
+       "よじ",
+       "four o'clock"
+      ],
+      [
+       "に",
+       "に",
+       "(at time)"
+      ],
+      [
+       "終わります",
+       "おわります",
+       "end"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What does Anna study every day?",
+     "options": [
+      "English",
+      "Math",
+      "Japanese",
+      "Music"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Who is Anna's Japanese teacher?",
+     "options": [
+      "Mr. Yamada",
+      "Mr. Tanaka",
+      "Ms. Suzuki",
+      "Ms. Kimura"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What time do classes end?",
+     "options": [
+      "Two o'clock",
+      "Three o'clock",
+      "Five o'clock",
+      "Four o'clock"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "ja5-s6",
+   "title": "かぞく",
+   "title_en": "My family",
+   "sentences": [
+    {
+     "text": "わたしの家族は四人です。",
+     "reading": "わたしのかぞくはよにんです。",
+     "en": "There are four people in my family.",
+     "tokens": [
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "家族",
+       "かぞく",
+       "family"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "四人",
+       "よにん",
+       "four people"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "父と母と姉とわたしです。",
+     "reading": "ちちとははとあねとわたしです。",
+     "en": "My father, my mother, my older sister, and me.",
+     "tokens": [
+      [
+       "父",
+       "ちち",
+       "(my) father"
+      ],
+      [
+       "と",
+       "と",
+       "and"
+      ],
+      [
+       "母",
+       "はは",
+       "(my) mother"
+      ],
+      [
+       "と",
+       "と",
+       "and"
+      ],
+      [
+       "姉",
+       "あね",
+       "(my) older sister"
+      ],
+      [
+       "と",
+       "と",
+       "and"
+      ],
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "父は銀行で働いています。",
+     "reading": "ちちはぎんこうではたらいています。",
+     "en": "My father works at a bank.",
+     "tokens": [
+      [
+       "父",
+       "ちち",
+       "(my) father"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "銀行",
+       "ぎんこう",
+       "bank"
+      ],
+      [
+       "で",
+       "で",
+       "(at)"
+      ],
+      [
+       "働いて",
+       "はたらいて",
+       "working"
+      ],
+      [
+       "います",
+       "います",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "母は料理がとても上手です。",
+     "reading": "はははりょうりがとてもじょうずです。",
+     "en": "My mother is very good at cooking.",
+     "tokens": [
+      [
+       "母",
+       "はは",
+       "(my) mother"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "料理",
+       "りょうり",
+       "cooking"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "上手",
+       "じょうず",
+       "good at"
+      ],
+      [
+       "です",
+       "です",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "姉は東京の大学に行っています。",
+     "reading": "あねはとうきょうのだいがくにいっています。",
+     "en": "My older sister goes to a university in Tokyo.",
+     "tokens": [
+      [
+       "姉",
+       "あね",
+       "(my) older sister"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "東京",
+       "とうきょう",
+       "Tokyo"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "大学",
+       "だいがく",
+       "university"
+      ],
+      [
+       "に",
+       "に",
+       "(to)"
+      ],
+      [
+       "行って",
+       "いって",
+       "going"
+      ],
+      [
+       "います",
+       "います",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "毎週、姉に電話をかけます。",
+     "reading": "まいしゅう、あねにでんわをかけます。",
+     "en": "I call my sister every week.",
+     "tokens": [
+      [
+       "毎週",
+       "まいしゅう",
+       "every week"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "姉",
+       "あね",
+       "(my) older sister"
+      ],
+      [
+       "に",
+       "に",
+       "(to)"
+      ],
+      [
+       "電話",
+       "でんわ",
+       "phone"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "かけます",
+       "かけます",
+       "call"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "夏休みには、家族みんなで海へ行きます。",
+     "reading": "なつやすみには、かぞくみんなでうみへいきます。",
+     "en": "In summer vacation, the whole family goes to the sea.",
+     "tokens": [
+      [
+       "夏休み",
+       "なつやすみ",
+       "summer vacation"
+      ],
+      [
+       "に",
+       "に",
+       "(in)"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "家族",
+       "かぞく",
+       "family"
+      ],
+      [
+       "みんな",
+       "みんな",
+       "everyone"
+      ],
+      [
+       "で",
+       "で",
+       "(together)"
+      ],
+      [
+       "海",
+       "うみ",
+       "sea"
+      ],
+      [
+       "へ",
+       "へ",
+       "(to)"
+      ],
+      [
+       "行きます",
+       "いきます",
+       "go"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How many people are in my family?",
+     "options": [
+      "Three",
+      "Four",
+      "Five",
+      "Six"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Where does my father work?",
+     "options": [
+      "At a school",
+      "At a hospital",
+      "At a bank",
+      "At a shop"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Where does the family go in summer vacation?",
+     "options": [
+      "To the sea",
+      "To the mountains",
+      "To Tokyo",
+      "To a park"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "ja5-s7",
+   "title": "てんき",
+   "title_en": "The weather",
+   "sentences": [
+    {
+     "text": "きょうは朝から雨が降っています。",
+     "reading": "きょうはあさからあめがふっています。",
+     "en": "It has been raining since this morning.",
+     "tokens": [
+      [
+       "きょう",
+       "きょう",
+       "today"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "朝",
+       "あさ",
+       "morning"
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "雨",
+       "あめ",
+       "rain"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "降って",
+       "ふって",
+       "falling"
+      ],
+      [
+       "います",
+       "います",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "とても寒いです。",
+     "reading": "とてもさむいです。",
+     "en": "It is very cold.",
+     "tokens": [
+      [
+       "とても",
+       "とても",
+       "very"
+      ],
+      [
+       "寒い",
+       "さむい",
+       "cold"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "わたしはセーターを着て、かさを持って出かけました。",
+     "reading": "わたしはせーたーをきて、かさをもってでかけました。",
+     "en": "I put on a sweater and went out with an umbrella.",
+     "tokens": [
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "セーター",
+       "せーたー",
+       "sweater"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "着て",
+       "きて",
+       "put on and"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "かさ",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "持って",
+       "もって",
+       "holding"
+      ],
+      [
+       "出かけました",
+       "でかけました",
+       "went out"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "道で、たなかさんに会いました。",
+     "reading": "みちで、たなかさんにあいました。",
+     "en": "On the street, I met Mr. Tanaka.",
+     "tokens": [
+      [
+       "道",
+       "みち",
+       "street"
+      ],
+      [
+       "で",
+       "で",
+       "(on)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "たなか",
+       "たなか",
+       "Tanaka"
+      ],
+      [
+       "さん",
+       "さん",
+       "Mr."
+      ],
+      [
+       "に",
+       "に",
+       "(object of meet)"
+      ],
+      [
+       "会いました",
+       "あいました",
+       "met"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "たなかさんはかさがありませんでした。",
+     "reading": "たなかさんはかさがありませんでした。",
+     "en": "Mr. Tanaka did not have an umbrella.",
+     "tokens": [
+      [
+       "たなか",
+       "たなか",
+       "Tanaka"
+      ],
+      [
+       "さん",
+       "さん",
+       "Mr."
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "かさ",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "ありませんでした",
+       "ありませんでした",
+       "did not have"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "それで、二人で一つのかさに入りました。",
+     "reading": "それで、ふたりでひとつのかさにはいりました。",
+     "en": "So the two of us shared one umbrella.",
+     "tokens": [
+      [
+       "それで",
+       "それで",
+       "so"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "二人",
+       "ふたり",
+       "two people"
+      ],
+      [
+       "で",
+       "で",
+       "(together)"
+      ],
+      [
+       "一つ",
+       "ひとつ",
+       "one"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "かさ",
+       "かさ",
+       "umbrella"
+      ],
+      [
+       "に",
+       "に",
+       "(into)"
+      ],
+      [
+       "入りました",
+       "はいりました",
+       "went in"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "あしたは晴れるでしょう。",
+     "reading": "あしたははれるでしょう。",
+     "en": "Tomorrow will probably be sunny.",
+     "tokens": [
+      [
+       "あした",
+       "あした",
+       "tomorrow"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "晴れる",
+       "はれる",
+       "be sunny"
+      ],
+      [
+       "でしょう",
+       "でしょう",
+       "probably"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What is the weather like today?",
+     "options": [
+      "Sunny",
+      "Snowy",
+      "Rainy",
+      "Windy"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Who did I meet on the street?",
+     "options": [
+      "Anna",
+      "My sister",
+      "Mr. Yamada",
+      "Mr. Tanaka"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "What will the weather probably be tomorrow?",
+     "options": [
+      "Sunny",
+      "Rainy",
+      "Cloudy",
+      "Snowy"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "ja5-s8",
+   "title": "でんわ",
+   "title_en": "A phone call",
+   "sentences": [
+    {
+     "text": "金曜日の夜、アンナさんから電話がありました。",
+     "reading": "きんようびのよる、あんなさんからでんわがありました。",
+     "en": "On Friday night, I got a phone call from Anna.",
+     "tokens": [
+      [
+       "金曜日",
+       "きんようび",
+       "Friday"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "夜",
+       "よる",
+       "night"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "アンナ",
+       "あんな",
+       "Anna"
+      ],
+      [
+       "さん",
+       "さん",
+       "Ms."
+      ],
+      [
+       "から",
+       "から",
+       "from"
+      ],
+      [
+       "電話",
+       "でんわ",
+       "phone call"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "ありました",
+       "ありました",
+       "there was"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "アンナさんはあした映画を見に行きたいと言いました。",
+     "reading": "あんなさんはあしたえいがをみにいきたいといいました。",
+     "en": "Anna said she wanted to go see a movie tomorrow.",
+     "tokens": [
+      [
+       "アンナ",
+       "あんな",
+       "Anna"
+      ],
+      [
+       "さん",
+       "さん",
+       "Ms."
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "あした",
+       "あした",
+       "tomorrow"
+      ],
+      [
+       "映画",
+       "えいが",
+       "movie"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "見",
+       "み",
+       "see"
+      ],
+      [
+       "に",
+       "に",
+       "(purpose)"
+      ],
+      [
+       "行きたい",
+       "いきたい",
+       "want to go"
+      ],
+      [
+       "と",
+       "と",
+       "(quote)"
+      ],
+      [
+       "言いました",
+       "いいました",
+       "said"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "わたしも映画が大好きです。",
+     "reading": "わたしもえいががだいすきです。",
+     "en": "I love movies too.",
+     "tokens": [
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "も",
+       "も",
+       "also"
+      ],
+      [
+       "映画",
+       "えいが",
+       "movie"
+      ],
+      [
+       "が",
+       "が",
+       "(subject)"
+      ],
+      [
+       "大好き",
+       "だいすき",
+       "love"
+      ],
+      [
+       "です",
+       "です",
+       "(polite)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "わたしたちは十時に駅の前で会います。",
+     "reading": "わたしたちはじゅうじにえきのまえであいます。",
+     "en": "We will meet in front of the station at ten o'clock.",
+     "tokens": [
+      [
+       "わたしたち",
+       "わたしたち",
+       "we"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "十時",
+       "じゅうじ",
+       "ten o'clock"
+      ],
+      [
+       "に",
+       "に",
+       "(at time)"
+      ],
+      [
+       "駅",
+       "えき",
+       "station"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "前",
+       "まえ",
+       "front"
+      ],
+      [
+       "で",
+       "で",
+       "(at)"
+      ],
+      [
+       "会います",
+       "あいます",
+       "meet"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "映画のあとで、いっしょに晩ごはんを食べます。",
+     "reading": "えいがのあとで、いっしょにばんごはんをたべます。",
+     "en": "After the movie, we will eat dinner together.",
+     "tokens": [
+      [
+       "映画",
+       "えいが",
+       "movie"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "あと",
+       "あと",
+       "after"
+      ],
+      [
+       "で",
+       "で",
+       "(at)"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "いっしょに",
+       "いっしょに",
+       "together"
+      ],
+      [
+       "晩ごはん",
+       "ばんごはん",
+       "dinner"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "食べます",
+       "たべます",
+       "eat"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "アンナさんはおいしいすしの店を知っています。",
+     "reading": "あんなさんはおいしいすしのみせをしっています。",
+     "en": "Anna knows a delicious sushi restaurant.",
+     "tokens": [
+      [
+       "アンナ",
+       "あんな",
+       "Anna"
+      ],
+      [
+       "さん",
+       "さん",
+       "Ms."
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "おいしい",
+       "おいしい",
+       "delicious"
+      ],
+      [
+       "すし",
+       "すし",
+       "sushi"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "店",
+       "みせ",
+       "restaurant"
+      ],
+      [
+       "を",
+       "を",
+       "(object)"
+      ],
+      [
+       "知って",
+       "しって",
+       "knowing"
+      ],
+      [
+       "います",
+       "います",
+       "is"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "電話のあと、わたしは早く寝ました。",
+     "reading": "でんわのあと、わたしははやくねました。",
+     "en": "After the call, I went to bed early.",
+     "tokens": [
+      [
+       "電話",
+       "でんわ",
+       "phone call"
+      ],
+      [
+       "の",
+       "の",
+       "('s)"
+      ],
+      [
+       "あと",
+       "あと",
+       "after"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "わたし",
+       "わたし",
+       "I"
+      ],
+      [
+       "は",
+       "は",
+       "(topic)"
+      ],
+      [
+       "早く",
+       "はやく",
+       "early"
+      ],
+      [
+       "寝ました",
+       "ねました",
+       "went to bed"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Who called me on Friday night?",
+     "options": [
+      "Mr. Tanaka",
+      "Anna",
+      "My mother",
+      "Mr. Yamada"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Where will we meet?",
+     "options": [
+      "At a café",
+      "At the cinema",
+      "In front of the station",
+      "At my house"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What will we do after the movie?",
+     "options": [
+      "Go shopping",
+      "Go home",
+      "Drink coffee",
+      "Eat dinner"
+     ],
+     "answer": 3
+    }
+   ]
+  }
+ ]
+}

@@ -1759,3 +1759,22 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .acc-perk b { display: block; }
 .acc-perk small { display: block; margin-top: 2px; line-height: 1.35; }
 .account-step .acc-skip { margin-top: 12px; font-weight: 800; }
+
+/* ------------------------------------------------------------------ small phones (and big display sizes)
+   Around 320 px wide and under 620 px tall nothing may stick out of the screen. */
+.home-head { flex-wrap: wrap; }
+.home-hello { flex: 1 1 140px; min-width: 0; }
+.home-pills { margin-left: auto; }
+.place-card .place-actions { flex-wrap: wrap; }
+.place-card .place-actions .btn.small { flex: 1 1 auto; }
+.leaf-progress { min-width: 0; }
+.lp-leaf { flex: 0 1 20px; min-width: 0; }
+.lp-leaf svg { width: 100%; height: auto; }
+.tut-card { overflow-y: auto; justify-content: safe center; }
+@media (max-height: 620px) {
+  .tut-stage { margin-bottom: 10px; }
+  .tut-art { min-height: 0; padding: 12px; gap: 8px; }
+  .tut-title { font-size: 21px; margin-bottom: 6px; }
+  .tut-text { font-size: 14.5px; line-height: 1.4; }
+  .tut-dots { margin: 10px auto; }
+}

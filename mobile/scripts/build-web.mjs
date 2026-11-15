@@ -193,6 +193,18 @@ for (const f of EAST ? readdirSync(jaSrc) : []) {
   nja++;
 }
 
+// Heritage doesn't need the Chinese/Japanese reading libraries (pinyin-pro, wanakana ~500 KB).
+const trimEdition = {
+  name: "trim-edition",
+  setup(b) {
+    if (EAST) return;
+    b.onResolve({ filter: /^(pinyin-pro|wanakana)$/ }, (a) => ({ path: a.path, namespace: "empty-cjk" }));
+    b.onLoad({ filter: /.*/, namespace: "empty-cjk" }, () => ({
+      contents: "export const pinyin = () => []; export const toHiragana = (s = '') => s; export const isRomaji = () => false;",
+    }));
+  },
+};
+
 await build({
   entryPoints: [join(mobile, "src", "main.ts")],
   bundle: true,
@@ -202,6 +214,7 @@ await build({
   outfile: join(www, "app.js"),
   loader: { ".json": "json" },
   logLevel: "warning",
+  plugins: [trimEdition],
   define: {
     __APP_VERSION__: JSON.stringify(process.env.APP_VERSION ? `2.1.${process.env.APP_VERSION}` : "2.1-dev"),
     __EDITION__: JSON.stringify(EDITION),

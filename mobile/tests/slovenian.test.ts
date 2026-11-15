@@ -19,9 +19,14 @@ test("a sentence is right for a woman and for a man", () => {
   assert.equal(grade("I like reading.", "rada berem")?.correct, true);
 });
 
-test("'jaz', 'ali' and another word order are fine", () => {
+test("subject pronouns ('jaz', 'ti', 'mi', 'vi'), 'ali' and another word order are fine", () => {
   assert.equal(grade("I am from Slovenia.", "Jaz sem iz Slovenije")?.correct, true);
   assert.equal(grade("I am hungry.", "Jaz sem lačen")?.correct, true, "pronoun and order together");
+  assert.equal(grade("Where do you live?", "Kje ti živiš?")?.correct, true);
+  assert.equal(grade("Where do you live?", "Kje vi živite?")?.correct, true);
+  assert.equal(grade("How are you?", "Kako si ti?")?.correct, true);
+  assert.equal(grade("We are going to the seaside.", "Mi gremo na morje.")?.correct, true);
+  assert.equal(grade("Can you help me?", "Ali lahko pomagaš?"), null, "'mi' (to me) is not a subject pronoun");
   assert.equal(grade("Do you speak English?", "Govoriš angleško?")?.correct, true);
   assert.equal(grade("Can I pay by card?", "Ali lahko plačam s kartico?")?.correct, true);
   const order = grade("My head hurts.", "Glava me boli");
@@ -31,12 +36,15 @@ test("'jaz', 'ali' and another word order are fine", () => {
   assert.ok(swapped!.score < 100, "another order is right, but the usual one is shown");
 });
 
-test("missing č š ž still counts; digits are read as words", () => {
+test("missing č š ž still counts; digits (including compound numbers) are read as words", () => {
   assert.equal(grade("I am hungry.", "lacen sem")?.score, 90);
   assert.equal(grade("It costs two euros.", "Stane 2 evra")?.correct, true);
   assert.equal(grade("It is eight o'clock.", "Ura je 8")?.correct, true);
   assert.equal(compareSpelling("2", "dva").result, "correct");
   assert.equal(compareSpelling("2", "dve").result, "correct");
+  assert.equal(compareSpelling("25", "petindvajset").result, "correct");
+  assert.equal(compareSpelling("21", "enaindvajset").result, "correct");
+  assert.equal(compareSpokenSl("stane 25 evrov", "Stane petindvajset evrov.").score, 100);
 });
 
 test("a wrong sentence stays wrong, a near miss says so", () => {

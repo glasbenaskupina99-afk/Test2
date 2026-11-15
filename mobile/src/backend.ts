@@ -28,33 +28,40 @@ import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./
 
 // Two apps from one code base: Bloomko East (Chinese, Japanese) and Bloomko Heritage
 // (lesser-known languages, for now Slovenian). The build picks one (__EDITION__).
-export const EDITION = typeof __EDITION__ !== "undefined" ? __EDITION__ : "east";
-const EDITION_LANGS: Lang[] = EDITION === "heritage" ? ["sl"] : ["zh", "ja"];
+const HERITAGE = typeof __EDITION__ !== "undefined" && __EDITION__ === "heritage";
+export const EDITION = HERITAGE ? "heritage" : "east";
+const EDITION_LANGS: Lang[] = HERITAGE ? ["sl"] : ["zh", "ja"];
 
 // Built-in word lists. Each is a "section" of its course (e.g. JLPT N5 / JLPT N3).
-const ALL_SEED_SETS = [
-  { lang: "zh", data: seedZh, section: "HSK 1", source: "hsk1", base: 0 },
-  { lang: "zh", data: seedZh2, section: "HSK 2", source: "hsk2", base: 1000 },
-  { lang: "zh", data: seedZh3, section: "HSK 3", source: "hsk3", base: 2000 },
-  { lang: "ja", data: seedKana, section: "Kana", source: "kana", base: -10000 },
-  { lang: "ja", data: seedJa, section: "JLPT N5", source: "n5", base: 0 },
-  { lang: "ja", data: seedJaN4, section: "JLPT N4", source: "n4", base: 5000 },
-  { lang: "ja", data: seedJaN3, section: "JLPT N3", source: "n3", base: 10000 },
-  { lang: "sl", data: seedSl, section: "A1", source: "sl_a1", base: 0 },
-];
-const SEED_SETS = ALL_SEED_SETS.filter((x) => EDITION_LANGS.includes(x.lang as Lang));
-const SECTION_OF_SOURCE = Object.fromEntries(ALL_SEED_SETS.map((x) => [x.source, x.section]));
+const SEED_SETS = HERITAGE
+  ? [{ lang: "sl", data: seedSl, section: "A1", source: "sl_a1", base: 0 }]
+  : [
+      { lang: "zh", data: seedZh, section: "HSK 1", source: "hsk1", base: 0 },
+      { lang: "zh", data: seedZh2, section: "HSK 2", source: "hsk2", base: 1000 },
+      { lang: "zh", data: seedZh3, section: "HSK 3", source: "hsk3", base: 2000 },
+      { lang: "ja", data: seedKana, section: "Kana", source: "kana", base: -10000 },
+      { lang: "ja", data: seedJa, section: "JLPT N5", source: "n5", base: 0 },
+      { lang: "ja", data: seedJaN4, section: "JLPT N4", source: "n4", base: 5000 },
+      { lang: "ja", data: seedJaN3, section: "JLPT N3", source: "n3", base: 10000 },
+    ];
+const SECTION_OF_SOURCE: Record<string, string> = {
+  hsk1: "HSK 1", hsk2: "HSK 2", hsk3: "HSK 3",
+  kana: "Kana", n5: "JLPT N5", n4: "JLPT N4", n3: "JLPT N3",
+  sl_a1: "A1",
+};
 const MY_WORDS = "My words";
 // Fallback sentences as [english, text, reading]
 const keyed = (rows, file) => rows.map((r, i) => Object.assign([...r], { key: `${file}|${i}` }));
-const FALLBACK_EN = {
-  zh: keyed(FALLBACK_ZH, "sentences").map((r) => Object.assign([r[0], r[1], null], { key: r.key })),
-  ja: [...keyed(FALLBACK_JA, "japanese_sentences"), ...keyed(FALLBACK_JA_N3, "japanese_n3_sentences")],
-  sl: keyed(FALLBACK_SL, "slovenian_sentences"),
-};
+const FALLBACK_EN = HERITAGE
+  ? { sl: keyed(FALLBACK_SL, "slovenian_sentences") }
+  : {
+      zh: keyed(FALLBACK_ZH, "sentences").map((r) => Object.assign([r[0], r[1], null], { key: r.key })),
+      ja: [...keyed(FALLBACK_JA, "japanese_sentences"), ...keyed(FALLBACK_JA_N3, "japanese_n3_sentences")],
+    };
 /** Other accepted answers of the built-in Slovenian sentences ("Lačna sem" for "Lačen sem"). */
-const SL_ALTS = new Map<string, string[]>((FALLBACK_SL as any[]).map((r) => [normSl(r[1]), r[3] || []]));
+const SL_ALTS = new Map<string, string[]>(HERITAGE ? (FALLBACK_SL as any[]).map((r) => [normSl(r[1]), r[3] || []]) : []);
 const slAlts = (expected) => SL_ALTS.get(normSl(expected)) || [];
+const LOOKALIKES_BY_LANG = HERITAGE ? {} : LOOKALIKES;
 /** Built-in sentences with the translation in the interface language. */
 const FALLBACK = new Proxy({}, { get: (_, lang) => (FALLBACK_EN[lang] || []).map((r) => Object.assign([locale.sentence(r.key) || r[0], r[1], r[2]], { key: r.key })) });
 
@@ -1239,7 +1246,7 @@ const routes = {
       saved_days: db.garden.saved.slice(-14),
       garden_notice: notice,
       plan,
-      lookalikes: (LOOKALIKES[course()] || []).length,
+      lookalikes: (LOOKALIKES_BY_LANG[course()] || []).length,
       grammar,
       xp_today: db.activity[dayKey()]?.xp || 0,
       daily_goal: s.daily_goal,
@@ -1863,7 +1870,7 @@ const routes = {
   },
 
   "GET /api/lookalikes/session": async (_, __, query) => {
-    const groups = LOOKALIKES[course()] || [];
+    const groups = LOOKALIKES_BY_LANG[course()] || [];
     const ov = (await locale.overlay("lookalikes")) || {}; // meanings and hints in the interface language
     const n = Math.min(Number(query.get("n")) || 8, groups.length);
     const known = new Set(learnedWords().flatMap((w) => [...w.hanzi]));

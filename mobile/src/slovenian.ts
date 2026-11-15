@@ -18,6 +18,24 @@ const NUMBERS: Record<number, string[]> = {
   11: ["enajst"], 12: ["dvanajst"], 13: ["trinajst"], 14: ["štirinajst"], 15: ["petnajst"], 16: ["šestnajst"], 17: ["sedemnajst"], 18: ["osemnajst"], 19: ["devetnajst"],
   20: ["dvajset"], 30: ["trideset"], 40: ["štirideset"], 50: ["petdeset"], 60: ["šestdeset"], 70: ["sedemdeset"], 80: ["osemdeset"], 90: ["devetdeset"], 100: ["sto"], 1000: ["tisoč"],
 };
+/** Word form(s) of a number (0–1000), including compound ones ("25" → "petindvajset"). */
+function numberForms(n: number): string[] | null {
+  if (NUMBERS[n]) return NUMBERS[n];
+  if (n > 20 && n < 100) {
+    const u = n % 10;
+    return [`${NUMBERS[u][0]}in${NUMBERS[n - u][0]}`];
+  }
+  if (n > 100 && n < 1000) {
+    const h = Math.floor(n / 100);
+    const rem = n % 100;
+    const hWord = h === 1 ? "sto" : h === 2 ? "dvesto" : `${NUMBERS[h][0]}sto`;
+    if (!rem) return [hWord];
+    const tail = numberForms(rem);
+    return tail ? tail.map((r) => `${hWord} ${r}`) : null;
+  }
+  return null;
+}
+
 /** "stane 2 evra" → "stane dva evra", choosing the form the expected sentence uses (dva / dve). */
 function digitsToWords(text: string, expected: string): string {
   if (!/\d/.test(text)) return text;
@@ -26,7 +44,7 @@ function digitsToWords(text: string, expected: string): string {
     .split(" ")
     .map((tok) => {
       if (!/^\d+$/.test(tok)) return tok;
-      const forms = NUMBERS[Number(tok)];
+      const forms = numberForms(Number(tok));
       return forms ? forms.find((f) => want.has(f)) || forms[0] : tok;
     })
     .join(" ");
@@ -46,9 +64,17 @@ export function compareSpelling(answer, expected) {
 // gender), with or without "jaz", with or without the question word "ali", and often in
 // another word order. `alts` are other accepted translations of the same English sentence.
 
-/** Without the words that may be left out or added freely: "jaz", and "ali" / "a" opening a question. */
+const NOT_2SG = /^(danes|čas|cas|glas|pas|vas|nas|les|pes|res)$/;
+const NOT_1PL = /^(samo|pismo)$/;
+
+/** Without the words that may be left out or added freely: subject pronouns and opening "ali" / "a". */
 function core(norm: string): string[] {
-  const words = norm.split(" ").filter(Boolean).filter((w) => w !== "jaz");
+  const raw = norm.split(" ").filter(Boolean);
+  // "ti" / "mi" can also mean "to you" / "to me" ("Kako ti je ime?", "Ali mi lahko pomagaš?"):
+  // only drop them when the verb is in their person ("živiš", "si", "gremo", "smo").
+  const has2sg = raw.some((w) => w === "si" || w === "nisi" || w === "boš" || w === "bos" || (w.length >= 3 && !NOT_2SG.test(w) && /(aš|iš|eš|as|is|es)$/.test(w)));
+  const has1pl = raw.some((w) => w === "smo" || w === "nismo" || (w.length >= 4 && !NOT_1PL.test(w) && w.endsWith("mo")));
+  const words = raw.filter((w) => w !== "jaz" && w !== "vi" && !(w === "ti" && has2sg) && !(w === "mi" && has1pl));
   if (words.length > 1 && (words[0] === "ali" || words[0] === "a")) words.shift();
   return words;
 }

@@ -10,9 +10,6 @@ import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions
-import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 /** Reads the text in a photo on the phone (ML Kit): Chinese, Japanese or Latin script. */
 @CapacitorPlugin(name = "Ocr")
@@ -22,11 +19,7 @@ class OcrPlugin : Plugin() {
         val b64 = call.getString("image") ?: return call.reject("image is required")
         val bytes = try { Base64.decode(b64, Base64.DEFAULT) } catch (_: Throwable) { return call.reject("That isn't an image") }
         val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return call.reject("Couldn't open the photo")
-        val recognizer = when (call.getString("script") ?: "latin") {
-            "zh" -> TextRecognition.getClient(ChineseTextRecognizerOptions.Builder().build())
-            "ja" -> TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build())
-            else -> TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-        }
+        val recognizer = TextRecognition.getClient(ocrOptions(call.getString("script") ?: "latin"))
         recognizer.process(InputImage.fromBitmap(bitmap, 0))
             .addOnSuccessListener { result ->
                 val lines = JSArray()

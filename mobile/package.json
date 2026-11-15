@@ -8,7 +8,6 @@
     "build": "node scripts/build-web.mjs",
     "sync": "npm run build && npx cap sync android",
     "apk": "npm run sync && cd android && ./gradlew assembleDebug",
-    "build:server": "node scripts/build-server.mjs",
     "build:site": "tsx scripts/build-site.ts",
     "typecheck": "tsc -p .",
     "test": "tsx --test tests/*.test.ts",

@@ -5,6 +5,7 @@
 
 import type { Db } from "./types.js";
 
+export const MAX_RAINDROPS = 2; // streak freezes you can hold
 export const SYNC_URL = () => window.__syncUrl || "https://bloomko.eu/api/sync";
 export const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"; // no 0/O, 1/I
 const SYNCED_SETTINGS = ["section_zh", "section_ja", "section_sl", "display_name", "daily_goal", "new_per_lesson", "review_size", "sentence_count", "leniency", "hint_after_misses", "tts_rate"];
@@ -174,9 +175,22 @@ export function merge(db: Db, r: any) {
 
   const newer = later(r.at, db.sync.changed_at);
   if (r.garden) {
+    // Raindrops: what the other device earned or used since the two last agreed is added to
+    // (or taken from) this device's count — not simply overwritten by whichever synced later,
+    // which could lose a raindrop or bring a used one back.
+    const fresh = (mine: string[], theirs: string[]) => {
+      const have = new Set(mine);
+      const oldest = mine.length >= 60 ? mine[0] : ""; // a full list may have dropped older days
+      return (theirs || []).filter((d) => !have.has(d) && d > oldest);
+    };
+    const earned = fresh(db.garden.awarded, r.garden.awarded);
+    const used = fresh(db.garden.saved, r.garden.saved);
+    if (typeof r.garden.raindrops === "number") {
+      // A device that just joined has nothing of its own yet: it takes the count as it is.
+      db.garden.raindrops = db.sync.changed_at ? Math.max(0, Math.min(MAX_RAINDROPS, db.garden.raindrops + earned.length - used.length)) : r.garden.raindrops;
+    }
     db.garden.saved = [...new Set([...db.garden.saved, ...(r.garden.saved || [])])].sort();
     db.garden.awarded = [...new Set([...db.garden.awarded, ...(r.garden.awarded || [])])].sort();
-    if (newer && typeof r.garden.raindrops === "number") db.garden.raindrops = r.garden.raindrops;
   }
   for (const [k, v] of Object.entries<any>(r.lookalikes || {})) {
     const mine = (db.lookalikes[k] ||= { seen: 0, wrong: 0 });

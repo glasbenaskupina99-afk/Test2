@@ -1,4 +1,4 @@
-// The whole server (app/main.py) re-implemented to run inside the app.
+// The app's own "server": every /api route, running inside the app.
 // Data is a single JSON document persisted on the phone.
 import seedZh from "../../app/data/hsk1.json";
 import seedJa from "../../app/data/japanese_n5.json";
@@ -13,7 +13,7 @@ import FALLBACK_JA_N3 from "../../app/data/japanese_n3_sentences.json";
 import seedSl from "../../app/data/slovenian_a1.json";
 import FALLBACK_SL from "../../app/data/slovenian_sentences.json";
 import type { Activity, Card, Db, Extras, Lang, Settings, Skill } from "./types.js";
-import { compareSpelling, compareSpokenSl, normSl } from "./slovenian.js";
+import { compareSpelling, compareSpokenSl, gradeSentenceSl, lemmaSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as sync from "./sync.js";
 import * as cloud from "./backup.js";
@@ -52,6 +52,9 @@ const FALLBACK_EN = {
   ja: [...keyed(FALLBACK_JA, "japanese_sentences"), ...keyed(FALLBACK_JA_N3, "japanese_n3_sentences")],
   sl: keyed(FALLBACK_SL, "slovenian_sentences"),
 };
+/** Other accepted answers of the built-in Slovenian sentences ("Lačna sem" for "Lačen sem"). */
+const SL_ALTS = new Map<string, string[]>((FALLBACK_SL as any[]).map((r) => [normSl(r[1]), r[3] || []]));
+const slAlts = (expected) => SL_ALTS.get(normSl(expected)) || [];
 /** Built-in sentences with the translation in the interface language. */
 const FALLBACK = new Proxy({}, { get: (_, lang) => (FALLBACK_EN[lang] || []).map((r) => Object.assign([locale.sentence(r.key) || r[0], r[1], r[2]], { key: r.key })) });
 
@@ -472,7 +475,7 @@ function bestStreak() {
   return Math.max(best, streak());
 }
 
-const MAX_RAINDROPS = 2;
+const MAX_RAINDROPS = sync.MAX_RAINDROPS;
 function awardRaindrop() {
   const g = db.garden;
   const today = dayKey();
@@ -983,7 +986,14 @@ const TALK_TOPICS = [
 
 /** Split text into tokens using the course's words (for stories Gemma writes). */
 function tokenize(text, lex) {
-  if (course() === "sl") return text.split(/(\s+|[.,!?;:])/).filter(Boolean).map((t) => [t, "", lex.get(t.toLowerCase())?.meaning || ""]);
+  if (course() === "sl") {
+    // Words change their endings: look the basic form up too (kavo → kava) and keep it as the "reading".
+    return text.split(/(\s+|[.,!?;:„“”"»«()…—–])/).filter(Boolean).map((t) => {
+      const low = t.toLowerCase();
+      const lemma = lex.has(low) ? low : lemmaSl(low, (x) => lex.has(x));
+      return [t, lemma && lemma !== low ? lemma : "", lex.get(lemma)?.meaning || ""];
+    });
+  }
   const out = [];
   for (let i = 0; i < text.length; ) {
     let len = Math.min(6, text.length - i);
@@ -1382,9 +1392,13 @@ const routes = {
       if (sl ? t.length < 2 : ja ? !/[\u4e00-\u9fff\u30a1-\u30fa]/.test(t) && !(lex.has(t) && t.length > 1) : !/[\u4e00-\u9fff]/.test(t)) continue;
       if (ja && /^[\u30a1-\u30fa\u30fc]$/.test(t)) continue;
       seen.add(t);
-      const w = lex.get(t);
+      // Slovenian: a word in another form is the course word it comes from (kavo → kava).
+      const base = sl && !lex.has(t) ? lemmaSl(t, (x) => lex.has(x)) : "";
+      if (base && seen.has(base)) continue;
+      if (base) seen.add(base);
+      const w = lex.get(base || t);
       words.push(w
-        ? { t, r: w.reading, m: w.meaning, kind: w.learned ? "learned" : "course", level: w.level, word_id: w.id }
+        ? { t: base || t, r: w.reading, m: w.meaning, kind: w.learned ? "learned" : "course", level: w.level, word_id: w.id }
         : { t, r: ja ? (/^[\u30a1-\u30fa\u30fc]+$/.test(t) ? normKana(t) : "") : sl ? "" : r || toPinyin(t), m: m || "", kind: "new" });
       if (words.length >= 80) break;
     }
@@ -1910,10 +1924,12 @@ const routes = {
   },
 
   "POST /api/sentences/grade": async (_, body) => {
+    // Slovenian: the speaker's gender, "jaz", "ali" and the word order may differ from the model answer.
+    let near = null;
     if (course() === "sl") {
-      const r = compareSpelling(body.answer, body.zh);
-      if (r.result === "correct") return { correct: true, score: 100, feedback: "Perfect!", corrected: body.zh, by: "exact" };
-      if (r.result === "tones_wrong") return { correct: true, score: 90, feedback: "Correct — just mind č, š and ž.", corrected: body.zh, by: "exact" };
+      const r = gradeSentenceSl(body.answer, body.zh, slAlts(body.zh));
+      if (r?.correct) return { ...r, by: "exact" };
+      near = r;
     }
     if (course() === "ja") {
       const strip = (t) => (t || "").replace(/[\s。、？！?!.,]/g, "");
@@ -1935,6 +1951,7 @@ const routes = {
         console.warn("AI grading unavailable", e);
       }
     }
+    if (near) return { ...near, by: "exact" };
     return { correct: false, score: 0, feedback: "Doesn't match the expected answer.", corrected: body.zh, by: "exact" };
   },
 
@@ -1948,7 +1965,7 @@ const routes = {
 
   "POST /api/speech/compare": (_, body) =>
     course() === "sl"
-      ? compareSpokenSl(body.heard, body.expected)
+      ? compareSpokenSl(body.heard, body.expected, slAlts(body.expected))
       : course() === "ja" ? compareSpokenJa(body.heard, body.expected, body.reading) : compareSpoken(body.heard, body.expected),
 
   // Pronunciation check by Gemma listening to the recording (audio-capable model on the phone).
@@ -1958,7 +1975,7 @@ const routes = {
     const res: any = await ai.assessSpeech(String(body.audio || ""), expected, reading);
     if (res.heard) {
       res.compare = course() === "sl"
-        ? compareSpokenSl(res.heard, expected)
+        ? compareSpokenSl(res.heard, expected, slAlts(expected))
         : course() === "ja" ? compareSpokenJa(res.heard, expected, reading) : compareSpoken(res.heard, expected);
     }
     return res;
@@ -2364,6 +2381,7 @@ const routes = {
     migrate();
     ensureShape();
     await applyLocale();
+    await checkAi(); // the backup's settings may switch the AI on or off
     flush();
     return { ok: true, learned: new Set(db.cards.map((c) => c.word_id)).size };
   },
@@ -2381,6 +2399,7 @@ const routes = {
     migrate();
     ensureShape();
     await applyLocale();
+    await checkAi(); // the backup's settings may switch the AI on or off
     flush();
     return { ok: true };
   },

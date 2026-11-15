@@ -4,13 +4,14 @@
 // in English, "undefined" on screen.
 //   npm run build (or EDITION=heritage npm run build), then:
 //   npx tsx scripts/audit.ts [out-dir] [ui languages, e.g. en,fr] [courses, e.g. zh,ja]
+import { fileURLToPath } from "node:url";
 import { createServer } from "node:http";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { readFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { chromium, type Page, type BrowserContext } from "playwright";
 
-const WWW = resolve(new URL("../www", import.meta.url).pathname);
+const WWW = resolve(process.env.WWW || fileURLToPath(new URL("../www", import.meta.url)));
 const OUT = resolve(process.argv[2] || "audit-out");
 const edition = /data-edition="heritage"/.test(readFileSync(join(WWW, "index.html"), "utf8")) ? "heritage" : "east";
 const UI = (process.argv[3] || "en,fr,es,ja").split(",");

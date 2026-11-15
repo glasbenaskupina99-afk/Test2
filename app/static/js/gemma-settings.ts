@@ -1,5 +1,5 @@
 // Settings card for running Gemma on the phone (Android app only).
-import { api, h, toast, confirmDialog } from "./util.js";
+import { api, h, toast, confirmDialog, SYNC_NOTE } from "./util.js";
 import { state } from "./state.js";
 import { hfToken, pickFile } from "./gemma-setup.js";
 
@@ -183,7 +183,8 @@ export function backupCard() {
     onchange: async () => {
       const f = fileIn.files[0];
       if (!f) return;
-      if (!(await confirmDialog({ icon: "📦", title: "Restore backup?", message: "This replaces all progress on this phone with the backup.", cancelLabel: "Cancel", confirmLabel: "Restore", danger: true }))) { fileIn.value = ""; return; }
+      const synced = (await api("/api/sync").catch(() => null))?.on;
+      if (!(await confirmDialog({ icon: "📦", title: "Restore backup?", message: "This replaces all progress on this phone with the backup.", content: synced ? h("p", { class: "muted small" }, SYNC_NOTE) : undefined, cancelLabel: "Cancel", confirmLabel: "Restore", danger: true }))) { fileIn.value = ""; return; }
       try {
         await api("/api/backup/restore", { method: "POST", body: JSON.parse(await f.text()) });
         toast("Backup restored ✓");

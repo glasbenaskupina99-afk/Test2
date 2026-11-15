@@ -5,12 +5,12 @@ import { build } from "esbuild";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { pathToFileURL, fileURLToPath } from "node:url";
 
 const dir = mkdtempSync(join(tmpdir(), "bloomko-worker-"));
 writeFileSync(join(dir, "stub.js"), "export class DurableObject { constructor(ctx, env) { this.ctx = ctx; this.env = env; } }");
 await build({
-  entryPoints: [new URL("../../worker/sync.js", import.meta.url).pathname],
+  entryPoints: [fileURLToPath(new URL("../../worker/sync.js", import.meta.url))],
   bundle: true,
   format: "esm",
   platform: "neutral",
@@ -148,4 +148,34 @@ test("friends: publish a garden card, visit it, water it once a day, see who wat
   assert.equal((await call2("DELETE", code, { secret: "1".repeat(32) })).status, 403);
   assert.equal((await call2("DELETE", code, { secret })).status, 200);
   assert.equal((await call2("GET", code)).status, 404, "the card is gone");
+});
+
+test("rate limits: a flood from one address is refused, others carry on", async () => {
+  const { tooMany, soft, strict, LIMITS } = await import(pathToFileURL(join(dir, "sync.mjs")).href);
+  // The counter in memory: `max` in a window, then no more until the window is over.
+  const t0 = 1_000_000;
+  for (let i = 0; i < 5; i++) assert.equal(tooMany("a|x", 5, 1000, t0 + i), false);
+  assert.equal(tooMany("a|x", 5, 1000, t0 + 10), true, "the sixth is too many");
+  assert.equal(tooMany("b|x", 5, 1000, t0 + 10), false, "another address is not affected");
+  assert.equal(tooMany("a|x", 5, 1000, t0 + 2000), false, "a new window starts clean");
+
+  const from = (ip: string) => new Request("https://bloomko.eu/api/x", { method: "POST", headers: { "CF-Connecting-IP": ip } });
+  const [max] = LIMITS.write;
+  for (let i = 0; i < max; i++) assert.equal(await soft(from("203.0.113.9"), "write"), null);
+  assert.equal((await soft(from("203.0.113.9"), "write"))?.status, 429);
+  assert.equal(await soft(from("203.0.113.10"), "write"), null);
+
+  // The exact counter (new accounts, sign-ups) lives in a Durable Object per address.
+  const e = env();
+  const [n] = LIMITS.register;
+  for (let i = 0; i < n; i++) assert.equal(await strict(from("198.51.100.7"), e, "register"), null);
+  const over = await strict(from("198.51.100.7"), e, "register");
+  assert.equal(over?.status, 429);
+  assert.match((await over!.json()).error, /Too many requests/);
+  assert.equal(await strict(from("198.51.100.8"), e, "register"), null, "another address can still register");
+  // Registering really is refused once the limit is used up.
+  const body = { email: "x@example.com", auth: "a".repeat(64), vault: "QUJD" };
+  const reg = (ip: string) => handleAccount(new Request("https://bloomko.eu/api/account/register", { method: "POST", body: JSON.stringify(body), headers: { "Content-Type": "application/json", "CF-Connecting-IP": ip } }), e, "register");
+  assert.equal((await reg("198.51.100.7")).status, 429);
+  assert.equal((await reg("198.51.100.99")).status, 200);
 });

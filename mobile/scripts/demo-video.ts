@@ -2,6 +2,7 @@
 // recorded — a new word, writing it stroke by stroke, the garden, a story — with captions on top.
 // Build the app first (npm run build, or EDITION=heritage npm run build), then:
 //   npx tsx scripts/demo-video.ts     → ../site/video/<edition>-demo.mp4 (+ a poster .jpg)
+import { fileURLToPath } from "node:url";
 import { createServer } from "node:http";
 import { readFile, mkdir, rm, readdir } from "node:fs/promises";
 import { readFileSync } from "node:fs";
@@ -9,8 +10,8 @@ import { execFileSync } from "node:child_process";
 import { extname, join, resolve } from "node:path";
 import { chromium, type Page } from "playwright";
 
-const WWW = resolve(new URL("../www", import.meta.url).pathname);
-const OUT = resolve(new URL("../../site/video", import.meta.url).pathname);
+const WWW = resolve(fileURLToPath(new URL("../www", import.meta.url)));
+const OUT = resolve(fileURLToPath(new URL("../../site/video", import.meta.url)));
 const edition = /data-edition="heritage"/.test(readFileSync(join(WWW, "index.html"), "utf8")) ? "heritage" : "east";
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".wasm": "application/wasm", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2" };
 const server = createServer(async (req, res) => {

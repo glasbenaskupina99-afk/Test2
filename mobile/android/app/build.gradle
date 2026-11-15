@@ -24,13 +24,16 @@ android {
     // Two apps from one code base. East keeps the original id so installed apps update.
     flavorDimensions = ["edition"]
     productFlavors {
+        // ocrModels: the text-recognition models Google Play downloads with the app (photo → words).
         east {
             dimension = "edition"
             applicationId = "com.hanzihome.app"
+            manifestPlaceholders = [ocrModels: "ocr,ocr_chinese,ocr_japanese"]
         }
         heritage {
             dimension = "edition"
             applicationId = "eu.bloomko.heritage"
+            manifestPlaceholders = [ocrModels: "ocr"]
         }
     }
     signingConfigs {

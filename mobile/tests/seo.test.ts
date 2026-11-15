@@ -6,10 +6,10 @@ import { build } from "esbuild";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { pathToFileURL, fileURLToPath } from "node:url";
 
 const dir = mkdtempSync(join(tmpdir(), "bloomko-seo-"));
-await build({ entryPoints: [new URL("../../worker/seo.js", import.meta.url).pathname], bundle: true, format: "esm", platform: "neutral", outfile: join(dir, "seo.mjs"), logLevel: "silent" });
+await build({ entryPoints: [fileURLToPath(new URL("../../worker/seo.js", import.meta.url))], bundle: true, format: "esm", platform: "neutral", outfile: join(dir, "seo.mjs"), logLevel: "silent" });
 const { seo } = await import(pathToFileURL(join(dir, "seo.mjs")).href);
 const get = async (path: string) => {
   const r = seo(new URL("https://bloomko.eu" + path));

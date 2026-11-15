@@ -1,6 +1,6 @@
 // Encrypted cloud backup (2.0): the Settings card, and restoring on a new phone (also from the
 // welcome screen). The backup key is shown once when backup is turned on, and can be shown again.
-import { api, h, toast, confirmDialog, fill } from "./util.js";
+import { api, h, toast, confirmDialog, fill, SYNC_NOTE } from "./util.js";
 
 const when = (iso: string | null) => (iso ? new Date(iso).toLocaleString([], { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "never");
 
@@ -172,7 +172,8 @@ export function restoreFlow({ key = "" }: { key?: string } = {}): Promise<boolea
     };
 
     const restore = async (k: string, b: any) => {
-      if (!(await confirmDialog({ icon: "☁️", title: "Restore this backup?", message: `Your progress on this device will be replaced by the copy from ${when(b.at)}.`, confirmLabel: "Restore", cancelLabel: "Cancel" }))) return;
+      const synced = (await api("/api/sync").catch(() => null))?.on;
+      if (!(await confirmDialog({ icon: "☁️", title: "Restore this backup?", message: `Your progress on this device will be replaced by the copy from ${when(b.at)}.`, content: synced ? h("p", { class: "muted small" }, SYNC_NOTE) : undefined, confirmLabel: "Restore", cancelLabel: "Cancel" }))) return;
       body.replaceChildren(h("div", { class: "spinner" }));
       try {
         const r = await api("/api/cloud-backup/restore", { method: "POST", body: { key: k, n: b.n } });

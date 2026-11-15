@@ -1,5 +1,6 @@
 // End-to-end: the built app (mobile/www, or $WWW) in Chromium, as a learner would use it.
 // Run after `npm run build` (East) or `EDITION=heritage npm run build`: npm run test:e2e
+import { fileURLToPath } from "node:url";
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
@@ -8,8 +9,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { chromium, type Browser, type Page } from "playwright";
 
-const WWW = resolve(process.env.WWW || new URL("../../www", import.meta.url).pathname);
-const FIXTURES = new URL("../fixtures/", import.meta.url).pathname;
+const WWW = resolve(process.env.WWW || fileURLToPath(new URL("../../www", import.meta.url)));
+const FIXTURES = fileURLToPath(new URL("../fixtures/", import.meta.url));
 const TYPES: Record<string, string> = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".wasm": "application/wasm", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".webmanifest": "application/manifest+json" };
 
 let server: Server;
@@ -520,5 +521,27 @@ test("AI: offered only when it can really answer (a model server that responds)"
   s = await api("/api/settings", { method: "PUT", body: { ai_enabled: false } });
   assert.equal(s.ai_enabled, false);
   assert.equal(s.ai_wanted, false);
+  assert.deepEqual(errors, []);
+});
+
+test("Slovenian without the AI: a sentence is right in more than one way; forms lead to their words", { skip: edition !== "heritage" }, async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const grade = (zh: string, answer: string) => api("/api/sentences/grade", { method: "POST", body: { en: "", zh, answer } });
+  assert.equal((await grade("Lačen sem.", "Lačna sem")).correct, true, "said by a woman");
+  assert.equal((await grade("Sem iz Slovenije.", "Jaz sem iz Slovenije")).correct, true, "with the pronoun");
+  assert.equal((await grade("Boli me glava.", "Glava me boli")).correct, true, "another word order");
+  assert.equal((await grade("Stane dva evra.", "stane 2 evra")).correct, true, "a digit for the number");
+  const wrong = await grade("Lačen sem.", "Žejen sem");
+  assert.equal(wrong.correct, false);
+  assert.equal(wrong.corrected, "Lačen sem.");
+  // Speech recognition writes "2" for "dva".
+  assert.equal((await api("/api/speech/compare", { method: "POST", body: { heard: "stane 2 evra", expected: "Stane dva evra." } })).score, 100);
+  // Words from a photo: "kavo" is the course word "kava", not a new word.
+  const { words } = await api("/api/photo/words", { method: "POST", body: { text: "Kavo z mlekom, prosim. Imam dve sestri." } });
+  const kava = words.find((w: any) => w.t === "kava");
+  assert.ok(kava && kava.kind !== "new", "kavo → kava, a word of the course");
+  assert.ok(!words.some((w: any) => w.t === "kavo"), "the inflected form isn't offered as a new word");
   assert.deepEqual(errors, []);
 });

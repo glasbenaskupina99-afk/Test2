@@ -2,14 +2,15 @@
 // Build the app first (npm run build, or EDITION=heritage npm run build), then:
 //   npx tsx scripts/site-shots.ts      → ../site/img/<lang>/<edition>-<shot>.png
 // (then convert them to .webp, about 560 px wide, e.g. with Pillow)
+import { fileURLToPath } from "node:url";
 import { createServer } from "node:http";
 import { readFile, mkdir } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { chromium, type Page } from "playwright";
 
-const WWW = resolve(process.env.WWW || new URL("../www", import.meta.url).pathname);
-const OUT = resolve(new URL("../../site/img", import.meta.url).pathname);
+const WWW = resolve(process.env.WWW || fileURLToPath(new URL("../www", import.meta.url)));
+const OUT = resolve(fileURLToPath(new URL("../../site/img", import.meta.url)));
 const edition = /data-edition="heritage"/.test(readFileSync(join(WWW, "index.html"), "utf8")) ? "heritage" : "east";
 const LANGS = (process.env.LANGS || "en,fr,es,ja").split(",");
 const NAMES = { en: "Mia", fr: "Léa", es: "Lucía", ja: "Yui" };

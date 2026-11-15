@@ -5,7 +5,7 @@
 // emailed to the owner.
 import { EmailMessage } from "cloudflare:email";
 import { seo } from "./seo.js";
-import { handleAccount, handleBackup, handleFriends, handleSync } from "./sync.js";
+import { handleAccount, handleBackup, handleFriends, handleSync, soft, strict } from "./sync.js";
 
 // Durable Object class for app sync (bound as SYNC in wrangler.jsonc).
 export { SyncStore } from "./sync.js";
@@ -86,6 +86,9 @@ async function notify(request, env, ctx) {
   const email = String(data.email || "").trim().toLowerCase();
   if (!EMAIL.test(email) || email.length > 254) return json(400, { error: "invalid email" });
   if (!env.NOTIFY) return json(503, { error: "sign-ups not available" });
+  // A handful of sign-ups an hour from one address is plenty; more is a script.
+  const over = await strict(request, env, "notify");
+  if (over) return over;
   if (!(await env.NOTIFY.get(email))) {
     const info = {
       at: new Date().toISOString(),
@@ -107,11 +110,16 @@ async function notify(request, env, ctx) {
   return json(200, { ok: true });
 }
 
-const VERSION = "2026-11-12 f — Learn Slovenian / Learn Chinese & Japanese titles and FAQ; menu: East = Chinese · Japanese, Heritage = Slovenian; grammar and stories: a few examples";
+const VERSION = "2026-11-15 a — rate limits; Learn Slovenian / Learn Chinese & Japanese titles and FAQ; menu: East = Chinese · Japanese, Heritage = Slovenian; grammar and stories: a few examples";
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // No address may hammer the API (240 requests a minute is far beyond any real use).
+    if (url.pathname.startsWith("/api/") && request.method !== "OPTIONS") {
+      const over = await soft(request, "api");
+      if (over) return over;
+    }
     if (url.pathname.startsWith("/api/sync/")) return handleSync(request, env, url.pathname.slice(10));
     if (url.pathname.startsWith("/api/backup/")) return handleBackup(request, env, url.pathname.slice(12));
     if (url.pathname.startsWith("/api/account/")) return handleAccount(request, env, url.pathname.slice(13));

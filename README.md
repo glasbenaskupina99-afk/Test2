@@ -1,6 +1,6 @@
 # Bloomko
 
-A Chinese (English → Mandarin) trainer in the style of Duolingo. Run it as an **offline Android app** with Gemma on the phone, or self-host it and use it from your phone over your home network. It covers handwriting with stroke-order checking, pronunciation, recall and sentence translation. Gemma 4 handles the parts that need language understanding. Everything else works without it.
+Two language-learning apps from one code base: **Bloomko East** (Chinese HSK 1–3, Japanese kana and JLPT N5–N3) and **Bloomko Heritage** (Slovenian A1). They run as **offline Android apps** and in the browser, with an optional AI tutor (Gemma) on the phone. Bloomko covers handwriting with stroke-order checking, pronunciation, recall and sentence translation. Gemma 4 handles the parts that need language understanding. Everything else works without it.
 
 **Why it exists:** writing on paper means your earlier attempts stay in view, so you end up copying them. Here every character starts on a fresh pad, gets checked stroke by stroke, and is wiped as soon as you finish it. Nothing to peek at, and no paper used up.
 
@@ -27,8 +27,8 @@ Also included: HSK 1–3 following the official HSK 3.0 (2021) word lists (508 +
 | Task | How |
 |---|---|
 | Stroke and stroke-order grading | [Hanzi Writer](https://hanziwriter.org) with Make Me a Hanzi data. No AI, runs in the browser. |
-| Scheduling (SRS) | [FSRS](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm) in the app and browser version (older SM-2 progress carries over); the Python server version still uses SM-2. No AI. |
-| Pinyin answers, tone checking | Local, using `pypinyin`. |
+| Scheduling (SRS) | [FSRS](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm) in the app and browser version (older SM-2 progress carries over). No AI. |
+| Pinyin answers, tone checking | Local, using `pinyin-pro`. |
 | Audio playback | Your phone's built-in Chinese voice. |
 | Sentence generation, translation grading, memory hooks, auto-filling new words | **Gemma** |
 | Pronunciation | Your choice: phone speech recognition (compared syllable by syllable, tones included), **Gemma audio**, or record yourself and compare against the native voice. |
@@ -44,7 +44,7 @@ npm run typecheck     # TypeScript, whole app
 npm test              # unit tests (scheduler, mock exams, sync, backup, Anki, bloomko.eu endpoints)
 npm run build         # East → mobile/www   (EDITION=heritage npm run build for Heritage)
 npm run test:e2e      # the built app in Chromium (Playwright)
-npm run build:server  # UI bundle for the self-hosted Python server (python run.py)
+npm run audit         # plays every screen and exercise at random and reports what breaks
 ```
 
 ## 💻 On a computer (in the browser)
@@ -90,49 +90,6 @@ Pages → *Connect to Git* → this repo → build command: *(none)* → build o
 Pushing changes under `site/` doesn't trigger the Android build.
 "Notify me" sign-ups are handled by `worker/index.js` and stored in a Workers KV namespace bound as `NOTIFY` (created automatically on the first deploy). To see them: Cloudflare dashboard → *Storage & Databases → KV* → the namespace → each key is an email address.
 
-## Running it as a server
-
-Requires Python 3.10+.
-
-```bash
-pip install -r requirements.txt
-python run.py
-```
-
-It prints the addresses to open, e.g. `https://192.168.1.20:8443`. Open that on your phone and accept the certificate warning once (Advanced → Proceed). **HTTPS matters:** phone browsers only give websites the microphone over HTTPS, so the app creates a self-signed certificate on first start. Use `python run.py --http` for plain HTTP on port 8000. Everything except the microphone will still work.
-
-On first start the app downloads the full stroke database (about 13 MB, roughly 9,500 characters) into `data/chars`. After that it works offline. All your progress is stored in `data/hanzi.db`.
-
-Tip: on Android/iOS use "Add to Home screen" to get a full-screen, app-like experience.
-
-### Gemma 4
-
-Any OpenAI-compatible server works. With [Ollama](https://ollama.com):
-
-```bash
-ollama pull gemma4:e4b
-python run.py      # defaults to http://localhost:11434/v1 and model gemma4:e4b
-```
-
-If the model runs on another machine, change the URL and model in the app's **Settings** screen, or set environment variables:
-
-```bash
-LLM_BASE_URL=http://192.168.1.50:11434/v1 LLM_MODEL=gemma4:e4b python run.py
-```
-
-Then use **Settings → Test connection**.
-
-**Pronunciation with Gemma audio:** the small Gemma 4 variants (E2B/E4B) understand audio. The app records you, converts the recording to 16 kHz WAV in the browser, and sends it as an OpenAI `input_audio` message. Your server has to accept audio input. llama.cpp's `llama-server` with the model's multimodal projector (`--mmproj`) does; at the time of writing, not every Ollama build does. If the server rejects audio, the app tells you and lets you grade yourself for that attempt. The default pronunciation mode, phone speech recognition, needs no AI at all.
-
-### Docker
-
-```bash
-docker compose up -d
-docker compose exec ollama ollama pull gemma4:e4b
-```
-
-Open `https://<server-ip>:8443`. Data is stored in `./data`.
-
 ## Settings worth knowing
 
 - **Stroke strictness**: Strict, Normal or Relaxed stroke matching.
@@ -143,18 +100,19 @@ Open `https://<server-ip>:8443`. Data is stored in `./data`.
 ## Project layout
 
 ```
-run.py                 start script (HTTPS cert, LAN addresses)
-app/main.py            FastAPI routes
-app/ai.py              Gemma prompts (OpenAI-compatible client)
-app/srs.py             spaced repetition
-app/pinyin.py          pinyin/tone comparison, speech scoring
-app/chardata.py        stroke data download + cache
-app/data/              HSK 1 word list, fallback sentences
-app/static/            the web app (vanilla JS modules, no build step)
+app/static/            the interface (TypeScript, shared by both apps and the browser version)
+app/data/              word lists, grammar, stories, sentences and their translations
+mobile/src/            everything behind the interface, running inside the app: scheduling,
+                       sync, backups, AI prompts (backend.ts is the app's own "server")
+mobile/android/        the Android app (Capacitor) with the Gemma, OCR and widget plugins
+mobile/scripts/        builds (build-web.mjs, build-site.ts) and the audit script
+mobile/tests/          unit tests and end-to-end tests of the built app
+worker/                bloomko.eu: sync, backups, accounts, friends, word pages (Cloudflare Worker)
+site-src/, site/       the landing pages and their generated output
 ```
 
 ## Credits
 
 - [Hanzi Writer](https://github.com/chanind/hanzi-writer) (MIT)
 - Stroke data from [Make Me a Hanzi](https://github.com/skishore/makemeahanzi) / hanzi-writer-data (Arphic Public License)
-- [pypinyin](https://github.com/mozillazg/python-pinyin) (MIT)
+- [pinyin-pro](https://github.com/zh-lx/pinyin-pro) (MIT)

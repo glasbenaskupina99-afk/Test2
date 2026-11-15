@@ -40,6 +40,29 @@ test("sync merge: the newer review wins, your own words come across, nothing is 
   assert.equal(b.cards.find((c: any) => c.word_id === 7).interval, 9);
 });
 
+test("sync merge: raindrops earned and used on two devices add up", () => {
+  // Both phones start with one raindrop. Phone A uses it to save a missed day; phone B earns one.
+  const a = db([], []);
+  const b = db([], []);
+  a.sync.changed_at = "2026-03-01T08:00:00.000Z";
+  b.sync.changed_at = "2026-03-02T08:00:00.000Z"; // B changed last — its count used to overwrite A's
+  Object.assign(a.garden, { raindrops: 0, saved: ["2026-02-27"] });
+  Object.assign(b.garden, { raindrops: 2, awarded: ["2026-03-01"] });
+  merge(a, { v: 1, ...snapshot(b) });
+  assert.equal(a.garden.raindrops, 1, "1 − 1 used + 1 earned");
+  merge(b, { v: 1, ...snapshot(a) });
+  assert.equal(b.garden.raindrops, 1, "both phones agree");
+  merge(a, { v: 1, ...snapshot(b) });
+  merge(b, { v: 1, ...snapshot(a) });
+  assert.deepEqual([a.garden.raindrops, b.garden.raindrops], [1, 1], "syncing again changes nothing");
+  // A phone that just joined (nothing of its own yet) takes the count as it is.
+  const c = db([], []);
+  c.sync.changed_at = "";
+  merge(c, { v: 1, ...snapshot(a) });
+  assert.equal(c.garden.raindrops, 1);
+  assert.deepEqual(c.garden.saved, ["2026-02-27"]);
+});
+
 test("cloud backup: upload, list with summaries, restore — against a fake server", async () => {
   const store = new Map<string, any[]>();
   const realFetch = globalThis.fetch;

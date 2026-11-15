@@ -2,11 +2,12 @@
 //   site/index.html, site/heritage/index.html            (English)
 //   site/<lang>/index.html, site/<lang>/heritage/index.html (fr, es, ja)
 // Run: cd mobile && npm run build:site   (the generated pages are committed; Cloudflare serves site/)
+import { fileURLToPath } from "node:url";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { SPECIES, plantFor } from "../../app/static/js/plants.ts";
 
-const ROOT = resolve(new URL("../..", import.meta.url).pathname);
+const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const SRC = join(ROOT, "site-src");
 const OUT = join(ROOT, "site");
 const SITE = "https://bloomko.eu";

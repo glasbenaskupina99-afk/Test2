@@ -47,7 +47,60 @@ const ipOf = async (request) => toHex(await crypto.subtle.digest("SHA-256", enc.
 const json = (status, body) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", ...CORS } });
 
+// ------------------------------------------------------------------ rate limits
+// Two layers. A counter in this Worker instance's memory stops a flood from one address; it is
+// free but not exact (instances come and go). What must not be abused at all — "Notify me"
+// sign-ups, new accounts — is counted exactly, in a small Durable Object per (hashed) address.
+const recent = new Map(); // "address|what" → { n, start }
+/** true when this address did `what` more than `max` times in the current window. */
+export function tooMany(key, max, windowMs, now = Date.now()) {
+  if (recent.size > 5000) for (const [k, v] of recent) if (now - v.start > windowMs) recent.delete(k);
+  const r = recent.get(key);
+  if (!r || now - r.start > windowMs) {
+    recent.set(key, { n: 1, start: now });
+    return false;
+  }
+  r.n++;
+  return r.n > max;
+}
+export const LIMITS = {
+  api: [240, 60 * 1000], // any /api request, per address and minute
+  write: [60, 10 * 60 * 1000], // sync, backup and friends writes, per address and 10 minutes
+  notify: [10, 60 * 60 * 1000], // "Notify me" sign-ups, per address and hour
+  register: [20, 60 * 60 * 1000], // new accounts, per address and hour (a class behind one address still fits)
+};
+const busy = (minutes = 1) => json(429, { error: `Too many requests — try again in ${minutes === 1 ? "a minute" : `${minutes} minutes`}` });
+/** The in-memory limit for a kind of request; a 429 response when it is used up, else null. */
+export async function soft(request, what) {
+  const [max, ms] = LIMITS[what];
+  return tooMany(`${await ipOf(request)}|${what}`, max, ms) ? busy(Math.ceil(ms / 60000)) : null;
+}
+/** The exact limit (counted in a Durable Object); a 429 response when it is used up, else null. */
+export async function strict(request, env, what) {
+  if (!env.SYNC) return null;
+  const [max, ms] = LIMITS[what];
+  const r = await env.SYNC.get(env.SYNC.idFromName(`limit:${await ipOf(request)}`)).hit(what, max, ms);
+  return r.ok ? null : busy(r.retry);
+}
+
 export class SyncStore extends DurableObject {
+  /** Counts one `what` for this address; { ok } or { ok: false, retry: minutes }. */
+  async hit(what, max, windowMs, now = Date.now()) {
+    const all = (await this.ctx.storage.get("limits")) || {};
+    let r = all[what];
+    if (!r || now - r.start > windowMs) r = { n: 0, start: now };
+    r.n++;
+    all[what] = r;
+    await this.ctx.storage.put("limits", all);
+    // Forget the counters once their time is up (an object without data costs nothing).
+    await this.ctx.storage.setAlarm?.(now + windowMs + 1000);
+    return r.n > max ? { ok: false, retry: Math.max(1, Math.ceil((r.start + windowMs - now) / 60000)) } : { ok: true };
+  }
+
+  async alarm() {
+    if (await this.ctx.storage.get("limits")) await this.ctx.storage.delete("limits");
+  }
+
   async get() {
     const meta = (await this.ctx.storage.get("meta")) || null;
     if (!meta) return { version: 0 };
@@ -235,6 +288,8 @@ export async function handleSync(request, env, id) {
   const stub = env.SYNC.get(env.SYNC.idFromName(id));
   if (request.method === "GET") return json(200, await stub.get());
   if (request.method === "PUT") {
+    const over = await soft(request, "write");
+    if (over) return over;
     const body = await readJson(request);
     if (!body) return json(400, { error: "invalid request" });
     const data = String(body?.data || "");
@@ -264,6 +319,8 @@ export async function handleBackup(request, env, path) {
   }
   if (request.method === "GET") return json(200, { backups: await stub.listBackups() });
   if (request.method === "POST" && !num) {
+    const over = await soft(request, "write");
+    if (over) return over;
     const body = await readJson(request);
     if (!body) return json(400, { error: "invalid request" });
     const data = String(body?.data || "");
@@ -306,6 +363,8 @@ export async function handleAccount(request, env, action) {
     : json(200, r);
   if (action === "register") {
     if (!vault) return json(400, { error: "invalid data" });
+    const over = await strict(request, env, "register");
+    if (over) return over;
     return answer(await stub.register(auth, vault));
   }
   if (action === "login") return answer(await stub.login(auth, ip));
@@ -328,6 +387,8 @@ export async function handleFriends(request, env, path) {
   const stub = env.SYNC.get(env.SYNC.idFromName(`friend:${code}`));
   let body = {};
   if (request.method !== "GET") {
+    const over = await soft(request, "write");
+    if (over) return over;
     body = await readJson(request);
     if (!body) return json(400, { error: "invalid request" });
   }

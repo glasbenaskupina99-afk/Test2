@@ -1,4 +1,4 @@
-// On-device Gemma prompts (JS port of app/ai.py). Inference runs in the native GemmaPlugin.
+// Gemma prompts. Inference runs in the native GemmaPlugin (Android) or an OpenAI-compatible server (browser).
 import type { Settings } from "./types.js";
 import { hanziOnly } from "./pinyin.js";
 import { normKana, writable } from "./japanese.js";

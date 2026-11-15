@@ -1,6 +1,6 @@
 // Builds mobile/www from the shared web app in app/static.
 import { build } from "esbuild";
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync, copyFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync, copyFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -97,14 +97,39 @@ Object.assign(manifest, EAST
       icons: (manifest.icons || []).filter((i) => i.src.endsWith(".png")).map((i) => ({ ...i, src: i.src.replace(/icon-(\d+)\.png/, "heritage-icon-$1.png") })) });
 writeFileSync(join(www, "manifest.webmanifest"), JSON.stringify(manifest, null, 2));
 
-// Ready-made memory hooks, one file per language, loaded by the app when needed.
-cpSync(join(mobile, "..", "app", "data", "extras"), join(www, "extras"), { recursive: true });
-cpSync(join(mobile, "..", "app", "data", "grammar"), join(www, "grammar"), { recursive: true });
-cpSync(join(mobile, "..", "app", "data", "stories"), join(www, "stories"), { recursive: true, filter: (src) => !src.endsWith(".py") });
+// Course data is copied for this app's languages only: Heritage doesn't carry the Chinese and
+// Japanese hooks, grammar and stories around (about 2 MB zipped), nor East the Slovenian ones.
+const dataDir = join(mobile, "..", "app", "data");
+/** Is this data file (by name) for one of the other app's languages? */
+const foreign = (name) =>
+  EAST
+    ? /^(sl|sl_a1|extras-sl|grammar-sl_a1|stories-sl)\.json$/.test(name)
+    : /^(zh|ja|hsk\d|n\d|extras-(zh|ja)|grammar-(hsk\d|n\d)|stories-(zh|ja)|charmap|lookalikes)\.json$/.test(name);
+const copyData = (dir) => {
+  mkdirSync(join(www, dir), { recursive: true });
+  for (const f of readdirSync(join(dataDir, dir))) if (f.endsWith(".json") && !foreign(f)) copyFileSync(join(dataDir, dir, f), join(www, dir, f));
+};
+// Ready-made memory hooks, grammar and stories: one file per language or level, loaded when needed.
+copyData("extras");
+copyData("grammar");
+copyData("stories");
 // Which parts every character is made of, for the character map.
-if (EAST) copyFileSync(join(mobile, "..", "app", "data", "charmap.json"), join(www, "charmap.json"));
-// Interface and content translations (French, Spanish, Japanese).
-cpSync(join(mobile, "..", "app", "data", "i18n"), join(www, "i18n"), { recursive: true, filter: (src) => !src.endsWith("ui-strings.json") });
+if (EAST) copyFileSync(join(dataDir, "charmap.json"), join(www, "charmap.json"));
+// Interface and content translations (French, Spanish, Japanese). Word meanings and sentences
+// are one file for all languages: keep this app's entries.
+const mine = EAST ? /^(zh|ja)\||^(sentences|japanese_sentences|japanese_n3_sentences)\|/ : /^sl\||^slovenian_sentences\|/;
+for (const lang of readdirSync(join(dataDir, "i18n"))) {
+  const from = join(dataDir, "i18n", lang);
+  if (!statSync(from).isDirectory()) continue;
+  mkdirSync(join(www, "i18n", lang), { recursive: true });
+  for (const f of readdirSync(from)) {
+    if (!f.endsWith(".json") || foreign(f)) continue;
+    if (f === "meanings.json" || f === "sentences.json") {
+      const all = JSON.parse(readFileSync(join(from, f), "utf8"));
+      writeFileSync(join(www, "i18n", lang, f), JSON.stringify(Object.fromEntries(Object.entries(all).filter(([k]) => mine.test(k)))));
+    } else copyFileSync(join(from, f), join(www, "i18n", lang, f));
+  }
+}
 
 // Stroke data for every character, bundled for offline use.
 const charSrc = join(mobile, "node_modules", "hanzi-writer-data");

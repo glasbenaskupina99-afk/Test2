@@ -1,4 +1,4 @@
-// JS port of app/pinyin.py (pinyin-pro replaces pypinyin).
+// Pinyin and tone comparison, speech scoring (with pinyin-pro).
 import { pinyin } from "pinyin-pro";
 
 const TONE_MARKS = { "̄": 1, "́": 2, "̌": 3, "̀": 4 };

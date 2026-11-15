@@ -114,6 +114,9 @@ export interface ConfirmOptions {
   content?: Node;
 }
 
+/** Said before a restore when this device syncs with others. */
+export const SYNC_NOTE = "Your other devices keep what they learned since then: at their next sync it is merged back in.";
+
 export function confirmDialog({ title, message = "", icon = "", confirmLabel = "OK", cancelLabel = "Cancel", danger = false, content }: ConfirmOptions = {}): Promise<boolean> {
   return new Promise((resolve) => {
     const done = (v) => { bg.remove(); document.removeEventListener("keydown", onKey); resolve(v); };

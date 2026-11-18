@@ -1,0 +1,3550 @@
+{
+ "level": "HSK 1",
+ "stories": [
+  {
+   "id": "zh1-s1",
+   "title": "在饭店",
+   "title_en": "At the restaurant",
+   "sentences": [
+    {
+     "text": "王明今天很饿。",
+     "en": "Wang Ming is very hungry today.",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "饿",
+       "è",
+       "hungry"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他和朋友小李去饭店吃饭。",
+     "en": "He and his friend Xiao Li go to a restaurant to eat.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he; his"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "朋友",
+       "péng you",
+       "friend"
+      ],
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "饭店",
+       "fàn diàn",
+       "restaurant"
+      ],
+      [
+       "吃饭",
+       "chī fàn",
+       "to eat; to have a meal"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王明要米饭和肉。",
+     "en": "Wang Ming orders rice and meat.",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "要",
+       "yào",
+       "to want; to order"
+      ],
+      [
+       "米饭",
+       "mǐ fàn",
+       "cooked rice"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "肉",
+       "ròu",
+       "meat"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小李不饿，她很渴。",
+     "en": "Xiao Li is not hungry; she is very thirsty.",
+     "tokens": [
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "不",
+       "bú",
+       "not"
+      ],
+      [
+       "饿",
+       "è",
+       "hungry"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "渴",
+       "kě",
+       "thirsty"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她要一杯茶。",
+     "en": "She orders a cup of tea.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "要",
+       "yào",
+       "to want; to order"
+      ],
+      [
+       "一",
+       "yì",
+       "one; a"
+      ],
+      [
+       "杯",
+       "bēi",
+       "cup of"
+      ],
+      [
+       "茶",
+       "chá",
+       "tea"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "菜很好吃，也不贵，他们都很高兴。",
+     "en": "The food is tasty and not expensive; they are both very happy.",
+     "tokens": [
+      [
+       "菜",
+       "cài",
+       "food; dishes"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "好吃",
+       "hǎo chī",
+       "tasty; delicious"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "也",
+       "yě",
+       "also; too"
+      ],
+      [
+       "不",
+       "bú",
+       "not"
+      ],
+      [
+       "贵",
+       "guì",
+       "expensive"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他们",
+       "tā men",
+       "they; them"
+      ],
+      [
+       "都",
+       "dōu",
+       "all; both"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "高兴",
+       "gāo xìng",
+       "happy; glad"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why does Wang Ming go to the restaurant?",
+     "options": [
+      "He is tired",
+      "He is hungry",
+      "He is cold",
+      "He is sad"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What does Xiao Li order?",
+     "options": [
+      "Rice",
+      "Meat",
+      "A cup of tea",
+      "Milk"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "How is the food?",
+     "options": [
+      "Tasty and not expensive",
+      "Tasty but expensive",
+      "Not tasty",
+      "Too cold"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh1-s2",
+   "title": "新同学",
+   "title_en": "A new classmate",
+   "sentences": [
+    {
+     "text": "安娜是外国学生。",
+     "en": "Anna is a foreign student.",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "外国",
+       "wài guó",
+       "foreign country; foreign"
+      ],
+      [
+       "学生",
+       "xué sheng",
+       "student"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她在北京学习汉语。",
+     "en": "She studies Chinese in Beijing.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "北京",
+       "běi jīng",
+       "Beijing"
+      ],
+      [
+       "学习",
+       "xué xí",
+       "to study; to learn"
+      ],
+      [
+       "汉语",
+       "hàn yǔ",
+       "Chinese (language)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "今天她认识了一个新同学。",
+     "en": "Today she met a new classmate.",
+     "tokens": [
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "认识",
+       "rèn shi",
+       "to know (someone); to recognize"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "一",
+       "yí",
+       "one; a"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "新",
+       "xīn",
+       "new"
+      ],
+      [
+       "同学",
+       "tóng xué",
+       "classmate"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他叫王明，是中国人。",
+     "en": "His name is Wang Ming, and he is Chinese.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he; his"
+      ],
+      [
+       "叫",
+       "jiào",
+       "to be called; to call"
+      ],
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "中国",
+       "zhōng guó",
+       "China"
+      ],
+      [
+       "人",
+       "rén",
+       "person; people"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王明说：“认识你很高兴！”",
+     "en": "Wang Ming says: \"Nice to meet you!\"",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "认识",
+       "rèn shi",
+       "to know (someone); to recognize"
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "高兴",
+       "gāo xìng",
+       "happy; glad"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "安娜也很高兴。",
+     "en": "Anna is also very happy.",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "也",
+       "yě",
+       "also; too"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "高兴",
+       "gāo xìng",
+       "happy; glad"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他们一起去图书馆看书。",
+     "en": "They go to the library together to read.",
+     "tokens": [
+      [
+       "他们",
+       "tā men",
+       "they; them"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "图书馆",
+       "tú shū guǎn",
+       "library"
+      ],
+      [
+       "看",
+       "kàn",
+       "to watch; to read"
+      ],
+      [
+       "书",
+       "shū",
+       "book"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where does Anna study Chinese?",
+     "options": [
+      "In a shop",
+      "At home",
+      "Abroad",
+      "In Beijing"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "Where is Wang Ming from?",
+     "options": [
+      "China",
+      "America",
+      "England",
+      "Japan"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What do they do together?",
+     "options": [
+      "Watch a movie",
+      "Eat dinner",
+      "Read at the library",
+      "Play ball"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "zh1-s3",
+   "title": "去商场",
+   "title_en": "Going to the mall",
+   "sentences": [
+    {
+     "text": "星期天上午，小李和妈妈去商场。",
+     "en": "On Sunday morning, Xiao Li and her mom go to the mall.",
+     "tokens": [
+      [
+       "星期天",
+       "xīng qī tiān",
+       "Sunday"
+      ],
+      [
+       "上午",
+       "shàng wǔ",
+       "morning (before noon)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom; mother"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "商场",
+       "shāng chǎng",
+       "shopping mall"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "妈妈想买一些水果。",
+     "en": "Mom wants to buy some fruit.",
+     "tokens": [
+      [
+       "妈妈",
+       "mā ma",
+       "mom; mother"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want"
+      ],
+      [
+       "买",
+       "mǎi",
+       "to buy"
+      ],
+      [
+       "一些",
+       "yì xiē",
+       "some; a few"
+      ],
+      [
+       "水果",
+       "shuǐ guǒ",
+       "fruit"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小李想买新衣服。",
+     "en": "Xiao Li wants to buy new clothes.",
+     "tokens": [
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want"
+      ],
+      [
+       "买",
+       "mǎi",
+       "to buy"
+      ],
+      [
+       "新",
+       "xīn",
+       "new"
+      ],
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她看见了一些很好看的衣服。",
+     "en": "She sees some very nice-looking clothes.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "看见",
+       "kàn jiàn",
+       "to see"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "一些",
+       "yì xiē",
+       "some; a few"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "好看",
+       "hǎo kàn",
+       "good-looking"
+      ],
+      [
+       "的",
+       "de",
+       "('s; of)"
+      ],
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "“这些衣服多少钱？”小李问。",
+     "en": "\"How much are these clothes?\" Xiao Li asks.",
+     "tokens": [
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "这些",
+       "zhè xiē",
+       "these"
+      ],
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "多少",
+       "duō shao",
+       "how many; how much"
+      ],
+      [
+       "钱",
+       "qián",
+       "money"
+      ],
+      [
+       "？",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ],
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "问",
+       "wèn",
+       "to ask"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "衣服太贵了，小李没买。",
+     "en": "The clothes are too expensive, so Xiao Li doesn't buy them.",
+     "tokens": [
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "太",
+       "tài",
+       "too"
+      ],
+      [
+       "贵",
+       "guì",
+       "expensive"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "没",
+       "méi",
+       "did not"
+      ],
+      [
+       "买",
+       "mǎi",
+       "to buy"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "最后，她们买了水果和牛奶，就回家了。",
+     "en": "In the end, they bought fruit and milk and then went home.",
+     "tokens": [
+      [
+       "最后",
+       "zuì hòu",
+       "finally; last"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她们",
+       "tā men",
+       "they (female)"
+      ],
+      [
+       "买",
+       "mǎi",
+       "to buy"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "水果",
+       "shuǐ guǒ",
+       "fruit"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "牛奶",
+       "niú nǎi",
+       "milk"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "回家",
+       "huí jiā",
+       "to go home"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "When do they go to the mall?",
+     "options": [
+      "Saturday evening",
+      "Sunday morning",
+      "Monday afternoon",
+      "Sunday evening"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Why doesn't Xiao Li buy the clothes?",
+     "options": [
+      "They are ugly",
+      "They are too small",
+      "They are too expensive",
+      "She has no time"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What do they buy in the end?",
+     "options": [
+      "Fruit and milk",
+      "Clothes and tea",
+      "Bread and eggs",
+      "Books"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh1-s4",
+   "title": "我的家",
+   "title_en": "My family",
+   "sentences": [
+    {
+     "text": "我叫王明，今年二十岁。",
+     "en": "My name is Wang Ming, and I am twenty this year.",
+     "tokens": [
+      [
+       "我",
+       "wǒ",
+       "I; my"
+      ],
+      [
+       "叫",
+       "jiào",
+       "to be called; to call"
+      ],
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "今年",
+       "jīn nián",
+       "this year"
+      ],
+      [
+       "二十",
+       "èr shí",
+       "twenty"
+      ],
+      [
+       "岁",
+       "suì",
+       "years old"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "我家有五口人：爸爸、妈妈、哥哥、妹妹和我。",
+     "en": "There are five people in my family: Dad, Mom, my older brother, my younger sister and me.",
+     "tokens": [
+      [
+       "我",
+       "wǒ",
+       "I; my"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; family"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "五",
+       "wǔ",
+       "five"
+      ],
+      [
+       "口",
+       "kǒu",
+       "(measure word for family members)"
+      ],
+      [
+       "人",
+       "rén",
+       "person; people"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "爸爸",
+       "bà ba",
+       "dad; father"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom; mother"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "哥哥",
+       "gē ge",
+       "older brother"
+      ],
+      [
+       "、",
+       "",
+       ""
+      ],
+      [
+       "妹妹",
+       "mèi mei",
+       "younger sister"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; my"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "爸爸是医生，他在医院工作。",
+     "en": "Dad is a doctor; he works at a hospital.",
+     "tokens": [
+      [
+       "爸爸",
+       "bà ba",
+       "dad; father"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "医生",
+       "yī shēng",
+       "doctor"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he; his"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "医院",
+       "yī yuàn",
+       "hospital"
+      ],
+      [
+       "工作",
+       "gōng zuò",
+       "work; job; to work"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "妈妈是老师。",
+     "en": "Mom is a teacher.",
+     "tokens": [
+      [
+       "妈妈",
+       "mā ma",
+       "mom; mother"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "哥哥是大学生，他喜欢打球。",
+     "en": "My older brother is a college student; he likes playing ball.",
+     "tokens": [
+      [
+       "哥哥",
+       "gē ge",
+       "older brother"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "大学生",
+       "dà xué shēng",
+       "college student"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he; his"
+      ],
+      [
+       "喜欢",
+       "xǐ huan",
+       "to like"
+      ],
+      [
+       "打球",
+       "dǎ qiú",
+       "to play ball"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "妹妹是小学生，她七岁。",
+     "en": "My younger sister is a primary school student; she is seven.",
+     "tokens": [
+      [
+       "妹妹",
+       "mèi mei",
+       "younger sister"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "小学生",
+       "xiǎo xué shēng",
+       "primary school student"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "七",
+       "qī",
+       "seven"
+      ],
+      [
+       "岁",
+       "suì",
+       "years old"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "星期天我们常常在家一起吃晚饭。",
+     "en": "On Sundays we often have dinner together at home.",
+     "tokens": [
+      [
+       "星期天",
+       "xīng qī tiān",
+       "Sunday"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "常常",
+       "cháng cháng",
+       "often"
+      ],
+      [
+       "在家",
+       "zài jiā",
+       "to be at home"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "晚饭",
+       "wǎn fàn",
+       "dinner"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "How many people are in Wang Ming's family?",
+     "options": [
+      "Three",
+      "Four",
+      "Six",
+      "Five"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "What does his father do?",
+     "options": [
+      "He is a teacher",
+      "He is a doctor",
+      "He is a student",
+      "He is a worker"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "How old is his younger sister?",
+     "options": [
+      "Seven",
+      "Ten",
+      "Five",
+      "Twenty"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh1-s5",
+   "title": "下雨了",
+   "title_en": "It's raining",
+   "sentences": [
+    {
+     "text": "今天天气不好，下雨了。",
+     "en": "The weather is bad today; it's raining.",
+     "tokens": [
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "天气",
+       "tiān qì",
+       "weather"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "下雨",
+       "xià yǔ",
+       "to rain"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "外边风很大，也很冷，安娜不想出去。",
+     "en": "Outside it is very windy and cold, so Anna doesn't want to go out.",
+     "tokens": [
+      [
+       "外边",
+       "wài bian",
+       "outside"
+      ],
+      [
+       "风",
+       "fēng",
+       "wind"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "大",
+       "dà",
+       "strong (wind); big"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "也",
+       "yě",
+       "also; too"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "冷",
+       "lěng",
+       "cold"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want"
+      ],
+      [
+       "出去",
+       "chū qu",
+       "to go out"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她给朋友小李打电话。",
+     "en": "She calls her friend Xiao Li.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "给",
+       "gěi",
+       "to (someone)"
+      ],
+      [
+       "朋友",
+       "péng you",
+       "friend"
+      ],
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "打电话",
+       "dǎ diàn huà",
+       "to make a phone call"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "“小李，你在家吗？”",
+     "en": "\"Xiao Li, are you at home?\"",
+     "tokens": [
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "在家",
+       "zài jiā",
+       "to be at home"
+      ],
+      [
+       "吗",
+       "ma",
+       "(question particle)"
+      ],
+      [
+       "？",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小李说：“在！你来我家吧！”",
+     "en": "Xiao Li says: \"Yes! Come to my place!\"",
+     "tokens": [
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; my"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; family"
+      ],
+      [
+       "吧",
+       "ba",
+       "(suggestion particle)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "安娜穿了很多衣服，打车去小李家。",
+     "en": "Anna puts on lots of clothes and takes a taxi to Xiao Li's home.",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "穿",
+       "chuān",
+       "to wear; to put on"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much"
+      ],
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "打车",
+       "dǎ chē",
+       "to take a taxi"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "小李",
+       "Xiǎo Lǐ",
+       "Xiao Li (name)"
+      ],
+      [
+       "家",
+       "jiā",
+       "home; family"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她们一起喝茶，看电影。",
+     "en": "They drink tea and watch a movie together.",
+     "tokens": [
+      [
+       "她们",
+       "tā men",
+       "they (female)"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "喝",
+       "hē",
+       "to drink"
+      ],
+      [
+       "茶",
+       "chá",
+       "tea"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "看",
+       "kàn",
+       "to watch; to read"
+      ],
+      [
+       "电影",
+       "diàn yǐng",
+       "movie; film"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What is the weather like?",
+     "options": [
+      "Sunny and hot",
+      "Rainy, windy and cold",
+      "Snowy",
+      "Warm and pleasant"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Who does Anna call?",
+     "options": [
+      "Wang Ming",
+      "Her mother",
+      "Her teacher",
+      "Xiao Li"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "How does Anna get to Xiao Li's home?",
+     "options": [
+      "She walks",
+      "By bus",
+      "By taxi",
+      "By train"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "zh1-s6",
+   "title": "一个电话",
+   "title_en": "A phone call",
+   "sentences": [
+    {
+     "text": "晚上八点，王明正在看电视。",
+     "en": "At eight in the evening, Wang Ming is watching TV.",
+     "tokens": [
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "八",
+       "bā",
+       "eight"
+      ],
+      [
+       "点",
+       "diǎn",
+       "o'clock"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "正在",
+       "zhèng zài",
+       "in the middle of (doing)"
+      ],
+      [
+       "看",
+       "kàn",
+       "to watch; to read"
+      ],
+      [
+       "电视",
+       "diàn shì",
+       "television"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "这时候，姐姐给他打电话。",
+     "en": "At this moment, his older sister calls him.",
+     "tokens": [
+      [
+       "这",
+       "zhè",
+       "this"
+      ],
+      [
+       "时候",
+       "shí hou",
+       "time; moment (when...)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "姐姐",
+       "jiě jie",
+       "older sister"
+      ],
+      [
+       "给",
+       "gěi",
+       "to (someone)"
+      ],
+      [
+       "他",
+       "tā",
+       "he; his"
+      ],
+      [
+       "打电话",
+       "dǎ diàn huà",
+       "to make a phone call"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "姐姐说：“明天是妈妈的生日，你记得吗？”",
+     "en": "His sister says: \"Tomorrow is Mom's birthday, do you remember?\"",
+     "tokens": [
+      [
+       "姐姐",
+       "jiě jie",
+       "older sister"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "明天",
+       "míng tiān",
+       "tomorrow"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom; mother"
+      ],
+      [
+       "的",
+       "de",
+       "('s; of)"
+      ],
+      [
+       "生日",
+       "shēng rì",
+       "birthday"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "记得",
+       "jì de",
+       "to remember"
+      ],
+      [
+       "吗",
+       "ma",
+       "(question particle)"
+      ],
+      [
+       "？",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王明说：“对不起，我忘了！”",
+     "en": "Wang Ming says: \"Sorry, I forgot!\"",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "对不起",
+       "duì bu qǐ",
+       "sorry"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "我",
+       "wǒ",
+       "I; my"
+      ],
+      [
+       "忘",
+       "wàng",
+       "to forget"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "姐姐笑着说：“没关系，我们明天一起去商场吧。”",
+     "en": "His sister says with a smile: \"It doesn't matter, let's go to the mall together tomorrow.\"",
+     "tokens": [
+      [
+       "姐姐",
+       "jiě jie",
+       "older sister"
+      ],
+      [
+       "笑",
+       "xiào",
+       "to laugh; to smile"
+      ],
+      [
+       "着",
+       "zhe",
+       "(-ing)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "没关系",
+       "méi guān xi",
+       "it doesn't matter; no problem"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "明天",
+       "míng tiān",
+       "tomorrow"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "商场",
+       "shāng chǎng",
+       "shopping mall"
+      ],
+      [
+       "吧",
+       "ba",
+       "(suggestion particle)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王明想送妈妈一本书。",
+     "en": "Wang Ming wants to give Mom a book.",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want"
+      ],
+      [
+       "送",
+       "sòng",
+       "to give (as a gift)"
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom; mother"
+      ],
+      [
+       "一",
+       "yì",
+       "one; a"
+      ],
+      [
+       "本",
+       "běn",
+       "(measure word for books)"
+      ],
+      [
+       "书",
+       "shū",
+       "book"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "姐姐想送妈妈一些花。",
+     "en": "His sister wants to give Mom some flowers.",
+     "tokens": [
+      [
+       "姐姐",
+       "jiě jie",
+       "older sister"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want"
+      ],
+      [
+       "送",
+       "sòng",
+       "to give (as a gift)"
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom; mother"
+      ],
+      [
+       "一些",
+       "yì xiē",
+       "some; a few"
+      ],
+      [
+       "花",
+       "huā",
+       "flowers"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王明很高兴，他有一个好姐姐。",
+     "en": "Wang Ming is very happy; he has a good older sister.",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "高兴",
+       "gāo xìng",
+       "happy; glad"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he; his"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "一",
+       "yí",
+       "one; a"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good"
+      ],
+      [
+       "姐姐",
+       "jiě jie",
+       "older sister"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What is Wang Ming doing when his sister calls?",
+     "options": [
+      "Watching TV",
+      "Sleeping",
+      "Eating dinner",
+      "Studying"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "Whose birthday is tomorrow?",
+     "options": [
+      "His sister's",
+      "His father's",
+      "His mother's",
+      "Wang Ming's"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "What does his sister want to give?",
+     "options": [
+      "A book",
+      "Some flowers",
+      "Some fruit",
+      "Clothes"
+     ],
+     "answer": 1
+    }
+   ]
+  },
+  {
+   "id": "zh1-s7",
+   "title": "考试",
+   "title_en": "The exam",
+   "sentences": [
+    {
+     "text": "安娜是一个大学生，她在中国学习汉语。",
+     "en": "Anna is a college student; she studies Chinese in China.",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "是",
+       "shì",
+       "to be"
+      ],
+      [
+       "一",
+       "yí",
+       "one; a"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "大学生",
+       "dà xué shēng",
+       "college student"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "中国",
+       "zhōng guó",
+       "China"
+      ],
+      [
+       "学习",
+       "xué xí",
+       "to study; to learn"
+      ],
+      [
+       "汉语",
+       "hàn yǔ",
+       "Chinese (language)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "明天上午九点，她有一个汉语考试。",
+     "en": "Tomorrow at nine in the morning, she has a Chinese exam.",
+     "tokens": [
+      [
+       "明天",
+       "míng tiān",
+       "tomorrow"
+      ],
+      [
+       "上午",
+       "shàng wǔ",
+       "morning (before noon)"
+      ],
+      [
+       "九",
+       "jiǔ",
+       "nine"
+      ],
+      [
+       "点",
+       "diǎn",
+       "o'clock"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "一",
+       "yí",
+       "one; a"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "汉语",
+       "hàn yǔ",
+       "Chinese (language)"
+      ],
+      [
+       "考试",
+       "kǎo shì",
+       "exam; to take an exam"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "今天下课了，她马上去图书馆学习。",
+     "en": "Today, when class is over, she goes straight to the library to study.",
+     "tokens": [
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "下课",
+       "xià kè",
+       "class is over"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "马上",
+       "mǎ shàng",
+       "immediately; right away"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "图书馆",
+       "tú shū guǎn",
+       "library"
+      ],
+      [
+       "学习",
+       "xué xí",
+       "to study; to learn"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她看课本，写汉字，学习了三个小时。",
+     "en": "She reads her textbook, writes Chinese characters, and studies for three hours.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "看",
+       "kàn",
+       "to watch; to read"
+      ],
+      [
+       "课本",
+       "kè běn",
+       "textbook"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "写",
+       "xiě",
+       "to write"
+      ],
+      [
+       "汉字",
+       "hàn zì",
+       "Chinese character"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "学习",
+       "xué xí",
+       "to study; to learn"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "三",
+       "sān",
+       "three"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "小时",
+       "xiǎo shí",
+       "hour"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "同学王明也在图书馆。",
+     "en": "Her classmate Wang Ming is also at the library.",
+     "tokens": [
+      [
+       "同学",
+       "tóng xué",
+       "classmate"
+      ],
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "也",
+       "yě",
+       "also; too"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "图书馆",
+       "tú shū guǎn",
+       "library"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王明问她：“你累不累？”",
+     "en": "Wang Ming asks her: \"Are you tired?\"",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "问",
+       "wèn",
+       "to ask"
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "累",
+       "lèi",
+       "tired"
+      ],
+      [
+       "不",
+       "bú",
+       "not"
+      ],
+      [
+       "累",
+       "lèi",
+       "tired"
+      ],
+      [
+       "？",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "安娜说：“有一点儿累。明天的考试很重要。”",
+     "en": "Anna says: \"A little tired. Tomorrow's exam is very important.\"",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "一点儿",
+       "yì diǎnr",
+       "a little"
+      ],
+      [
+       "累",
+       "lèi",
+       "tired"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "明天",
+       "míng tiān",
+       "tomorrow"
+      ],
+      [
+       "的",
+       "de",
+       "('s; of)"
+      ],
+      [
+       "考试",
+       "kǎo shì",
+       "exam; to take an exam"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "重要",
+       "zhòng yào",
+       "important"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "晚上，他们一起吃了晚饭，安娜就回家睡觉了。",
+     "en": "In the evening they had dinner together, and then Anna went home to sleep.",
+     "tokens": [
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他们",
+       "tā men",
+       "they; them"
+      ],
+      [
+       "一起",
+       "yì qǐ",
+       "together"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "晚饭",
+       "wǎn fàn",
+       "dinner"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "回家",
+       "huí jiā",
+       "to go home"
+      ],
+      [
+       "睡觉",
+       "shuì jiào",
+       "to sleep"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "When is Anna's exam?",
+     "options": [
+      "Today at 3 pm",
+      "Tomorrow at 9 am",
+      "Tomorrow evening",
+      "Next week"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "How long does Anna study at the library?",
+     "options": [
+      "One hour",
+      "Two hours",
+      "Half a day",
+      "Three hours"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "What does Anna do after dinner?",
+     "options": [
+      "She goes home to sleep",
+      "She studies more",
+      "She watches a movie",
+      "She calls her mom"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh1-s8",
+   "title": "去山上玩儿",
+   "title_en": "A trip to the mountains",
+   "sentences": [
+    {
+     "text": "这个星期天，王明和安娜想去山上玩儿。",
+     "en": "This Sunday, Wang Ming and Anna want to go have fun in the mountains.",
+     "tokens": [
+      [
+       "这",
+       "zhè",
+       "this"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "星期天",
+       "xīng qī tiān",
+       "Sunday"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "to want"
+      ],
+      [
+       "去",
+       "qù",
+       "to go"
+      ],
+      [
+       "山",
+       "shān",
+       "mountain"
+      ],
+      [
+       "上",
+       "shàng",
+       "on"
+      ],
+      [
+       "玩儿",
+       "wánr",
+       "to play; to have fun"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "早上七点，他们在火车站见面。",
+     "en": "At seven in the morning, they meet at the train station.",
+     "tokens": [
+      [
+       "早上",
+       "zǎo shang",
+       "early morning"
+      ],
+      [
+       "七",
+       "qī",
+       "seven"
+      ],
+      [
+       "点",
+       "diǎn",
+       "o'clock"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他们",
+       "tā men",
+       "they; them"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "火车站",
+       "huǒ chē zhàn",
+       "train station"
+      ],
+      [
+       "见面",
+       "jiàn miàn",
+       "to meet; to see each other"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "安娜来晚了，她说：“对不起，路上车太多了。”",
+     "en": "Anna arrives late and says: \"Sorry, there were too many cars on the road.\"",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "晚",
+       "wǎn",
+       "late"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she; her"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "对不起",
+       "duì bu qǐ",
+       "sorry"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "路上",
+       "lù shang",
+       "on the way"
+      ],
+      [
+       "车",
+       "chē",
+       "vehicle; car"
+      ],
+      [
+       "太",
+       "tài",
+       "too"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王明笑着说：“没事儿，火车还没来。”",
+     "en": "Wang Ming smiles and says: \"It's OK, the train hasn't come yet.\"",
+     "tokens": [
+      [
+       "王明",
+       "Wáng Míng",
+       "Wang Ming (name)"
+      ],
+      [
+       "笑",
+       "xiào",
+       "to laugh; to smile"
+      ],
+      [
+       "着",
+       "zhe",
+       "(-ing)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "没事儿",
+       "méi shìr",
+       "it's OK; never mind"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "火车",
+       "huǒ chē",
+       "train"
+      ],
+      [
+       "还",
+       "hái",
+       "still; yet"
+      ],
+      [
+       "没",
+       "méi",
+       "did not"
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他们坐了两个小时的火车。",
+     "en": "They rode the train for two hours.",
+     "tokens": [
+      [
+       "他们",
+       "tā men",
+       "they; them"
+      ],
+      [
+       "坐",
+       "zuò",
+       "to travel by"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "两",
+       "liǎng",
+       "two (with measure words)"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "小时",
+       "xiǎo shí",
+       "hour"
+      ],
+      [
+       "的",
+       "de",
+       "('s; of)"
+      ],
+      [
+       "火车",
+       "huǒ chē",
+       "train"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "山上有很多树和花，非常好看。",
+     "en": "There are many trees and flowers on the mountain; it is very beautiful.",
+     "tokens": [
+      [
+       "山",
+       "shān",
+       "mountain"
+      ],
+      [
+       "上",
+       "shàng",
+       "on"
+      ],
+      [
+       "有",
+       "yǒu",
+       "to have; there is"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "多",
+       "duō",
+       "many; much"
+      ],
+      [
+       "树",
+       "shù",
+       "tree"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "花",
+       "huā",
+       "flowers"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "very; extremely"
+      ],
+      [
+       "好看",
+       "hǎo kàn",
+       "good-looking"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "中午，他们在一个小饭店吃了面条儿和包子。",
+     "en": "At noon, they ate noodles and steamed buns at a small restaurant.",
+     "tokens": [
+      [
+       "中午",
+       "zhōng wǔ",
+       "noon"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他们",
+       "tā men",
+       "they; them"
+      ],
+      [
+       "在",
+       "zài",
+       "at; in"
+      ],
+      [
+       "一",
+       "yí",
+       "one; a"
+      ],
+      [
+       "个",
+       "gè",
+       "(measure word)"
+      ],
+      [
+       "小",
+       "xiǎo",
+       "small"
+      ],
+      [
+       "饭店",
+       "fàn diàn",
+       "restaurant"
+      ],
+      [
+       "吃",
+       "chī",
+       "to eat"
+      ],
+      [
+       "了",
+       "le",
+       "(completed action)"
+      ],
+      [
+       "面条儿",
+       "miàn tiáor",
+       "noodles"
+      ],
+      [
+       "和",
+       "hé",
+       "and"
+      ],
+      [
+       "包子",
+       "bāo zi",
+       "steamed buns"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "回北京的火车上，安娜说：“今天真好玩儿！下次我们再来吧！”",
+     "en": "On the train back to Beijing, Anna says: \"Today was really fun! Let's come again next time!\"",
+     "tokens": [
+      [
+       "回",
+       "huí",
+       "to go back to"
+      ],
+      [
+       "北京",
+       "běi jīng",
+       "Beijing"
+      ],
+      [
+       "的",
+       "de",
+       "('s; of)"
+      ],
+      [
+       "火车",
+       "huǒ chē",
+       "train"
+      ],
+      [
+       "上",
+       "shàng",
+       "on"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "安娜",
+       "Ān nà",
+       "Anna (name)"
+      ],
+      [
+       "说",
+       "shuō",
+       "to say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "真",
+       "zhēn",
+       "really"
+      ],
+      [
+       "好玩儿",
+       "hǎo wánr",
+       "fun; interesting"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "下次",
+       "xià cì",
+       "next time"
+      ],
+      [
+       "我们",
+       "wǒ men",
+       "we; us"
+      ],
+      [
+       "再",
+       "zài",
+       "again"
+      ],
+      [
+       "来",
+       "lái",
+       "to come"
+      ],
+      [
+       "吧",
+       "ba",
+       "(suggestion particle)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where do Wang Ming and Anna meet?",
+     "options": [
+      "At the airport",
+      "At a restaurant",
+      "At the train station",
+      "At school"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Why is Anna late?",
+     "options": [
+      "She got up late",
+      "There was too much traffic",
+      "She forgot her ticket",
+      "It was raining"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What do they eat for lunch?",
+     "options": [
+      "Rice and meat",
+      "Bread and milk",
+      "Fruit",
+      "Noodles and steamed buns"
+     ],
+     "answer": 3
+    }
+   ]
+  }
+ ]
+}

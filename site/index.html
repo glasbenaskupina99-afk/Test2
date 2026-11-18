@@ -1,5 +1,4 @@
 <!doctype html>
-<!-- Generated from site-src/ by mobile/scripts/build-site.ts — edit there, then: cd mobile && npm run build:site -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -656,14 +655,19 @@
       const status = (t, cls = "") => { statusEl.textContent = t; statusEl.className = "try-status " + cls; };
       const fmt = (s, n) => s.replace("{0}", n);
 
+      let tryAudio = null;
       function say() {
         const [c] = SETS[lang][idx];
-        if (!("speechSynthesis" in window)) return;
-        const u = new SpeechSynthesisUtterance(c);
-        u.lang = lang === "ja" ? "ja-JP" : "zh-CN";
-        u.rate = 0.8;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(u);
+        try { if (tryAudio) tryAudio.pause(); } catch {}
+        const a = (tryAudio = new Audio("/api/tts?lang=" + lang + "&text=" + encodeURIComponent(c)));
+        a.play().catch(() => {
+          if (!("speechSynthesis" in window)) return;
+          const u = new SpeechSynthesisUtterance(c);
+          u.lang = lang === "ja" ? "ja-JP" : "zh-CN";
+          u.rate = 0.8;
+          speechSynthesis.cancel();
+          speechSynthesis.speak(u);
+        });
       }
 
       function renderChars() {

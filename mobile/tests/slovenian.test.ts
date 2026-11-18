@@ -110,4 +110,17 @@ test("bundled Slovenian neural audio covers every course word and sentence", () 
       assert.ok(index[k], `audio for sentence: ${s}`);
     }
   }
+  // East neural packs (Chinese HSK 1 + Japanese Kana/N5)
+  for (const [code, file] of [["zh", "hsk1.json"], ["ja", "japanese_n5.json"]] as const) {
+    const idx = JSON.parse(readFileSync(new URL(`../../app/data/audio/${code}.json`, import.meta.url), "utf8"));
+    const b = readFileSync(new URL(`../../app/data/audio/${code}.bin`, import.meta.url));
+    const data = JSON.parse(readFileSync(new URL(`../../app/data/${file}`, import.meta.url), "utf8"));
+    for (const u of data.units) {
+      for (const [hz, py] of u.words) {
+        const slice = idx[String(hz).toLowerCase().trim()] || idx[String(py).toLowerCase().trim()];
+        assert.ok(slice, `${code} audio for ${hz}`);
+        assert.ok(slice[1] > 500 && slice[0] + slice[1] <= b.length);
+      }
+    }
+  }
 });

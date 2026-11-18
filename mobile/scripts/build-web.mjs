@@ -115,11 +115,13 @@ copyData("grammar");
 copyData("stories");
 // Which parts every character is made of, for the character map.
 if (EAST) copyFileSync(join(dataDir, "charmap.json"), join(www, "charmap.json"));
-// Pre-recorded natural Slovenian neural audio (words, sentences, grammar, stories) for Heritage.
-if (!EAST && existsSync(join(dataDir, "audio", "sl.bin"))) {
-  mkdirSync(join(www, "audio"), { recursive: true });
-  copyFileSync(join(dataDir, "audio", "sl.bin"), join(www, "audio", "sl.bin"));
-  copyFileSync(join(dataDir, "audio", "sl.json"), join(www, "audio", "sl.json"));
+// Pre-recorded natural neural audio packs: Chinese & Japanese for East, Slovenian for Heritage.
+mkdirSync(join(www, "audio"), { recursive: true });
+for (const code of EAST ? ["zh", "ja"] : ["sl"]) {
+  if (existsSync(join(dataDir, "audio", `${code}.bin`))) {
+    copyFileSync(join(dataDir, "audio", `${code}.bin`), join(www, "audio", `${code}.bin`));
+    copyFileSync(join(dataDir, "audio", `${code}.json`), join(www, "audio", `${code}.json`));
+  }
 }
 // Interface and content translations (French, Spanish, Japanese). Word meanings and sentences
 // are one file for all languages: keep this app's entries.

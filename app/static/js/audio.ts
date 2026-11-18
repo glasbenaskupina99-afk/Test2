@@ -19,11 +19,11 @@ if ("speechSynthesis" in window) speechSynthesis.getVoices();
 const native = () => window.__native;
 
 // ------------------------------------------------------------------ neural voice (bundled + cloud)
-// Slovenian ships with a pre-recorded neural voice pack (audio/sl.bin + audio/sl.json) for every
-// course word, sentence, grammar example and story, and falls back to /api/tts (cached on the
-// device) for newly generated AI sentences before ever touching the phone's robotic system TTS.
+// Each edition ships with pre-recorded neural voice packs (audio/<lang>.bin + audio/<lang>.json:
+// zh-CN-XiaoxiaoNeural, ja-JP-NanamiNeural, sl-SI-PetraNeural) and falls back to /api/tts (cached
+// on the phone) for higher levels and newly generated AI sentences before touching system TTS.
 
-let slPack: Promise<{ index: Record<string, [number, number]>; bin: ArrayBuffer } | null> | null = null;
+const packs = new Map<string, Promise<{ index: Record<string, [number, number]>; bin: ArrayBuffer } | null>>();
 let activeAudio: HTMLAudioElement | null = null;
 let activeDone: (() => void) | null = null;
 
@@ -34,16 +34,21 @@ const normAudioKey = (t: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
-function loadSlPack() {
-  if (!slPack) {
-    slPack = Promise.all([
-      fetch("audio/sl.json").then((r) => (r.ok ? r.json() : null)),
-      fetch("audio/sl.bin").then((r) => (r.ok ? r.arrayBuffer() : null)),
-    ])
-      .then(([index, bin]) => (index && bin ? { index, bin } : null))
-      .catch(() => null);
+const stripAudioPunct = (t: string) => t.replace(/[.!?。！？、，]+$/g, "").trim();
+
+function loadPack(code: string) {
+  if (!packs.has(code)) {
+    packs.set(
+      code,
+      Promise.all([
+        fetch(`audio/${code}.json`).then((r) => (r.ok ? r.json() : null)),
+        fetch(`audio/${code}.bin`).then((r) => (r.ok ? r.arrayBuffer() : null)),
+      ])
+        .then(([index, bin]) => (index && bin ? { index, bin } : null))
+        .catch(() => null)
+    );
   }
-  return slPack;
+  return packs.get(code)!;
 }
 
 function stopActiveAudio() {
@@ -86,25 +91,21 @@ async function speakNeural(text: string, lang: string, rate: number): Promise<bo
   if (typeof navigator !== "undefined" && navigator.webdriver) return false;
   const key = normAudioKey(text);
   if (!key) return false;
+  const code = lang.split("-")[0].toLowerCase();
 
-  // 1) Bundled offline Slovenian neural voice pack (words, sentences, grammar, stories).
-  if (lang.startsWith("sl")) {
-    const pack = await loadSlPack();
-    if (pack) {
-      const slice = pack.index[key] || pack.index[key.replace(/[.!?]+$/g, "").trim()];
-      if (slice) {
-        const [off, len] = slice;
-        const blob = new Blob([pack.bin.slice(off, off + len)], { type: "audio/mpeg" });
-        if (await playBlob(blob, rate)) return true;
-      }
+  // 1) Bundled offline neural voice pack (words, sentences, grammar, stories).
+  const pack = await loadPack(code);
+  if (pack) {
+    const slice = pack.index[key] || pack.index[stripAudioPunct(key)];
+    if (slice) {
+      const [off, len] = slice;
+      const blob = new Blob([pack.bin.slice(off, off + len)], { type: "audio/mpeg" });
+      if (await playBlob(blob, rate)) return true;
     }
   }
 
-  // 2) Persistent device cache + online neural voice (/api/tts) for AI-generated sentences
-  //    or when the phone has no built-in voice for this language.
-  const useCloud = lang.startsWith("sl") || !(await nativeOrBrowserVoice(lang));
-  if (!useCloud) return false;
-
+  // 2) Persistent device cache + online neural voice (/api/tts) for higher-level words
+  //    and newly generated AI sentences.
   const base = window.__ttsUrl || "https://bloomko.eu/api/tts";
   const url = `${base}?lang=${encodeURIComponent(lang)}&text=${encodeURIComponent(text.trim().slice(0, 220))}`;
   const cache = typeof caches !== "undefined" ? await caches.open("bloomko-tts-v1").catch(() => null) : null;
@@ -169,7 +170,7 @@ async function nativeOrBrowserVoice(lang: string): Promise<boolean> {
 /** Is there a voice for the course's language on this device? (true when it can't be told) */
 export async function voiceAvailable(): Promise<boolean> {
   const lang = T.speechLang();
-  if (lang.startsWith("sl")) return true;
+  if (/^(zh|ja|sl)/i.test(lang)) return true;
   return nativeOrBrowserVoice(lang);
 }
 export const canInstallVoice = () => !!native()?.installVoice;

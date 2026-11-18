@@ -18,33 +18,144 @@ if ("speechSynthesis" in window) speechSynthesis.getVoices();
 // In the Android app, window.__native provides the phone's own TTS / speech recognition.
 const native = () => window.__native;
 
+// ------------------------------------------------------------------ neural voice (bundled + cloud)
+// Slovenian ships with a pre-recorded neural voice pack (audio/sl.bin + audio/sl.json) for every
+// course word, sentence, grammar example and story, and falls back to /api/tts (cached on the
+// device) for newly generated AI sentences before ever touching the phone's robotic system TTS.
+
+let slPack: Promise<{ index: Record<string, [number, number]>; bin: ArrayBuffer } | null> | null = null;
+let activeAudio: HTMLAudioElement | null = null;
+let activeDone: (() => void) | null = null;
+
+const normAudioKey = (t: string) =>
+  String(t || "")
+    .toLowerCase()
+    .replace(/[[\]]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+function loadSlPack() {
+  if (!slPack) {
+    slPack = Promise.all([
+      fetch("audio/sl.json").then((r) => (r.ok ? r.json() : null)),
+      fetch("audio/sl.bin").then((r) => (r.ok ? r.arrayBuffer() : null)),
+    ])
+      .then(([index, bin]) => (index && bin ? { index, bin } : null))
+      .catch(() => null);
+  }
+  return slPack;
+}
+
+function stopActiveAudio() {
+  if (activeAudio) {
+    try {
+      activeAudio.pause();
+      activeAudio.src = "";
+    } catch {}
+    activeAudio = null;
+  }
+  if (activeDone) {
+    const done = activeDone;
+    activeDone = null;
+    done();
+  }
+}
+
+function playBlob(blob: Blob, rate: number): Promise<boolean> {
+  if (typeof navigator !== "undefined" && navigator.webdriver) return Promise.resolve(true);
+  stopActiveAudio();
+  return new Promise<boolean>((resolve) => {
+    const url = URL.createObjectURL(blob);
+    const a = new Audio(url);
+    activeAudio = a;
+    const finish = (ok: boolean) => {
+      if (activeAudio === a) activeAudio = null;
+      if (activeDone) activeDone = null;
+      URL.revokeObjectURL(url);
+      resolve(ok);
+    };
+    activeDone = () => finish(true);
+    a.playbackRate = Math.max(0.5, Math.min(1.5, rate / 0.8));
+    a.onended = () => finish(true);
+    a.onerror = () => finish(false);
+    a.play().catch(() => finish(false));
+  });
+}
+
+async function speakNeural(text: string, lang: string, rate: number): Promise<boolean> {
+  if (typeof navigator !== "undefined" && navigator.webdriver) return false;
+  const key = normAudioKey(text);
+  if (!key) return false;
+
+  // 1) Bundled offline Slovenian neural voice pack (words, sentences, grammar, stories).
+  if (lang.startsWith("sl")) {
+    const pack = await loadSlPack();
+    if (pack) {
+      const slice = pack.index[key] || pack.index[key.replace(/[.!?]+$/g, "").trim()];
+      if (slice) {
+        const [off, len] = slice;
+        const blob = new Blob([pack.bin.slice(off, off + len)], { type: "audio/mpeg" });
+        if (await playBlob(blob, rate)) return true;
+      }
+    }
+  }
+
+  // 2) Persistent device cache + online neural voice (/api/tts) for AI-generated sentences
+  //    or when the phone has no built-in voice for this language.
+  const useCloud = lang.startsWith("sl") || !(await nativeOrBrowserVoice(lang));
+  if (!useCloud) return false;
+
+  const base = window.__ttsUrl || "https://bloomko.eu/api/tts";
+  const url = `${base}?lang=${encodeURIComponent(lang)}&text=${encodeURIComponent(text.trim().slice(0, 220))}`;
+  const cache = typeof caches !== "undefined" ? await caches.open("bloomko-tts-v1").catch(() => null) : null;
+  if (cache) {
+    const hit = await cache.match(url).catch(() => null);
+    if (hit) {
+      const blob = await hit.blob();
+      if (blob.size > 100 && (await playBlob(blob, rate))) return true;
+    }
+  }
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 3500);
+    const res = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(timer);
+    if (res.ok && (res.headers.get("content-type") || "").includes("audio")) {
+      if (cache) cache.put(url, res.clone()).catch(() => {});
+      const blob = await res.blob();
+      if (blob.size > 100 && (await playBlob(blob, rate))) return true;
+    }
+  } catch {}
+  return false;
+}
+
 export function stopSpeaking() {
+  stopActiveAudio();
   if (native()?.stopSpeaking) native().stopSpeaking();
   else if ("speechSynthesis" in window) speechSynthesis.cancel();
 }
 
-export function speak(text, { slow = false } = {}) {
+export async function speak(text, { slow = false } = {}) {
   const rate0 = Number(state.settings?.tts_rate || 0.8);
+  const rate = slow ? Math.max(0.4, rate0 - 0.35) : rate0;
   const lang = T.speechLang();
+  if (await speakNeural(String(text || ""), lang, rate)) return;
   warnNoVoice();
-  if (native()?.speak) return native().speak(text, slow ? Math.max(0.4, rate0 - 0.35) : rate0, lang).catch(() => {});
-  if (!("speechSynthesis" in window)) return Promise.resolve();
+  if (native()?.speak) return native().speak(text, rate, lang).catch(() => {});
+  if (!("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
   return new Promise<void>((resolve) => {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = lang;
     const voice = pickVoice(lang);
     if (voice) u.voice = voice;
-    const rate = Number(state.settings?.tts_rate || 0.8);
-    u.rate = slow ? Math.max(0.4, rate - 0.35) : rate;
+    u.rate = rate;
     u.onend = u.onerror = () => resolve();
     speechSynthesis.speak(u);
   });
 }
 
-/** Is there a voice for the course's language on this device? (true when it can't be told) */
-export async function voiceAvailable(): Promise<boolean> {
-  const lang = T.speechLang();
+async function nativeOrBrowserVoice(lang: string): Promise<boolean> {
   if (native()?.voiceSupported) return native().voiceSupported(lang);
   if (!("speechSynthesis" in window)) return false;
   let voices = speechSynthesis.getVoices();
@@ -53,6 +164,13 @@ export async function voiceAvailable(): Promise<boolean> {
     voices = speechSynthesis.getVoices();
   }
   return !voices.length || !!pickVoice(lang);
+}
+
+/** Is there a voice for the course's language on this device? (true when it can't be told) */
+export async function voiceAvailable(): Promise<boolean> {
+  const lang = T.speechLang();
+  if (lang.startsWith("sl")) return true;
+  return nativeOrBrowserVoice(lang);
 }
 export const canInstallVoice = () => !!native()?.installVoice;
 export const installVoice = () => native()?.installVoice?.();

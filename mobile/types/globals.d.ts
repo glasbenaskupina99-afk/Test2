@@ -20,6 +20,7 @@ interface Window {
   __backupUrl?: string;
   __accountUrl?: string;
   __friendsUrl?: string;
+  __ttsUrl?: string;
   __splashAudio?: AudioContext;
   __gemmaMock?: any;
   __notifyMock?: any;

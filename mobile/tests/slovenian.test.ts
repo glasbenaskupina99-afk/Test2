@@ -91,3 +91,23 @@ test("basic forms: kavo → kava, delam → delati", () => {
   }
   assert.ok(n > 50 && right / n > 0.95, `${right} of ${n} forms in the stories found`);
 });
+
+test("bundled Slovenian neural audio covers every course word and sentence", () => {
+  const index = JSON.parse(readFileSync(new URL("../../app/data/audio/sl.json", import.meta.url), "utf8"));
+  const bin = readFileSync(new URL("../../app/data/audio/sl.bin", import.meta.url));
+  const course = JSON.parse(readFileSync(new URL("../../app/data/slovenian_a1.json", import.meta.url), "utf8"));
+  for (const u of course.units) {
+    for (const [w] of u.words) {
+      const slice = index[String(w).toLowerCase().trim()];
+      assert.ok(slice, `audio for word: ${w}`);
+      const [off, len] = slice;
+      assert.ok(len > 500 && off + len <= bin.length, `valid MP3 slice for ${w}`);
+    }
+  }
+  for (const [, sl, , alts = []] of sentences) {
+    for (const s of [sl, ...alts]) {
+      const k = String(s).toLowerCase().replace(/\s+/g, " ").trim();
+      assert.ok(index[k], `audio for sentence: ${s}`);
+    }
+  }
+});

@@ -1,0 +1,6342 @@
+{
+ "level": "HSK 3",
+ "stories": [
+  {
+   "id": "zh3-s1",
+   "title": "新城市",
+   "title_en": "A New City",
+   "sentences": [
+    {
+     "text": "去年夏天，小林把家搬到了上海。",
+     "en": "Last summer, Xiao Lin moved to Shanghai.",
+     "tokens": [
+      [
+       "去年",
+       "qù nián",
+       "last year"
+      ],
+      [
+       "夏天",
+       "xià tiān",
+       "summer"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "小林",
+       "Xiǎo Lín",
+       "Xiao Lin"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "家",
+       "jiā",
+       "home"
+      ],
+      [
+       "搬",
+       "bān",
+       "move"
+      ],
+      [
+       "到",
+       "dào",
+       "to"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "上海",
+       "Shàng hǎi",
+       "Shanghai"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "刚到的时候，他觉得这个城市太大了，常常找不到路。",
+     "en": "When he had just arrived, he felt the city was too big and he often got lost.",
+     "tokens": [
+      [
+       "刚",
+       "gāng",
+       "just"
+      ],
+      [
+       "到",
+       "dào",
+       "arrive"
+      ],
+      [
+       "的时候",
+       "de shí hou",
+       "when"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "觉得",
+       "jué de",
+       "feel"
+      ],
+      [
+       "这个",
+       "zhè ge",
+       "this"
+      ],
+      [
+       "城市",
+       "chéng shì",
+       "city"
+      ],
+      [
+       "太",
+       "tài",
+       "too"
+      ],
+      [
+       "大",
+       "dà",
+       "big"
+      ],
+      [
+       "了",
+       "le",
+       "(emphasis)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "常常",
+       "cháng cháng",
+       "often"
+      ],
+      [
+       "找不到",
+       "zhǎo bu dào",
+       "can't find"
+      ],
+      [
+       "路",
+       "lù",
+       "the way"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他也不认识什么人，所以周末一般一个人在家看电视。",
+     "en": "He didn't know anyone either, so at weekends he usually watched TV at home alone.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "也",
+       "yě",
+       "also"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "认识",
+       "rèn shi",
+       "know"
+      ],
+      [
+       "什么",
+       "shén me",
+       "any"
+      ],
+      [
+       "人",
+       "rén",
+       "people"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "所以",
+       "suǒ yǐ",
+       "so"
+      ],
+      [
+       "周末",
+       "zhōu mò",
+       "weekend"
+      ],
+      [
+       "一般",
+       "yì bān",
+       "usually"
+      ],
+      [
+       "一个人",
+       "yí gè rén",
+       "alone"
+      ],
+      [
+       "在",
+       "zài",
+       "at"
+      ],
+      [
+       "家",
+       "jiā",
+       "home"
+      ],
+      [
+       "看",
+       "kàn",
+       "watch"
+      ],
+      [
+       "电视",
+       "diàn shì",
+       "TV"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "有一天，他下地铁的时候，把手机忘在座位上了。",
+     "en": "One day, when he got off the subway, he left his phone on the seat.",
+     "tokens": [
+      [
+       "有一天",
+       "yǒu yì tiān",
+       "one day"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "下",
+       "xià",
+       "get off"
+      ],
+      [
+       "地铁",
+       "dì tiě",
+       "subway"
+      ],
+      [
+       "的时候",
+       "de shí hou",
+       "when"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "phone"
+      ],
+      [
+       "忘",
+       "wàng",
+       "forget"
+      ],
+      [
+       "在",
+       "zài",
+       "on"
+      ],
+      [
+       "座位",
+       "zuò wèi",
+       "seat"
+      ],
+      [
+       "上",
+       "shang",
+       "on"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他一发现就急得不知道怎么办。",
+     "en": "As soon as he noticed, he was so worried he didn't know what to do.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "一",
+       "yī",
+       "as soon as"
+      ],
+      [
+       "发现",
+       "fā xiàn",
+       "discover"
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "急",
+       "jí",
+       "anxious"
+      ],
+      [
+       "得",
+       "de",
+       "(complement)"
+      ],
+      [
+       "不知道",
+       "bù zhī dào",
+       "not know"
+      ],
+      [
+       "怎么办",
+       "zěn me bàn",
+       "what to do"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "这时候，一个年轻的女孩跑过来，把手机还给了他。",
+     "en": "Just then, a young girl ran over and gave the phone back to him.",
+     "tokens": [
+      [
+       "这时候",
+       "zhè shí hou",
+       "at this moment"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "一个",
+       "yí gè",
+       "a"
+      ],
+      [
+       "年轻",
+       "nián qīng",
+       "young"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "女孩",
+       "nǚ hái",
+       "girl"
+      ],
+      [
+       "跑",
+       "pǎo",
+       "run"
+      ],
+      [
+       "过来",
+       "guò lái",
+       "over"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "phone"
+      ],
+      [
+       "还",
+       "huán",
+       "return"
+      ],
+      [
+       "给",
+       "gěi",
+       "to"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "他",
+       "tā",
+       "him"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "原来她就住在小林家旁边的楼里。",
+     "en": "It turned out she lived in the building right next to Xiao Lin's.",
+     "tokens": [
+      [
+       "原来",
+       "yuán lái",
+       "it turns out"
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "就",
+       "jiù",
+       "just"
+      ],
+      [
+       "住",
+       "zhù",
+       "live"
+      ],
+      [
+       "在",
+       "zài",
+       "in"
+      ],
+      [
+       "小林",
+       "Xiǎo Lín",
+       "Xiao Lin"
+      ],
+      [
+       "家",
+       "jiā",
+       "home"
+      ],
+      [
+       "旁边",
+       "páng biān",
+       "next to"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "楼",
+       "lóu",
+       "building"
+      ],
+      [
+       "里",
+       "li",
+       "in"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "为了感谢她，小林请她喝了一杯咖啡。",
+     "en": "To thank her, Xiao Lin bought her a cup of coffee.",
+     "tokens": [
+      [
+       "为了",
+       "wèi le",
+       "in order to"
+      ],
+      [
+       "感谢",
+       "gǎn xiè",
+       "thank"
+      ],
+      [
+       "她",
+       "tā",
+       "her"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "小林",
+       "Xiǎo Lín",
+       "Xiao Lin"
+      ],
+      [
+       "请",
+       "qǐng",
+       "treat"
+      ],
+      [
+       "她",
+       "tā",
+       "her"
+      ],
+      [
+       "喝",
+       "hē",
+       "drink"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一",
+       "yì",
+       "one"
+      ],
+      [
+       "杯",
+       "bēi",
+       "cup"
+      ],
+      [
+       "咖啡",
+       "kā fēi",
+       "coffee"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "后来，她带他去了很多好玩的地方。",
+     "en": "Later, she took him to many fun places.",
+     "tokens": [
+      [
+       "后来",
+       "hòu lái",
+       "later"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "带",
+       "dài",
+       "take"
+      ],
+      [
+       "他",
+       "tā",
+       "him"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "很多",
+       "hěn duō",
+       "many"
+      ],
+      [
+       "好玩",
+       "hǎo wán",
+       "fun"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "地方",
+       "dì fang",
+       "places"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "现在小林越来越喜欢上海了。",
+     "en": "Now Xiao Lin likes Shanghai more and more.",
+     "tokens": [
+      [
+       "现在",
+       "xiàn zài",
+       "now"
+      ],
+      [
+       "小林",
+       "Xiǎo Lín",
+       "Xiao Lin"
+      ],
+      [
+       "越来越",
+       "yuè lái yuè",
+       "more and more"
+      ],
+      [
+       "喜欢",
+       "xǐ huan",
+       "like"
+      ],
+      [
+       "上海",
+       "Shàng hǎi",
+       "Shanghai"
+      ],
+      [
+       "了",
+       "le",
+       "(change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why did Xiao Lin often get lost at first?",
+     "options": [
+      "He had no phone",
+      "The city felt too big",
+      "He couldn't read signs",
+      "He always took the wrong bus"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Where did he leave his phone?",
+     "options": [
+      "At a café",
+      "At home",
+      "On a subway seat",
+      "In a taxi"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "How does Xiao Lin feel about Shanghai now?",
+     "options": [
+      "He likes it more and more",
+      "He wants to leave",
+      "He is still lonely",
+      "He finds it boring"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh3-s2",
+   "title": "生日蛋糕",
+   "title_en": "The Birthday Cake",
+   "sentences": [
+    {
+     "text": "王丽的好朋友叫张月。",
+     "en": "Wang Li's good friend is called Zhang Yue.",
+     "tokens": [
+      [
+       "王丽",
+       "Wáng Lì",
+       "Wang Li"
+      ],
+      [
+       "的",
+       "de",
+       "'s"
+      ],
+      [
+       "好朋友",
+       "hǎo péng you",
+       "good friend"
+      ],
+      [
+       "叫",
+       "jiào",
+       "be called"
+      ],
+      [
+       "张月",
+       "Zhāng Yuè",
+       "Zhang Yue"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "上个星期，张月在电话里说：“我的生日快到了。”",
+     "en": "Last week, Zhang Yue said on the phone: \"My birthday is coming soon.\"",
+     "tokens": [
+      [
+       "上个星期",
+       "shàng ge xīng qī",
+       "last week"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "张月",
+       "Zhāng Yuè",
+       "Zhang Yue"
+      ],
+      [
+       "在",
+       "zài",
+       "on"
+      ],
+      [
+       "电话",
+       "diàn huà",
+       "phone"
+      ],
+      [
+       "里",
+       "li",
+       "in"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "我的",
+       "wǒ de",
+       "my"
+      ],
+      [
+       "生日",
+       "shēng rì",
+       "birthday"
+      ],
+      [
+       "快",
+       "kuài",
+       "soon"
+      ],
+      [
+       "到",
+       "dào",
+       "arrive"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王丽以为她的生日就是这个星期六。",
+     "en": "Wang Li thought her birthday was this Saturday.",
+     "tokens": [
+      [
+       "王丽",
+       "Wáng Lì",
+       "Wang Li"
+      ],
+      [
+       "以为",
+       "yǐ wéi",
+       "thought (wrongly)"
+      ],
+      [
+       "她的",
+       "tā de",
+       "her"
+      ],
+      [
+       "生日",
+       "shēng rì",
+       "birthday"
+      ],
+      [
+       "就是",
+       "jiù shì",
+       "was exactly"
+      ],
+      [
+       "这个",
+       "zhè ge",
+       "this"
+      ],
+      [
+       "星期六",
+       "xīng qī liù",
+       "Saturday"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她花了很多时间，给张月做了一个大蛋糕。",
+     "en": "She spent a lot of time making a big cake for Zhang Yue.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "花",
+       "huā",
+       "spend"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "很多",
+       "hěn duō",
+       "a lot of"
+      ],
+      [
+       "时间",
+       "shí jiān",
+       "time"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "给",
+       "gěi",
+       "for"
+      ],
+      [
+       "张月",
+       "Zhāng Yuè",
+       "Zhang Yue"
+      ],
+      [
+       "做",
+       "zuò",
+       "make"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "a"
+      ],
+      [
+       "大",
+       "dà",
+       "big"
+      ],
+      [
+       "蛋糕",
+       "dàn gāo",
+       "cake"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "星期六早上，她拿着蛋糕去了张月家。",
+     "en": "On Saturday morning, she carried the cake to Zhang Yue's home.",
+     "tokens": [
+      [
+       "星期六",
+       "xīng qī liù",
+       "Saturday"
+      ],
+      [
+       "早上",
+       "zǎo shang",
+       "morning"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "拿",
+       "ná",
+       "carry"
+      ],
+      [
+       "着",
+       "zhe",
+       "(ongoing)"
+      ],
+      [
+       "蛋糕",
+       "dàn gāo",
+       "cake"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "张月",
+       "Zhāng Yuè",
+       "Zhang Yue"
+      ],
+      [
+       "家",
+       "jiā",
+       "home"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "张月打开门，看见蛋糕以后，觉得很奇怪。",
+     "en": "Zhang Yue opened the door, saw the cake and thought it was very strange.",
+     "tokens": [
+      [
+       "张月",
+       "Zhāng Yuè",
+       "Zhang Yue"
+      ],
+      [
+       "打开",
+       "dǎ kāi",
+       "open"
+      ],
+      [
+       "门",
+       "mén",
+       "door"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "看见",
+       "kàn jiàn",
+       "see"
+      ],
+      [
+       "蛋糕",
+       "dàn gāo",
+       "cake"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "觉得",
+       "jué de",
+       "feel"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "奇怪",
+       "qí guài",
+       "strange"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "“我的生日是下个月十号啊！”她笑着说。",
+     "en": "\"My birthday is on the 10th of next month!\" she said with a smile.",
+     "tokens": [
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "我的",
+       "wǒ de",
+       "my"
+      ],
+      [
+       "生日",
+       "shēng rì",
+       "birthday"
+      ],
+      [
+       "是",
+       "shì",
+       "is"
+      ],
+      [
+       "下个月",
+       "xià ge yuè",
+       "next month"
+      ],
+      [
+       "十号",
+       "shí hào",
+       "the 10th"
+      ],
+      [
+       "啊",
+       "a",
+       "(particle)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "笑",
+       "xiào",
+       "smile"
+      ],
+      [
+       "着",
+       "zhe",
+       "(while)"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "王丽这才明白，原来是自己听错了。",
+     "en": "Only then did Wang Li understand that she had misheard.",
+     "tokens": [
+      [
+       "王丽",
+       "Wáng Lì",
+       "Wang Li"
+      ],
+      [
+       "这才",
+       "zhè cái",
+       "only then"
+      ],
+      [
+       "明白",
+       "míng bai",
+       "understand"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "原来",
+       "yuán lái",
+       "it turned out"
+      ],
+      [
+       "是",
+       "shì",
+       "was"
+      ],
+      [
+       "自己",
+       "zì jǐ",
+       "herself"
+      ],
+      [
+       "听错",
+       "tīng cuò",
+       "mishear"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "虽然今天不是生日，但是两个人还是高兴地把蛋糕吃完了。",
+     "en": "Although it wasn't her birthday, the two of them still happily ate up the cake.",
+     "tokens": [
+      [
+       "虽然",
+       "suī rán",
+       "although"
+      ],
+      [
+       "今天",
+       "jīn tiān",
+       "today"
+      ],
+      [
+       "不是",
+       "bú shì",
+       "is not"
+      ],
+      [
+       "生日",
+       "shēng rì",
+       "birthday"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "但是",
+       "dàn shì",
+       "but"
+      ],
+      [
+       "两个人",
+       "liǎng gè rén",
+       "the two of them"
+      ],
+      [
+       "还是",
+       "hái shi",
+       "still"
+      ],
+      [
+       "高兴",
+       "gāo xìng",
+       "happy"
+      ],
+      [
+       "地",
+       "de",
+       "(adverb marker)"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "蛋糕",
+       "dàn gāo",
+       "cake"
+      ],
+      [
+       "吃完",
+       "chī wán",
+       "finish eating"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "张月说：“下个月你还得再做一个！”",
+     "en": "Zhang Yue said: \"Next month you'll have to make another one!\"",
+     "tokens": [
+      [
+       "张月",
+       "Zhāng Yuè",
+       "Zhang Yue"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "下个月",
+       "xià ge yuè",
+       "next month"
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "还",
+       "hái",
+       "still"
+      ],
+      [
+       "得",
+       "děi",
+       "have to"
+      ],
+      [
+       "再",
+       "zài",
+       "again"
+      ],
+      [
+       "做",
+       "zuò",
+       "make"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "one"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "When did Wang Li think Zhang Yue's birthday was?",
+     "options": [
+      "Next month",
+      "Last week",
+      "Sunday",
+      "This Saturday"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "When is Zhang Yue's birthday really?",
+     "options": [
+      "The 10th of next month",
+      "Today",
+      "Next Saturday",
+      "Last week"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "What did they do with the cake?",
+     "options": [
+      "Threw it away",
+      "Gave it to a neighbour",
+      "Ate it together",
+      "Kept it for next month"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "zh3-s3",
+   "title": "考试",
+   "title_en": "The Exam",
+   "sentences": [
+    {
+     "text": "下个星期一，大卫要参加汉语考试。",
+     "en": "Next Monday, David will take a Chinese exam.",
+     "tokens": [
+      [
+       "下个星期一",
+       "xià ge xīng qī yī",
+       "next Monday"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "大卫",
+       "Dà wèi",
+       "David"
+      ],
+      [
+       "要",
+       "yào",
+       "will"
+      ],
+      [
+       "参加",
+       "cān jiā",
+       "take part in"
+      ],
+      [
+       "汉语",
+       "Hàn yǔ",
+       "Chinese"
+      ],
+      [
+       "考试",
+       "kǎo shì",
+       "exam"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他已经学了两年汉语，但是还是很紧张。",
+     "en": "He has already studied Chinese for two years, but he is still very nervous.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "已经",
+       "yǐ jīng",
+       "already"
+      ],
+      [
+       "学",
+       "xué",
+       "study"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "两年",
+       "liǎng nián",
+       "two years"
+      ],
+      [
+       "汉语",
+       "Hàn yǔ",
+       "Chinese"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "但是",
+       "dàn shì",
+       "but"
+      ],
+      [
+       "还是",
+       "hái shi",
+       "still"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "紧张",
+       "jǐn zhāng",
+       "nervous"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "每天晚上，他都在图书馆复习到十一点。",
+     "en": "Every evening he reviewed at the library until eleven o'clock.",
+     "tokens": [
+      [
+       "每天",
+       "měi tiān",
+       "every day"
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "都",
+       "dōu",
+       "always"
+      ],
+      [
+       "在",
+       "zài",
+       "at"
+      ],
+      [
+       "图书馆",
+       "tú shū guǎn",
+       "library"
+      ],
+      [
+       "复习",
+       "fù xí",
+       "review"
+      ],
+      [
+       "到",
+       "dào",
+       "until"
+      ],
+      [
+       "十一点",
+       "shí yī diǎn",
+       "eleven o'clock"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "考试前一天，他把所有的书都看了一遍。",
+     "en": "The day before the exam, he read through all his books once.",
+     "tokens": [
+      [
+       "考试",
+       "kǎo shì",
+       "exam"
+      ],
+      [
+       "前一天",
+       "qián yì tiān",
+       "the day before"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "所有",
+       "suǒ yǒu",
+       "all"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "书",
+       "shū",
+       "books"
+      ],
+      [
+       "都",
+       "dōu",
+       "all"
+      ],
+      [
+       "看",
+       "kàn",
+       "read"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一遍",
+       "yí biàn",
+       "once through"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "那天晚上他太累了，一上床就睡着了。",
+     "en": "That night he was so tired that he fell asleep as soon as he got into bed.",
+     "tokens": [
+      [
+       "那天",
+       "nà tiān",
+       "that day"
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "evening"
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "太",
+       "tài",
+       "too"
+      ],
+      [
+       "累",
+       "lèi",
+       "tired"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "一",
+       "yī",
+       "as soon as"
+      ],
+      [
+       "上床",
+       "shàng chuáng",
+       "get into bed"
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "睡着",
+       "shuì zháo",
+       "fall asleep"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "第二天早上，他的手机没响，他起晚了！",
+     "en": "The next morning his phone didn't ring, and he got up late!",
+     "tokens": [
+      [
+       "第二天",
+       "dì èr tiān",
+       "the next day"
+      ],
+      [
+       "早上",
+       "zǎo shang",
+       "morning"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他的",
+       "tā de",
+       "his"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "phone"
+      ],
+      [
+       "没",
+       "méi",
+       "didn't"
+      ],
+      [
+       "响",
+       "xiǎng",
+       "ring"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "起",
+       "qǐ",
+       "get up"
+      ],
+      [
+       "晚",
+       "wǎn",
+       "late"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他马上打了一辆出租车，让司机开得快一点儿。",
+     "en": "He immediately took a taxi and asked the driver to drive a bit faster.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "马上",
+       "mǎ shàng",
+       "immediately"
+      ],
+      [
+       "打",
+       "dǎ",
+       "take (a taxi)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一辆",
+       "yí liàng",
+       "a"
+      ],
+      [
+       "出租车",
+       "chū zū chē",
+       "taxi"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "让",
+       "ràng",
+       "ask"
+      ],
+      [
+       "司机",
+       "sī jī",
+       "driver"
+      ],
+      [
+       "开",
+       "kāi",
+       "drive"
+      ],
+      [
+       "得",
+       "de",
+       "(complement)"
+      ],
+      [
+       "快",
+       "kuài",
+       "fast"
+      ],
+      [
+       "一点儿",
+       "yì diǎnr",
+       "a bit"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "到了学校，他跑进教室，发现里面一个人也没有。",
+     "en": "When he reached the school, he ran into the classroom and found nobody inside.",
+     "tokens": [
+      [
+       "到",
+       "dào",
+       "arrive at"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "学校",
+       "xué xiào",
+       "school"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "跑",
+       "pǎo",
+       "run"
+      ],
+      [
+       "进",
+       "jìn",
+       "into"
+      ],
+      [
+       "教室",
+       "jiào shì",
+       "classroom"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "发现",
+       "fā xiàn",
+       "find"
+      ],
+      [
+       "里面",
+       "lǐ miàn",
+       "inside"
+      ],
+      [
+       "一个人",
+       "yí gè rén",
+       "one person"
+      ],
+      [
+       "也",
+       "yě",
+       "(not) even"
+      ],
+      [
+       "没有",
+       "méi yǒu",
+       "there is not"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "老师走过来告诉他：“考试是下午两点，不是上午！”",
+     "en": "The teacher walked over and told him: \"The exam is at two in the afternoon, not in the morning!\"",
+     "tokens": [
+      [
+       "老师",
+       "lǎo shī",
+       "teacher"
+      ],
+      [
+       "走",
+       "zǒu",
+       "walk"
+      ],
+      [
+       "过来",
+       "guò lái",
+       "over"
+      ],
+      [
+       "告诉",
+       "gào su",
+       "tell"
+      ],
+      [
+       "他",
+       "tā",
+       "him"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "考试",
+       "kǎo shì",
+       "exam"
+      ],
+      [
+       "是",
+       "shì",
+       "is"
+      ],
+      [
+       "下午",
+       "xià wǔ",
+       "afternoon"
+      ],
+      [
+       "两点",
+       "liǎng diǎn",
+       "two o'clock"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "不是",
+       "bú shì",
+       "not"
+      ],
+      [
+       "上午",
+       "shàng wǔ",
+       "morning"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "大卫笑了，他用这几个小时又复习了一遍。",
+     "en": "David laughed and used those few hours to review everything once more.",
+     "tokens": [
+      [
+       "大卫",
+       "Dà wèi",
+       "David"
+      ],
+      [
+       "笑",
+       "xiào",
+       "laugh"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "用",
+       "yòng",
+       "use"
+      ],
+      [
+       "这",
+       "zhè",
+       "these"
+      ],
+      [
+       "几个",
+       "jǐ gè",
+       "several"
+      ],
+      [
+       "小时",
+       "xiǎo shí",
+       "hours"
+      ],
+      [
+       "又",
+       "yòu",
+       "again"
+      ],
+      [
+       "复习",
+       "fù xí",
+       "review"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一遍",
+       "yí biàn",
+       "once through"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "最后，他的考试成绩非常好。",
+     "en": "In the end, his exam result was excellent.",
+     "tokens": [
+      [
+       "最后",
+       "zuì hòu",
+       "in the end"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他的",
+       "tā de",
+       "his"
+      ],
+      [
+       "考试",
+       "kǎo shì",
+       "exam"
+      ],
+      [
+       "成绩",
+       "chéng jì",
+       "result"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "very"
+      ],
+      [
+       "好",
+       "hǎo",
+       "good"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why did David get up late?",
+     "options": [
+      "He went to bed very late",
+      "His phone didn't ring",
+      "He was ill",
+      "He forgot about the exam"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Why was the classroom empty?",
+     "options": [
+      "The exam was cancelled",
+      "He went to the wrong school",
+      "The exam was in the afternoon",
+      "Everyone was late"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "How did David do in the exam?",
+     "options": [
+      "He failed",
+      "He didn't take it",
+      "He did just okay",
+      "He did very well"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "zh3-s4",
+   "title": "楼上的邻居",
+   "title_en": "The Neighbour Upstairs",
+   "sentences": [
+    {
+     "text": "李阿姨住在一个老小区的三楼。",
+     "en": "Auntie Li lives on the third floor in an old residential compound.",
+     "tokens": [
+      [
+       "李阿姨",
+       "Lǐ ā yí",
+       "Auntie Li"
+      ],
+      [
+       "住",
+       "zhù",
+       "live"
+      ],
+      [
+       "在",
+       "zài",
+       "in"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "a"
+      ],
+      [
+       "老",
+       "lǎo",
+       "old"
+      ],
+      [
+       "小区",
+       "xiǎo qū",
+       "residential compound"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "三楼",
+       "sān lóu",
+       "third floor"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "最近，她每天晚上都被楼上的声音吵醒。",
+     "en": "Recently, she has been woken up every night by noise from upstairs.",
+     "tokens": [
+      [
+       "最近",
+       "zuì jìn",
+       "recently"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "每天",
+       "měi tiān",
+       "every day"
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "night"
+      ],
+      [
+       "都",
+       "dōu",
+       "always"
+      ],
+      [
+       "被",
+       "bèi",
+       "(passive)"
+      ],
+      [
+       "楼上",
+       "lóu shàng",
+       "upstairs"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "声音",
+       "shēng yīn",
+       "noise"
+      ],
+      [
+       "吵醒",
+       "chǎo xǐng",
+       "wake up (by noise)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "声音不大，但是一直到半夜才停。",
+     "en": "The noise wasn't loud, but it didn't stop until midnight.",
+     "tokens": [
+      [
+       "声音",
+       "shēng yīn",
+       "noise"
+      ],
+      [
+       "不",
+       "bú",
+       "not"
+      ],
+      [
+       "大",
+       "dà",
+       "loud"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "但是",
+       "dàn shì",
+       "but"
+      ],
+      [
+       "一直",
+       "yì zhí",
+       "continuously"
+      ],
+      [
+       "到",
+       "dào",
+       "until"
+      ],
+      [
+       "半夜",
+       "bàn yè",
+       "midnight"
+      ],
+      [
+       "才",
+       "cái",
+       "only then"
+      ],
+      [
+       "停",
+       "tíng",
+       "stop"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她越来越生气，决定上楼去看看。",
+     "en": "She got angrier and angrier and decided to go upstairs to have a look.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "越来越",
+       "yuè lái yuè",
+       "more and more"
+      ],
+      [
+       "生气",
+       "shēng qì",
+       "angry"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "决定",
+       "jué dìng",
+       "decide"
+      ],
+      [
+       "上楼",
+       "shàng lóu",
+       "go upstairs"
+      ],
+      [
+       "去",
+       "qù",
+       "to"
+      ],
+      [
+       "看看",
+       "kàn kan",
+       "take a look"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "开门的是一个十几岁的男孩，手里拿着一本书。",
+     "en": "The one who opened the door was a teenage boy holding a book.",
+     "tokens": [
+      [
+       "开门",
+       "kāi mén",
+       "open the door"
+      ],
+      [
+       "的",
+       "de",
+       "the one who"
+      ],
+      [
+       "是",
+       "shì",
+       "is"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "a"
+      ],
+      [
+       "十几岁",
+       "shí jǐ suì",
+       "teenage"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "男孩",
+       "nán hái",
+       "boy"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "手",
+       "shǒu",
+       "hand"
+      ],
+      [
+       "里",
+       "li",
+       "in"
+      ],
+      [
+       "拿",
+       "ná",
+       "hold"
+      ],
+      [
+       "着",
+       "zhe",
+       "(ongoing)"
+      ],
+      [
+       "一本",
+       "yì běn",
+       "a"
+      ],
+      [
+       "书",
+       "shū",
+       "book"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "男孩说他的父母在外地工作，他一个人在家准备考试。",
+     "en": "The boy said his parents worked in another city and he was at home alone preparing for an exam.",
+     "tokens": [
+      [
+       "男孩",
+       "nán hái",
+       "boy"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "他的",
+       "tā de",
+       "his"
+      ],
+      [
+       "父母",
+       "fù mǔ",
+       "parents"
+      ],
+      [
+       "在",
+       "zài",
+       "in"
+      ],
+      [
+       "外地",
+       "wài dì",
+       "another city"
+      ],
+      [
+       "工作",
+       "gōng zuò",
+       "work"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "一个人",
+       "yí gè rén",
+       "alone"
+      ],
+      [
+       "在家",
+       "zài jiā",
+       "at home"
+      ],
+      [
+       "准备",
+       "zhǔn bèi",
+       "prepare for"
+      ],
+      [
+       "考试",
+       "kǎo shì",
+       "exam"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他晚上睡不着，就在房间里走来走去地背课文。",
+     "en": "He couldn't sleep at night, so he walked back and forth in his room reciting texts.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "晚上",
+       "wǎn shang",
+       "at night"
+      ],
+      [
+       "睡不着",
+       "shuì bu zháo",
+       "can't fall asleep"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "就",
+       "jiù",
+       "so"
+      ],
+      [
+       "在",
+       "zài",
+       "in"
+      ],
+      [
+       "房间",
+       "fáng jiān",
+       "room"
+      ],
+      [
+       "里",
+       "li",
+       "in"
+      ],
+      [
+       "走来走去",
+       "zǒu lái zǒu qù",
+       "walk back and forth"
+      ],
+      [
+       "地",
+       "de",
+       "(adverb marker)"
+      ],
+      [
+       "背",
+       "bèi",
+       "recite"
+      ],
+      [
+       "课文",
+       "kè wén",
+       "texts"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "李阿姨听了以后，一点儿也不生气了。",
+     "en": "After hearing this, Auntie Li wasn't angry at all any more.",
+     "tokens": [
+      [
+       "李阿姨",
+       "Lǐ ā yí",
+       "Auntie Li"
+      ],
+      [
+       "听",
+       "tīng",
+       "hear"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "一点儿",
+       "yì diǎnr",
+       "a bit"
+      ],
+      [
+       "也",
+       "yě",
+       "(not) at all"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "生气",
+       "shēng qì",
+       "angry"
+      ],
+      [
+       "了",
+       "le",
+       "(change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她告诉男孩，睡觉前喝一杯热牛奶，就容易睡着了。",
+     "en": "She told the boy that if he drank a cup of hot milk before bed, it would be easier to fall asleep.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "告诉",
+       "gào su",
+       "tell"
+      ],
+      [
+       "男孩",
+       "nán hái",
+       "boy"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "睡觉",
+       "shuì jiào",
+       "sleep"
+      ],
+      [
+       "前",
+       "qián",
+       "before"
+      ],
+      [
+       "喝",
+       "hē",
+       "drink"
+      ],
+      [
+       "一杯",
+       "yì bēi",
+       "a cup of"
+      ],
+      [
+       "热",
+       "rè",
+       "hot"
+      ],
+      [
+       "牛奶",
+       "niú nǎi",
+       "milk"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "容易",
+       "róng yì",
+       "easy"
+      ],
+      [
+       "睡着",
+       "shuì zháo",
+       "fall asleep"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "第二天，她还给男孩送去了一碗热面条。",
+     "en": "The next day, she also brought the boy a bowl of hot noodles.",
+     "tokens": [
+      [
+       "第二天",
+       "dì èr tiān",
+       "the next day"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "还",
+       "hái",
+       "also"
+      ],
+      [
+       "给",
+       "gěi",
+       "to"
+      ],
+      [
+       "男孩",
+       "nán hái",
+       "boy"
+      ],
+      [
+       "送",
+       "sòng",
+       "bring"
+      ],
+      [
+       "去",
+       "qù",
+       "over"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一碗",
+       "yì wǎn",
+       "a bowl of"
+      ],
+      [
+       "热",
+       "rè",
+       "hot"
+      ],
+      [
+       "面条",
+       "miàn tiáo",
+       "noodles"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "从那以后，楼上安静多了，两个人也成了好朋友。",
+     "en": "From then on, it was much quieter upstairs, and the two of them became good friends.",
+     "tokens": [
+      [
+       "从那以后",
+       "cóng nà yǐ hòu",
+       "from then on"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "楼上",
+       "lóu shàng",
+       "upstairs"
+      ],
+      [
+       "安静",
+       "ān jìng",
+       "quiet"
+      ],
+      [
+       "多了",
+       "duō le",
+       "much more"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "两个人",
+       "liǎng gè rén",
+       "the two of them"
+      ],
+      [
+       "也",
+       "yě",
+       "also"
+      ],
+      [
+       "成",
+       "chéng",
+       "become"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "好朋友",
+       "hǎo péng you",
+       "good friends"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "What kept waking Auntie Li up?",
+     "options": [
+      "Noise from upstairs",
+      "Her phone",
+      "Cars outside",
+      "A dog barking"
+     ],
+     "answer": 0
+    },
+    {
+     "q": "Why was the boy walking around at night?",
+     "options": [
+      "He was playing games",
+      "He couldn't sleep and was reciting texts",
+      "He was cleaning",
+      "He was looking for his parents"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What advice did Auntie Li give the boy?",
+     "options": [
+      "Study less",
+      "Call his parents",
+      "Drink hot milk before bed",
+      "Go to a hotel"
+     ],
+     "answer": 2
+    }
+   ]
+  },
+  {
+   "id": "zh3-s5",
+   "title": "假期计划",
+   "title_en": "The Holiday Plan",
+   "sentences": [
+    {
+     "text": "快放假了，小张一家正在讨论去哪儿旅游。",
+     "en": "The holidays are coming, and Xiao Zhang's family is discussing where to travel.",
+     "tokens": [
+      [
+       "快",
+       "kuài",
+       "soon"
+      ],
+      [
+       "放假",
+       "fàng jià",
+       "have a holiday"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "小张",
+       "Xiǎo Zhāng",
+       "Xiao Zhang"
+      ],
+      [
+       "一家",
+       "yì jiā",
+       "whole family"
+      ],
+      [
+       "正在",
+       "zhèng zài",
+       "in the middle of"
+      ],
+      [
+       "讨论",
+       "tǎo lùn",
+       "discuss"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "哪儿",
+       "nǎr",
+       "where"
+      ],
+      [
+       "旅游",
+       "lǚ yóu",
+       "travel"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "爸爸想去海边，因为他喜欢游泳。",
+     "en": "Dad wants to go to the seaside because he likes swimming.",
+     "tokens": [
+      [
+       "爸爸",
+       "bà ba",
+       "dad"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "want"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "海边",
+       "hǎi biān",
+       "seaside"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "因为",
+       "yīn wèi",
+       "because"
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "喜欢",
+       "xǐ huan",
+       "like"
+      ],
+      [
+       "游泳",
+       "yóu yǒng",
+       "swim"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "妈妈想去北京，她说那里的历史文化很有意思。",
+     "en": "Mom wants to go to Beijing; she says the history and culture there are very interesting.",
+     "tokens": [
+      [
+       "妈妈",
+       "mā ma",
+       "mom"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "want"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "北京",
+       "Běi jīng",
+       "Beijing"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "那里",
+       "nà li",
+       "there"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "历史",
+       "lì shǐ",
+       "history"
+      ],
+      [
+       "文化",
+       "wén huà",
+       "culture"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "有意思",
+       "yǒu yì si",
+       "interesting"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小张只想在家玩电脑游戏。",
+     "en": "Xiao Zhang only wants to play computer games at home.",
+     "tokens": [
+      [
+       "小张",
+       "Xiǎo Zhāng",
+       "Xiao Zhang"
+      ],
+      [
+       "只",
+       "zhǐ",
+       "only"
+      ],
+      [
+       "想",
+       "xiǎng",
+       "want"
+      ],
+      [
+       "在家",
+       "zài jiā",
+       "at home"
+      ],
+      [
+       "玩",
+       "wán",
+       "play"
+      ],
+      [
+       "电脑",
+       "diàn nǎo",
+       "computer"
+      ],
+      [
+       "游戏",
+       "yóu xì",
+       "games"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "大家说了一个小时，也没有决定下来。",
+     "en": "Everyone talked for an hour but still couldn't decide.",
+     "tokens": [
+      [
+       "大家",
+       "dà jiā",
+       "everyone"
+      ],
+      [
+       "说",
+       "shuō",
+       "talk"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "one"
+      ],
+      [
+       "小时",
+       "xiǎo shí",
+       "hour"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "也",
+       "yě",
+       "still"
+      ],
+      [
+       "没有",
+       "méi yǒu",
+       "not"
+      ],
+      [
+       "决定",
+       "jué dìng",
+       "decide"
+      ],
+      [
+       "下来",
+       "xià lái",
+       "(settle)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "最后，奶奶出了一个主意：“你们都来我家吧！”",
+     "en": "Finally, Grandma had an idea: \"All of you come to my place!\"",
+     "tokens": [
+      [
+       "最后",
+       "zuì hòu",
+       "finally"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "奶奶",
+       "nǎi nai",
+       "grandma"
+      ],
+      [
+       "出",
+       "chū",
+       "come up with"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "an"
+      ],
+      [
+       "主意",
+       "zhǔ yi",
+       "idea"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "你们",
+       "nǐ men",
+       "you all"
+      ],
+      [
+       "都",
+       "dōu",
+       "all"
+      ],
+      [
+       "来",
+       "lái",
+       "come"
+      ],
+      [
+       "我",
+       "wǒ",
+       "my"
+      ],
+      [
+       "家",
+       "jiā",
+       "home"
+      ],
+      [
+       "吧",
+       "ba",
+       "(suggestion)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "奶奶住在南方的一个小城市，离海很近，城里还有一个很老的博物馆。",
+     "en": "Grandma lives in a small city in the south, close to the sea, and the town also has a very old museum.",
+     "tokens": [
+      [
+       "奶奶",
+       "nǎi nai",
+       "grandma"
+      ],
+      [
+       "住",
+       "zhù",
+       "live"
+      ],
+      [
+       "在",
+       "zài",
+       "in"
+      ],
+      [
+       "南方",
+       "nán fāng",
+       "the south"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "a"
+      ],
+      [
+       "小",
+       "xiǎo",
+       "small"
+      ],
+      [
+       "城市",
+       "chéng shì",
+       "city"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "离",
+       "lí",
+       "from"
+      ],
+      [
+       "海",
+       "hǎi",
+       "sea"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "近",
+       "jìn",
+       "close"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "城里",
+       "chéng lǐ",
+       "in town"
+      ],
+      [
+       "还",
+       "hái",
+       "also"
+      ],
+      [
+       "有",
+       "yǒu",
+       "have"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "a"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "老",
+       "lǎo",
+       "old"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "博物馆",
+       "bó wù guǎn",
+       "museum"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "这样，爸爸可以游泳，妈妈可以参观博物馆。",
+     "en": "This way, Dad can swim and Mom can visit the museum.",
+     "tokens": [
+      [
+       "这样",
+       "zhè yàng",
+       "this way"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "爸爸",
+       "bà ba",
+       "dad"
+      ],
+      [
+       "可以",
+       "kě yǐ",
+       "can"
+      ],
+      [
+       "游泳",
+       "yóu yǒng",
+       "swim"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "妈妈",
+       "mā ma",
+       "mom"
+      ],
+      [
+       "可以",
+       "kě yǐ",
+       "can"
+      ],
+      [
+       "参观",
+       "cān guān",
+       "visit"
+      ],
+      [
+       "博物馆",
+       "bó wù guǎn",
+       "museum"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "“那我呢？”小张问。",
+     "en": "\"What about me?\" asked Xiao Zhang.",
+     "tokens": [
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "那",
+       "nà",
+       "then"
+      ],
+      [
+       "我",
+       "wǒ",
+       "I"
+      ],
+      [
+       "呢",
+       "ne",
+       "what about"
+      ],
+      [
+       "？",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ],
+      [
+       "小张",
+       "Xiǎo Zhāng",
+       "Xiao Zhang"
+      ],
+      [
+       "问",
+       "wèn",
+       "ask"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "奶奶笑着说：“我家也有电脑，不过你得先陪我去公园散步。”",
+     "en": "Grandma smiled and said: \"My home has a computer too, but first you have to go for a walk in the park with me.\"",
+     "tokens": [
+      [
+       "奶奶",
+       "nǎi nai",
+       "grandma"
+      ],
+      [
+       "笑",
+       "xiào",
+       "smile"
+      ],
+      [
+       "着",
+       "zhe",
+       "(while)"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "我",
+       "wǒ",
+       "my"
+      ],
+      [
+       "家",
+       "jiā",
+       "home"
+      ],
+      [
+       "也",
+       "yě",
+       "also"
+      ],
+      [
+       "有",
+       "yǒu",
+       "have"
+      ],
+      [
+       "电脑",
+       "diàn nǎo",
+       "computer"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "不过",
+       "bú guò",
+       "but"
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "得",
+       "děi",
+       "have to"
+      ],
+      [
+       "先",
+       "xiān",
+       "first"
+      ],
+      [
+       "陪",
+       "péi",
+       "accompany"
+      ],
+      [
+       "我",
+       "wǒ",
+       "me"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "公园",
+       "gōng yuán",
+       "park"
+      ],
+      [
+       "散步",
+       "sàn bù",
+       "take a walk"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "大家都同意了，这个假期的计划就这样定下来了。",
+     "en": "Everyone agreed, and that's how the holiday plan was decided.",
+     "tokens": [
+      [
+       "大家",
+       "dà jiā",
+       "everyone"
+      ],
+      [
+       "都",
+       "dōu",
+       "all"
+      ],
+      [
+       "同意",
+       "tóng yì",
+       "agree"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "这个",
+       "zhè ge",
+       "this"
+      ],
+      [
+       "假期",
+       "jià qī",
+       "holiday"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "计划",
+       "jì huà",
+       "plan"
+      ],
+      [
+       "就",
+       "jiù",
+       "just"
+      ],
+      [
+       "这样",
+       "zhè yàng",
+       "like this"
+      ],
+      [
+       "定",
+       "dìng",
+       "fix"
+      ],
+      [
+       "下来",
+       "xià lái",
+       "(settle)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why did Dad want to go to the seaside?",
+     "options": [
+      "He likes fishing",
+      "He likes the food",
+      "He likes swimming",
+      "He has friends there"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Who solved the problem?",
+     "options": [
+      "Mom",
+      "Grandma",
+      "Xiao Zhang",
+      "Dad"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What must Xiao Zhang do before using the computer?",
+     "options": [
+      "Visit the museum",
+      "Do homework",
+      "Swim with Dad",
+      "Walk in the park with Grandma"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "zh3-s6",
+   "title": "一个小事故",
+   "title_en": "A Small Accident",
+   "sentences": [
+    {
+     "text": "周六下午，刘明骑自行车去超市买东西。",
+     "en": "On Saturday afternoon, Liu Ming rode his bike to the supermarket to buy things.",
+     "tokens": [
+      [
+       "周六",
+       "zhōu liù",
+       "Saturday"
+      ],
+      [
+       "下午",
+       "xià wǔ",
+       "afternoon"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "刘明",
+       "Liú Míng",
+       "Liu Ming"
+      ],
+      [
+       "骑",
+       "qí",
+       "ride"
+      ],
+      [
+       "自行车",
+       "zì xíng chē",
+       "bicycle"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "超市",
+       "chāo shì",
+       "supermarket"
+      ],
+      [
+       "买",
+       "mǎi",
+       "buy"
+      ],
+      [
+       "东西",
+       "dōng xi",
+       "things"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "那天刚下过雨，路上很滑。",
+     "en": "It had just rained that day, and the road was very slippery.",
+     "tokens": [
+      [
+       "那天",
+       "nà tiān",
+       "that day"
+      ],
+      [
+       "刚",
+       "gāng",
+       "just"
+      ],
+      [
+       "下",
+       "xià",
+       "fall (rain)"
+      ],
+      [
+       "过",
+       "guo",
+       "(past)"
+      ],
+      [
+       "雨",
+       "yǔ",
+       "rain"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "路上",
+       "lù shang",
+       "on the road"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "滑",
+       "huá",
+       "slippery"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他一边骑车一边听音乐，没注意前面有一只小狗。",
+     "en": "He was listening to music while riding and didn't notice a little dog ahead.",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "一边",
+       "yì biān",
+       "while"
+      ],
+      [
+       "骑车",
+       "qí chē",
+       "ride a bike"
+      ],
+      [
+       "一边",
+       "yì biān",
+       "while"
+      ],
+      [
+       "听",
+       "tīng",
+       "listen to"
+      ],
+      [
+       "音乐",
+       "yīn yuè",
+       "music"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "没",
+       "méi",
+       "didn't"
+      ],
+      [
+       "注意",
+       "zhù yì",
+       "notice"
+      ],
+      [
+       "前面",
+       "qián miàn",
+       "ahead"
+      ],
+      [
+       "有",
+       "yǒu",
+       "there is"
+      ],
+      [
+       "一只",
+       "yì zhī",
+       "a"
+      ],
+      [
+       "小狗",
+       "xiǎo gǒu",
+       "little dog"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "为了不撞到小狗，他突然停了下来，结果自己摔倒了。",
+     "en": "To avoid hitting the dog, he stopped suddenly, and as a result he fell off.",
+     "tokens": [
+      [
+       "为了",
+       "wèi le",
+       "in order to"
+      ],
+      [
+       "不",
+       "bú",
+       "not"
+      ],
+      [
+       "撞",
+       "zhuàng",
+       "hit"
+      ],
+      [
+       "到",
+       "dào",
+       "(result)"
+      ],
+      [
+       "小狗",
+       "xiǎo gǒu",
+       "little dog"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "突然",
+       "tū rán",
+       "suddenly"
+      ],
+      [
+       "停",
+       "tíng",
+       "stop"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "下来",
+       "xià lái",
+       "(down)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "结果",
+       "jié guǒ",
+       "as a result"
+      ],
+      [
+       "自己",
+       "zì jǐ",
+       "himself"
+      ],
+      [
+       "摔倒",
+       "shuāi dǎo",
+       "fall down"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他的腿受伤了，手机也被摔坏了。",
+     "en": "His leg was hurt, and his phone was broken in the fall too.",
+     "tokens": [
+      [
+       "他的",
+       "tā de",
+       "his"
+      ],
+      [
+       "腿",
+       "tuǐ",
+       "leg"
+      ],
+      [
+       "受伤",
+       "shòu shāng",
+       "get hurt"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "phone"
+      ],
+      [
+       "也",
+       "yě",
+       "also"
+      ],
+      [
+       "被",
+       "bèi",
+       "(passive)"
+      ],
+      [
+       "摔",
+       "shuāi",
+       "drop"
+      ],
+      [
+       "坏",
+       "huài",
+       "broken"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小狗的主人是一位老奶奶，她马上跑过来把刘明扶了起来。",
+     "en": "The dog's owner was an old lady; she ran over at once and helped Liu Ming up.",
+     "tokens": [
+      [
+       "小狗",
+       "xiǎo gǒu",
+       "little dog"
+      ],
+      [
+       "的",
+       "de",
+       "'s"
+      ],
+      [
+       "主人",
+       "zhǔ rén",
+       "owner"
+      ],
+      [
+       "是",
+       "shì",
+       "is"
+      ],
+      [
+       "一位",
+       "yí wèi",
+       "a (polite)"
+      ],
+      [
+       "老奶奶",
+       "lǎo nǎi nai",
+       "old lady"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "马上",
+       "mǎ shàng",
+       "immediately"
+      ],
+      [
+       "跑",
+       "pǎo",
+       "run"
+      ],
+      [
+       "过来",
+       "guò lái",
+       "over"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "刘明",
+       "Liú Míng",
+       "Liu Ming"
+      ],
+      [
+       "扶",
+       "fú",
+       "help up"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "起来",
+       "qǐ lái",
+       "up"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她非常不好意思，一定要带他去医院看看。",
+     "en": "She felt very sorry and insisted on taking him to the hospital to get checked.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "very"
+      ],
+      [
+       "不好意思",
+       "bù hǎo yì si",
+       "embarrassed"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "一定",
+       "yí dìng",
+       "insist"
+      ],
+      [
+       "要",
+       "yào",
+       "want"
+      ],
+      [
+       "带",
+       "dài",
+       "take"
+      ],
+      [
+       "他",
+       "tā",
+       "him"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "医院",
+       "yī yuàn",
+       "hospital"
+      ],
+      [
+       "看看",
+       "kàn kan",
+       "get checked"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "医生检查以后说，问题不大，休息几天就好了。",
+     "en": "After the examination, the doctor said it wasn't serious and he would be fine after a few days' rest.",
+     "tokens": [
+      [
+       "医生",
+       "yī shēng",
+       "doctor"
+      ],
+      [
+       "检查",
+       "jiǎn chá",
+       "examine"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "问题",
+       "wèn tí",
+       "problem"
+      ],
+      [
+       "不大",
+       "bú dà",
+       "not big"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "休息",
+       "xiū xi",
+       "rest"
+      ],
+      [
+       "几天",
+       "jǐ tiān",
+       "a few days"
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "好",
+       "hǎo",
+       "fine"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "老奶奶还要给他买一个新手机，刘明却怎么也不同意。",
+     "en": "The old lady also wanted to buy him a new phone, but Liu Ming wouldn't agree no matter what.",
+     "tokens": [
+      [
+       "老奶奶",
+       "lǎo nǎi nai",
+       "old lady"
+      ],
+      [
+       "还",
+       "hái",
+       "also"
+      ],
+      [
+       "要",
+       "yào",
+       "want"
+      ],
+      [
+       "给",
+       "gěi",
+       "for"
+      ],
+      [
+       "他",
+       "tā",
+       "him"
+      ],
+      [
+       "买",
+       "mǎi",
+       "buy"
+      ],
+      [
+       "一个",
+       "yí gè",
+       "a"
+      ],
+      [
+       "新",
+       "xīn",
+       "new"
+      ],
+      [
+       "手机",
+       "shǒu jī",
+       "phone"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "刘明",
+       "Liú Míng",
+       "Liu Ming"
+      ],
+      [
+       "却",
+       "què",
+       "however"
+      ],
+      [
+       "怎么也",
+       "zěn me yě",
+       "no matter what"
+      ],
+      [
+       "不",
+       "bù",
+       "not"
+      ],
+      [
+       "同意",
+       "tóng yì",
+       "agree"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "他说：“是我自己不小心，以后骑车再也不听音乐了。”",
+     "en": "He said: \"It was my own carelessness. From now on I'll never listen to music while riding again.\"",
+     "tokens": [
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "是",
+       "shì",
+       "it is"
+      ],
+      [
+       "我",
+       "wǒ",
+       "I"
+      ],
+      [
+       "自己",
+       "zì jǐ",
+       "myself"
+      ],
+      [
+       "不小心",
+       "bù xiǎo xīn",
+       "careless"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "from now on"
+      ],
+      [
+       "骑车",
+       "qí chē",
+       "ride a bike"
+      ],
+      [
+       "再也不",
+       "zài yě bù",
+       "never again"
+      ],
+      [
+       "听",
+       "tīng",
+       "listen to"
+      ],
+      [
+       "音乐",
+       "yīn yuè",
+       "music"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why didn't Liu Ming notice the dog?",
+     "options": [
+      "It was dark",
+      "He was listening to music",
+      "He was riding too fast",
+      "He was talking on the phone"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What happened to his phone?",
+     "options": [
+      "It was lost",
+      "It was stolen",
+      "It was broken",
+      "Nothing"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Why did he refuse the new phone?",
+     "options": [
+      "He felt the accident was his own fault",
+      "He already had two phones",
+      "He didn't like the model",
+      "The old lady had no money"
+     ],
+     "answer": 0
+    }
+   ]
+  },
+  {
+   "id": "zh3-s7",
+   "title": "学做饭",
+   "title_en": "Learning to Cook",
+   "sentences": [
+    {
+     "text": "安娜来中国已经半年了，她特别喜欢吃中国菜。",
+     "en": "Anna has been in China for half a year, and she especially loves Chinese food.",
+     "tokens": [
+      [
+       "安娜",
+       "Ān nà",
+       "Anna"
+      ],
+      [
+       "来",
+       "lái",
+       "come"
+      ],
+      [
+       "中国",
+       "Zhōng guó",
+       "China"
+      ],
+      [
+       "已经",
+       "yǐ jīng",
+       "already"
+      ],
+      [
+       "半年",
+       "bàn nián",
+       "half a year"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "特别",
+       "tè bié",
+       "especially"
+      ],
+      [
+       "喜欢",
+       "xǐ huan",
+       "like"
+      ],
+      [
+       "吃",
+       "chī",
+       "eat"
+      ],
+      [
+       "中国菜",
+       "Zhōng guó cài",
+       "Chinese food"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "可是饭馆的菜越来越贵，她决定自己学做饭。",
+     "en": "But restaurant food was getting more and more expensive, so she decided to learn to cook herself.",
+     "tokens": [
+      [
+       "可是",
+       "kě shì",
+       "but"
+      ],
+      [
+       "饭馆",
+       "fàn guǎn",
+       "restaurant"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "菜",
+       "cài",
+       "dishes"
+      ],
+      [
+       "越来越",
+       "yuè lái yuè",
+       "more and more"
+      ],
+      [
+       "贵",
+       "guì",
+       "expensive"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "决定",
+       "jué dìng",
+       "decide"
+      ],
+      [
+       "自己",
+       "zì jǐ",
+       "by herself"
+      ],
+      [
+       "学",
+       "xué",
+       "learn"
+      ],
+      [
+       "做饭",
+       "zuò fàn",
+       "cook"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她请同事小王教她做西红柿炒鸡蛋。",
+     "en": "She asked her colleague Xiao Wang to teach her to make tomato and egg stir-fry.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "请",
+       "qǐng",
+       "ask"
+      ],
+      [
+       "同事",
+       "tóng shì",
+       "colleague"
+      ],
+      [
+       "小王",
+       "Xiǎo Wáng",
+       "Xiao Wang"
+      ],
+      [
+       "教",
+       "jiāo",
+       "teach"
+      ],
+      [
+       "她",
+       "tā",
+       "her"
+      ],
+      [
+       "做",
+       "zuò",
+       "make"
+      ],
+      [
+       "西红柿",
+       "xī hóng shì",
+       "tomato"
+      ],
+      [
+       "炒",
+       "chǎo",
+       "stir-fried"
+      ],
+      [
+       "鸡蛋",
+       "jī dàn",
+       "eggs"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小王说这个菜很简单，先把鸡蛋炒好，再放西红柿。",
+     "en": "Xiao Wang said the dish is simple: first fry the eggs, then add the tomatoes.",
+     "tokens": [
+      [
+       "小王",
+       "Xiǎo Wáng",
+       "Xiao Wang"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "这个",
+       "zhè ge",
+       "this"
+      ],
+      [
+       "菜",
+       "cài",
+       "dish"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "简单",
+       "jiǎn dān",
+       "simple"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "先",
+       "xiān",
+       "first"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "鸡蛋",
+       "jī dàn",
+       "eggs"
+      ],
+      [
+       "炒",
+       "chǎo",
+       "fry"
+      ],
+      [
+       "好",
+       "hǎo",
+       "(done)"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "再",
+       "zài",
+       "then"
+      ],
+      [
+       "放",
+       "fàng",
+       "put in"
+      ],
+      [
+       "西红柿",
+       "xī hóng shì",
+       "tomatoes"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "第一次做的时候，安娜把糖当成了盐。",
+     "en": "The first time she made it, Anna mistook the sugar for salt.",
+     "tokens": [
+      [
+       "第一次",
+       "dì yī cì",
+       "first time"
+      ],
+      [
+       "做",
+       "zuò",
+       "make"
+      ],
+      [
+       "的时候",
+       "de shí hou",
+       "when"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "安娜",
+       "Ān nà",
+       "Anna"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "糖",
+       "táng",
+       "sugar"
+      ],
+      [
+       "当成",
+       "dàng chéng",
+       "mistake for"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "盐",
+       "yán",
+       "salt"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她放了很多糖，菜变得非常甜。",
+     "en": "She put in a lot of sugar, and the dish became very sweet.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "放",
+       "fàng",
+       "put in"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "很多",
+       "hěn duō",
+       "a lot of"
+      ],
+      [
+       "糖",
+       "táng",
+       "sugar"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "菜",
+       "cài",
+       "dish"
+      ],
+      [
+       "变",
+       "biàn",
+       "become"
+      ],
+      [
+       "得",
+       "de",
+       "(complement)"
+      ],
+      [
+       "非常",
+       "fēi cháng",
+       "very"
+      ],
+      [
+       "甜",
+       "tián",
+       "sweet"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她觉得很难过，想把菜倒掉。",
+     "en": "She felt very upset and wanted to throw the dish away.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "觉得",
+       "jué de",
+       "feel"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "难过",
+       "nán guò",
+       "sad"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "想",
+       "xiǎng",
+       "want"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "菜",
+       "cài",
+       "dish"
+      ],
+      [
+       "倒掉",
+       "dào diào",
+       "pour away"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "小王尝了一口，却说：“太好吃了！”",
+     "en": "Xiao Wang tasted a bite, but said: \"It's delicious!\"",
+     "tokens": [
+      [
+       "小王",
+       "Xiǎo Wáng",
+       "Xiao Wang"
+      ],
+      [
+       "尝",
+       "cháng",
+       "taste"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "一口",
+       "yì kǒu",
+       "a bite"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "却",
+       "què",
+       "but"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "太",
+       "tài",
+       "so"
+      ],
+      [
+       "好吃",
+       "hǎo chī",
+       "delicious"
+      ],
+      [
+       "了",
+       "le",
+       "(particle)"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "原来小王是上海人，他家做这个菜的时候也放糖。",
+     "en": "It turned out Xiao Wang is from Shanghai, and his family also puts sugar in this dish.",
+     "tokens": [
+      [
+       "原来",
+       "yuán lái",
+       "it turns out"
+      ],
+      [
+       "小王",
+       "Xiǎo Wáng",
+       "Xiao Wang"
+      ],
+      [
+       "是",
+       "shì",
+       "is"
+      ],
+      [
+       "上海人",
+       "Shàng hǎi rén",
+       "Shanghainese"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "他",
+       "tā",
+       "his"
+      ],
+      [
+       "家",
+       "jiā",
+       "family"
+      ],
+      [
+       "做",
+       "zuò",
+       "make"
+      ],
+      [
+       "这个",
+       "zhè ge",
+       "this"
+      ],
+      [
+       "菜",
+       "cài",
+       "dish"
+      ],
+      [
+       "的时候",
+       "de shí hou",
+       "when"
+      ],
+      [
+       "也",
+       "yě",
+       "also"
+      ],
+      [
+       "放",
+       "fàng",
+       "put in"
+      ],
+      [
+       "糖",
+       "táng",
+       "sugar"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "从那以后，安娜一有时间就在家做饭。",
+     "en": "From then on, whenever Anna had time, she cooked at home.",
+     "tokens": [
+      [
+       "从那以后",
+       "cóng nà yǐ hòu",
+       "from then on"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "安娜",
+       "Ān nà",
+       "Anna"
+      ],
+      [
+       "一",
+       "yī",
+       "as soon as"
+      ],
+      [
+       "有",
+       "yǒu",
+       "have"
+      ],
+      [
+       "时间",
+       "shí jiān",
+       "time"
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "在家",
+       "zài jiā",
+       "at home"
+      ],
+      [
+       "做饭",
+       "zuò fàn",
+       "cook"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "现在她已经会做十几个菜了。",
+     "en": "Now she can already make more than ten dishes.",
+     "tokens": [
+      [
+       "现在",
+       "xiàn zài",
+       "now"
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "已经",
+       "yǐ jīng",
+       "already"
+      ],
+      [
+       "会",
+       "huì",
+       "can"
+      ],
+      [
+       "做",
+       "zuò",
+       "make"
+      ],
+      [
+       "十几个",
+       "shí jǐ gè",
+       "more than ten"
+      ],
+      [
+       "菜",
+       "cài",
+       "dishes"
+      ],
+      [
+       "了",
+       "le",
+       "(change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why did Anna decide to learn to cook?",
+     "options": [
+      "Her kitchen was new",
+      "Restaurant food was getting expensive",
+      "She didn't like restaurants",
+      "Her friend asked her to"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "What mistake did Anna make?",
+     "options": [
+      "She burned the eggs",
+      "She forgot the tomatoes",
+      "She used sugar instead of salt",
+      "She used too much oil"
+     ],
+     "answer": 2
+    },
+    {
+     "q": "Why did Xiao Wang like the dish?",
+     "options": [
+      "He was very hungry",
+      "He didn't want to make her sad",
+      "He doesn't like salt",
+      "His Shanghai family also cooks it with sugar"
+     ],
+     "answer": 3
+    }
+   ]
+  },
+  {
+   "id": "zh3-s8",
+   "title": "面试",
+   "title_en": "The Job Interview",
+   "sentences": [
+    {
+     "text": "陈静大学毕业以后，一直在找工作。",
+     "en": "After graduating from university, Chen Jing had been looking for a job.",
+     "tokens": [
+      [
+       "陈静",
+       "Chén Jìng",
+       "Chen Jing"
+      ],
+      [
+       "大学",
+       "dà xué",
+       "university"
+      ],
+      [
+       "毕业",
+       "bì yè",
+       "graduate"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "after"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "一直",
+       "yì zhí",
+       "all along"
+      ],
+      [
+       "在",
+       "zài",
+       "(in progress)"
+      ],
+      [
+       "找",
+       "zhǎo",
+       "look for"
+      ],
+      [
+       "工作",
+       "gōng zuò",
+       "job"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "有一天，她收到一封电子邮件，一家公司请她去面试。",
+     "en": "One day she received an email: a company invited her to an interview.",
+     "tokens": [
+      [
+       "有一天",
+       "yǒu yì tiān",
+       "one day"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "收到",
+       "shōu dào",
+       "receive"
+      ],
+      [
+       "一封",
+       "yì fēng",
+       "a"
+      ],
+      [
+       "电子邮件",
+       "diàn zǐ yóu jiàn",
+       "email"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "一家",
+       "yì jiā",
+       "a"
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "请",
+       "qǐng",
+       "invite"
+      ],
+      [
+       "她",
+       "tā",
+       "her"
+      ],
+      [
+       "去",
+       "qù",
+       "go"
+      ],
+      [
+       "面试",
+       "miàn shì",
+       "interview"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "面试那天，她穿上了最漂亮的衣服，提前半个小时出了门。",
+     "en": "On the day of the interview, she put on her nicest clothes and left home half an hour early.",
+     "tokens": [
+      [
+       "面试",
+       "miàn shì",
+       "interview"
+      ],
+      [
+       "那天",
+       "nà tiān",
+       "that day"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "穿",
+       "chuān",
+       "put on"
+      ],
+      [
+       "上",
+       "shang",
+       "(on)"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "最",
+       "zuì",
+       "most"
+      ],
+      [
+       "漂亮",
+       "piào liang",
+       "beautiful"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "衣服",
+       "yī fu",
+       "clothes"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "提前",
+       "tí qián",
+       "in advance"
+      ],
+      [
+       "半个小时",
+       "bàn gè xiǎo shí",
+       "half an hour"
+      ],
+      [
+       "出",
+       "chū",
+       "go out"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "门",
+       "mén",
+       "door"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "在公司楼下，她看见一位老先生拿着很多东西，走得很慢。",
+     "en": "Downstairs at the company, she saw an old gentleman carrying lots of things and walking very slowly.",
+     "tokens": [
+      [
+       "在",
+       "zài",
+       "at"
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "楼下",
+       "lóu xià",
+       "downstairs"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "看见",
+       "kàn jiàn",
+       "see"
+      ],
+      [
+       "一位",
+       "yí wèi",
+       "a (polite)"
+      ],
+      [
+       "老先生",
+       "lǎo xiān sheng",
+       "old gentleman"
+      ],
+      [
+       "拿",
+       "ná",
+       "carry"
+      ],
+      [
+       "着",
+       "zhe",
+       "(ongoing)"
+      ],
+      [
+       "很多",
+       "hěn duō",
+       "many"
+      ],
+      [
+       "东西",
+       "dōng xi",
+       "things"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "走",
+       "zǒu",
+       "walk"
+      ],
+      [
+       "得",
+       "de",
+       "(complement)"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "慢",
+       "màn",
+       "slow"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "虽然时间有点儿紧，但是她还是帮他把东西搬到了十楼。",
+     "en": "Although time was a bit tight, she still helped him carry his things up to the tenth floor.",
+     "tokens": [
+      [
+       "虽然",
+       "suī rán",
+       "although"
+      ],
+      [
+       "时间",
+       "shí jiān",
+       "time"
+      ],
+      [
+       "有点儿",
+       "yǒu diǎnr",
+       "a little"
+      ],
+      [
+       "紧",
+       "jǐn",
+       "tight"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "但是",
+       "dàn shì",
+       "but"
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "还是",
+       "hái shi",
+       "still"
+      ],
+      [
+       "帮",
+       "bāng",
+       "help"
+      ],
+      [
+       "他",
+       "tā",
+       "him"
+      ],
+      [
+       "把",
+       "bǎ",
+       "(object marker)"
+      ],
+      [
+       "东西",
+       "dōng xi",
+       "things"
+      ],
+      [
+       "搬",
+       "bān",
+       "carry"
+      ],
+      [
+       "到",
+       "dào",
+       "to"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "十楼",
+       "shí lóu",
+       "tenth floor"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "等她跑到面试的办公室时，已经晚了五分钟。",
+     "en": "By the time she ran to the interview office, she was already five minutes late.",
+     "tokens": [
+      [
+       "等",
+       "děng",
+       "by the time"
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "跑",
+       "pǎo",
+       "run"
+      ],
+      [
+       "到",
+       "dào",
+       "to"
+      ],
+      [
+       "面试",
+       "miàn shì",
+       "interview"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "办公室",
+       "bàn gōng shì",
+       "office"
+      ],
+      [
+       "时",
+       "shí",
+       "when"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "已经",
+       "yǐ jīng",
+       "already"
+      ],
+      [
+       "晚",
+       "wǎn",
+       "late"
+      ],
+      [
+       "了",
+       "le",
+       "(completed)"
+      ],
+      [
+       "五分钟",
+       "wǔ fēn zhōng",
+       "five minutes"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "她心里很着急，觉得这次一定没有希望了。",
+     "en": "She was very worried and felt there was surely no hope this time.",
+     "tokens": [
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "心里",
+       "xīn li",
+       "in her heart"
+      ],
+      [
+       "很",
+       "hěn",
+       "very"
+      ],
+      [
+       "着急",
+       "zháo jí",
+       "worried"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "觉得",
+       "jué de",
+       "feel"
+      ],
+      [
+       "这次",
+       "zhè cì",
+       "this time"
+      ],
+      [
+       "一定",
+       "yí dìng",
+       "surely"
+      ],
+      [
+       "没有",
+       "méi yǒu",
+       "have no"
+      ],
+      [
+       "希望",
+       "xī wàng",
+       "hope"
+      ],
+      [
+       "了",
+       "le",
+       "(change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "可是她一进门就吃了一惊，坐在里面的正是那位老先生！",
+     "en": "But as soon as she walked in she was startled: the person sitting inside was that very old gentleman!",
+     "tokens": [
+      [
+       "可是",
+       "kě shì",
+       "but"
+      ],
+      [
+       "她",
+       "tā",
+       "she"
+      ],
+      [
+       "一",
+       "yī",
+       "as soon as"
+      ],
+      [
+       "进门",
+       "jìn mén",
+       "enter"
+      ],
+      [
+       "就",
+       "jiù",
+       "then"
+      ],
+      [
+       "吃了一惊",
+       "chī le yì jīng",
+       "be startled"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "坐",
+       "zuò",
+       "sit"
+      ],
+      [
+       "在",
+       "zài",
+       "in"
+      ],
+      [
+       "里面",
+       "lǐ miàn",
+       "inside"
+      ],
+      [
+       "的",
+       "de",
+       "the one who"
+      ],
+      [
+       "正是",
+       "zhèng shì",
+       "precisely"
+      ],
+      [
+       "那位",
+       "nà wèi",
+       "that"
+      ],
+      [
+       "老先生",
+       "lǎo xiān sheng",
+       "old gentleman"
+      ],
+      [
+       "！",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "原来他就是这家公司的经理。",
+     "en": "It turned out he was the manager of the company.",
+     "tokens": [
+      [
+       "原来",
+       "yuán lái",
+       "it turns out"
+      ],
+      [
+       "他",
+       "tā",
+       "he"
+      ],
+      [
+       "就是",
+       "jiù shì",
+       "is exactly"
+      ],
+      [
+       "这家",
+       "zhè jiā",
+       "this"
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "的",
+       "de",
+       "'s"
+      ],
+      [
+       "经理",
+       "jīng lǐ",
+       "manager"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "经理笑着说：“不用紧张，你刚才的表现就是最好的面试。”",
+     "en": "The manager smiled and said: \"Don't be nervous. What you did just now was the best interview.\"",
+     "tokens": [
+      [
+       "经理",
+       "jīng lǐ",
+       "manager"
+      ],
+      [
+       "笑",
+       "xiào",
+       "smile"
+      ],
+      [
+       "着",
+       "zhe",
+       "(while)"
+      ],
+      [
+       "说",
+       "shuō",
+       "say"
+      ],
+      [
+       "：",
+       "",
+       ""
+      ],
+      [
+       "“",
+       "",
+       ""
+      ],
+      [
+       "不用",
+       "bú yòng",
+       "no need"
+      ],
+      [
+       "紧张",
+       "jǐn zhāng",
+       "nervous"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "你",
+       "nǐ",
+       "you"
+      ],
+      [
+       "刚才",
+       "gāng cái",
+       "just now"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "表现",
+       "biǎo xiàn",
+       "performance"
+      ],
+      [
+       "就是",
+       "jiù shì",
+       "is exactly"
+      ],
+      [
+       "最好",
+       "zuì hǎo",
+       "best"
+      ],
+      [
+       "的",
+       "de",
+       "(particle)"
+      ],
+      [
+       "面试",
+       "miàn shì",
+       "interview"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ],
+      [
+       "”",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "text": "一个星期以后，陈静开始在这家公司上班了。",
+     "en": "A week later, Chen Jing started working at the company.",
+     "tokens": [
+      [
+       "一个星期",
+       "yí gè xīng qī",
+       "one week"
+      ],
+      [
+       "以后",
+       "yǐ hòu",
+       "later"
+      ],
+      [
+       "，",
+       "",
+       ""
+      ],
+      [
+       "陈静",
+       "Chén Jìng",
+       "Chen Jing"
+      ],
+      [
+       "开始",
+       "kāi shǐ",
+       "start"
+      ],
+      [
+       "在",
+       "zài",
+       "at"
+      ],
+      [
+       "这家",
+       "zhè jiā",
+       "this"
+      ],
+      [
+       "公司",
+       "gōng sī",
+       "company"
+      ],
+      [
+       "上班",
+       "shàng bān",
+       "work"
+      ],
+      [
+       "了",
+       "le",
+       "(change)"
+      ],
+      [
+       "。",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why was Chen Jing late for the interview?",
+     "options": [
+      "She got lost",
+      "She helped an old man carry his things",
+      "Her bus was late",
+      "She overslept"
+     ],
+     "answer": 1
+    },
+    {
+     "q": "Who was the old gentleman?",
+     "options": [
+      "Her teacher",
+      "Another job seeker",
+      "A security guard",
+      "The company's manager"
+     ],
+     "answer": 3
+    },
+    {
+     "q": "What happened in the end?",
+     "options": [
+      "She got the job",
+      "She had to come back another day",
+      "She didn't get the job",
+      "She chose another company"
+     ],
+     "answer": 0
+    }
+   ]
+  }
+ ]
+}

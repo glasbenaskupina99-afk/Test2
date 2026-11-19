@@ -1,0 +1,3077 @@
+{
+ "level": "HSK 3",
+ "points": [
+  {
+   "id": "zh3-ba",
+   "title": "把 — doing something to an object",
+   "pattern": "Subject + 把 + Object + Verb + Result",
+   "short": "handle an object: 把 sentence",
+   "explain": "把 moves the object before the verb to show what you do to it and how it ends up. The verb must have something after it, such as a result, direction or 了. Pitfall: you cannot end with a bare verb (not 我把书看).",
+   "examples": [
+    {
+     "text": "请把门关上吧。",
+     "mark": [
+      "把"
+     ],
+     "en": "Please close the door."
+    },
+    {
+     "text": "我把作业写完了。",
+     "mark": [
+      "把"
+     ],
+     "en": "I finished my homework."
+    },
+    {
+     "text": "他把手机忘在家里了。",
+     "mark": [
+      "把"
+     ],
+     "en": "He left his phone at home."
+    },
+    {
+     "text": "你把这本书放在桌子上吧。",
+     "mark": [
+      "把"
+     ],
+     "en": "Put this book on the table."
+    }
+   ]
+  },
+  {
+   "id": "zh3-ba-neg",
+   "title": "把 with negation and modal verbs",
+   "pattern": "Subject + 没/不/要 + 把 + Object + Verb + …",
+   "short": "negative or modal before 把",
+   "explain": "In a 把 sentence, negatives like 没 and 不 and modal verbs like 要, 能, 应该 go before 把, not before the verb. Pitfall: 我把门没关 is wrong; say 我没把门关上.",
+   "examples": [
+    {
+     "text": "我没把钱带来。",
+     "mark": [
+      "没把"
+     ],
+     "en": "I didn't bring the money."
+    },
+    {
+     "text": "你别把衣服弄脏了。",
+     "mark": [
+      "别把"
+     ],
+     "en": "Don't get your clothes dirty."
+    },
+    {
+     "text": "我要把房间打扫干净。",
+     "mark": [
+      "要把"
+     ],
+     "en": "I'm going to clean the room."
+    },
+    {
+     "text": "他不想把这件事告诉别人。",
+     "mark": [
+      "不想把"
+     ],
+     "en": "He doesn't want to tell others about this."
+    }
+   ]
+  },
+  {
+   "id": "zh3-ba-cheng",
+   "title": "把…当作/变成/翻译成 — turning A into B",
+   "pattern": "Subject + 把 + A + Verb成/作 + B",
+   "short": "把 A into B (变成, 当作)",
+   "explain": "把 A + verb + 成/作 + B means treating, turning or translating A into B. Common verbs are 变成, 当作, 翻译成, 换成, 看成. Pitfall: 成 must follow the verb directly.",
+   "examples": [
+    {
+     "text": "请把这些字写成汉字。",
+     "mark": [
+      "把",
+      "写成"
+     ],
+     "en": "Please write these as Chinese characters."
+    },
+    {
+     "text": "他把我当作好朋友。",
+     "mark": [
+      "把",
+      "当作"
+     ],
+     "en": "He treats me as a good friend."
+    },
+    {
+     "text": "我想把美元换成人民币。",
+     "mark": [
+      "把",
+      "换成"
+     ],
+     "en": "I want to change dollars into RMB."
+    },
+    {
+     "text": "别把\"大\"字写成\"太\"字。",
+     "mark": [
+      "把",
+      "写成"
+     ],
+     "en": "Don't write 大 as 太."
+    }
+   ]
+  },
+  {
+   "id": "zh3-bei",
+   "title": "被 — the passive voice",
+   "pattern": "Receiver + 被 + (Doer) + Verb + Result",
+   "short": "passive voice with 被",
+   "explain": "被 marks the passive: the subject receives the action, and the doer can follow 被 or be left out. It often describes something unpleasant or unexpected. Pitfall: like 把, the verb usually needs a result or 了 after it.",
+   "examples": [
+    {
+     "text": "我的自行车被人骑走了。",
+     "mark": [
+      "被"
+     ],
+     "en": "Someone rode off on my bike."
+    },
+    {
+     "text": "蛋糕被弟弟吃完了。",
+     "mark": [
+      "被"
+     ],
+     "en": "The cake was eaten up by my little brother."
+    },
+    {
+     "text": "他被老师批评了。",
+     "mark": [
+      "被"
+     ],
+     "en": "He was criticized by the teacher."
+    },
+    {
+     "text": "杯子被我打破了。",
+     "mark": [
+      "被"
+     ],
+     "en": "The cup was broken by me."
+    }
+   ]
+  },
+  {
+   "id": "zh3-jiao-rang",
+   "title": "叫/让 — spoken passive",
+   "pattern": "Receiver + 叫/让 + Doer + Verb + Result",
+   "short": "spoken passive with 叫 or 让",
+   "explain": "In speech, 叫 and 让 can replace 被 to form a passive. Unlike 被, they must be followed by the doer. Pitfall: 我的书让偷了 is wrong; the doer cannot be left out.",
+   "examples": [
+    {
+     "text": "我的伞叫人拿走了。",
+     "mark": [
+      "叫"
+     ],
+     "en": "Someone took my umbrella."
+    },
+    {
+     "text": "衣服让孩子弄脏了。",
+     "mark": [
+      "让"
+     ],
+     "en": "The kid got the clothes dirty."
+    },
+    {
+     "text": "那块蛋糕叫猫吃了一半。",
+     "mark": [
+      "叫"
+     ],
+     "en": "The cat ate half of that cake."
+    },
+    {
+     "text": "我的话让他听见了。",
+     "mark": [
+      "让"
+     ],
+     "en": "He overheard what I said."
+    }
+   ]
+  },
+  {
+   "id": "zh3-pot-de",
+   "title": "Potential complement: V得 + result",
+   "pattern": "Verb + 得 + Result/Direction",
+   "short": "can do: V得 complement",
+   "explain": "Verb + 得 + result says the action is possible, for example 看得见 'can see'. It focuses on whether the result can be reached. Pitfall: don't confuse it with the degree complement 跑得快 'runs fast'.",
+   "examples": [
+    {
+     "text": "黑板上的字你看得清楚吗？",
+     "mark": [
+      "看得清楚"
+     ],
+     "en": "Can you see the words on the board clearly?"
+    },
+    {
+     "text": "这么多菜，我们吃得完。",
+     "mark": [
+      "吃得完"
+     ],
+     "en": "We can finish this much food."
+    },
+    {
+     "text": "他说中文，我听得懂。",
+     "mark": [
+      "听得懂"
+     ],
+     "en": "He speaks Chinese and I can understand it."
+    },
+    {
+     "text": "八点以前回得来吗？",
+     "mark": [
+      "回得来"
+     ],
+     "en": "Can you come back before eight?"
+    }
+   ]
+  },
+  {
+   "id": "zh3-pot-bu",
+   "title": "Potential complement: V不 + result",
+   "pattern": "Verb + 不 + Result/Direction",
+   "short": "cannot do: V不 complement",
+   "explain": "Verb + 不 + result says the action can't reach its result, for example 听不懂 'can't understand'. It is more natural than 不能 for physical or mental limits. Pitfall: 不能听懂 is unnatural; say 听不懂.",
+   "examples": [
+    {
+     "text": "老师说得太快，我听不懂。",
+     "mark": [
+      "听不懂"
+     ],
+     "en": "The teacher speaks too fast; I can't understand."
+    },
+    {
+     "text": "箱子太重了，我拿不动。",
+     "mark": [
+      "拿不动"
+     ],
+     "en": "The box is too heavy; I can't carry it."
+    },
+    {
+     "text": "今天的作业我做不完。",
+     "mark": [
+      "做不完"
+     ],
+     "en": "I can't finish today's homework."
+    },
+    {
+     "text": "门关着，我进不去。",
+     "mark": [
+      "进不去"
+     ],
+     "en": "The door is shut; I can't get in."
+    }
+   ]
+  },
+  {
+   "id": "zh3-pot-liao",
+   "title": "V得了/V不了 — able or unable",
+   "pattern": "Verb + 得了 / 不了 (liǎo)",
+   "short": "able/unable: 得了, 不了",
+   "explain": "得了 and 不了 (liǎo) after a verb say whether something can happen at all, or whether there is too much to finish. 吃不了 can mean 'can't eat it' or 'can't eat that much'. Pitfall: 了 here is read liǎo, not le.",
+   "examples": [
+    {
+     "text": "明天我去不了。",
+     "mark": [
+      "去不了"
+     ],
+     "en": "I can't go tomorrow."
+    },
+    {
+     "text": "这么多饭，我吃不了。",
+     "mark": [
+      "吃不了"
+     ],
+     "en": "I can't eat this much food."
+    },
+    {
+     "text": "你一个人做得了吗？",
+     "mark": [
+      "做得了"
+     ],
+     "en": "Can you manage it by yourself?"
+    },
+    {
+     "text": "他病了，来不了了。",
+     "mark": [
+      "来不了"
+     ],
+     "en": "He's sick and can't come."
+    }
+   ]
+  },
+  {
+   "id": "zh3-deg-de",
+   "title": "Degree complement with 得",
+   "pattern": "Verb + 得 + Adjective phrase",
+   "short": "how an action is done: V得 + adj",
+   "explain": "Verb + 得 + description says how well or how something is done: 她唱得很好. If there is an object, repeat the verb: 他说中文说得很流利. Pitfall: don't put the object between the verb and 得.",
+   "examples": [
+    {
+     "text": "她唱歌唱得很好听。",
+     "mark": [
+      "唱得很好听"
+     ],
+     "en": "She sings beautifully."
+    },
+    {
+     "text": "你今天来得真早。",
+     "mark": [
+      "来得真早"
+     ],
+     "en": "You came really early today."
+    },
+    {
+     "text": "他跑得比我快。",
+     "mark": [
+      "跑得比我快"
+     ],
+     "en": "He runs faster than me."
+    },
+    {
+     "text": "这件事你做得不对。",
+     "mark": [
+      "做得不对"
+     ],
+     "en": "You handled this wrongly."
+    }
+   ]
+  },
+  {
+   "id": "zh3-deg-ji",
+   "title": "极了/死了/坏了 — extremely",
+   "pattern": "Adjective + 极了 / 死了 / 坏了",
+   "short": "extremely: adj + 极了/死了",
+   "explain": "Adjective + 极了 means 'extremely'. In speech, 死了 and 坏了 also mean 'terribly', often for feelings or bad states. Pitfall: don't add 很 before the adjective (not 很好极了).",
+   "examples": [
+    {
+     "text": "今天的天气好极了。",
+     "mark": [
+      "好极了"
+     ],
+     "en": "The weather today is excellent."
+    },
+    {
+     "text": "我饿死了，快吃饭吧！",
+     "mark": [
+      "饿死了"
+     ],
+     "en": "I'm starving, let's eat!"
+    },
+    {
+     "text": "听到这个消息，他高兴坏了。",
+     "mark": [
+      "高兴坏了"
+     ],
+     "en": "He was overjoyed at the news."
+    },
+    {
+     "text": "这个菜好吃极了。",
+     "mark": [
+      "好吃极了"
+     ],
+     "en": "This dish is delicious."
+    }
+   ]
+  },
+  {
+   "id": "zh3-deg-state",
+   "title": "V得 + result clause — so … that",
+   "pattern": "Verb/Adj + 得 + clause",
+   "short": "so...that: 得 + result clause",
+   "explain": "得 can introduce a whole clause that shows the result of a strong state, like 'so tired that I can't walk'. The clause describes what happened because of the degree. Pitfall: the part after 得 is a full description, not just one adjective.",
+   "examples": [
+    {
+     "text": "他笑得说不出话来。",
+     "mark": [
+      "笑得"
+     ],
+     "en": "He laughed so hard he couldn't speak."
+    },
+    {
+     "text": "我累得不想动。",
+     "mark": [
+      "累得"
+     ],
+     "en": "I'm so tired I don't want to move."
+    },
+    {
+     "text": "她急得哭了起来。",
+     "mark": [
+      "急得"
+     ],
+     "en": "She was so anxious that she started crying."
+    },
+    {
+     "text": "孩子们高兴得跳了起来。",
+     "mark": [
+      "高兴得"
+     ],
+     "en": "The children jumped up with joy."
+    }
+   ]
+  },
+  {
+   "id": "zh3-dir-compound",
+   "title": "Compound directional complements",
+   "pattern": "Verb + 上/下/进/出/回/过/起 + 来/去",
+   "short": "compound direction: 走进来, 跑出去",
+   "explain": "A verb can take a two-part direction: 上/下/进/出/回/过/起 plus 来 (toward the speaker) or 去 (away). A place word goes before 来/去: 走进教室来. Pitfall: don't put the place after 来/去.",
+   "examples": [
+    {
+     "text": "他从楼上走下来了。",
+     "mark": [
+      "走下来"
+     ],
+     "en": "He came down from upstairs."
+    },
+    {
+     "text": "老师走进教室来了。",
+     "mark": [
+      "走进",
+      "来"
+     ],
+     "en": "The teacher walked into the classroom."
+    },
+    {
+     "text": "小狗跑出去了。",
+     "mark": [
+      "跑出去"
+     ],
+     "en": "The puppy ran out."
+    },
+    {
+     "text": "请把书拿回来。",
+     "mark": [
+      "拿回来"
+     ],
+     "en": "Please bring the book back."
+    }
+   ]
+  },
+  {
+   "id": "zh3-qilai",
+   "title": "V起来 — start to; when doing",
+   "pattern": "Verb/Adj + 起来",
+   "short": "begin or 'when doing': 起来",
+   "explain": "起来 after a verb or adjective can mean an action or state starts, like 下起雨来 'it started to rain'. 看起来 / 听起来 mean 'it looks / sounds'. Pitfall: an object goes between 起 and 来.",
+   "examples": [
+    {
+     "text": "天气慢慢热起来了。",
+     "mark": [
+      "热起来"
+     ],
+     "en": "The weather is gradually getting hot."
+    },
+    {
+     "text": "这个菜看起来很好吃。",
+     "mark": [
+      "看起来"
+     ],
+     "en": "This dish looks delicious."
+    },
+    {
+     "text": "突然下起雨来了。",
+     "mark": [
+      "下起",
+      "来"
+     ],
+     "en": "Suddenly it started to rain."
+    },
+    {
+     "text": "说起来容易，做起来难。",
+     "mark": [
+      "说起来",
+      "做起来"
+     ],
+     "en": "Easier said than done."
+    }
+   ]
+  },
+  {
+   "id": "zh3-xiaqu",
+   "title": "V下去 — keep on doing",
+   "pattern": "Verb + 下去",
+   "short": "continue: V下去",
+   "explain": "下去 after a verb means to keep doing something that has already started. It is common with 说, 学, 坚持 and 住. Pitfall: don't confuse it with the literal 'go down', like 走下去.",
+   "examples": [
+    {
+     "text": "请你继续说下去。",
+     "mark": [
+      "说下去"
+     ],
+     "en": "Please go on."
+    },
+    {
+     "text": "你要坚持学下去。",
+     "mark": [
+      "学下去"
+     ],
+     "en": "You need to keep studying."
+    },
+    {
+     "text": "这样下去不行。",
+     "mark": [
+      "下去"
+     ],
+     "en": "It can't go on like this."
+    },
+    {
+     "text": "我想在这里住下去。",
+     "mark": [
+      "住下去"
+     ],
+     "en": "I want to keep living here."
+    }
+   ]
+  },
+  {
+   "id": "zh3-chulai",
+   "title": "V出来 — figure out, come up with",
+   "pattern": "Verb + 出来",
+   "short": "identify or produce: V出来",
+   "explain": "出来 after a verb can mean something becomes known or produced: 看出来 'notice', 想出来 'come up with', 听出来 'recognize by sound'. Pitfall: 想出来 means coming up with an idea, while 想起来 means remembering.",
+   "examples": [
+    {
+     "text": "我听出来是你的声音。",
+     "mark": [
+      "听出来"
+     ],
+     "en": "I recognized your voice."
+    },
+    {
+     "text": "你看出来他不高兴了吗？",
+     "mark": [
+      "看出来"
+     ],
+     "en": "Did you notice he was unhappy?"
+    },
+    {
+     "text": "我想出来一个好办法。",
+     "mark": [
+      "想出来"
+     ],
+     "en": "I came up with a good idea."
+    },
+    {
+     "text": "这个字我写不出来。",
+     "mark": [
+      "写不出来"
+     ],
+     "en": "I can't write this character."
+    }
+   ]
+  },
+  {
+   "id": "zh3-xiaqu2",
+   "title": "V下来 — record, stop, settle",
+   "pattern": "Verb + 下来",
+   "short": "fix or settle down: V下来",
+   "explain": "下来 after a verb can mean something is kept or fixed, as in 记下来 'write down' and 留下来 'stay'. With adjectives, it means calming or slowing down: 安静下来. Pitfall: 下来 is about settling or staying, while 下去 is about continuing.",
+   "examples": [
+    {
+     "text": "请把他的名字记下来。",
+     "mark": [
+      "记下来"
+     ],
+     "en": "Please write down his name."
+    },
+    {
+     "text": "教室里慢慢安静下来了。",
+     "mark": [
+      "安静下来"
+     ],
+     "en": "The classroom gradually quieted down."
+    },
+    {
+     "text": "车慢慢停下来了。",
+     "mark": [
+      "停下来"
+     ],
+     "en": "The car slowly came to a stop."
+    },
+    {
+     "text": "他决定留下来工作。",
+     "mark": [
+      "留下来"
+     ],
+     "en": "He decided to stay and work."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yuelaiyue",
+   "title": "越来越 — more and more",
+   "pattern": "Subject + 越来越 + Adjective/Verb",
+   "short": "more and more over time",
+   "explain": "越来越 + adjective means something is getting more and more so over time. Don't add 很 or 非常 after 越来越. Pitfall: 越来越很冷 is wrong; say 越来越冷.",
+   "examples": [
+    {
+     "text": "天气越来越冷了。",
+     "mark": [
+      "越来越"
+     ],
+     "en": "It's getting colder and colder."
+    },
+    {
+     "text": "他的中文越来越好。",
+     "mark": [
+      "越来越"
+     ],
+     "en": "His Chinese is getting better and better."
+    },
+    {
+     "text": "城市里的车越来越多。",
+     "mark": [
+      "越来越"
+     ],
+     "en": "There are more and more cars in the city."
+    },
+    {
+     "text": "我越来越喜欢这里了。",
+     "mark": [
+      "越来越"
+     ],
+     "en": "I like it here more and more."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yue-yue",
+   "title": "越…越… — the more…, the more…",
+   "pattern": "越 + A, 越 + B",
+   "short": "the more A, the more B",
+   "explain": "越 A 越 B means 'the more A, the more B': B changes as A increases. Both parts need 越. Pitfall: don't add 很 after 越.",
+   "examples": [
+    {
+     "text": "外面的雨越下越大。",
+     "mark": [
+      "越",
+      "越"
+     ],
+     "en": "The rain outside is getting heavier and heavier."
+    },
+    {
+     "text": "这本书我越看越喜欢。",
+     "mark": [
+      "越",
+      "越"
+     ],
+     "en": "The more I read this book, the more I like it."
+    },
+    {
+     "text": "他越说越高兴。",
+     "mark": [
+      "越",
+      "越"
+     ],
+     "en": "The more he talked, the happier he got."
+    },
+    {
+     "text": "越着急越容易错。",
+     "mark": [
+      "越",
+      "越"
+     ],
+     "en": "The more anxious you are, the more mistakes you make."
+    }
+   ]
+  },
+  {
+   "id": "zh3-bi-geng",
+   "title": "比 with 更/还/一点儿/多了",
+   "pattern": "A + 比 + B + (更/还) + Adj + (一点儿/多了)",
+   "short": "comparison details: 更, 一点儿",
+   "explain": "In 比 comparisons, 更 or 还 before the adjective mean 'even more'. 一点儿 or 多了 after it show a small or big difference. Pitfall: never use 很 or 非常 in a 比 sentence.",
+   "examples": [
+    {
+     "text": "今天比昨天更热。",
+     "mark": [
+      "比",
+      "更"
+     ],
+     "en": "Today is even hotter than yesterday."
+    },
+    {
+     "text": "他比我高一点儿。",
+     "mark": [
+      "比",
+      "一点儿"
+     ],
+     "en": "He's a little taller than me."
+    },
+    {
+     "text": "这个房间比那个大多了。",
+     "mark": [
+      "比",
+      "多了"
+     ],
+     "en": "This room is much bigger than that one."
+    },
+    {
+     "text": "妹妹比姐姐还聪明。",
+     "mark": [
+      "比",
+      "还"
+     ],
+     "en": "The younger sister is even smarter than the older one."
+    }
+   ]
+  },
+  {
+   "id": "zh3-bi-num",
+   "title": "比 with exact difference",
+   "pattern": "A + 比 + B + Adj + Number + Measure",
+   "short": "comparison with exact amount",
+   "explain": "To say exactly how big the difference is, put the amount after the adjective: 他比我大两岁. The amount always follows the adjective. Pitfall: 他比我两岁大 is wrong.",
+   "examples": [
+    {
+     "text": "哥哥比我大三岁。",
+     "mark": [
+      "比",
+      "大三岁"
+     ],
+     "en": "My brother is three years older than me."
+    },
+    {
+     "text": "这件比那件贵五十块。",
+     "mark": [
+      "比",
+      "贵五十块"
+     ],
+     "en": "This one is fifty yuan more expensive than that one."
+    },
+    {
+     "text": "他比我早到十分钟。",
+     "mark": [
+      "比",
+      "早到十分钟"
+     ],
+     "en": "He arrived ten minutes earlier than me."
+    },
+    {
+     "text": "我比去年重了两公斤。",
+     "mark": [
+      "比",
+      "重了两公斤"
+     ],
+     "en": "I'm two kilos heavier than last year."
+    }
+   ]
+  },
+  {
+   "id": "zh3-meiyou-name",
+   "title": "没有…那么/这么 — not as … as",
+   "pattern": "A + 没有 + B + 那么/这么 + Adj",
+   "short": "not as...as: 没有…那么",
+   "explain": "A 没有 B 那么 + adjective means 'A is not as … as B'. 那么 or 这么 adds emphasis. Pitfall: don't use 比 with 不 for this meaning; 不比 means something else.",
+   "examples": [
+    {
+     "text": "北京没有东北那么冷。",
+     "mark": [
+      "没有",
+      "那么"
+     ],
+     "en": "Beijing isn't as cold as the Northeast."
+    },
+    {
+     "text": "我没有他那么高。",
+     "mark": [
+      "没有",
+      "那么"
+     ],
+     "en": "I'm not as tall as him."
+    },
+    {
+     "text": "今天没有昨天这么热。",
+     "mark": [
+      "没有",
+      "这么"
+     ],
+     "en": "Today isn't as hot as yesterday."
+    },
+    {
+     "text": "坐车没有走路这么累。",
+     "mark": [
+      "没有",
+      "这么"
+     ],
+     "en": "Riding isn't as tiring as walking."
+    }
+   ]
+  },
+  {
+   "id": "zh3-buru",
+   "title": "A 不如 B — A is not as good as B",
+   "pattern": "A + 不如 + B + (Adj)",
+   "short": "A not as good as B: 不如",
+   "explain": "A 不如 B means 'A is not as good as B', or not as good in some way if an adjective follows. 不如 can also suggest a better choice: 不如明天去. Pitfall: the adjective after 不如 B is usually positive.",
+   "examples": [
+    {
+     "text": "我的中文不如他好。",
+     "mark": [
+      "不如"
+     ],
+     "en": "My Chinese isn't as good as his."
+    },
+    {
+     "text": "坐车不如骑车快。",
+     "mark": [
+      "不如"
+     ],
+     "en": "Taking the bus is not as fast as cycling."
+    },
+    {
+     "text": "今天太晚了，不如明天去。",
+     "mark": [
+      "不如"
+     ],
+     "en": "It's too late today; we might as well go tomorrow."
+    },
+    {
+     "text": "这家饭馆不如那家。",
+     "mark": [
+      "不如"
+     ],
+     "en": "This restaurant isn't as good as that one."
+    }
+   ]
+  },
+  {
+   "id": "zh3-haoxiang",
+   "title": "好像 — seem, as if",
+   "pattern": "Subject + 好像 + Verb/Adj/Clause",
+   "short": "seems like: 好像",
+   "explain": "好像 means 'it seems' or 'as if' and makes a statement softer or less certain. It can go before the subject or the verb. Pitfall: 好像…一样 is a comparison, while 好像 alone just shows uncertainty.",
+   "examples": [
+    {
+     "text": "他好像生病了。",
+     "mark": [
+      "好像"
+     ],
+     "en": "He seems to be sick."
+    },
+    {
+     "text": "外面好像下雨了。",
+     "mark": [
+      "好像"
+     ],
+     "en": "It seems to be raining outside."
+    },
+    {
+     "text": "我好像在哪儿见过你。",
+     "mark": [
+      "好像"
+     ],
+     "en": "I think I've seen you somewhere."
+    },
+    {
+     "text": "她高兴得好像孩子一样。",
+     "mark": [
+      "好像"
+     ],
+     "en": "She was as happy as a child."
+    }
+   ]
+  },
+  {
+   "id": "zh3-chule-yiwai-ye",
+   "title": "除了…以外，还/也 — besides",
+   "pattern": "除了 + A + (以外)，Subject + 还/也 + …",
+   "short": "besides A, also B",
+   "explain": "除了 A 以外，还/也 B means 'besides A, also B', so A is included. Use 还 or 也 in the second part. Pitfall: if the second part has 都, A is left out.",
+   "examples": [
+    {
+     "text": "除了中文以外，我还学英语。",
+     "mark": [
+      "除了",
+      "以外",
+      "还"
+     ],
+     "en": "Besides Chinese, I also study English."
+    },
+    {
+     "text": "除了米饭，他也喜欢面条。",
+     "mark": [
+      "除了",
+      "也"
+     ],
+     "en": "Besides rice, he also likes noodles."
+    },
+    {
+     "text": "除了周末以外，我晚上也有空。",
+     "mark": [
+      "除了",
+      "以外",
+      "也"
+     ],
+     "en": "Besides weekends, I'm also free in the evenings."
+    },
+    {
+     "text": "除了打球，他还喜欢游泳。",
+     "mark": [
+      "除了",
+      "还"
+     ],
+     "en": "Besides playing ball, he also likes swimming."
+    }
+   ]
+  },
+  {
+   "id": "zh3-chule-yiwai-dou",
+   "title": "除了…以外，都 — except",
+   "pattern": "除了 + A + (以外)，Others + 都 + …",
+   "short": "except A, all others",
+   "explain": "除了 A 以外，都 … means 'everyone or everything except A'. With 都, A is left out of the group. Pitfall: don't use 还 here, or the meaning becomes 'besides'.",
+   "examples": [
+    {
+     "text": "除了小王，大家都来了。",
+     "mark": [
+      "除了",
+      "都"
+     ],
+     "en": "Everyone came except Xiao Wang."
+    },
+    {
+     "text": "除了星期天以外，我每天都上班。",
+     "mark": [
+      "除了",
+      "以外",
+      "都"
+     ],
+     "en": "I work every day except Sunday."
+    },
+    {
+     "text": "除了鱼，什么菜我都吃。",
+     "mark": [
+      "除了",
+      "都"
+     ],
+     "en": "I eat everything except fish."
+    },
+    {
+     "text": "除了他以外，我们都同意。",
+     "mark": [
+      "除了",
+      "以外",
+      "都"
+     ],
+     "en": "All of us agree except him."
+    }
+   ]
+  },
+  {
+   "id": "zh3-budan-erqie",
+   "title": "不但…而且… — not only…but also",
+   "pattern": "Subject + 不但 + A，而且 + B",
+   "short": "not only A but also B",
+   "explain": "不但 A，而且 B means 'not only A, but also B', where B adds more. Often 也 or 还 follows in the second part. Pitfall: if the subjects differ, put 不但 before the first subject.",
+   "examples": [
+    {
+     "text": "她不但漂亮，而且聪明。",
+     "mark": [
+      "不但",
+      "而且"
+     ],
+     "en": "She's not only pretty but also smart."
+    },
+    {
+     "text": "这家店不但便宜，而且好吃。",
+     "mark": [
+      "不但",
+      "而且"
+     ],
+     "en": "This place is not only cheap but tasty."
+    },
+    {
+     "text": "他不但会说，而且会写。",
+     "mark": [
+      "不但",
+      "而且"
+     ],
+     "en": "He can not only speak but also write."
+    },
+    {
+     "text": "不但我去，而且他也去。",
+     "mark": [
+      "不但",
+      "而且"
+     ],
+     "en": "Not only am I going, he is too."
+    }
+   ]
+  },
+  {
+   "id": "zh3-jiu-you",
+   "title": "既…又… — both … and …",
+   "pattern": "既 + A + 又 + B",
+   "short": "both A and B: 既…又",
+   "explain": "既 A 又 B means something is both A and B at the same time. A and B are usually adjectives or verbs of the same kind. Pitfall: both parts should be all positive or all negative.",
+   "examples": [
+    {
+     "text": "这个房间既干净又安静。",
+     "mark": [
+      "既",
+      "又"
+     ],
+     "en": "This room is both clean and quiet."
+    },
+    {
+     "text": "他既是老师，又是朋友。",
+     "mark": [
+      "既",
+      "又"
+     ],
+     "en": "He's both a teacher and a friend."
+    },
+    {
+     "text": "这样做既省钱又方便。",
+     "mark": [
+      "既",
+      "又"
+     ],
+     "en": "Doing it this way saves money and is convenient."
+    },
+    {
+     "text": "她既会唱歌又会跳舞。",
+     "mark": [
+      "既",
+      "又"
+     ],
+     "en": "She can both sing and dance."
+    }
+   ]
+  },
+  {
+   "id": "zh3-zhiyao-jiu",
+   "title": "只要…就… — as long as",
+   "pattern": "只要 + Condition，(Subject) + 就 + Result",
+   "short": "as long as: 只要…就",
+   "explain": "只要 A，就 B means 'as long as A, then B': A is enough for B to happen. 就 comes after the subject in the second part. Pitfall: don't mix it with 只有…才, which means A is required.",
+   "examples": [
+    {
+     "text": "只要努力，就能学好。",
+     "mark": [
+      "只要",
+      "就"
+     ],
+     "en": "As long as you work hard, you'll learn well."
+    },
+    {
+     "text": "只要你来，我就高兴。",
+     "mark": [
+      "只要",
+      "就"
+     ],
+     "en": "As long as you come, I'm happy."
+    },
+    {
+     "text": "只要不下雨，我们就去。",
+     "mark": [
+      "只要",
+      "就"
+     ],
+     "en": "As long as it doesn't rain, we'll go."
+    },
+    {
+     "text": "只要有时间，他就看书。",
+     "mark": [
+      "只要",
+      "就"
+     ],
+     "en": "Whenever he has time, he reads."
+    }
+   ]
+  },
+  {
+   "id": "zh3-zhiyou-cai",
+   "title": "只有…才… — only if",
+   "pattern": "只有 + Condition，(Subject) + 才 + Result",
+   "short": "only if: 只有…才",
+   "explain": "只有 A，才 B means 'only if A, then B': A is the one necessary condition. Always use 才, not 就, in the second part. Pitfall: 只有…就 is wrong.",
+   "examples": [
+    {
+     "text": "只有多练习，才能说好。",
+     "mark": [
+      "只有",
+      "才"
+     ],
+     "en": "Only with lots of practice can you speak well."
+    },
+    {
+     "text": "只有他才知道这件事。",
+     "mark": [
+      "只有",
+      "才"
+     ],
+     "en": "Only he knows about this."
+    },
+    {
+     "text": "只有周末我才有空。",
+     "mark": [
+      "只有",
+      "才"
+     ],
+     "en": "Only on weekends am I free."
+    },
+    {
+     "text": "只有认真，才能做好。",
+     "mark": [
+      "只有",
+      "才"
+     ],
+     "en": "Only by being serious can you do it well."
+    }
+   ]
+  },
+  {
+   "id": "zh3-ruguo-jiu",
+   "title": "如果…(的话)，就… — if … then",
+   "pattern": "如果 + Condition (+ 的话)，(Subject) + 就 + Result",
+   "short": "if...then: 如果…就",
+   "explain": "如果 A (的话)，就 B means 'if A, then B'. 的话 at the end of the condition is optional and common in speech. Pitfall: 就 goes after the subject of the second part, never before it.",
+   "examples": [
+    {
+     "text": "如果明天下雨，我们就不去了。",
+     "mark": [
+      "如果",
+      "就"
+     ],
+     "en": "If it rains tomorrow, we won't go."
+    },
+    {
+     "text": "如果你累了的话，就休息吧。",
+     "mark": [
+      "如果",
+      "的话",
+      "就"
+     ],
+     "en": "If you're tired, rest."
+    },
+    {
+     "text": "如果有问题，就问老师。",
+     "mark": [
+      "如果",
+      "就"
+     ],
+     "en": "If you have questions, ask the teacher."
+    },
+    {
+     "text": "如果我有钱，就买房子。",
+     "mark": [
+      "如果",
+      "就"
+     ],
+     "en": "If I had money, I'd buy a house."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yaoshi",
+   "title": "要是…就… — if (spoken)",
+   "pattern": "要是 + Condition，(Subject) + 就 + Result",
+   "short": "spoken if: 要是…就",
+   "explain": "要是 means 'if' like 如果, but it sounds more casual and spoken. It often pairs with 就 or ends with 的话. Pitfall: don't confuse it with 要 'want', since 要是 is one word.",
+   "examples": [
+    {
+     "text": "要是你不想去，就别去了。",
+     "mark": [
+      "要是",
+      "就"
+     ],
+     "en": "If you don't want to go, then don't."
+    },
+    {
+     "text": "要是有空，就来我家玩。",
+     "mark": [
+      "要是",
+      "就"
+     ],
+     "en": "If you're free, come over."
+    },
+    {
+     "text": "要是早知道，我就不来了。",
+     "mark": [
+      "要是",
+      "就"
+     ],
+     "en": "If I'd known, I wouldn't have come."
+    },
+    {
+     "text": "要是迟到了怎么办？",
+     "mark": [
+      "要是"
+     ],
+     "en": "What if we're late?"
+    }
+   ]
+  },
+  {
+   "id": "zh3-lian-dou",
+   "title": "连…都/也… — even",
+   "pattern": "连 + Focus + 都/也 + Verb",
+   "short": "even: 连…都/也",
+   "explain": "连 X 都/也 means 'even X' and points out a surprising or extreme case. 都 or 也 must follow. Pitfall: forgetting 都 or 也 makes the sentence wrong.",
+   "examples": [
+    {
+     "text": "他连饭都没吃就走了。",
+     "mark": [
+      "连",
+      "都"
+     ],
+     "en": "He left without even eating."
+    },
+    {
+     "text": "这个字连老师也不认识。",
+     "mark": [
+      "连",
+      "也"
+     ],
+     "en": "Even the teacher doesn't know this character."
+    },
+    {
+     "text": "我忙得连水都没喝。",
+     "mark": [
+      "连",
+      "都"
+     ],
+     "en": "I was so busy I didn't even drink water."
+    },
+    {
+     "text": "连小孩子都知道。",
+     "mark": [
+      "连",
+      "都"
+     ],
+     "en": "Even little kids know that."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yi-jiu",
+   "title": "一…就… — as soon as",
+   "pattern": "Subject + 一 + Action A + 就 + Action B",
+   "short": "as soon as: 一…就",
+   "explain": "一 A 就 B means 'as soon as A, B happens', or 'every time A, B'. Both 一 and 就 go before verbs. Pitfall: if there are two subjects, 一 comes after the first and 就 after the second.",
+   "examples": [
+    {
+     "text": "我一到家就给你打电话。",
+     "mark": [
+      "一",
+      "就"
+     ],
+     "en": "I'll call you as soon as I get home."
+    },
+    {
+     "text": "他一喝酒就脸红。",
+     "mark": [
+      "一",
+      "就"
+     ],
+     "en": "His face turns red whenever he drinks."
+    },
+    {
+     "text": "老师一说，我就明白了。",
+     "mark": [
+      "一",
+      "就"
+     ],
+     "en": "As soon as the teacher explained, I understood."
+    },
+    {
+     "text": "天一黑，路灯就亮了。",
+     "mark": [
+      "一",
+      "就"
+     ],
+     "en": "As soon as it got dark, the street lights came on."
+    }
+   ]
+  },
+  {
+   "id": "zh3-dui-laishuo",
+   "title": "对…来说 — for someone",
+   "pattern": "对 + Person + 来说，…",
+   "short": "from someone's view: 对…来说",
+   "explain": "对 X 来说 means 'for X' or 'as far as X is concerned', and gives someone's point of view. It usually starts the sentence. Pitfall: don't confuse it with 对…说 'say to someone'.",
+   "examples": [
+    {
+     "text": "对我来说，汉字很难。",
+     "mark": [
+      "对",
+      "来说"
+     ],
+     "en": "For me, Chinese characters are hard."
+    },
+    {
+     "text": "对孩子来说，玩很重要。",
+     "mark": [
+      "对",
+      "来说"
+     ],
+     "en": "For kids, playing is important."
+    },
+    {
+     "text": "对他来说，这不是问题。",
+     "mark": [
+      "对",
+      "来说"
+     ],
+     "en": "For him, this isn't a problem."
+    },
+    {
+     "text": "对学生来说，学习最重要。",
+     "mark": [
+      "对",
+      "来说"
+     ],
+     "en": "For students, studying matters most."
+    }
+   ]
+  },
+  {
+   "id": "zh3-shi-de",
+   "title": "是…的 — emphasizing details of a past event",
+   "pattern": "Subject + 是 + Time/Place/Manner + Verb + 的",
+   "short": "stress when/where/how: 是…的",
+   "explain": "是…的 stresses when, where, how or with whom a past action happened. Put the detail after 是 and 的 at the end, or before the object. Pitfall: use it only for actions already done, and 是 can be left out in positive sentences.",
+   "examples": [
+    {
+     "text": "你是什么时候来的？",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "When did you come?"
+    },
+    {
+     "text": "我是坐飞机来的。",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "I came by plane."
+    },
+    {
+     "text": "这本书是在北京买的。",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "This book was bought in Beijing."
+    },
+    {
+     "text": "我不是一个人去的。",
+     "mark": [
+      "是",
+      "的"
+     ],
+     "en": "I didn't go alone."
+    }
+   ]
+  },
+  {
+   "id": "zh3-nandao",
+   "title": "难道…吗 — surely not?",
+   "pattern": "难道 + Statement + 吗？",
+   "short": "surely not? rhetorical 难道",
+   "explain": "难道…吗 makes a rhetorical question that shows surprise or disbelief. The speaker means the opposite of what is asked. Pitfall: it isn't a real question, so don't answer it with yes or no.",
+   "examples": [
+    {
+     "text": "难道你不知道吗？",
+     "mark": [
+      "难道",
+      "吗"
+     ],
+     "en": "Don't tell me you don't know?"
+    },
+    {
+     "text": "难道他又迟到了吗？",
+     "mark": [
+      "难道",
+      "吗"
+     ],
+     "en": "Surely he isn't late again?"
+    },
+    {
+     "text": "这么简单，难道你不会吗？",
+     "mark": [
+      "难道",
+      "吗"
+     ],
+     "en": "It's so easy, surely you can do it?"
+    },
+    {
+     "text": "难道这是真的吗？",
+     "mark": [
+      "难道",
+      "吗"
+     ],
+     "en": "Can this really be true?"
+    }
+   ]
+  },
+  {
+   "id": "zh3-bushi-ma",
+   "title": "不是…吗 — isn't it…?",
+   "pattern": "不是 + Statement + 吗？",
+   "short": "isn't it? 不是…吗",
+   "explain": "不是…吗 is a rhetorical question meaning 'isn't it …?' and reminds someone of a known fact. It often sounds a little surprised or blaming. Pitfall: the meaning is positive: 你不是去过吗 means 'you have been there'.",
+   "examples": [
+    {
+     "text": "你不是说今天来吗？",
+     "mark": [
+      "不是",
+      "吗"
+     ],
+     "en": "Didn't you say you'd come today?"
+    },
+    {
+     "text": "他不是你哥哥吗？",
+     "mark": [
+      "不是",
+      "吗"
+     ],
+     "en": "Isn't he your older brother?"
+    },
+    {
+     "text": "这不是很简单吗？",
+     "mark": [
+      "不是",
+      "吗"
+     ],
+     "en": "Isn't this simple?"
+    },
+    {
+     "text": "你不是去过上海吗？",
+     "mark": [
+      "不是",
+      "吗"
+     ],
+     "en": "Haven't you been to Shanghai?"
+    }
+   ]
+  },
+  {
+   "id": "zh3-rhet-zenme",
+   "title": "怎么/哪儿 rhetorical questions",
+   "pattern": "怎么/哪儿/谁 + (能/会) + Verb？",
+   "short": "rhetorical 怎么/哪儿/谁",
+   "explain": "Question words like 怎么, 哪儿 and 谁 can make rhetorical questions that mean a strong 'no'. 我哪儿知道 means 'how would I know'. Pitfall: these are not real questions; they express denial.",
+   "examples": [
+    {
+     "text": "我怎么会忘了你呢？",
+     "mark": [
+      "怎么会"
+     ],
+     "en": "How could I forget you?"
+    },
+    {
+     "text": "我哪儿知道他去哪儿了？",
+     "mark": [
+      "哪儿知道"
+     ],
+     "en": "How would I know where he went?"
+    },
+    {
+     "text": "谁不想去旅游呢？",
+     "mark": [
+      "谁不想"
+     ],
+     "en": "Who doesn't want to travel?"
+    },
+    {
+     "text": "这么贵，我怎么买得起？",
+     "mark": [
+      "怎么"
+     ],
+     "en": "It's so expensive, how could I afford it?"
+    }
+   ]
+  },
+  {
+   "id": "zh3-jiran",
+   "title": "既然…就… — since … then",
+   "pattern": "既然 + Known fact，(Subject) + 就 + Conclusion",
+   "short": "since (known fact): 既然…就",
+   "explain": "既然 A，就 B means 'since A is true, then B'. A is a fact both people already know, and B is a suggestion or conclusion. Pitfall: unlike 因为, 既然 is not used for new information.",
+   "examples": [
+    {
+     "text": "既然你病了，就在家休息吧。",
+     "mark": [
+      "既然",
+      "就"
+     ],
+     "en": "Since you're sick, rest at home."
+    },
+    {
+     "text": "既然来了，就多住几天。",
+     "mark": [
+      "既然",
+      "就"
+     ],
+     "en": "Since you're here, stay a few more days."
+    },
+    {
+     "text": "既然你不喜欢，就别买了。",
+     "mark": [
+      "既然",
+      "就"
+     ],
+     "en": "Since you don't like it, don't buy it."
+    },
+    {
+     "text": "既然决定了，就别再想了。",
+     "mark": [
+      "既然",
+      "就"
+     ],
+     "en": "Since you've decided, stop thinking about it."
+    }
+   ]
+  },
+  {
+   "id": "zh3-buguan",
+   "title": "不管…都… — no matter",
+   "pattern": "不管 + Question/Choice，Subject + 都/也 + …",
+   "short": "no matter what: 不管…都",
+   "explain": "不管 A，都 B means 'no matter A, B still happens'. A must have a question word or two choices, like 多忙 or 去不去. Pitfall: 不管很忙 is wrong; say 不管多忙.",
+   "examples": [
+    {
+     "text": "不管多忙，他都去跑步。",
+     "mark": [
+      "不管",
+      "都"
+     ],
+     "en": "No matter how busy, he goes running."
+    },
+    {
+     "text": "不管你去不去，我都去。",
+     "mark": [
+      "不管",
+      "都"
+     ],
+     "en": "Whether you go or not, I'm going."
+    },
+    {
+     "text": "不管谁来，我都欢迎。",
+     "mark": [
+      "不管",
+      "都"
+     ],
+     "en": "Whoever comes, I welcome them."
+    },
+    {
+     "text": "不管天气怎么样，我们都出发。",
+     "mark": [
+      "不管",
+      "都"
+     ],
+     "en": "Whatever the weather, we'll set off."
+    }
+   ]
+  },
+  {
+   "id": "zh3-youyu",
+   "title": "由于 — due to, because of",
+   "pattern": "由于 + Cause，(所以/因此) + Result",
+   "short": "due to: 由于 (formal cause)",
+   "explain": "由于 means 'due to' or 'because of' and is more formal than 因为. It often pairs with 所以 or 因此. Pitfall: 由于 usually starts the sentence, while 因为 can also come second.",
+   "examples": [
+    {
+     "text": "由于下雪，飞机晚了。",
+     "mark": [
+      "由于"
+     ],
+     "en": "Due to snow, the plane was late."
+    },
+    {
+     "text": "由于身体不好，他没来。",
+     "mark": [
+      "由于"
+     ],
+     "en": "Because of poor health, he didn't come."
+    },
+    {
+     "text": "由于时间关系，我们先走了。",
+     "mark": [
+      "由于"
+     ],
+     "en": "Due to time, we're leaving first."
+    },
+    {
+     "text": "由于努力，他考得很好。",
+     "mark": [
+      "由于"
+     ],
+     "en": "Thanks to hard work, he did well on the exam."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yinci",
+   "title": "因此 — therefore",
+   "pattern": "Cause，因此 + Result",
+   "short": "therefore: 因此",
+   "explain": "因此 means 'therefore' or 'for this reason' and links a cause to a result. It is a bit more formal than 所以. Pitfall: 因此 starts the result clause and is not used before the cause.",
+   "examples": [
+    {
+     "text": "他病了，因此没上班。",
+     "mark": [
+      "因此"
+     ],
+     "en": "He was sick, so he didn't go to work."
+    },
+    {
+     "text": "路上车太多，因此我迟到了。",
+     "mark": [
+      "因此"
+     ],
+     "en": "There was traffic, so I was late."
+    },
+    {
+     "text": "她很努力，因此进步很快。",
+     "mark": [
+      "因此"
+     ],
+     "en": "She works hard, so she improves fast."
+    },
+    {
+     "text": "天气不好，因此比赛取消了。",
+     "mark": [
+      "因此"
+     ],
+     "en": "The weather was bad, so the match was canceled."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yushi",
+   "title": "于是 — so, thereupon",
+   "pattern": "Event A，于是 + Event B",
+   "short": "and so (next event): 于是",
+   "explain": "于是 means 'so' or 'then' and shows that event B happened because of A. It is used in stories about the past. Pitfall: 于是 isn't used for advice or future plans; use 所以 there.",
+   "examples": [
+    {
+     "text": "天黑了，于是我们回家了。",
+     "mark": [
+      "于是"
+     ],
+     "en": "It got dark, so we went home."
+    },
+    {
+     "text": "他很饿，于是去买了面包。",
+     "mark": [
+      "于是"
+     ],
+     "en": "He was hungry, so he went to buy bread."
+    },
+    {
+     "text": "我没听懂，于是又问了一遍。",
+     "mark": [
+      "于是"
+     ],
+     "en": "I didn't understand, so I asked again."
+    },
+    {
+     "text": "下雨了，于是比赛停了。",
+     "mark": [
+      "于是"
+     ],
+     "en": "It rained, so the game stopped."
+    }
+   ]
+  },
+  {
+   "id": "zh3-xian-zai",
+   "title": "先…再/然后… — first … then",
+   "pattern": "先 + A，再/然后 + B",
+   "short": "sequence: 先…再/然后",
+   "explain": "先 A 再 B means 'first A, then B'. 然后 can also link the steps, and 最后 marks the last step. Pitfall: 再 is used for actions not yet done; for the past, use 然后 or 又.",
+   "examples": [
+    {
+     "text": "我们先吃饭，再看电影。",
+     "mark": [
+      "先",
+      "再"
+     ],
+     "en": "Let's eat first, then see a movie."
+    },
+    {
+     "text": "先洗手，然后吃饭。",
+     "mark": [
+      "先",
+      "然后"
+     ],
+     "en": "Wash your hands first, then eat."
+    },
+    {
+     "text": "你先休息，再做作业。",
+     "mark": [
+      "先",
+      "再"
+     ],
+     "en": "Rest first, then do your homework."
+    },
+    {
+     "text": "他先去银行，然后去了超市。",
+     "mark": [
+      "先",
+      "然后"
+     ],
+     "en": "He went to the bank first, then the supermarket."
+    }
+   ]
+  },
+  {
+   "id": "zh3-bushi-ershi",
+   "title": "不是…而是… — not A but B",
+   "pattern": "不是 + A，而是 + B",
+   "short": "not A but B: 不是…而是",
+   "explain": "不是 A，而是 B means 'not A, but B' and corrects a wrong idea. A and B should be the same kind of thing. Pitfall: don't confuse it with 不是 A 就是 B 'either A or B'.",
+   "examples": [
+    {
+     "text": "他不是老师，而是学生。",
+     "mark": [
+      "不是",
+      "而是"
+     ],
+     "en": "He's not a teacher but a student."
+    },
+    {
+     "text": "我不是不想去，而是没时间。",
+     "mark": [
+      "不是",
+      "而是"
+     ],
+     "en": "It's not that I don't want to go, I don't have time."
+    },
+    {
+     "text": "问题不是钱，而是时间。",
+     "mark": [
+      "不是",
+      "而是"
+     ],
+     "en": "The problem isn't money but time."
+    },
+    {
+     "text": "这不是我的，而是他的。",
+     "mark": [
+      "不是",
+      "而是"
+     ],
+     "en": "This isn't mine, it's his."
+    }
+   ]
+  },
+  {
+   "id": "zh3-bushi-jiushi",
+   "title": "不是…就是… — either … or",
+   "pattern": "不是 + A，就是 + B",
+   "short": "either A or B: 不是…就是",
+   "explain": "不是 A 就是 B means 'if not A, then B', so it is always one of the two. It often describes habits or guesses. Pitfall: it doesn't mean 'not A but B'.",
+   "examples": [
+    {
+     "text": "他周末不是看书就是睡觉。",
+     "mark": [
+      "不是",
+      "就是"
+     ],
+     "en": "On weekends he either reads or sleeps."
+    },
+    {
+     "text": "这几天不是刮风就是下雨。",
+     "mark": [
+      "不是",
+      "就是"
+     ],
+     "en": "These days it's either windy or rainy."
+    },
+    {
+     "text": "她不是在学校就是在家。",
+     "mark": [
+      "不是",
+      "就是"
+     ],
+     "en": "She's either at school or at home."
+    },
+    {
+     "text": "门口那个人不是小王就是小李。",
+     "mark": [
+      "不是",
+      "就是"
+     ],
+     "en": "That person at the door is either Xiao Wang or Xiao Li."
+    }
+   ]
+  },
+  {
+   "id": "zh3-weile",
+   "title": "为了 — in order to",
+   "pattern": "为了 + Goal，Subject + Action",
+   "short": "purpose: 为了 (in order to)",
+   "explain": "为了 means 'in order to' or 'for' and comes before the goal at the start of the sentence. The action comes after. Pitfall: don't use 因为 for purpose; 因为 is for causes.",
+   "examples": [
+    {
+     "text": "为了身体健康，他每天跑步。",
+     "mark": [
+      "为了"
+     ],
+     "en": "He runs every day to stay healthy."
+    },
+    {
+     "text": "为了学好中文，她去了中国。",
+     "mark": [
+      "为了"
+     ],
+     "en": "She went to China to learn Chinese well."
+    },
+    {
+     "text": "为了孩子，妈妈很努力工作。",
+     "mark": [
+      "为了"
+     ],
+     "en": "Mom works hard for her kids."
+    },
+    {
+     "text": "为了不迟到，我早起了。",
+     "mark": [
+      "为了"
+     ],
+     "en": "I got up early so as not to be late."
+    }
+   ]
+  },
+  {
+   "id": "zh3-guanyu",
+   "title": "关于 — about, concerning",
+   "pattern": "关于 + Topic，… / 关于 + Topic + 的 + Noun",
+   "short": "about a topic: 关于",
+   "explain": "关于 means 'about' or 'concerning' and introduces a topic. It can start a sentence or describe a noun with 的. Pitfall: 关于 can't come after the subject; use 对 for that.",
+   "examples": [
+    {
+     "text": "这是一本关于历史的书。",
+     "mark": [
+      "关于"
+     ],
+     "en": "This is a book about history."
+    },
+    {
+     "text": "关于这件事，我不太清楚。",
+     "mark": [
+      "关于"
+     ],
+     "en": "I'm not too clear about this matter."
+    },
+    {
+     "text": "我们说了关于工作的事。",
+     "mark": [
+      "关于"
+     ],
+     "en": "We talked about work."
+    },
+    {
+     "text": "关于考试，你有问题吗？",
+     "mark": [
+      "关于"
+     ],
+     "en": "Do you have questions about the exam?"
+    }
+   ]
+  },
+  {
+   "id": "zh3-duiyu",
+   "title": "对 / 对于 — toward, regarding",
+   "pattern": "Subject + 对 + Person/Thing + Adj/Verb",
+   "short": "toward someone: 对/对于",
+   "explain": "对 introduces the person or thing an attitude or action is directed at: 他对我很好. 对于 is more formal and usually starts the sentence. Pitfall: 对 can come after the subject, but 对于 is rarely used there.",
+   "examples": [
+    {
+     "text": "老师对我们很好。",
+     "mark": [
+      "对"
+     ],
+     "en": "The teacher is very kind to us."
+    },
+    {
+     "text": "我对中国文化很感兴趣。",
+     "mark": [
+      "对"
+     ],
+     "en": "I'm very interested in Chinese culture."
+    },
+    {
+     "text": "对于这个问题，大家意见不同。",
+     "mark": [
+      "对于"
+     ],
+     "en": "People have different views on this question."
+    },
+    {
+     "text": "喝酒对身体不好。",
+     "mark": [
+      "对"
+     ],
+     "en": "Drinking is bad for your health."
+    }
+   ]
+  },
+  {
+   "id": "zh3-genju",
+   "title": "根据/按照 — according to",
+   "pattern": "根据/按照 + Basis，…",
+   "short": "according to: 根据/按照",
+   "explain": "根据 means 'according to' or 'based on', usually information. 按照 means 'following' a rule or plan. Both start a phrase before the main verb. Pitfall: use 按照 for instructions and 根据 for evidence.",
+   "examples": [
+    {
+     "text": "根据天气预报，明天有雨。",
+     "mark": [
+      "根据"
+     ],
+     "en": "According to the forecast, it'll rain tomorrow."
+    },
+    {
+     "text": "请按照要求写作业。",
+     "mark": [
+      "按照"
+     ],
+     "en": "Please do the homework as required."
+    },
+    {
+     "text": "我们按照计划出发。",
+     "mark": [
+      "按照"
+     ],
+     "en": "We set off according to plan."
+    },
+    {
+     "text": "根据调查，大家都喜欢。",
+     "mark": [
+      "根据"
+     ],
+     "en": "According to the survey, everyone likes it."
+    }
+   ]
+  },
+  {
+   "id": "zh3-tongguo",
+   "title": "通过 — through, by means of",
+   "pattern": "通过 + Means，Subject + Result",
+   "short": "by means of: 通过",
+   "explain": "通过 means 'through' or 'by means of' and shows how something is achieved. It can also be a verb meaning 'to pass', like 通过考试. Pitfall: put the means right after 通过, before the result.",
+   "examples": [
+    {
+     "text": "通过朋友，我认识了他。",
+     "mark": [
+      "通过"
+     ],
+     "en": "I met him through a friend."
+    },
+    {
+     "text": "通过努力，他成功了。",
+     "mark": [
+      "通过"
+     ],
+     "en": "Through hard work, he succeeded."
+    },
+    {
+     "text": "我通过了这次考试。",
+     "mark": [
+      "通过"
+     ],
+     "en": "I passed this exam."
+    },
+    {
+     "text": "通过上网，我们可以学很多。",
+     "mark": [
+      "通过"
+     ],
+     "en": "We can learn a lot online."
+    }
+   ]
+  },
+  {
+   "id": "zh3-suizhe",
+   "title": "随着 — along with, as",
+   "pattern": "随着 + Change，Result",
+   "short": "as X changes: 随着",
+   "explain": "随着 means 'along with' or 'as' and shows that one change brings another. It usually starts the sentence and is followed by a noun phrase of change. Pitfall: the result often uses 越来越 or 了.",
+   "examples": [
+    {
+     "text": "随着年纪变大，他更懂事了。",
+     "mark": [
+      "随着"
+     ],
+     "en": "As he got older, he became more sensible."
+    },
+    {
+     "text": "随着天气变冷，人们穿得多了。",
+     "mark": [
+      "随着"
+     ],
+     "en": "As it gets colder, people wear more."
+    },
+    {
+     "text": "随着时间过去，我忘了他。",
+     "mark": [
+      "随着"
+     ],
+     "en": "As time passed, I forgot him."
+    },
+    {
+     "text": "随着发展，城市越来越大。",
+     "mark": [
+      "随着"
+     ],
+     "en": "With development, the city keeps growing."
+    }
+   ]
+  },
+  {
+   "id": "zh3-xiang-wang",
+   "title": "向/往 — toward a direction",
+   "pattern": "向/往 + Direction/Place + Verb",
+   "short": "direction: 向/往",
+   "explain": "向 and 往 mean 'toward' and show direction before a verb: 往前走 'walk forward'. 向 can also mean 'to a person', as in 向老师学习. Pitfall: 往 is only for direction, never for people.",
+   "examples": [
+    {
+     "text": "一直往前走就到了。",
+     "mark": [
+      "往"
+     ],
+     "en": "Go straight ahead and you'll get there."
+    },
+    {
+     "text": "我们要向他学习。",
+     "mark": [
+      "向"
+     ],
+     "en": "We should learn from him."
+    },
+    {
+     "text": "这辆车开往上海。",
+     "mark": [
+      "往"
+     ],
+     "en": "This bus goes to Shanghai."
+    },
+    {
+     "text": "他向我笑了笑。",
+     "mark": [
+      "向"
+     ],
+     "en": "He smiled at me."
+    }
+   ]
+  },
+  {
+   "id": "zh3-zhe-state",
+   "title": "V着 — continuing state, existence",
+   "pattern": "Place + Verb + 着 + Thing / Subject + Verb + 着",
+   "short": "ongoing state: V着",
+   "explain": "着 after a verb shows a state that continues, like 门开着 'the door is open'. In 'place + verb + 着 + thing' it describes what is there: 墙上挂着画. Pitfall: negate with 没, not 不.",
+   "examples": [
+    {
+     "text": "门开着，请进来吧。",
+     "mark": [
+      "开着"
+     ],
+     "en": "The door is open, come on in."
+    },
+    {
+     "text": "墙上挂着一张地图。",
+     "mark": [
+      "挂着"
+     ],
+     "en": "A map is hanging on the wall."
+    },
+    {
+     "text": "他穿着一件红衣服。",
+     "mark": [
+      "穿着"
+     ],
+     "en": "He's wearing a red shirt."
+    },
+    {
+     "text": "桌子上放着很多书。",
+     "mark": [
+      "放着"
+     ],
+     "en": "There are many books on the table."
+    }
+   ]
+  },
+  {
+   "id": "zh3-zhe-v2",
+   "title": "V1着 V2 — doing while doing",
+   "pattern": "Subject + V1着 (+ Obj) + V2",
+   "short": "manner: V1着 V2",
+   "explain": "V1着 V2 means doing V2 while in the state of V1. V1 describes the manner, like 笑着说 'say with a smile'. Pitfall: the main action is V2, not V1.",
+   "examples": [
+    {
+     "text": "他笑着说没关系。",
+     "mark": [
+      "笑着"
+     ],
+     "en": "He said with a smile that it was fine."
+    },
+    {
+     "text": "我们走着去吧。",
+     "mark": [
+      "走着"
+     ],
+     "en": "Let's walk there."
+    },
+    {
+     "text": "你别站着吃饭，坐下吧。",
+     "mark": [
+      "站着"
+     ],
+     "en": "Don't eat standing, sit down."
+    },
+    {
+     "text": "孩子哭着找妈妈。",
+     "mark": [
+      "哭着"
+     ],
+     "en": "The child cried looking for mom."
+    }
+   ]
+  },
+  {
+   "id": "zh3-kuaiyao",
+   "title": "快要/就要…了 — about to",
+   "pattern": "Subject + 快(要)/就要 + Verb + 了",
+   "short": "about to happen: 快要…了",
+   "explain": "快要…了 and 就要…了 mean something is about to happen. 就要 can follow a time word, but 快要 cannot. Pitfall: 明天快要走了 is wrong; say 明天就要走了.",
+   "examples": [
+    {
+     "text": "火车快要开了。",
+     "mark": [
+      "快要",
+      "了"
+     ],
+     "en": "The train is about to leave."
+    },
+    {
+     "text": "我们明天就要考试了。",
+     "mark": [
+      "就要",
+      "了"
+     ],
+     "en": "We have an exam tomorrow."
+    },
+    {
+     "text": "天快黑了，回家吧。",
+     "mark": [
+      "快",
+      "了"
+     ],
+     "en": "It's almost dark, let's go home."
+    },
+    {
+     "text": "春节就要到了。",
+     "mark": [
+      "就要",
+      "了"
+     ],
+     "en": "Spring Festival is coming soon."
+    }
+   ]
+  },
+  {
+   "id": "zh3-jiu-cai",
+   "title": "就 vs 才 — early vs late",
+   "pattern": "Time + 就 + Verb + 了 / Time + 才 + Verb",
+   "short": "early 就 vs late 才",
+   "explain": "After a time or amount, 就 means it happened earlier or more easily than expected, and 才 means later or harder. 就 sentences often end in 了, but 才 sentences don't. Pitfall: don't add 了 after 才 + verb.",
+   "examples": [
+    {
+     "text": "他六点就起床了。",
+     "mark": [
+      "就"
+     ],
+     "en": "He got up as early as six."
+    },
+    {
+     "text": "他十点才起床。",
+     "mark": [
+      "才"
+     ],
+     "en": "He didn't get up until ten."
+    },
+    {
+     "text": "我等了一个小时他才来。",
+     "mark": [
+      "才"
+     ],
+     "en": "I waited an hour before he came."
+    },
+    {
+     "text": "我看一遍就懂了。",
+     "mark": [
+      "就"
+     ],
+     "en": "I understood after reading it once."
+    }
+   ]
+  },
+  {
+   "id": "zh3-dongliang",
+   "title": "Verb measure words: 次/遍/趟/下",
+   "pattern": "Verb + Number + 次/遍/趟/下 (+ Object)",
+   "short": "how many times: 次, 遍, 趟",
+   "explain": "Verb measure words count how many times an action happens. 次 is general, 遍 means doing it from start to finish, 趟 is a round trip, and 下 is a brief action. Pitfall: a pronoun object goes before the measure word: 找过他两次.",
+   "examples": [
+    {
+     "text": "这本书我看了三遍。",
+     "mark": [
+      "三遍"
+     ],
+     "en": "I've read this book three times."
+    },
+    {
+     "text": "我去过两次北京。",
+     "mark": [
+      "两次"
+     ],
+     "en": "I've been to Beijing twice."
+    },
+    {
+     "text": "我得去一趟银行。",
+     "mark": [
+      "一趟"
+     ],
+     "en": "I have to make a trip to the bank."
+    },
+    {
+     "text": "请你在这儿等一下。",
+     "mark": [
+      "一下"
+     ],
+     "en": "Please wait here a moment."
+    }
+   ]
+  },
+  {
+   "id": "zh3-shiliang",
+   "title": "Duration complements",
+   "pattern": "Verb + (了) + Duration (+ 的) + Object",
+   "short": "how long: duration complement",
+   "explain": "The length of an action comes after the verb: 我学了两年中文. If there is an object, repeat the verb or put the time before the object. Pitfall: 我两年学中文 is wrong.",
+   "examples": [
+    {
+     "text": "我学了两年中文。",
+     "mark": [
+      "两年"
+     ],
+     "en": "I studied Chinese for two years."
+    },
+    {
+     "text": "他睡了八个小时。",
+     "mark": [
+      "八个小时"
+     ],
+     "en": "He slept for eight hours."
+    },
+    {
+     "text": "我等你等了半天。",
+     "mark": [
+      "半天"
+     ],
+     "en": "I waited for you for ages."
+    },
+    {
+     "text": "我来中国一年了。",
+     "mark": [
+      "一年"
+     ],
+     "en": "I've been in China for a year."
+    }
+   ]
+  },
+  {
+   "id": "zh3-redup-adj",
+   "title": "Adjective reduplication AABB / AA",
+   "pattern": "AA(的) / AABB(的)",
+   "short": "doubled adjectives: AABB",
+   "explain": "Doubling an adjective (AA or AABB) makes it more vivid and is often followed by 的 or 地. Two-syllable adjectives double as AABB: 干干净净. Pitfall: doubled adjectives can't take 很 or 不.",
+   "examples": [
+    {
+     "text": "房间打扫得干干净净的。",
+     "mark": [
+      "干干净净"
+     ],
+     "en": "The room was cleaned spotless."
+    },
+    {
+     "text": "她有一双大大的眼睛。",
+     "mark": [
+      "大大"
+     ],
+     "en": "She has big, big eyes."
+    },
+    {
+     "text": "大家高高兴兴地回家了。",
+     "mark": [
+      "高高兴兴"
+     ],
+     "en": "Everyone went home happily."
+    },
+    {
+     "text": "你要慢慢地说。",
+     "mark": [
+      "慢慢"
+     ],
+     "en": "You should speak slowly."
+    }
+   ]
+  },
+  {
+   "id": "zh3-redup-verb",
+   "title": "Verb reduplication ABAB / V一V",
+   "pattern": "AA / A一A / ABAB / A了A",
+   "short": "doubled verbs: try briefly",
+   "explain": "Doubling a verb makes the action short, casual or a gentle try: 看看, 看一看, 休息休息. For past actions, put 了 in the middle: 看了看. Pitfall: two-syllable verbs double as ABAB, not AABB.",
+   "examples": [
+    {
+     "text": "你试试这件衣服。",
+     "mark": [
+      "试试"
+     ],
+     "en": "Try on this piece of clothing."
+    },
+    {
+     "text": "我们休息休息吧。",
+     "mark": [
+      "休息休息"
+     ],
+     "en": "Let's take a little rest."
+    },
+    {
+     "text": "他看了看手表。",
+     "mark": [
+      "看了看"
+     ],
+     "en": "He glanced at his watch."
+    },
+    {
+     "text": "让我再想一想。",
+     "mark": [
+      "想一想"
+     ],
+     "en": "Let me think about it again."
+    }
+   ]
+  },
+  {
+   "id": "zh3-redup-mw",
+   "title": "Measure word reduplication — every",
+   "pattern": "MM / 一MM (+ 都)",
+   "short": "every one: doubled measure words",
+   "explain": "Doubling a measure word or one-syllable noun means 'every': 人人 'everyone', 天天 'every day'. It is often followed by 都. Pitfall: it isn't used after numbers or 这/那.",
+   "examples": [
+    {
+     "text": "我天天都锻炼。",
+     "mark": [
+      "天天"
+     ],
+     "en": "I exercise every day."
+    },
+    {
+     "text": "这里人人都认识他。",
+     "mark": [
+      "人人"
+     ],
+     "en": "Everyone here knows him."
+    },
+    {
+     "text": "他的衣服件件都很贵。",
+     "mark": [
+      "件件"
+     ],
+     "en": "Every one of his clothes is expensive."
+    },
+    {
+     "text": "他一次次地练习。",
+     "mark": [
+      "一次次"
+     ],
+     "en": "He practiced again and again."
+    }
+   ]
+  },
+  {
+   "id": "zh3-wh-any",
+   "title": "Question words as 'any' + 都/也",
+   "pattern": "Question word + 都/也 + Verb",
+   "short": "anyone/anything: 什么都",
+   "explain": "A question word with 都 or 也 means 'any' or 'every': 谁都 'everyone', 什么都不 'nothing'. Two question words can also match each other: 想吃什么就吃什么. Pitfall: the question word goes before 都/也 and the verb.",
+   "examples": [
+    {
+     "text": "我什么都不想吃。",
+     "mark": [
+      "什么都"
+     ],
+     "en": "I don't want to eat anything."
+    },
+    {
+     "text": "他哪儿都去过。",
+     "mark": [
+      "哪儿都"
+     ],
+     "en": "He's been everywhere."
+    },
+    {
+     "text": "这件事谁也不知道。",
+     "mark": [
+      "谁也"
+     ],
+     "en": "Nobody knows about this."
+    },
+    {
+     "text": "你想吃什么就点什么。",
+     "mark": [
+      "什么",
+      "什么"
+     ],
+     "en": "Order whatever you want to eat."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yidianr-ye",
+   "title": "一点儿也/都不 — not at all",
+   "pattern": "一点儿 + 也/都 + 不/没 + Verb/Adj",
+   "short": "not at all: 一点儿也不",
+   "explain": "一点儿也不 or 一点儿都不 means 'not at all'. It goes before the adjective or verb. Pitfall: 我不一点儿累 is wrong; say 我一点儿也不累.",
+   "examples": [
+    {
+     "text": "我一点儿也不累。",
+     "mark": [
+      "一点儿也不"
+     ],
+     "en": "I'm not tired at all."
+    },
+    {
+     "text": "这个菜一点儿都不贵。",
+     "mark": [
+      "一点儿都不"
+     ],
+     "en": "This dish isn't expensive at all."
+    },
+    {
+     "text": "他一点儿也没变。",
+     "mark": [
+      "一点儿也没"
+     ],
+     "en": "He hasn't changed at all."
+    },
+    {
+     "text": "我一点儿都不怕。",
+     "mark": [
+      "一点儿都不"
+     ],
+     "en": "I'm not afraid at all."
+    }
+   ]
+  },
+  {
+   "id": "zh3-zaiye",
+   "title": "再也不/没 — never again",
+   "pattern": "Subject + 再也 + 不/没 + Verb",
+   "short": "never again: 再也不",
+   "explain": "再也不 means 'never again' from now on, and 再也没 means 'never again' since a past time. 再也 comes before the negative. Pitfall: 不再 just means 'no longer' and is softer.",
+   "examples": [
+    {
+     "text": "我再也不喝酒了。",
+     "mark": [
+      "再也不"
+     ],
+     "en": "I'll never drink again."
+    },
+    {
+     "text": "他走了以后再也没回来。",
+     "mark": [
+      "再也没"
+     ],
+     "en": "After he left, he never came back."
+    },
+    {
+     "text": "我再也不相信他了。",
+     "mark": [
+      "再也不"
+     ],
+     "en": "I'll never trust him again."
+    },
+    {
+     "text": "那以后我再也没见过她。",
+     "mark": [
+      "再也没"
+     ],
+     "en": "I never saw her again after that."
+    }
+   ]
+  },
+  {
+   "id": "zh3-chadianr",
+   "title": "差点儿 — almost",
+   "pattern": "Subject + 差点儿 + (没) + Verb",
+   "short": "nearly happened: 差点儿",
+   "explain": "差点儿 means 'almost' or 'nearly'. For bad things, 差点儿 and 差点儿没 both mean it didn't happen. For hoped-for things, 差点儿没 means it just barely happened. Pitfall: don't put 了 right after 差点儿; it goes after the verb.",
+   "examples": [
+    {
+     "text": "我差点儿迟到了。",
+     "mark": [
+      "差点儿"
+     ],
+     "en": "I was almost late."
+    },
+    {
+     "text": "他差点儿哭了出来。",
+     "mark": [
+      "差点儿"
+     ],
+     "en": "He nearly burst into tears."
+    },
+    {
+     "text": "我差点儿忘了你的生日。",
+     "mark": [
+      "差点儿"
+     ],
+     "en": "I almost forgot your birthday."
+    },
+    {
+     "text": "我差点儿没赶上火车。",
+     "mark": [
+      "差点儿没"
+     ],
+     "en": "I barely caught the train."
+    }
+   ]
+  },
+  {
+   "id": "zh3-zhongyu",
+   "title": "终于 — finally",
+   "pattern": "Subject + 终于 + Verb + 了",
+   "short": "finally after effort: 终于",
+   "explain": "终于 means 'finally', after a long wait or effort, and usually describes a result someone wanted. The sentence often ends with 了. Pitfall: don't use 终于 for 'lastly' in a list; use 最后.",
+   "examples": [
+    {
+     "text": "我终于找到工作了。",
+     "mark": [
+      "终于"
+     ],
+     "en": "I finally found a job."
+    },
+    {
+     "text": "外面的雨终于停了。",
+     "mark": [
+      "终于"
+     ],
+     "en": "The rain outside finally stopped."
+    },
+    {
+     "text": "他终于明白了。",
+     "mark": [
+      "终于"
+     ],
+     "en": "He finally understood."
+    },
+    {
+     "text": "等了半天，车终于来了。",
+     "mark": [
+      "终于"
+     ],
+     "en": "After waiting ages, the bus finally came."
+    }
+   ]
+  },
+  {
+   "id": "zh3-yuanlai",
+   "title": "原来 — so it turns out",
+   "pattern": "原来 + Discovery / 原来的 + Noun",
+   "short": "it turns out: 原来",
+   "explain": "原来 can mean 'it turns out', when you discover a truth, or 'originally' or 'formerly'. As 'it turns out', it often starts the sentence. Pitfall: 本来 can also mean 'originally', but it doesn't mean 'it turns out'.",
+   "examples": [
+    {
+     "text": "原来是你来了啊！",
+     "mark": [
+      "原来"
+     ],
+     "en": "Oh, so it's you who came!"
+    },
+    {
+     "text": "原来他是老师。",
+     "mark": [
+      "原来"
+     ],
+     "en": "So he's a teacher."
+    },
+    {
+     "text": "他还住在原来的地方。",
+     "mark": [
+      "原来"
+     ],
+     "en": "He still lives in the same place."
+    },
+    {
+     "text": "原来你早就知道了。",
+     "mark": [
+      "原来"
+     ],
+     "en": "So you knew all along."
+    }
+   ]
+  },
+  {
+   "id": "zh3-benlai",
+   "title": "本来 — originally, should have",
+   "pattern": "Subject + 本来 + Verb/Adj",
+   "short": "originally planned: 本来",
+   "explain": "本来 means 'originally' and is often followed by a change with 可是 or 后来. 本来就 means 'of course, it was always so'. Pitfall: 本来 suggests a plan that changed, so the second part shows the change.",
+   "examples": [
+    {
+     "text": "我本来想去，可是太忙了。",
+     "mark": [
+      "本来"
+     ],
+     "en": "I meant to go, but I was too busy."
+    },
+    {
+     "text": "他本来不喜欢狗。",
+     "mark": [
+      "本来"
+     ],
+     "en": "He originally didn't like dogs."
+    },
+    {
+     "text": "这本来就是你的错。",
+     "mark": [
+      "本来就"
+     ],
+     "en": "This was your fault in the first place."
+    },
+    {
+     "text": "我本来住在上海。",
+     "mark": [
+      "本来"
+     ],
+     "en": "I originally lived in Shanghai."
+    }
+   ]
+  },
+  {
+   "id": "zh3-qishi",
+   "title": "其实 — actually",
+   "pattern": "其实 + Truth (contrasting expectation)",
+   "short": "actually (truth): 其实",
+   "explain": "其实 means 'actually' or 'in fact' and shows the real situation, often different from what was thought. It can go before or after the subject. Pitfall: it is not used for 'currently' or 'at the moment'.",
+   "examples": [
+    {
+     "text": "其实我不喜欢吃肉。",
+     "mark": [
+      "其实"
+     ],
+     "en": "Actually, I don't like meat."
+    },
+    {
+     "text": "这个问题其实很简单。",
+     "mark": [
+      "其实"
+     ],
+     "en": "This problem is actually simple."
+    },
+    {
+     "text": "他看起来很冷，其实人很好。",
+     "mark": [
+      "其实"
+     ],
+     "en": "He seems cold, but he's actually nice."
+    },
+    {
+     "text": "其实我早就知道了。",
+     "mark": [
+      "其实"
+     ],
+     "en": "Actually, I knew long ago."
+    }
+   ]
+  },
+  {
+   "id": "zh3-zhihao",
+   "title": "只好 — have no choice but to",
+   "pattern": "Situation，Subject + 只好 + Verb",
+   "short": "no choice but: 只好",
+   "explain": "只好 means 'have no choice but to' and shows a decision made because there was no better option. The reason usually comes first. Pitfall: it goes before the verb, not before the subject.",
+   "examples": [
+    {
+     "text": "没有车了，我只好走回家。",
+     "mark": [
+      "只好"
+     ],
+     "en": "No more buses, so I had to walk home."
+    },
+    {
+     "text": "下雨了，我们只好在家。",
+     "mark": [
+      "只好"
+     ],
+     "en": "It rained, so we had to stay home."
+    },
+    {
+     "text": "票卖完了，他只好明天来。",
+     "mark": [
+      "只好"
+     ],
+     "en": "Tickets sold out; he has to come tomorrow."
+    },
+    {
+     "text": "我不会做，只好问老师。",
+     "mark": [
+      "只好"
+     ],
+     "en": "I couldn't do it, so I had to ask the teacher."
+    }
+   ]
+  },
+  {
+   "id": "zh3-budebu",
+   "title": "不得不 — have to (forced)",
+   "pattern": "Subject + 不得不 + Verb",
+   "short": "forced to: 不得不",
+   "explain": "不得不 means 'have to' or 'can't help but', when outside pressure forces you. It is stronger than 只好. Pitfall: it already includes a double negative, so don't add another 不.",
+   "examples": [
+    {
+     "text": "我不得不早起。",
+     "mark": [
+      "不得不"
+     ],
+     "en": "I have to get up early."
+    },
+    {
+     "text": "天太晚了，我不得不走了。",
+     "mark": [
+      "不得不"
+     ],
+     "en": "It's too late; I must leave."
+    },
+    {
+     "text": "他病了，不得不住院。",
+     "mark": [
+      "不得不"
+     ],
+     "en": "He's sick and has to be hospitalized."
+    },
+    {
+     "text": "我们不得不改变计划。",
+     "mark": [
+      "不得不"
+     ],
+     "en": "We were forced to change our plan."
+    }
+   ]
+  },
+  {
+   "id": "zh3-qianwan",
+   "title": "千万 — be sure to, by all means",
+   "pattern": "千万 + 要/别/不要 + Verb",
+   "short": "be sure (warning): 千万",
+   "explain": "千万 means 'be sure to' or 'by all means' and adds strong urging, often in warnings with 别 or 不要. It is used in advice to others. Pitfall: don't use it to describe your own past actions.",
+   "examples": [
+    {
+     "text": "你千万别忘了。",
+     "mark": [
+      "千万别"
+     ],
+     "en": "Whatever you do, don't forget."
+    },
+    {
+     "text": "路上千万要小心！",
+     "mark": [
+      "千万要"
+     ],
+     "en": "Be very careful on the road!"
+    },
+    {
+     "text": "千万不要告诉他。",
+     "mark": [
+      "千万不要"
+     ],
+     "en": "Don't tell him, whatever you do."
+    },
+    {
+     "text": "考试千万别迟到。",
+     "mark": [
+      "千万别"
+     ],
+     "en": "Don't be late for the exam, whatever happens."
+    }
+   ]
+  },
+  {
+   "id": "zh3-daodi",
+   "title": "到底 — after all; on earth",
+   "pattern": "Subject + 到底 + Question？",
+   "short": "on earth? (pressing question): 到底",
+   "explain": "到底 in a question means 'on earth' or 'exactly' and pushes for a clear answer. In statements, it can mean 'finally' or 'after all'. Pitfall: in a question, don't add 吗; use a question word or A不A.",
+   "examples": [
+    {
+     "text": "你到底去不去？",
+     "mark": [
+      "到底"
+     ],
+     "en": "Are you going or not?"
+    },
+    {
+     "text": "这到底是怎么回事？",
+     "mark": [
+      "到底"
+     ],
+     "en": "What on earth is going on?"
+    },
+    {
+     "text": "他到底想要什么？",
+     "mark": [
+      "到底"
+     ],
+     "en": "What exactly does he want?"
+    },
+    {
+     "text": "你到底喜欢哪一个？",
+     "mark": [
+      "到底"
+     ],
+     "en": "Which one do you actually like?"
+    }
+   ]
+  },
+  {
+   "id": "zh3-que",
+   "title": "却 — but, yet",
+   "pattern": "Subject + 却 + Verb/Adj",
+   "short": "yet (contrast): 却",
+   "explain": "却 means 'but' or 'yet' and shows contrast. It is an adverb, so it goes after the subject and before the verb. Pitfall: unlike 但是, 却 can't go before the subject.",
+   "examples": [
+    {
+     "text": "他很聪明，却不努力。",
+     "mark": [
+      "却"
+     ],
+     "en": "He's smart but doesn't work hard."
+    },
+    {
+     "text": "我等了很久，他却没来。",
+     "mark": [
+      "却"
+     ],
+     "en": "I waited long, yet he didn't come."
+    },
+    {
+     "text": "东西很便宜，却很好用。",
+     "mark": [
+      "却"
+     ],
+     "en": "It's cheap, yet it works well."
+    },
+    {
+     "text": "大家都去了，他却没去。",
+     "mark": [
+      "却"
+     ],
+     "en": "Everyone went, but he didn't."
+    }
+   ]
+  },
+  {
+   "id": "zh3-fouze",
+   "title": "否则/不然 — otherwise",
+   "pattern": "Action，否则/不然 + Bad result",
+   "short": "otherwise: 否则/不然",
+   "explain": "否则 and 不然 mean 'otherwise' and introduce what will happen if the first part isn't done. 否则 is more formal, and 不然 is more spoken. Pitfall: the first part is usually advice or a must.",
+   "examples": [
+    {
+     "text": "快走吧，不然要迟到了。",
+     "mark": [
+      "不然"
+     ],
+     "en": "Let's hurry, or we'll be late."
+    },
+    {
+     "text": "你要多穿衣服，否则会感冒。",
+     "mark": [
+      "否则"
+     ],
+     "en": "Dress warmly, otherwise you'll catch a cold."
+    },
+    {
+     "text": "快点吃，不然菜就凉了。",
+     "mark": [
+      "不然"
+     ],
+     "en": "Eat up, or the food will get cold."
+    },
+    {
+     "text": "必须早点去，否则没票了。",
+     "mark": [
+      "否则"
+     ],
+     "en": "You must go early, or there'll be no tickets."
+    }
+   ]
+  },
+  {
+   "id": "zh3-wanyi",
+   "title": "万一 — in case, what if",
+   "pattern": "万一 + Unlikely bad event，…",
+   "short": "just in case: 万一",
+   "explain": "万一 means 'in case' or 'what if' for an unlikely but possible bad event. It is often followed by 怎么办 or by advice. Pitfall: use 如果 for normal conditions and 万一 for unlikely bad ones.",
+   "examples": [
+    {
+     "text": "万一下雨怎么办？",
+     "mark": [
+      "万一"
+     ],
+     "en": "What if it rains?"
+    },
+    {
+     "text": "带上伞吧，万一下雨呢。",
+     "mark": [
+      "万一"
+     ],
+     "en": "Take an umbrella, just in case it rains."
+    },
+    {
+     "text": "万一他不来，我们就先走。",
+     "mark": [
+      "万一"
+     ],
+     "en": "If by chance he doesn't come, we'll leave first."
+    },
+    {
+     "text": "万一迷路了，就给我打电话。",
+     "mark": [
+      "万一"
+     ],
+     "en": "If you get lost, call me."
+    }
+   ]
+  },
+  {
+   "id": "zh3-youde",
+   "title": "有的…有的… — some … others",
+   "pattern": "有的 + Noun + A，有的 + B",
+   "short": "some...others: 有的…有的",
+   "explain": "有的…有的… means 'some … others …' and divides a group into parts. It always comes before the subject or noun. Pitfall: 有的 must go at the front of its clause, not after the verb.",
+   "examples": [
+    {
+     "text": "有的人喜欢茶，有的人喜欢咖啡。",
+     "mark": [
+      "有的",
+      "有的"
+     ],
+     "en": "Some like tea, some like coffee."
+    },
+    {
+     "text": "同学们有的唱歌，有的跳舞。",
+     "mark": [
+      "有的",
+      "有的"
+     ],
+     "en": "Some classmates sang, others danced."
+    },
+    {
+     "text": "这些书有的新，有的旧。",
+     "mark": [
+      "有的",
+      "有的"
+     ],
+     "en": "Some of these books are new, some old."
+    },
+    {
+     "text": "有的菜好吃，有的不好吃。",
+     "mark": [
+      "有的",
+      "有的"
+     ],
+     "en": "Some dishes are tasty, others not."
+    }
+   ]
+  },
+  {
+   "id": "zh3-duo-approx",
+   "title": "多/左右/上下 — approximately",
+   "pattern": "Number + 多 + Measure / Number + 左右",
+   "short": "about or more than: 多, 左右",
+   "explain": "多 after a number means 'more than' or 'odd': 十多个 'ten-odd'. 左右 after a number means 'about'. Pitfall: with round numbers like 10 or 20, 多 goes before the measure word; with other numbers, it goes after: 三个多月.",
+   "examples": [
+    {
+     "text": "我等了二十多分钟。",
+     "mark": [
+      "多"
+     ],
+     "en": "I waited over twenty minutes."
+    },
+    {
+     "text": "他三点左右到。",
+     "mark": [
+      "左右"
+     ],
+     "en": "He'll arrive around three."
+    },
+    {
+     "text": "我来了一个多月了。",
+     "mark": [
+      "多"
+     ],
+     "en": "I've been here for over a month."
+    },
+    {
+     "text": "这件衣服一百块左右。",
+     "mark": [
+      "左右"
+     ],
+     "en": "This piece of clothing is about 100 yuan."
+    }
+   ]
+  },
+  {
+   "id": "zh3-jihu",
+   "title": "几乎 — almost, nearly",
+   "pattern": "Subject + 几乎 + 都/没 + Verb",
+   "short": "almost all: 几乎",
+   "explain": "几乎 means 'almost' or 'nearly' and is often followed by 都, 每 or a negative. It is more neutral than 差点儿. Pitfall: 几乎 describes a near-total amount, while 差点儿 is about an event that almost happened.",
+   "examples": [
+    {
+     "text": "我几乎每天都喝咖啡。",
+     "mark": [
+      "几乎"
+     ],
+     "en": "I drink coffee almost every day."
+    },
+    {
+     "text": "大家几乎都到了。",
+     "mark": [
+      "几乎"
+     ],
+     "en": "Almost everyone is here."
+    },
+    {
+     "text": "我几乎不认识他了。",
+     "mark": [
+      "几乎"
+     ],
+     "en": "I barely recognized him."
+    },
+    {
+     "text": "昨晚我几乎没睡觉。",
+     "mark": [
+      "几乎"
+     ],
+     "en": "I hardly slept last night."
+    }
+   ]
+  }
+ ]
+}

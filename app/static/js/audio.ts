@@ -18,10 +18,10 @@ if ("speechSynthesis" in window) speechSynthesis.getVoices();
 // In the Android app, window.__native provides the phone's own TTS / speech recognition.
 const native = () => window.__native;
 
-// ------------------------------------------------------------------ neural voice (bundled + cloud)
-// Each edition ships with pre-recorded neural voice packs (audio/<lang>.bin + audio/<lang>.json:
-// zh-CN-XiaoxiaoNeural, ja-JP-NanamiNeural, sl-SI-PetraNeural) and falls back to /api/tts (cached
-// on the phone) for higher levels and newly generated AI sentences before touching system TTS.
+// ------------------------------------------------------------------ natural voice (bundled)
+// Each edition ships with pre-recorded voice packs (audio/<lang>.bin + audio/<lang>.json, made by
+// mobile/scripts/make-audio.ts): every word, sentence, grammar example and story of the course,
+// played offline on any phone. Anything else (sentences the AI writes) uses the phone's own voice.
 
 const packs = new Map<string, Promise<{ index: Record<string, [number, number]>; bin: ArrayBuffer } | null>>();
 let activeAudio: HTMLAudioElement | null = null;
@@ -93,7 +93,7 @@ async function speakNeural(text: string, lang: string, rate: number): Promise<bo
   if (!key) return false;
   const code = lang.split("-")[0].toLowerCase();
 
-  // 1) Bundled offline neural voice pack (words, sentences, grammar, stories).
+  // The bundled voice pack (words, sentences, grammar, stories).
   const pack = await loadPack(code);
   if (pack) {
     const slice = pack.index[key] || pack.index[stripAudioPunct(key)];
@@ -104,29 +104,6 @@ async function speakNeural(text: string, lang: string, rate: number): Promise<bo
     }
   }
 
-  // 2) Persistent device cache + online neural voice (/api/tts) for higher-level words
-  //    and newly generated AI sentences.
-  const base = window.__ttsUrl || "https://bloomko.eu/api/tts";
-  const url = `${base}?lang=${encodeURIComponent(lang)}&text=${encodeURIComponent(text.trim().slice(0, 220))}`;
-  const cache = typeof caches !== "undefined" ? await caches.open("bloomko-tts-v1").catch(() => null) : null;
-  if (cache) {
-    const hit = await cache.match(url).catch(() => null);
-    if (hit) {
-      const blob = await hit.blob();
-      if (blob.size > 100 && (await playBlob(blob, rate))) return true;
-    }
-  }
-  try {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 3500);
-    const res = await fetch(url, { signal: ctrl.signal });
-    clearTimeout(timer);
-    if (res.ok && (res.headers.get("content-type") || "").includes("audio")) {
-      if (cache) cache.put(url, res.clone()).catch(() => {});
-      const blob = await res.blob();
-      if (blob.size > 100 && (await playBlob(blob, rate))) return true;
-    }
-  } catch {}
   return false;
 }
 

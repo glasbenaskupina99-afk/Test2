@@ -6,7 +6,6 @@
 import { EmailMessage } from "cloudflare:email";
 import { seo } from "./seo.js";
 import { handleAccount, handleBackup, handleFriends, handleSync, soft, strict } from "./sync.js";
-import { handleTts } from "./tts.js";
 
 // Durable Object class for app sync (bound as SYNC in wrangler.jsonc).
 export { SyncStore } from "./sync.js";
@@ -111,7 +110,7 @@ async function notify(request, env, ctx) {
   return json(200, { ok: true });
 }
 
-const VERSION = "2026-11-18 a — neural TTS (/api/tts); rate limits; Learn Slovenian / Learn Chinese & Japanese titles and FAQ; menu: East = Chinese · Japanese, Heritage = Slovenian; grammar and stories: a few examples";
+const VERSION = "2026-11-19 a — no /api/tts (voice packs are built into the apps); rate limits; Learn Slovenian / Learn Chinese & Japanese titles and FAQ";
 
 export default {
   async fetch(request, env, ctx) {
@@ -125,7 +124,6 @@ export default {
     if (url.pathname.startsWith("/api/backup/")) return handleBackup(request, env, url.pathname.slice(12));
     if (url.pathname.startsWith("/api/account/")) return handleAccount(request, env, url.pathname.slice(13));
     if (url.pathname.startsWith("/api/friends/")) return handleFriends(request, env, url.pathname.slice(13));
-    if (url.pathname === "/api/tts") return handleTts(request, ctx);
     if (url.pathname === "/api/notify") {
       if (request.method !== "POST") return json(405, { error: "use POST" });
       return notify(request, env, ctx);

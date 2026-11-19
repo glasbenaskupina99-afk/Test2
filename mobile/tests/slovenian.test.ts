@@ -92,13 +92,19 @@ test("basic forms: kavo → kava, delam → delati", () => {
   assert.ok(n > 50 && right / n > 0.95, `${right} of ${n} forms in the stories found`);
 });
 
+// The lookup app/static/js/audio.ts does: the text as is, then without its closing . ! ? (packs keep that form).
+const audioSlice = (index: Record<string, [number, number]>, t: unknown) => {
+  const k = String(t ?? "").toLowerCase().replace(/[[\]]/g, "").replace(/\s+/g, " ").trim();
+  return index[k] || index[k.replace(/[.!?。！？、，]+$/g, "").trim()];
+};
+
 test("bundled Slovenian neural audio covers every course word and sentence", () => {
   const index = JSON.parse(readFileSync(new URL("../../app/data/audio/sl.json", import.meta.url), "utf8"));
   const bin = readFileSync(new URL("../../app/data/audio/sl.bin", import.meta.url));
   const course = JSON.parse(readFileSync(new URL("../../app/data/slovenian_a1.json", import.meta.url), "utf8"));
   for (const u of course.units) {
     for (const [w] of u.words) {
-      const slice = index[String(w).toLowerCase().trim()];
+      const slice = audioSlice(index, w);
       assert.ok(slice, `audio for word: ${w}`);
       const [off, len] = slice;
       assert.ok(len > 500 && off + len <= bin.length, `valid MP3 slice for ${w}`);
@@ -106,8 +112,7 @@ test("bundled Slovenian neural audio covers every course word and sentence", () 
   }
   for (const [, sl, , alts = []] of sentences) {
     for (const s of [sl, ...alts]) {
-      const k = String(s).toLowerCase().replace(/\s+/g, " ").trim();
-      assert.ok(index[k], `audio for sentence: ${s}`);
+      assert.ok(audioSlice(index, s), `audio for sentence: ${s}`);
     }
   }
   // East neural packs (Chinese HSK 1 + Japanese Kana/N5)
@@ -117,7 +122,7 @@ test("bundled Slovenian neural audio covers every course word and sentence", () 
     const data = JSON.parse(readFileSync(new URL(`../../app/data/${file}`, import.meta.url), "utf8"));
     for (const u of data.units) {
       for (const [hz, py] of u.words) {
-        const slice = idx[String(hz).toLowerCase().trim()] || idx[String(py).toLowerCase().trim()];
+        const slice = audioSlice(idx, hz) || audioSlice(idx, py);
         assert.ok(slice, `${code} audio for ${hz}`);
         assert.ok(slice[1] > 500 && slice[0] + slice[1] <= b.length);
       }

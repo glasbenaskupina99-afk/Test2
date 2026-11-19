@@ -1248,6 +1248,11 @@ select.select-native { display: none !important; }
 .cm-formula small { color: var(--muted); font-size: 13px; }
 .cm-link { border: none; background: none; padding: 0 2px; cursor: pointer; color: var(--blue); }
 .cm-section { display: flex; flex-direction: column; gap: 8px; }
+.cm-write:empty { display: none; }
+.cm-write { align-items: center; }
+.cm-write-tools { justify-content: center; gap: 8px; }
+.cm-write-done { font-weight: 700; text-align: center; }
+.cm-write-done.good { color: var(--green); }
 .cm-label { font-size: 12px; font-weight: 900; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 .cm-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .cm-chip {

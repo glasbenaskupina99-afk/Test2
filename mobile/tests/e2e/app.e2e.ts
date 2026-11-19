@@ -211,6 +211,56 @@ test("every main screen opens without errors", async () => {
   assert.deepEqual(errors, []);
 });
 
+/** Writes a character on the open pad by following its stroke medians (Make Me a Hanzi data). */
+async function drawChar(page: Page, ch: string) {
+  const data = await page.evaluate(async (c) => {
+    const url = (window as any).__charDataUrl ? (window as any).__charDataUrl(c) : `/api/chardata/${encodeURIComponent(c)}`;
+    return (await fetch(url)).json();
+  }, ch);
+  // The pad scrolls into view smoothly: wait until it stands still.
+  const svg = page.locator(".pad .writer svg").last();
+  let box = await svg.boundingBox();
+  for (let i = 0; i < 40; i++) {
+    await page.waitForTimeout(100);
+    const now = await svg.boundingBox();
+    if (now.y === box.y && now.x === box.x) break;
+    box = now;
+  }
+  const pad = Math.round(box.width * 0.06);
+  const k = (box.width - 2 * pad) / 1024;
+  for (const median of data.medians) {
+    const pts = median.map(([x, y]: number[]) => [box.x + pad + x * k, box.y + pad + (900 - y) * k]);
+    await page.mouse.move(pts[0][0], pts[0][1]);
+    await page.mouse.down();
+    for (const [x, y] of pts.slice(1)) await page.mouse.move(x, y, { steps: 4 });
+    await page.mouse.up();
+    await page.waitForTimeout(120);
+  }
+}
+
+test("character map: a character can be written, traced first and then from memory", { skip: edition !== "east" }, async () => {
+  const { page, errors } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await go(page, "#/map/%E4%BA%BA", ".cm-info"); // 人
+  assert.equal(await page.locator(".cm-write .pad").count(), 0, "no pad until asked");
+  await page.click(".cm-write-btn");
+  await page.waitForSelector(".cm-write .pad .writer svg");
+  assert.match(await page.locator(".cm-write .pad-status").innerText(), /Trace/);
+  await drawChar(page, "人");
+  await page.waitForSelector(".cm-write .pad-status:text('Write from memory')", { timeout: 5000 });
+  await page.waitForTimeout(300);
+  await drawChar(page, "人");
+  await page.waitForSelector(".cm-write-done", { timeout: 5000 });
+  assert.match(await page.locator(".cm-write-done").innerText(), /Perfect/);
+  // Again starts over; Close takes the pad away.
+  await page.click(".cm-write button:text('Write it again')");
+  await page.waitForSelector(".cm-write .pad-status:text('Trace')");
+  await page.click(".cm-write button:text('Close')");
+  assert.equal(await page.locator(".cm-write .pad").count(), 0);
+  assert.deepEqual(errors, []);
+});
+
 test("mock exam: a short exam can be taken to the result", { skip: edition !== "east" }, async () => {
   const { page, errors } = await fresh();
   await start(page);

@@ -4,7 +4,7 @@
 import { api, h, iconBtn } from "./util.js";
 import { isJa } from "./state.js";
 import { speak } from "./audio.js";
-import { strokeDemo } from "./writer.js";
+import { strokeDemo, writingPad } from "./writer.js";
 
 const S = 64; // square size
 const GX = 34; // gap between columns
@@ -122,9 +122,39 @@ function chips(list, label) {
   );
 }
 
+/** Practice writing one character: trace it over the outline, then write it from memory. */
+function writeBox(ch) {
+  const box = h("div", { class: "cm-section cm-write" });
+  let pad = null;
+  const close = () => {
+    pad?.destroy();
+    pad = null;
+    box.replaceChildren();
+  };
+  const step = (outline) => {
+    pad?.destroy();
+    pad = writingPad([{ c: ch, outline }]);
+    box.replaceChildren(pad.el, h("div", { class: "row cm-write-tools" }, h("button", { class: "btn ghost small", onclick: close }, "Close")));
+    return pad.done;
+  };
+  const start = async () => {
+    const traced = await step(true);
+    if (!box.isConnected || traced.skipped) return;
+    const r = await step(false);
+    if (!box.isConnected) return;
+    const ok = !r.mistakes && !r.hints && !r.gaveUp && !r.skipped;
+    box.append(
+      h("div", { class: `cm-write-done ${ok ? "good" : ""}` }, ok ? "Perfect! ✨" : "Done"),
+      h("div", { class: "row cm-write-tools" }, h("button", { class: "btn small", onclick: start }, "✍️ Write it again"))
+    );
+  };
+  return { el: box, start };
+}
+
 function info(d) {
   const c = d.center;
   const demo = strokeDemo(c.ch, { size: 130 });
+  const write = writeBox(c.ch);
   return h(
     "div",
     { class: "card cm-info" },
@@ -138,9 +168,15 @@ function info(d) {
         h("div", { class: "cm-big-m" }, c.meaning || "—"),
         c.reading ? h("div", { class: "py" }, c.reading) : null,
         h("div", { class: `cm-state ${c.state}` }, c.state === "known" ? [h("span", {}, "✓ "), "Known"] : c.state === "course" ? "In your course · not learned yet" : "A building block (not a course character)"),
-        h("div", { class: "row", style: { marginTop: "8px" } }, iconBtn("speaker", "speaker sm", () => speak(c.ch), "Listen"))
+        h(
+          "div",
+          { class: "row", style: { marginTop: "8px" } },
+          iconBtn("speaker", "speaker sm", () => speak(c.ch), "Listen"),
+          h("button", { class: "btn small cm-write-btn", onclick: () => { write.start(); requestAnimationFrame(() => write.el.scrollIntoView({ behavior: "smooth", block: "center" })); } }, "✍️ Write it")
+        )
       )
     ),
+    write.el,
     d.parents.length
       ? h("div", { class: "cm-formula" }, h("span", { class: "hz" }, c.ch), " = ", d.parents.map((p, i) => [i ? " + " : "", h("button", { class: "cm-link hz", onclick: () => go(p.ch) }, p.ch), p.meaning ? h("small", {}, ` ${p.meaning}`) : null]))
       : h("p", { class: "muted small" }, "A basic shape: it isn't built from smaller parts."),

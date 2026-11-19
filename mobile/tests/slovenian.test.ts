@@ -129,3 +129,18 @@ test("bundled Slovenian neural audio covers every course word and sentence", () 
     }
   }
 });
+
+test("every Slovenian course word has a memory hook and an example sentence, and the example has audio", () => {
+  const course = JSON.parse(readFileSync(new URL("../../app/data/slovenian_a1.json", import.meta.url), "utf8"));
+  const extras = JSON.parse(readFileSync(new URL("../../app/data/extras/sl.json", import.meta.url), "utf8"));
+  const index = JSON.parse(readFileSync(new URL("../../app/data/audio/sl.json", import.meta.url), "utf8"));
+  for (const u of course.units) {
+    for (const [w] of u.words) {
+      const x = extras[w];
+      assert.ok(x, `extras for ${w}`);
+      for (const k of ["sounds_like", "mnemonic", "components", "example_zh", "example_en"]) assert.ok(String(x[k] || "").trim(), `${k} for ${w}`);
+      assert.ok(x.example_zh.split(/\s+/).length <= 8, `short example for ${w} (dictation takes up to 8 words)`);
+      assert.ok(audioSlice(index, x.example_zh), `audio for the example of ${w}: ${x.example_zh}`);
+    }
+  }
+});

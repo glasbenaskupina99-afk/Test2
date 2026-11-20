@@ -1741,6 +1741,7 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .fib-row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
 .friend-list { display: flex; flex-direction: column; gap: 8px; }
 .friend-row { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
+.fr-lang { color: var(--text); font-weight: 600; margin: 1px 0; }
 .fr-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; background: none; border: 0; font: inherit; color: var(--text-strong); text-align: left; cursor: pointer; padding: 0; }
 .fr-ava, .visit-ava { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 22px; background: var(--surface-2); }
 .friend-row .btn.small { width: auto; flex: none; }

@@ -242,6 +242,57 @@ test("Safari: a spoken word is recorded, recognised on bloomko.eu and graded", a
   }
 });
 
+test("friends across apps: East and Heritage learners add each other and water each other's gardens", async () => {
+  const { page, errors } = await fresh();
+  // bloomko.eu/api/friends, in memory. The friend already there learns with the other app.
+  const other = edition === "heritage" ? { lang: "zh", edition: "east", learns: /Learning Chinese/ } : { lang: "sl", edition: "heritage", learns: /Learning Slovenian/ };
+  const cards = new Map<string, { secret: string; profile: any; inbox: { name: string; at: string }[] }>();
+  cards.set("MAJA-2345", { secret: "f".repeat(32), inbox: [], profile: { name: "Maja", streak: 4, today: false, plants: 3, season: "spring", lang: other.lang, edition: other.edition, beds: [{ n: "First words", s: "0a1e2i" }] } });
+  const watered: { code: string; from: string }[] = [];
+  await page.route("https://bloomko.eu/api/friends/**", async (route) => {
+    const req = route.request();
+    const [code, action] = new URL(req.url()).pathname.replace("/api/friends/", "").split("/");
+    const body = req.postData() ? JSON.parse(req.postData()) : {};
+    const reply = (status: number, data: unknown) => route.fulfill({ status, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify(data) });
+    const card = cards.get(code);
+    if (req.method() === "PUT") {
+      if (card && card.secret !== body.secret) return reply(403, { error: "not your garden" });
+      cards.set(code, { secret: body.secret, profile: body.profile, inbox: [] });
+      return reply(200, { inbox: card?.inbox || [] });
+    }
+    if (req.method() === "GET") return card ? reply(200, { profile: card.profile, updated: new Date().toISOString() }) : reply(404, { error: "No garden with this friend code" });
+    if (req.method() === "POST" && action === "water") {
+      if (cards.get(body.from)?.secret !== body.secret) return reply(403, { error: "Turn on friends first" });
+      card.inbox.push({ name: body.name, at: new Date().toISOString() });
+      watered.push({ code, from: body.from });
+      return reply(200, { ok: true });
+    }
+    return reply(405, { error: "not allowed" });
+  });
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await go(page, "#/forest", ".garden-tabs");
+  await page.click(".garden-tabs button:nth-child(2)");
+  await page.click(".friends-intro .btn");
+  await page.waitForSelector(".my-code .sync-code");
+  const mine = (await page.locator(".my-code .sync-code").innerText()).trim();
+  assert.equal(cards.get(mine)?.profile.edition, edition, "my card says which app I use");
+
+  await page.fill(".my-code input", "maja-2345");
+  await page.locator(".my-code .btn", { hasText: "Add" }).click();
+  await page.waitForSelector(".friend-row");
+  assert.match(await page.locator(".friend-row").innerText(), other.learns, "the list shows what the friend learns");
+  await page.locator(".friend-row .btn", { hasText: "Visit" }).click();
+  await page.waitForSelector(".visit .water-friend");
+  assert.match(await page.locator(".visit-card").innerText(), other.learns);
+  assert.ok(await page.locator(".visit .bed-svg g.gplant").count(), "the friend's plants from the other app are drawn");
+  await page.click(".visit .water-friend");
+  await page.waitForSelector(".visit .water-friend:has-text('Watered today')");
+  assert.deepEqual(watered, [{ code: "MAJA-2345", from: mine }]);
+  assert.equal(cards.get("MAJA-2345").inbox[0].name, "Ana", "Maja sees who watered her garden");
+  assert.deepEqual(errors, []);
+});
+
 test("practice: due words come back and can be reviewed", async () => {
   const { page, errors, api } = await fresh();
   await start(page);

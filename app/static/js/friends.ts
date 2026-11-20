@@ -8,6 +8,10 @@ const ago = (iso: string) => {
   return m < 60 ? `${Math.max(1, m)} min ago` : m < 1440 ? `${Math.round(m / 60)} h ago` : new Date(iso).toLocaleDateString();
 };
 
+/** Which language a friend learns — friends can use Bloomko East (Chinese, Japanese) or Heritage (Slovenian). */
+const LEARNS = { zh: "🇨🇳 Learning Chinese", ja: "🇯🇵 Learning Japanese", sl: "🇸🇮 Learning Slovenian" };
+const learns = (p) => (p && LEARNS[p.lang] ? h("div", { class: "fr-lang small" }, LEARNS[p.lang]) : null);
+
 async function share(code: string) {
   const text = `Visit my garden in Bloomko 🌱 My friend code: ${code}`;
   try {
@@ -62,7 +66,7 @@ export async function visitGarden(code: string, onChange?: () => void) {
     h(
       "div",
       { class: "card visit-card" },
-      h("div", { class: "row", style: { alignItems: "center", gap: "12px" } }, h("span", { class: "visit-ava" }, "🌱"), h("div", {}, h("b", {}, g.name), h("div", { class: "small muted" }, `🔥 ${g.streak}-day streak · ${g.plants} plants · ${g.today ? "practised today ✓" : "hasn't practised yet today"}`))),
+      h("div", { class: "row", style: { alignItems: "center", gap: "12px" } }, h("span", { class: "visit-ava" }, "🌱"), h("div", {}, h("b", {}, g.name), learns(g), h("div", { class: "small muted" }, `🔥 ${g.streak}-day streak · ${g.plants} plants · ${g.today ? "practised today ✓" : "hasn't practised yet today"}`))),
       !g.today ? h("p", { class: "small", style: { margin: "10px 0 0" } }, `A little water is a friendly nudge — ${g.name} will see it when they open Bloomko.`) : null,
       h("div", { style: { marginTop: "12px" } }, waterBtn)
     ),
@@ -144,7 +148,7 @@ export function friendsPanel({ season }: { season?: string } = {}) {
                 { class: "card friend-row" },
                 h("button", { class: "fr-main", onclick: () => visitGarden(f.code, render) },
                   h("span", { class: "fr-ava" }, f.profile?.today ? "🌷" : "🌱"),
-                  h("div", {}, h("b", {}, f.name), h("div", { class: "small muted" }, f.error ? f.error : `🔥 ${f.profile?.streak ?? 0} · ${f.profile?.plants ?? 0} plants · ${f.profile?.today ? "practised today" : "not yet today"}`))),
+                  h("div", {}, h("b", {}, f.name), learns(f.profile), h("div", { class: "small muted" }, f.error ? f.error : `🔥 ${f.profile?.streak ?? 0} · ${f.profile?.plants ?? 0} plants · ${f.profile?.today ? "practised today" : "not yet today"}`))),
                 h("button", { class: `btn small ${f.watered ? "ghost" : ""}`, disabled: !!f.error, onclick: () => visitGarden(f.code, render) }, f.watered ? "Visit ✓" : "💧 Visit"),
                 h("button", {
                   class: "icon-btn fr-remove",

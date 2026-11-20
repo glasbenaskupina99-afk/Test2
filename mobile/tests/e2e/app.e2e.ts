@@ -352,6 +352,67 @@ test("the path: one stone open at a time, a stone keeps the streak, grammar and 
   assert.deepEqual(errors, []);
 });
 
+test("chapter gate: build the chapter's sentences; a wrong order comes back until it's right", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  // Walk the whole first chapter (its words and grammar), so its gate is next.
+  let j = await api("/api/journey");
+  const first = j.chapters[0];
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: first.stones.filter((s: any) => s.kind === "words").flatMap((s: any) => s.ids), xp: 0 } });
+  for (let k = 0; k < first.stones.filter((s: any) => s.kind === "grammar").length; k++) {
+    const lesson = await api("/api/grammar/lesson");
+    await api("/api/grammar/complete", { method: "POST", body: { ids: lesson.points.map((p: any) => p.id), xp: 0 } });
+  }
+  j = await api("/api/journey");
+  assert.equal(j.current, first.stones[first.stones.length - 1].id, "the gate is next");
+  assert.equal(j.chapters[0].stones.at(-1).kind, "gate");
+  // Remember the sentences the gate asks for, to put them in order.
+  await page.evaluate(() => {
+    const real = (window as any).__localApi;
+    (window as any).__localApi = async (p: string, o: any) => {
+      const r = await real(p, o);
+      if (p.startsWith("/api/journey/gate?")) (window as any).__gate = r;
+      return r;
+    };
+  });
+  await go(page, "#/words", ".topbar");
+  await go(page, "#/", ".journey .jr-current");
+  assert.match(await page.locator(".primary-go").innerText(), /Chapter gate/);
+  await page.locator(".primary-go").click();
+  await page.waitForSelector(".lesson .wo-tile");
+  const gate = await page.evaluate(() => (window as any).__gate);
+  assert.equal(gate.items.length, 3);
+  const put = async (order: string[]) => {
+    for (const t of order) await page.locator(".lesson .wo-bank .wo-tile", { hasText: t }).filter({ hasText: new RegExp(`^${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`) }).first().click();
+    await page.locator(".lesson-foot .btn", { hasText: "Check" }).click();
+  };
+  const itemNow = async () => {
+    const en = (await page.locator(".lesson .ex-title").innerText()).trim();
+    return gate.items.find((x: any) => x.en.trim() === en);
+  };
+  // The first sentence in the wrong order: not accepted, it comes back at the end.
+  let it = await itemNow();
+  await put([...it.answer].reverse());
+  assert.match(await page.locator(".lesson").innerText(), /Right words, another order|Not quite/);
+  await page.locator(".lesson-foot .btn").last().click();
+  for (let n = 0; n < 3; n++) {
+    await page.waitForSelector(".lesson .wo-tile");
+    it = await itemNow();
+    await put(it.answer);
+    assert.match(await page.locator(".lesson").innerText(), /Correct!/);
+    await page.locator(".lesson-foot .btn").last().click();
+  }
+  await page.waitForSelector(".lesson:has-text('Chapter gate passed!')");
+  await page.locator(".lesson-foot .btn").last().click();
+  await page.waitForSelector(".journey .jr-current");
+  j = await api("/api/journey");
+  assert.equal(j.chapters[0].stones.at(-1).done, true, "the gate is passed");
+  assert.equal(j.current, j.chapters[1].stones[0].id, "the next chapter is open");
+  assert.match(await page.locator(".jr-current .jr-head").innerText(), /Chapter 2/);
+  assert.deepEqual(errors, []);
+});
+
 test("practice: due words come back and can be reviewed", async () => {
   const { page, errors, api } = await fresh();
   await start(page);

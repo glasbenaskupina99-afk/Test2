@@ -5,6 +5,8 @@ import { h, toast } from "./util.js";
 export interface JourneyActions {
   /** A stone of new words: learn them (again: practise them). */
   words: (stone: any, again: boolean) => unknown;
+  /** The chapter gate: build sentences with the chapter's words. */
+  gate: (stone: any) => unknown;
   /** A grammar stone: the lesson (again: look it up in the grammar book). */
   grammar: (stone: any, again: boolean) => unknown;
   story: (stone: any) => unknown;
@@ -13,12 +15,13 @@ export interface JourneyActions {
   next: () => unknown;
 }
 
-const ICON = { words: "🌱", grammar: "📘", story: "📜", water: "💧" };
+const ICON = { words: "🌱", grammar: "📘", story: "📜", water: "💧", gate: "🚪" };
 
 function label(s) {
   if (s.kind === "words") return { title: "New words", sub: s.words.slice(0, 3).join(", ") + (s.words.length > 3 ? " …" : "") };
   if (s.kind === "grammar") return { title: "Grammar", sub: s.title };
   if (s.kind === "story") return { title: "Story", sub: s.title_en && s.title_en !== s.title ? `${s.title} · ${s.title_en}` : s.title };
+  if (s.kind === "gate") return { title: "Chapter gate", sub: "Build 3 sentences with this chapter's words" };
   return { title: "Water your garden", sub: `${s.due} words are thirsty` };
 }
 
@@ -32,6 +35,7 @@ function openStone(s, state: "done" | "now" | "locked", act: JourneyActions) {
   if (s.kind === "words") return act.words(s, again);
   if (s.kind === "grammar") return act.grammar(s, again);
   if (s.kind === "story") return act.story(s);
+  if (s.kind === "gate") return act.gate(s);
   return act.water(s);
 }
 

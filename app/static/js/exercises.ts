@@ -691,6 +691,61 @@ export function sentenceType(ctx, s) {
   };
 }
 
+/**
+ * Build the sentence (the chapter gate of the journey): tap the words in order, tap one in the
+ * answer to put it back. From the third chapter on, one tile is a wrong form and stays out.
+ */
+export function wordOrder(ctx, item) {
+  const sl = item.lang === "sl";
+  const answer = h("div", { class: "wo-answer" });
+  const end = h("span", { class: "wo-end" + (sl ? "" : " hz") }, item.end || "");
+  const bank = h("div", { class: "wo-bank" });
+  const placed = () => [...answer.querySelectorAll<HTMLElement>(".wo-tile")];
+  const tiles = item.tiles.map((t) => {
+    const b = h("button", { class: "wo-tile" + (sl ? "" : " hz") }, t);
+    b.dataset.t = t;
+    b.onclick = () => {
+      if (b.parentElement === bank) answer.insertBefore(b, end);
+      else bank.append(b);
+      ctx.setReady(placed().length > 0);
+    };
+    return b;
+  });
+  // Shuffled, but never already in the right order.
+  let order = shuffle(tiles);
+  for (let i = 0; i < 5 && order.map((b) => b.dataset.t).join("|") === item.answer.join("|"); i++) order = shuffle(tiles);
+  bank.append(...order);
+  answer.append(end);
+  const same = (a: string[], b: string[]) => (sl ? a.join(" ").toLowerCase() === b.join(" ").toLowerCase() : a.join("") === b.join(""));
+  const sentence = () => h("div", { class: (sl ? "" : "hz ") + "wo-solution" }, item.text);
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker purple" }, "🚪 Chapter gate"),
+      h("h2", { class: "ex-title" }, item.en || "Put the words in order"),
+      answer,
+      bank,
+      h("div", { class: "hint center" }, item.extra ? "Tap the words in order — one word is extra" : "Tap the words in order")
+    ),
+    mode: "check",
+    async check() {
+      const got = placed().map((b) => b.dataset.t);
+      const ok = same(got, item.answer);
+      tiles.forEach((b) => (b.disabled = true));
+      answer.classList.add(ok ? "good" : "bad");
+      speak(item.text);
+      const rightWords = !ok && same([...got].sort(), [...item.answer].sort());
+      return {
+        ok,
+        grade: ok ? 2 : 0,
+        title: ok ? "Correct!" : rightWords ? "Right words, another order" : "Not quite",
+        detail: h("div", {}, rightWords ? h("div", { class: "small" }, "This gate practises this order:") : null, sentence()),
+      };
+    },
+  };
+}
+
 export function sentenceSpeak(ctx, s) {
   const py = h("div", { class: "small muted center" }, s.pinyin);
   py.hidden = true;

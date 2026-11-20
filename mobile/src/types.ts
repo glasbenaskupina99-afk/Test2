@@ -154,7 +154,7 @@ export interface Db {
   grammar: { learned: Record<string, GrammarCard> };
   stories?: Record<string, { done: boolean; best: number; [key: string]: unknown }>;
   /** The journey (3.0): when each stone was first seen walked ("before" for older progress), watering days, levels seen. */
-  journey?: { done: Record<string, string>; water: Record<string, boolean>; seen: Record<string, boolean> };
+  journey?: { done: Record<string, string>; water: Record<string, boolean>; seen: Record<string, boolean>; gates?: Record<string, string> };
   storiesAi?: any[];
   forest?: { weeks: Record<string, ForestWeek>; glade: any[] };
   exams?: ExamResult[];

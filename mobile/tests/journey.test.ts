@@ -52,6 +52,8 @@ for (const level of LEVELS) {
       if (s.kind === "words") met += s.ids.length;
       if (s.kind === "grammar") assert.ok(met >= Math.min(unlocks[s.lesson], words.length), `grammar lesson ${s.lesson + 1} after ${met} words`);
     }
+    // Every chapter but kana ends with its gate.
+    for (const c of p.chapters) assert.equal(c.stones[c.stones.length - 1].kind === "gate", level[0] !== "Kana", `chapter ${c.n + 1} ends with a gate`);
     // Stories: each one on the path once.
     assert.deepEqual(stones.filter((s) => s.kind === "story").map((s) => s.story).sort(), stories.map((s: any) => s.id).sort());
   });

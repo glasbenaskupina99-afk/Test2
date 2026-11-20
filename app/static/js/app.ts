@@ -488,6 +488,7 @@ function journeyHome(home, practice, tiles) {
     },
     grammar: (_, again) => (again ? grammarBook() : startFlow(flows.grammarLesson)),
     story: (s) => storyReader(s.story),
+    gate: (s) => startFlow(() => flows.chapterGate(s.chapter)),
     water: async () => {
       const d = home.due_by_skill || {};
       const m = await flows.pickStudyMode({

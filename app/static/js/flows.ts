@@ -251,6 +251,25 @@ function grammarQuestion(p, lesson, others, n = 1) {
     : (ctx) => ex.grammarGap(ctx, p, x, grammarOptions(p, lesson, others, "mark", x));
 }
 
+/** The chapter gate of the journey: three sentences to build; a wrong one comes back until it's right. */
+export async function chapterGate(chapter: number) {
+  const g = await api(`/api/journey/gate?chapter=${chapter}`);
+  if (!g.items.length) {
+    toast("No sentences for this gate yet");
+    return null;
+  }
+  const steps = g.items.map((it, i) => {
+    const make = (ctx) => ex.wordOrder(ctx, it);
+    return step(make, untilRight(make, `gate${i}`), `gate${i}`);
+  });
+  return runLesson({
+    steps,
+    title: "Chapter gate",
+    endTitle: "Chapter gate passed!",
+    onDone: () => api("/api/journey/gate", { method: "POST", body: { chapter } }),
+  });
+}
+
 /** A grammar lesson: three new points, each introduced, then a quiz on all of them. */
 export async function grammarLesson() {
   let data;

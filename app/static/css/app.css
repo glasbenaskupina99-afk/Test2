@@ -1373,6 +1373,18 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .jr-more { align-self: center; position: relative; z-index: 1; width: auto; }
 .jr-stone.now { border-color: var(--accent, var(--green)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent, var(--green)) 20%, transparent); }
 .jr-stone.now .jr-ic { background: var(--accent, var(--green)); color: var(--on-accent, #fff); }
+.jr-stone.gate .jr-ic { background: var(--purple-light); }
+/* Build the sentence (chapter gate): tiles move from the bank to the answer line and back. */
+.wo-answer { min-height: 58px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 0; margin: 8px 0 14px; border-bottom: 2px solid var(--border); }
+.wo-answer.good { border-color: var(--green); }
+.wo-answer.bad { border-color: var(--red); }
+.wo-bank { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; min-height: 52px; }
+.wo-tile { padding: 9px 13px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); box-shadow: 0 3px 0 var(--border); color: var(--text-strong); font: inherit; font-size: 17px; font-weight: 800; cursor: pointer; }
+.wo-tile.hz { font-size: 20px; font-weight: 500; }
+.wo-tile:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border); }
+.wo-tile:disabled { cursor: default; }
+.wo-end { font-size: 20px; font-weight: 800; color: var(--muted); }
+.wo-solution { font-size: 18px; font-weight: 800; color: var(--text-strong); margin-top: 4px; }
 .jr-chapter { display: flex; flex-direction: column; gap: 8px; }
 .jr-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .jr-row-ic { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 900; background: var(--surface-2); color: var(--muted); }

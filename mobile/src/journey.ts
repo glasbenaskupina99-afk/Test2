@@ -2,6 +2,7 @@
 // screen. A level's themed units are grouped into chapters of about 60 words (kana: by script,
 // then by dakuten), and each chapter is a row of stones: 5 new words at a time, a grammar lesson
 // where the grammar rule unlocks it, and a story once 85 % of its words have been learned.
+// Every chapter ends with a gate: put sentences with its words back in order.
 // This module only plans the path; whether a stone is done is worked out by the backend from
 // what has been learned, so older progress and placement tests show up as stones already walked.
 
@@ -19,7 +20,7 @@ export interface PlanStory { id: string; title: string; title_en: string; need: 
 
 export interface Stone {
   id: string;
-  kind: "words" | "grammar" | "story";
+  kind: "words" | "grammar" | "story" | "gate";
   chapter: number;
   /** words: the stone's words, in course order */
   ids?: number[];
@@ -124,6 +125,8 @@ export function buildPlan({ section, words, points = [], stories = [], perLesson
       out.push(s);
       for (const x of extra) if (x.after === s) out.push({ ...x.stone, chapter: c.n });
     }
+    // The chapter gate: build sentences with the chapter's words. (Kana gets its own gate later.)
+    if (section !== "Kana") out.push({ id: `x${section}:${c.n}`, kind: "gate", chapter: c.n });
     c.stones = out;
   }
   return { section, chapters };

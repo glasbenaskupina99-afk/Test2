@@ -27,6 +27,7 @@ import LOOKALIKES from "../../app/data/lookalikes.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
 import { buildPlan, wordsNeeded, type Plan, type Stone } from "./journey.js";
+import { cutCjk, cutSl, extraTile, goodCut } from "./tiles.js";
 
 // Two apps from one code base: Bloomko East (Chinese, Japanese) and Bloomko Heritage
 // (lesser-known languages, for now Slovenian). The build picks one (__EDITION__).
@@ -1078,12 +1079,16 @@ async function journey() {
   const ids = learnedIds();
   const points = GRAMMAR[sec] || [];
   const learnedPoints = points.filter((p) => db.grammar.learned[p.id]).length;
+  const j = (db.journey ||= { done: {}, water: {}, seen: {} });
+  // A gate is passed, or left behind: someone whose words already reach a later chapter (older
+  // progress, a placement test) isn't sent back to it.
+  const wordsWalked = plan.chapters.map((c) => c.stones.some((s) => s.kind === "words" && s.ids.every((id) => ids.has(id))));
   const done = (s: Stone) =>
     s.kind === "words" ? s.ids.every((id) => ids.has(id))
     : s.kind === "grammar" ? learnedPoints >= Math.min(points.length, (s.lesson + 1) * PER_LESSON)
     : s.kind === "story" ? !!db.stories?.[s.story]?.done
+    : s.kind === "gate" ? !!j.gates?.[s.id] || wordsWalked.slice(s.chapter + 1).some(Boolean)
     : false;
-  const j = (db.journey ||= { done: {}, water: {}, seen: {} });
   const today = dayKey();
   // The first time a level is shown, what's already done is older progress, not today's walk.
   const first = !j.seen[sec];
@@ -1115,6 +1120,7 @@ async function journey() {
     }
     if (s.kind === "grammar") Object.assign(v, { lesson: s.lesson, title: s.title });
     if (s.kind === "story") Object.assign(v, { story: s.story, title: s.title, title_en: s.title_en });
+    if (s.kind === "gate") v.chapter = s.chapter;
     return v;
   };
   return {
@@ -1125,6 +1131,53 @@ async function journey() {
     water,
     stones_today: a.stones || 0,
     chapters: plan.chapters.map((c) => ({ n: c.n, units: c.units, words: c.ids.length, stones: c.stones.map(view) })),
+  };
+}
+
+/** Names in the Slovenian examples (written with a capital in mid-sentence): Ana, Ljubljana, Novak. */
+let SL_NAMES: Set<string> | null = null;
+function slNames(ready) {
+  if (SL_NAMES) return SL_NAMES;
+  SL_NAMES = new Set();
+  for (const x of Object.values<any>(ready || {})) for (const t of String(x?.example_zh || "").split(/\s+/).slice(1)) if (/^\p{Lu}\p{Ll}/u.test(t)) SL_NAMES.add(t.replace(/[.,!?;:]+$/, ""));
+  return SL_NAMES;
+}
+
+/** Three sentences with the chapter's words, cut into tiles; from the third chapter on, one tile is extra. */
+async function gateItems(n: number) {
+  const sec = sections().current;
+  const plan = await journeyPlan(sec);
+  const c = plan?.chapters[n];
+  if (!c) throw new HttpError(404, "No such chapter");
+  const lang = course();
+  await loadReady(lang);
+  const ready = READY[lang] || {};
+  const byId = new Map(W().map((w) => [w.id, w]));
+  const lex = new Set(W().filter((w) => w.section !== "Kana").map((w) => w.hanzi));
+  const cut = (t) => (lang === "sl" ? cutSl(t, slNames(ready)) : cutCjk(t, lex, lang));
+  const found = [];
+  const seen = new Set();
+  // The chapter's own words first; examples of earlier chapters if it has too few.
+  for (const pool of [c.ids, plan.chapters.slice(0, n).reverse().flatMap((x) => x.ids)]) {
+    for (const id of shuffled(pool)) {
+      const x = ready[byId.get(id)?.hanzi];
+      const text = x?.example_zh;
+      if (!text || seen.has(text)) continue;
+      const k = cut(text);
+      if (!goodCut(k, lang)) continue;
+      seen.add(text);
+      found.push({ text, en: x.example_en || "", answer: k.tiles, end: k.end });
+      if (found.length === 3) break;
+    }
+    if (found.length === 3) break;
+  }
+  return {
+    chapter: n,
+    lang,
+    items: found.map((f, i) => {
+      const extra = n >= 2 ? extraTile(f.answer, lang, i + n) : null;
+      return { ...f, lang, extra, tiles: extra ? [...f.answer, extra] : f.answer };
+    }),
   };
 }
 
@@ -1297,6 +1350,17 @@ function placementOffer(secs) {
 const routes = {
   // The journey (3.0): the path of the current level, stone by stone.
   "GET /api/journey": async () => (await journey()) || { available: false },
+
+  // The chapter gate: its sentences, and passing it.
+  "GET /api/journey/gate": (_, __, query) => gateItems(Number(query.get("chapter")) || 0),
+  "POST /api/journey/gate": async (_, body) => {
+    const sec = sections().current;
+    const j = (db.journey ||= { done: {}, water: {}, seen: {} });
+    (j.gates ||= {})[`x${sec}:${Number(body.chapter) || 0}`] = dayKey();
+    persist();
+    await journey();
+    return { ok: true, streak: streak() };
+  },
 
   // Watering from the path: done for today once a practice session has been finished.
   "POST /api/journey/water": () => {

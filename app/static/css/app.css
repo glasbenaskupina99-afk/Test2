@@ -1734,7 +1734,8 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .friends-intro { text-align: center; }
 .fi-art { font-size: 40px; letter-spacing: 6px; }
 .friends-intro .btn { margin-top: 6px; }
-.my-code .sync-code { font-size: 22px; letter-spacing: 2px; }
+/* The box is always as wide as the code (it never shrinks under it), a little smaller on narrow phones. */
+.my-code .sync-code { flex: 0 1 auto; min-width: max-content; font-size: clamp(17px, 5.6vw, 22px); letter-spacing: 2px; }
 .my-code .btn.small { width: auto; }
 .my-code .row > .input { flex: 1; min-width: 0; }
 .friend-inbox { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }

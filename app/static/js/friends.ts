@@ -111,7 +111,7 @@ export function friendsPanel({ season }: { season?: string } = {}) {
       );
       return;
     }
-    const codeIn = h("input", { class: "input", placeholder: "Friend's code: XXXX-XXXX", autocapitalize: "characters", spellcheck: "false" });
+    const codeIn = h("input", { class: "input", placeholder: "Friend's code", autocapitalize: "characters", spellcheck: "false" });
     const add = h("button", { class: "btn ghost" }, "Add");
     add.onclick = async () => {
       add.disabled = true;

@@ -127,7 +127,7 @@ const STEPS = () => [
   {
     art: artReview,
     title: "2 · Practice at the right time",
-    text: "Bloomko knows when you're about to forget a word and brings it back just then — first after a day, then after longer and longer breaks. Tap Practice when words are due.",
+    text: "Bloomko knows when you're about to forget a word and brings it back just then — first after a day, then after longer and longer breaks. When words are due, watering shows up on your path.",
   },
   {
     art: artGrammar,

@@ -1345,6 +1345,47 @@ h1, h2, .section-title { font-family: var(--heading); font-weight: 700; letter-s
 .pg-arrow { margin-left: auto; width: 40px; height: 40px; flex: none; border-radius: 50%; background: rgba(255, 255, 255, .22); display: grid; place-items: center; }
 .pg-arrow svg { width: 20px; height: 20px; }
 
+/* The journey (3.0): the path of stones on the home screen. Stones zigzag down a dotted path. */
+.journey { display: flex; flex-direction: column; gap: 8px; }
+.jr-current { padding: 16px 14px; }
+.jr-head { display: flex; flex-direction: column; gap: 3px; margin-bottom: 14px; }
+.jr-head small { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: .04em; }
+.jr-head h3 { margin: 0; font-size: 19px; color: var(--text-strong); font-family: var(--heading, inherit); text-wrap: balance; }
+.jr-bar { height: 7px; border-radius: 99px; background: var(--surface-2); overflow: hidden; margin: 6px 0 2px; }
+.jr-bar i { display: block; height: 100%; border-radius: 99px; background: var(--green); }
+.jr-stones { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 4px 0; }
+.jr-stones::before { content: ""; position: absolute; z-index: 0; left: 50%; top: 16px; bottom: 16px; border-left: 3px dotted var(--border-dark); transform: translateX(-50%); }
+.jr-stone { position: relative; z-index: 1; width: 78%; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 26px 20px 24px 18px / 20px 26px 18px 24px; border: 2px solid var(--border); background: var(--surface); color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.jr-stone:nth-child(odd) { align-self: flex-start; }
+.jr-stone:nth-child(even) { align-self: flex-end; }
+.jr-ic { width: 36px; height: 36px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 17px; background: var(--surface-2); }
+.jr-txt { display: flex; flex-direction: column; min-width: 0; }
+.jr-txt b { font-size: 14.5px; color: var(--text-strong); }
+.jr-txt small { font-size: 12.5px; color: var(--muted); line-height: 1.3; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.jr-stone.words .jr-ic { background: var(--green-light); }
+.jr-stone.grammar .jr-ic { background: var(--blue-light); }
+.jr-stone.story .jr-ic { background: color-mix(in srgb, var(--orange) 24%, var(--surface)); }
+.jr-stone.water .jr-ic { background: var(--blue-light); }
+.jr-stone.done > * { opacity: .75; }
+.jr-stone.done .jr-ic { background: var(--green); color: #fff; font-weight: 900; }
+.jr-stone.locked { border-style: dashed; }
+.jr-stone.locked > * { opacity: .5; }
+.jr-more { align-self: center; position: relative; z-index: 1; width: auto; }
+.jr-stone.now { border-color: var(--accent, var(--green)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent, var(--green)) 20%, transparent); }
+.jr-stone.now .jr-ic { background: var(--accent, var(--green)); color: var(--on-accent, #fff); }
+.jr-chapter { display: flex; flex-direction: column; gap: 8px; }
+.jr-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.jr-row-ic { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 900; background: var(--surface-2); color: var(--muted); }
+.jr-chapter.done .jr-row-ic { background: var(--green); color: #fff; }
+.jr-chapter.locked .jr-row { opacity: .6; }
+.jr-row-txt { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.jr-row-txt small { font-size: 11.5px; font-weight: 800; color: var(--muted); letter-spacing: .03em; }
+.jr-row-txt b { font-size: 14.5px; color: var(--text-strong); overflow-wrap: anywhere; }
+.jr-row-n { font-size: 12.5px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
+.jr-complete { margin-top: 14px; display: flex; align-items: center; gap: 12px; }
+.jr-complete-ic { font-size: 30px; }
+.jr-complete .btn.small { width: auto; flex: none; margin-left: auto; }
+@media (prefers-reduced-motion: no-preference) { .jr-stone.now { animation: jr-breathe 2.6s ease-in-out infinite; } @keyframes jr-breathe { 50% { transform: translateY(-2px); } } }
 .home-label { margin: 24px 0 10px; font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .tile { display: flex; flex-direction: column; gap: 5px; min-height: 104px; padding: 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: inherit; text-align: left; text-decoration: none; cursor: pointer; transition: transform .1s; }

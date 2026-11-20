@@ -26,6 +26,7 @@ import * as fsrs from "./fsrs.js";
 import LOOKALIKES from "../../app/data/lookalikes.json";
 import { compareSpoken, comparePinyin, hanziOnly, toPinyin } from "./pinyin.js";
 import { compareReading, compareSpokenJa, isKanji, normKana, writable } from "./japanese.js";
+import { buildPlan, wordsNeeded, type Plan, type Stone } from "./journey.js";
 
 // Two apps from one code base: Bloomko East (Chinese, Japanese) and Bloomko Heritage
 // (lesser-known languages, for now Slovenian). The build picks one (__EDITION__).
@@ -408,7 +409,7 @@ async function applyLocale() {
     if (en !== undefined) w.english = locale.meaning(w.lang, w.hanzi) || en;
   }
   // Loaded content is cached per level: load it again in the new language.
-  for (const cache of [grammarJobs, GRAMMAR, storyJobs, STORIES, readyJobs, READY]) for (const k of Object.keys(cache)) delete cache[k];
+  for (const cache of [grammarJobs, GRAMMAR, storyJobs, STORIES, readyJobs, READY, PLANS]) for (const k of Object.keys(cache)) delete cache[k];
 }
 
 function persist() {
@@ -453,7 +454,14 @@ function addActivity({ xp = 0, new_words = 0, reviews = 0, sentences = 0, second
   persist();
 }
 
-const practiced = (k) => db.activity[k]?.xp > 0;
+/**
+ * A day counts as practised with a stone of the journey walked. Days without a stone waiting
+ * (before 3.0, your own word lists, a finished level) count with any practice, as before.
+ */
+const practiced = (k) => {
+  const a = db.activity[k];
+  return !!a && ((a.stones || 0) > 0 || (!a.path && a.xp > 0));
+};
 /** A day keeps the streak alive if you practised or a raindrop watered it. */
 const covered = (k) => practiced(k) || db.garden.saved.includes(k);
 const shiftDay = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
@@ -1022,6 +1030,104 @@ function annotate(tokens, lex) {
     return { t, r, m: m || w?.meaning || "", punct: isPunct(t), word_id: w?.id || null, learned: !!w?.learned, level: w?.level || null };
   });
 }
+// ------------------------------------------------------------------ the journey (3.0)
+// The home screen is a path through the level: chapters of themed units and, on them, stones of
+// 5 new words, grammar lessons and stories (planned in journey.ts), plus watering when 10 or more
+// reviews wait. A stone is done when its words are learned, its grammar learned, its story read,
+// so older progress and placement tests show as stones already walked.
+const WATER_AT = 10;
+const PLANS: Record<string, Plan> = {};
+
+/** Proper names in a story (Ana, 王明) aren't taught by the course; they don't make it harder to read. */
+const isName = (t, gloss) => /\(name\)/.test(String(gloss || "")) || (course() === "sl" && /^\p{Lu}/u.test(t) && t !== t.toUpperCase());
+
+async function journeyPlan(sec): Promise<Plan | null> {
+  const words = W().filter((w) => w.section === sec).sort(byPosition);
+  if (!words.length || words.some((w) => w.source === "custom")) return null;
+  const [points, stories] = await Promise.all([loadGrammar(sec), loadStories(sec)]);
+  const key = `${course()}|${sec}|${words.length}|${points?.length || 0}|${stories?.length || 0}`;
+  if (PLANS[key]) return PLANS[key];
+  const lex = courseLexicon();
+  const order = new Map(words.map((w, i) => [w.id, i + 1]));
+  const secs = sections().list.map((s) => s.name);
+  const earlier = new Set(secs.slice(0, Math.max(0, secs.indexOf(sec))));
+  const need = (st) =>
+    wordsNeeded(
+      st.sentences.flatMap((s) => s.tokens || []).filter(([t]) => !isPunct(t)).map(([t, r, gloss]) => {
+        const hit = tokenWord(lex, t, r);
+        if (hit) return order.get(hit.id) ?? (earlier.has(hit.level) ? 0 : Infinity);
+        return isName(t, gloss) ? 0 : Infinity;
+      })
+    );
+  return (PLANS[key] = buildPlan({
+    section: sec,
+    words: words.map((w) => ({ id: w.id, unit: w.unit })),
+    points: (points || []).map((p) => ({ id: p.id, title: p.title })),
+    stories: (stories || []).map((st) => ({ id: st.id, title: st.title, title_en: st.title_en, need: need(st) })),
+    perLesson: PER_LESSON,
+  }));
+}
+
+const todayActivity = () => (db.activity[dayKey()] ||= { xp: 0, new_words: 0, reviews: 0, sentences: 0 });
+
+/** The path of the current level with every stone's state; also records stones walked today. */
+async function journey() {
+  const sec = sections().current;
+  const plan = await journeyPlan(sec);
+  if (!plan) return null;
+  const ids = learnedIds();
+  const points = GRAMMAR[sec] || [];
+  const learnedPoints = points.filter((p) => db.grammar.learned[p.id]).length;
+  const done = (s: Stone) =>
+    s.kind === "words" ? s.ids.every((id) => ids.has(id))
+    : s.kind === "grammar" ? learnedPoints >= Math.min(points.length, (s.lesson + 1) * PER_LESSON)
+    : s.kind === "story" ? !!db.stories?.[s.story]?.done
+    : false;
+  const j = (db.journey ||= { done: {}, water: {}, seen: {} });
+  const today = dayKey();
+  // The first time a level is shown, what's already done is older progress, not today's walk.
+  const first = !j.seen[sec];
+  let walked = 0;
+  const stones = plan.chapters.flatMap((c) => c.stones);
+  for (const s of stones) {
+    if (done(s) && !j.done[s.id]) {
+      j.done[s.id] = first ? "before" : today;
+      if (!first) walked++;
+    }
+  }
+  j.seen[sec] = true;
+  const current = stones.find((s) => !done(s)) || null;
+  const n = fmt(now());
+  const due = SC().filter((c) => c.due <= n).length;
+  const water = due >= WATER_AT && !j.water[today] ? { id: "water", kind: "water", due } : null;
+  const a = todayActivity();
+  if (walked) a.stones = (a.stones || 0) + walked;
+  const changed = walked > 0 || first || ((current || water) && !a.path);
+  if (current || water) a.path = true;
+  if (changed) persist();
+  const byId = new Map(W().map((w) => [w.id, w]));
+  const view = (s: Stone) => {
+    const v: any = { id: s.id, kind: s.kind, done: done(s) };
+    if (s.kind === "words") {
+      v.ids = s.ids;
+      v.words = s.ids.map((id) => byId.get(id)?.hanzi).filter(Boolean);
+      v.left = s.ids.filter((id) => !ids.has(id));
+    }
+    if (s.kind === "grammar") Object.assign(v, { lesson: s.lesson, title: s.title });
+    if (s.kind === "story") Object.assign(v, { story: s.story, title: s.title, title_en: s.title_en });
+    return v;
+  };
+  return {
+    available: true,
+    section: sec,
+    current: current?.id || null,
+    complete: !current,
+    water,
+    stones_today: a.stones || 0,
+    chapters: plan.chapters.map((c) => ({ n: c.n, units: c.units, words: c.ids.length, stones: c.stones.map(view) })),
+  };
+}
+
 function knownShare(story, lex) {
   const toks = story.sentences.flatMap((s) => s.tokens).filter(([t]) => !isPunct(t));
   if (!toks.length) return 0;
@@ -1189,6 +1295,22 @@ function placementOffer(secs) {
 }
 
 const routes = {
+  // The journey (3.0): the path of the current level, stone by stone.
+  "GET /api/journey": async () => (await journey()) || { available: false },
+
+  // Watering from the path: done for today once a practice session has been finished.
+  "POST /api/journey/water": () => {
+    const j = (db.journey ||= { done: {}, water: {}, seen: {} });
+    const today = dayKey();
+    if (!j.water[today]) {
+      j.water[today] = true;
+      const a = todayActivity();
+      a.stones = (a.stones || 0) + 1;
+      persist();
+    }
+    return { ok: true, streak: streak() };
+  },
+
   "GET /api/home": async () => {
     waterMissedDays();
     pushWidget();
@@ -1469,13 +1591,19 @@ const routes = {
     const n = Number(query.get("n")) || settingsAll().new_per_lesson;
     const ids = learnedIds();
     const sec = sections().current;
-    const words = W().filter((w) => !ids.has(w.id) && w.section === sec).sort(byPosition).slice(0, n).map((w) => ({ ...w, extras: extrasOf(w) }));
+    // A stone of the journey asks for its own words (those not learned yet).
+    const only = new Set((query.get("ids") || "").split(",").map(Number).filter(Boolean));
+    const words = W()
+      .filter((w) => !ids.has(w.id) && (only.size ? only.has(w.id) : w.section === sec))
+      .sort(byPosition)
+      .slice(0, only.size ? only.size : n)
+      .map((w) => ({ ...w, extras: extrasOf(w) }));
     // Distractors from the same level, so N3 words are quizzed against N3 words, kana against kana.
     const level = W().filter((w) => w.section === sec);
     return { words, pool: shuffled(level.length >= 12 ? level : W()).slice(0, 40).map(pick) };
   },
 
-  "POST /api/learn/complete": (_, body) => {
+  "POST /api/learn/complete": async (_, body) => {
     const firstDue = fmt(addMs(20 * 3600000));
     const have = new Set(db.cards.map((c) => `${c.word_id}|${c.skill}`));
     const exists = new Set(db.words.map((w) => w.id));
@@ -1489,6 +1617,7 @@ const routes = {
     }
     addActivity({ xp: body.xp || 0, new_words: ids.length });
     checkChallenges(); // e.g. "plant 25 trees" can be finished right here
+    if (ids.length) await journey(); // a stone walked counts for today right away
     return { ok: true, streak: streak() };
   },
 
@@ -1684,11 +1813,12 @@ const routes = {
     return { ...st, points: GRAMMAR[st.section].map((p) => (db.grammar.learned[p.id] ? { ...grammarPoint(p, known), learned: true } : { id: p.id, title: p.title, learned: false })) };
   },
 
-  "POST /api/grammar/complete": (_, body) => {
+  "POST /api/grammar/complete": async (_, body) => {
     const tomorrow = fmt(addMs(20 * 3600000));
     for (const id of body.ids || []) db.grammar.learned[id] ||= { due: tomorrow, reps: 0, lapses: 0, last_review: null };
     addActivity({ xp: body.xp || 0 });
     persist();
+    await journey();
     return { ok: true, streak: streak() };
   },
 
@@ -1802,7 +1932,7 @@ const routes = {
     };
   },
 
-  "POST /api/stories/:id/done": ({ id }, body) => {
+  "POST /api/stories/:id/done": async ({ id }, body) => {
     const score = Math.max(0, Math.min(100, Number(body.score) || 0));
     const st = (db.stories[id] ||= { done: false, best: 0 });
     st.done = true;
@@ -1811,6 +1941,7 @@ const routes = {
     addActivity({ xp: body.xp || 5 });
     checkChallenges();
     persist();
+    await journey();
     return { ok: true, streak: streak() };
   },
 

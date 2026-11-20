@@ -293,6 +293,65 @@ test("friends across apps: East and Heritage learners add each other and water e
   assert.deepEqual(errors, []);
 });
 
+test("the path: one stone open at a time, a stone keeps the streak, grammar and watering come along", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await page.waitForSelector(".journey .jr-current");
+  assert.match(await page.locator(".primary-go").innerText(), /Continue · New words/);
+  assert.equal(await page.locator(".jr-current .jr-stone.now").count(), 1, "only the next stone is open");
+  await page.locator(".jr-current .jr-stone.locked").first().click();
+  await page.waitForSelector(".toast:has-text('Walk the stones before this one first')");
+
+  // Practice without a stone doesn't keep the streak on a day the path has one waiting.
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: [], xp: 12 } });
+  assert.equal((await api("/api/home")).streak, 0);
+
+  // The first stone, walked in the app.
+  const words = await api("/api/words");
+  await page.locator(".primary-go").click();
+  await page.locator(".sheet .mode", { hasText: "Choice only" }).click();
+  await page.waitForSelector(".lesson");
+  await finishLesson(page, words, /New words learned!/);
+  await page.locator(".lesson-foot .btn").last().click();
+  await page.waitForSelector(".journey .jr-current");
+  let j = await api("/api/journey");
+  assert.equal(j.stones_today, 1);
+  assert.equal(j.chapters[0].stones[0].done, true);
+  assert.equal((await api("/api/home")).streak, 1, "one stone keeps the streak");
+  assert.match(await page.locator(".garden-goal").innerText(), /Today's stone walked/);
+
+  // After the first 10 words the grammar lesson is next on the path.
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 10).map((w: any) => w.id), xp: 0 } });
+  await go(page, "#/words", ".topbar");
+  await go(page, "#/", ".journey .jr-current");
+  assert.match(await page.locator(".primary-go").innerText(), /Continue · Grammar/);
+  await page.locator(".primary-go").click();
+  await page.waitForSelector(".lesson");
+  await page.locator(".lesson .icon-btn").first().click(); // leave it for now
+  await page.locator(".dialog .btn", { hasText: /Leave|Quit|End/ }).click().catch(() => {});
+
+  // Ten or more reviews waiting: watering comes before the next stone, once a day.
+  await page.waitForTimeout(800);
+  await page.goto(`${base}/nothing-here.txt`);
+  await page.evaluate(() => {
+    const db = JSON.parse(localStorage.getItem("hanzi-db"));
+    db.cards.forEach((c: any) => (c.due = "2000-01-01 00:00:00"));
+    localStorage.setItem("hanzi-db", JSON.stringify(db));
+  });
+  await page.goto(base);
+  await page.waitForSelector(".journey .jr-current");
+  await page.evaluate(() => document.getElementById("splash")?.remove());
+  assert.match(await page.locator(".primary-go").innerText(), /Water your garden/);
+  j = await api("/api/journey");
+  assert.ok(j.water && j.water.due >= 10);
+  await api("/api/journey/water", { method: "POST" });
+  j = await api("/api/journey");
+  assert.equal(j.water, null, "watered today");
+  assert.equal(j.stones_today, 3, "the first stone, the second (words 6–10) and watering");
+  assert.deepEqual(errors, []);
+});
+
 test("practice: due words come back and can be reviewed", async () => {
   const { page, errors, api } = await fresh();
   await start(page);
@@ -679,6 +738,9 @@ test("AI: offered only when it can really answer (a model server that responds)"
   assert.equal(s.ai_enabled, false, "but the AI isn't offered while nothing can answer");
   const words = await api("/api/words");
   await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 30).map((w: any) => w.id), xp: 0 } });
+  // The first grammar lesson of the path, so that the next stone is new words again.
+  const lesson = await api("/api/grammar/lesson");
+  await api("/api/grammar/complete", { method: "POST", body: { ids: lesson.points.map((p: any) => p.id), xp: 0 } });
   const session = await api("/api/sentences/session?use_ai=1");
   assert.ok(session.sentences.length, "built-in sentences are used");
   assert.equal(session.note, null, "without a complaint about the AI");

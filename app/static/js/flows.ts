@@ -56,8 +56,9 @@ export function pickStudyMode({ title, writingSub, choiceSub, extraNote = "" }: 
 
 // ------------------------------------------------------------------ learn new words
 
-export async function learnNew({ writing = true } = {}) {
-  const { words, pool } = await api("/api/learn/next");
+export async function learnNew({ writing = true, ids = null }: { writing?: boolean; ids?: number[] | null } = {}) {
+  // A stone of the journey brings its own words; otherwise the next words of the level.
+  const { words, pool } = await api(`/api/learn/next${ids?.length ? `?ids=${ids.join(",")}` : ""}`);
   if (!words.length) {
     toast("You've learned every word in your list! Add more on the Words tab.");
     return null;

@@ -12,6 +12,7 @@ import { genderTag, withEndings, richText } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
 import { FEATURES } from "./features.js";
+import { journeyView } from "./journey.js";
 import { syncCard } from "./sync-ui.js";
 import { cloudBackupCard, restoreFlow } from "./backup-ui.js";
 import { accountCard, accountSheet } from "./account-ui.js";
@@ -286,7 +287,9 @@ function homeHeader(home) {
 
 /** The plant in the middle of the home screen: today's goal as a ring around it, the streak beside it. */
 function gardenHero(home) {
-  const pct = Math.min(1, home.xp_today / Math.max(home.daily_goal, 1));
+  // On the path, today's goal is one stone; otherwise the daily XP goal.
+  const stones = home.journey ? home.journey.stones_today : null;
+  const pct = stones != null ? (stones > 0 ? 1 : 0) : Math.min(1, home.xp_today / Math.max(home.daily_goal, 1));
   const R = 52;
   const C = 2 * Math.PI * R;
   const ring = `<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" fill="none" class="ring-bg" stroke-width="7"/><circle cx="60" cy="60" r="${R}" fill="none" class="ring-fg" stroke-width="7" stroke-linecap="round" stroke-dasharray="${(C * pct).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 60 60)"/></svg>`;
@@ -304,7 +307,7 @@ function gardenHero(home) {
       { class: "garden-text" },
       h("b", {}, home.streak ? `${home.streak}-day streak` : "Start your streak"),
       h("span", {}, line),
-      h("span", { class: "garden-goal" }, pct >= 1 ? `Daily goal reached · ${home.xp_today} XP` : `${home.xp_today} / ${home.daily_goal} XP today`),
+      h("span", { class: "garden-goal" }, stones != null ? (stones > 0 ? `Today's stone walked ✓ · ${home.xp_today} XP` : "Walk one stone of your path today") : pct >= 1 ? `Daily goal reached · ${home.xp_today} XP` : `${home.xp_today} / ${home.daily_goal} XP today`),
       f.trees
         ? h("span", { class: "garden-forest" }, h("span", {}, `${season.icon} `), h("span", {}, season.name), h("span", {}, " · "), h("span", {}, `${f.trees} plants`), f.wilting ? [h("span", {}, " · "), h("span", { class: "gf-wilt" }, `${f.wilting} wilting`)] : null)
         : null
@@ -376,8 +379,9 @@ function tile({ icon, title, sub, badge, onclick, href, soft }: TileOptions) {
 
 async function homeScreen() {
   shell(loading(), "#/");
-  const [home, next] = await Promise.all([api("/api/home"), api("/api/learn/next")]);
+  const [home, next, journey] = await Promise.all([api("/api/home"), api("/api/learn/next"), api("/api/journey")]);
   const multi = home.sections?.length > 1;
+  if (journey?.available) home.journey = journey;
 
   const learn = async () => {
     const m = await flows.pickStudyMode({
@@ -434,8 +438,10 @@ async function homeScreen() {
     home.learned >= 8 ? tile({ icon: SVG.target, title: "Weak spots", sub: isSl() ? "Cases, genders, topics" : home.course === "ja" ? "Kanji parts, scripts, grammar" : "Parts, tones, grammar", href: "#/weak" }) : null,
   ].filter(Boolean);
 
+  const away = () => !["", "#", "#/"].includes(location.hash); // you've gone to another screen meanwhile
+  if (home.journey) return away() ? undefined : journeyHome(home, practice, tiles);
   const units = await unitsView(home.units);
-  if (!["", "#", "#/"].includes(location.hash)) return; // you've gone to another screen meanwhile
+  if (away()) return;
 
   shell(
     [
@@ -459,6 +465,64 @@ async function homeScreen() {
       weekChart(home.week, home.saved_days),
       h("h2", { class: "section-title" }, `Your ${T.lang()} path`),
       units,
+    ],
+    "#/"
+  );
+  gardenNotice(home.garden_notice);
+}
+
+/**
+ * The home screen of a course level (3.0): the path of stones at the top, free practice below.
+ * Your own word lists keep the home screen above, with new words and practice to pick from.
+ */
+function journeyHome(home, practice, tiles) {
+  const j = home.journey;
+  const pick = (title, writingSub, choiceSub) => flows.pickStudyMode({ title, writingSub, choiceSub });
+  const { primary, path } = journeyView(j, {
+    words: async (s, again) => {
+      const m = again
+        ? await pick("Practise these words", "Write, say and recall them again", "Recognise meanings and readings")
+        : await pick("New words", "See, trace and write each word, then a mixed quiz", "See each word, then pick meanings, readings and sounds");
+      if (!m) return;
+      startFlow(() => (again ? flows.review({ extra: true, ids: s.ids, writing: m.writing }) : flows.learnNew({ writing: m.writing, ids: s.left })));
+    },
+    grammar: (_, again) => (again ? grammarBook() : startFlow(flows.grammarLesson)),
+    story: (s) => storyReader(s.story),
+    water: async () => {
+      const d = home.due_by_skill || {};
+      const m = await flows.pickStudyMode({
+        title: "Water your garden",
+        writingSub: `All reviews: writing, speaking, recall · ${home.due} due`,
+        choiceSub: `Recognise characters & meanings · ${d.recall || 0} due`,
+        extraNote: "Choice-only practice doesn't count as writing practice — writing reviews stay due until you write them.",
+      });
+      if (!m) return;
+      startFlow(async () => {
+        const r = await flows.review({ writing: m.writing });
+        if (r) await api("/api/journey/water", { method: "POST" });
+        return r;
+      });
+    },
+    next: () => courseSheet(home),
+  });
+  // Free practice: everything that isn't on the path (new words only come along the path).
+  const free = tiles.filter((t) => !/^New words/.test(t.querySelector("b")?.textContent || ""));
+  if (home.learned && !free.some((t) => /^Practice/.test(t.querySelector("b")?.textContent || "")))
+    free.unshift(tile({ icon: SVG.review, title: "Practice", sub: home.due ? `${home.due} word${home.due === 1 ? "" : "s"} due` : nextDueText(home.next_due) || "All caught up", onclick: practice }));
+  shell(
+    [
+      homeHeader(home),
+      gardenHero(home),
+      friendWaterCard(home),
+      primary,
+      home.placement ? placementCard(home.placement, route) : null,
+      aiInviteCard(),
+      path,
+      h("div", { class: "home-label" }, "Free practice"),
+      h("div", { class: "tiles" }, free),
+      challengesPreview(home.challenges),
+      h("h2", { class: "section-title" }, "This week"),
+      weekChart(home.week, home.saved_days),
     ],
     "#/"
   );

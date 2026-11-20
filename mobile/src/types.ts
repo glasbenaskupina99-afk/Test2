@@ -59,6 +59,10 @@ export interface GrammarCard {
 
 export interface Activity {
   xp: number;
+  /** Stones of the journey walked that day (3.0): one keeps the streak. */
+  stones?: number;
+  /** The journey had a stone waiting that day, so only a stone counts as practising. */
+  path?: boolean;
   new_words?: number;
   reviews?: number;
   sentences?: number;
@@ -149,6 +153,8 @@ export interface Db {
   lookalikes: Record<string, { seen: number; wrong: number }>;
   grammar: { learned: Record<string, GrammarCard> };
   stories?: Record<string, { done: boolean; best: number; [key: string]: unknown }>;
+  /** The journey (3.0): when each stone was first seen walked ("before" for older progress), watering days, levels seen. */
+  journey?: { done: Record<string, string>; water: Record<string, boolean>; seen: Record<string, boolean> };
   storiesAi?: any[];
   forest?: { weeks: Record<string, ForestWeek>; glade: any[] };
   exams?: ExamResult[];

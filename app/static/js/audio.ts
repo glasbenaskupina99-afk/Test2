@@ -170,6 +170,28 @@ const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 export const canRecognize = () => (native()?.recognize ? true : !!Recognition && window.isSecureContext);
 export const canRecord = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
 
+/**
+ * Safari, and every browser on iPhone and iPad (all WebKit): its own recognition goes through Apple
+ * dictation, which has no Slovenian and stays silent unless dictation is turned on. There the word
+ * is recorded and recognised on bloomko.eu (Azure AI Speech) instead. Other browsers are unchanged.
+ */
+export const useServerRecognition = () => !native() && /Apple/.test(navigator.vendor || "") && canRecord();
+const SPEECH_URL = () => window.__speechUrl || "https://bloomko.eu/api/speech";
+
+/** Recognises a recording (16 kHz mono WAV, base64) on bloomko.eu; resolves with alternatives, best first. */
+export async function recognizeOnServer(wavBase64: string): Promise<string[]> {
+  const bytes = Uint8Array.from(atob(wavBase64), (c) => c.charCodeAt(0));
+  let r;
+  try {
+    r = await fetch(`${SPEECH_URL()}?lang=${encodeURIComponent(T.speechLang())}`, { method: "POST", headers: { "Content-Type": "audio/wav" }, body: bytes });
+  } catch {
+    throw new Error("Can't reach bloomko.eu — check your internet connection");
+  }
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error || `Speech recognition failed (${r.status})`);
+  return Array.isArray(d.alternatives) ? d.alternatives.map(String) : [];
+}
+
 /** Start listening; resolves with an array of hanzi alternatives. Call .stop() to end early. */
 export function recognize() {
   if (native()?.recognize) return native().recognize(T.speechLang());

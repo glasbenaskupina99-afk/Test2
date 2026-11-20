@@ -169,6 +169,79 @@ test("learn new words (choice only) from start to finish", async () => {
   assert.deepEqual(errors, []);
 });
 
+test("Safari: a spoken word is recorded, recognised on bloomko.eu and graded", async () => {
+  // Chromium with a fake microphone, made to look like Safari (navigator.vendor is Apple's).
+  const safari = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}), args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"] });
+  try {
+    const ctx = await safari.newContext({ viewport: { width: 390, height: 844 } });
+    // As a string: a compiled function here would call a helper (__name) the page doesn't have.
+    await ctx.addInitScript(`
+      Object.defineProperty(navigator, "vendor", { get() { return "Apple Computer, Inc."; }, configurable: true });
+      if (window.speechSynthesis) window.speechSynthesis.speak = function () {};
+      window.__syncUrl = window.__backupUrl = "http://127.0.0.1:9/none";
+      window.__speechUrl = "https://speech.test/api/speech";
+    `);
+    const page = await ctx.newPage();
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    let heard = "";
+    let down = false;
+    const sent: { lang: string; wav: boolean }[] = [];
+    await page.route("https://speech.test/**", async (route) => {
+      if (down) return route.fulfill({ status: 503, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ error: "speech recognition is not set up" }) });
+      const body = route.request().postDataBuffer();
+      sent.push({ lang: new URL(route.request().url()).searchParams.get("lang"), wav: !!body && body.subarray(0, 4).toString() === "RIFF" && body.subarray(8, 12).toString() === "WAVE" });
+      await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ alternatives: [heard] }) });
+    });
+    await page.goto(base);
+    await page.waitForSelector(".welcome", { timeout: 20000 });
+    await page.evaluate(() => document.getElementById("splash")?.remove());
+    const api = (path: string, opts?: any) => page.evaluate(([p, o]) => window.__localApi(p, o), [path, opts] as const);
+    await start(page);
+    await page.click(".tut-top .link-btn");
+    // Three learned words whose speaking cards are due (and nothing else), then Practice.
+    const words = await api("/api/words");
+    await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 3).map((w: any) => w.id), xp: 0 } });
+    await page.waitForTimeout(800);
+    await page.goto(`${base}/nothing-here.txt`);
+    await page.evaluate(() => {
+      const db = JSON.parse(localStorage.getItem("hanzi-db"));
+      db.cards.forEach((c: any) => (c.due = c.skill === "speak" ? "2000-01-01 00:00:00" : "2999-01-01 00:00:00"));
+      localStorage.setItem("hanzi-db", JSON.stringify(db));
+    });
+    await page.goto(base);
+    await page.waitForSelector(".home-head");
+    await page.evaluate(() => document.getElementById("splash")?.remove());
+    await page.locator(".tile", { hasText: "Practice" }).first().click().catch(() => page.click(".primary-go"));
+    await page.locator(".sheet .mode", { hasText: "With writing" }).click();
+    await page.waitForSelector(".lesson .mic");
+    assert.match(await page.locator(".lesson .mic-wrap").first().innerText(), /Tap, speak, tap again/, "Safari records instead of asking the browser");
+    heard = (await page.locator(".lesson .big-hz").innerText()).trim();
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson .mic.rec");
+    await page.waitForTimeout(1200);
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson .heard", { timeout: 10000 });
+    assert.match(await page.locator(".lesson .heard").innerText(), new RegExp(heard));
+    assert.equal(sent.length, 1);
+    assert.equal(sent[0].lang, edition === "heritage" ? "sl-SI" : "zh-CN");
+    assert.ok(sent[0].wav, "the recording is sent as WAV");
+    await page.waitForFunction(() => /Excellent pronunciation|Sounds good/.test(document.querySelector(".lesson")?.textContent || ""), null, { timeout: 5000 });
+    // When bloomko.eu can't help, the learner grades the recording themselves instead of seeing an error.
+    down = true;
+    await page.locator(".lesson-foot .btn").last().click();
+    await page.waitForSelector(".lesson .mic:not(.rec)");
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson .mic.rec");
+    await page.waitForTimeout(800);
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson button:has-text('Sounded right')", { timeout: 10000 });
+    assert.deepEqual(errors, []);
+  } finally {
+    await safari.close();
+  }
+});
+
 test("practice: due words come back and can be reviewed", async () => {
   const { page, errors, api } = await fresh();
   await start(page);

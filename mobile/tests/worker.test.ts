@@ -179,3 +179,42 @@ test("rate limits: a flood from one address is refused, others carry on", async 
   assert.equal((await reg("198.51.100.7")).status, 429);
   assert.equal((await reg("198.51.100.99")).status, 200);
 });
+
+test("speech recognition for Safari: the recording goes to Azure with the key, the words come back", async () => {
+  await build({ entryPoints: [fileURLToPath(new URL("../../worker/speech.js", import.meta.url))], bundle: true, format: "esm", platform: "neutral", outfile: join(dir, "speech.mjs"), logLevel: "silent" });
+  const { handleSpeech, MAX_AUDIO } = await import(pathToFileURL(join(dir, "speech.mjs")).href);
+  const wav = (bytes = 32000) => {
+    const b = new Uint8Array(44 + bytes);
+    b.set([..."RIFF"].map((c) => c.charCodeAt(0)), 0);
+    b.set([..."WAVE"].map((c) => c.charCodeAt(0)), 8);
+    return b;
+  };
+  const req = (lang: string, body: Uint8Array | string = wav()) => new Request(`https://bloomko.eu/api/speech?lang=${lang}`, { method: "POST", body, headers: { "Content-Type": "audio/wav" } });
+  const env = { AZURE_SPEECH_KEY: "test-key" };
+  const calls: any[] = [];
+  const azure = (reply: any, status = 200) => async (url: string, init: any) => {
+    calls.push({ url, init });
+    return new Response(JSON.stringify(reply), { status });
+  };
+  const ok = azure({ RecognitionStatus: "Success", DisplayText: "Dober dan.", NBest: [{ Display: "Dober dan.", Lexical: "dober dan" }, { Display: "Dobro dan.", Lexical: "dobro dan" }] });
+
+  const r = await handleSpeech(req("sl-SI"), env, ok);
+  assert.equal(r.status, 200);
+  assert.deepEqual((await r.json()).alternatives, ["Dober dan.", "dober dan", "Dobro dan.", "dobro dan"]);
+  assert.match(calls[0].url, /^https:\/\/northeurope\.stt\.speech\.microsoft\.com\/.*language=sl-SI/);
+  assert.equal(calls[0].init.headers["Ocp-Apim-Subscription-Key"], "test-key");
+  assert.equal(r.headers.get("Access-Control-Allow-Origin"), "*", "the web app on another origin may call it");
+
+  // Nothing heard → no alternatives (the app asks to try again).
+  assert.deepEqual((await (await handleSpeech(req("zh-CN"), env, azure({ RecognitionStatus: "NoMatch" }))).json()).alternatives, []);
+  // Refused: unknown language, not WAV, too long, no key, Azure down.
+  const n = calls.length;
+  assert.equal((await handleSpeech(req("de-DE"), env, ok)).status, 400);
+  assert.equal((await handleSpeech(req("sl-SI", "x".repeat(2000)), env, ok)).status, 400);
+  assert.equal((await handleSpeech(req("sl-SI", wav(MAX_AUDIO)), env, ok)).status, 413);
+  assert.equal((await handleSpeech(req("sl-SI"), {}, ok)).status, 503);
+  assert.equal(calls.length, n, "nothing refused reaches Azure");
+  assert.equal((await handleSpeech(req("ja-JP"), env, azure({}, 401))).status, 502);
+  assert.equal((await handleSpeech(new Request("https://bloomko.eu/api/speech?lang=sl-SI"), env, ok)).status, 405);
+  assert.equal((await handleSpeech(new Request("https://bloomko.eu/api/speech", { method: "OPTIONS" }), env, ok)).status, 204);
+});

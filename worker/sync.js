@@ -68,6 +68,7 @@ export const LIMITS = {
   write: [60, 10 * 60 * 1000], // sync, backup and friends writes, per address and 10 minutes
   notify: [10, 60 * 60 * 1000], // "Notify me" sign-ups, per address and hour
   register: [20, 60 * 60 * 1000], // new accounts, per address and hour (a class behind one address still fits)
+  speech: [30, 60 * 1000], // words checked by speech recognition (Safari), per address and minute
 };
 const busy = (minutes = 1) => json(429, { error: `Too many requests — try again in ${minutes === 1 ? "a minute" : `${minutes} minutes`}` });
 /** The in-memory limit for a kind of request; a 429 response when it is used up, else null. */

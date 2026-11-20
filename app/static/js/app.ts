@@ -1,6 +1,6 @@
 import { api, h, iconBtn, toast, confirmDialog, enhanceSelects, type Child } from "./util.js";
 import { state, T, isJa, isSl, sayText, applyCourse, EDITION, isHeritage } from "./state.js";
-import { speak, stopSpeaking, canRecognize, canRecord, voiceAvailable, canInstallVoice, installVoice } from "./audio.js";
+import { speak, stopSpeaking, canRecognize, canRecord, useServerRecognition, voiceAvailable, canInstallVoice, installVoice } from "./audio.js";
 import { strokeDemo } from "./writer.js";
 import * as flows from "./flows.js";
 import { gemmaSetupScreen, hasGemmaSupport, dl as gemmaDl } from "./gemma-setup.js";
@@ -1503,7 +1503,7 @@ async function settingsScreen() {
   const speechOptions = isApp
     ? [["browser", "Android speech recognition"], ["ai", "Gemma listens (offline · Gemma 3n / 4 E2B, E4B)"], ["self", "Record & compare myself"]]
     : isWeb
-    ? [["browser", "Browser speech recognition (Chrome / Edge)"], ["self", "Record & compare myself"]]
+    ? [["browser", useServerRecognition() ? "Speech recognition (on bloomko.eu)" : "Browser speech recognition (Chrome / Edge)"], ["self", "Record & compare myself"]]
     : [["browser", "Phone speech recognition (fast)"], ["ai", "Gemma audio (needs audio-capable server)"], ["self", "Record & compare myself"]];
 
   // Shown when the phone has no voice for the course's language (common for Slovenian).
@@ -1519,7 +1519,9 @@ async function settingsScreen() {
     );
   });
   const speechSupport = isApp ? [`Tip: for offline recognition, install the ${isSl() ? "Slovenian" : isJa() ? "Japanese" : "Chinese (Mandarin)"} offline speech pack in Android settings → Google → Voice.`] : [
-    `Browser speech recognition: ${canRecognize() ? "✅ available" : "❌ not available"}`,
+    useServerRecognition()
+      ? "Speech recognition: ✅ on bloomko.eu (Safari can't recognise every language itself). Your recording is only used to check the word and is not stored."
+      : `Browser speech recognition: ${canRecognize() ? "✅ available" : "❌ not available"}`,
     `Recording: ${canRecord() ? "✅ available" : "❌ not available"}`,
     window.isSecureContext ? "" : "⚠️ Not on HTTPS — the microphone is blocked. Use the https:// address.",
   ].filter(Boolean);

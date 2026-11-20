@@ -6,6 +6,7 @@
 import { EmailMessage } from "cloudflare:email";
 import { seo } from "./seo.js";
 import { handleAccount, handleBackup, handleFriends, handleSync, soft, strict } from "./sync.js";
+import { handleSpeech } from "./speech.js";
 
 // Durable Object class for app sync (bound as SYNC in wrangler.jsonc).
 export { SyncStore } from "./sync.js";
@@ -110,7 +111,7 @@ async function notify(request, env, ctx) {
   return json(200, { ok: true });
 }
 
-const VERSION = "2026-11-19 a — no /api/tts (voice packs are built into the apps); rate limits; Learn Slovenian / Learn Chinese & Japanese titles and FAQ";
+const VERSION = "2026-11-20 a — /api/speech: speech recognition for Safari (Azure AI Speech)";
 
 export default {
   async fetch(request, env, ctx) {
@@ -124,6 +125,13 @@ export default {
     if (url.pathname.startsWith("/api/backup/")) return handleBackup(request, env, url.pathname.slice(12));
     if (url.pathname.startsWith("/api/account/")) return handleAccount(request, env, url.pathname.slice(13));
     if (url.pathname.startsWith("/api/friends/")) return handleFriends(request, env, url.pathname.slice(13));
+    if (url.pathname === "/api/speech") {
+      if (request.method === "POST") {
+        const over = await soft(request, "speech");
+        if (over) return over;
+      }
+      return handleSpeech(request, env);
+    }
     if (url.pathname === "/api/notify") {
       if (request.method !== "POST") return json(405, { error: "use POST" });
       return notify(request, env, ctx);

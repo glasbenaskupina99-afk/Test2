@@ -3,7 +3,7 @@
 // ctx: { setReady(bool), finish(result), skip() }
 // result: { ok: true|false, grade: 0..3, title?, detail? }
 import { api, h, icons, iconBtn, shuffle, toast } from "./util.js";
-import { speak, stopSpeaking, canRecognize, canRecord, recognize, Recorder, setActiveMic, speakSoon } from "./audio.js";
+import { speak, stopSpeaking, canRecognize, canRecord, recognize, recognizeOnServer, useServerRecognition, Recorder, setActiveMic, speakSoon } from "./audio.js";
 import { writingPad, strokeDemo } from "./writer.js";
 import { noteWritePerfect } from "./forest.js";
 import { state, T, isJa, isSl, sayText } from "./state.js";
@@ -389,6 +389,7 @@ function speechMode() {
   if (!window.isSecureContext && !window.__native) return "none";
   let m = state.settings?.speech_mode || "browser";
   if (m === "ai" && (!canRecord() || !state.settings?.ai_enabled)) m = "browser";
+  if (m === "browser" && useServerRecognition()) m = "server";
   if (m === "browser" && !canRecognize()) m = canRecord() ? "self" : "none";
   if (m === "self" && !canRecord()) m = "none";
   return m;
@@ -456,7 +457,15 @@ function speakPanel(ctx, target, solutionNode, reading = "") {
     return out;
   }
 
-  statusEl.textContent = mode === "self" ? "Record yourself, then compare" : "Tap and speak";
+  statusEl.textContent = mode === "self" ? "Record yourself, then compare" : mode === "server" ? "Tap, speak, tap again" : "Tap and speak";
+
+  /** Grades what the recogniser heard (best of its alternatives). */
+  const scoreHeard = async (alts) => {
+    const scored = await Promise.all(alts.map((a) => api("/api/speech/compare", { method: "POST", body: { heard: a, expected: target, reading } }).then((r) => ({ ...r, heard: a }))));
+    scored.sort((a, b) => b.score - a.score);
+    const r = scored[0];
+    handleScore(r.score, [syllableChips(r.syllables), h("div", { class: "heard" }, "Heard: ", h("span", { class: "hz" }, r.heard), ` (${r.heard_pinyin})`)]);
+  };
 
   if (mode === "browser") {
     let listening = null;
@@ -473,10 +482,7 @@ function speakPanel(ctx, target, solutionNode, reading = "") {
         mic.classList.remove("rec");
         if (!alts.length) { statusEl.textContent = "Didn't catch that — tap and try again"; return; }
         statusEl.textContent = "";
-        const scored = await Promise.all(alts.map((a) => api("/api/speech/compare", { method: "POST", body: { heard: a, expected: target, reading } }).then((r) => ({ ...r, heard: a }))));
-        scored.sort((a, b) => b.score - a.score);
-        const r = scored[0];
-        handleScore(r.score, [syllableChips(r.syllables), h("div", { class: "heard" }, "Heard: ", h("span", { class: "hz" }, r.heard), ` (${r.heard_pinyin})`)]);
+        await scoreHeard(alts);
       } catch (e) {
         listening = null;
         mic.classList.remove("rec");
@@ -486,7 +492,7 @@ function speakPanel(ctx, target, solutionNode, reading = "") {
     return out;
   }
 
-  // Recording-based modes (ai, self)
+  // Recording-based modes (server, ai, self)
   let rec = null;
   let starting = false;
   setActiveMic(() => {
@@ -527,6 +533,22 @@ function speakPanel(ctx, target, solutionNode, reading = "") {
       h("button", { class: "btn ghost small", onclick: () => speak(reading && isJa() && [...target].length < 4 ? reading : target) }, "🔊 Native")
     );
 
+    if (mode === "server" && wavBase64) {
+      mic.disabled = true;
+      statusEl.textContent = "Listening to your recording…";
+      try {
+        const alts = await recognizeOnServer(wavBase64);
+        mic.disabled = false;
+        if (!out.isConnected) return;
+        if (!alts.length) { statusEl.textContent = "Didn't catch that — tap and try again"; return; }
+        statusEl.textContent = "";
+        await scoreHeard(alts);
+        return;
+      } catch (e) {
+        mic.disabled = false;
+        toast(`${e.message} — grade yourself this time`, 4000);
+      }
+    }
     if (mode === "ai" && wavBase64) {
       mic.disabled = true;
       statusEl.textContent = "✨ Gemma is listening…";

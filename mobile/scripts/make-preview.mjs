@@ -6,7 +6,7 @@ import { join } from "node:path";
 
 const [src = "www", out = "preview"] = process.argv.slice(2);
 // SHA-256 of the access code (the code itself is not stored anywhere in the repository).
-const CODE_HASH = "951a6465efaa924ba26c4b3cc3d8b135837c1b82a6abd137b14d9655ce5a6113";
+const CODE_HASH = "7366f3cb52ee580e0e24d705e648334fe4cf2e9f0c6af51b0dddf0e8b8ace086";
 
 rmSync(out, { recursive: true, force: true });
 cpSync(src, out, { recursive: true });

@@ -11,6 +11,7 @@ import { pickTime } from "./timepicker.js";
 import { genderTag, withEndings, richText } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
+import { FEATURES } from "./features.js";
 import { syncCard } from "./sync-ui.js";
 import { cloudBackupCard, restoreFlow } from "./backup-ui.js";
 import { accountCard, accountSheet } from "./account-ui.js";
@@ -423,7 +424,9 @@ async function homeScreen() {
           onclick: () => (g.unlocked ? startFlow(flows.grammarLesson) : grammarBook()),
         })
       : null,
-    tile({ icon: SVG.ear, title: "Listen & talk", sub: home.course === "zh" ? "Stories, tones, chats" : "Stories and chats", onclick: () => listenSheet(home) }),
+    FEATURES.talk
+      ? tile({ icon: SVG.ear, title: "Listen & talk", sub: home.course === "zh" ? "Stories, tones, chats" : "Stories and chats", onclick: () => listenSheet(home) })
+      : tile({ icon: SVG.ear, title: "Listen & read", sub: home.course === "zh" ? "Stories, tones" : "Dictation and stories", onclick: () => listenSheet(home) }),
     tile({ icon: SVG.chat, title: "Sentences", sub: "Write, type & say", onclick: () => startFlow(flows.sentences) }),
     home.lookalikes ? tile({ icon: SVG.twins, title: "Look-alikes", sub: home.course === "ja" ? "未 or 末? 待 or 持?" : "未 or 末? 己 or 已?", onclick: () => startFlow(flows.lookalikes) }) : null,
     isSl() ? null : tile({ icon: SVG.map, title: "Character map", sub: "How characters connect", href: "#/map" }),
@@ -579,12 +582,12 @@ function listenSheet(home) {
     h(
       "div",
       { class: "sheet" },
-      h("h2", { style: { margin: "0 0 4px" } }, "Listen, read & talk"),
-      h("p", { class: "muted small", style: { margin: "0 0 14px" } }, "Train your ear, read little stories and have a real chat — all with the words you know."),
+      h("h2", { style: { margin: "0 0 4px" } }, FEATURES.talk ? "Listen, read & talk" : "Listen & read"),
+      h("p", { class: "muted small", style: { margin: "0 0 14px" } }, FEATURES.talk ? "Train your ear, read little stories and have a real chat — all with the words you know." : "Train your ear and read little stories — all with the words you know."),
       option("🎧", "Dictation & listening", isSl() ? "Hear a sentence, type it — or pick what it means" : "Hear a sentence, write it by hand — or pick what it means", () => startFlow(flows.listening)),
       option("📖", "Stories", `Short graded stories for ${home.section} — tap any word`, () => storiesSheet()),
       home.course === "zh" ? option("🎵", "Tones", "Hear the tones — and see the pitch of your own voice", () => startFlow(flows.tones)) : null,
-      option("💬", "Talk", state.settings.ai_enabled ? "Chat with Gemma — at a café, in a shop, asking the way…" : "Chat with Gemma (turn on AI in Settings)", () => talkSheet())
+      FEATURES.talk && option("💬", "Talk", state.settings.ai_enabled ? "Chat with Gemma — at a café, in a shop, asking the way…" : "Chat with Gemma (turn on AI in Settings)", () => talkSheet())
     )
   );
   document.body.append(bg);

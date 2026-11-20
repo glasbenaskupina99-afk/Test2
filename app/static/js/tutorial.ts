@@ -5,6 +5,7 @@ import { api, h } from "./util.js";
 import { isHeritage, isJa } from "./state.js";
 import { strokeDemo } from "./writer.js";
 import { runPlacement } from "./placement.js";
+import { FEATURES } from "./features.js";
 
 const SEEN = "tutorialSeen";
 export const tutorialSeen = () => {
@@ -140,12 +141,12 @@ const STEPS = () => [
     title: "4 · Your garden",
     text: "Each day you learn waters your plant. Every word you learn grows into a real plant in your garden — skip its reviews and it wilts, forget it for long and it disappears, practise it and it comes back. Friends can visit and water your garden.",
   },
-  {
+  FEATURES.talk && {
     art: artAI,
     title: "5 · Talk with the AI tutor",
     text: "Order a coffee, ask the way, chat about your day. The tutor runs on your phone, even offline, and gently corrects your mistakes. Download it once in Settings.",
   },
-];
+].filter(Boolean);
 
 /** The tour. `first`: shown on first start; ends with the placement test or "complete beginner". */
 export function showTutorial({ first = false, onDone = (_action?: string) => {} }: { first?: boolean; onDone?: (action?: string) => void } = {}) {

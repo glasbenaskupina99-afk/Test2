@@ -20,6 +20,7 @@ import * as cloud from "./backup.js";
 import * as account from "./account.js";
 import * as friends from "./friends.js";
 import * as locale from "./locale.js";
+import { FEATURES } from "../../app/static/js/features.js";
 import { EXAMS, makePaper, scorePaper } from "./exams.js";
 import * as fsrs from "./fsrs.js";
 import LOOKALIKES from "../../app/data/lookalikes.json";
@@ -712,7 +713,7 @@ const CHALLENGES = {
   days: () => ({ goal: 5, title: "Practise on {0} days this week", icon: "📅" }),
   planted: () => ({ goal: 25, title: "Plant {0} new trees", icon: "🌱" }),
   spoken: () => ({ goal: 20, title: "Say {0} words out loud", icon: "🗣️" }),
-  finished: () => ({ goal: 2, title: "Finish {0} stories or chats", icon: "📖" }),
+  finished: () => ({ goal: 2, title: FEATURES.talk ? "Finish {0} stories or chats" : "Finish {0} stories", icon: "📖" }),
 };
 const ROTATING = ["revived", "days", "planted", "spoken", "finished"];
 

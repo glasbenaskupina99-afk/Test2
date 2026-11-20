@@ -70,6 +70,12 @@ async function start(page: Page, name = "Ana") {
   await page.waitForSelector(".tutorial");
 }
 
+/** Next through every step of the tutorial, up to its last screen. */
+async function throughTutorial(page: Page) {
+  for (let i = 0; i < 10 && (await page.locator(".tut-foot .foot-row").count()); i++) await page.click(".tut-foot .foot-row .btn:not(.ghost)");
+  await page.waitForSelector(".tut-choice, .tut-foot > .btn");
+}
+
 const go = async (page: Page, hash: string, selector: string) => {
   await page.evaluate((h) => (location.hash = h), hash);
   await page.waitForSelector(selector, { timeout: 15000 });
@@ -117,10 +123,10 @@ async function finishLesson(page: Page, words: any[], end: RegExp) {
   assert.ok(await page.locator(".lesson", { hasText: end }).count(), `lesson ended with ${end}`);
 }
 
-test("first start: welcome, the 5-step tutorial, complete beginner", async () => {
+test("first start: welcome, the tutorial, complete beginner", async () => {
   const { page, errors, api } = await fresh();
   await start(page);
-  for (let i = 0; i < 5; i++) await page.click(".tut-foot .btn:not(.ghost)");
+  await throughTutorial(page);
   await page.click(".tut-choice .btn.ghost");
   await page.waitForSelector(".home-head");
   assert.equal(await page.locator(".place-card").count(), 0, "the placement card isn't offered again");
@@ -131,7 +137,7 @@ test("first start: welcome, the 5-step tutorial, complete beginner", async () =>
 test("placement test from the tutorial marks known words as learned", async () => {
   const { page, errors, api } = await fresh();
   await start(page);
-  for (let i = 0; i < 5; i++) await page.click(".tut-foot .btn:not(.ghost)");
+  await throughTutorial(page);
   await page.click(".tut-choice .btn:not(.ghost)");
   await page.click(".place .lesson-foot .btn");
   const words = await api("/api/words");

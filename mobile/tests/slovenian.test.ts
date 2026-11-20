@@ -144,3 +144,11 @@ test("every Slovenian course word has a memory hook and an example sentence, and
     }
   }
 });
+
+test("the Slovenian memory hooks are translated for every interface language", () => {
+  const extras = JSON.parse(readFileSync(new URL("../../app/data/extras/sl.json", import.meta.url), "utf8"));
+  for (const lang of ["es", "fr", "ja"]) {
+    const ov = JSON.parse(readFileSync(new URL(`../../app/data/i18n/${lang}/extras-sl.json`, import.meta.url), "utf8"));
+    for (const w of Object.keys(extras)) for (const k of ["m", "c", "e"]) assert.ok(String(ov[`${w}|${k}`] || "").trim(), `${lang}: ${w}|${k}`);
+  }
+});

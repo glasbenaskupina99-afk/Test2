@@ -5,7 +5,7 @@
 <script>
 (function () {
   var KEY = "bloomko-preview";
-  try { if (localStorage.getItem(KEY) === "951a6465efaa924ba26c4b3cc3d8b135837c1b82a6abd137b14d9655ce5a6113") return; } catch (e) {}
+  try { if (localStorage.getItem(KEY) === "7366f3cb52ee580e0e24d705e648334fe4cf2e9f0c6af51b0dddf0e8b8ace086") return; } catch (e) {}
   document.documentElement.classList.add("locked");
   var st = document.createElement("style");
   st.textContent = "html.locked body>*:not(#preview-gate){display:none!important}#preview-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#16271e;color:#f4efe2;font:700 17px Nunito,system-ui,sans-serif}#preview-gate form{display:flex;flex-direction:column;gap:12px;width:min(320px,86vw);text-align:center}#preview-gate input{padding:14px;border-radius:14px;border:2px solid #3d5a47;background:#1c3026;color:inherit;font:inherit;text-align:center;letter-spacing:2px;text-transform:uppercase}#preview-gate button{padding:14px;border:0;border-radius:14px;background:#8cc06b;color:#16271e;font:inherit;font-weight:900}#preview-gate small{color:#a9b5a6}";
@@ -23,7 +23,7 @@
     g.querySelector("form").addEventListener("submit", function (e) {
       e.preventDefault();
       sha(g.querySelector("input").value.trim().toUpperCase()).then(function (h) {
-        if (h !== "951a6465efaa924ba26c4b3cc3d8b135837c1b82a6abd137b14d9655ce5a6113") { g.querySelector(".err").textContent = "Wrong code"; return; }
+        if (h !== "7366f3cb52ee580e0e24d705e648334fe4cf2e9f0c6af51b0dddf0e8b8ace086") { g.querySelector(".err").textContent = "Wrong code"; return; }
         try { localStorage.setItem(KEY, h); } catch (e) {}
         location.reload();
       });

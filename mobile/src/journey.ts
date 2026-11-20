@@ -15,8 +15,11 @@ const KANA_CHAPTER = /^(Hiragana|Katakana): (a, ka|ga, za, da)\b/;
 
 export interface PlanWord { id: number; unit: string }
 export interface PlanPoint { id: string; title: string }
-/** A story and the number of the level's words (in course order) needed to know 85 % of it. */
-export interface PlanStory { id: string; title: string; title_en: string; need: number }
+/**
+ * A story and the number of the level's words (in course order) needed to know 85 % of it.
+ * A story written for a chapter says so (`chapter`, 0-based) and is read at its end, before the gate.
+ */
+export interface PlanStory { id: string; title: string; title_en: string; need: number; chapter?: number }
 
 export interface Stone {
   id: string;
@@ -109,7 +112,12 @@ export function buildPlan({ section, words, points = [], stories = [], perLesson
   // Stories where 85 % of their words are known; one per chapter, a second one moves on to the
   // middle of the next chapter that has none (by then even more of its words are known).
   const withStory = new Set<number>();
-  for (const st of [...stories].sort((a, b) => a.need - b.need)) {
+  for (const st of stories.filter((s) => s.chapter != null && chapters[s.chapter])) {
+    const c = chapters[st.chapter];
+    withStory.add(c.n);
+    extra.push({ after: c.stones[c.stones.length - 1], stone: { id: `s${st.id}`, kind: "story", chapter: c.n, story: st.id, title: st.title, title_en: st.title_en } });
+  }
+  for (const st of [...stories].filter((s) => s.chapter == null || !chapters[s.chapter]).sort((a, b) => a.need - b.need)) {
     let at = Number.isFinite(st.need) ? after(st.need).stone : ends[ends.length - 1].stone;
     if (withStory.has(at.chapter)) {
       const free = chapters.find((c) => c.n > at.chapter && !withStory.has(c.n));

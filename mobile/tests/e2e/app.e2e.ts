@@ -356,7 +356,7 @@ test("chapter gate: build the chapter's sentences; a wrong order comes back unti
   const { page, errors, api } = await fresh();
   await start(page);
   await page.click(".tut-top .link-btn");
-  // Walk the whole first chapter (its words and grammar), so its gate is next.
+  // Walk the whole first chapter (its words, grammar and story), so its gate is next.
   let j = await api("/api/journey");
   const first = j.chapters[0];
   await api("/api/learn/complete", { method: "POST", body: { word_ids: first.stones.filter((s: any) => s.kind === "words").flatMap((s: any) => s.ids), xp: 0 } });
@@ -364,6 +364,7 @@ test("chapter gate: build the chapter's sentences; a wrong order comes back unti
     const lesson = await api("/api/grammar/lesson");
     await api("/api/grammar/complete", { method: "POST", body: { ids: lesson.points.map((p: any) => p.id), xp: 0 } });
   }
+  for (const st of first.stones.filter((s: any) => s.kind === "story")) await api(`/api/stories/${st.story}/done`, { method: "POST", body: { score: 100 } });
   j = await api("/api/journey");
   assert.equal(j.current, first.stones[first.stones.length - 1].id, "the gate is next");
   assert.equal(j.chapters[0].stones.at(-1).kind, "gate");

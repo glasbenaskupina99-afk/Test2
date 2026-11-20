@@ -22,11 +22,20 @@ function plan([section, file, grammar, stories, before]: (typeof LEVELS)[number]
   const words = data(file).units.flatMap((u: any) => u.words.map((w: string[]) => ({ id: id++, unit: u.name, hanzi: w[0] })));
   const earlier = new Set(before.flatMap((f) => data(f).units.flatMap((u: any) => u.words.map((w: string[]) => w[0]))));
   const place = new Map(words.map((w: any, i: number) => [w.hanzi.toLowerCase(), i + 1]));
+  // As the backend does: names, and in Slovenian the little words and biti, don't count.
+  const glue = new Set(words.filter((w: any) => ["Little words", "Question words"].includes(w.unit) || w.hanzi === "biti").map((w: any) => w.hanzi.toLowerCase()));
+  const sl = section === "A1";
+  const at = ([t, lemma, gloss]: string[]) => {
+    const key = [String(lemma || "").toLowerCase(), t.toLowerCase()].find((k) => k && place.has(k));
+    if (key) return sl && glue.has(key) ? 0 : place.get(key);
+    if (earlier.has(t)) return 0;
+    return /\(name\)/.test(gloss || "") || (sl && /^\p{Lu}/u.test(t)) ? 0 : Infinity;
+  };
   const points = grammar ? data(`grammar/${grammar}.json`).points : [];
   const st = stories
     ? data(`stories/${stories}.json`).stories.map((s: any) => ({
-        id: s.id, title: s.title, title_en: s.title_en,
-        need: wordsNeeded(s.sentences.flatMap((x: any) => x.tokens).filter(([t]: string[]) => /\p{L}/u.test(t)).map(([t, lemma]: string[]) => place.get(String(lemma || t).toLowerCase()) ?? place.get(t.toLowerCase()) ?? (earlier.has(t) ? 0 : Infinity))),
+        id: s.id, title: s.title, title_en: s.title_en, chapter: s.chapter,
+        need: wordsNeeded(s.sentences.flatMap((x: any) => x.tokens).filter(([t]: string[]) => /\p{L}/u.test(t)).map(at)),
       }))
     : [];
   return { words, points, stories: st, plan: buildPlan({ section, words, points, stories: st }) };
@@ -71,10 +80,22 @@ test("a story waits until 85 % of its words are known", () => {
   assert.equal(wordsNeeded([]), 0);
 });
 
-test("the Slovenian path: 8 chapters; the ready-made stories need most of A1, so they wait at its end", () => {
-  const { plan: p } = plan(LEVELS[0]);
+test("the Slovenian path: 8 chapters, each with a story its readers can already read", () => {
+  const { plan: p, stories } = plan(LEVELS[0]);
   assert.equal(p.chapters.length, 8);
-  const last = p.chapters[p.chapters.length - 1];
-  assert.ok(last.stones.filter((s) => s.kind === "story").length >= 5, "the end-of-level stories are read at the end");
   assert.equal(p.chapters[0].stones[0].kind, "words", "the path starts with new words");
+  let met = 0;
+  for (const c of p.chapters) {
+    met += c.ids.length;
+    const here = c.stones.filter((s) => s.kind === "story");
+    assert.ok(here.length >= 1, `chapter ${c.n + 1} has a story`);
+    for (const s of here) {
+      const st = stories.find((x: any) => x.id === s.story);
+      if (st.chapter != null) {
+        assert.equal(st.chapter, c.n, `${st.id} is read in its own chapter`);
+        assert.ok(st.need <= met, `${st.id}: 85 % of its words are known by the end of chapter ${c.n + 1} (${st.need} ≤ ${met})`);
+      }
+    }
+    assert.equal(c.stones.at(-1).kind, "gate", "the story comes before the gate");
+  }
 });

@@ -1039,7 +1039,12 @@ function annotate(tokens, lex) {
 const WATER_AT = 10;
 const PLANS: Record<string, Plan> = {};
 
-/** Proper names in a story (Ana, 王明) aren't taught by the course; they don't make it harder to read. */
+/**
+ * Words that don't count when judging whether a story can be read yet: proper names (Ana, 王明),
+ * which the course doesn't teach, and in Slovenian the little words (in, v, na, moj, kje …) and
+ * the verb biti, which A1 teaches in its last units but every example sentence uses from the start.
+ */
+const GLUE_UNITS = new Set(["Little words", "Question words"]);
 const isName = (t, gloss) => /\(name\)/.test(String(gloss || "")) || (course() === "sl" && /^\p{Lu}/u.test(t) && t !== t.toUpperCase());
 
 async function journeyPlan(sec): Promise<Plan | null> {
@@ -1049,6 +1054,7 @@ async function journeyPlan(sec): Promise<Plan | null> {
   const key = `${course()}|${sec}|${words.length}|${points?.length || 0}|${stories?.length || 0}`;
   if (PLANS[key]) return PLANS[key];
   const lex = courseLexicon();
+  const byIdAll = new Map(W().map((w) => [w.id, w]));
   const order = new Map(words.map((w, i) => [w.id, i + 1]));
   const secs = sections().list.map((s) => s.name);
   const earlier = new Set(secs.slice(0, Math.max(0, secs.indexOf(sec))));
@@ -1056,6 +1062,7 @@ async function journeyPlan(sec): Promise<Plan | null> {
     wordsNeeded(
       st.sentences.flatMap((s) => s.tokens || []).filter(([t]) => !isPunct(t)).map(([t, r, gloss]) => {
         const hit = tokenWord(lex, t, r);
+        if (hit && course() === "sl" && (GLUE_UNITS.has(byIdAll.get(hit.id)?.unit) || byIdAll.get(hit.id)?.hanzi === "biti")) return 0;
         if (hit) return order.get(hit.id) ?? (earlier.has(hit.level) ? 0 : Infinity);
         return isName(t, gloss) ? 0 : Infinity;
       })
@@ -1064,7 +1071,7 @@ async function journeyPlan(sec): Promise<Plan | null> {
     section: sec,
     words: words.map((w) => ({ id: w.id, unit: w.unit })),
     points: (points || []).map((p) => ({ id: p.id, title: p.title })),
-    stories: (stories || []).map((st) => ({ id: st.id, title: st.title, title_en: st.title_en, need: need(st) })),
+    stories: (stories || []).map((st) => ({ id: st.id, title: st.title, title_en: st.title_en, need: need(st), chapter: st.chapter })),
     perLesson: PER_LESSON,
   }));
 }

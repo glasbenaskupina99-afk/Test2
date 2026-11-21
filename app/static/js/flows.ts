@@ -117,7 +117,7 @@ export async function learnNew({ writing = true, ids = null }: { writing?: boole
   });
 }
 
-/** Learn new words without handwriting: see them, then recognise meaning, reading and sound. */
+/** Learn new words without handwriting: see them, then recognise meaning, reading, sound and say them. */
 function learnChoiceOnly(words, pool) {
   const steps = [];
   for (const w of words) {
@@ -137,8 +137,9 @@ function learnChoiceOnly(words, pool) {
   for (const w of words) {
     for (const make of [
       (ctx) => ex.multipleChoice(ctx, w, pool),
-      isSl() ? (ctx) => ex.choice(ctx, w, pool, "meaning") : (ctx) => ex.choice(ctx, w, pool, "reading"),
+      ...(isSl() ? [] : [(ctx) => ex.choice(ctx, w, pool, "reading")]),
       (ctx) => ex.choice(ctx, w, pool, "listen"),
+      (ctx) => ex.speakWord(ctx, w, { showPinyin: true }),
     ]) {
       finalRound.push(step(make, learnAfter(make, w.id), w.id));
     }
@@ -414,11 +415,11 @@ export function storyQuestions(story) {
 // ------------------------------------------------------------------ practice old words
 
 export async function review({ extra = false, writing = true, ids = null, skill = null, grammarIds = null, title = null } = {}) {
-  // Choice-only practice reviews (and reschedules) just the recall cards; writing and
-  // speaking reviews stay due until you practise them for real.
+  // Choice-only practice reviews (and reschedules) recall and speaking cards; writing
+  // reviews stay due until you write them.
   const qs = new URLSearchParams();
   if (extra) qs.set("extra", "1");
-  if (!writing) qs.set("skills", "recall");
+  if (!writing) qs.set("skills", "recall,speak");
   if (skill) qs.set("skills", skill);
   if (ids?.length) qs.set("ids", ids.join(","));
   // Weak spots practise only their own group: just these words, or just these grammar points.
@@ -434,7 +435,7 @@ export async function review({ extra = false, writing = true, ids = null, skill 
   const steps = items.map((it) => {
     const w = it.word;
     let make;
-    if (!writing) make = randomChoice(w, allPool);
+    if (!writing) make = it.skill === "speak" ? (ctx) => ex.speakWord(ctx, w, { showPinyin: false }) : randomChoice(w, allPool);
     else if (ex.noKanji(w)) make = it.skill === "speak" ? (ctx) => ex.speakWord(ctx, w, { showPinyin: false }) : randomChoice(w, allPool);
     else if (it.skill === "write") make = (ctx) => writeEx(ctx, w);
     else if (it.skill === "speak") make = (ctx) => ex.speakWord(ctx, w, { showPinyin: false });

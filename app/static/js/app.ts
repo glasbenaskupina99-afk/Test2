@@ -387,19 +387,20 @@ async function homeScreen() {
     const m = await flows.pickStudyMode({
       title: "Learn new words",
       writingSub: "See, trace and write each word, then a mixed quiz",
-      choiceSub: "See each word, then pick meanings, readings and sounds",
+      choiceSub: "See each word, then pick meanings, sounds and say them",
     });
     if (m) startFlow(() => flows.learnNew(m));
   };
   const practice = async () => {
     const d = home.due_by_skill || {};
+    const choiceDue = (d.recall || 0) + (d.speak || 0);
     const m = await flows.pickStudyMode({
       title: "Practice",
       writingSub: home.due ? `All reviews: writing, speaking, recall · ${home.due} due` : "Nothing due — extra writing practice",
-      choiceSub: d.recall ? `Recognise characters & meanings · ${d.recall} due` : "Nothing due — extra recognition practice",
+      choiceSub: choiceDue ? `Speaking & recognition · ${choiceDue} due` : "Nothing due — extra speaking & recognition practice",
       extraNote: "Choice-only practice doesn't count as writing practice — writing reviews stay due until you write them.",
     });
-    if (m) startFlow(() => flows.review({ writing: m.writing, extra: m.writing ? home.due === 0 : !d.recall }));
+    if (m) startFlow(() => flows.review({ writing: m.writing, extra: m.writing ? home.due === 0 : !choiceDue }));
   };
 
   // One clear next step: new words while there are any, otherwise practice.
@@ -481,8 +482,8 @@ function journeyHome(home, practice, tiles) {
   const { primary, path } = journeyView(j, {
     words: async (s, again) => {
       const m = again
-        ? await pick("Practise these words", "Write, say and recall them again", "Recognise meanings and readings")
-        : await pick("New words", "See, trace and write each word, then a mixed quiz", "See each word, then pick meanings, readings and sounds");
+        ? await pick("Practise these words", "Write, say and recall them again", "Recognise meanings, readings and say them")
+        : await pick("New words", "See, trace and write each word, then a mixed quiz", "See each word, then pick meanings, sounds and say them");
       if (!m) return;
       startFlow(() => (again ? flows.review({ extra: true, ids: s.ids, writing: m.writing }) : flows.learnNew({ writing: m.writing, ids: s.left })));
     },
@@ -491,10 +492,11 @@ function journeyHome(home, practice, tiles) {
     gate: (s) => startFlow(() => flows.chapterGate(s.chapter)),
     water: async () => {
       const d = home.due_by_skill || {};
+      const choiceDue = (d.recall || 0) + (d.speak || 0);
       const m = await flows.pickStudyMode({
         title: "Water your garden",
         writingSub: `All reviews: writing, speaking, recall · ${home.due} due`,
-        choiceSub: `Recognise characters & meanings · ${d.recall || 0} due`,
+        choiceSub: `Speaking & recognition · ${choiceDue} due`,
         extraNote: "Choice-only practice doesn't count as writing practice — writing reviews stay due until you write them.",
       });
       if (!m) return;

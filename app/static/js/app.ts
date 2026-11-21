@@ -718,7 +718,7 @@ async function storyReader(id) {
     el.classList.add("on");
     const status = tok.word_id ? (tok.learned ? "✓ learned" : `in ${tok.level}`) : "not in your course";
     pop.replaceChildren(
-      h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, h("b", { class: "hz wp-word" }, tok.t), isSl() ? (tok.r && tok.r !== tok.t ? h("span", { class: "muted small" }, `← ${tok.r}`) : null) : h("span", { class: "py" }, tok.r), h("span", { class: "spacer" }), iconBtn("speaker", "speaker sm", () => speak(tok.t), "Listen")),
+      h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, h("b", { class: "hz wp-word" }, tok.t), isSl() ? (tok.r && tok.r !== tok.t ? h("span", { class: "muted small" }, `← ${tok.r}`) : null) : h("span", { class: "py" }, tok.r), h("span", { class: "spacer" }), iconBtn("speaker", "speaker sm", () => { stopAuto(); speak(tok.t); }, "Listen")),
       h("div", { class: "wp-mean" }, tok.m || "—"),
       h(
         "div",
@@ -747,6 +747,7 @@ async function storyReader(id) {
       )
     );
     pop.hidden = false;
+    stopAuto();
     speak(tok.t);
   };
   const sentences = st.sentences.map((x) => {
@@ -759,11 +760,17 @@ async function storyReader(id) {
         { class: "st-text hz" },
         x.tokens.map((tok) => (tok.punct ? h("span", {}, tok.t) : h("span", { class: "tok" + (tok.word_id && !tok.learned ? " new" : "") + (!tok.word_id ? " out" : ""), onclick: (e) => showWord(tok, e.currentTarget) }, tok.t)))
       ),
-      h("div", { class: "row", style: { alignItems: "center", gap: "8px" } }, iconBtn("speaker", "speaker sm", () => speak(x.text), "Listen"), en)
+      h("div", { class: "row", style: { alignItems: "center", gap: "8px" } }, iconBtn("speaker", "speaker sm", () => { stopAuto(); speak(x.text); }, "Listen"), en)
     );
   });
   let playing = false;
   let run = 0; // each Play starts a new run; an older loop stops as soon as it notices
+  const stopAuto = () => {
+    if (!playing) return;
+    playing = false;
+    run++;
+    playAll.textContent = "▶ Listen to the story";
+  };
   const playAll = h(
     "button",
     {

@@ -21,11 +21,18 @@ const native = () => window.__native;
 // ------------------------------------------------------------------ natural voice (bundled)
 // Each edition ships with pre-recorded voice packs (audio/<lang>.bin + audio/<lang>.json, made by
 // mobile/scripts/make-audio.ts): every word, sentence, grammar example and story of the course,
-// played offline on any phone. Anything else (sentences the AI writes) uses the phone's own voice.
+// played offline on any phone. Anything else (custom words, higher levels, AI sentences) uses the
+// phone's own voice.
 
+const SILENT_WAV = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
 const packs = new Map<string, Promise<{ index: Record<string, [number, number]>; bin: ArrayBuffer } | null>>();
-let activeAudio: HTMLAudioElement | null = null;
-let activeDone: (() => void) | null = null;
+let player: HTMLAudioElement | null = null;
+let activeUrl: string | null = null;
+let activeSource: AudioBufferSourceNode | null = null;
+let activeDone: ((status: "ok" | "stopped" | "error") => void) | null = null;
+let audioCtx: AudioContext | null = null;
+let unlocked = false;
+let speakId = 0;
 
 const normAudioKey = (t: string) =>
   String(t || "")
@@ -51,79 +58,197 @@ function loadPack(code: string) {
   return packs.get(code)!;
 }
 
+function getPlayer(): HTMLAudioElement | null {
+  if (typeof Audio === "undefined") return null;
+  if (!player) {
+    player = new Audio();
+    (player as any).preservesPitch = true;
+    (player as any).webkitPreservesPitch = true;
+  }
+  return player;
+}
+
+function getAudioCtx(): AudioContext | null {
+  const Ctx = typeof window !== "undefined" && (window.AudioContext || window.webkitAudioContext);
+  if (!Ctx) return null;
+  try {
+    audioCtx ||= window.__splashAudio || new Ctx();
+    if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+    return audioCtx;
+  } catch {
+    return null;
+  }
+}
+
+// Unlock one shared <audio> element on the first tap so Safari and mobile WebViews allow
+// automatic playback in exercises (speakSoon) and multi-sentence story loops.
+function unlockAudio() {
+  if (unlocked) return;
+  unlocked = true;
+  const p = getPlayer();
+  if (p && !activeDone && !p.src) {
+    p.muted = true;
+    p.src = SILENT_WAV;
+    p.play()
+      .then(() => {
+        if (!activeDone && p.src === SILENT_WAV) {
+          p.pause();
+          p.muted = false;
+        }
+      })
+      .catch(() => {
+        p.muted = false;
+        unlocked = false;
+      });
+  }
+  getAudioCtx();
+  // Quietly warm up the current language's voice pack so the first word plays with zero delay.
+  const lang = T.speechLang();
+  if (lang) loadPack(lang.split("-")[0].toLowerCase());
+}
+if (typeof document !== "undefined" && !(typeof navigator !== "undefined" && navigator.webdriver)) {
+  for (const ev of ["pointerdown", "touchstart", "keydown"]) {
+    document.addEventListener(ev, unlockAudio, { capture: true, passive: true });
+  }
+}
+
 function stopActiveAudio() {
-  if (activeAudio) {
+  const done = activeDone;
+  activeDone = null;
+  if (player) {
+    // Clear handlers BEFORE pausing so stopping never fires onerror or triggers a fallback voice.
+    player.onended = null;
+    player.onerror = null;
     try {
-      activeAudio.pause();
-      activeAudio.src = "";
+      player.pause();
     } catch {}
-    activeAudio = null;
   }
-  if (activeDone) {
-    const done = activeDone;
-    activeDone = null;
-    done();
+  if (activeSource) {
+    const src = activeSource;
+    activeSource = null;
+    src.onended = null;
+    try {
+      src.stop();
+    } catch {}
   }
+  if (activeUrl) {
+    URL.revokeObjectURL(activeUrl);
+    activeUrl = null;
+  }
+  done?.("stopped");
 }
 
-function playBlob(blob: Blob, rate: number): Promise<boolean> {
-  if (typeof navigator !== "undefined" && navigator.webdriver) return Promise.resolve(true);
+async function playSlice(slice: ArrayBuffer, rate: number, myId: number): Promise<"ok" | "stopped" | "error"> {
+  if (typeof navigator !== "undefined" && navigator.webdriver) return "ok";
+  if (myId !== speakId) return "stopped";
   stopActiveAudio();
-  return new Promise<boolean>((resolve) => {
-    const url = URL.createObjectURL(blob);
-    const a = new Audio(url);
-    activeAudio = a;
-    const finish = (ok: boolean) => {
-      if (activeAudio === a) activeAudio = null;
-      if (activeDone) activeDone = null;
-      URL.revokeObjectURL(url);
-      resolve(ok);
-    };
-    activeDone = () => finish(true);
-    a.playbackRate = Math.max(0.5, Math.min(1.5, rate / 0.8));
-    a.onended = () => finish(true);
-    a.onerror = () => finish(false);
-    a.play().catch(() => finish(false));
-  });
+
+  const p = getPlayer();
+  const speed = Math.max(0.5, Math.min(1.5, rate / 0.8));
+  if (p) {
+    const res = await new Promise<"ok" | "stopped" | "blocked" | "error">((resolve) => {
+      const url = URL.createObjectURL(new Blob([slice], { type: "audio/mpeg" }));
+      activeUrl = url;
+      let settled = false;
+      const finish = (status: "ok" | "stopped" | "blocked" | "error") => {
+        if (settled) return;
+        settled = true;
+        p.onended = null;
+        p.onerror = null;
+        if (activeDone) activeDone = null;
+        if (activeUrl === url) {
+          URL.revokeObjectURL(url);
+          activeUrl = null;
+        }
+        resolve(status);
+      };
+      activeDone = (s) => finish(s);
+      p.muted = false;
+      p.src = url;
+      p.playbackRate = speed;
+      p.onended = () => finish("ok");
+      p.onerror = () => finish("error");
+      p.play().catch((err) => finish(err?.name === "NotAllowedError" ? "blocked" : "error"));
+    });
+    if (res === "ok" || res === "stopped") return res;
+  }
+
+  // If <audio> was blocked by autoplay policy, decode and play the same neural MP3 via Web Audio.
+  if (myId !== speakId) return "stopped";
+  const c = getAudioCtx();
+  if (!c) return "error";
+  try {
+    const audioBuf = await c.decodeAudioData(slice.slice(0));
+    if (myId !== speakId) return "stopped";
+    return await new Promise<"ok" | "stopped" | "error">((resolve) => {
+      const src = c.createBufferSource();
+      src.buffer = audioBuf;
+      src.playbackRate.value = speed;
+      src.connect(c.destination);
+      activeSource = src;
+      let settled = false;
+      const finish = (status: "ok" | "stopped" | "error") => {
+        if (settled) return;
+        settled = true;
+        src.onended = null;
+        if (activeSource === src) activeSource = null;
+        if (activeDone) activeDone = null;
+        resolve(status);
+      };
+      activeDone = (s) => finish(s);
+      src.onended = () => finish("ok");
+      src.start(0);
+    });
+  } catch {
+    return "error";
+  }
 }
 
-async function speakNeural(text: string, lang: string, rate: number): Promise<boolean> {
-  if (typeof navigator !== "undefined" && navigator.webdriver) return false;
+async function speakNeural(text: string, lang: string, rate: number, myId: number): Promise<"handled" | "missing"> {
+  if (typeof navigator !== "undefined" && navigator.webdriver) return "missing";
   const key = normAudioKey(text);
-  if (!key) return false;
+  if (!key) return "handled";
   const code = lang.split("-")[0].toLowerCase();
 
   // The bundled voice pack (words, sentences, grammar, stories).
   const pack = await loadPack(code);
+  if (myId !== speakId) return "handled";
   if (pack) {
     const slice = pack.index[key] || pack.index[stripAudioPunct(key)];
     if (slice) {
       const [off, len] = slice;
-      const blob = new Blob([pack.bin.slice(off, off + len)], { type: "audio/mpeg" });
-      if (await playBlob(blob, rate)) return true;
+      await playSlice(pack.bin.slice(off, off + len), rate, myId);
+      // This text has a bundled neural clip — never fall back to the phone's old system voice.
+      return "handled";
     }
   }
 
-  return false;
+  return "missing";
 }
 
 export function stopSpeaking() {
+  speakId++;
   stopActiveAudio();
   if (native()?.stopSpeaking) native().stopSpeaking();
-  else if ("speechSynthesis" in window) speechSynthesis.cancel();
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
 }
 
 export async function speak(text, { slow = false } = {}) {
+  const raw = String(text || "").trim();
+  if (!raw) return;
+  stopSpeaking();
+  const myId = speakId;
   const rate0 = Number(state.settings?.tts_rate || 0.8);
   const rate = slow ? Math.max(0.4, rate0 - 0.35) : rate0;
   const lang = T.speechLang();
-  if (await speakNeural(String(text || ""), lang, rate)) return;
+  const status = await speakNeural(raw, lang, rate, myId);
+  if (status !== "missing" || myId !== speakId) return;
   warnNoVoice();
-  if (native()?.speak) return native().speak(text, rate, lang).catch(() => {});
+  if (native()?.speak) return native().speak(raw, rate, lang).catch(() => {});
   if (!("speechSynthesis" in window)) return;
   speechSynthesis.cancel();
   return new Promise<void>((resolve) => {
-    const u = new SpeechSynthesisUtterance(text);
+    const u = new SpeechSynthesisUtterance(raw);
     u.lang = lang;
     const voice = pickVoice(lang);
     if (voice) u.voice = voice;

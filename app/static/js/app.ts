@@ -8,7 +8,7 @@ import { soundsOn, setSounds, playCorrect } from "./sounds.js";
 import { plantArt, gardenSheet, gardenNotice, dayLeafArt } from "./garden.js";
 import { canRemind, ensurePermission, scheduleReminders } from "./reminders.js";
 import { pickTime } from "./timepicker.js";
-import { genderTag, withEndings, richText } from "./exercises.js";
+import { genderTag, grammarTable, slCasesCheatSheet, withEndings, richText } from "./exercises.js";
 import { gemmaCard, backupCard } from "./gemma-settings.js";
 import { talkSheet } from "./talk.js";
 import { FEATURES } from "./features.js";
@@ -833,17 +833,26 @@ async function grammarBook() {
           { class: "g-book-item" },
           h("summary", {}, h("b", {}, p.title), h("small", {}, p.short)),
           h("div", { class: "g-pattern hz" }, withEndings(p.pattern)),
+          grammarTable(p.table),
           richText(p.explain),
           p.examples.slice(0, 3).map((x) => h("div", { class: "g-example" }, h("div", { class: "g-text hz" }, withEndings(x.text)), x.reading && x.reading !== x.text ? h("div", { class: "small muted" }, x.reading) : null, h("div", { class: "small" }, x.en)))
         )
       : h("div", { class: "g-book-item locked" }, h("span", { html: SVG.lock }), p.title);
+  const casesSheet = isSl()
+    ? h(
+        "details",
+        { class: "g-book-item g-cases-sheet" },
+        h("summary", {}, h("b", {}, "📊 All 6 cases at a glance"), h("small", {}, "Tabela sklonov · triggers, endings & 3 shortcuts")),
+        slCasesCheatSheet()
+      )
+    : null;
   bg.append(
     h(
       "div",
       { class: "sheet" },
       h("h2", { style: { margin: "0 0 4px" } }, `${b.section} grammar`),
       h("p", { class: "muted small", style: { margin: "0 0 14px" } }, b.finished ? `All ${b.total} points learned.` : `${b.learned} of ${b.total} learned · next lesson unlocks after ${b.words_to_next} more word${b.words_to_next === 1 ? "" : "s"}.`),
-      h("div", { class: "g-book" }, b.points.map(item)),
+      h("div", { class: "g-book" }, casesSheet, b.points.map(item)),
       h("button", { class: "btn", style: { marginTop: "14px" }, onclick: () => bg.remove() }, "Close")
     )
   );

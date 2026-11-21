@@ -87,8 +87,8 @@ async function answer(page: Page, words: any[]) {
   const kicker = (await page.locator(".lesson .ex-kicker").first().innerText().catch(() => "")).trim();
   const quoted = (text.match(/“([^”]+)”/) || [])[1];
   const word = words.find((w) => w.english === quoted) || words.find((w) => text.includes(w.hanzi) && w.hanzi.length > 1) || words.find((w) => text.includes(w.hanzi));
-  const choices = page.locator(".lesson .choice");
-  const woTiles = page.locator(".lesson .wo-bank .wo-tile");
+  const choices = page.locator(".lesson .choice:not([disabled])");
+  const woTiles = page.locator(".lesson .wo-bank .wo-tile:not([disabled])");
   const input = page.locator(".lesson-body input.input");
   if (/NEW WORD/i.test(kicker)) {
     // just look at it
@@ -653,7 +653,7 @@ test("grammar quizzes: practical usage only (gaps, forms, right sentence, gender
     for (let i = 0; i < 120 && (await page.locator(".lesson").count()); i++) {
       const title = (await page.locator(".lesson .ex-title").first().innerText().catch(() => "")).trim();
       assert.notEqual(title, "What does the highlighted part do?", "meta-grammar label guessing is removed");
-      if (title === "Fill in the gap" || title === "Which form fits?") {
+      if (title === "Fill in the gap" || title === "Which form fits?" || title === "Complete the reply" || title === "Change the sentence") {
         practical++;
         assert.ok(await page.locator(".lesson .g-example .g-gap").count(), "the sentence has a blank");
         assert.ok((await page.locator(".lesson .choice").count()) >= 2, "there are answers to choose from");
@@ -661,15 +661,15 @@ test("grammar quizzes: practical usage only (gaps, forms, right sentence, gender
       } else if (title === "Which sentence is right?" || title === "Which gender is this noun?") {
         practical++;
         assert.ok((await page.locator(".lesson .choice").count()) >= 3, "sentence/gender choices are shown");
-      } else if (await page.locator(".lesson .wo-bank .wo-tile").count()) {
+      } else if (await page.locator(".lesson .wo-bank .wo-tile:not([disabled])").count()) {
         practical++;
-        const bankTiles = page.locator(".lesson .wo-bank .wo-tile");
+        const bankTiles = page.locator(".lesson .wo-bank .wo-tile:not([disabled])");
         for (let k = 0; k < 2 && (await bankTiles.count()); k++) await bankTiles.first().click();
       }
-      const choice = page.locator(".lesson .choice").first();
+      const choice = page.locator(".lesson .choice:not([disabled])").first();
       if (await choice.isVisible().catch(() => false)) await choice.click();
       const btn = page.locator(".lesson .lesson-foot .btn").last();
-      if (await btn.isVisible().catch(() => false)) await btn.click().catch(() => {});
+      if (await btn.isVisible().catch(() => false) && (await btn.isEnabled().catch(() => false))) await btn.click().catch(() => {});
       await page.waitForTimeout(80);
     }
     if (await page.locator(".lesson").count()) {

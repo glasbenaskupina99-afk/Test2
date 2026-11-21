@@ -13,7 +13,7 @@ import FALLBACK_JA_N3 from "../../app/data/japanese_n3_sentences.json";
 import seedSl from "../../app/data/slovenian_a1.json";
 import FALLBACK_SL from "../../app/data/slovenian_sentences.json";
 import type { Activity, Card, Db, Extras, Lang, Settings, Skill } from "./types.js";
-import { compareSpelling, compareSpokenSl, gradeSentenceSl, lemmaSl, normSl } from "./slovenian.js";
+import { compareSpelling, compareSpokenSl, dynamicSlExamples, gradeSentenceSl, lemmaSl, normSl } from "./slovenian.js";
 import * as ai from "./ai.js";
 import * as sync from "./sync.js";
 import * as cloud from "./backup.js";
@@ -945,7 +945,8 @@ function grammarPoint(p, known) {
   const examples = p.examples
     .map((x) => ({ ...x, reading: course() === "zh" ? toPinyin(x.text) : x.reading || "" }))
     .sort((a, b) => score(b.text) - score(a.text));
-  return { ...p, examples };
+  const dynamic = course() === "sl" ? dynamicSlExamples(p.id, W().filter((w) => learnedIds().has(w.id)), 3) : [];
+  return { ...p, examples, dynamic };
 }
 
 

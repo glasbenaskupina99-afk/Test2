@@ -698,7 +698,7 @@ export function sentenceType(ctx, s) {
  * Build the sentence (the chapter gate of the journey): tap the words in order, tap one in the
  * answer to put it back. From the third chapter on, one tile is a wrong form and stays out.
  */
-export function wordOrder(ctx, item, { kicker = "🚪 Chapter gate" } = {}) {
+export function wordOrder(ctx, item, { kicker = "🚪 Chapter gate", why = null, audio = null } = {}) {
   const sl = item.lang === "sl";
   const answer = h("div", { class: "wo-answer" });
   const end = h("span", { class: "wo-end" + (sl ? "" : " hz") }, item.end || "");
@@ -737,13 +737,13 @@ export function wordOrder(ctx, item, { kicker = "🚪 Chapter gate" } = {}) {
       const ok = same(got, item.answer);
       tiles.forEach((b) => (b.disabled = true));
       answer.classList.add(ok ? "good" : "bad");
-      speak(item.text);
+      speak(audio || item.text);
       const rightWords = !ok && same([...got].sort(), [...item.answer].sort());
       return {
         ok,
         grade: ok ? 2 : 0,
         title: ok ? "Correct!" : rightWords ? "Right words, another order" : "Not quite",
-        detail: h("div", {}, rightWords ? h("div", { class: "small" }, "This gate practises this order:") : null, sentence()),
+        detail: h("div", {}, rightWords ? h("div", { class: "small" }, "This gate practises this order:") : null, sentence(), why),
       };
     },
   };
@@ -914,27 +914,91 @@ function markedSentence(x, { gap = false } = {}) {
   return h("span", {}, parts.map((p) => (marks.includes(p) ? (gap ? h("span", { class: "g-gap" }, "＿＿") : h("mark", { class: "g-mark" }, p)) : p)));
 }
 
+/** Audio text for a grammar example: bundled neural clip (word audio for dynamic examples, full sentence otherwise). */
+const exampleAudio = (x) => x.audio || plainText(x.text);
+
+/** 1-line "Why?" explanation shown in feedback after answering a grammar exercise. */
+function whyBox(p, x) {
+  const txt = x?.why || (p?.short ? `${p.title} — ${p.short}` : "");
+  return txt ? h("div", { class: "g-why small" }, "💡 ", txt) : null;
+}
+
+/** Compact grammar table (headers + rows, with [endings] highlighted). */
+export function grammarTable(t) {
+  if (!t?.headers?.length || !t?.rows?.length) return null;
+  return h(
+    "div",
+    { class: "g-table-wrap" },
+    h(
+      "table",
+      { class: "g-table" },
+      h("thead", {}, h("tr", {}, t.headers.map((c) => h("th", {}, withEndings(c))))),
+      h("tbody", {}, t.rows.map((r) => h("tr", {}, r.map((c) => h("td", {}, withEndings(c))))))
+    )
+  );
+}
+
+const SL_CASE_IDS = new Set(["sl-acc-fem", "sl-acc-masc", "sl-kam-acc", "sl-locative", "sl-gen-neg", "sl-gen-quantity", "sl-instrumental", "sl-dative"]);
+
+/** Full 6-case Slovenian reference table + 3 memory shortcuts (shown in Grammar Book and case intros). */
+export function slCasesCheatSheet() {
+  return h(
+    "div",
+    { class: "g-cases-body" },
+    grammarTable({
+      headers: ["Case", "Question / triggers", "m (stol / brat)", "ž (hiša)", "s (mesto)"],
+      rows: [
+        ["1. Imenovalnik", "Kdo? Kaj? (basic)", "stol · brat", "hiš[a]", "mest[o]"],
+        ["2. Rodilnik", "Koga? Česa? · nimam, ni, brez, iz, veliko", "stol[a] · brat[a]", "hiš[e]", "mest[a]"],
+        ["3. Dajalnik", "Komu? Čemu? · dam, pomagam, k/h", "stol[u] · brat[u]", "hiš[i]", "mest[u]"],
+        ["4. Tožilnik", "Koga? Kaj? Kam? · vidim, pijem, v/na (kam)", "stol · brat[a]", "hiš[o]", "mest[o]"],
+        ["5. Mestnik", "Kje? · v/na (kje), pri, o, po", "v hotel[u]", "v hiš[i]", "v mest[u]"],
+        ["6. Orodnik", "S kom? S čim? · z / s (with, by)", "z avt[om] · s prijatelj[em]", "z mam[o]", "z mlek[om]"],
+      ],
+    }),
+    h(
+      "div",
+      { class: "g-shortcuts" },
+      h("b", {}, "3 shortcuts so you don't memorise 18 endings:"),
+      h(
+        "ul",
+        {},
+        h("li", {}, h("b", {}, "m & s match"), " in cases 2, 3, 5, 6 (-a, -u, -u, -om/-em) — learn 2 patterns, not 3."),
+        h("li", {}, h("b", {}, "Case 3 (Dative) = Case 5 (Locative)"), " — always -u (m/s) and -i (ž)."),
+        h("li", {}, h("b", {}, "Feminine Case 4 = Case 6"), " (-o). In Case 4, neuter & non-living m stay unchanged; living m borrows -a from Case 2.")
+      )
+    )
+  );
+}
+
 function grammarExampleBox(x, { gap = false, showReading = true, fresh = false, showEn = false } = {}) {
+  const isFresh = fresh || !!x.fresh;
   // In gap/drill quizzes show the English meaning right away so the target form is unambiguous.
   const en = showEn || gap
     ? h("div", { class: "g-en small" }, x.en)
     : h("button", { class: "g-en-reveal small", onclick: () => en.replaceWith(h("div", { class: "g-en small" }, x.en)) }, "👁 Show translation");
   return h(
     "div",
-    { class: "g-example" + (fresh ? " g-fresh" : "") },
-    fresh ? h("div", { class: "g-fresh-tag" }, "✨ From your words") : null,
-    h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, speakerBtn(plainText(x.text)), h("div", { class: "g-text hz" }, markedSentence(x, { gap }))),
+    { class: "g-example" + (isFresh ? " g-fresh" : "") },
+    isFresh ? h("div", { class: "g-fresh-tag" }, "✨ From your words") : null,
+    h("div", { class: "row", style: { alignItems: "center", gap: "10px" } }, speakerBtn(exampleAudio(x)), h("div", { class: "g-text hz" }, markedSentence(x, { gap }))),
     showReading && x.reading && x.reading !== x.text ? h("div", { class: "g-reading small muted" }, x.reading) : null,
     en
   );
 }
 
-/** Introduces one grammar point: pattern, an example from words you know, and how it's used. */
+/** Introduces one grammar point: pattern, mini-table, an example, and concise explanation. */
 export function grammarIntro(ctx, p, i, n) {
   const seen = new Set(p.examples.map((x) => x.text));
-  const exBox = h("div", {}, grammarExampleBox(p.examples[0]));
+  const exBox = h("div", {}, grammarExampleBox(p.examples[0], { showEn: true }));
   const more = p.examples.slice(1);
-  const moreBox = h("div", { class: "g-more", hidden: true }, more.map((x) => grammarExampleBox(x)));
+  const moreBox = h("div", { class: "g-more", hidden: true }, more.map((x) => grammarExampleBox(x, { showEn: true })));
+  const casesBox = isSl() && SL_CASE_IDS.has(p.id) ? h("div", { class: "g-more", hidden: true }, slCasesCheatSheet()) : null;
+  // Keep the intro scannable: show the core paragraphs immediately and tuck extra notes behind a toggle.
+  const paras = String(p.explain ?? "").split(/\n\s*\n/).filter((s) => s.trim());
+  const shortExplain = paras.slice(0, p.table ? 1 : 2).join("\n\n");
+  const restExplain = paras.slice(p.table ? 1 : 2).join("\n\n");
+  const restBox = restExplain ? h("div", { class: "g-more", hidden: true }, richText(restExplain)) : null;
   const aiBtn = state.settings?.ai_enabled
     ? h(
         "button",
@@ -950,7 +1014,7 @@ export function grammarIntro(ctx, p, i, n) {
               if (seen.has(x.text)) x = await api("/api/grammar/example", { method: "POST", body: { id: p.id, avoid: [...seen] } });
               if (seen.has(x.text)) throw new Error("Gemma came up with the same sentence again — try once more");
               seen.add(x.text);
-              exBox.replaceChildren(grammarExampleBox(x, { fresh: true }));
+              exBox.replaceChildren(grammarExampleBox(x, { fresh: true, showEn: true }));
               speak(plainText(x.text));
               b.textContent = "✨ Another example from my words";
             } catch (err) {
@@ -969,17 +1033,22 @@ export function grammarIntro(ctx, p, i, n) {
     h("div", { class: "ex-kicker blue" }, `📘 Grammar ${i + 1} of ${n}`),
     h("h2", { class: "ex-title" }, p.title),
     h("div", { class: "g-pattern hz" }, withEndings(p.pattern)),
+    grammarTable(p.table),
     exBox,
-    richText(p.explain),
+    richText(shortExplain),
     h(
       "div",
       { class: "row", style: { gap: "8px", flexWrap: "wrap", justifyContent: "center" } },
+      restBox ? h("button", { class: "btn ghost small auto", onclick: (e) => { restBox.hidden = !restBox.hidden; e.currentTarget.textContent = restBox.hidden ? "More notes & exceptions" : "Hide notes"; } }, "More notes & exceptions") : null,
+      casesBox ? h("button", { class: "btn ghost small auto", onclick: (e) => { casesBox.hidden = !casesBox.hidden; e.currentTarget.textContent = casesBox.hidden ? "📊 All 6 cases" : "Hide cases table"; } }, "📊 All 6 cases") : null,
       more.length ? h("button", { class: "btn ghost small auto", onclick: (e) => { moreBox.hidden = !moreBox.hidden; e.currentTarget.textContent = moreBox.hidden ? `More examples (${more.length})` : "Hide examples"; } }, `More examples (${more.length})`) : null,
       aiBtn
     ),
+    restBox,
+    casesBox,
     moreBox
   );
-  speakSoon(() => plainText(p.examples[0].text), 400);
+  speakSoon(() => exampleAudio(p.examples[0]), 400);
   return { el, mode: "continue" };
 }
 
@@ -1002,12 +1071,12 @@ function grammarChoice(ctx, p, x, options, { kicker, title, gap }) {
         if (options[i].correct) t.classList.add("correct");
         else if (options[i] === picked) t.classList.add("wrong");
       });
-      speak(plainText(x.text));
+      speak(exampleAudio(x));
       return {
         ok,
         grade: ok ? 2 : 0,
         title: ok ? "Correct!" : "Correct answer:",
-        detail: h("div", {}, h("b", {}, p.title), h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, x.en)),
+        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, x.en), whyBox(p, x)),
       };
     },
   };
@@ -1049,12 +1118,12 @@ export function grammarGender(ctx, p, x) {
         if (opts[i].correct) t.classList.add("correct");
         else if (opts[i] === picked) t.classList.add("wrong");
       });
-      speak(plainText(x.text));
+      speak(exampleAudio(x));
       return {
         ok,
         grade: ok ? 2 : 0,
         title: ok ? "Correct!" : "Correct answer:",
-        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, `${x.gender} · ${GENDER[x.gender] || ""} — ${x.en}`)),
+        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, `${x.gender} · ${GENDER[x.gender] || ""} — ${x.en}`), whyBox(p, x)),
       };
     },
   };
@@ -1136,12 +1205,12 @@ export function grammarSentence(ctx, p, x, wrongSentences: string[]) {
         if (opts[i].correct) t.classList.add("correct");
         else if (opts[i] === picked) t.classList.add("wrong");
       });
-      speak(right);
+      speak(exampleAudio(x));
       return {
         ok,
         grade: ok ? 2 : 0,
         title: ok ? "Correct!" : "Correct answer:",
-        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small muted" }, p.title), h("div", { class: "small" }, x.en)),
+        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, x.en), whyBox(p, x)),
       };
     },
   };
@@ -1166,7 +1235,7 @@ export function grammarWordOrder(ctx, p, x) {
     if (wrong) extra = wrong.toLowerCase();
   }
   const tiles = extra ? [...words, extra] : [...words];
-  return wordOrder(ctx, { lang: "sl", text, en: x.en, tiles, answer: words, end, extra: !!extra }, { kicker: "📘 Grammar · Word order" });
+  return wordOrder(ctx, { lang: "sl", text, en: x.en, tiles, answer: words, end, extra: !!extra }, { kicker: "📘 Grammar · Word order", why: whyBox(p, x), audio: exampleAudio(x) });
 }
 
 /** The form of a word with the part that changes in colour (stem = what all the options share). */
@@ -1174,8 +1243,8 @@ function formTile(form, stemLen) {
   return h("span", { class: "txt hz" }, form.slice(0, stemLen), h("span", { class: "g-end" }, form.slice(stemLen)));
 }
 
-/** Ending drill (Slovenian): "Grem v ＿＿ (trgovina)" → pick the right form, trgovin·o. */
-export function grammarDrill(ctx, p, x) {
+/** Shared form-picker builder for ending drills, mini-dialogues and sentence transformations. */
+function formDrillExercise(ctx, p, x, { kicker, title, promptEl }) {
   const m = x.text.match(ENDED);
   const answer = m ? m[1] + m[2] + m[3] : "";
   // At the start of a sentence the answer is capitalised: show the options the same way.
@@ -1190,14 +1259,7 @@ export function grammarDrill(ctx, p, x) {
     return t;
   });
   return {
-    el: h(
-      "div",
-      {},
-      h("div", { class: "ex-kicker blue" }, "📘 Endings"),
-      h("h2", { class: "ex-title" }, "Which form fits?"),
-      grammarExampleBox(x, { gap: true }),
-      h("div", { class: "choices" }, tiles)
-    ),
+    el: h("div", {}, h("div", { class: "ex-kicker blue" }, kicker), h("h2", { class: "ex-title" }, title), promptEl, h("div", { class: "choices" }, tiles)),
     mode: "check",
     async check() {
       const ok = picked === answer;
@@ -1205,15 +1267,68 @@ export function grammarDrill(ctx, p, x) {
         if (forms[i] === answer) t.classList.add("correct");
         else if (forms[i] === picked) t.classList.add("wrong");
       });
-      speak(plainText(x.text));
+      speak(exampleAudio(x));
       return {
         ok,
         grade: ok ? 2 : 0,
         title: ok ? "Correct!" : "Correct answer:",
-        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small muted" }, p.title), h("div", { class: "small" }, x.en)),
+        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, x.en), whyBox(p, x)),
       };
     },
   };
+}
+
+/** Ending drill (Slovenian): "Grem v ＿＿ (trgovina)" → pick the right form, trgovin·o. */
+export function grammarDrill(ctx, p, x) {
+  return formDrillExercise(ctx, p, x, {
+    kicker: "📘 Endings",
+    title: "Which form fits?",
+    promptEl: grammarExampleBox(x, { gap: true }),
+  });
+}
+
+/** Mini-dialogue drill: a natural question triggers the right case/form in the reply. */
+export function grammarDialogue(ctx, p, x) {
+  const promptEl = h(
+    "div",
+    { class: "g-example g-dialogue" + (x.fresh ? " g-fresh" : "") },
+    x.fresh ? h("div", { class: "g-fresh-tag" }, "✨ From your words") : null,
+    h(
+      "div",
+      { class: "g-turn g-turn-q" },
+      h("span", { class: "g-who" }, "A"),
+      h("div", {}, h("div", { class: "g-q-text hz" }, x.dialogue.q), x.dialogue.q_en ? h("div", { class: "small muted" }, x.dialogue.q_en) : null)
+    ),
+    h(
+      "div",
+      { class: "g-turn g-turn-a" },
+      h("span", { class: "g-who me" }, "B"),
+      h("div", {}, h("div", { class: "g-text hz" }, markedSentence(x, { gap: true })), h("div", { class: "g-en small" }, x.en))
+    )
+  );
+  return formDrillExercise(ctx, p, x, {
+    kicker: "💬 Mini-dialogue",
+    title: "Complete the reply",
+    promptEl,
+  });
+}
+
+/** Sentence transformation drill: contrast the starting form with the changed form. */
+export function grammarTransform(ctx, p, x) {
+  const promptEl = h(
+    "div",
+    { class: "g-example g-transform" + (x.fresh ? " g-fresh" : "") },
+    x.fresh ? h("div", { class: "g-fresh-tag" }, "✨ From your words") : null,
+    h("div", { class: "g-from" }, h("div", { class: "hz" }, x.transform.from), x.transform.from_en ? h("div", { class: "small muted" }, x.transform.from_en) : null),
+    h("div", { class: "g-arrow small" }, "↓ ", x.transform.prompt),
+    h("div", { class: "g-text hz" }, markedSentence(x, { gap: true })),
+    h("div", { class: "g-en small" }, x.en)
+  );
+  return formDrillExercise(ctx, p, x, {
+    kicker: "🔄 Transform",
+    title: "Change the sentence",
+    promptEl,
+  });
 }
 
 // ------------------------------------------------------------------ listening

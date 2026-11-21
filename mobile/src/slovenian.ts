@@ -248,3 +248,204 @@ export function lemmaSl(word: string, has: (w: string) => boolean): string {
   if (!w || has(w)) return w && has(w) ? w : "";
   return lemmaCandidates(w).find(has) || "";
 }
+
+// ------------------------------------------------------------------ dynamic grammar from learned words
+// Builds 100% grammatically verified exercises using nouns the learner has actually studied,
+// so grammar practice applies the rule to fresh vocabulary instead of repeating 4 fixed sentences.
+
+const VOICELESS = /^[cčfhksšpt]/i;
+const prepSZ = (w: string) => (VOICELESS.test(w) ? "s" : "z");
+const prepKH = (w: string) => (/^[kg]/i.test(w) ? "h" : "k");
+const firstGloss = (en: string) => String(en || "").split(/[;,]/)[0].replace(/\s*\([^)]*\)/g, "").trim();
+
+const SL_PLACES_V_FEM = new Set(["kavarna", "restavracija", "hiša", "soba", "kuhinja", "kopalnica", "spalnica", "pekarna", "lekarna", "banka", "bolnišnica", "knjižnica", "pisarna", "Evropa"]);
+const SL_PLACES_NA_FEM = new Set(["tržnica", "postaja", "fakulteta", "ulica", "cesta", "gora"]);
+const SL_PLACES_V_NEUT = new Set(["stanovanje", "podjetje", "mesto"]);
+const SL_PLACES_NA_NEUT = new Set(["letališče", "jezero"]);
+const SL_PEOPLE_FEM = new Set(["prijateljica", "soseda", "babica", "teta", "sestrična", "zdravnica", "učiteljica", "študentka", "žena"]);
+const SL_OBJECTS_FEM = new Set(["skodelica", "steklenica", "miza", "postelja", "omara", "slika", "vozovnica", "karta", "obleka", "majica", "srajca", "jakna", "kapa", "torba", "kartica", "vrečka", "roža", "mačka", "ptica", "riba", "banana", "pomaranča", "solata", "juha", "pica", "torta", "potica"]);
+const SL_FOOD_NEUT = new Set(["meso", "maslo", "sadje", "jabolko", "kosilo", "pivo", "vino"]);
+const SL_ADJ_NEUT = new Set(["mesto", "stanovanje", "okno", "letalo", "jezero", "darilo", "kosilo", "krilo", "pisalo", "vprašanje", "podjetje", "jabolko", "pivo", "vino"]);
+
+const GENDER_WHY: Record<string, string> = { m: "masculine (m · moški)", ž: "feminine (ž · ženski)", s: "neuter (s · srednji)" };
+const STATIC_GENDER_NOUNS = new Set(["stol", "hiša", "mesto", "morje"]);
+
+function shuffleArr<T>(arr: T[]): T[] {
+  const out = arr.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+export interface DynamicSlWord {
+  hanzi: string;
+  english: string;
+  gender?: string | null;
+}
+
+/** Generate up to `limit` verified grammar examples from the learner's own studied Slovenian nouns. */
+export function dynamicSlExamples(pointId: string, learnedWords: DynamicSlWord[], limit = 3): any[] {
+  const words = shuffleArr(learnedWords.filter((w) => w.hanzi && !/\s/.test(w.hanzi) && ["m", "ž", "s"].includes(w.gender || "")));
+  const out: any[] = [];
+
+  if (pointId === "sl-gender") {
+    const byG: Record<string, DynamicSlWord[]> = { m: [], ž: [], s: [] };
+    for (const w of words) {
+      if (STATIC_GENDER_NOUNS.has(w.hanzi.toLowerCase())) continue;
+      byG[w.gender!].push(w);
+    }
+    const picked: DynamicSlWord[] = [];
+    for (let i = 0; picked.length < limit && i < 3; i++) {
+      for (const g of ["m", "ž", "s"]) if (byG[g][i] && picked.length < limit) picked.push(byG[g][i]);
+    }
+    for (const w of picked) {
+      const h = w.hanzi;
+      const g = w.gender!;
+      const last = h.slice(-1);
+      const marked = g === "ž" && last === "a" ? `${h.slice(0, -1)}[a]` : g === "s" && (last === "o" || last === "e") ? `${h.slice(0, -1)}[${last}]` : `[${h}]`;
+      const regular = (g === "ž" && last === "a") || (g === "s" && (last === "o" || last === "e")) || (g === "m" && !/[aeiou]$/i.test(h));
+      const why = regular
+        ? `${h} ends in ${g === "m" ? "a consonant" : `-${last}`} → ${GENDER_WHY[g]}`
+        : `${h} is an exception: ${GENDER_WHY[g]} even though it ends in ${/[aeiou]$/i.test(h) ? `-${last}` : "a consonant"}`;
+      out.push({ text: marked, en: firstGloss(w.english), gender: g, audio: h, fresh: true, why });
+    }
+    return out;
+  }
+
+  for (const w of words) {
+    if (out.length >= limit) break;
+    const h = w.hanzi;
+    const low = h.toLowerCase();
+    const g = w.gender!;
+    const en = firstGloss(w.english);
+
+    if (pointId === "sl-acc-fem" && g === "ž" && h.endsWith("a") && SL_OBJECTS_FEM.has(low)) {
+      const st = h.slice(0, -1);
+      out.push({
+        text: `Imam ${st}[o].`,
+        en: `I have a ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}o`, h, `${st}e`, `${st}i`] },
+        transform: { from: `To je ${h}.`, from_en: `This is a ${en}.`, prompt: "Say you have it:" },
+        why: `imam + what? (4. tožilnik): feminine -a → -o (${h} → ${st}o)`,
+      });
+    } else if (pointId === "sl-kam-acc" && g === "ž" && h.endsWith("a") && (SL_PLACES_V_FEM.has(low) || SL_PLACES_NA_FEM.has(low))) {
+      const st = h.slice(0, -1);
+      const prep = SL_PLACES_NA_FEM.has(low) ? "na" : "v";
+      out.push({
+        text: `Grem ${prep} ${st}[o].`,
+        en: `I'm going to the ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}o`, h, `${st}i`, `${st}e`] },
+        dialogue: { q: "Kam greš?", q_en: "Where are you going?" },
+        why: `Kam? (direction) → ${prep} + 4. tožilnik: -a → -o (${h} → ${st}o)`,
+      });
+    } else if (pointId === "sl-locative" && g === "ž" && h.endsWith("a") && (SL_PLACES_V_FEM.has(low) || SL_PLACES_NA_FEM.has(low))) {
+      const st = h.slice(0, -1);
+      const prep = SL_PLACES_NA_FEM.has(low) ? "na" : "v";
+      out.push({
+        text: `Sem ${prep} ${st}[i].`,
+        en: `I'm at the ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}i`, `${st}o`, h, `${st}e`] },
+        transform: { from: `Grem ${prep} ${st}o.`, from_en: `I'm going to the ${en} (Kam?).`, prompt: "Now you're already there (Kje?):" },
+        why: `Kje? (location) → ${prep} + 5. mestnik: -a → -i (${h} → ${st}i)`,
+      });
+    } else if (pointId === "sl-locative" && g === "s" && (SL_PLACES_V_NEUT.has(low) || SL_PLACES_NA_NEUT.has(low))) {
+      const st = h.slice(0, -1);
+      const prep = SL_PLACES_NA_NEUT.has(low) ? "na" : "v";
+      out.push({
+        text: `Sem ${prep} ${st}[u].`,
+        en: `I'm at the ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}u`, h, `${st}a`, `${st}i`] },
+        dialogue: { q: "Kje si?", q_en: "Where are you?" },
+        why: `Kje? (location) → ${prep} + 5. mestnik: neuter -${h.slice(-1)} → -u (${h} → ${st}u)`,
+      });
+    } else if (pointId === "sl-gen-neg" && g === "ž" && h.endsWith("a") && SL_OBJECTS_FEM.has(low)) {
+      const st = h.slice(0, -1);
+      out.push({
+        text: `Nimam ${st}[e].`,
+        en: `I don't have a ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}e`, `${st}o`, h, `${st}i`] },
+        transform: { from: `Imam ${st}o.`, from_en: `I have a ${en}.`, prompt: "Say the negative:" },
+        why: `nimam (negation) → 2. rodilnik: feminine -a → -e (${h} → ${st}e)`,
+      });
+    } else if (pointId === "sl-gen-neg" && g === "s" && SL_FOOD_NEUT.has(low)) {
+      const st = h.slice(0, -1);
+      out.push({
+        text: `Tukaj ni ${st}[a].`,
+        en: `There is no ${en} here.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}a`, h, `${st}u`, `${st}e`] },
+        transform: { from: `Tukaj je ${h}.`, from_en: `There is ${en} here.`, prompt: "Say there isn't any:" },
+        why: `ni (negation) → 2. rodilnik: neuter -${h.slice(-1)} → -a (${h} → ${st}a)`,
+      });
+    } else if (pointId === "sl-instrumental" && g === "ž" && h.endsWith("a") && SL_PEOPLE_FEM.has(low)) {
+      const st = h.slice(0, -1);
+      const prep = prepSZ(h);
+      out.push({
+        text: `Govorim ${prep} ${st}[o].`,
+        en: `I'm talking with the ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}o`, h, `${st}i`, `${st}e`] },
+        dialogue: { q: "S kom govoriš?", q_en: "Who are you talking with?" },
+        why: `${prep} (with) → 6. orodnik: feminine -a → -o (${h} → ${st}o)`,
+      });
+    } else if (pointId === "sl-dative" && g === "ž" && h.endsWith("a") && SL_PEOPLE_FEM.has(low)) {
+      const st = h.slice(0, -1);
+      const prep = prepKH(h);
+      out.push({
+        text: `Grem ${prep} ${st}[i].`,
+        en: `I'm going to the ${en}'s place.`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}i`, `${st}o`, h, `${st}e`] },
+        dialogue: { q: "Kam greš?", q_en: "Where are you going?" },
+        why: `${prep} (to a person) → 3. dajalnik: feminine -a → -i (${h} → ${st}i)`,
+      });
+    } else if (pointId === "sl-plural" && g === "ž" && h.endsWith("a") && SL_OBJECTS_FEM.has(low)) {
+      const st = h.slice(0, -1);
+      out.push({
+        text: `Tukaj so tri ${st}[e].`,
+        en: `Here are three (${en}).`,
+        audio: h,
+        fresh: true,
+        drill: { base: h, options: [`${st}e`, h, `${st}i`, `${st}o`] },
+        transform: { from: `Tukaj je ena ${h}.`, from_en: `Here is one ${en}.`, prompt: "Now say three (tri):" },
+        why: `3–4 uses normal plural: feminine -a → -e (${h} → ${st}e)`,
+      });
+    } else if (pointId === "sl-adjectives" && g === "ž" && h.endsWith("a") && SL_OBJECTS_FEM.has(low)) {
+      out.push({
+        text: `To je lep[a] ${h}.`,
+        en: `This is a nice ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: "lep", options: ["lepa", "lep", "lepo", "lepi"] },
+        transform: { from: "To je lep stol.", from_en: "This is a nice chair (m).", prompt: `Now describe ${h} (ž):` },
+        why: `${h} is feminine (ž) → adjective takes -a (lepa)`,
+      });
+    } else if (pointId === "sl-adjectives" && g === "s" && SL_ADJ_NEUT.has(low)) {
+      out.push({
+        text: `To je lep[o] ${h}.`,
+        en: `This is a nice ${en}.`,
+        audio: h,
+        fresh: true,
+        drill: { base: "lep", options: ["lepo", "lep", "lepa", "lepi"] },
+        transform: { from: "To je lep stol.", from_en: "This is a nice chair (m).", prompt: `Now describe ${h} (s):` },
+        why: `${h} is neuter (s) → adjective takes -o (lepo)`,
+      });
+    }
+  }
+  return out;
+}

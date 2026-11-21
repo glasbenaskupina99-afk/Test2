@@ -249,12 +249,16 @@ const distractorMarks = (p, lesson, others, x) =>
     .filter((o) => !o.correct)
     .map((o) => o.label);
 
-/** Build a practical grammar exercise for example `x` (A: form/gap, B: right sentence, C: word order). */
-function grammarExercise(p, x, lesson, others, pref: "form" | "sentence" | "order" = "form") {
+/** Build a practical grammar exercise for example `x` (context dialogue/transform, form/gap, right sentence, word order). */
+function grammarExercise(p, x, lesson, others, pref: "context" | "form" | "sentence" | "order" = "context") {
   if (x.gender) return (ctx) => ex.grammarGender(ctx, p, x);
   if (pref === "order" && canWordOrder(x)) return (ctx) => ex.grammarWordOrder(ctx, p, x);
   const wrong = ex.grammarWrongSentences(x, distractorMarks(p, lesson, others, x));
   if (pref === "sentence" && wrong.length >= 2) return (ctx) => ex.grammarSentence(ctx, p, x, wrong);
+  if (pref === "context" && x.drill) {
+    if (x.transform) return (ctx) => ex.grammarTransform(ctx, p, x);
+    if (x.dialogue) return (ctx) => ex.grammarDialogue(ctx, p, x);
+  }
   if (x.drill) return (ctx) => ex.grammarDrill(ctx, p, x);
   if (wrong.length >= 2 && (x.wrong?.length || !ex.marksOf(x).length)) return (ctx) => ex.grammarSentence(ctx, p, x, wrong);
   if (canWordOrder(x) && !ex.marksOf(x).length) return (ctx) => ex.grammarWordOrder(ctx, p, x);
@@ -264,14 +268,23 @@ function grammarExercise(p, x, lesson, others, pref: "form" | "sentence" | "orde
   return (ctx) => ex.grammarWordOrder(ctx, p, x);
 }
 
-/** One graded grammar question about point p (form/gap, right sentence, or word order). */
+/** Examples available for practice on point p, putting fresh learned-word examples first when available. */
+function practicePool(p) {
+  const dyn = Array.isArray(p.dynamic) ? p.dynamic : [];
+  return [...dyn, ...(p.examples || [])];
+}
+
+/** One graded grammar question about point p (context dialogue/transform, form/gap, right sentence, or word order). */
 function grammarQuestion(p, lesson, others, n = 1) {
-  const genders = p.examples.filter((e) => e.gender);
+  const all = practicePool(p);
+  const genders = all.filter((e) => e.gender);
   if (genders.length) return (ctx) => ex.grammarGender(ctx, p, genders[n % genders.length]);
-  const drills = p.examples.filter((e) => e.drill);
-  const pool = drills.length ? drills : p.examples;
+  const drills = all.filter((e) => e.drill);
+  const pool = drills.length ? drills : all;
   const x = pool[n % pool.length];
-  const prefs: ("form" | "sentence" | "order")[] = isSl() ? ["form", "sentence", "order"] : ["form", "sentence", "form"];
+  const prefs: ("context" | "form" | "sentence" | "order")[] = isSl()
+    ? ["context", "sentence", "order", "form"]
+    : ["form", "sentence", "form"];
   return grammarExercise(p, x, lesson, others, prefs[n % prefs.length]);
 }
 
@@ -294,7 +307,7 @@ export async function chapterGate(chapter: number) {
   });
 }
 
-/** A grammar lesson: three new points, each introduced, then a practical quiz on all of them. */
+/** A grammar lesson: introduce one rule → practise it immediately (dialogues, transforms, your own words), then a short mixed round. */
 export async function grammarLesson() {
   let data;
   try {
@@ -304,37 +317,55 @@ export async function grammarLesson() {
     return null;
   }
   const { points, others } = data;
-  const steps = points.map((p, i) => step((ctx) => ex.grammarIntro(ctx, p, i, points.length)));
-  const quiz = [];
-  for (const p of points) {
-    const genders = p.examples.filter((e) => e.gender);
-    const drills = p.examples.filter((e) => e.drill);
-    const wrongs = p.examples.filter((e) => e.wrong?.length);
+  const steps = [];
+  const finalMix = [];
+  for (let i = 0; i < points.length; i++) {
+    const p = points[i];
+    steps.push(step((ctx) => ex.grammarIntro(ctx, p, i, points.length)));
+    const dyn = Array.isArray(p.dynamic) ? p.dynamic : [];
+    const stat = p.examples || [];
+    const genders = [...dyn, ...stat].filter((e) => e.gender);
+    const wrongs = stat.filter((e) => e.wrong?.length);
+    const drills = [...dyn, ...stat.slice(1), ...stat.slice(0, 1)].filter((e) => e.drill);
+
     if (genders.length >= 2) {
-      const q1 = (ctx) => ex.grammarGender(ctx, p, genders[1]);
-      const q2 = (ctx) => ex.grammarGender(ctx, p, genders[2] || genders[0]);
-      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+      const q1 = (ctx) => ex.grammarGender(ctx, p, genders[0]);
+      const q2 = (ctx) => ex.grammarGender(ctx, p, genders[1]);
+      const q3 = (ctx) => ex.grammarGender(ctx, p, genders[2] || genders[0]);
+      steps.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+      finalMix.push(step(q3, learnAfter(q3, p.id), p.id));
     } else if (wrongs.length) {
       const q1 = grammarExercise(p, wrongs[1] || wrongs[0], points, others, "sentence");
       const q2 = grammarExercise(p, wrongs[2] || wrongs[0], points, others, "order");
-      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+      const q3 = grammarExercise(p, wrongs[3] || wrongs[0], points, others, "sentence");
+      steps.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+      finalMix.push(step(q3, learnAfter(q3, p.id), p.id));
     } else if (drills.length) {
-      const q1 = grammarExercise(p, drills[0], points, others, "form");
-      const q2 = grammarExercise(p, drills[1] || drills[0], points, others, "sentence");
-      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
-      if (drills.length >= 3) {
-        const q3 = grammarExercise(p, drills[2], points, others, canWordOrder(drills[2]) ? "order" : "form");
-        quiz.push(step(q3, learnAfter(q3, p.id), p.id));
-      }
+      // Pick up to 3 distinct examples: prefer dialogue/transform + fresh learned-word drill first.
+      const used = new Set();
+      const pickNext = (pred) => {
+        const hit = drills.find((e) => !used.has(e.text) && pred(e)) || drills.find((e) => !used.has(e.text)) || drills[0];
+        used.add(hit.text);
+        return hit;
+      };
+      const e1 = pickNext((e) => e.dialogue || e.transform);
+      const e2 = pickNext((e) => e.fresh || e.transform || e.dialogue);
+      const e3 = pickNext((e) => !e.fresh);
+      const q1 = grammarExercise(p, e1, points, others, "context");
+      const q2 = grammarExercise(p, e2, points, others, e2.transform || e2.dialogue ? "context" : "form");
+      const q3 = grammarExercise(p, e3, points, others, canWordOrder(e3) && i % 2 === 1 ? "order" : "sentence");
+      steps.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+      finalMix.push(step(q3, learnAfter(q3, p.id), p.id));
     } else {
-      const x1 = p.examples[1] || p.examples[0];
-      const x2 = p.examples[2] || p.examples[0];
+      const x1 = stat[1] || stat[0];
+      const x2 = stat[2] || stat[0];
       const q1 = grammarExercise(p, x1, points, others, "form");
       const q2 = grammarExercise(p, x2, points, others, "sentence");
-      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+      steps.push(step(q1, learnAfter(q1, p.id), p.id));
+      finalMix.push(step(q2, learnAfter(q2, p.id), p.id));
     }
   }
-  steps.push(...spreadOut(shuffle(quiz)));
+  steps.push(...spreadOut(shuffle(finalMix)));
   return runLesson({
     steps,
     endTitle: "Grammar learned!",

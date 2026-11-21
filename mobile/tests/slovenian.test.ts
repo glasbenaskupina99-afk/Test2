@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { compareSpelling, compareSpokenSl, gradeSentenceSl, lemmaSl } from "../src/slovenian.js";
+import { compareSpelling, compareSpokenSl, dynamicSlExamples, gradeSentenceSl, lemmaSl } from "../src/slovenian.js";
 
 const sentences: any[] = JSON.parse(readFileSync(new URL("../../app/data/slovenian_sentences.json", import.meta.url), "utf8"));
 const grade = (en: string, answer: string) => {
@@ -150,5 +150,27 @@ test("the Slovenian memory hooks are translated for every interface language", (
   for (const lang of ["es", "fr", "ja"]) {
     const ov = JSON.parse(readFileSync(new URL(`../../app/data/i18n/${lang}/extras-sl.json`, import.meta.url), "utf8"));
     for (const w of Object.keys(extras)) for (const k of ["m", "c", "e"]) assert.ok(String(ov[`${w}|${k}`] || "").trim(), `${lang}: ${w}|${k}`);
+  }
+});
+
+test("Slovenian grammar examples have bundled audio and dynamic learned-word drills are valid", () => {
+  const index = JSON.parse(readFileSync(new URL("../../app/data/audio/sl.json", import.meta.url), "utf8"));
+  const gram = JSON.parse(readFileSync(new URL("../../app/data/grammar/sl_a1.json", import.meta.url), "utf8"));
+  for (const p of gram.points) {
+    for (const x of p.examples) {
+      assert.ok(audioSlice(index, x.text), `audio for grammar ${p.id}: ${x.text}`);
+    }
+  }
+  const course = JSON.parse(readFileSync(new URL("../../app/data/slovenian_a1.json", import.meta.url), "utf8"));
+  const learned = course.units.flatMap((u: any) => u.words.map(([hanzi, , english, gender]: any) => ({ hanzi, english, gender: gender || null })));
+  for (const id of ["sl-gender", "sl-acc-fem", "sl-kam-acc", "sl-locative", "sl-gen-neg", "sl-instrumental", "sl-dative", "sl-plural", "sl-adjectives"]) {
+    const dyn = dynamicSlExamples(id, learned, 3);
+    assert.ok(dyn.length >= 2, `dynamic examples generated for ${id}`);
+    for (const x of dyn) {
+      assert.ok(x.why && x.fresh && x.audio, `dynamic metadata for ${id}: ${x.text}`);
+      assert.ok(audioSlice(index, x.audio), `bundled word audio for dynamic ${id}: ${x.audio}`);
+      if (id === "sl-gender") assert.ok(["m", "ž", "s"].includes(x.gender));
+      else assert.ok(x.drill?.options?.length === 4 && /\[[^\]]+\]/.test(x.text), `valid drill for ${id}: ${x.text}`);
+    }
   }
 });

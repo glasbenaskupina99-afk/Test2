@@ -238,18 +238,41 @@ function grammarOptions(p, lesson, others, kind, x?) {
   return shuffle(out);
 }
 
-/** One graded grammar question about point p (which grammar / fill the gap). */
+const canWordOrder = (x) => {
+  if (!isSl() || !x?.text) return false;
+  const n = ex.plainText(x.text).replace(/[.!?…]+$/, "").trim().split(/\s+/).filter(Boolean).length;
+  return n >= 3 && n <= 6;
+};
+
+const distractorMarks = (p, lesson, others, x) =>
+  grammarOptions(p, lesson, others, "mark", x)
+    .filter((o) => !o.correct)
+    .map((o) => o.label);
+
+/** Build a practical grammar exercise for example `x` (A: form/gap, B: right sentence, C: word order). */
+function grammarExercise(p, x, lesson, others, pref: "form" | "sentence" | "order" = "form") {
+  if (x.gender) return (ctx) => ex.grammarGender(ctx, p, x);
+  if (pref === "order" && canWordOrder(x)) return (ctx) => ex.grammarWordOrder(ctx, p, x);
+  const wrong = ex.grammarWrongSentences(x, distractorMarks(p, lesson, others, x));
+  if (pref === "sentence" && wrong.length >= 2) return (ctx) => ex.grammarSentence(ctx, p, x, wrong);
+  if (x.drill) return (ctx) => ex.grammarDrill(ctx, p, x);
+  if (wrong.length >= 2 && (x.wrong?.length || !ex.marksOf(x).length)) return (ctx) => ex.grammarSentence(ctx, p, x, wrong);
+  if (canWordOrder(x) && !ex.marksOf(x).length) return (ctx) => ex.grammarWordOrder(ctx, p, x);
+  const gapOpts = grammarOptions(p, lesson, others, "mark", x);
+  if (ex.marksOf(x).length && gapOpts.length >= 2) return (ctx) => ex.grammarGap(ctx, p, x, gapOpts);
+  if (wrong.length >= 2) return (ctx) => ex.grammarSentence(ctx, p, x, wrong);
+  return (ctx) => ex.grammarWordOrder(ctx, p, x);
+}
+
+/** One graded grammar question about point p (form/gap, right sentence, or word order). */
 function grammarQuestion(p, lesson, others, n = 1) {
-  const x = p.examples[n % p.examples.length];
-  // Slovenian points with ending drills: mostly practise the endings themselves.
+  const genders = p.examples.filter((e) => e.gender);
+  if (genders.length) return (ctx) => ex.grammarGender(ctx, p, genders[n % genders.length]);
   const drills = p.examples.filter((e) => e.drill);
-  if (drills.length && Math.random() < 0.7) {
-    const d = drills[n % drills.length];
-    return (ctx) => ex.grammarDrill(ctx, p, d);
-  }
-  return Math.random() < 0.5 || !ex.marksOf(x).length
-    ? (ctx) => ex.grammarWhich(ctx, p, x, grammarOptions(p, lesson, others, "short"))
-    : (ctx) => ex.grammarGap(ctx, p, x, grammarOptions(p, lesson, others, "mark", x));
+  const pool = drills.length ? drills : p.examples;
+  const x = pool[n % pool.length];
+  const prefs: ("form" | "sentence" | "order")[] = isSl() ? ["form", "sentence", "order"] : ["form", "sentence", "form"];
+  return grammarExercise(p, x, lesson, others, prefs[n % prefs.length]);
 }
 
 /** The chapter gate of the journey: three sentences to build; a wrong one comes back until it's right. */
@@ -271,7 +294,7 @@ export async function chapterGate(chapter: number) {
   });
 }
 
-/** A grammar lesson: three new points, each introduced, then a quiz on all of them. */
+/** A grammar lesson: three new points, each introduced, then a practical quiz on all of them. */
 export async function grammarLesson() {
   let data;
   try {
@@ -284,19 +307,31 @@ export async function grammarLesson() {
   const steps = points.map((p, i) => step((ctx) => ex.grammarIntro(ctx, p, i, points.length)));
   const quiz = [];
   for (const p of points) {
-    const x1 = p.examples[1] || p.examples[0];
-    const x2 = p.examples[2] || p.examples[0];
+    const genders = p.examples.filter((e) => e.gender);
     const drills = p.examples.filter((e) => e.drill);
-    const which = (ctx) => ex.grammarWhich(ctx, p, x1, grammarOptions(p, points, others, "short"));
-    const gap = drills.length
-      ? (ctx) => ex.grammarDrill(ctx, p, drills[0])
-      : !ex.marksOf(x2).length
-      ? (ctx) => ex.grammarWhich(ctx, p, x2, grammarOptions(p, points, others, "short"))
-      : (ctx) => ex.grammarGap(ctx, p, x2, grammarOptions(p, points, others, "mark", x2));
-    quiz.push(step(which, learnAfter(which, p.id), p.id), step(gap, learnAfter(gap, p.id), p.id));
-    if (drills.length > 1) {
-      const more = (ctx) => ex.grammarDrill(ctx, p, drills[1]);
-      quiz.push(step(more, learnAfter(more, p.id), p.id));
+    const wrongs = p.examples.filter((e) => e.wrong?.length);
+    if (genders.length >= 2) {
+      const q1 = (ctx) => ex.grammarGender(ctx, p, genders[1]);
+      const q2 = (ctx) => ex.grammarGender(ctx, p, genders[2] || genders[0]);
+      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+    } else if (wrongs.length) {
+      const q1 = grammarExercise(p, wrongs[1] || wrongs[0], points, others, "sentence");
+      const q2 = grammarExercise(p, wrongs[2] || wrongs[0], points, others, "order");
+      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+    } else if (drills.length) {
+      const q1 = grammarExercise(p, drills[0], points, others, "form");
+      const q2 = grammarExercise(p, drills[1] || drills[0], points, others, "sentence");
+      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
+      if (drills.length >= 3) {
+        const q3 = grammarExercise(p, drills[2], points, others, canWordOrder(drills[2]) ? "order" : "form");
+        quiz.push(step(q3, learnAfter(q3, p.id), p.id));
+      }
+    } else {
+      const x1 = p.examples[1] || p.examples[0];
+      const x2 = p.examples[2] || p.examples[0];
+      const q1 = grammarExercise(p, x1, points, others, "form");
+      const q2 = grammarExercise(p, x2, points, others, "sentence");
+      quiz.push(step(q1, learnAfter(q1, p.id), p.id), step(q2, learnAfter(q2, p.id), p.id));
     }
   }
   steps.push(...spreadOut(shuffle(quiz)));

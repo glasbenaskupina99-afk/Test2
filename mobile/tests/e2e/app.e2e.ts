@@ -88,6 +88,7 @@ async function answer(page: Page, words: any[]) {
   const quoted = (text.match(/“([^”]+)”/) || [])[1];
   const word = words.find((w) => w.english === quoted) || words.find((w) => text.includes(w.hanzi) && w.hanzi.length > 1) || words.find((w) => text.includes(w.hanzi));
   const choices = page.locator(".lesson .choice");
+  const woTiles = page.locator(".lesson .wo-bank .wo-tile");
   const input = page.locator(".lesson-body input.input");
   if (/NEW WORD/i.test(kicker)) {
     // just look at it
@@ -99,6 +100,11 @@ async function answer(page: Page, words: any[]) {
       if (word && [word.english, word.hanzi, word.pinyin].includes(t)) hit = i;
     }
     await choices.nth(hit).click();
+    const check = page.locator(".lesson-foot .btn", { hasText: "Check" });
+    if (await check.count()) await check.click();
+  } else if (await woTiles.count()) {
+    const n = Math.min(2, await woTiles.count());
+    for (let i = 0; i < n; i++) await woTiles.first().click();
     const check = page.locator(".lesson-foot .btn", { hasText: "Check" });
     if (await check.count()) await check.click();
   } else if (await input.count()) {
@@ -633,28 +639,32 @@ test("cloud backup holds only your progress, and restores all of it on a new pho
   assert.deepEqual([...a.errors, ...b.errors], []);
 });
 
-test("grammar quizzes: every gap has a blank and choices, every 'highlighted part' is highlighted", async () => {
+test("grammar quizzes: practical usage only (gaps, forms, right sentence, gender, word order — no meta labels)", async () => {
   const { page, errors, api } = await fresh();
   await start(page);
   await page.click(".tut-top .link-btn");
   const words = await api("/api/words");
   await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 600).map((w: any) => w.id), xp: 0 } });
-  let gaps = 0, which = 0;
+  let practical = 0;
   for (let lesson = 0; lesson < 4; lesson++) {
     await go(page, "#/", ".home-head");
     await page.locator(".tile", { hasText: "Grammar" }).first().click();
     await page.waitForSelector(".lesson");
     for (let i = 0; i < 120 && (await page.locator(".lesson").count()); i++) {
       const title = (await page.locator(".lesson .ex-title").first().innerText().catch(() => "")).trim();
-      if (title === "Fill in the gap") {
-        gaps++;
+      assert.notEqual(title, "What does the highlighted part do?", "meta-grammar label guessing is removed");
+      if (title === "Fill in the gap" || title === "Which form fits?") {
+        practical++;
         assert.ok(await page.locator(".lesson .g-example .g-gap").count(), "the sentence has a blank");
         assert.ok((await page.locator(".lesson .choice").count()) >= 2, "there are answers to choose from");
         for (const t of await page.locator(".lesson .choice").allInnerTexts()) assert.ok(t.trim(), "no empty answer");
-      }
-      if (title === "What does the highlighted part do?") {
-        which++;
-        assert.ok(await page.locator(".lesson .g-example .g-end, .lesson .g-example .g-mark").count(), "something is highlighted");
+      } else if (title === "Which sentence is right?" || title === "Which gender is this noun?") {
+        practical++;
+        assert.ok((await page.locator(".lesson .choice").count()) >= 3, "sentence/gender choices are shown");
+      } else if (await page.locator(".lesson .wo-bank .wo-tile").count()) {
+        practical++;
+        const bankTiles = page.locator(".lesson .wo-bank .wo-tile");
+        for (let k = 0; k < 2 && (await bankTiles.count()); k++) await bankTiles.first().click();
       }
       const choice = page.locator(".lesson .choice").first();
       if (await choice.isVisible().catch(() => false)) await choice.click();
@@ -668,7 +678,7 @@ test("grammar quizzes: every gap has a blank and choices, every 'highlighted par
       await page.evaluate(() => document.getElementById("splash")?.remove());
     }
   }
-  assert.ok(gaps + which > 0, "grammar questions were shown");
+  assert.ok(practical > 0, "practical grammar questions were shown");
   assert.deepEqual(errors, []);
 });
 

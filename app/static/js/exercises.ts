@@ -698,7 +698,7 @@ export function sentenceType(ctx, s) {
  * Build the sentence (the chapter gate of the journey): tap the words in order, tap one in the
  * answer to put it back. From the third chapter on, one tile is a wrong form and stays out.
  */
-export function wordOrder(ctx, item) {
+export function wordOrder(ctx, item, { kicker = "🚪 Chapter gate" } = {}) {
   const sl = item.lang === "sl";
   const answer = h("div", { class: "wo-answer" });
   const end = h("span", { class: "wo-end" + (sl ? "" : " hz") }, item.end || "");
@@ -725,7 +725,7 @@ export function wordOrder(ctx, item) {
     el: h(
       "div",
       {},
-      h("div", { class: "ex-kicker purple" }, "🚪 Chapter gate"),
+      h("div", { class: "ex-kicker purple" }, kicker),
       h("h2", { class: "ex-title" }, item.en || "Put the words in order"),
       answer,
       bank,
@@ -914,9 +914,11 @@ function markedSentence(x, { gap = false } = {}) {
   return h("span", {}, parts.map((p) => (marks.includes(p) ? (gap ? h("span", { class: "g-gap" }, "＿＿") : h("mark", { class: "g-mark" }, p)) : p)));
 }
 
-function grammarExampleBox(x, { gap = false, showReading = true, fresh = false } = {}) {
-  // The translation stays hidden until tapped, so you try to understand the sentence first.
-  const en = h("button", { class: "g-en-reveal small", onclick: () => en.replaceWith(h("div", { class: "g-en small" }, x.en)) }, "👁 Show translation");
+function grammarExampleBox(x, { gap = false, showReading = true, fresh = false, showEn = false } = {}) {
+  // In gap/drill quizzes show the English meaning right away so the target form is unambiguous.
+  const en = showEn || gap
+    ? h("div", { class: "g-en small" }, x.en)
+    : h("button", { class: "g-en-reveal small", onclick: () => en.replaceWith(h("div", { class: "g-en small" }, x.en)) }, "👁 Show translation");
   return h(
     "div",
     { class: "g-example" + (fresh ? " g-fresh" : "") },
@@ -1011,13 +1013,161 @@ function grammarChoice(ctx, p, x, options, { kicker, title, gap }) {
   };
 }
 
-/** Quiz: which grammar point does this sentence use? */
-export const grammarWhich = (ctx, p, x, options) =>
-  grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: marksOf(x).length ? "What does the highlighted part do?" : "Which grammar does this sentence show?", gap: false });
-
 /** Quiz: fill the gap with the right grammar. */
 export const grammarGap = (ctx, p, x, options) =>
   grammarChoice(ctx, p, x, options, { kicker: "📘 Grammar", title: "Fill in the gap", gap: true });
+
+/** Quiz (Slovenian gender lesson): pick the gender (m, ž, s) of the highlighted noun. */
+export function grammarGender(ctx, p, x) {
+  const opts = [
+    { key: "m", label: "m · masculine", correct: x.gender === "m" },
+    { key: "ž", label: "ž · feminine", correct: x.gender === "ž" },
+    { key: "s", label: "s · neuter", correct: x.gender === "s" },
+  ];
+  let picked = null;
+  const tiles = opts.map((o) => {
+    const t = h(
+      "button",
+      { class: "choice text", onclick: () => { picked = o; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } },
+      h("span", { class: `tag gender g-${o.key}` }, o.label)
+    );
+    return t;
+  });
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker blue" }, "📘 Grammar"),
+      h("h2", { class: "ex-title" }, "Which gender is this noun?"),
+      grammarExampleBox(x, { gap: false, showEn: true }),
+      h("div", { class: "choices three" }, tiles)
+    ),
+    mode: "check",
+    async check() {
+      const ok = !!picked?.correct;
+      tiles.forEach((t, i) => {
+        if (opts[i].correct) t.classList.add("correct");
+        else if (opts[i] === picked) t.classList.add("wrong");
+      });
+      speak(plainText(x.text));
+      return {
+        ok,
+        grade: ok ? 2 : 0,
+        title: ok ? "Correct!" : "Correct answer:",
+        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small" }, `${x.gender} · ${GENDER[x.gender] || ""} — ${x.en}`)),
+      };
+    },
+  };
+}
+
+/** Build plausible wrong sentences from an example's drill options, wrong list, or distractor marks. */
+export function grammarWrongSentences(x, distractorMarks: string[] = []): string[] {
+  const right = plainText(x.text);
+  const out: string[] = [];
+  const add = (s: string) => {
+    const clean = plainText(s).trim();
+    if (clean && clean !== right && !out.includes(clean)) out.push(clean);
+  };
+  if (Array.isArray(x.wrong)) for (const w of x.wrong) add(w);
+  if (out.length < 2 && x.drill?.options?.length) {
+    const m = x.text.match(ENDED);
+    if (m) {
+      const ans = m[1] + m[2] + m[3];
+      const cap = ans && ans[0] !== ans[0].toLowerCase();
+      const fit = (f: string) => (cap ? f[0].toUpperCase() + f.slice(1) : f);
+      const before = plainText(x.text.slice(0, m.index));
+      const after = plainText(x.text.slice(m.index + m[0].length));
+      for (const opt of shuffle(x.drill.options.slice())) {
+        const w = fit(opt);
+        if (w !== ans) add(before + w + after);
+        if (out.length >= 2) break;
+      }
+    }
+  }
+  if (out.length < 2) {
+    if (/\[[^\]]+\]/.test(x.text)) {
+      const m0 = x.text.match(/\[([^\]]+)\]/);
+      if (m0) {
+        for (const d of shuffle(distractorMarks.slice())) {
+          if (d && d !== m0[1] && !d.includes("…")) add(x.text.replace(/\[[^\]]+\]/, d));
+          if (out.length >= 2) break;
+        }
+      }
+    } else if (x.mark?.length) {
+      const m0 = x.mark[0];
+      for (const d of shuffle(distractorMarks.slice())) {
+        if (d && d !== m0 && !d.includes("…")) add(right.replace(m0, d));
+        if (out.length >= 2) break;
+      }
+    }
+  }
+  return out.slice(0, 2);
+}
+
+/** Quiz: given the English meaning, pick the grammatically right sentence among close variations. */
+export function grammarSentence(ctx, p, x, wrongSentences: string[]) {
+  const right = plainText(x.text);
+  const opts = shuffle([
+    { label: right, correct: true },
+    ...wrongSentences.slice(0, 2).map((w) => ({ label: w, correct: false })),
+  ]);
+  let picked = null;
+  const tiles = opts.map((o) => {
+    const t = h(
+      "button",
+      { class: "choice text", onclick: () => { picked = o; tiles.forEach((b) => b.classList.toggle("selected", b === t)); ctx.setReady(true); } },
+      h("span", { class: "txt hz" }, o.label)
+    );
+    return t;
+  });
+  return {
+    el: h(
+      "div",
+      {},
+      h("div", { class: "ex-kicker blue" }, "📘 Grammar"),
+      h("h2", { class: "ex-title" }, "Which sentence is right?"),
+      h("div", { class: "g-example" }, h("div", { class: "g-text" }, `“${x.en}”`)),
+      h("div", { class: "choices one-col" }, tiles)
+    ),
+    mode: "check",
+    async check() {
+      const ok = !!picked?.correct;
+      tiles.forEach((t, i) => {
+        if (opts[i].correct) t.classList.add("correct");
+        else if (opts[i] === picked) t.classList.add("wrong");
+      });
+      speak(right);
+      return {
+        ok,
+        grade: ok ? 2 : 0,
+        title: ok ? "Correct!" : "Correct answer:",
+        detail: h("div", {}, h("div", { class: "hz" }, markedSentence(x)), h("div", { class: "small muted" }, p.title), h("div", { class: "small" }, x.en)),
+      };
+    },
+  };
+}
+
+const SL_PROPER = new Set(["Ana", "Ljubljana", "Ljubljane", "Ljubljani", "Slovenija", "Slovenije", "Sloveniji", "Italije", "Gorazdu", "Marko", "Maja", "Peter", "Eva"]);
+
+/** Quiz (Slovenian): put the sentence's words in order (with optional wrong-form extra tile). */
+export function grammarWordOrder(ctx, p, x) {
+  const text = plainText(x.text);
+  const end = text.match(/[.!?…]+$/)?.[0] || "";
+  const body = text.slice(0, text.length - end.length).trim();
+  const words = body.split(/\s+/).filter(Boolean);
+  if (words.length && !SL_PROPER.has(words[0].replace(/[,;:]$/, ""))) {
+    words[0] = words[0][0].toLowerCase() + words[0].slice(1);
+  }
+  let extra: string | null = null;
+  if (x.drill?.options?.length) {
+    const m = x.text.match(ENDED);
+    const ans = m ? (m[1] + m[2] + m[3]).toLowerCase() : "";
+    const wrong = x.drill.options.find((o) => o && !o.includes(" ") && o.toLowerCase() !== ans && !words.some((w) => w.toLowerCase() === o.toLowerCase()));
+    if (wrong) extra = wrong.toLowerCase();
+  }
+  const tiles = extra ? [...words, extra] : [...words];
+  return wordOrder(ctx, { lang: "sl", text, en: x.en, tiles, answer: words, end, extra: !!extra }, { kicker: "📘 Grammar · Word order" });
+}
 
 /** The form of a word with the part that changes in colour (stem = what all the options share). */
 function formTile(form, stemLen) {

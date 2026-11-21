@@ -10,19 +10,23 @@
    "examples": [
     {
      "text": "To je [stol].",
-     "en": "This is a chair."
+     "en": "This is a chair.",
+     "gender": "m"
     },
     {
      "text": "To je hiš[a].",
-     "en": "This is a house."
+     "en": "This is a house.",
+     "gender": "ž"
     },
     {
      "text": "To je mest[o].",
-     "en": "This is a town."
+     "en": "This is a town.",
+     "gender": "s"
     },
     {
      "text": "To je morj[e].",
-     "en": "This is the sea."
+     "en": "This is the sea.",
+     "gender": "s"
     }
    ]
   },
@@ -113,15 +117,42 @@
     },
     {
      "text": "Kje je hiša? [Ona] je tam.",
-     "en": "Where is the house? It is over there."
+     "en": "Where is the house? It is over there.",
+     "drill": {
+      "base": "hiša (ž)",
+      "options": [
+       "ona",
+       "on",
+       "ono",
+       "one"
+      ]
+     }
     },
     {
      "text": "[Mi] smo iz Ljubljane.",
-     "en": "We are from Ljubljana."
+     "en": "We are from Ljubljana.",
+     "drill": {
+      "base": "we",
+      "options": [
+       "mi",
+       "jaz",
+       "vi",
+       "oni"
+      ]
+     }
     },
     {
      "text": "Govori[m] slovensko.",
-     "en": "I speak Slovenian."
+     "en": "I speak Slovenian.",
+     "drill": {
+      "base": "govoriti (jaz)",
+      "options": [
+       "govorim",
+       "govoriš",
+       "govori",
+       "govorimo"
+      ]
+     }
     }
    ]
   },
@@ -186,19 +217,55 @@
    "examples": [
     {
      "text": "[Kje] je postaja?",
-     "en": "Where is the station?"
+     "en": "Where is the station?",
+     "drill": {
+      "base": "where",
+      "options": [
+       "kje",
+       "kam",
+       "kdaj",
+       "kdo"
+      ]
+     }
     },
     {
      "text": "[Kam] greš?",
-     "en": "Where are you going?"
+     "en": "Where are you going?",
+     "drill": {
+      "base": "where to",
+      "options": [
+       "kam",
+       "kje",
+       "kdaj",
+       "kaj"
+      ]
+     }
     },
     {
      "text": "[Ali] govoriš angleško?",
-     "en": "Do you speak English?"
+     "en": "Do you speak English?",
+     "drill": {
+      "base": "yes / no",
+      "options": [
+       "ali",
+       "kje",
+       "kdo",
+       "kaj"
+      ]
+     }
     },
     {
      "text": "[Koliko] stane kava?",
-     "en": "How much does the coffee cost?"
+     "en": "How much does the coffee cost?",
+     "drill": {
+      "base": "how much",
+      "options": [
+       "koliko",
+       "kaj",
+       "kje",
+       "kako"
+      ]
+     }
     }
    ]
   },
@@ -1381,19 +1448,55 @@
    "examples": [
     {
      "text": "Danes [moram] delati.",
-     "en": "Today I have to work."
+     "en": "Today I have to work.",
+     "drill": {
+      "base": "morati",
+      "options": [
+       "moram",
+       "moraš",
+       "mora",
+       "moramo"
+      ]
+     }
     },
     {
      "text": "Ali [lahko] plačam s kartico?",
-     "en": "Can I pay by card?"
+     "en": "Can I pay by card?",
+     "drill": {
+      "base": "can",
+      "options": [
+       "lahko",
+       "moram",
+       "hočem",
+       "znam"
+      ]
+     }
     },
     {
      "text": "[Hočem] spati.",
-     "en": "I want to sleep."
+     "en": "I want to sleep.",
+     "drill": {
+      "base": "hoteti",
+      "options": [
+       "hočem",
+       "hočeš",
+       "hoče",
+       "hočemo"
+      ]
+     }
     },
     {
      "text": "[Ne morem] priti, ker sem bolan.",
-     "en": "I can't come because I'm ill."
+     "en": "I can't come because I'm ill.",
+     "drill": {
+      "base": "can't",
+      "options": [
+       "ne morem",
+       "ne moram",
+       "nočem",
+       "nisem"
+      ]
+     }
     }
    ]
   },
@@ -1622,19 +1725,35 @@
    "examples": [
     {
      "text": "Danes [sem] doma.",
-     "en": "Today I'm at home."
+     "en": "Today I'm at home.",
+     "wrong": [
+      "Danes doma sem.",
+      "Sem danes doma."
+     ]
     },
     {
      "text": "Včeraj [sem] [se] učil.",
-     "en": "Yesterday I studied. (a man)"
+     "en": "Yesterday I studied. (a man)",
+     "wrong": [
+      "Včeraj učil sem se.",
+      "Včeraj se sem učil."
+     ]
     },
     {
      "text": "Kava [mi je] všeč.",
-     "en": "I like the coffee."
+     "en": "I like the coffee.",
+     "wrong": [
+      "Kava je mi všeč.",
+      "Kava všeč mi je."
+     ]
     },
     {
      "text": "Jutri [se] vidimo!",
-     "en": "See you tomorrow!"
+     "en": "See you tomorrow!",
+     "wrong": [
+      "Jutri vidimo se!",
+      "Se jutri vidimo!"
+     ]
     }
    ]
   }

@@ -803,7 +803,7 @@ function forestSummary() {
 }
 const learnedIds = () => new Set(C().map((c) => c.word_id));
 const byPosition = (a, b) => a.position - b.position || a.id - b.id;
-const pick = ({ id, hanzi, pinyin, english, gender, source }) => ({ id, hanzi, pinyin, english, gender: gender || null, source });
+const pick = ({ id, hanzi, pinyin, english, gender = null, source }) => ({ id, hanzi, pinyin, english, gender: gender || null, source });
 const shuffled = (arr) => arr.map((x) => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
 
 function getWord(id) {

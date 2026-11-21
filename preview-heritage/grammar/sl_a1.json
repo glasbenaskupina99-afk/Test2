@@ -6,25 +6,61 @@
    "title": "Every noun has a gender",
    "pattern": "stol (m) · hiš[a] (ž) · mest[o] (s)",
    "short": "masculine, feminine or neuter — you can usually tell from the ending",
-   "explain": "In Slovenian every noun is **masculine (m)**, **feminine (ž)** or **neuter (s)**. This isn't about meaning — a chair is masculine and a house is feminine — but it matters a lot, because adjectives, words like \"my\" and later the case endings all change with the gender.\n\nThe good news: in most cases the **last letter** of the word tells you the gender:\n• ends in a **consonant** → usually masculine: stol, kruh, avto (exception: avto, kino, radio end in -o but are masculine)\n• ends in **-a** → usually feminine: hiš[a], kav[a], mam[a]\n• ends in **-o** or **-e** → usually neuter: mest[o], mlek[o], morj[e], sonc[e]\n\nA few useful exceptions to keep in mind: words for men are masculine even when they end in -a or -e (oče, ati, vodja), and some feminine words end in a consonant (noč, pot, sol, stvar, jesen).\n\nIn the app you'll see a small tag next to every noun: **m**, **ž** or **s**. Say the word together with its gender in your head (\"ta hiša, ta stol, to mesto\") and the gender will stick by itself.",
+   "explain": "In Slovenian every noun is **masculine (m)**, **feminine (ž)** or **neuter (s)** — named after the Slovenian words **m** (*moški* = masculine), **ž** (*ženski* = feminine) and **s** (*srednji* = neuter). This isn't about meaning — a chair is masculine and a house is feminine — but it matters a lot, because adjectives, words like \"my\" and later the case endings all change with the gender.\n\nThe good news: in most cases the **last letter** of the word tells you the gender:\n• ends in a **consonant** → usually masculine (**m**): stol, kruh, avto (exception: avto, kino, radio end in -o but are masculine)\n• ends in **-a** → usually feminine (**ž**): hiš[a], kav[a], mam[a]\n• ends in **-o** or **-e** → usually neuter (**s**): mest[o], mlek[o], morj[e], sonc[e]\n\nA few useful exceptions to keep in mind: words for men are masculine even when they end in -a or -e (oče, ati, vodja), and some feminine words end in a consonant (noč, pot, sol, stvar, jesen).\n\nIn the app you'll see a small tag next to every noun showing the Slovenian abbreviation and its meaning:\n• **m · masculine** (*moški*)\n• **ž · feminine** (*ženski*)\n• **s · neuter** (*srednji*)\n• **mn · plural only** (*množina*, e.g. *vrata* — door)\n\nSay the word together with its gender in your head (\"ta hiša, ta stol, to mesto\") and the gender will stick by itself.",
    "examples": [
     {
      "text": "To je [stol].",
-     "en": "This is a chair."
+     "en": "This is a chair.",
+     "gender": "m",
+     "why": "stol ends in a consonant → masculine (m · moški)"
     },
     {
      "text": "To je hiš[a].",
-     "en": "This is a house."
+     "en": "This is a house.",
+     "gender": "ž",
+     "why": "hiša ends in -a → feminine (ž · ženski)"
     },
     {
      "text": "To je mest[o].",
-     "en": "This is a town."
+     "en": "This is a town.",
+     "gender": "s",
+     "why": "mesto ends in -o → neuter (s · srednji)"
     },
     {
      "text": "To je morj[e].",
-     "en": "This is the sea."
+     "en": "This is the sea.",
+     "gender": "s",
+     "why": "morje ends in -e → neuter (s · srednji)"
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "Usual ending",
+     "Examples",
+     "Tag"
+    ],
+    "rows": [
+     [
+      "Masculine (moški)",
+      "consonant",
+      "stol, kruh, brat",
+      "m"
+     ],
+     [
+      "Feminine (ženski)",
+      "[-a]",
+      "hiš[a], kav[a], vod[a]",
+      "ž"
+     ],
+     [
+      "Neuter (srednji)",
+      "[-o] / [-e]",
+      "mest[o], mlek[o], morj[e]",
+      "s"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-biti",
@@ -44,6 +80,11 @@
        "je",
        "so"
       ]
+     },
+     "why": "jaz (I) → sem",
+     "dialogue": {
+      "q": "Kdo si ti?",
+      "q_en": "Who are you?"
      }
     },
     {
@@ -57,7 +98,8 @@
        "ste",
        "je"
       ]
-     }
+     },
+     "why": "ti (you, singular) → si"
     },
     {
      "text": "Mi [smo] doma.",
@@ -70,6 +112,11 @@
        "ste",
        "sem"
       ]
+     },
+     "why": "mi (we) → smo",
+     "dialogue": {
+      "q": "Kje ste?",
+      "q_en": "Where are you (all)?"
      }
     },
     {
@@ -83,6 +130,12 @@
        "je",
        "ste"
       ]
+     },
+     "why": "oni (they) → so",
+     "transform": {
+      "from": "On je utrujen.",
+      "from_en": "He is tired.",
+      "prompt": "Change to “oni” (they):"
      }
     },
     {
@@ -96,9 +149,56 @@
        "si",
        "sem"
       ]
-     }
+     },
+     "why": "vreme (it, singular) → je"
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Who",
+     "Form",
+     "Negative",
+     "Example"
+    ],
+    "rows": [
+     [
+      "jaz (I)",
+      "[sem]",
+      "[nisem]",
+      "Danes [sem] doma."
+     ],
+     [
+      "ti (you)",
+      "[si]",
+      "[nisi]",
+      "Ti [si] moj prijatelj."
+     ],
+     [
+      "on / ona / ono",
+      "[je]",
+      "[ni]",
+      "Danes [je] lepo vreme."
+     ],
+     [
+      "mi (we)",
+      "[smo]",
+      "[nismo]",
+      "Mi [smo] doma."
+     ],
+     [
+      "vi (you pl./polite)",
+      "[ste]",
+      "[niste]",
+      "Kako [ste]?"
+     ],
+     [
+      "oni / one (they)",
+      "[so]",
+      "[niso]",
+      "Oni [so] utrujeni."
+     ]
+    ]
+   }
   },
   {
    "id": "sl-pronouns",
@@ -113,15 +213,54 @@
     },
     {
      "text": "Kje je hiša? [Ona] je tam.",
-     "en": "Where is the house? It is over there."
+     "en": "Where is the house? It is over there.",
+     "drill": {
+      "base": "hiša (ž)",
+      "options": [
+       "ona",
+       "on",
+       "ono",
+       "one"
+      ]
+     },
+     "why": "hiša is feminine (ž), so 'it' is ona (not ono)"
     },
     {
      "text": "[Mi] smo iz Ljubljane.",
-     "en": "We are from Ljubljana."
+     "en": "We are from Ljubljana.",
+     "drill": {
+      "base": "we",
+      "options": [
+       "mi",
+       "jaz",
+       "vi",
+       "oni"
+      ]
+     },
+     "why": "verb smo = we → pronoun mi",
+     "dialogue": {
+      "q": "Od kod ste?",
+      "q_en": "Where are you from?"
+     }
     },
     {
      "text": "Govori[m] slovensko.",
-     "en": "I speak Slovenian."
+     "en": "I speak Slovenian.",
+     "drill": {
+      "base": "govoriti (jaz)",
+      "options": [
+       "govorim",
+       "govoriš",
+       "govori",
+       "govorimo"
+      ]
+     },
+     "why": "-m already means 'I', so 'jaz' is normally dropped",
+     "transform": {
+      "from": "Ti govoriš slovensko.",
+      "from_en": "You speak Slovenian.",
+      "prompt": "Say it about yourself (jaz):"
+     }
     }
    ]
   },
@@ -143,6 +282,12 @@
        "niso",
        "nisi"
       ]
+     },
+     "why": "negative of sem → nisem (one word)",
+     "transform": {
+      "from": "Sem utrujen.",
+      "from_en": "I am tired.",
+      "prompt": "Say the negative:"
      }
     },
     {
@@ -156,6 +301,11 @@
        "niso",
        "niste"
       ]
+     },
+     "why": "negative of je → ni",
+     "dialogue": {
+      "q": "Ali je Ana doma?",
+      "q_en": "Is Ana at home?"
      }
     },
     {
@@ -169,13 +319,44 @@
        "nisem",
        "ni"
       ]
+     },
+     "why": "negative of smo → nismo",
+     "transform": {
+      "from": "Mi smo iz Italije.",
+      "from_en": "We are from Italy.",
+      "prompt": "Say the negative:"
      }
     },
     {
      "text": "[Ne] razumem.",
-     "en": "I don't understand."
+     "en": "I don't understand.",
+     "why": "regular verbs take separate 'ne' before the verb"
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Positive",
+     "Negative",
+     "Rule"
+    ],
+    "rows": [
+     [
+      "sem / si / je",
+      "[nisem] / [nisi] / [ni]",
+      "ni- fused with biti"
+     ],
+     [
+      "smo / ste / so",
+      "[nismo] / [niste] / [niso]",
+      "ni- fused with biti"
+     ],
+     [
+      "razumem / delam",
+      "[ne] razumem / [ne] delam",
+      "ne + verb (separate)"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-questions",
@@ -186,21 +367,95 @@
    "examples": [
     {
      "text": "[Kje] je postaja?",
-     "en": "Where is the station?"
+     "en": "Where is the station?",
+     "drill": {
+      "base": "where",
+      "options": [
+       "kje",
+       "kam",
+       "kdaj",
+       "kdo"
+      ]
+     },
+     "why": "Kje = where (location, staying in one place)"
     },
     {
      "text": "[Kam] greš?",
-     "en": "Where are you going?"
+     "en": "Where are you going?",
+     "drill": {
+      "base": "where to",
+      "options": [
+       "kam",
+       "kje",
+       "kdaj",
+       "kaj"
+      ]
+     },
+     "why": "Kam = where to (movement / direction — not Kje!)"
     },
     {
      "text": "[Ali] govoriš angleško?",
-     "en": "Do you speak English?"
+     "en": "Do you speak English?",
+     "drill": {
+      "base": "yes / no",
+      "options": [
+       "ali",
+       "kje",
+       "kdo",
+       "kaj"
+      ]
+     },
+     "why": "Ali starts a yes/no question"
     },
     {
      "text": "[Koliko] stane kava?",
-     "en": "How much does the coffee cost?"
+     "en": "How much does the coffee cost?",
+     "drill": {
+      "base": "how much",
+      "options": [
+       "koliko",
+       "kaj",
+       "kje",
+       "kako"
+      ]
+     },
+     "why": "Koliko = how much / how many"
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Question word",
+     "Meaning",
+     "Example"
+    ],
+    "rows": [
+     [
+      "[Ali] …?",
+      "yes / no question",
+      "[Ali] govoriš angleško?"
+     ],
+     [
+      "[Kje] …?",
+      "where (location)",
+      "[Kje] je postaja?"
+     ],
+     [
+      "[Kam] …?",
+      "where to (direction)",
+      "[Kam] greš?"
+     ],
+     [
+      "[Kaj] / [Kdo]?",
+      "what / who",
+      "[Kaj] piješ?"
+     ],
+     [
+      "[Koliko]?",
+      "how much / many",
+      "[Koliko] stane kava?"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-present-am",
@@ -220,6 +475,11 @@
        "dela",
        "delajo"
       ]
+     },
+     "why": "delati (jaz) → -am (delam)",
+     "dialogue": {
+      "q": "Kje delaš danes?",
+      "q_en": "Where are you working today?"
      }
     },
     {
@@ -233,7 +493,8 @@
        "gleda",
        "gledate"
       ]
-     }
+     },
+     "why": "gledati (ti) → -aš (gledaš)"
     },
     {
      "text": "Mi posluša[mo] glasbo.",
@@ -246,6 +507,12 @@
        "poslušam",
        "poslušate"
       ]
+     },
+     "why": "poslušati (mi) → -amo (poslušamo)",
+     "transform": {
+      "from": "Jaz poslušam glasbo.",
+      "from_en": "I'm listening to music.",
+      "prompt": "Change to “mi” (we):"
      }
     },
     {
@@ -259,13 +526,33 @@
        "igra",
        "igraš"
       ]
-     }
+     },
+     "why": "igrati (oni / children) → -ajo (igrajo)"
     },
     {
      "text": "Mama kuha kosil[o].",
      "en": "Mom is cooking lunch."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Who",
+     "Ending",
+     "delati (to work)"
+    ],
+    "rows": [
+     [
+      "jaz / ti / on(a)",
+      "[-am] · [-aš] · [-a]",
+      "dela[m] · dela[š] · dela"
+     ],
+     [
+      "mi / vi / oni",
+      "[-amo] · [-ate] · [-ajo]",
+      "dela[mo] · dela[te] · dela[jo]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-present-im",
@@ -285,6 +572,11 @@
        "govori",
        "govorijo"
       ]
+     },
+     "why": "govoriti (jaz) → -im (govorim)",
+     "dialogue": {
+      "q": "Ali govoriš slovensko?",
+      "q_en": "Do you speak Slovenian?"
      }
     },
     {
@@ -298,7 +590,8 @@
        "živi",
        "živite"
       ]
-     }
+     },
+     "why": "živeti (ti) → -iš (živiš)"
     },
     {
      "text": "Vidi[mo] se jutri!",
@@ -311,7 +604,8 @@
        "vidijo",
        "vidiš"
       ]
-     }
+     },
+     "why": "videti (mi) → -imo (vidimo)"
     },
     {
      "text": "Starši kupi[jo] kruh.",
@@ -324,13 +618,38 @@
        "kupi",
        "kupite"
       ]
+     },
+     "why": "kupiti (oni / parents) → -ijo (kupijo)",
+     "transform": {
+      "from": "Mama kupi kruh.",
+      "from_en": "Mom buys bread.",
+      "prompt": "Change to “starši” (the parents):"
      }
     },
     {
      "text": "Brat sp[i].",
      "en": "My brother is sleeping."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Who",
+     "Ending",
+     "govoriti (to speak)"
+    ],
+    "rows": [
+     [
+      "jaz / ti / on(a)",
+      "[-im] · [-iš] · [-i]",
+      "govori[m] · govori[š] · govori"
+     ],
+     [
+      "mi / vi / oni",
+      "[-imo] · [-ite] · [-ijo]",
+      "govori[mo] · govori[te] · govori[jo]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-present-em",
@@ -350,6 +669,11 @@
        "bere",
        "berejo"
       ]
+     },
+     "why": "brati (jaz) → -em (berem)",
+     "dialogue": {
+      "q": "Kaj delaš zvečer?",
+      "q_en": "What do you do in the evening?"
      }
     },
     {
@@ -363,7 +687,8 @@
        "gre",
        "gremo"
       ]
-     }
+     },
+     "why": "iti (ti) → greš"
     },
     {
      "text": "Jutri gre[mo] na morje.",
@@ -376,6 +701,12 @@
        "greste",
        "grem"
       ]
+     },
+     "why": "iti (mi) → gremo",
+     "transform": {
+      "from": "Jutri grem na morje.",
+      "from_en": "Tomorrow I'm going to the seaside.",
+      "prompt": "Change to “we” (mi):"
      }
     },
     {
@@ -389,7 +720,8 @@
        "razumejo",
        "razumeš"
       ]
-     }
+     },
+     "why": "razumeti (vi) → -ete (razumete)"
     },
     {
      "text": "Kaj pije[š]?",
@@ -404,7 +736,26 @@
       ]
      }
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Who",
+     "Ending",
+     "brati (to read) · iti (to go)"
+    ],
+    "rows": [
+     [
+      "jaz / ti / on(a)",
+      "[-em] · [-eš] · [-e]",
+      "bere[m] · gre[š] · gre"
+     ],
+     [
+      "mi / vi / oni",
+      "[-emo] · [-ete] · [-ejo]",
+      "gre[mo] · razume[te] · bere[jo]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-imeti",
@@ -424,7 +775,8 @@
        "ima",
        "imajo"
       ]
-     }
+     },
+     "why": "imeti (jaz) → imam"
     },
     {
      "text": "Ali ima[š] čas?",
@@ -437,7 +789,8 @@
        "imate",
        "ima"
       ]
-     }
+     },
+     "why": "imeti (ti) → imaš"
     },
     {
      "text": "Danes [nimam] časa.",
@@ -450,6 +803,12 @@
        "nimajo",
        "imam"
       ]
+     },
+     "why": "negative of imam is one word: nimam (not *ne imam)",
+     "transform": {
+      "from": "Danes imam čas.",
+      "from_en": "I have time today.",
+      "prompt": "Say the negative:"
      }
     },
     {
@@ -476,6 +835,12 @@
        "nov",
        "nove"
       ]
+     },
+     "why": "hiša is feminine (ž) → adjective takes -a (nova)",
+     "transform": {
+      "from": "To je nov stol.",
+      "from_en": "This is a new chair (m).",
+      "prompt": "Now describe hiša (ž):"
      }
     },
     {
@@ -489,7 +854,8 @@
        "lep",
        "lepi"
       ]
-     }
+     },
+     "why": "mesto is neuter (s) → adjective takes -o (lepo)"
     },
     {
      "text": "Kava je vroč[a].",
@@ -502,7 +868,8 @@
        "vroč",
        "vroči"
       ]
-     }
+     },
+     "why": "kava is feminine (ž) → vroča"
     },
     {
      "text": "Utrujen[a] sem.",
@@ -515,13 +882,43 @@
        "utrujeno",
        "utrujeni"
       ]
+     },
+     "why": "spoken by a woman (ž) → utrujena",
+     "transform": {
+      "from": "Utrujen sem.",
+      "from_en": "I'm tired (said by a man).",
+      "prompt": "How does a woman say it?"
      }
     },
     {
      "text": "Imamo majhn[o] stanovanje.",
      "en": "We have a small flat."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "Ending",
+     "Example"
+    ],
+    "rows": [
+     [
+      "m (stol)",
+      "—",
+      "nov stol"
+     ],
+     [
+      "ž (hiša)",
+      "[-a]",
+      "nov[a] hiša · vroč[a] kava"
+     ],
+     [
+      "s (mesto)",
+      "[-o] ([-e] after c,č,š,ž,j)",
+      "lep[o] mesto · vroč[e] mleko"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-possessive",
@@ -541,6 +938,12 @@
        "moj",
        "moji"
       ]
+     },
+     "why": "sestra is feminine (ž) → moja",
+     "transform": {
+      "from": "To je moj brat.",
+      "from_en": "This is my brother (m).",
+      "prompt": "Now with sestra (ž):"
      }
     },
     {
@@ -554,7 +957,8 @@
        "tvoj",
        "tvoji"
       ]
-     }
+     },
+     "why": "ime is neuter (s) → tvoje (after -j-, neuter takes -e)"
     },
     {
      "text": "Njegov[a] hiša je velika.",
@@ -567,7 +971,8 @@
        "njegov",
        "njegove"
       ]
-     }
+     },
+     "why": "hiša is feminine (ž) → njegova (agrees with hiša, not 'his')"
     },
     {
      "text": "Naš[e] mesto je majhno.",
@@ -580,9 +985,38 @@
        "naš",
        "naši"
       ]
-     }
+     },
+     "why": "mesto is neuter (s) → naše (after -š-, neuter takes -e)"
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "moj (my)",
+     "tvoj (your)",
+     "naš (our)"
+    ],
+    "rows": [
+     [
+      "m",
+      "moj brat",
+      "tvoj avto",
+      "naš dom"
+     ],
+     [
+      "ž",
+      "moj[a] sestra",
+      "tvoj[a] kava",
+      "naš[a] hiša"
+     ],
+     [
+      "s",
+      "moj[e] ime",
+      "tvoj[e] mesto",
+      "naš[e] mesto"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-plural",
@@ -602,6 +1036,12 @@
        "stol",
        "stole"
       ]
+     },
+     "why": "masculine plural (3+) adds -i (stol → stoli)",
+     "transform": {
+      "from": "V sobi je en stol.",
+      "from_en": "There is one chair in the room.",
+      "prompt": "Now say three chairs:"
      }
     },
     {
@@ -615,7 +1055,8 @@
        "knjigo",
        "knjigi"
       ]
-     }
+     },
+     "why": "feminine plural (3+) changes -a → -e (knjiga → knjige)"
     },
     {
      "text": "Slovenska mest[a] so lepa.",
@@ -628,13 +1069,42 @@
        "mesti",
        "meste"
       ]
-     }
+     },
+     "why": "neuter plural (3+) changes -o → -a (mesto → mesta)"
     },
     {
      "text": "Moji brat[je] živijo v Mariboru.",
      "en": "My brothers live in Maribor."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "1 (singular)",
+     "3+ (plural)",
+     "Example"
+    ],
+    "rows": [
+     [
+      "m",
+      "stol",
+      "stol[i]",
+      "trije stol[i]"
+     ],
+     [
+      "ž",
+      "knjig[a]",
+      "knjig[e]",
+      "tri knjig[e]"
+     ],
+     [
+      "s",
+      "mest[o]",
+      "mest[a]",
+      "slovenska mest[a]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-formal",
@@ -654,7 +1124,8 @@
        "so",
        "smo"
       ]
-     }
+     },
+     "why": "polite 'you' (vikanje) uses plural vi → ste"
     },
     {
      "text": "Oprostite, ali govori[te] angleško?",
@@ -667,6 +1138,12 @@
        "govori",
        "govorijo"
       ]
+     },
+     "why": "polite 'you' uses the vi ending -te (govorite)",
+     "transform": {
+      "from": "Ali govoriš angleško?",
+      "from_en": "Do you speak English? (informal)",
+      "prompt": "Ask politely (vikanje):"
      }
     },
     {
@@ -684,7 +1161,7 @@
    "title": "What do you see? Feminine -a → -o",
    "pattern": "kav[a] → Pijem kav[o].",
    "short": "accusative (tožilnik) of feminine nouns",
-   "explain": "Now the big topic of Slovenian: **cases** (skloni). A noun changes its ending depending on its **role in the sentence**. Don't panic — we'll take them one at a time, starting with the most useful one.\n\nThe **accusative** (tožilnik) is used for the **object** — the thing you see, have, buy, drink, want, love: \"I drink **coffee**\", \"I see **a house**\".\n\nFor **feminine nouns in -a** the rule is simple: **-a becomes -o**.\n• kav[a] → Pijem kav[o]. (I drink coffee.)\n• hiš[a] → Vidim hiš[o]. (I see a house.)\n• sestr[a] → Imam sestr[o]. (I have a sister.)\n• voda → \"Vod[o], prosim.\" (Water, please.)\n\nAdjectives and words like \"my\" do the same: \"Imam nov[o] knjig[o].\" \"Kličem moj[o] mam[o].\"\n\nFeminine nouns ending in a consonant (noč, sol, pot) **don't change** in the accusative: \"Daj mi sol.\"\n\nThis is also the form you use when you order something: \"Kav[o] z mlekom, prosim.\" — so you'll use it every day.",
+   "explain": "Now the big topic of Slovenian: **cases** (skloni). A noun changes its ending depending on its **role in the sentence**. The dictionary form you already know is Case 1 (**nominative / imenovalnik**, answering *Kdo? Kaj?*). Don't panic — we'll take them one at a time, starting with the most useful one.\n\nThe **accusative** (tožilnik) is used for the **object** — the thing you see, have, buy, drink, want, love: \"I drink **coffee**\", \"I see **a house**\".\n\nFor **feminine nouns in -a** the rule is simple: **-a becomes -o**.\n• kav[a] → Pijem kav[o]. (I drink coffee.)\n• hiš[a] → Vidim hiš[o]. (I see a house.)\n• sestr[a] → Imam sestr[o]. (I have a sister.)\n• voda → \"Vod[o], prosim.\" (Water, please.)\n\nAdjectives and words like \"my\" do the same: \"Imam nov[o] knjig[o].\" \"Kličem moj[o] mam[o].\"\n\nFeminine nouns ending in a consonant (noč, sol, pot) **don't change** in the accusative: \"Daj mi sol.\"\n\nThis is also the form you use when you order something: \"Kav[o] z mlekom, prosim.\" — so you'll use it every day.",
    "examples": [
     {
      "text": "Pijem kav[o].",
@@ -697,6 +1174,11 @@
        "kavi",
        "kave"
       ]
+     },
+     "why": "pijem + what? (4. tožilnik): feminine -a → -o (kava → kavo)",
+     "dialogue": {
+      "q": "Kaj piješ?",
+      "q_en": "What are you drinking?"
      }
     },
     {
@@ -710,6 +1192,11 @@
        "vode",
        "vodi"
       ]
+     },
+     "why": "ordering uses 4. tožilnik ('I want water'): voda → vodo",
+     "dialogue": {
+      "q": "Kaj boste pili?",
+      "q_en": "What will you drink?"
      }
     },
     {
@@ -723,6 +1210,12 @@
        "sestri",
        "sestre"
       ]
+     },
+     "why": "imam + whom? (4. tožilnik): feminine -a → -o (sestra → sestro)",
+     "transform": {
+      "from": "To je moja sestra.",
+      "from_en": "This is my sister.",
+      "prompt": "Say you have a sister:"
      }
     },
     {
@@ -736,13 +1229,40 @@
        "knjige",
        "knjigi"
       ]
+     },
+     "why": "berem + what? (4. tožilnik): knjiga → knjigo",
+     "dialogue": {
+      "q": "Kaj bereš?",
+      "q_en": "What are you reading?"
      }
     },
     {
      "text": "Kličem mam[o].",
      "en": "I'm calling mom."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Case",
+     "Question",
+     "ž (-a)",
+     "Example"
+    ],
+    "rows": [
+     [
+      "1. Imenovalnik (basic)",
+      "Kdo? Kaj?",
+      "kav[a]",
+      "To je kav[a]."
+     ],
+     [
+      "4. Tožilnik (object)",
+      "Koga? Kaj? (pijem/vidim)",
+      "kav[o]",
+      "Pijem kav[o]."
+     ]
+    ]
+   }
   },
   {
    "id": "sl-acc-masc",
@@ -762,6 +1282,12 @@
        "bratu",
        "brati"
       ]
+     },
+     "why": "brat is masculine & alive → 4. tožilnik adds -a (brata)",
+     "transform": {
+      "from": "To je moj brat.",
+      "from_en": "This is my brother.",
+      "prompt": "Say you have a brother:"
      }
     },
     {
@@ -775,7 +1301,8 @@
        "psu",
        "psi"
       ]
-     }
+     },
+     "why": "pes is masculine & alive → adds -a and drops -e- (psa)"
     },
     {
      "text": "Čakam prijatelj[a].",
@@ -788,13 +1315,53 @@
        "prijatelju",
        "prijatelji"
       ]
+     },
+     "why": "prijatelj is masculine & alive → čakam + -a (prijatelja)",
+     "dialogue": {
+      "q": "Koga čakaš?",
+      "q_en": "Who are you waiting for?"
      }
     },
     {
      "text": "Jem [kruh] in pijem [mleko].",
-     "en": "I eat bread and drink milk."
+     "en": "I eat bread and drink milk.",
+     "why": "kruh (m, thing) and mleko (s) don't change in 4. tožilnik"
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "Basic (1.)",
+     "Accusative (4.)",
+     "Example"
+    ],
+    "rows": [
+     [
+      "ž (-a)",
+      "hiš[a]",
+      "hiš[o]",
+      "Vidim hiš[o]."
+     ],
+     [
+      "m (thing)",
+      "kruh · stol",
+      "no change",
+      "Jem kruh. · Vidim stol."
+     ],
+     [
+      "m (alive)",
+      "brat · pes",
+      "+ [-a]",
+      "Imam brat[a]. · Imam ps[a]."
+     ],
+     [
+      "s (-o/-e)",
+      "mlek[o]",
+      "no change",
+      "Pijem mlek[o]."
+     ]
+    ]
+   }
   },
   {
    "id": "sl-kam-acc",
@@ -814,6 +1381,11 @@
        "trgovini",
        "trgovine"
       ]
+     },
+     "why": "Kam? (direction) → v + 4. tožilnik: -a → -o (trgovino)",
+     "dialogue": {
+      "q": "Kam greš?",
+      "q_en": "Where are you going?"
      }
     },
     {
@@ -827,6 +1399,12 @@
        "šoli",
        "šole"
       ]
+     },
+     "why": "Kam? (going to) → v + 4. tožilnik: šola → šolo",
+     "transform": {
+      "from": "Otroci so v šoli.",
+      "from_en": "The children are at school (Kje?).",
+      "prompt": "Now say they are going there (Kam?):"
      }
     },
     {
@@ -840,6 +1418,11 @@
        "pošti",
        "pošte"
       ]
+     },
+     "why": "Kam? → na + 4. tožilnik: pošta → pošto",
+     "dialogue": {
+      "q": "Kam greš?",
+      "q_en": "Where are you going?"
      }
     },
     {
@@ -853,13 +1436,42 @@
        "Ljubljani",
        "Ljubljane"
       ]
-     }
+     },
+     "why": "Kam? → v + 4. tožilnik: Ljubljana → Ljubljano"
     },
     {
      "text": "Poleti gremo na morj[e].",
      "en": "In summer we go to the seaside."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Direction (Kam?)",
+     "Gender",
+     "Basic → Accusative",
+     "Example"
+    ],
+    "rows": [
+     [
+      "v / na + 4. sklon",
+      "ž (-a)",
+      "trgovin[a] → trgovin[o]",
+      "Grem v trgovin[o]."
+     ],
+     [
+      "v / na + 4. sklon",
+      "m (thing)",
+      "park → park",
+      "Grem v park."
+     ],
+     [
+      "v / na + 4. sklon",
+      "s (-o/-e)",
+      "morj[e] → morj[e]",
+      "Gremo na morj[e]."
+     ]
+    ]
+   }
   },
   {
    "id": "sl-locative",
@@ -879,6 +1491,12 @@
        "trgovina",
        "trgovine"
       ]
+     },
+     "why": "Kje? (location, not moving) → v + 5. mestnik: -a → -i (trgovini)",
+     "transform": {
+      "from": "Mama gre v trgovino.",
+      "from_en": "Mom is going to the shop (Kam?).",
+      "prompt": "Now she is already there (Kje?):"
      }
     },
     {
@@ -892,6 +1510,11 @@
        "Ljubljana",
        "Ljubljane"
       ]
+     },
+     "why": "Kje živiš? → v + 5. mestnik: Ljubljana → Ljubljani",
+     "dialogue": {
+      "q": "Kje živiš?",
+      "q_en": "Where do you live?"
      }
     },
     {
@@ -905,6 +1528,11 @@
        "hotela",
        "hoteli"
       ]
+     },
+     "why": "Kje? → v + 5. mestnik: masculine adds -u (hotelu)",
+     "dialogue": {
+      "q": "Kje si?",
+      "q_en": "Where are you?"
      }
     },
     {
@@ -918,20 +1546,48 @@
        "morja",
        "morji"
       ]
+     },
+     "why": "Kje? → na + 5. mestnik: neuter -e → -u (morju)",
+     "transform": {
+      "from": "Poleti gremo na morje.",
+      "from_en": "In summer we go to the seaside (Kam?).",
+      "prompt": "Now say we are there (Kje?):"
      }
     },
     {
      "text": "Po kosil[u] grem na sprehod.",
      "en": "After lunch I go for a walk."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Question",
+     "Case",
+     "ž (-a)",
+     "m / s"
+    ],
+    "rows": [
+     [
+      "Kam? (going to)",
+      "4. Tožilnik",
+      "v šol[o] · v trgovin[o]",
+      "v hotel · na morj[e]"
+     ],
+     [
+      "Kje? (being at)",
+      "5. Mestnik",
+      "v šol[i] · v trgovin[i]",
+      "v hotel[u] · na morj[u]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-gen-neg",
    "title": "Nimam čas[a]: the genitive after \"no\"",
    "pattern": "Imam kav[o]. → Nimam kav[e].",
    "short": "genitive (rodilnik) after nimam, ni, brez",
-   "explain": "The **genitive** (rodilnik) has many uses. The first one is with **negation**: when you say you **don't have** something, or something **isn't there**, the noun goes into the genitive.\n\nThe endings:\n• feminine -a → **-e**: kav[a] → \"Nimam kav[e].\" (I have no coffee.)\n• masculine → **-a**: čas → \"Nimam čas[a].\" kruh → \"Ni kruh[a].\" (There's no bread.)\n• neuter -o/-e → **-a**: mlek[o] → \"Ni mlek[a].\"\n\nSo with negation, compare:\n• Imam sestr[o]. → Nimam sestr[e].\n• Vidim avto. → Ne vidim avt[a].\n• Tukaj je park. → Tukaj ni park[a].\n\nThe genitive also comes after the preposition **brez** (without): \"Kava brez sladkorj[a]\" (coffee without sugar), \"čaj brez mlek[a]\", and after **iz** and **od** (from): \"Sem iz Slovenij[e].\" (I'm from Slovenia.), \"od mam[e]\" (from mom), and after **do** (until, to): \"do pošt[e]\".",
+   "explain": "The **genitive** (rodilnik) has many uses. The first one is with **negation**: when you say you **don't have** something, or something **isn't there**, the noun goes into the genitive.\n\nThe endings:\n• feminine -a → **-e**: kav[a] → \"Nimam kav[e].\" (I have no coffee.)\n• masculine → **-a**: čas → \"Nimam čas[a].\" kruh → \"Ni kruh[a].\" (There's no bread.)\n• neuter -o/-e → **-a**: mlek[o] → \"Ni mlek[a].\"\n\nSo with negation, compare:\n• Imam sestr[o]. → Nimam sestr[e].\n• Vidim avto. → Ne vidim avt[a].\n• Tukaj je park. → Tukaj ni park[a].\n\nNote on **-r** nouns: a handful of common masculine nouns ending in **-r** insert **-j-** before endings: sladkor → sladkor[ja], denar → denar[ja].\n\nThe genitive also comes after the preposition **brez** (without): \"Kava brez sladkorj[a]\" (coffee without sugar), \"čaj brez mlek[a]\", and after **iz** and **od** (from): \"Sem iz Slovenij[e].\" (I'm from Slovenia.), \"od mam[e]\" (from mom), and after **do** (until, to): \"do pošt[e]\".",
    "examples": [
     {
      "text": "Danes nimam čas[a].",
@@ -944,6 +1600,12 @@
        "času",
        "časi"
       ]
+     },
+     "why": "nimam (negation) → 2. rodilnik: masculine adds -a (časa)",
+     "transform": {
+      "from": "Danes imam čas.",
+      "from_en": "I have time today.",
+      "prompt": "Say the negative:"
      }
     },
     {
@@ -957,6 +1619,11 @@
        "mleku",
        "mleke"
       ]
+     },
+     "why": "ni (negation) → 2. rodilnik: neuter -o → -a (mleka)",
+     "dialogue": {
+      "q": "Ali imamo mleko?",
+      "q_en": "Do we have milk?"
      }
     },
     {
@@ -970,7 +1637,8 @@
        "sladkorju",
        "sladkorji"
       ]
-     }
+     },
+     "why": "brez → 2. rodilnik: sladkor inserts -j- + -a (sladkorja)"
     },
     {
      "text": "Sem iz Slovenij[e].",
@@ -983,13 +1651,46 @@
        "Slovenijo",
        "Sloveniji"
       ]
+     },
+     "why": "iz (from) → 2. rodilnik: feminine -a → -e (Slovenije)",
+     "dialogue": {
+      "q": "Od kod si?",
+      "q_en": "Where are you from?"
      }
     },
     {
      "text": "Nimam sestr[e].",
      "en": "I don't have a sister."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "Positive (4.)",
+     "Negative / brez / iz (2.)",
+     "Ending"
+    ],
+    "rows": [
+     [
+      "ž (-a)",
+      "Imam kav[o].",
+      "Nimam kav[e]. · iz Slovenij[e]",
+      "[-a] → [-e]"
+     ],
+     [
+      "m",
+      "Imam čas.",
+      "Nimam čas[a]. · brez sladkorj[a]",
+      "+ [-a]"
+     ],
+     [
+      "s (-o/-e)",
+      "Imam mlek[o].",
+      "Ni mlek[a].",
+      "[-o/-e] → [-a]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-gen-quantity",
@@ -1009,6 +1710,11 @@
        "vodo",
        "vodi"
       ]
+     },
+     "why": "after an amount (kozarec) → 2. rodilnik: voda → vode",
+     "dialogue": {
+      "q": "Kaj želiš?",
+      "q_en": "What would you like?"
      }
     },
     {
@@ -1022,7 +1728,8 @@
        "mleku",
        "mleki"
       ]
-     }
+     },
+     "why": "after an amount (liter) → 2. rodilnik: mleko → mleka"
     },
     {
      "text": "Imam veliko del[a].",
@@ -1035,7 +1742,8 @@
        "delu",
        "dele"
       ]
-     }
+     },
+     "why": "veliko (a lot of) → 2. rodilnik: delo → dela"
     },
     {
      "text": "Koliko denarj[a] imaš?",
@@ -1048,13 +1756,42 @@
        "denarju",
        "denarji"
       ]
-     }
+     },
+     "why": "koliko (how much) → 2. rodilnik: denar inserts -j- + -a (denarja)"
     },
     {
      "text": "Kilogram jabol[k] stane dva evra.",
      "en": "A kilo of apples costs two euros."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "With amount (sg.)",
+     "5+ / countable (pl.)",
+     "Example"
+    ],
+    "rows": [
+     [
+      "ž (-a)",
+      "[-e]",
+      "drop -a",
+      "kozarec vod[e] · pet hiš"
+     ],
+     [
+      "m",
+      "[-a]",
+      "[-ov] / [-ev]",
+      "kilogram kruh[a] · pet stol[ov]"
+     ],
+     [
+      "s (-o/-e)",
+      "[-a]",
+      "drop -o/-e",
+      "liter mlek[a] · kilogram jabol[k]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-numbers-nouns",
@@ -1074,7 +1811,8 @@
        "bratov",
        "brat"
       ]
-     }
+     },
+     "why": "2 (dual) with masculine → + -a (dva brata)"
     },
     {
      "text": "Kava stane dva evr[a].",
@@ -1087,7 +1825,8 @@
        "evrov",
        "evro"
       ]
-     }
+     },
+     "why": "2 (dual) with masculine → -o drops + -a (dva evra)"
     },
     {
      "text": "V razredu je pet študent[ov].",
@@ -1100,6 +1839,12 @@
        "študenta",
        "študent"
       ]
+     },
+     "why": "5 or more → genitive plural: masculine adds -ov (pet študentov)",
+     "transform": {
+      "from": "V razredu so trije študenti.",
+      "from_en": "There are three students in the class.",
+      "prompt": "Change 3 to 5 (pet):"
      }
     },
     {
@@ -1113,13 +1858,48 @@
        "knjig",
        "knjiga"
       ]
-     }
+     },
+     "why": "3–4 uses normal plural: feminine -a → -e (tri knjige)"
     },
     {
      "text": "Ena kava in dve hiš[i].",
      "en": "One coffee and two houses."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Number",
+     "m (stol / brat)",
+     "ž (hiša)",
+     "s (jabolko)"
+    ],
+    "rows": [
+     [
+      "1",
+      "en stol",
+      "ena hiš[a]",
+      "eno jabolk[o]"
+     ],
+     [
+      "2 (dual)",
+      "dva stol[a]",
+      "dve hiš[i]",
+      "dve jabolk[i]"
+     ],
+     [
+      "3–4 (plural)",
+      "trije stol[i]",
+      "tri hiš[e]",
+      "štiri jabolk[a]"
+     ],
+     [
+      "5+ (gen. pl.)",
+      "pet stol[ov]",
+      "pet hiš",
+      "pet jabolk"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-dual",
@@ -1139,6 +1919,12 @@
        "sta",
        "sem"
       ]
+     },
+     "why": "midva (we two) → sva (not smo)",
+     "transform": {
+      "from": "Mi smo prijatelji.",
+      "from_en": "We (3+) are friends.",
+      "prompt": "Say it for just two of us (midva):"
      }
     },
     {
@@ -1152,6 +1938,12 @@
        "greta",
        "grem"
       ]
+     },
+     "why": "we two (dvojina) verb ending is -va (greva)",
+     "transform": {
+      "from": "Kam gremo danes?",
+      "from_en": "Where are we (3+) going today?",
+      "prompt": "Ask for just the two of us:"
      }
     },
     {
@@ -1165,7 +1957,8 @@
        "sester",
        "sestra"
       ]
-     }
+     },
+     "why": "2 (dve) with feminine → -a → -i (dve sestri)"
     },
     {
      "text": "Ali [sta] utrujena?",
@@ -1178,13 +1971,48 @@
        "ste",
        "so"
       ]
-     }
+     },
+     "why": "you two (vidva) → sta (not ste)"
     },
     {
      "text": "Na mizi sta dva kozarc[a].",
      "en": "There are two glasses on the table."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "",
+     "1 (sg.)",
+     "2 (dvojina)",
+     "3+ (pl.)"
+    ],
+    "rows": [
+     [
+      "we",
+      "jaz [sem]",
+      "midva [sva]",
+      "mi [smo]"
+     ],
+     [
+      "you / they",
+      "ti [si]",
+      "vidva / onadva [sta]",
+      "vi [ste] / oni [so]"
+     ],
+     [
+      "verb (iti)",
+      "gre[m]",
+      "gre[va] · gre[ta]",
+      "gre[mo] · gre[ste]"
+     ],
+     [
+      "nouns (m / ž / s)",
+      "stol · hiša · mesto",
+      "stol[a] · hiš[i] · mest[i]",
+      "stol[i] · hiš[e] · mest[a]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-instrumental",
@@ -1204,6 +2032,11 @@
        "mleka",
        "mleku"
       ]
+     },
+     "why": "z (with) → 6. orodnik: neuter -o → -om (mlekom)",
+     "dialogue": {
+      "q": "Kako piješ kavo?",
+      "q_en": "How do you take your coffee?"
      }
     },
     {
@@ -1217,6 +2050,11 @@
        "prijatelju",
        "prijatelj"
       ]
+     },
+     "why": "s (before p) + 6. orodnik: after -j-, masculine takes -em (prijateljem)",
+     "dialogue": {
+      "q": "S kom greš v kino?",
+      "q_en": "Who are you going to the cinema with?"
      }
     },
     {
@@ -1230,6 +2068,11 @@
        "kartici",
        "kartice"
       ]
+     },
+     "why": "s (before k) + 6. orodnik: feminine -a → -o (kartico)",
+     "dialogue": {
+      "q": "Kako plačate?",
+      "q_en": "How will you pay?"
      }
     },
     {
@@ -1243,20 +2086,53 @@
        "avtobusa",
        "avtobusu"
       ]
+     },
+     "why": "z (by transport) + 6. orodnik: masculine adds -om (avtobusom)",
+     "dialogue": {
+      "q": "Kako greš v službo?",
+      "q_en": "How do you go to work?"
      }
     },
     {
      "text": "Živim z mam[o] in sestr[o].",
      "en": "I live with my mom and sister."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "Basic (1.)",
+     "With z / s (6.)",
+     "Example"
+    ],
+    "rows": [
+     [
+      "ž (-a)",
+      "mam[a] · kartic[a]",
+      "[-o] (same as 4.!)",
+      "z mam[o] · s kartic[o]"
+     ],
+     [
+      "m",
+      "avtobus · prijatelj",
+      "[-om] / [-em]",
+      "z avtobus[om] · s prijatelj[em]"
+     ],
+     [
+      "s (-o/-e)",
+      "mlek[o] · morj[e]",
+      "[-om] / [-em]",
+      "z mlek[om]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-dative",
    "title": "To someone: Dam mam[i], grem k brat[u]",
    "pattern": "mam[i] · brat[u] · k / h + dative",
    "short": "dative (dajalnik): giving, telling, going to a person",
-   "explain": "The **dative** (dajalnik) answers **komu?** — to whom? You use it for the person who **receives** something: you give, send, tell, show, help **someone**.\n\nEndings:\n• feminine -a → **-i**: mam[a] → \"Dam mam[i] darilo.\" (I give mom a present.)\n• masculine and neuter → **-u**: brat → \"Pišem brat[u].\" (I'm writing to my brother.)\n\nVerbs with the dative: **dati** (give), **reči / povedati** (say, tell), **pisati** (write to), **pokazati** (show), **pomagati** (help) — careful, in Slovenian you help **to** someone: \"Pomagam sosed[u].\" (I help the neighbour.)\n\nThe preposition **k** (before k and g it becomes **h**) + dative means **to someone's place**: \"Grem k mam[i].\" (I'm going to mom's.), \"Grem k zdravnik[u].\" (I'm going to the doctor.), \"Grem h Gorazd[u].\"\n\nYou'll also meet the dative in feelings: \"Mraz mi je.\" (I'm cold — literally: to me is cold.), \"Všeč mi je.\" (I like it.) — **mi** is the short dative of jaz; **ti** = to you, **mu** = to him, **ji** = to her.",
+   "explain": "The **dative** (dajalnik) answers **komu?** — to whom? You use it for the person who **receives** something: you give, send, tell, show, help **someone**.\n\nEndings:\n• feminine -a → **-i**: mam[a] → \"Dam mam[i] darilo.\" (I give mom a present.)\n• masculine and neuter → **-u**: brat → \"Pišem brat[u].\" (I'm writing to my brother.)\n\n**Big shortcut:** the dative (Case 3) has the **exact same endings as the locative (Case 5)** — **-i** for feminine, **-u** for masculine and neuter! You already know them.\n\nVerbs with the dative: **dati** (give), **reči / povedati** (say, tell), **pisati** (write to), **pokazati** (show), **pomagati** (help) — careful, in Slovenian you help **to** someone: \"Pomagam sosed[u].\" (I help the neighbour.)\n\nThe preposition **k** (before k and g it becomes **h**) + dative means **to someone's place**: \"Grem k mam[i].\" (I'm going to mom's.), \"Grem k zdravnik[u].\" (I'm going to the doctor.), \"Grem h Gorazd[u].\"\n\nYou'll also meet the dative in feelings: \"Mraz mi je.\" (I'm cold — literally: to me is cold.), \"Všeč mi je.\" (I like it.) — **mi** is the short dative of jaz; **ti** = to you, **mu** = to him, **ji** = to her.",
    "examples": [
     {
      "text": "Mam[i] dam darilo.",
@@ -1269,7 +2145,8 @@
        "mama",
        "mame"
       ]
-     }
+     },
+     "why": "dam + Komu? (3. dajalnik): feminine -a → -i (mami) — same ending as mestnik!"
     },
     {
      "text": "Pomagam sosed[u].",
@@ -1282,6 +2159,11 @@
        "sosed",
        "sosedi"
       ]
+     },
+     "why": "pomagam + Komu? (3. dajalnik): masculine adds -u (sosedu)",
+     "dialogue": {
+      "q": "Komu pomagaš?",
+      "q_en": "Who are you helping?"
      }
     },
     {
@@ -1295,6 +2177,11 @@
        "zdravnik",
        "zdravniki"
       ]
+     },
+     "why": "k (to a person) → 3. dajalnik: masculine adds -u (zdravniku)",
+     "dialogue": {
+      "q": "Kam greš jutri?",
+      "q_en": "Where are you going tomorrow?"
      }
     },
     {
@@ -1308,13 +2195,46 @@
        "prijateljica",
        "prijateljice"
       ]
+     },
+     "why": "pišem + Komu? (3. dajalnik): feminine -a → -i (prijateljici)",
+     "dialogue": {
+      "q": "Komu pišeš?",
+      "q_en": "Who are you writing to?"
      }
     },
     {
      "text": "Ta film [mi] je všeč.",
      "en": "I like this film."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Gender",
+     "Basic (1.)",
+     "Dative (3.) = Locative (5.)!",
+     "Example"
+    ],
+    "rows": [
+     [
+      "ž (-a)",
+      "mam[a]",
+      "[-i]",
+      "Dam mam[i]. · k mam[i]"
+     ],
+     [
+      "m",
+      "sosed · zdravnik",
+      "[-u]",
+      "Pomagam sosed[u]. · k zdravnik[u]"
+     ],
+     [
+      "s (-o/-e)",
+      "mest[o]",
+      "[-u]",
+      "k mest[u]"
+     ]
+    ]
+   }
   },
   {
    "id": "sl-rad",
@@ -1334,6 +2254,12 @@
        "radi",
        "rado"
       ]
+     },
+     "why": "woman speaking (ž) → rada",
+     "transform": {
+      "from": "Rad plešem.",
+      "from_en": "I like dancing (a man).",
+      "prompt": "How does a woman say it?"
      }
     },
     {
@@ -1351,7 +2277,8 @@
        "rada",
        "rade"
       ]
-     }
+     },
+     "why": "group (vi) → radi"
     },
     {
      "text": "Moja sestra rad[a] bere.",
@@ -1364,7 +2291,8 @@
        "radi",
        "rade"
       ]
-     }
+     },
+     "why": "sestra is feminine (ž) → rada"
     },
     {
      "text": "Ta film [mi] je všeč.",
@@ -1381,19 +2309,64 @@
    "examples": [
     {
      "text": "Danes [moram] delati.",
-     "en": "Today I have to work."
+     "en": "Today I have to work.",
+     "drill": {
+      "base": "morati",
+      "options": [
+       "moram",
+       "moraš",
+       "mora",
+       "moramo"
+      ]
+     },
+     "why": "moram = I must / have to (+ infinitive delati)"
     },
     {
      "text": "Ali [lahko] plačam s kartico?",
-     "en": "Can I pay by card?"
+     "en": "Can I pay by card?",
+     "drill": {
+      "base": "can",
+      "options": [
+       "lahko",
+       "moram",
+       "hočem",
+       "znam"
+      ]
+     },
+     "why": "lahko = can / may (stays the same for every person!)"
     },
     {
      "text": "[Hočem] spati.",
-     "en": "I want to sleep."
+     "en": "I want to sleep.",
+     "drill": {
+      "base": "hoteti",
+      "options": [
+       "hočem",
+       "hočeš",
+       "hoče",
+       "hočemo"
+      ]
+     },
+     "why": "hočem = I want (+ infinitive spati)"
     },
     {
      "text": "[Ne morem] priti, ker sem bolan.",
-     "en": "I can't come because I'm ill."
+     "en": "I can't come because I'm ill.",
+     "drill": {
+      "base": "can't",
+      "options": [
+       "ne morem",
+       "ne moram",
+       "nočem",
+       "nisem"
+      ]
+     },
+     "why": "ne morem = I can't (not *ne lahko!)",
+     "transform": {
+      "from": "Lahko pridem.",
+      "from_en": "I can come.",
+      "prompt": "Say that you CAN'T come:"
+     }
     }
    ]
   },
@@ -1415,6 +2388,11 @@
        "uči",
        "učijo"
       ]
+     },
+     "why": "učiti se (jaz) → učim se",
+     "dialogue": {
+      "q": "Kaj se učiš?",
+      "q_en": "What are you learning?"
      }
     },
     {
@@ -1428,7 +2406,8 @@
        "imenuje",
        "imenujete"
       ]
-     }
+     },
+     "why": "imenovati se (ti) → imenuješ se"
     },
     {
      "text": "Imenujem [se] Luka.",
@@ -1458,6 +2437,12 @@
        "delali",
        "delam"
       ]
+     },
+     "why": "past tense (man): sem + -l (delal)",
+     "transform": {
+      "from": "Danes delam doma.",
+      "from_en": "Today I'm working from home.",
+      "prompt": "Say it for yesterday (včeraj, man):"
      }
     },
     {
@@ -1471,7 +2456,8 @@
        "bili",
        "bilo"
       ]
-     }
+     },
+     "why": "past tense (Ana, ž): je + -la (bila)"
     },
     {
      "text": "Poleti smo bi[li] na morju.",
@@ -1484,6 +2470,12 @@
        "bil",
        "bile"
       ]
+     },
+     "why": "past tense (mi, pl.): smo + -li (bili)",
+     "transform": {
+      "from": "Poleti smo na morju.",
+      "from_en": "In summer we're at the seaside.",
+      "prompt": "Put it in the past:"
      }
     },
     {
@@ -1497,13 +2489,42 @@
        "govorili",
        "govoriš"
       ]
-     }
+     },
+     "why": "past tense (ti, woman): si + -la (govorila)"
     },
     {
      "text": "Včeraj sem [šel] v kino.",
      "en": "Yesterday I went to the cinema. (a man)"
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Subject",
+     "Helper (biti)",
+     "Participle (-l)",
+     "Example"
+    ],
+    "rows": [
+     [
+      "he / man",
+      "sem / si / je",
+      "dela[l] · bi[l]",
+      "Včeraj sem dela[l]."
+     ],
+     [
+      "she / woman",
+      "sem / si / je",
+      "dela[la] · bi[la]",
+      "Ana je bi[la] doma."
+     ],
+     [
+      "we / they (pl.)",
+      "smo / ste / so",
+      "dela[li] · bi[li]",
+      "Poleti smo bi[li] na morju."
+     ]
+    ]
+   }
   },
   {
    "id": "sl-future",
@@ -1523,6 +2544,12 @@
        "bo",
        "bodo"
       ]
+     },
+     "why": "future (jaz): bom + -l participle",
+     "transform": {
+      "from": "Danes delam.",
+      "from_en": "Today I'm working.",
+      "prompt": "Say it for tomorrow (jutri):"
      }
     },
     {
@@ -1536,6 +2563,11 @@
        "bo",
        "boste"
       ]
+     },
+     "why": "future (ti): boš + -la participle",
+     "dialogue": {
+      "q": "Kaj bova jedla?",
+      "q_en": "What shall we eat?"
      }
     },
     {
@@ -1549,13 +2581,33 @@
        "boste",
        "bom"
       ]
-     }
+     },
+     "why": "future (mi): bomo (for 'will be', no extra participle needed)"
     },
     {
      "text": "Ne [bom] pil kave.",
      "en": "I won't drink coffee."
     }
-   ]
+   ],
+   "table": {
+    "headers": [
+     "Who",
+     "Helper (future)",
+     "Example"
+    ],
+    "rows": [
+     [
+      "jaz / ti / on(a)",
+      "[bom] · [boš] · [bo]",
+      "Jutri [bom] delal. · Kaj [boš] jedla?"
+     ],
+     [
+      "mi / vi / oni",
+      "[bomo] · [boste] · [bodo]",
+      "Poleti [bomo] na morju."
+     ]
+    ]
+   }
   },
   {
    "id": "sl-imperative",
@@ -1575,7 +2627,8 @@
        "posluša",
        "poslušajte"
       ]
-     }
+     },
+     "why": "imperative of -am verbs (ti) → -j (poslušaj!)"
     },
     {
      "text": "Prosim, sed[ite].",
@@ -1588,7 +2641,8 @@
        "sedimo",
        "sedijo"
       ]
-     }
+     },
+     "why": "polite imperative (vi) adds -te (sedite)"
     },
     {
      "text": "Pojdi[mo] domov!",
@@ -1605,6 +2659,12 @@
        "počakam",
        "počaka"
       ]
+     },
+     "why": "polite imperative (vi) adds -te (počakajte)",
+     "transform": {
+      "from": "Počakaj!",
+      "from_en": "Wait! (informal)",
+      "prompt": "Say it politely (vikanje):"
      }
     },
     {
@@ -1622,19 +2682,39 @@
    "examples": [
     {
      "text": "Danes [sem] doma.",
-     "en": "Today I'm at home."
+     "en": "Today I'm at home.",
+     "wrong": [
+      "Danes doma sem.",
+      "Sem danes doma."
+     ],
+     "why": "short helper 'sem' goes in 2nd position, right after 'Danes'"
     },
     {
      "text": "Včeraj [sem] [se] učil.",
-     "en": "Yesterday I studied. (a man)"
+     "en": "Yesterday I studied. (a man)",
+     "wrong": [
+      "Včeraj učil sem se.",
+      "Včeraj se sem učil."
+     ],
+     "why": "helper 'sem' + reflexive 'se' sit together in 2nd position (sem before se)"
     },
     {
      "text": "Kava [mi je] všeč.",
-     "en": "I like the coffee."
+     "en": "I like the coffee.",
+     "wrong": [
+      "Kava je mi všeč.",
+      "Kava všeč mi je."
+     ],
+     "why": "short pronoun 'mi' + helper 'je' stay in 2nd position (mi before je)"
     },
     {
      "text": "Jutri [se] vidimo!",
-     "en": "See you tomorrow!"
+     "en": "See you tomorrow!",
+     "wrong": [
+      "Jutri vidimo se!",
+      "Se jutri vidimo!"
+     ],
+     "why": "reflexive 'se' sits in 2nd position, right after 'Jutri'"
     }
    ]
   }

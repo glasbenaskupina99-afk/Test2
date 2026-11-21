@@ -1071,6 +1071,25 @@ select.select-native { display: none !important; }
 .g-fresh { animation: fresh-in .45s ease-out; border-color: #6f8f6c; }
 .g-fresh-tag { font-size: 12px; font-weight: 800; color: var(--yellow); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
 @keyframes fresh-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+.g-table-wrap { overflow-x: auto; margin: 0 0 12px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--surface); }
+.g-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+.g-table th { background: var(--surface-2); color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; padding: 7px 9px; border-bottom: 1.5px solid var(--border); }
+.g-table td { padding: 7px 9px; border-bottom: 1px solid var(--border); color: var(--text-strong); vertical-align: top; }
+.g-table tbody tr:last-child td { border-bottom: none; }
+.g-shortcuts { margin: 8px 0 4px; padding: 10px 12px; border-radius: 12px; background: var(--surface-2); border: 1.5px dashed var(--border); font-size: 13.5px; line-height: 1.45; }
+.g-shortcuts ul { margin: 6px 0 0; padding-left: 18px; }
+.g-shortcuts li { margin: 3px 0; }
+.g-cases-sheet { border-color: var(--blue); }
+.g-cases-body { margin-top: 10px; }
+.g-why { margin-top: 6px; padding: 6px 10px; border-radius: 10px; background: rgba(111, 143, 108, .14); color: var(--text-strong); font-weight: 600; line-height: 1.4; }
+.g-dialogue { display: flex; flex-direction: column; gap: 10px; }
+.g-turn { display: flex; align-items: flex-start; gap: 10px; }
+.g-who { width: 26px; height: 26px; border-radius: 50%; background: var(--surface-2); border: 1.5px solid var(--border); color: var(--muted); font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex: none; margin-top: 2px; }
+.g-who.me { background: var(--blue); border-color: var(--blue); color: #fff; }
+.g-q-text { font-size: 18px; font-weight: 700; color: var(--text); }
+.g-turn-a { padding-top: 8px; border-top: 1px dashed var(--border); }
+.g-transform .g-from { padding: 8px 10px; border-radius: 10px; background: var(--surface-2); font-size: 18px; color: var(--text); }
+.g-transform .g-arrow { margin: 8px 0 6px; font-weight: 800; color: var(--blue); }
 
 /* ------------------------------------------------------------ listen & read */
 .mode.sky { --c: #5c7fa3; --cd: #44617f; }

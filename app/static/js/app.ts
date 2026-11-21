@@ -936,7 +936,7 @@ async function wordsScreen() {
         "div",
         { class: "list-item", onclick: () => wordSheet(w), style: { cursor: "pointer" } },
         h("div", { class: "hz" }, w.hanzi),
-        h("div", { class: "meta" }, h("div", { class: "py" }, w.pinyin), h("div", { class: "en" }, w.english)),
+        h("div", { class: "meta" }, h("div", { class: "py" }, w.pinyin, w.gender ? [" ", genderTag(w)] : null), h("div", { class: "en" }, w.english)),
         w.cards ? h("div", { class: "strength" }, [0, 1, 2, 3, 4].map((i) => h("i", { class: i < s ? "on" : "" }))) : h("span", { class: "tag blue" }, "new")
       );
     };

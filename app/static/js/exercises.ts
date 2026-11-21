@@ -34,6 +34,7 @@ function solution(word, extra?) {
     "div",
     {},
     h("span", { class: "hz" }, word.hanzi),
+    word.gender ? [" ", genderTag(word)] : null,
     word.pinyin && word.pinyin !== word.hanzi ? [" · ", word.pinyin] : null,
     h("div", { class: "notranslate" }, word.english),
     extra ? h("div", { class: "small" }, extra) : null
@@ -291,7 +292,8 @@ export function choice(ctx, word, pool, kind) {
     prompt = [
       h("div", { class: "ex-kicker" }, kind === "meaning" && !kanaOf(word) ? "🧠 Meaning" : `🔤 ${isJa() ? "Reading" : "Pinyin"}`),
       h("h2", { class: "ex-title" }, kind === "meaning" && !kanaOf(word) ? "What does this mean?" : `How is this read?`),
-      h("div", { class: "big-hz hz", style: { margin: "4px 0 18px" } }, word.hanzi),
+      h("div", { class: "big-hz hz", style: { margin: word.gender ? "4px 0 6px" : "4px 0 18px" } }, word.hanzi),
+      word.gender ? h("div", { class: "center", style: { marginBottom: "14px" } }, genderTag(word)) : null,
     ];
   }
   return {
@@ -332,7 +334,7 @@ export function spell(ctx, word, { hint = false } = {}) {
       {},
       h("div", { class: "ex-kicker blue" }, "⌨️ Spell it"),
       h("h2", { class: "ex-title" }, `How do you write “${word.english}” in Slovenian?`),
-      h("div", { class: "row", style: { margin: "0 0 16px" } }, speakerBtn(word.hanzi), slowBtn(word.hanzi), hint ? h("span", { class: "muted" }, word.pinyin) : null),
+      h("div", { class: "row", style: { margin: "0 0 16px" } }, speakerBtn(word.hanzi), slowBtn(word.hanzi), genderTag(word), hint ? h("span", { class: "muted" }, word.pinyin) : null),
       input,
       h("div", { class: "hint" }, "Tip: č, š, ž — long-press c, s or z on your keyboard.")
     ),
@@ -599,6 +601,7 @@ export function speakWord(ctx, word, { showPinyin = true } = {}) {
         "div",
         { class: "word-hero" },
         h("div", { class: "big-hz hz" }, word.hanzi),
+        genderTag(word),
         py,
         peek,
         h("div", { class: "row", style: { justifyContent: "center", marginTop: "10px" } }, speakerBtn(sayText(word)), slowBtn(sayText(word)))

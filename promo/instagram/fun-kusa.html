@@ -1,0 +1,105 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>fun-kusa</title><style>
+@font-face{font-family:N;font-weight:700;src:url(src/nunito-latin-700-normal.woff2)}
+@font-face{font-family:N;font-weight:800;src:url(src/nunito-latin-800-normal.woff2)}
+@font-face{font-family:N;font-weight:900;src:url(src/nunito-latin-900-normal.woff2)}
+:root{--bg:#1c3026;--bg2:#16271e;--sage:#8cc06b;--gold:#d2ae52;--txt:#f4efe2;--mut:#a9b5a6}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg2)}
+body{font-family:N,"Noto Sans CJK JP",sans-serif;color:var(--txt);position:relative;
+  background:radial-gradient(1000px 900px at 80% 15%,#2c4a36 0%,transparent 60%),radial-gradient(900px 900px at 10% 95%,#24402f 0%,transparent 60%),linear-gradient(160deg,var(--bg),var(--bg2))}
+.zh{font-family:N,"Noto Sans CJK SC",sans-serif}.ja{font-family:N,"Noto Sans CJK JP",sans-serif}
+.a{opacity:0;animation-fill-mode:both}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:150px 70px 0;opacity:0}
+@keyframes win{0%{opacity:0}100%{opacity:1}}
+@keyframes wout{0%{opacity:1}100%{opacity:0}}
+@keyframes up{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.5)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+@keyframes dim{to{opacity:.35;transform:scale(.97)}}
+@keyframes right{to{background:#8cc06b;color:#16271e;border-color:#8cc06b;transform:scale(1.04)}}
+@keyframes bar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.k{display:inline-block;font-weight:900;font-size:36px;letter-spacing:3px;text-transform:uppercase;color:var(--bg2);background:var(--gold);padding:12px 30px;border-radius:999px}
+h2{font-weight:900;font-size:88px;line-height:1.05;letter-spacing:-1.5px;margin-top:28px}
+.hl{color:var(--sage)}.gd{color:var(--gold)}
+.sub{font-size:42px;font-weight:800;color:var(--mut)}
+.cta{display:inline-block;background:var(--sage);color:var(--bg2);font-weight:900;font-size:58px;padding:34px 66px;border-radius:999px;box-shadow:0 20px 60px rgba(140,192,107,.4)}
+.url{font-weight:900;font-size:92px;color:var(--gold)}
+
+.box{position:relative;border-radius:40px;border:4px solid rgba(244,239,226,.25);background:radial-gradient(circle at 30% 20%,#6c8a6f,#4d6a54);
+  box-shadow:0 34px 90px rgba(0,0,0,.45);display:grid;place-items:center;overflow:hidden}
+.box:before{content:"";position:absolute;inset:0;background:linear-gradient(to right,transparent calc(50% - 2px),rgba(244,239,226,.22) calc(50% - 2px),rgba(244,239,226,.22) calc(50% + 2px),transparent calc(50% + 2px)),linear-gradient(to bottom,transparent calc(50% - 2px),rgba(244,239,226,.22) calc(50% - 2px),rgba(244,239,226,.22) calc(50% + 2px),transparent calc(50% + 2px))}
+.box>*{position:relative;z-index:1}
+.ink{color:#13201a;font-weight:700;line-height:1}
+.item{position:absolute;left:70px;right:70px;top:520px;display:flex;flex-direction:column;align-items:center}
+.parts{display:flex;align-items:center;justify-content:center;gap:26px;margin-top:20px}
+.part{display:flex;flex-direction:column;align-items:center;background:rgba(244,239,226,.07);border:3px solid rgba(244,239,226,.14);border-radius:44px;padding:30px 34px 26px;min-width:300px}
+.part .c{font-size:210px;font-weight:900;line-height:1.1}
+.part .e{font-size:56px;font-weight:900;color:var(--sage);margin-top:4px}
+.plus{font-size:96px;font-weight:900;color:var(--gold)}
+.q{font-size:150px;font-weight:900;color:var(--gold);margin-top:80px}
+.wbar{height:18px;border-radius:9px;background:rgba(244,239,226,.12);overflow:hidden;width:560px;margin:24px auto 0}
+.wbar i{display:block;height:100%;background:var(--gold);transform-origin:left}
+.rev{position:absolute;left:0;right:0;top:560px;display:flex;flex-direction:column;align-items:center}
+.emo{font-size:280px;line-height:1.1}
+.big{font-size:118px;font-weight:900;line-height:1.1}.big b{color:var(--sage)}
+.rd{font-size:50px;font-weight:800;color:var(--mut);margin-top:10px}
+.tag{display:inline-block;font-size:40px;font-weight:900;color:var(--bg2);background:var(--gold);border-radius:999px;padding:10px 26px}
+
+</style></head><body>
+
+<section class="sc" style="animation:win .2s 0s both,wout .25s 26.77s forwards">
+  <span class="k a" style="animation:pop .4s .05s both">🇯🇵 Internet slang</span>
+  <h2 class="a" style="animation:up .4s .15s both">How Japanese<br>people <span class="hl">laugh online</span></h2>
+  
+  <div class="item a" style="animation:pop .4s 0.70s both,wout .25s 9.20s forwards">
+    <div class="box" style="width:640px;height:640px"><svg viewBox="0 0 1024 1024" width="560" height="560"><defs><mask id="m31505_0" maskUnits="userSpaceOnUse"><polyline points="308,794 341,753 307,676 167,530" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 1.10s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_1" maskUnits="userSpaceOnUse"><polyline points="332,669 525,706" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 1.43s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_2" maskUnits="userSpaceOnUse"><polyline points="353,606 420,533" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 1.76s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_3" maskUnits="userSpaceOnUse"><polyline points="616,836 651,802 646,776 603,678 517,592" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 2.09s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_4" maskUnits="userSpaceOnUse"><polyline points="655,718 877,749" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 2.42s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_5" maskUnits="userSpaceOnUse"><polyline points="641,627 737,549" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 2.75s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_6" maskUnits="userSpaceOnUse"><polyline points="553,541 577,503 321,444" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 3.08s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_7" maskUnits="userSpaceOnUse"><polyline points="208,292 281,285 683,360 786,352" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 3.41s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_8" maskUnits="userSpaceOnUse"><polyline points="439,429 483,390 455,267 402,165 297,72 150,15" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 3.74s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m31505_9" maskUnits="userSpaceOnUse"><polyline points="480,278 742,55 950,16" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 4.07s cubic-bezier(.4,0,.6,1) both"/></mask></defs><g transform="translate(0,900) scale(1,-1)"><path d="M334,691C356,726 367,748 373,752C377,757 378,761 377,767C375,773 371,780 363,786C340,804 320,811 301,804C296,803 294,798 296,790C304,752 286,697 237,627C210,590 180,558 156,531C151,527 152,523 159,524C205,533 260,579 317,665C328,682 328,682 334,691Z" fill="#13201a" mask="url(#m31505_0)"/><path d="M317,665C339,659 371,658 414,667C443,674 472,682 504,688C520,692 530,696 532,698C536,703 538,708 535,713C530,720 519,726 501,729C482,733 464,729 447,721C428,714 409,708 390,703C372,699 353,695 334,691C324,689 307,667 317,665Z" fill="#13201a" mask="url(#m31505_1)"/><path d="M367,571C377,561 386,548 398,534C405,525 414,521 425,520C431,520 437,525 441,533C445,542 445,557 440,576C436,591 410,604 365,617C355,620 347,622 344,619C340,618 338,611 340,603C340,597 351,587 367,571Z" fill="#13201a" mask="url(#m31505_2)"/><path d="M656,738C680,784 691,809 691,809C689,816 683,822 675,827C653,842 631,848 612,841C606,840 604,833 608,826C618,801 608,753 570,681C550,647 527,616 508,591C504,587 504,583 511,584C553,595 601,639 644,716C652,731 652,731 656,738Z" fill="#13201a" mask="url(#m31505_3)"/><path d="M644,716C676,700 709,699 747,707C824,726 868,734 876,739C882,745 883,751 880,756C875,764 862,771 842,774C821,778 801,774 781,766C763,760 744,754 726,749C705,744 682,741 656,738C648,737 636,719 644,716Z" fill="#13201a" mask="url(#m31505_4)"/><path d="M665,590C679,580 694,567 710,552C718,544 728,541 739,542C745,543 750,548 753,556C755,566 754,581 746,599C738,616 708,629 657,636C646,638 638,637 636,635C632,633 631,627 633,619C634,612 646,603 665,590Z" fill="#13201a" mask="url(#m31505_5)"/><path d="M469,444C501,450 535,460 573,472C583,476 596,479 610,481C620,483 625,488 625,494C624,500 619,509 609,518C586,539 567,550 552,553C545,555 541,552 539,544C527,512 451,481 313,447C304,446 305,440 316,436C319,435 353,425 415,435C451,441 451,441 469,444Z" fill="#13201a" mask="url(#m31505_6)"/><path d="M477,311C567,328 666,335 769,335C783,335 793,338 797,344C801,353 796,363 785,370C748,395 717,403 693,396C642,384 573,367 486,351C449,344 449,344 430,341C361,329 287,316 208,303C193,301 191,294 203,283C222,265 252,261 292,272C332,284 376,293 422,301C459,308 459,308 477,311Z" fill="#13201a" mask="url(#m31505_7)"/><path d="M474,295C475,301 475,306 477,311C483,338 483,338 486,351C492,380 496,398 502,406C507,415 506,422 500,428C493,435 483,440 469,444C452,451 409,452 415,435C429,403 435,370 430,341C427,328 424,315 422,301C401,199 322,112 184,40C169,33 153,27 138,18C126,12 128,7 143,7C235,10 313,46 379,109C412,142 445,193 466,266C471,285 471,285 474,295Z" fill="#13201a" mask="url(#m31505_8)"/><path d="M466,266C624,94 723,2 764,-6C807,-13 868,-8 945,6C958,9 965,12 967,15C968,20 964,25 953,29C813,81 737,108 726,114C671,147 597,192 474,295C467,302 460,274 466,266Z" fill="#13201a" mask="url(#m31505_9)"/></g></svg></div>
+    <div style="position:relative;height:520px;width:100%;margin-top:36px">
+      <div class="a" style="position:absolute;left:0;right:0;animation:pop .4s 4.50s both">
+        <div class="big"><span class="ja">笑</span> = <b>laugh</b> 😄</div><div class="rd" style="font-size:42px">warau · in chats: (笑) after a joke</div></div>
+      <div style="position:absolute;left:0;right:0;top:220px;display:flex;justify-content:center;gap:26px;font-size:84px;font-weight:900">
+        <span class="a" style="animation:pop .35s 5.80s both">(笑)</span><span class="a" style="animation:pop .35s 6.50s both">→ w</span><span class="a hl" style="animation:pop .35s 7.20s both">→ wwwww</span>
+      </div>
+      <div class="rd a" style="position:absolute;left:0;right:0;top:360px;animation:pop .35s 7.90s both">w = <b style="color:var(--gold)">w</b>arau · more w = more laughing</div>
+    </div>
+  </div>
+  <div class="item a" style="animation:pop .4s 9.20s both,wout .25s 14.10s forwards;top:600px">
+    <div style="position:relative;height:330px;width:100%">
+      <div class="a" style="position:absolute;left:0;right:0;font-size:200px;font-weight:900;white-space:nowrap;line-height:1.4;animation:pop .35s 9.20s both,wout .25s 12.10s forwards">wwwww</div>
+      <div class="a" style="position:absolute;left:0;right:0;font-size:150px;line-height:1.8;white-space:nowrap;animation:pop .4s 12.10s both">🌱🌱🌱🌱🌱</div>
+    </div>
+    <div style="position:relative;height:300px;width:100%;margin-top:60px">
+      <div class="a" style="position:absolute;left:0;right:0;animation:pop .3s 9.90s both,wout .25s 12.10s forwards"><div class="big" style="font-size:72px">What does it look like? 👀</div><div class="wbar"><i style="animation:bar 2.2s 9.90s linear both"></i></div></div>
+      <div class="a" style="position:absolute;left:0;right:0;animation:pop .4s 12.30s both"><div class="big"><b>Grass!</b> 🌿</div><div class="rd">a whole lawn of laughing</div></div>
+    </div>
+  </div>
+  <div class="item a" style="animation:pop .4s 14.10s both,wout .25s 20.57s forwards">
+    <div class="box" style="width:640px;height:640px"><svg viewBox="0 0 1024 1024" width="560" height="560"><defs><mask id="m33609_0" maskUnits="userSpaceOnUse"><polyline points="217,686 726,723 819,709" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 14.50s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_1" maskUnits="userSpaceOnUse"><polyline points="349,793 403,761 431,604" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 14.83s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_2" maskUnits="userSpaceOnUse"><polyline points="595,841 638,793 570,613" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 15.16s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_3" maskUnits="userSpaceOnUse"><polyline points="296,556 340,509 382,321" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 15.49s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_4" maskUnits="userSpaceOnUse"><polyline points="352,550 672,566 713,517 636,334" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 15.82s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_5" maskUnits="userSpaceOnUse"><polyline points="378,447 697,480" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 16.15s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_6" maskUnits="userSpaceOnUse"><polyline points="401,354 619,371" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 16.48s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_7" maskUnits="userSpaceOnUse"><polyline points="141,210 198,194 798,253 914,230" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 16.81s cubic-bezier(.4,0,.6,1) both"/></mask><mask id="m33609_8" maskUnits="userSpaceOnUse"><polyline points="464,347 506,315 507,-61" fill="none" stroke="#fff" stroke-width="150" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" style="animation:draw 0.28s 17.14s cubic-bezier(.4,0,.6,1) both"/></mask></defs><g transform="translate(0,900) scale(1,-1)"><path d="M627,694C672,697 736,698 803,691C811,691 818,693 822,698C825,705 823,715 815,723C786,752 736,756 669,741C661,740 655,739 648,737C607,732 607,732 587,729C540,723 490,717 438,711C405,708 405,708 389,706C336,702 282,697 226,692C208,690 205,685 218,675C244,657 285,653 339,663C357,667 377,671 397,674C426,678 426,678 440,680C465,685 531,690 578,693C611,694 611,694 627,694Z" fill="#13201a" mask="url(#m33609_0)"/><path d="M438,711C436,732 434,751 435,768C435,781 428,787 416,793C390,806 370,812 355,805C342,800 341,790 352,777C369,757 382,733 389,706C394,685 394,685 397,674C405,638 414,614 423,604C431,598 437,598 441,605C443,614 443,639 440,680C439,701 439,701 438,711Z" fill="#13201a" mask="url(#m33609_1)"/><path d="M578,693C568,655 562,628 562,616C562,606 568,605 580,613C590,620 606,648 627,694C641,723 641,723 648,737C654,750 660,766 673,782C681,794 683,800 677,808C668,820 653,832 630,844C618,851 606,853 594,846C586,843 588,837 592,828C600,810 597,777 587,729C581,705 581,705 578,693Z" fill="#13201a" mask="url(#m33609_2)"/><path d="M349,555C341,559 325,562 307,564C297,566 293,565 291,561C287,556 287,550 294,538C314,498 333,444 348,377C351,358 357,341 371,327C393,305 397,318 398,345C398,351 397,357 397,362C394,390 386,412 383,434C380,449 380,449 379,457C373,487 369,507 368,519C365,532 362,550 349,555Z" fill="#13201a" mask="url(#m33609_3)"/><path d="M618,361C622,341 626,329 640,329C650,330 656,337 663,346C669,356 682,381 697,424C709,461 729,490 756,510C769,521 771,533 760,544C747,557 722,573 689,592C662,607 629,593 349,555C336,552 355,516 368,519C407,527 502,543 612,551C647,554 655,541 655,512C654,469 644,433 622,380C620,374 617,367 618,361Z" fill="#13201a" mask="url(#m33609_4)"/><path d="M383,434C408,434 630,462 689,469C703,471 708,478 704,485C697,495 685,502 670,504C649,508 476,483 379,457C371,455 375,434 383,434Z" fill="#13201a" mask="url(#m33609_5)"/><path d="M518,350C552,355 585,359 615,361C615,362 616,362 618,361C624,361 627,376 622,380C595,408 570,389 397,362C391,361 393,347 398,345C404,341 424,340 458,343C498,348 498,348 518,350Z" fill="#13201a" mask="url(#m33609_6)"/><path d="M539,212C633,220 748,220 889,213C902,213 913,216 918,222C923,231 918,242 906,252C865,285 823,293 777,285C714,275 599,260 540,253C498,248 498,248 477,246C376,235 267,227 151,217C135,216 131,210 144,195C165,173 193,163 223,169C327,194 366,198 479,207C519,210 519,210 539,212Z" fill="#13201a" mask="url(#m33609_7)"/><path d="M532,1C532,3 535,74 539,212C540,239 540,239 540,253C541,332 554,328 518,350C501,360 448,360 458,343C470,323 474,291 477,246C478,220 478,220 479,207C487,44 489,-45 496,-58C498,-63 506,-68 511,-66C523,-59 530,-35 532,1Z" fill="#13201a" mask="url(#m33609_8)"/></g></svg></div>
+    <div style="position:relative;height:520px;width:100%;margin-top:36px">
+      <div class="a" style="position:absolute;left:0;right:0;animation:pop .4s 17.57s both">
+        <div class="big"><span class="ja">草</span> = <b>grass</b> 🌿</div><div class="rd">kusa</div></div>
+      <div class="a" style="position:absolute;left:0;right:0;top:230px;animation:pop .45s 18.77s both">
+        <div class="big" style="font-size:96px">so <span class="ja">草</span> now means <b>LOL</b> 😂</div><div class="rd">Japanese internet slang</div></div>
+    </div>
+  </div>
+  <div class="item a" style="animation:pop .4s 20.57s both,wout .25s 26.77s forwards">
+    <span class="tag">BONUS</span>
+    <div style="position:relative;margin-top:70px;font-size:330px;font-weight:900;letter-spacing:6px;line-height:1">
+      <span class="a" style="animation:pop .35s 20.87s both">o</span><span class="a" style="animation:pop .35s 21.07s both">r</span><span class="a" style="animation:pop .35s 21.27s both">z</span>
+    </div>
+    <div style="display:flex;justify-content:center;gap:34px;margin-top:40px">
+      <span class="tag a" style="animation:pop .3s 21.57s both">o = head</span>
+      <span class="tag a" style="animation:pop .3s 21.97s both">r = arms</span>
+      <span class="tag a" style="animation:pop .3s 22.37s both">z = legs</span>
+    </div>
+    <div class="a" style="margin-top:70px;animation:pop .45s 24.17s both">
+      <div style="font-size:200px;line-height:1.1">🙇</div>
+      <div class="big" style="font-size:88px">= <b>I give up</b></div><div class="rd">someone on their knees in despair · born on Japanese forums</div></div>
+  </div>
+</section>
+<section class="sc" style="animation:win .3s 26.769999999999996s both;justify-content:center;padding-top:0;background:inherit">
+  <img class="a" src="src/logo.png" style="width:260px;height:260px;border-radius:66px;box-shadow:0 30px 120px rgba(140,192,107,.45);animation:pop .6s 26.819999999999997s both">
+  <div class="a" style="font-weight:900;font-size:76px;line-height:1.1;margin-top:60px;animation:up .5s 26.969999999999995s both">Learn Japanese<br><span class="hl">the fun way</span> 🌱</div>
+  <div class="cta a" style="margin-top:70px;animation:pop .5s 27.219999999999995s both">Try it free</div>
+  <div class="url a" style="margin-top:50px;animation:up .5s 27.369999999999997s both">bloomko.eu</div>
+</section><script>window.seek=(ms)=>document.getAnimations().forEach(a=>{a.pause();a.currentTime=ms;});</script></body></html>

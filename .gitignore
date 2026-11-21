@@ -1,0 +1,12 @@
+/data/
+__pycache__/
+*.pyc
+.venv/
+.env
+node_modules/
+mobile/www/
+.wrangler/
+app/static/dist/
+app/static/vendor/sql-wasm.*
+mobile/.audio-cache/
+mobile/.audio-sample/

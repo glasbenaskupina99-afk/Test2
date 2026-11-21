@@ -1,0 +1,21 @@
+# Search engines and AI assistants are welcome: Bloomko wants to be found.
+User-agent: *
+Allow: /
+
+# AI search and assistants (answers about Bloomko, its word lists and stroke order pages)
+User-agent: Googlebot
+User-agent: Google-Extended
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://bloomko.eu/sitemap.xml

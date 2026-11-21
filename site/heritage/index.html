@@ -1,0 +1,518 @@
+<!doctype html>
+<!-- Generated from site-src/ by mobile/scripts/build-site.ts — edit there, then: cd mobile && npm run build:site -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn Slovenian app — grammar, words & pronunciation for beginners | Bloomko Heritage</title>
+  <meta name="description" content="A free app to learn Slovenian from zero: grammar explained step by step, word endings shown in colour, pronunciation with stress, short stories, an AI tutor that works offline and a garden where every word grows into a plant.">
+  <link rel="canonical" href="https://bloomko.eu/heritage/">
+  <link rel="alternate" hreflang="en" href="https://bloomko.eu/heritage/">
+  <link rel="alternate" hreflang="fr" href="https://bloomko.eu/fr/heritage/">
+  <link rel="alternate" hreflang="es" href="https://bloomko.eu/es/heritage/">
+  <link rel="alternate" hreflang="ja" href="https://bloomko.eu/ja/heritage/">
+  <link rel="alternate" hreflang="x-default" href="https://bloomko.eu/heritage/">
+  <link rel="icon" href="/img/heritage-icon-512.png" type="image/png">
+  <link rel="apple-touch-icon" href="/img/heritage-icon-512.png">
+  <meta name="theme-color" content="#f6efe3">
+  <meta property="og:title" content="Bloomko Heritage — small languages, learned with love">
+  <meta property="og:description" content="Slovenian now, Icelandic soon. Grammar that makes sense, endings in colour, a garden where every word is a plant and an AI tutor that lives on your phone. Coming soon to Android.">
+  <meta property="og:image" content="https://bloomko.eu/img/heritage-icon-512.png">
+  <meta property="og:url" content="https://bloomko.eu/heritage/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"When can I get Bloomko Heritage?","acceptedAnswer":{"@type":"Answer","text":"It's in its last stretch of testing. Android comes first, iPhone follows. Leave your email and you'll be among the first to try it."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes — Bloomko Heritage is free to download, with no ads."}},{"@type":"Question","name":"Is there a Duolingo for Slovenian?","acceptedAnswer":{"@type":"Answer","text":"Duolingo doesn't teach Slovenian — and neither do most big apps. Bloomko Heritage was made for exactly that: a full beginner (A1) course with grammar, vocabulary, pronunciation, short stories and review."}},{"@type":"Question","name":"How hard is Slovenian to learn?","acceptedAnswer":{"@type":"Answer","text":"Slovenian has cases and three numbers — singular, dual and plural — so the endings take practice. Spelling is easy, though: words are written the way they sound. Bloomko shows every ending in colour and introduces one thing at a time."}},{"@type":"Question","name":"What is the dual in Slovenian?","acceptedAnswer":{"@type":"Answer","text":"Slovenian has a special form for exactly two of something: ena hiša (one house), dve hiši (two houses), tri hiše (three houses). It's one of the few languages that kept it, and Bloomko teaches it step by step."}},{"@type":"Question","name":"Do I need to know any Slovenian?","acceptedAnswer":{"@type":"Answer","text":"No. The course starts at zero: greetings, “I am”, numbers, family — and builds up to the cases one step at a time. If you already know some, skip ahead."}},{"@type":"Question","name":"Does it work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. Lessons, reviews and even the AI tutor run on your phone. You only need the internet for the one-time AI download and, if you want them, sync and backups."}},{"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. Your progress stays on your phone. An account is optional and keeps your progress the same on all your devices, encrypted before it leaves your phone."}},{"@type":"Question","name":"How does the garden work?","acceptedAnswer":{"@type":"Answer","text":"Every word you learn becomes a plant — one of 28 real species. Review it on time and it grows; skip its reviews and it wilts; forget it for long and it disappears until you practise it again. Friends can visit and water your garden."}}]}</script>
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:ital,wght@0,600;0,700;1,700&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Lora:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet"></noscript>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Bloomko Heritage","operatingSystem":"Android","applicationCategory":"EducationalApplication",
+   "description":"Learn lesser-known languages: Slovenian now, Icelandic soon. Slovenian A1: 564 words, 30 grammar lessons with endings in colour, pronunciation with stress, a garden where every learned word grows into a real plant, and an offline AI tutor.",
+   "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"url":"https://bloomko.eu/heritage/","inLanguage":["en","fr","es","ja"]}
+  </script>
+  <style>
+    :root {
+      --bg: #f6efe3; --surface: #fffaf1; --surface-2: #f1e6d3; --border: #e4d4ba;
+      --text: #4a3628; --strong: #33241b; --muted: #76614f;
+      --rust: #a8462f; --rust-dark: #80331f; --ink: #2c4a6e; --honey: #d39b32; --moss: #56743f;
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: "Nunito", system-ui, sans-serif; color: var(--text); line-height: 1.6; overflow-x: hidden;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 8'%3E%3Cpath d='M1 1l6 6M7 1l-6 6' stroke='%23a8462f' stroke-opacity='.3' stroke-width='1.2'/%3E%3C/svg%3E") repeat-x left 6px / 20px 8px,
+        radial-gradient(ellipse 100% 55% at 10% -10%, rgba(211, 155, 50, .18), transparent 60%),
+        radial-gradient(ellipse 70% 40% at 100% 50%, rgba(95, 127, 74, .08), transparent 60%), var(--bg);
+    }
+    a { color: inherit; }
+    :lang(ja) h1, :lang(ja) h2, :lang(ja) h3 { word-break: auto-phrase; }
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 22px; }
+    h1, h2, h3 { color: var(--strong); line-height: 1.15; margin: 0; font-family: "Lora", Georgia, serif; font-weight: 700; }
+    :lang(ja) h1, :lang(ja) h2, :lang(ja) h3 { font-family: "Nunito", system-ui, sans-serif; font-weight: 900; }
+
+    nav { display: flex; align-items: center; gap: 12px; padding: 24px 0 20px; position: relative; z-index: 5; }
+    nav .logo { width: 42px; height: 42px; border-radius: 11px; }
+    nav .brand { font-weight: 700; font-size: 24px; color: var(--strong); font-family: "Lora", Georgia, serif; text-decoration: none; }
+    .editions { display: inline-flex; padding: 4px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); margin-left: 6px; }
+    .ed { padding: 6px 14px; border-radius: 99px; font-weight: 800; font-size: 14px; color: var(--muted); text-decoration: none; }
+    .ed.on { background: var(--rust); color: #fffaf1; }
+    .ed:not(.on):hover { color: var(--strong); }
+    .navlinks { display: flex; gap: 18px; margin-left: auto; }
+    .navlink { font-weight: 800; color: var(--muted); text-decoration: none; font-size: 15px; white-space: nowrap; }
+    .navlink:hover { color: var(--strong); }
+    .langmenu { position: relative; }
+    .langmenu summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14px; padding: 7px 12px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); color: var(--strong); }
+    .langmenu summary::-webkit-details-marker { display: none; }
+    .langmenu summary svg { width: 16px; height: 16px; }
+    .langmenu[open] summary { border-color: var(--rust); }
+    .langmenu ul { position: absolute; right: 0; top: calc(100% + 8px); margin: 0; padding: 6px; list-style: none; min-width: 170px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 40px rgba(80,50,30,.18); }
+    .langmenu a { display: flex; justify-content: space-between; gap: 12px; padding: 9px 12px; border-radius: 10px; text-decoration: none; font-weight: 800; }
+    .langmenu a:hover { background: var(--surface-2); }
+    .langmenu a[aria-current] { color: var(--rust); }
+    .langmenu a small { color: var(--muted); font-weight: 700; }
+    .pill { font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 7px 12px; border-radius: 99px; border: 2px solid var(--rust); color: var(--rust); white-space: nowrap; }
+    html { overflow-x: clip; }
+    nav { flex-wrap: wrap; }
+    .navlink.ext { color: var(--strong); }
+    @media (max-width: 1240px) { .navlink:not(.ext) { display: none; } }
+    @media (max-width: 980px) { .navlinks { order: 10; width: 100%; margin: 0; justify-content: center; gap: 22px; } .langmenu { margin-left: auto; } }
+    @media (max-width: 560px) { nav .pill { display: none; } nav .brand { font-size: 20px; } nav .logo { width: 36px; height: 36px; } .ed { padding: 5px 10px; font-size: 13px; } }
+    @media (max-width: 400px) { nav .brand { display: none; } }
+
+    .suggest { display: none; margin: 0 auto; max-width: 1140px; padding: 14px 22px 0; }
+    .suggest.show { display: block; }
+    .suggest div { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); font-weight: 800; font-size: 15px; }
+    .suggest a { color: var(--rust); text-decoration: none; }
+    .suggest button { margin-left: auto; background: none; border: 0; color: var(--muted); font-size: 20px; cursor: pointer; line-height: 1; }
+
+    .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; padding: 30px 0 70px; }
+    .badge-new { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14px; padding: 6px 14px 6px 6px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); color: var(--strong); text-decoration: none; margin-bottom: 18px; }
+    .badge-new b { background: var(--moss); color: #fffaf1; border-radius: 99px; padding: 2px 10px; font-size: 12px; letter-spacing: .6px; }
+    .badge-new:hover { border-color: var(--moss); }
+    .hero h1 { font-size: clamp(40px, 5.6vw, 66px); letter-spacing: -.3px; }
+    .hero h1 em { font-style: italic; color: var(--rust); display: block; font-size: .62em; margin-top: .12em; }
+    :lang(ja) .hero h1 em { font-style: normal; }
+    .hero p.lead { font-size: 20px; color: var(--muted); margin: 22px 0 26px; max-width: 34em; }
+    .hero p.lead b { color: var(--strong); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+    .tags span { padding: 7px 13px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); font-weight: 800; font-size: 14px; }
+    .end { color: #b5442a; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 15px 24px; border-radius: 99px; border: 0; font: inherit; font-weight: 900; font-size: 16px; background: var(--rust); color: #fffaf1; box-shadow: 0 10px 24px rgba(128, 51, 31, .22); cursor: pointer; text-decoration: none; transition: transform .15s, background .15s; }
+    .btn:hover { background: var(--rust-dark); transform: translateY(-1px); }
+    .notify { display: flex; flex-wrap: wrap; gap: 10px; max-width: 520px; }
+    .notify input[type=email] { flex: 1 1 240px; min-width: 0; padding: 15px 18px; border-radius: 99px; border: 1.5px solid var(--border); background: var(--surface); font: inherit; font-weight: 700; color: var(--strong); outline: none; }
+    .notify input[type=email]:focus { border-color: var(--rust); }
+    .notify .btn:disabled { opacity: .6; cursor: default; }
+    .notify .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .notify-note { flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+    .notify-done { flex-basis: 100%; font-weight: 800; color: var(--moss); padding: 14px 18px; border-radius: 18px; background: var(--surface); border: 1.5px solid var(--moss); }
+    .notify.center { justify-content: center; margin: 0 auto; }
+    .notify.center .notify-note, .notify.center .notify-done { text-align: center; }
+
+    .phones { position: relative; height: 610px; }
+    .phone { position: absolute; width: 262px; border-radius: 34px; overflow: hidden; border: 6px solid #3a2a20; box-shadow: 0 30px 60px rgba(80, 50, 30, .3); background: #3a2a20; aspect-ratio: 390 / 844; }
+    .phone img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .phone.p1 { left: 2%; top: 46px; transform: rotate(-6deg); }
+    .phone.p2 { left: 32%; top: 0; z-index: 2; }
+    .phone.p3 { right: 0; top: 76px; transform: rotate(6deg); }
+    .float { animation: float 7s ease-in-out infinite; }
+    .p1.float { animation-delay: -2s; } .p3.float { animation-delay: -4s; }
+    @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+    .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding-bottom: 10px; }
+    .stat { text-align: center; padding: 18px 10px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); }
+    .stat b { display: block; font-family: "Lora", Georgia, serif; font-size: 30px; color: var(--rust); line-height: 1.2; }
+    .stat span { font-size: 14px; color: var(--muted); font-weight: 800; }
+
+    section { padding: 76px 0; }
+    .eyebrow { display: inline-flex; gap: 8px; font-weight: 800; color: var(--moss); font-size: 15px; margin-bottom: 12px; }
+    .section-head { text-align: center; max-width: 740px; margin: 0 auto 44px; }
+    .section-head h2 { font-size: clamp(30px, 4vw, 44px); }
+    .section-head p { color: var(--muted); font-size: 18px; margin: 14px 0 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 24px; transition: transform .2s, box-shadow .2s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 16px 30px rgba(80, 50, 30, .1); }
+    .card .ico { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-size: 24px; margin-bottom: 14px; background: var(--surface-2); }
+    .card h3 { font-size: 20px; margin-bottom: 8px; }
+    .card p { margin: 0; color: var(--muted); font-size: 16px; }
+    .new { display: inline-block; font-family: "Nunito", sans-serif; font-size: 11px; font-weight: 900; letter-spacing: .8px; text-transform: uppercase; color: #fffaf1; background: var(--moss); border-radius: 99px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .split.rev .text { order: 2; }
+    .split .shot { display: flex; justify-content: center; }
+    .split .shot .phone { position: static; transform: none; width: 290px; aspect-ratio: auto; }
+    .split .shot .phone img { height: auto; }
+    .split h2 { font-size: clamp(28px, 3.4vw, 40px); margin-bottom: 16px; }
+    .split p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .split ul { padding: 0; margin: 18px 0 0; list-style: none; }
+    .split li { padding-left: 30px; position: relative; margin: 10px 0; font-size: 17px; }
+    .split li::before { content: "✕"; position: absolute; left: 4px; color: var(--rust); font-size: 13px; top: 3px; }
+    .example { margin-top: 18px; padding: 16px 20px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); font-family: "Lora", Georgia, serif; font-size: 22px; color: var(--strong); line-height: 1.7; }
+
+
+    /* the demo video */
+    .demo { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; }
+    .demo .phone { position: static; transform: none; width: 300px; aspect-ratio: 390 / 844; }
+    .demo video { display: block; width: 100%; height: 100%; object-fit: cover; background: #3a2a20; }
+    .demo h2 { font-size: clamp(30px, 3.6vw, 42px); margin-bottom: 16px; }
+    .demo p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .demo .note { font-size: 14px; }
+    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; justify-items: center; text-align: center; } .demo .phone { width: 270px; } }
+    /* the demo garden */
+    .garden { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
+    .garden h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 16px; }
+    .garden .text p { color: var(--muted); font-size: 18px; margin: 0 0 14px; }
+    .life { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
+    .life div { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); font-size: 15px; }
+    .life b { color: var(--strong); display: block; }
+    .life span { color: var(--muted); }
+    .life i { font-style: normal; font-size: 22px; line-height: 1.2; }
+    .bedwrap { border-radius: 30px; padding: 22px 20px 18px; background: linear-gradient(180deg, #c6dfa9 0%, #a3c97f 40%, #93bd6d 100%); box-shadow: 0 30px 60px rgba(80,50,30,.22), inset 0 -6px 0 rgba(0,0,0,.06); position: relative; }
+    .bed-sign { display: inline-flex; gap: 10px; align-items: center; font-weight: 900; padding: 6px 14px; border-radius: 12px; background: #fffaf1; color: #33241b; border: 2px solid #e4d4ba; font-size: 15px; margin: 0 0 12px 6px; }
+    .bed-sign small { color: #76614f; font-weight: 800; }
+    .bed { position: relative; border-radius: 22px; background: #8a6446; border: 5px solid #a77d58; padding: 16px 10px 8px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px 2px; min-height: 230px; }
+    .spot { position: relative; display: flex; justify-content: center; align-items: flex-end; height: 92px; cursor: pointer; background: none; border: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    .spot::after { content: ""; position: absolute; bottom: 4px; left: 50%; width: 40px; height: 9px; margin-left: -20px; border-radius: 50%; background: rgba(0,0,0,.18); }
+    .spot svg { width: 58px; height: auto; position: relative; z-index: 1; transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.3,1.6,.5,1), filter .6s, opacity .6s; transform: scale(0); }
+    .bed.grown .spot svg { transform: scale(1); }
+    .spot:hover svg, .spot:focus-visible svg { transform: scale(1.12) !important; }
+    .spot.wilt svg { filter: saturate(.25) brightness(.85) sepia(.4); transform: rotate(9deg) scale(.86) !important; }
+    .spot.gone svg { opacity: 0; transform: scale(.2) !important; }
+    .spot.gone::before { content: "·"; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); color: #5f4330; font-size: 40px; line-height: 0; z-index: 1; }
+    .ptag { position: absolute; left: 50%; bottom: calc(100% - 6px); transform: translateX(-50%); z-index: 4; white-space: nowrap; background: #fffaf1; color: #33241b; border-radius: 12px; padding: 6px 12px; font-size: 14px; font-weight: 800; box-shadow: 0 8px 20px rgba(0,0,0,.2); pointer-events: none; }
+    .ptag::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -6px; border: 6px solid transparent; border-top-color: #fffaf1; }
+    .ptag .w { font-size: 16px; margin: 0 4px; }
+    .ptag small { color: #76614f; font-weight: 700; }
+    .gcontrols { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; justify-content: center; }
+    .gcontrols button { font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; border-radius: 99px; border: 0; background: rgba(51, 36, 27, .78); color: #fffaf1; padding: 9px 16px; }
+    .gcontrols button:hover { background: #33241b; }
+    .ghint { text-align: center; color: rgba(51,36,27,.75); font-weight: 800; font-size: 13px; margin-top: 10px; }
+
+    /* steps */
+    .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; counter-reset: step; }
+    .step { position: relative; padding: 24px 18px 20px; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); }
+    .step::before { counter-increment: step; content: counter(step); position: absolute; top: -16px; left: 18px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; background: var(--rust); color: #fffaf1; font-family: "Lora", Georgia, serif; }
+    .step .ico { font-size: 30px; margin: 4px 0 8px; }
+    .step h3 { font-size: 18px; margin-bottom: 6px; }
+    .step p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    /* friends mock */
+    .friends { background: var(--surface); border: 1px solid var(--border); border-radius: 26px; padding: 20px; max-width: 420px; width: 100%; justify-self: center; box-shadow: 0 30px 60px rgba(80,50,30,.18); }
+    .friends h3 { font-size: 22px; margin: 2px 4px 12px; }
+    .fnote { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 16px; background: #dcebf5; color: #2c4a6e; font-weight: 800; margin-bottom: 12px; font-size: 15px; }
+    .frow { display: flex; align-items: center; gap: 12px; padding: 12px 6px; border-top: 1px solid var(--border); }
+    .frow .ava { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; background: var(--bg); border: 1px solid var(--border); }
+    .frow b { display: block; color: var(--strong); }
+    .frow small { color: var(--muted); font-weight: 700; }
+    .frow span.b { margin-left: auto; font-weight: 900; font-size: 14px; padding: 8px 14px; border-radius: 99px; background: var(--ink); color: #fff; white-space: nowrap; }
+    .frow span.b.done { background: var(--surface); color: var(--ink); border: 1px solid #c9d6df; }
+    .fcode { margin-top: 12px; text-align: center; font-weight: 800; font-size: 14px; color: var(--muted); }
+    .fcode b { letter-spacing: 2px; color: var(--strong); font-size: 16px; }
+
+    .langs { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .lang { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 18px; min-width: 230px; background: var(--surface); border: 1px solid var(--border); text-decoration: none; }
+    .lang .flag { font-size: 30px; }
+    .lang b { display: block; font-size: 17px; color: var(--strong); }
+    .lang span { color: var(--muted); font-size: 14px; }
+    .lang.now { border: 2px solid var(--rust); }
+    .lang.next { border-style: dashed; }
+    .lang.soon { border: 2px dashed var(--ink); }
+    .lang.soon span { color: var(--ink); font-weight: 800; }
+    .vote { text-align: center; margin-top: 22px; color: var(--muted); }
+    .vote a { color: var(--rust); font-weight: 800; }
+    .uilangs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 18px; }
+    .uilangs span, .uilangs a { font-weight: 800; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); color: var(--strong); text-decoration: none; }
+    .uilangs a:hover { border-color: var(--rust); }
+    .uilangs span:first-child { border: 0; background: none; color: var(--muted); padding-right: 2px; }
+
+    .private { background: linear-gradient(135deg, var(--surface), var(--surface-2)); border: 1px solid var(--border); border-radius: 28px; padding: 44px; display: grid; grid-template-columns: auto 1fr; gap: 30px; align-items: center; }
+    .private .big { font-size: 64px; }
+    .private h2 { font-size: 32px; margin-bottom: 10px; }
+    .private p { color: var(--muted); font-size: 18px; margin: 0; }
+    .checks { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; padding: 0; list-style: none; font-weight: 800; color: var(--strong); }
+
+    .faq { max-width: 820px; margin: 0 auto; display: grid; gap: 10px; }
+    .faq details { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 0 20px; }
+    .faq summary { cursor: pointer; list-style: none; font-weight: 900; color: var(--strong); font-size: 18px; padding: 18px 30px 18px 0; position: relative; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; position: absolute; right: 0; top: 14px; font-size: 26px; color: var(--rust); transition: transform .2s; }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { margin: 0 0 18px; color: var(--muted); font-size: 16.5px; }
+
+    .final { text-align: center; padding: 80px 22px 90px; }
+    .final img { width: 96px; height: 96px; border-radius: 24px; }
+    .final h2 { font-size: clamp(32px, 4vw, 46px); margin: 18px 0 12px; }
+    .final > p { color: var(--muted); font-size: 18px; max-width: 560px; margin: 0 auto 24px; }
+    .perks { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; margin: 0 auto 26px; max-width: 760px; padding: 0; list-style: none; }
+    .perks li { font-weight: 800; color: var(--strong); }
+    .final .contact { margin: 30px auto 0; color: var(--muted); }
+    .final .contact a, footer a { color: var(--rust); font-weight: 800; text-decoration: none; }
+    footer { border-top: 1px solid var(--border); padding: 26px 0 40px; font-size: 14px; color: var(--muted); }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+    footer nav { padding: 0; gap: 14px; flex-wrap: wrap; }
+    .sticky-cta { display: none; }
+    .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .js .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .float { animation: none; } .js .reveal { opacity: 1; transform: none; transition: none; } .spot svg { transition: none; } }
+
+    @media (max-width: 980px) {
+      .steps { grid-template-columns: repeat(2, 1fr); row-gap: 28px; }
+      .steps .step:last-child { grid-column: span 2; }
+    }
+    @media (max-width: 900px) {
+      .hero, .split, .garden { grid-template-columns: 1fr; }
+      .split.rev .text { order: 0; }
+      .phones { height: 480px; max-width: 520px; margin: 0 auto; width: 100%; }
+      .phone { width: 205px; }
+      .phone.p2 { left: 30%; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .stats { grid-template-columns: repeat(3, 1fr); }
+      .private { grid-template-columns: 1fr; text-align: center; padding: 34px 24px; }
+      .checks { justify-content: center; }
+    }
+    @media (max-width: 700px) {
+      .sticky-cta { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 20; justify-content: center; padding: 14px; border-radius: 99px; font-weight: 900; text-decoration: none;
+        background: var(--rust); color: #fffaf1; box-shadow: 0 12px 30px rgba(80,50,30,.35); transition: transform .3s, opacity .3s; }
+      .sticky-cta.hide { transform: translateY(140%); opacity: 0; }
+      footer { padding-bottom: 90px; }
+    }
+    @media (max-width: 600px) {
+      .grid, .steps { grid-template-columns: 1fr; }
+      .steps .step:last-child { grid-column: auto; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stats .stat:last-child { grid-column: span 2; }
+      .phones { height: 400px; }
+      .phone { width: 168px; border-width: 4px; border-radius: 26px; }
+      .phone.p1 { left: 0; } .phone.p2 { left: 27%; } .phone.p3 { right: 0; }
+      .hero p.lead { font-size: 18px; }
+      section { padding: 54px 0; }
+      .split .shot .phone { width: 250px; }
+      .lang { min-width: 0; width: 100%; }
+      .life { grid-template-columns: 1fr; }
+      .bed { grid-template-columns: repeat(4, 1fr); }
+      .bedwrap { padding: 18px 12px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="suggest" id="suggest"><div><span id="suggest-text"></span><button type="button" aria-label="×" id="suggest-close">×</button></div></div>
+  <div class="wrap">
+    <nav>
+      <a href="/heritage/" aria-label="Bloomko Heritage"><img class="logo" src="/img/heritage-logo.png" alt=""></a>
+      <a class="brand" href="/heritage/">Bloomko</a>
+      <div class="editions" role="tablist" aria-label="Bloomko apps">
+        <a class="ed" href="/" role="tab" aria-selected="false">East</a>
+        <a class="ed on" href="/heritage/" role="tab" aria-selected="true">Heritage</a>
+      </div>
+      <div class="navlinks">
+        <a class="navlink" href="#demo">Video</a>
+        <a class="navlink" href="#garden">The garden</a>
+        <a class="navlink" href="#grammar">Grammar</a>
+        <a class="navlink" href="#faq">FAQ</a>
+        <a class="navlink ext" href="/slovenian/">Slovenian</a>
+      </div>
+      <details class="langmenu"><summary aria-label="EN · Language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>EN</summary><ul><li><a href="/heritage/" hreflang="en" lang="en" aria-current="page">English<small>EN</small></a></li><li><a href="/fr/heritage/" hreflang="fr" lang="fr">Français<small>FR</small></a></li><li><a href="/es/heritage/" hreflang="es" lang="es">Español<small>ES</small></a></li><li><a href="/ja/heritage/" hreflang="ja" lang="ja">日本語<small>JA</small></a></li></ul></details>
+      <span class="pill">Coming soon</span>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <a class="badge-new" href="#garden"><b>2.1</b> Every Slovenian word you learn is now a real plant 🌷</a>
+        <h1>Learn Slovenian <em>A small language, learned with love.</em></h1>
+        <p class="lead">The languages most apps skip deserve a good app too. Bloomko Heritage starts with <b>Slovenian</b>, with <b>Icelandic</b> coming soon: grammar taken one step at a time, <b>word endings shown in colour</b>, pronunciation with stress marks, an AI tutor that works offline — and a garden where every word you learn grows into a plant.</p>
+        <div class="tags"><span>🇸🇮 Slovenian A1</span><span>🇮🇸 Icelandic · soon</span><span>🎨 Endings in colour</span><span>🌷 A plant for every word</span><span>💬 Offline AI tutor</span></div>
+        <form class="notify" data-notify>
+          <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-label="Your email address">
+          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">🌿 Get early access</button>
+          <p class="notify-note">Be among the first to try Bloomko Heritage on Android. No spam, ever.</p>
+        </form>
+      </div>
+      <div class="phones" aria-hidden="true">
+        <div class="phone p1 float"><img src="/img/en/heritage-words.webp" alt="" width="280" height="606"></div>
+        <div class="phone p2 float"><img src="/img/en/heritage-home.webp" alt="" width="280" height="606"></div>
+        <div class="phone p3 float"><img src="/img/en/heritage-garden.webp" alt="" width="280" height="606"></div>
+      </div>
+    </header>
+
+    <div class="stats" aria-label="Slovenian in Bloomko Heritage">
+      <div class="stat"><b>564</b><span>Slovenian words</span></div>
+      <div class="stat"><b>30</b><span>grammar lessons</span></div>
+      <div class="stat"><b>91</b><span>ending drills</span></div>
+      <div class="stat"><b>28</b><span>kinds of plants</span></div>
+      <div class="stat"><b>100%</b><span>offline AI tutor</span></div>
+    </div>
+  </div>
+
+  <section id="demo">
+    <div class="wrap demo">
+      <div class="text reveal">
+        <div class="eyebrow">🎬 See it in action</div>
+        <h2>One minute with Bloomko</h2>
+        <p>A real look at the app: a new Slovenian word with its stressed syllable, practising it, the garden where your words grow, and a story where every word can be tapped.</p>
+        <p class="note muted">Video in English · no sound</p>
+      </div>
+      <div class="phone reveal"><video src="/video/heritage-demo.mp4" poster="/video/heritage-demo.jpg" controls playsinline muted preload="none" aria-label="One minute with Bloomko"></video></div>
+    </div>
+  </section>
+
+  <section id="grammar">
+    <div class="wrap split">
+      <div class="text reveal">
+        <h2>Grammar that finally makes sense</h2>
+        <p>Slovenian has cases, three genders and even a dual. Bloomko Heritage takes them one at a time, with real examples — and the part that changes is always in colour, so you see the pattern instead of memorising tables.</p>
+        <div class="example">hiš<span class="end">a</span> → v hiš<span class="end">i</span> → brez hiš<span class="end">e</span><br>Grem v trgovin<span class="end">o</span>.</div>
+        <ul><li>30 lessons: gender, “biti”, the verb groups, every case, dual, past, future</li><li>Ending drills: pick the right form and see why</li><li>A grammar book you can look things up in any time</li></ul>
+      </div>
+      <div class="shot reveal"><div class="phone"><img src="/img/en/heritage-drill.webp" alt="An ending drill in Bloomko Heritage" loading="lazy" width="280" height="606"></div></div>
+    </div>
+  </section>
+
+  <section id="garden">
+    <div class="wrap garden">
+      <div class="text reveal">
+        <div class="eyebrow">🌷 New in 2.1</div>
+        <h2>Every word you learn grows into a real plant</h2>
+        <p>Your garden isn't a scoreboard — it's alive. Each word becomes its own plant, one of 28 real species from oak and lotus to lavender and edelweiss, always the same plant for the same word. Tap a plant and it tells you its name and the word it grew from.</p>
+        <div class="life">
+          <div><i>🌱</i><p style="margin:0"><b>Learn a word</b><span>a new plant sprouts in its topic's bed</span></p></div>
+          <div><i>🥀</i><p style="margin:0"><b>Skip its reviews</b><span>it gets thirsty, then wilts</span></p></div>
+          <div><i>🍂</i><p style="margin:0"><b>Forget it for long</b><span>the plant disappears — bare soil</span></p></div>
+          <div><i>💧</i><p style="margin:0"><b>Practise it again</b><span>and it grows right back</span></p></div>
+        </div>
+      </div>
+      <div class="bedwrap reveal" data-garden>
+        <div class="bed-sign"><span data-gname></span> <small data-gcount></small></div>
+        <div class="bed" data-bed></div>
+        <div class="gcontrols">
+          <button type="button" data-gact="forget">🍂 Skip reviews</button>
+          <button type="button" data-gact="practise">💧 Practise</button>
+        </div>
+        <div class="ghint">👆 Tap a plant to see its name</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>How Bloomko Heritage works</h2>
+        <p>Short daily lessons that build on each other. Bloomko tells you what's next — you just show up.</p>
+      </div>
+      <div class="steps reveal">
+        <div class="step"><div class="ico">🗣️</div><h3>Hear & say new words</h3><p>Every word with audio and its stressed syllable: ZDRA-vo, DOB-ro JU-tro.</p></div>
+        <div class="step"><div class="ico">🎨</div><h3>See the endings change</h3><p>Short grammar lessons with the changing part in colour, then quick ending drills.</p></div>
+        <div class="step"><div class="ico">🌷</div><h3>Water your garden</h3><p>Practise every day and your streak plant grows. Every learned word blooms in your garden.</p></div>
+        <div class="step"><div class="ico">💬</div><h3>Talk with the AI</h3><p>Order coffee or ask the way with Gemma, using only words you know.</p></div>
+        <div class="step"><div class="ico">⏳</div><h3>Review at the right time</h3><p>Words and grammar come back just before you'd forget them.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Everything you need to start speaking</h2>
+        <p>Short daily lessons, real conversations and a garden that grows every day you practise.</p>
+      </div>
+      <div class="grid reveal">
+        <div class="card"><div class="ico">🗣️</div><h3>Say it right</h3><p>Every word with its stressed syllable and audio, plus a check of your own pronunciation.</p></div>
+        <div class="card"><div class="ico">💬</div><h3>Talk with an AI tutor</h3><p>Order coffee or ask the way with Gemma. It runs on your phone, uses the words you know and gently fixes mistakes.</p></div>
+        <div class="card"><div class="ico">✍️</div><h3>Write, type & say</h3><p>Sentences, dictation and listening practice built from the words you've learned.</p></div>
+        <div class="card"><div class="ico">📷</div><h3>Words from photos</h3><p>Point your camera at a menu or a sign and turn the new words into your own list.</p></div>
+        <div class="card"><div class="ico">👥</div><h3>Friends & gardens <span class="new">new</span></h3><p>Visit a friend's garden and water it — a gentle nudge to keep their streak. No feeds, no leaderboards.</p></div>
+        <div class="card"><div class="ico">☁️</div><h3>Account & cloud backup <span class="new">new</span></h3><p>Optional. Sign in on a new phone and everything is there; backups are encrypted on your device first.</p></div>
+        <div class="card"><div class="ico">🃏</div><h3>Bring your Anki decks <span class="new">new</span></h3><p>Import an .apkg deck as your own word list — even keep the progress you made in Anki.</p></div>
+        <div class="card"><div class="ico">💧</div><h3>A streak that forgives</h3><p>Raindrops save a missed day, and soft nature sounds replace buzzers.</p></div>
+        <div class="card"><div class="ico">🌍</div><h3>In your language</h3><p>The app speaks English, French, Spanish and Japanese — menus, meanings and memory hooks.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap split rev">
+      <div class="text reveal">
+        <div class="eyebrow">👥 Learn together, gently</div>
+        <h2>Water a friend's garden</h2>
+        <p>Share your friend code and visit each other's gardens. Watering a friend's plants once a day is a small “I'm with you” — they see it the next time they open Bloomko, right when they need a reason to practise.</p>
+        <ul><li>See your friends' streaks and how their gardens grow</li><li>Water each garden once a day — a soft nudge, never a guilt trip</li><li>Friends only see your name, streak and garden — never your words</li></ul>
+      </div>
+      <div class="friends reveal" aria-hidden="true">
+        <h3>👥 Friends</h3>
+        <div class="fnote">💧 Ana and Tomo watered your garden</div>
+        <div class="frow"><span class="ava">🌷</span><div><b>Ana</b><small>🔥 41 · 312 plants · practised today</small></div><span class="b done">Visited ✓</span></div>
+        <div class="frow"><span class="ava">🌱</span><div><b>Tomo</b><small>🔥 6 · 58 plants · not yet today</small></div><span class="b">💧 Visit</span></div>
+        <div class="frow"><span class="ava">🌷</span><div><b>Kenji</b><small>🔥 120 · 504 plants · practised today</small></div><span class="b">💧 Visit</span></div>
+        <div class="fcode">Your friend code: <b>K7QM-4TRA</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Slovenian now, Icelandic soon</h2>
+        <p>Heritage is for languages with a big culture and a small number of learners. Slovenian is here, Icelandic is on its way — tell us which one you'd love to learn after that.</p>
+      </div>
+      <div class="langs reveal">
+        <div class="lang now"><span class="flag">🇸🇮</span><div><b>Slovenščina</b><span>Available · A1</span></div></div>
+        <div class="lang soon"><span class="flag">🇮🇸</span><div><b>Íslenska</b><span>Icelandic · coming soon</span></div></div>
+        <a class="lang next" href="mailto:thebloomko@gmail.com?subject=Bloomko%20Heritage%3A%20next%20language"><span class="flag">🌍</span><div><b>Your language?</b><span>Welsh, Maltese, Basque, Estonian… tell us</span></div></a>
+      </div>
+      <div class="uilangs reveal" aria-label="App in:"><span>App in:</span><a href="/heritage/" hreflang="en" lang="en">English</a><a href="/fr/heritage/" hreflang="fr" lang="fr">Français</a><a href="/es/heritage/" hreflang="es" lang="es">Español</a><a href="/ja/heritage/" hreflang="ja" lang="ja">日本語</a></div>
+      <p class="vote">Looking for Chinese or Japanese? They live in <a href="/">Bloomko East</a>.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="private reveal">
+        <div class="big">🔒</div>
+        <div>
+          <h2>Private by design</h2>
+          <p>No ads and no tracking. The AI tutor runs on your phone, so your sentences never leave it. An account is optional: without one, your progress simply lives on your phone. With one, sync and backups are encrypted on your device before they're sent — not even we can read them.</p>
+          <ul class="checks"><li>✓ No ads</li><li>✓ No tracking</li><li>✓ Works offline</li><li>✓ Encrypted sync &amp; backup</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal"><h2>Questions & answers</h2></div>
+      <div class="faq reveal"><details><summary>When can I get Bloomko Heritage?</summary><p>It's in its last stretch of testing. Android comes first, iPhone follows. Leave your email and you'll be among the first to try it.</p></details><details><summary>Is it free?</summary><p>Yes — Bloomko Heritage is free to download, with no ads.</p></details><details><summary>Is there a Duolingo for Slovenian?</summary><p>Duolingo doesn't teach Slovenian — and neither do most big apps. Bloomko Heritage was made for exactly that: a full beginner (A1) course with grammar, vocabulary, pronunciation, short stories and review.</p></details><details><summary>How hard is Slovenian to learn?</summary><p>Slovenian has cases and three numbers — singular, dual and plural — so the endings take practice. Spelling is easy, though: words are written the way they sound. Bloomko shows every ending in colour and introduces one thing at a time.</p></details><details><summary>What is the dual in Slovenian?</summary><p>Slovenian has a special form for exactly two of something: ena hiša (one house), dve hiši (two houses), tri hiše (three houses). It's one of the few languages that kept it, and Bloomko teaches it step by step.</p></details><details><summary>Do I need to know any Slovenian?</summary><p>No. The course starts at zero: greetings, “I am”, numbers, family — and builds up to the cases one step at a time. If you already know some, skip ahead.</p></details><details><summary>Does it work offline?</summary><p>Yes. Lessons, reviews and even the AI tutor run on your phone. You only need the internet for the one-time AI download and, if you want them, sync and backups.</p></details><details><summary>Do I need an account?</summary><p>No. Your progress stays on your phone. An account is optional and keeps your progress the same on all your devices, encrypted before it leaves your phone.</p></details><details><summary>How does the garden work?</summary><p>Every word you learn becomes a plant — one of 28 real species. Review it on time and it grows; skip its reviews and it wilts; forget it for long and it disappears until you practise it again. Friends can visit and water your garden.</p></details></div>
+    </div>
+  </section>
+
+  <div class="final" id="join">
+    <img src="/img/heritage-logo.png" alt="Bloomko Heritage" loading="lazy">
+    <h2>Get early access</h2>
+    <p>Bloomko Heritage is almost ready. Leave your email and you'll be among the first to try it on Android.</p>
+    <ul class="perks"><li>🌱 Be one of the first testers</li><li>💬 Tell us what to build next</li><li>🎁 Free to download</li></ul>
+    <form class="notify center" data-notify>
+      <input type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-label="Your email address">
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">🌿 Get early access</button>
+      <p class="notify-note">We'll email you when testing starts and when Bloomko launches. Your address is used for nothing else.</p>
+    </form>
+    <p class="contact">Questions, ideas or want to help test? <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></p>
+  </div>
+
+  <a class="sticky-cta" href="#join" id="sticky-cta">🌿 Get early access</a>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Bloomko · <a href="mailto:thebloomko@gmail.com">thebloomko@gmail.com</a></span>
+      <nav aria-label="Language"><a href="/heritage/" hreflang="en" lang="en">English</a><a href="/fr/heritage/" hreflang="fr" lang="fr">Français</a><a href="/es/heritage/" hreflang="es" lang="es">Español</a><a href="/ja/heritage/" hreflang="ja" lang="ja">日本語</a></nav>
+      <nav aria-label="Learn for free">Learn for free: <a href="/slovenian/">Slovenian words, grammar & stories</a></nav>
+      <span><a href="/">Bloomko East</a> · Chinese & Japanese</span>
+    </div>
+  </footer>
+  <script>window.BLOOMKO = {"lang":"en","edition":"heritage","t":{"invalid":"Please enter a valid email address.","thanks":"🌱 Thank you! You're on the list — we'll write when Bloomko blooms.","on_list":"🌸 You're on the list. Keep writing!","g_gone_tag":"Bare soil — practise the word to bring it back","watch":"Watch the stroke order…","watch_then":"Watch, then write it yourself","now_you":"Now you: tap “Write it”","your_turn":"Your turn — draw the strokes in order","other_dir":"Other direction ↩","almost":"Almost — try that stroke again","stroke_left":"{0} stroke to go","strokes_left":"{0} strokes to go","perfect":"Perfect! ✨","win_one":"🌸 Beautiful! You just wrote your first character by hand. Imagine thousands more — get Bloomko first:","win_many":"🌸 Beautiful! You just wrote {0} characters by hand. Imagine thousands more — get Bloomko first:"},"garden":{"sl":{"name":"My first words","words":[["zdravo","","hello; hi","carnation"],["živjo","","hi; bye (informal)","bamboo"],["dober dan","","good day; hello (formal)","chrysanthemum"],["dobro jutro","","good morning","iris"],["dober večer","","good evening","linden"],["lahko noč","","good night","pine"],["nasvidenje","","goodbye","poppy"],["adijo","","bye","olive"],["hvala","","thank you","bamboo"],["hvala lepa","","thank you very much","oak"],["prosim","","please; you're welcome","iris"],["ni za kaj","","you're welcome; don't mention it","carnation"]]}},"plants":{"oak":{"name":"Oak","svg":"\u003cpath d=\"M17.6 46 L18.8 26 L21.2 26 L22.4 46 Z\" fill=\"#7a5640\"/>\u003cpath d=\"M20 5c7 0 12 5 12 10 3 2 4 5 3 8-1 4-5 6-9 6-2 2-4 2-6 2s-4 0-6-2c-4 0-8-2-9-6-1-3 0-6 3-8 0-5 5-10 12-10z\" fill=\"#4e8a3a\"/>\u003cpath d=\"M11 18c3 2 6 2 9 0M21 13c3 2 6 2 8 0\" stroke=\"#3d6e2d\" stroke-width=\"1\" fill=\"none\"/>"},"birch":{"name":"Birch","svg":"\u003cpath d=\"M18.6 46 L19.2 14 L20.8 14 L21.4 46 Z\" fill=\"#f4f1e8\" stroke=\"#a9a293\" stroke-width=\"0.5\"/>\u003cpath d=\"M19 22h2M19.2 30h1.8M19 38h2\" stroke=\"#3a3a3a\" stroke-width=\"1\"/>\u003cellipse cx=\"20\" cy=\"15\" rx=\"9\" ry=\"12\" fill=\"#8fc463\"/>\u003cellipse cx=\"16\" cy=\"20\" rx=\"4\" ry=\"5\" fill=\"#a4d277\"/>"},"cherry":{"name":"Cherry blossom","svg":"\u003cpath d=\"M17.8 46 L18.9 24 L21.1 24 L22.2 46 Z\" fill=\"#6a4636\"/>\u003cpath d=\"M20 26 L13 18 M20 26 L27 17\" stroke=\"#6a4636\" stroke-width=\"1.6\"/>\u003ccircle cx=\"20\" cy=\"15\" r=\"10\" fill=\"#f6c1d0\"/>\u003ccircle cx=\"12\" cy=\"19\" r=\"6\" fill=\"#f3aec3\"/>\u003ccircle cx=\"28\" cy=\"18\" r=\"6.5\" fill=\"#f9d2de\"/>\u003ccircle cx=\"17\" cy=\"11\" r=\"1.3\" fill=\"#e2789a\"/>\u003ccircle cx=\"25\" cy=\"14\" r=\"1.3\" fill=\"#e2789a\"/>\u003ccircle cx=\"13\" cy=\"20\" r=\"1.2\" fill=\"#e2789a\"/>"},"pine":{"name":"Pine","svg":"\u003cpath d=\"M18.2 46 L19.1 32 L20.9 32 L21.8 46 Z\" fill=\"#7a5640\"/>\u003cpath d=\"M20 3 L30 18 L25 18 L33 29 L27 29 L35 38 L5 38 L13 29 L7 29 L15 18 L10 18 Z\" fill=\"#2f6b45\"/>\u003cpath d=\"M20 3 L25 11 L20 9.5 L15 11 Z\" fill=\"#3f8558\"/>"},"bamboo":{"name":"Bamboo","svg":"\u003cpath d=\"M15 46 V12 M20 46 V6 M25 46 V15\" stroke=\"#8cbf4a\" stroke-width=\"2.6\" fill=\"none\"/>\u003cpath d=\"M14 20h2.4M14 30h2.4M19 16h2.4M19 27h2.4M19 37h2.4M24 25h2.4M24 35h2.4\" stroke=\"#5f8f2c\" stroke-width=\"1\"/>\u003cellipse cx=\"11\" cy=\"12\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-30 11 12)\" fill=\"#6fae3a\"/>\u003cellipse cx=\"24\" cy=\"8\" rx=\"4.5\" ry=\"2\" transform=\"rotate(25 24 8)\" fill=\"#6fae3a\"/>\u003cellipse cx=\"29\" cy=\"16\" rx=\"4.5\" ry=\"2\" transform=\"rotate(30 29 16)\" fill=\"#6fae3a\"/>\u003cellipse cx=\"16\" cy=\"23\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-25 16 23)\" fill=\"#7fbd47\"/>"},"maple":{"name":"Japanese maple","svg":"\u003cpath d=\"M18 46 L19 26 L21 26 L22 46 Z\" fill=\"#5a3d30\"/>\u003cpath d=\"M20 4l4 6 6-2-1 7 6 3-6 4 2 6-7-2-4 6-4-6-7 2 2-6-6-4 6-3-1-7 6 2z\" fill=\"#c8452f\"/>\u003cpath d=\"M20 10v16\" stroke=\"#9c3324\" stroke-width=\"0.8\"/>"},"ginkgo":{"name":"Ginkgo","svg":"\u003cpath d=\"M18 46 L19 24 L21 24 L22 46 Z\" fill=\"#6e5240\"/>\u003cpath d=\"M20 26c-9 0-14-6-12-14 4 3 8 3 12-1 4 4 8 4 12 1 2 8-3 14-12 14z\" fill=\"#d9c13c\"/>\u003cpath d=\"M20 26c-6-1-9-5-9-10 3 2 6 2 9-1 3 3 6 3 9 1 0 5-3 9-9 10z\" fill=\"#e8d35b\"/>"},"linden":{"name":"Linden","svg":"\u003cpath d=\"M17.6 46 L18.8 26 L21.2 26 L22.4 46 Z\" fill=\"#6b4e3c\"/>\u003cpath d=\"M20 4c-6 6-13 8-12 17 1 6 6 9 12 9s11-3 12-9c1-9-6-11-12-17z\" fill=\"#6aa84f\"/>\u003cpath d=\"M14 18c2 2 4 2 6 0 2 2 4 2 6 0\" stroke=\"#4f8a38\" stroke-width=\"1\" fill=\"none\"/>\u003ccircle cx=\"15\" cy=\"23\" r=\"1.2\" fill=\"#efe39a\"/>\u003ccircle cx=\"25\" cy=\"21\" r=\"1.2\" fill=\"#efe39a\"/>"},"apple":{"name":"Apple tree","svg":"\u003cpath d=\"M17.6 46 L18.8 26 L21.2 26 L22.4 46 Z\" fill=\"#6e4b37\"/>\u003ccircle cx=\"20\" cy=\"16\" r=\"12\" fill=\"#5c9a44\"/>\u003ccircle cx=\"14\" cy=\"14\" r=\"2\" fill=\"#d33b2c\"/>\u003ccircle cx=\"24\" cy=\"11\" r=\"2\" fill=\"#d33b2c\"/>\u003ccircle cx=\"26\" cy=\"20\" r=\"2\" fill=\"#d33b2c\"/>\u003ccircle cx=\"17\" cy=\"22\" r=\"2\" fill=\"#d33b2c\"/>"},"olive":{"name":"Olive tree","svg":"\u003cpath d=\"M18 46 C17 38 22 34 19 26 L22 26 C24 34 21 38 23 46 Z\" fill=\"#7d6a55\"/>\u003cellipse cx=\"20\" cy=\"18\" rx=\"12\" ry=\"8\" fill=\"#8fa178\"/>\u003cellipse cx=\"14\" cy=\"15\" rx=\"5\" ry=\"3\" fill=\"#a3b48c\"/>\u003ccircle cx=\"23\" cy=\"20\" r=\"1.1\" fill=\"#3d3a4a\"/>\u003ccircle cx=\"17\" cy=\"21\" r=\"1.1\" fill=\"#3d3a4a\"/>"},"tea":{"name":"Tea plant","svg":"\u003cpath d=\"M20 46 V30\" stroke=\"#6b4e3c\" stroke-width=\"2\"/>\u003cellipse cx=\"20\" cy=\"28\" rx=\"12\" ry=\"9\" fill=\"#3f7a3a\"/>\u003cellipse cx=\"12\" cy=\"25\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-20 12 25)\" fill=\"#59964b\"/>\u003cellipse cx=\"27\" cy=\"23\" rx=\"4.5\" ry=\"2\" transform=\"rotate(20 27 23)\" fill=\"#59964b\"/>\u003cellipse cx=\"20\" cy=\"21\" rx=\"4.5\" ry=\"2\" transform=\"rotate(0 20 21)\" fill=\"#6fae5a\"/>\u003ccircle cx=\"15\" cy=\"30\" r=\"1.6\" fill=\"#fff8e6\"/>\u003ccircle cx=\"26\" cy=\"29\" r=\"1.6\" fill=\"#fff8e6\"/>"},"camellia":{"name":"Camellia","svg":"\u003cellipse cx=\"20\" cy=\"30\" rx=\"12\" ry=\"11\" fill=\"#2f6a3a\"/>\u003ccircle cx=\"17.6\" cy=\"26.0\" r=\"2.2\" fill=\"#d9334f\"/>\u003ccircle cx=\"16.3\" cy=\"28.3\" r=\"2.2\" fill=\"#d9334f\"/>\u003ccircle cx=\"13.7\" cy=\"28.3\" r=\"2.2\" fill=\"#d9334f\"/>\u003ccircle cx=\"12.4\" cy=\"26.0\" r=\"2.2\" fill=\"#d9334f\"/>\u003ccircle cx=\"13.7\" cy=\"23.7\" r=\"2.2\" fill=\"#d9334f\"/>\u003ccircle cx=\"16.3\" cy=\"23.7\" r=\"2.2\" fill=\"#d9334f\"/>\u003ccircle cx=\"15\" cy=\"26\" r=\"2.0\" fill=\"#f5d45a\"/>\u003ccircle cx=\"28.6\" cy=\"31.0\" r=\"2.2\" fill=\"#e2506a\"/>\u003ccircle cx=\"27.3\" cy=\"33.3\" r=\"2.2\" fill=\"#e2506a\"/>\u003ccircle cx=\"24.7\" cy=\"33.3\" r=\"2.2\" fill=\"#e2506a\"/>\u003ccircle cx=\"23.4\" cy=\"31.0\" r=\"2.2\" fill=\"#e2506a\"/>\u003ccircle cx=\"24.7\" cy=\"28.7\" r=\"2.2\" fill=\"#e2506a\"/>\u003ccircle cx=\"27.3\" cy=\"28.7\" r=\"2.2\" fill=\"#e2506a\"/>\u003ccircle cx=\"26\" cy=\"31\" r=\"2.0\" fill=\"#f5d45a\"/>\u003ccircle cx=\"20.2\" cy=\"36.0\" r=\"1.9\" fill=\"#d9334f\"/>\u003ccircle cx=\"18.7\" cy=\"38.1\" r=\"1.9\" fill=\"#d9334f\"/>\u003ccircle cx=\"16.2\" cy=\"37.3\" r=\"1.9\" fill=\"#d9334f\"/>\u003ccircle cx=\"16.2\" cy=\"34.7\" r=\"1.9\" fill=\"#d9334f\"/>\u003ccircle cx=\"18.7\" cy=\"33.9\" r=\"1.9\" fill=\"#d9334f\"/>\u003ccircle cx=\"18\" cy=\"36\" r=\"1.7\" fill=\"#f5d45a\"/>"},"hydrangea":{"name":"Hydrangea","svg":"\u003cellipse cx=\"20\" cy=\"36\" rx=\"13\" ry=\"8\" fill=\"#3d7340\"/>\u003ccircle cx=\"14\" cy=\"28\" r=\"6\" fill=\"#7b9ee0\"/>\u003ccircle cx=\"25\" cy=\"27\" r=\"6.5\" fill=\"#9a8fdc\"/>\u003ccircle cx=\"20\" cy=\"22\" r=\"5.5\" fill=\"#8db3ea\"/>\u003ccircle cx=\"14\" cy=\"27\" r=\"1\" fill=\"#e9efff\"/>\u003ccircle cx=\"24\" cy=\"25\" r=\"1\" fill=\"#e9efff\"/>"},"lavender":{"name":"Lavender","svg":"\u003cpath d=\"M14 46 L12 20 M20 46 V16 M26 46 L28 21 M17 46 L16 24 M23 46 L24 23\" stroke=\"#7c9a6a\" stroke-width=\"1.2\" fill=\"none\"/>\u003cellipse cx=\"12\" cy=\"20\" rx=\"1.8\" ry=\"5\" fill=\"#8d6cc8\"/>\u003cellipse cx=\"20\" cy=\"16\" rx=\"1.8\" ry=\"5\" fill=\"#8d6cc8\"/>\u003cellipse cx=\"28\" cy=\"21\" rx=\"1.8\" ry=\"5\" fill=\"#8d6cc8\"/>\u003cellipse cx=\"16\" cy=\"24\" rx=\"1.8\" ry=\"5\" fill=\"#8d6cc8\"/>\u003cellipse cx=\"24\" cy=\"23\" rx=\"1.8\" ry=\"5\" fill=\"#8d6cc8\"/>"},"sunflower":{"name":"Sunflower","svg":"\u003cpath d=\"M20 46 L20 16\" stroke=\"#4f7d3a\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cellipse cx=\"15\" cy=\"32\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-30 15 32)\" fill=\"#5f9b45\"/>\u003cellipse cx=\"25\" cy=\"28\" rx=\"4.5\" ry=\"2\" transform=\"rotate(30 25 28)\" fill=\"#5f9b45\"/>\u003ccircle cx=\"25.5\" cy=\"13.0\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"24.8\" cy=\"15.8\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"22.8\" cy=\"17.8\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"20.0\" cy=\"18.5\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"17.3\" cy=\"17.8\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"15.2\" cy=\"15.8\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"14.5\" cy=\"13.0\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"15.2\" cy=\"10.3\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"17.2\" cy=\"8.2\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"20.0\" cy=\"7.5\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"22.8\" cy=\"8.2\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"24.8\" cy=\"10.2\" r=\"2.6\" fill=\"#f2c12e\"/>\u003ccircle cx=\"20\" cy=\"13\" r=\"2.3\" fill=\"#6b4423\"/>"},"tulip":{"name":"Tulip","svg":"\u003cpath d=\"M20 46 L20 22\" stroke=\"#4f8a3a\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cpath d=\"M15 34c-3-4-2-10 5-12-1 5-2 9-5 12zM25 34c3-4 2-10-5-12 1 5 2 9 5 12z\" fill=\"#5f9b45\"/>\u003cpath d=\"M14 13c0 7 2 10 6 10s6-3 6-10l-3 3-3-5-3 5z\" fill=\"#e2483d\"/>"},"rose":{"name":"Rose","svg":"\u003cpath d=\"M20 46 L20 18\" stroke=\"#3f6e34\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cellipse cx=\"15\" cy=\"30\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-30 15 30)\" fill=\"#3f7a3a\"/>\u003cellipse cx=\"25\" cy=\"26\" rx=\"4.5\" ry=\"2\" transform=\"rotate(30 25 26)\" fill=\"#3f7a3a\"/>\u003ccircle cx=\"20\" cy=\"15\" r=\"6.5\" fill=\"#c62c47\"/>\u003cpath d=\"M16 15c1-3 6-4 8 0-2-1-4-1-5 1 1 1 3 1 4 0\" stroke=\"#8c1a30\" stroke-width=\"1\" fill=\"none\"/>"},"lotus":{"name":"Lotus","svg":"\u003cellipse cx=\"20\" cy=\"43\" rx=\"15\" ry=\"3.5\" fill=\"#4d8a52\"/>\u003cpath d=\"M20 22c-4 4-4 12 0 16 4-4 4-12 0-16z\" fill=\"#f4a9c4\"/>\u003cpath d=\"M12 28c1 6 4 9 8 10-2-4-4-8-8-10zM28 28c-1 6-4 9-8 10 2-4 4-8 8-10z\" fill=\"#f7c3d6\"/>\u003cpath d=\"M8 34c3 3 7 4 12 4-4-3-8-4-12-4zM32 34c-3 3-7 4-12 4 4-3 8-4 12-4z\" fill=\"#f9d4e2\"/>"},"fern":{"name":"Fern","svg":"\u003cg transform=\"rotate(-24 20 46)\">\u003cpath d=\"M20 46 Q20 26 20 8\" stroke=\"#3f7d3a\" stroke-width=\"1.2\" fill=\"none\"/>\u003cellipse cx=\"17\" cy=\"12\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 12)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"16.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 16.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"21\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 21)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"25.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 25.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"30\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 30)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"34.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 34.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"39\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 39)\" fill=\"#5aa14a\"/>\u003c/g>\u003cg transform=\"rotate(-9 20 46)\">\u003cpath d=\"M20 46 Q20 26 20 8\" stroke=\"#3f7d3a\" stroke-width=\"1.2\" fill=\"none\"/>\u003cellipse cx=\"17\" cy=\"12\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 12)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"16.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 16.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"21\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 21)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"25.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 25.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"30\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 30)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"34.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 34.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"39\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 39)\" fill=\"#5aa14a\"/>\u003c/g>\u003cg transform=\"rotate(9 20 46)\">\u003cpath d=\"M20 46 Q20 26 20 8\" stroke=\"#3f7d3a\" stroke-width=\"1.2\" fill=\"none\"/>\u003cellipse cx=\"17\" cy=\"12\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 12)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"16.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 16.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"21\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 21)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"25.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 25.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"30\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 30)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"34.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 34.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"39\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 39)\" fill=\"#5aa14a\"/>\u003c/g>\u003cg transform=\"rotate(24 20 46)\">\u003cpath d=\"M20 46 Q20 26 20 8\" stroke=\"#3f7d3a\" stroke-width=\"1.2\" fill=\"none\"/>\u003cellipse cx=\"17\" cy=\"12\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 12)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"16.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 16.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"21\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 21)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"25.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 25.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"30\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 30)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"34.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 34.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"39\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 39)\" fill=\"#5aa14a\"/>\u003c/g>\u003cg transform=\"rotate(0 20 46)\">\u003cpath d=\"M20 46 Q20 26 20 8\" stroke=\"#3f7d3a\" stroke-width=\"1.2\" fill=\"none\"/>\u003cellipse cx=\"17\" cy=\"12\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 12)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"16.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 16.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"21\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 21)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"25.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 25.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"30\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 30)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"23\" cy=\"34.5\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(25 23 34.5)\" fill=\"#5aa14a\"/>\u003cellipse cx=\"17\" cy=\"39\" rx=\"3.2\" ry=\"1.3\" transform=\"rotate(-25 17 39)\" fill=\"#5aa14a\"/>\u003c/g>"},"cactus":{"name":"Cactus","svg":"\u003cpath d=\"M16 46 V18 a4 4 0 0 1 8 0 V46 Z\" fill=\"#4f9a5a\"/>\u003cpath d=\"M16 32 h-4 v-8 a2.5 2.5 0 0 1 5 0\" fill=\"none\" stroke=\"#4f9a5a\" stroke-width=\"4\" stroke-linecap=\"round\"/>\u003cpath d=\"M24 28 h4 v-6 a2.5 2.5 0 0 0 -5 0\" fill=\"none\" stroke=\"#4f9a5a\" stroke-width=\"4\" stroke-linecap=\"round\"/>\u003cpath d=\"M20 16v28\" stroke=\"#3c7d47\" stroke-width=\"0.8\"/>\u003ccircle cx=\"20\" cy=\"13\" r=\"2.6\" fill=\"#ef6f8d\"/>"},"daisy":{"name":"Daisy","svg":"\u003cpath d=\"M14 46 L14 26\" stroke=\"#5a9a45\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cpath d=\"M25 46 L25 20\" stroke=\"#5a9a45\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003ccircle cx=\"17.4\" cy=\"24.0\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"16.8\" cy=\"26.0\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"15.1\" cy=\"27.2\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"12.9\" cy=\"27.2\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"11.2\" cy=\"26.0\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"10.6\" cy=\"24.0\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"11.2\" cy=\"22.0\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"12.9\" cy=\"20.8\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"15.1\" cy=\"20.8\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"16.8\" cy=\"22.0\" r=\"1.7\" fill=\"#ffffff\"/>\u003ccircle cx=\"14\" cy=\"24\" r=\"1.5\" fill=\"#f2c12e\"/>\u003ccircle cx=\"28.6\" cy=\"18.0\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"27.9\" cy=\"20.1\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"26.1\" cy=\"21.4\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"23.9\" cy=\"21.4\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"22.1\" cy=\"20.1\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"21.4\" cy=\"18.0\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"22.1\" cy=\"15.9\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"23.9\" cy=\"14.6\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"26.1\" cy=\"14.6\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"27.9\" cy=\"15.9\" r=\"1.8\" fill=\"#fdfbf5\"/>\u003ccircle cx=\"25\" cy=\"18\" r=\"1.6\" fill=\"#f2c12e\"/>\u003cellipse cx=\"19\" cy=\"40\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-10 19 40)\" fill=\"#5f9b45\"/>"},"poppy":{"name":"Poppy","svg":"\u003cpath d=\"M16 46 Q15 30 14 20 M24 46 Q26 32 27 24\" stroke=\"#5f8f3a\" stroke-width=\"1.3\" fill=\"none\"/>\u003ccircle cx=\"14\" cy=\"18\" r=\"5\" fill=\"#e0322a\"/>\u003ccircle cx=\"14\" cy=\"18\" r=\"1.6\" fill=\"#2a2222\"/>\u003ccircle cx=\"27\" cy=\"22\" r=\"4.2\" fill=\"#ea4a35\"/>\u003ccircle cx=\"27\" cy=\"22\" r=\"1.3\" fill=\"#2a2222\"/>"},"peony":{"name":"Peony","svg":"\u003cellipse cx=\"20\" cy=\"38\" rx=\"12\" ry=\"7\" fill=\"#3f7a40\"/>\u003ccircle cx=\"20\" cy=\"24\" r=\"8.5\" fill=\"#f2a1b8\"/>\u003ccircle cx=\"16\" cy=\"22\" r=\"4\" fill=\"#f6bccc\"/>\u003ccircle cx=\"23\" cy=\"26\" r=\"4\" fill=\"#ec8eaa\"/>\u003ccircle cx=\"20\" cy=\"21\" r=\"2.5\" fill=\"#fbd3df\"/>"},"chrysanthemum":{"name":"Chrysanthemum","svg":"\u003cpath d=\"M20 46 L20 18\" stroke=\"#4f7d3a\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cellipse cx=\"15\" cy=\"32\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-30 15 32)\" fill=\"#5f9b45\"/>\u003cellipse cx=\"25\" cy=\"36\" rx=\"4.5\" ry=\"2\" transform=\"rotate(30 25 36)\" fill=\"#5f9b45\"/>\u003ccircle cx=\"25.0\" cy=\"15.0\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"24.6\" cy=\"16.9\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"23.5\" cy=\"18.5\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"21.9\" cy=\"19.6\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"20.0\" cy=\"20.0\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"18.1\" cy=\"19.6\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"16.5\" cy=\"18.5\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"15.4\" cy=\"16.9\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"15.0\" cy=\"15.0\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"15.4\" cy=\"13.1\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"16.5\" cy=\"11.5\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"18.1\" cy=\"10.4\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"20.0\" cy=\"10.0\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"21.9\" cy=\"10.4\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"23.5\" cy=\"11.5\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"24.6\" cy=\"13.1\" r=\"1.8\" fill=\"#e9a527\"/>\u003ccircle cx=\"20\" cy=\"15\" r=\"1.6\" fill=\"#c97a14\"/>\u003ccircle cx=\"22.6\" cy=\"15.0\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"22.1\" cy=\"16.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"20.8\" cy=\"17.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"19.2\" cy=\"17.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"17.9\" cy=\"16.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"17.4\" cy=\"15.0\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"17.9\" cy=\"13.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"19.2\" cy=\"12.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"20.8\" cy=\"12.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"22.1\" cy=\"13.5\" r=\"1.4\" fill=\"#f2c14a\"/>\u003ccircle cx=\"20\" cy=\"15\" r=\"1.3\" fill=\"#e09422\"/>"},"iris":{"name":"Iris","svg":"\u003cpath d=\"M17 46 Q15 30 12 18 M23 46 Q25 30 28 16\" stroke=\"#5a8f45\" stroke-width=\"2\" fill=\"none\"/>\u003cpath d=\"M20 46 L20 20\" stroke=\"#4f7d3a\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cpath d=\"M20 20c-5-1-7-6-4-9 2 2 3 5 4 9zM20 20c5-1 7-6 4-9-2 2-3 5-4 9zM20 20c-1-6 0-10 0-12 1 2 2 6 0 12z\" fill=\"#6a5acd\"/>\u003cpath d=\"M20 20c-3 2-6 2-8 1 3-1 5-2 8-1zM20 20c3 2 6 2 8 1-3-1-5-2-8-1z\" fill=\"#8f82e0\"/>"},"mint":{"name":"Mint","svg":"\u003cpath d=\"M14 46 V24\" stroke=\"#4f8f3f\" stroke-width=\"1.3\"/>\u003cellipse cx=\"11\" cy=\"42\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-25 11 42)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"17\" cy=\"37\" rx=\"4.5\" ry=\"2\" transform=\"rotate(25 17 37)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"11\" cy=\"32\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-25 11 32)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"17\" cy=\"27\" rx=\"4.5\" ry=\"2\" transform=\"rotate(25 17 27)\" fill=\"#6cbb5a\"/>\u003cpath d=\"M20 46 V22\" stroke=\"#4f8f3f\" stroke-width=\"1.3\"/>\u003cellipse cx=\"17\" cy=\"40\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-25 17 40)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"23\" cy=\"35\" rx=\"4.5\" ry=\"2\" transform=\"rotate(25 23 35)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"17\" cy=\"30\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-25 17 30)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"23\" cy=\"25\" rx=\"4.5\" ry=\"2\" transform=\"rotate(25 23 25)\" fill=\"#6cbb5a\"/>\u003cpath d=\"M26 46 V20\" stroke=\"#4f8f3f\" stroke-width=\"1.3\"/>\u003cellipse cx=\"23\" cy=\"38\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-25 23 38)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"29\" cy=\"33\" rx=\"4.5\" ry=\"2\" transform=\"rotate(25 29 33)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"23\" cy=\"28\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-25 23 28)\" fill=\"#6cbb5a\"/>\u003cellipse cx=\"29\" cy=\"23\" rx=\"4.5\" ry=\"2\" transform=\"rotate(25 29 23)\" fill=\"#6cbb5a\"/>"},"carnation":{"name":"Carnation","svg":"\u003cpath d=\"M16 46 L16 22\" stroke=\"#7da38c\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cpath d=\"M25 46 L25 18\" stroke=\"#7da38c\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003cpath d=\"M11 21l2-4 2 3 2-4 2 4 1-2 1 3c-2 3-8 3-10 0z\" fill=\"#d9304a\"/>\u003cpath d=\"M20 17l2-4 2 3 2-4 2 4 1-2 1 3c-2 3-8 3-10 0z\" fill=\"#e2485e\"/>\u003cellipse cx=\"20\" cy=\"38\" rx=\"4.5\" ry=\"2\" transform=\"rotate(0 20 38)\" fill=\"#7da38c\"/>"},"edelweiss":{"name":"Edelweiss","svg":"\u003cpath d=\"M20 46 L20 24\" stroke=\"#9db39a\" stroke-width=\"1.6\" fill=\"none\" stroke-linecap=\"round\"/>\u003ccircle cx=\"24.0\" cy=\"22.0\" r=\"2.6\" fill=\"#f4f2ea\"/>\u003ccircle cx=\"22.5\" cy=\"25.1\" r=\"2.6\" fill=\"#f4f2ea\"/>\u003ccircle cx=\"19.1\" cy=\"25.9\" r=\"2.6\" fill=\"#f4f2ea\"/>\u003ccircle cx=\"16.4\" cy=\"23.7\" r=\"2.6\" fill=\"#f4f2ea\"/>\u003ccircle cx=\"16.4\" cy=\"20.3\" r=\"2.6\" fill=\"#f4f2ea\"/>\u003ccircle cx=\"19.1\" cy=\"18.1\" r=\"2.6\" fill=\"#f4f2ea\"/>\u003ccircle cx=\"22.5\" cy=\"18.9\" r=\"2.6\" fill=\"#f4f2ea\"/>\u003ccircle cx=\"20\" cy=\"22\" r=\"2.3\" fill=\"#d9d07a\"/>\u003cellipse cx=\"16\" cy=\"36\" rx=\"4.5\" ry=\"2\" transform=\"rotate(-30 16 36)\" fill=\"#b8c8b4\"/>\u003cellipse cx=\"24\" cy=\"34\" rx=\"4.5\" ry=\"2\" transform=\"rotate(30 24 34)\" fill=\"#b8c8b4\"/>"}},"suggest":{"en":{"text":"This page is also in English","url":"/heritage/"},"fr":{"text":"Cette page existe en français","url":"/fr/heritage/"},"es":{"text":"Esta página también está en español","url":"/es/heritage/"},"ja":{"text":"このページは日本語でもご覧いただけます","url":"/ja/heritage/"}}};</script>
+  <script src="/site.js"></script>
+</body>
+</html>

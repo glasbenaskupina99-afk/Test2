@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Bloomko reel zh+ja</title>
+<style>
+@font-face{font-family:N;font-weight:700;src:url(src/nunito-latin-700-normal.woff2)}
+@font-face{font-family:N;font-weight:800;src:url(src/nunito-latin-800-normal.woff2)}
+@font-face{font-family:N;font-weight:900;src:url(src/nunito-latin-900-normal.woff2)}
+:root{--bg:#1c3026;--bg2:#16271e;--sage:#8cc06b;--gold:#d2ae52;--txt:#f4efe2;--mut:#a9b5a6;--end:#f0b35e}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg2)}
+body{font-family:N,"Noto Sans CJK JP",sans-serif;color:var(--txt);position:relative;
+  background:radial-gradient(1000px 900px at 80% 15%,#2c4a36 0%,transparent 60%),radial-gradient(900px 900px at 10% 95%,#24402f 0%,transparent 60%),linear-gradient(160deg,var(--bg),var(--bg2))}
+.bgglyph{position:absolute;font-weight:900;font-size:520px;opacity:.06;animation:drift 20s linear both}
+@keyframes drift{from{transform:translateY(60px) rotate(-4deg)}to{transform:translateY(-120px) rotate(4deg)}}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:170px 80px 0;text-align:center;opacity:0}
+@keyframes show{0%{opacity:0}6%{opacity:1}94%{opacity:1}100%{opacity:0}}
+@keyframes showLast{0%{opacity:0}8%{opacity:1}100%{opacity:1}}
+@keyframes up{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}70%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+@keyframes phoneIn{from{opacity:0;transform:translateY(260px) rotate(var(--r,0deg)) scale(.92)}to{opacity:1;transform:translateY(0) rotate(var(--r,0deg)) scale(1)}}
+@keyframes slowzoom{from{scale:1}to{scale:1.05}}
+.k{display:inline-block;font-weight:800;font-size:34px;letter-spacing:4px;text-transform:uppercase;color:var(--bg2);background:var(--sage);padding:12px 28px;border-radius:999px}
+.k.gold{background:var(--gold)}
+h1{font-weight:900;font-size:110px;line-height:1.02;letter-spacing:-2px}
+h2{font-weight:900;font-size:96px;line-height:1.04;letter-spacing:-1.5px;margin-top:34px}
+.hl{color:var(--sage)}.gd{color:var(--gold)}.en{color:var(--end)}
+.sub{font-size:44px;font-weight:700;color:var(--mut);margin-top:30px;line-height:1.3}
+.phone{width:430px;aspect-ratio:780/1688;border-radius:62px;background:#0b130e;padding:15px;margin-top:0;
+  box-shadow:0 0 0 4px #38503f,0 60px 140px rgba(0,0,0,.55),0 0 200px rgba(140,192,107,.2)}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:48px;display:block}
+.chip{display:inline-flex;align-items:center;gap:16px;background:rgba(244,239,226,.08);border:3px solid rgba(244,239,226,.15);border-radius:30px;padding:24px 36px;font-size:46px;font-weight:800}
+.word{font-size:150px;font-weight:900;line-height:1.15}
+.cta{display:inline-block;background:var(--sage);color:var(--bg2);font-weight:900;font-size:60px;padding:36px 70px;border-radius:999px;box-shadow:0 20px 60px rgba(140,192,107,.4)}
+.url{font-weight:900;font-size:96px;color:var(--gold)}
+.a{opacity:0;animation-fill-mode:both}
+.zh{font-family:N,"Noto Sans CJK SC",sans-serif}.ja{font-family:N,"Noto Sans CJK JP",sans-serif}
+.duo{position:relative;width:100%;height:1000px;margin-top:60px}
+.duo .phone{position:absolute;top:0}
+.tag{position:absolute;top:-6px;font-weight:900;font-size:40px;background:var(--bg2);border:3px solid rgba(244,239,226,.18);border-radius:999px;padding:10px 26px;z-index:2}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:30px;width:100%;margin-top:26px}
+.pc{background:rgba(244,239,226,.07);border:3px solid rgba(244,239,226,.13);border-radius:34px;padding:24px 10px}
+.pc .w{font-size:96px;font-weight:900;line-height:1.1}
+.pc .r{font-size:40px;font-weight:800;color:var(--sage)}.pc .m{font-size:34px;font-weight:700;color:var(--mut)}
+.lab{font-size:30px;font-weight:800;letter-spacing:3px;color:var(--mut);margin-bottom:6px}
+</style></head><body>
+<div class="bgglyph zh" style="left:-80px;top:120px">文</div>
+<div class="bgglyph ja" style="right:-90px;top:900px;animation-delay:-3s">あ</div>
+<div class="bgglyph zh" style="left:40px;bottom:-60px;animation-delay:-6s">字</div>
+
+<!-- S1 0–2.6 -->
+<section class="sc" style="animation:show 2.6s 0s both;justify-content:center;padding-top:0">
+  <img class="a" src="src/logo.png" style="width:320px;height:320px;border-radius:80px;box-shadow:0 30px 120px rgba(140,192,107,.45);animation:pop .9s .1s both">
+  <div class="a" style="font-weight:900;font-size:90px;margin-top:46px;animation:up .7s .6s both">Bloomko</div>
+  <h1 class="a" style="margin-top:36px;font-size:92px;animation:up .7s 1.0s both"><span class="hl">Chinese</span> &amp; <span class="gd">Japanese</span><br>in one app</h1>
+  <div class="a" style="margin-top:46px;display:flex;gap:24px;animation:up .6s 1.4s both"><span class="chip">🇨🇳 HSK 1–3</span><span class="chip">🇯🇵 Kana – N3</span></div>
+</section>
+
+<!-- S2 2.6–6.2 -->
+<section class="sc" style="animation:show 3.6s 2.6s both">
+  <span class="k a" style="animation:pop .5s 2.75s both">Write it</span>
+  <h2 class="a" style="animation:up .6s 2.85s both"><span class="zh">汉字</span> &amp; <span class="ja">漢字</span><br><span class="hl">stroke by stroke</span></h2>
+  <div class="duo">
+    <div class="phone a" style="left:20px;top:60px;--r:-6deg;animation:phoneIn .8s 3.0s cubic-bezier(.2,.8,.2,1) both"><img src="src/trace.webp"></div>
+    <div class="phone a" style="right:20px;top:120px;--r:6deg;animation:phoneIn .8s 3.25s cubic-bezier(.2,.8,.2,1) both"><img src="src/ja_trace.png"></div>
+    <span class="tag a" style="left:60px;animation:pop .4s 3.7s both">🇨🇳 不客气</span>
+    <span class="tag a ja" style="right:60px;top:54px;animation:pop .4s 3.9s both">🇯🇵 先生</span>
+  </div>
+</section>
+
+<!-- S3 6.2–9.8 -->
+<section class="sc" style="animation:show 3.6s 6.2s both">
+  <span class="k gold a" style="animation:pop .5s 6.35s both">Talk</span>
+  <h2 class="a" style="animation:up .6s 6.45s both">An <span class="gd">AI tutor</span><br>that works offline</h2>
+  <div class="duo">
+    <div class="phone a" style="left:20px;top:60px;--r:-6deg;animation:phoneIn .8s 6.6s cubic-bezier(.2,.8,.2,1) both"><img src="src/turn1.png"></div>
+    <div class="phone a" style="right:20px;top:120px;--r:6deg;animation:phoneIn .8s 6.85s cubic-bezier(.2,.8,.2,1) both"><img src="src/ja_talk.png"></div>
+    <span class="tag a zh" style="left:60px;animation:pop .4s 7.3s both">☕ 我要茶</span>
+    <span class="tag a ja" style="right:60px;top:54px;animation:pop .4s 7.5s both">☕ お茶をください</span>
+  </div>
+</section>
+
+<!-- S4 9.8–14.2 -->
+<section class="sc" style="animation:show 4.4s 9.8s both">
+  <span class="k a" style="animation:pop .5s 9.95s both">Learn both</span>
+  <h2 class="a" style="animation:up .6s 10.05s both">Same characters,<br><span class="hl">two languages</span></h2>
+  <div class="pair a" style="margin-top:70px;animation:up .4s 10.4s both"><div class="lab">🇨🇳 CHINESE</div><div class="lab">🇯🇵 JAPANESE</div></div>
+  <div class="pair a" style="animation:pop .5s 10.6s both">
+    <div class="pc"><div class="w zh">学生</div><div class="r">xuésheng</div><div class="m">student</div></div>
+    <div class="pc"><div class="w ja">学生</div><div class="r">gakusei</div><div class="m">student</div></div></div>
+  <div class="pair a" style="animation:pop .5s 11.4s both">
+    <div class="pc"><div class="w zh">日本</div><div class="r">Rìběn</div><div class="m">Japan</div></div>
+    <div class="pc"><div class="w ja">日本</div><div class="r">Nihon</div><div class="m">Japan</div></div></div>
+  <div class="pair a" style="animation:pop .5s 12.2s both">
+    <div class="pc"><div class="w zh">电话</div><div class="r">diànhuà</div><div class="m">phone</div></div>
+    <div class="pc"><div class="w ja">電話</div><div class="r">denwa</div><div class="m">phone</div></div></div>
+</section>
+
+<!-- S5 14.2–16.8 -->
+<section class="sc" style="animation:show 2.6s 14.2s both">
+  <h2 class="a" style="animation:up .5s 14.3s both;margin-top:0">And <span class="hl">so much</span> more</h2>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:30px;margin-top:90px">
+    <span class="chip a" style="animation:pop .4s 14.55s both">📷 Words from a photo</span>
+    <span class="chip a" style="animation:pop .4s 14.75s both">📖 Stories to listen to</span>
+    <span class="chip a" style="animation:pop .4s 14.95s both">🗣️ Pronunciation check</span>
+    <span class="chip a" style="animation:pop .4s 15.15s both">🧠 Memory hooks</span>
+    <span class="chip a" style="animation:pop .4s 15.35s both">📱 Widget · 🔄 Sync</span>
+    <span class="chip a" style="animation:pop .4s 15.55s both">🌱 A plant that grows daily</span>
+  </div>
+</section>
+
+<!-- S6 16.8–20 -->
+<section class="sc" style="animation:showLast 3.2s 16.8s both;justify-content:center;padding-top:0">
+  <img class="a" src="src/logo.png" style="width:280px;height:280px;border-radius:72px;box-shadow:0 30px 120px rgba(140,192,107,.45);animation:pop .7s 16.9s both">
+  <h1 class="a" style="margin-top:70px;animation:up .6s 17.2s both">Start growing<br><span class="hl">today</span></h1>
+  <div class="cta a" style="margin-top:80px;animation:pop .6s 17.6s both">Get early access</div>
+  <div class="url a" style="margin-top:60px;animation:up .6s 17.9s both">bloomko.eu</div>
+  <div class="sub a" style="animation:up .6s 18.1s both">link in bio 🌱</div>
+</section>
+<script>
+window.seek = (ms) => document.getAnimations().forEach(a => { a.pause(); a.currentTime = ms; });
+</script>
+</body></html>

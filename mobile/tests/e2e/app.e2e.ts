@@ -1,0 +1,861 @@
+// End-to-end: the built app (mobile/www, or $WWW) in Chromium, as a learner would use it.
+// Run after `npm run build` (East) or `EDITION=heritage npm run build`: npm run test:e2e
+import { fileURLToPath } from "node:url";
+import { test, before, after } from "node:test";
+import assert from "node:assert/strict";
+import { createServer, type Server } from "node:http";
+import { readFile } from "node:fs/promises";
+import { existsSync, readFileSync } from "node:fs";
+import { extname, join, resolve } from "node:path";
+import { chromium, type Browser, type Page } from "playwright";
+
+const WWW = resolve(process.env.WWW || fileURLToPath(new URL("../../www", import.meta.url)));
+const FIXTURES = fileURLToPath(new URL("../fixtures/", import.meta.url));
+const TYPES: Record<string, string> = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".wasm": "application/wasm", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".webmanifest": "application/manifest+json" };
+
+let server: Server;
+let browser: Browser;
+let base = "";
+// Which app was built: some tests are only for Bloomko East (mock exams, Chinese Anki deck).
+const edition = existsSync(join(WWW, "index.html")) && /data-edition="heritage"/.test(readFileSync(join(WWW, "index.html"), "utf8")) ? "heritage" : "east";
+
+before(async () => {
+  assert.ok(existsSync(join(WWW, "index.html")), `no build in ${WWW} — run npm run build first`);
+  server = createServer(async (req, res) => {
+    const path = decodeURIComponent(new URL(req.url, "http://x").pathname);
+    const file = join(WWW, path.endsWith("/") ? path + "index.html" : path);
+    try {
+      const body = await readFile(file);
+      res.writeHead(200, { "Content-Type": TYPES[extname(file)] || "application/octet-stream" });
+      res.end(body);
+    } catch {
+      res.writeHead(404, { "Content-Type": "text/plain" });
+      res.end("not found");
+    }
+  });
+  await new Promise<void>((r) => server.listen(0, "127.0.0.1", r));
+  base = `http://127.0.0.1:${(server.address() as any).port}`;
+  browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
+});
+
+after(async () => {
+  await browser?.close();
+  server?.close();
+});
+
+/** A fresh device: no data, the app open on the welcome screen. Page errors fail the test. */
+async function fresh(): Promise<{ page: Page; errors: string[]; api: (path: string, opts?: any) => Promise<any> }> {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  // No sound in tests, and no requests to bloomko.eu.
+  await ctx.addInitScript(() => {
+    if (window.speechSynthesis) window.speechSynthesis.speak = () => {};
+    (window as any).__syncUrl = (window as any).__backupUrl = "http://127.0.0.1:9/none";
+  });
+  const page = await ctx.newPage();
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(base);
+  await page.waitForSelector(".welcome", { timeout: 20000 });
+  await page.evaluate(() => document.getElementById("splash")?.remove());
+  const api = (path: string, opts?: any) => page.evaluate(([p, o]) => window.__localApi(p, o), [path, opts] as const);
+  return { page, errors, api };
+}
+
+async function start(page: Page, name = "Ana") {
+  await page.fill(".welcome input", name);
+  await page.click(".welcome-go");
+  // Step 2 (optional): an account — not now.
+  await page.waitForSelector(".account-step, .tutorial");
+  if (await page.locator(".account-step").count()) await page.click(".account-step .acc-skip");
+  await page.waitForSelector(".tutorial");
+}
+
+/** Next through every step of the tutorial, up to its last screen. */
+async function throughTutorial(page: Page) {
+  for (let i = 0; i < 10 && (await page.locator(".tut-foot .foot-row").count()); i++) await page.click(".tut-foot .foot-row .btn:not(.ghost)");
+  await page.waitForSelector(".tut-choice, .tut-foot > .btn");
+}
+
+const go = async (page: Page, hash: string, selector: string) => {
+  await page.evaluate((h) => (location.hash = h), hash);
+  await page.waitForSelector(selector, { timeout: 15000 });
+};
+
+/** Answer whatever exercise is showing, correctly, then press Continue. */
+async function answer(page: Page, words: any[]) {
+  const text = await page.locator(".lesson").innerText();
+  const kicker = (await page.locator(".lesson .ex-kicker").first().innerText().catch(() => "")).trim();
+  const quoted = (text.match(/“([^”]+)”/) || [])[1];
+  const word = words.find((w) => w.english === quoted) || words.find((w) => text.includes(w.hanzi) && w.hanzi.length > 1) || words.find((w) => text.includes(w.hanzi));
+  const choices = page.locator(".lesson .choice");
+  const woTiles = page.locator(".lesson .wo-bank .wo-tile");
+  const input = page.locator(".lesson-body input.input");
+  if (/NEW WORD/i.test(kicker)) {
+    // just look at it
+  } else if (await choices.count()) {
+    const n = await choices.count();
+    let hit = 0;
+    for (let i = 0; i < n; i++) {
+      const t = (await choices.nth(i).innerText()).trim();
+      if (word && [word.english, word.hanzi, word.pinyin].includes(t)) hit = i;
+    }
+    await choices.nth(hit).click();
+    const check = page.locator(".lesson-foot .btn", { hasText: "Check" });
+    if (await check.count()) await check.click();
+  } else if (await woTiles.count()) {
+    const n = Math.min(2, await woTiles.count());
+    for (let i = 0; i < n; i++) await woTiles.first().click();
+    const check = page.locator(".lesson-foot .btn", { hasText: "Check" });
+    if (await check.count()) await check.click();
+  } else if (await input.count()) {
+    await input.first().fill(word ? (/reading|pinyin/i.test(kicker) ? word.pinyin : word.hanzi) : "x");
+    await page.locator(".lesson-foot .btn").last().click();
+  } else {
+    const skip = page.locator(".lesson button", { hasText: /can.t (speak|listen)|skip/i });
+    if (await skip.count()) await skip.first().click();
+  }
+  const cont = page.locator(".lesson-foot .btn").last();
+  await cont.waitFor({ timeout: 5000 }).catch(() => {});
+  if (await cont.isEnabled().catch(() => false)) await cont.click();
+  await page.waitForTimeout(150);
+}
+
+async function finishLesson(page: Page, words: any[], end: RegExp) {
+  for (let i = 0; i < 160; i++) {
+    if (await page.locator(".lesson", { hasText: end }).count()) return;
+    if (!(await page.locator(".lesson").count())) break;
+    await answer(page, words);
+  }
+  assert.ok(await page.locator(".lesson", { hasText: end }).count(), `lesson ended with ${end}`);
+}
+
+test("first start: welcome, the tutorial, complete beginner", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await throughTutorial(page);
+  await page.click(".tut-choice .btn.ghost");
+  await page.waitForSelector(".home-head");
+  assert.equal(await page.locator(".place-card").count(), 0, "the placement card isn't offered again");
+  assert.equal((await api("/api/settings")).display_name, "Ana");
+  assert.deepEqual(errors, []);
+});
+
+test("placement test from the tutorial marks known words as learned", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await throughTutorial(page);
+  await page.click(".tut-choice .btn:not(.ghost)");
+  await page.click(".place .lesson-foot .btn");
+  const words = await api("/api/words");
+  for (let i = 0; i < 40 && (await page.locator(".place .place-word").count()); i++) {
+    const shown = (await page.locator(".place .place-word > div").first().innerText()).trim();
+    const meaning = words.find((w: any) => w.hanzi === shown)?.english;
+    if (i < 9) await page.locator(".place .choice", { hasText: meaning }).first().click();
+    else await page.click(".place .lesson-foot .btn.ghost");
+  }
+  await page.locator(".place .lesson-foot .btn").last().click();
+  await page.waitForSelector(".home-head");
+  assert.ok((await api("/api/home")).learned >= 30, "the first blocks count as learned");
+  assert.deepEqual(errors, []);
+});
+
+test("learn new words (choice only) from start to finish", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await page.waitForSelector(".primary-go");
+  const words = await api("/api/words");
+  await page.click(".primary-go");
+  await page.locator(".sheet .mode", { hasText: "Choice only" }).click();
+  await page.waitForSelector(".lesson");
+  await finishLesson(page, words, /New words learned!/);
+  await page.locator(".lesson-foot .btn").last().click();
+  await page.waitForSelector(".home-head");
+  assert.ok((await api("/api/home")).learned >= 3);
+  assert.deepEqual(errors, []);
+});
+
+test("Safari: a spoken word is recorded, recognised on bloomko.eu and graded", async () => {
+  // Chromium with a fake microphone, made to look like Safari (navigator.vendor is Apple's).
+  const safari = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}), args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"] });
+  try {
+    const ctx = await safari.newContext({ viewport: { width: 390, height: 844 } });
+    // As a string: a compiled function here would call a helper (__name) the page doesn't have.
+    await ctx.addInitScript(`
+      Object.defineProperty(navigator, "vendor", { get() { return "Apple Computer, Inc."; }, configurable: true });
+      if (window.speechSynthesis) window.speechSynthesis.speak = function () {};
+      window.__syncUrl = window.__backupUrl = "http://127.0.0.1:9/none";
+      window.__speechUrl = "https://speech.test/api/speech";
+    `);
+    const page = await ctx.newPage();
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    let heard = "";
+    let down = false;
+    const sent: { lang: string; wav: boolean }[] = [];
+    await page.route("https://speech.test/**", async (route) => {
+      if (down) return route.fulfill({ status: 503, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ error: "speech recognition is not set up" }) });
+      const body = route.request().postDataBuffer();
+      sent.push({ lang: new URL(route.request().url()).searchParams.get("lang"), wav: !!body && body.subarray(0, 4).toString() === "RIFF" && body.subarray(8, 12).toString() === "WAVE" });
+      await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ alternatives: [heard] }) });
+    });
+    await page.goto(base);
+    await page.waitForSelector(".welcome", { timeout: 20000 });
+    await page.evaluate(() => document.getElementById("splash")?.remove());
+    const api = (path: string, opts?: any) => page.evaluate(([p, o]) => window.__localApi(p, o), [path, opts] as const);
+    await start(page);
+    await page.click(".tut-top .link-btn");
+    // Three learned words whose speaking cards are due (and nothing else), then Practice.
+    const words = await api("/api/words");
+    await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 3).map((w: any) => w.id), xp: 0 } });
+    await page.waitForTimeout(800);
+    await page.goto(`${base}/nothing-here.txt`);
+    await page.evaluate(() => {
+      const db = JSON.parse(localStorage.getItem("hanzi-db"));
+      db.cards.forEach((c: any) => (c.due = c.skill === "speak" ? "2000-01-01 00:00:00" : "2999-01-01 00:00:00"));
+      localStorage.setItem("hanzi-db", JSON.stringify(db));
+    });
+    await page.goto(base);
+    await page.waitForSelector(".home-head");
+    await page.evaluate(() => document.getElementById("splash")?.remove());
+    await page.locator(".tile", { hasText: "Practice" }).first().click().catch(() => page.click(".primary-go"));
+    await page.locator(".sheet .mode", { hasText: "With writing" }).click();
+    await page.waitForSelector(".lesson .mic");
+    assert.match(await page.locator(".lesson .mic-wrap").first().innerText(), /Tap, speak, tap again/, "Safari records instead of asking the browser");
+    heard = (await page.locator(".lesson .big-hz").innerText()).trim();
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson .mic.rec");
+    await page.waitForTimeout(1200);
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson .heard", { timeout: 10000 });
+    assert.match(await page.locator(".lesson .heard").innerText(), new RegExp(heard));
+    assert.equal(sent.length, 1);
+    assert.equal(sent[0].lang, edition === "heritage" ? "sl-SI" : "zh-CN");
+    assert.ok(sent[0].wav, "the recording is sent as WAV");
+    await page.waitForFunction(() => /Excellent pronunciation|Sounds good/.test(document.querySelector(".lesson")?.textContent || ""), null, { timeout: 5000 });
+    // When bloomko.eu can't help, the learner grades the recording themselves instead of seeing an error.
+    down = true;
+    await page.locator(".lesson-foot .btn").last().click();
+    await page.waitForSelector(".lesson .mic:not(.rec)");
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson .mic.rec");
+    await page.waitForTimeout(800);
+    await page.click(".lesson .mic");
+    await page.waitForSelector(".lesson button:has-text('Sounded right')", { timeout: 10000 });
+    assert.deepEqual(errors, []);
+  } finally {
+    await safari.close();
+  }
+});
+
+test("friends across apps: East and Heritage learners add each other and water each other's gardens", async () => {
+  const { page, errors } = await fresh();
+  // bloomko.eu/api/friends, in memory. The friend already there learns with the other app.
+  const other = edition === "heritage" ? { lang: "zh", edition: "east", learns: /Learning Chinese/ } : { lang: "sl", edition: "heritage", learns: /Learning Slovenian/ };
+  const cards = new Map<string, { secret: string; profile: any; inbox: { name: string; at: string }[] }>();
+  cards.set("MAJA-2345", { secret: "f".repeat(32), inbox: [], profile: { name: "Maja", streak: 4, today: false, plants: 3, season: "spring", lang: other.lang, edition: other.edition, beds: [{ n: "First words", s: "0a1e2i" }] } });
+  const watered: { code: string; from: string }[] = [];
+  await page.route("https://bloomko.eu/api/friends/**", async (route) => {
+    const req = route.request();
+    const [code, action] = new URL(req.url()).pathname.replace("/api/friends/", "").split("/");
+    const body = req.postData() ? JSON.parse(req.postData()) : {};
+    const reply = (status: number, data: unknown) => route.fulfill({ status, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify(data) });
+    const card = cards.get(code);
+    if (req.method() === "PUT") {
+      if (card && card.secret !== body.secret) return reply(403, { error: "not your garden" });
+      cards.set(code, { secret: body.secret, profile: body.profile, inbox: [] });
+      return reply(200, { inbox: card?.inbox || [] });
+    }
+    if (req.method() === "GET") return card ? reply(200, { profile: card.profile, updated: new Date().toISOString() }) : reply(404, { error: "No garden with this friend code" });
+    if (req.method() === "POST" && action === "water") {
+      if (cards.get(body.from)?.secret !== body.secret) return reply(403, { error: "Turn on friends first" });
+      card.inbox.push({ name: body.name, at: new Date().toISOString() });
+      watered.push({ code, from: body.from });
+      return reply(200, { ok: true });
+    }
+    return reply(405, { error: "not allowed" });
+  });
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await go(page, "#/forest", ".garden-tabs");
+  await page.click(".garden-tabs button:nth-child(2)");
+  await page.click(".friends-intro .btn");
+  await page.waitForSelector(".my-code .sync-code");
+  const mine = (await page.locator(".my-code .sync-code").innerText()).trim();
+  assert.equal(cards.get(mine)?.profile.edition, edition, "my card says which app I use");
+
+  await page.fill(".my-code input", "maja-2345");
+  await page.locator(".my-code .btn", { hasText: "Add" }).click();
+  await page.waitForSelector(".friend-row");
+  assert.match(await page.locator(".friend-row").innerText(), other.learns, "the list shows what the friend learns");
+  await page.locator(".friend-row .btn", { hasText: "Visit" }).click();
+  await page.waitForSelector(".visit .water-friend");
+  assert.match(await page.locator(".visit-card").innerText(), other.learns);
+  assert.ok(await page.locator(".visit .bed-svg g.gplant").count(), "the friend's plants from the other app are drawn");
+  await page.click(".visit .water-friend");
+  await page.waitForSelector(".visit .water-friend:has-text('Watered today')");
+  assert.deepEqual(watered, [{ code: "MAJA-2345", from: mine }]);
+  assert.equal(cards.get("MAJA-2345").inbox[0].name, "Ana", "Maja sees who watered her garden");
+  assert.deepEqual(errors, []);
+});
+
+test("the path: one stone open at a time, a stone keeps the streak, grammar and watering come along", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await page.waitForSelector(".journey .jr-current");
+  assert.match(await page.locator(".primary-go").innerText(), /Continue · New words/);
+  assert.equal(await page.locator(".jr-current .jr-stone.now").count(), 1, "only the next stone is open");
+  await page.locator(".jr-current .jr-stone.locked").first().click();
+  await page.waitForSelector(".toast:has-text('Walk the stones before this one first')");
+
+  // Practice without a stone doesn't keep the streak on a day the path has one waiting.
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: [], xp: 12 } });
+  assert.equal((await api("/api/home")).streak, 0);
+
+  // The first stone, walked in the app.
+  const words = await api("/api/words");
+  await page.locator(".primary-go").click();
+  await page.locator(".sheet .mode", { hasText: "Choice only" }).click();
+  await page.waitForSelector(".lesson");
+  await finishLesson(page, words, /New words learned!/);
+  await page.locator(".lesson-foot .btn").last().click();
+  await page.waitForSelector(".journey .jr-current");
+  let j = await api("/api/journey");
+  assert.equal(j.stones_today, 1);
+  assert.equal(j.chapters[0].stones[0].done, true);
+  assert.equal((await api("/api/home")).streak, 1, "one stone keeps the streak");
+  assert.match(await page.locator(".garden-goal").innerText(), /Today's stone walked/);
+
+  // After the first 10 words the grammar lesson is next on the path.
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 10).map((w: any) => w.id), xp: 0 } });
+  await go(page, "#/words", ".topbar");
+  await go(page, "#/", ".journey .jr-current");
+  assert.match(await page.locator(".primary-go").innerText(), /Continue · Grammar/);
+  await page.locator(".primary-go").click();
+  await page.waitForSelector(".lesson");
+  await page.locator(".lesson .icon-btn").first().click(); // leave it for now
+  await page.locator(".dialog .btn", { hasText: /Leave|Quit|End/ }).click().catch(() => {});
+
+  // Ten or more reviews waiting: watering comes before the next stone, once a day.
+  await page.waitForTimeout(800);
+  await page.goto(`${base}/nothing-here.txt`);
+  await page.evaluate(() => {
+    const db = JSON.parse(localStorage.getItem("hanzi-db"));
+    db.cards.forEach((c: any) => (c.due = "2000-01-01 00:00:00"));
+    localStorage.setItem("hanzi-db", JSON.stringify(db));
+  });
+  await page.goto(base);
+  await page.waitForSelector(".journey .jr-current");
+  await page.evaluate(() => document.getElementById("splash")?.remove());
+  assert.match(await page.locator(".primary-go").innerText(), /Water your garden/);
+  j = await api("/api/journey");
+  assert.ok(j.water && j.water.due >= 10);
+  await api("/api/journey/water", { method: "POST" });
+  j = await api("/api/journey");
+  assert.equal(j.water, null, "watered today");
+  assert.equal(j.stones_today, 3, "the first stone, the second (words 6–10) and watering");
+  assert.deepEqual(errors, []);
+});
+
+test("chapter gate: build the chapter's sentences; a wrong order comes back until it's right", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  // Walk the whole first chapter (its words, grammar and story), so its gate is next.
+  let j = await api("/api/journey");
+  const first = j.chapters[0];
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: first.stones.filter((s: any) => s.kind === "words").flatMap((s: any) => s.ids), xp: 0 } });
+  for (let k = 0; k < first.stones.filter((s: any) => s.kind === "grammar").length; k++) {
+    const lesson = await api("/api/grammar/lesson");
+    await api("/api/grammar/complete", { method: "POST", body: { ids: lesson.points.map((p: any) => p.id), xp: 0 } });
+  }
+  for (const st of first.stones.filter((s: any) => s.kind === "story")) await api(`/api/stories/${st.story}/done`, { method: "POST", body: { score: 100 } });
+  j = await api("/api/journey");
+  assert.equal(j.current, first.stones[first.stones.length - 1].id, "the gate is next");
+  assert.equal(j.chapters[0].stones.at(-1).kind, "gate");
+  // Remember the sentences the gate asks for, to put them in order.
+  await page.evaluate(() => {
+    const real = (window as any).__localApi;
+    (window as any).__localApi = async (p: string, o: any) => {
+      const r = await real(p, o);
+      if (p.startsWith("/api/journey/gate?")) (window as any).__gate = r;
+      return r;
+    };
+  });
+  await go(page, "#/words", ".topbar");
+  await go(page, "#/", ".journey .jr-current");
+  assert.match(await page.locator(".primary-go").innerText(), /Chapter gate/);
+  await page.locator(".primary-go").click();
+  await page.waitForSelector(".lesson .wo-tile");
+  const gate = await page.evaluate(() => (window as any).__gate);
+  assert.equal(gate.items.length, 3);
+  const put = async (order: string[]) => {
+    for (const t of order) await page.locator(".lesson .wo-bank .wo-tile", { hasText: t }).filter({ hasText: new RegExp(`^${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`) }).first().click();
+    await page.locator(".lesson-foot .btn", { hasText: "Check" }).click();
+  };
+  const itemNow = async () => {
+    const en = (await page.locator(".lesson .ex-title").innerText()).trim();
+    return gate.items.find((x: any) => x.en.trim() === en);
+  };
+  // The first sentence in the wrong order: not accepted, it comes back at the end.
+  let it = await itemNow();
+  await put([...it.answer].reverse());
+  assert.match(await page.locator(".lesson").innerText(), /Right words, another order|Not quite/);
+  await page.locator(".lesson-foot .btn").last().click();
+  for (let n = 0; n < 3; n++) {
+    await page.waitForSelector(".lesson .wo-tile");
+    it = await itemNow();
+    await put(it.answer);
+    assert.match(await page.locator(".lesson").innerText(), /Correct!/);
+    await page.locator(".lesson-foot .btn").last().click();
+  }
+  await page.waitForSelector(".lesson:has-text('Chapter gate passed!')");
+  await page.locator(".lesson-foot .btn").last().click();
+  await page.waitForSelector(".journey .jr-current");
+  j = await api("/api/journey");
+  assert.equal(j.chapters[0].stones.at(-1).done, true, "the gate is passed");
+  assert.equal(j.current, j.chapters[1].stones[0].id, "the next chapter is open");
+  assert.match(await page.locator(".jr-current .jr-head").innerText(), /Chapter 2/);
+  assert.deepEqual(errors, []);
+});
+
+test("practice: due words come back and can be reviewed", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 20).map((w: any) => w.id), xp: 0 } });
+  // Make them due now (edited away from the app, which saves its own copy when it closes).
+  await page.waitForTimeout(800);
+  await page.goto(`${base}/nothing-here.txt`);
+  await page.evaluate(() => {
+    const db = JSON.parse(localStorage.getItem("hanzi-db"));
+    db.cards.forEach((c: any) => (c.due = "2000-01-01 00:00:00"));
+    localStorage.setItem("hanzi-db", JSON.stringify(db));
+  });
+  await page.goto(base);
+  await page.waitForSelector(".home-head");
+  await page.evaluate(() => document.getElementById("splash")?.remove());
+  assert.ok((await api("/api/home")).due > 0);
+  await page.locator(".tile", { hasText: "Practice" }).first().click().catch(() => page.click(".primary-go"));
+  await page.locator(".sheet .mode", { hasText: "Choice only" }).click();
+  await page.waitForSelector(".lesson");
+  await finishLesson(page, words, /practice (done|complete)/i);
+  assert.deepEqual(errors, []);
+});
+
+test("every main screen opens without errors", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 60).map((w: any) => w.id), xp: 0 } });
+  const screens: [string, string][] = [["#/words", ".topbar"], ["#/stats", ".screen"], ["#/settings", ".sync-card"], ["#/forest", ".season-banner"], ["#/weak", ".screen h2"], ["#/", ".home-head"]];
+  if (edition === "east") screens.push(["#/map", ".cm"], ["#/exams", ".exam-card"]);
+  for (const [hash, sel] of screens) await go(page, hash, sel);
+  // The garden: a plant for every learned word; tapping one shows its name.
+  await go(page, "#/forest", ".bed-svg");
+  assert.ok((await page.locator(".bed-svg g.gplant").count()) >= 50, "learned words grow as plants");
+  await page.locator(".bed-svg g.gplant").first().click();
+  await page.waitForSelector(".plant-tag");
+  await page.click(".garden-tabs button:nth-child(2)");
+  await page.waitForSelector(".friends-intro, .my-code");
+  // Grammar opens once enough words are known.
+  await go(page, "#/", ".home-head");
+  await page.locator(".tile", { hasText: "Grammar" }).first().click();
+  await page.waitForSelector(".lesson");
+  assert.deepEqual(errors, []);
+});
+
+/** Writes a character on the open pad by following its stroke medians (Make Me a Hanzi data). */
+async function drawChar(page: Page, ch: string) {
+  const data = await page.evaluate(async (c) => {
+    const url = (window as any).__charDataUrl ? (window as any).__charDataUrl(c) : `/api/chardata/${encodeURIComponent(c)}`;
+    return (await fetch(url)).json();
+  }, ch);
+  // The pad scrolls into view smoothly: wait until it stands still.
+  const svg = page.locator(".pad .writer svg").last();
+  let box = await svg.boundingBox();
+  for (let i = 0; i < 40; i++) {
+    await page.waitForTimeout(100);
+    const now = await svg.boundingBox();
+    if (now.y === box.y && now.x === box.x) break;
+    box = now;
+  }
+  const pad = Math.round(box.width * 0.06);
+  const k = (box.width - 2 * pad) / 1024;
+  for (const median of data.medians) {
+    const pts = median.map(([x, y]: number[]) => [box.x + pad + x * k, box.y + pad + (900 - y) * k]);
+    await page.mouse.move(pts[0][0], pts[0][1]);
+    await page.mouse.down();
+    for (const [x, y] of pts.slice(1)) await page.mouse.move(x, y, { steps: 4 });
+    await page.mouse.up();
+    await page.waitForTimeout(120);
+  }
+}
+
+test("character map: a character can be written, traced first and then from memory", { skip: edition !== "east" }, async () => {
+  const { page, errors } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await go(page, "#/map/%E4%BA%BA", ".cm-info"); // 人
+  assert.equal(await page.locator(".cm-write .pad").count(), 0, "no pad until asked");
+  await page.click(".cm-write-btn");
+  await page.waitForSelector(".cm-write .pad .writer svg");
+  assert.match(await page.locator(".cm-write .pad-status").innerText(), /Trace/);
+  await drawChar(page, "人");
+  await page.waitForSelector(".cm-write .pad-status:text('Write from memory')", { timeout: 5000 });
+  await page.waitForTimeout(300);
+  await drawChar(page, "人");
+  await page.waitForSelector(".cm-write-done", { timeout: 5000 });
+  assert.match(await page.locator(".cm-write-done").innerText(), /Perfect/);
+  // Again starts over; Close takes the pad away.
+  await page.click(".cm-write button:text('Write it again')");
+  await page.waitForSelector(".cm-write .pad-status:text('Trace')");
+  await page.click(".cm-write button:text('Close')");
+  assert.equal(await page.locator(".cm-write .pad").count(), 0);
+  assert.deepEqual(errors, []);
+});
+
+test("mock exam: a short exam can be taken to the result", { skip: edition !== "east" }, async () => {
+  const { page, errors } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await go(page, "#/exams", ".exam-card");
+  await page.locator(".exam-card .btn.ghost").first().click();
+  for (let i = 0; i < 400 && !(await page.locator(".exam .exam-result").count()); i++) {
+    if (await page.locator(".dialog").count()) await page.click(".dialog .btn.ghost");
+    else if (await page.locator(".exam .exam-intro").count()) await page.click(".exam .lesson-foot .btn");
+    else if (await page.locator(".exam .exam-opt").count()) {
+      await page.locator(".exam .exam-opt").first().click();
+      await page.locator(".exam .lesson-foot .btn").last().click();
+    }
+    await page.waitForTimeout(40); // let the next question (or the results) render
+  }
+  await page.waitForSelector(".exam .exam-result", { timeout: 20000 });
+  assert.match(await page.locator(".exam .er-total").innerText(), /\d+\s*\/\s*200/);
+  assert.deepEqual(errors, []);
+});
+
+test("Anki deck import (.apkg) with progress", { skip: edition !== "east" }, async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  await go(page, "#/words", ".topbar");
+  await page.click('button:has-text("Import")');
+  const [chooser] = await Promise.all([page.waitForEvent("filechooser"), page.click(".anki-link")]);
+  await chooser.setFiles(join(FIXTURES, "chinese-legacy.apkg"));
+  await page.waitForSelector(".import-report .good", { timeout: 20000 });
+  await page.click(".anki-sheet .btn:not(.ghost)");
+  await page.waitForTimeout(1000);
+  const words = await api("/api/words");
+  assert.ok(words.some((w: any) => w.hanzi === "长颈鹿" && w.section === "HSK Extra"));
+  const panda = words.find((w: any) => w.hanzi === "熊猫");
+  assert.ok(panda.learned || (await api("/api/home")).learned >= 3, "Anki progress kept");
+  assert.deepEqual(errors, []);
+});
+
+test("the garden stays quick with a big vocabulary (it once took seconds)", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 1500).map((w: any) => w.id), xp: 0 } });
+  const ms = await page.evaluate(async () => {
+    const t = performance.now();
+    await window.__localApi("/api/forest");
+    await window.__localApi("/api/home");
+    return performance.now() - t;
+  });
+  assert.ok(ms < 1500, `garden + home took ${Math.round(ms)} ms`);
+  await go(page, "#/forest", ".bed-svg g.gplant");
+  await page.locator(".bed-svg g.gplant").nth(5).click();
+  await page.waitForSelector(".plant-tag", { timeout: 3000 });
+  // Plants at the edges: the name tag stays fully inside the garden (it used to slide off the side).
+  const plants = page.locator(".bed-svg g.gplant");
+  const n = await plants.count();
+  for (const i of [0, 6, 7, 13, n - 1]) {
+    await plants.nth(i).scrollIntoViewIfNeeded();
+    await plants.nth(i).click();
+    const tag = await page.locator(".plant-tag").boundingBox();
+    const garden = await page.locator(".plant-tag").evaluate((t) => t.parentElement.getBoundingClientRect().toJSON());
+    await page.waitForTimeout(300);
+    const t2 = await page.locator(".plant-tag").boundingBox();
+    assert.ok(t2.x >= garden.x - 1 && t2.x + t2.width <= garden.x + garden.width + 1, `tag of plant ${i} is inside the garden`);
+  }
+  assert.deepEqual(errors, []);
+});
+
+test("cloud backup holds only your progress, and restores all of it on a new phone", async () => {
+  // A stand-in for bloomko.eu/api/backup, shared by both "phones".
+  const stored = new Map<string, any[]>();
+  const fakeServer = async (page: Page) => {
+    await page.evaluate(() => ((window as any).__backupUrl = "https://backup.test/api/backup"));
+    await page.route("https://backup.test/**", async (route) => {
+      const req = route.request();
+      const [id, n] = new URL(req.url()).pathname.split("/api/backup/")[1].split("/");
+      const items = stored.get(id) || [];
+      let body: any;
+      if (req.method() === "POST") {
+        const b = JSON.parse(req.postData() || "{}");
+        items.push({ n: items.length + 1, at: new Date().toISOString(), size: b.data.length, meta: b.meta, data: b.data });
+        stored.set(id, items);
+        body = { n: items.length };
+      } else body = n ? items.find((x) => x.n === Number(n)) : { backups: items.map(({ data: _d, ...x }) => x) };
+      await route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify(body) });
+    });
+  };
+
+  // Phone 1: some words learned, one of your own, then cloud backup on.
+  const a = await fresh();
+  await start(a.page, "Ana");
+  await a.page.click(".tut-top .link-btn");
+  await fakeServer(a.page);
+  const words = await a.api("/api/words");
+  await a.api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 40).map((w: any) => w.id), xp: 20 } });
+  const own = edition === "east" ? { hanzi: "考拉", pinyin: "kǎo lā", english: "koala" } : { hanzi: "pingvin", pinyin: "", english: "penguin" };
+  await a.api("/api/words", { method: "POST", body: own });
+  await a.api("/api/cloud-backup/enable", { method: "POST" });
+  const { key } = await a.api("/api/cloud-backup");
+  const sent = [...stored.values()][0][0];
+  assert.ok(sent.size < 40000, `a backup is small now (${sent.size} bytes, was ~200 KB with every built-in word)`);
+  const before = await a.api("/api/words");
+  const learnedA = before.filter((w: any) => w.cards).map((w: any) => w.hanzi).sort();
+
+  // Phone 2: a new install restores it.
+  const b = await fresh();
+  await start(b.page, "Someone");
+  await b.page.click(".tut-top .link-btn");
+  await fakeServer(b.page);
+  const { backups } = await b.api("/api/cloud-backup/list", { method: "POST", body: { key } });
+  await b.api("/api/cloud-backup/restore", { method: "POST", body: { key, n: backups[0].n } });
+  const after = await b.api("/api/words");
+  assert.equal(after.length, before.length, "every built-in word is there again");
+  assert.deepEqual(after.filter((w: any) => w.cards).map((w: any) => w.hanzi).sort(), learnedA, "the same words learned");
+  const back = after.find((w: any) => w.hanzi === own.hanzi);
+  assert.ok(back && back.english === own.english, "your own word came back");
+  assert.equal((await b.api("/api/settings")).display_name, "Ana");
+  assert.deepEqual([...a.errors, ...b.errors], []);
+});
+
+test("grammar quizzes: practical usage only (gaps, forms, right sentence, gender, word order — no meta labels)", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 600).map((w: any) => w.id), xp: 0 } });
+  let practical = 0;
+  for (let lesson = 0; lesson < 4; lesson++) {
+    await go(page, "#/", ".home-head");
+    await page.locator(".tile", { hasText: "Grammar" }).first().click();
+    await page.waitForSelector(".lesson");
+    for (let i = 0; i < 120 && (await page.locator(".lesson").count()); i++) {
+      const title = (await page.locator(".lesson .ex-title").first().innerText().catch(() => "")).trim();
+      assert.notEqual(title, "What does the highlighted part do?", "meta-grammar label guessing is removed");
+      if (title === "Fill in the gap" || title === "Which form fits?") {
+        practical++;
+        assert.ok(await page.locator(".lesson .g-example .g-gap").count(), "the sentence has a blank");
+        assert.ok((await page.locator(".lesson .choice").count()) >= 2, "there are answers to choose from");
+        for (const t of await page.locator(".lesson .choice").allInnerTexts()) assert.ok(t.trim(), "no empty answer");
+      } else if (title === "Which sentence is right?" || title === "Which gender is this noun?") {
+        practical++;
+        assert.ok((await page.locator(".lesson .choice").count()) >= 3, "sentence/gender choices are shown");
+      } else if (await page.locator(".lesson .wo-bank .wo-tile").count()) {
+        practical++;
+        const bankTiles = page.locator(".lesson .wo-bank .wo-tile");
+        for (let k = 0; k < 2 && (await bankTiles.count()); k++) await bankTiles.first().click();
+      }
+      const choice = page.locator(".lesson .choice").first();
+      if (await choice.isVisible().catch(() => false)) await choice.click();
+      const btn = page.locator(".lesson .lesson-foot .btn").last();
+      if (await btn.isVisible().catch(() => false)) await btn.click().catch(() => {});
+      await page.waitForTimeout(80);
+    }
+    if (await page.locator(".lesson").count()) {
+      await page.reload();
+      await page.waitForSelector(".home-head, #app", { timeout: 20000 });
+      await page.evaluate(() => document.getElementById("splash")?.remove());
+    }
+  }
+  assert.ok(practical > 0, "practical grammar questions were shown");
+  assert.deepEqual(errors, []);
+});
+
+test("stories: tap a word for its meaning, then a short quiz", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 80).map((w: any) => w.id), xp: 0 } });
+  const list = await api("/api/stories");
+  assert.ok(list.stories.length >= 8, "ready-made stories for this level");
+  await go(page, "#/", ".home-head");
+  await page.locator(".tile", { hasText: "Listen" }).first().click();
+  await page.locator(".mode-opt", { hasText: "Stories" }).click();
+  await page.locator(".story-item").first().click();
+  await page.waitForSelector(".story-reader .tok");
+  // Every word can be tapped and has a meaning.
+  const toks = page.locator(".story-reader .tok");
+  for (let i = 0; i < Math.min(await toks.count(), 12); i++) {
+    await toks.nth(i).click();
+    const meaning = (await page.locator(".word-pop .wp-mean").innerText()).trim();
+    assert.ok(meaning && meaning !== "—", `“${await toks.nth(i).innerText()}” has a meaning`);
+  }
+  if (edition === "heritage") {
+    // A word in another form shows its basic form: kavo ← kava.
+    await page.locator(".story-reader .tok", { hasText: /^Kavo$/ }).first().click();
+    assert.match(await page.locator(".word-pop").innerText(), /← kava/);
+  }
+  await page.click(".story-reader .lesson-foot .btn");
+  for (let i = 0; i < 20 && !(await page.locator(".lesson-done, .done-screen, .lesson .end").count()); i++) {
+    const c = page.locator(".lesson .choice").first();
+    if (await c.isVisible().catch(() => false)) await c.click();
+    const b = page.locator(".lesson .lesson-foot .btn").last();
+    if (await b.isVisible().catch(() => false)) await b.click().catch(() => {});
+    await page.waitForTimeout(80);
+    if (!(await page.locator(".lesson").count())) break;
+  }
+  assert.ok((await api("/api/stories")).stories.some((s: any) => s.done), "the story counts as read");
+  assert.deepEqual(errors, []);
+});
+
+test("first start: the account step is optional, and typing in the account form can be corrected", async () => {
+  const { page, errors } = await fresh();
+  await page.fill(".welcome input", "Ana");
+  await page.click(".welcome-go");
+  await page.waitForSelector(".account-step");
+  assert.match(await page.locator(".account-step").innerText(), /Keep your progress safe/);
+  await page.click(".account-step .btn:not(.ghost)");
+  await page.waitForSelector(".account-sheet input[type=email]");
+  const email = page.locator(".account-sheet input[type=email]");
+  await email.click();
+  await page.keyboard.type("anaa");
+  await page.keyboard.press("Backspace");
+  assert.equal(await email.inputValue(), "ana", "Backspace deletes a letter");
+  await page.mouse.click(5, 5); // close the sheet: still on the account step
+  await page.click(".account-step .acc-skip");
+  await page.waitForSelector(".tutorial");
+  assert.deepEqual(errors, []);
+});
+
+test("sync: two phones learn offline, then both end up with everything", async () => {
+  // A stand-in for bloomko.eu/api/sync (versioned, like the real one), shared by both phones.
+  const store = new Map<string, { version: number; data: string }>();
+  let online = true;
+  const fakeSync = async (page: Page) => {
+    await page.evaluate(() => ((window as any).__syncUrl = "https://sync.test/api/sync"));
+    await page.route("https://sync.test/**", async (route) => {
+      const req = route.request();
+      const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET, PUT, DELETE", "Access-Control-Allow-Headers": "Content-Type" };
+      if (req.method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
+      if (!online) return route.abort("internetdisconnected");
+      const id = new URL(req.url()).pathname.split("/").pop()!;
+      const cur = store.get(id);
+      let status = 200, body: any = cur ? { version: cur.version, data: cur.data } : { version: 0 };
+      if (req.method() === "PUT") {
+        const b = JSON.parse(req.postData() || "{}");
+        if (b.base !== (cur?.version || 0)) [status, body] = [409, { conflict: true, version: cur?.version || 0 }];
+        else { store.set(id, { version: (cur?.version || 0) + 1, data: b.data }); body = { version: (cur?.version || 0) + 1 }; }
+      }
+      await route.fulfill({ status, contentType: "application/json", headers: cors, body: JSON.stringify(body) });
+    });
+  };
+  const learned = async (api: any) => (await api("/api/words")).filter((w: any) => w.cards).map((w: any) => w.hanzi).sort();
+
+  const a = await fresh();
+  await start(a.page, "Ana");
+  await a.page.click(".tut-top .link-btn");
+  await fakeSync(a.page);
+  const words = await a.api("/api/words");
+  const ids = (from: number, to: number) => words.slice(from, to).map((w: any) => w.id);
+  await a.api("/api/learn/complete", { method: "POST", body: { word_ids: ids(0, 20), xp: 20 } });
+  const { code } = await a.api("/api/sync/enable", { method: "POST", body: {} });
+  assert.ok(code, "phone A has a sync code");
+
+  const b = await fresh();
+  await start(b.page, "Someone");
+  await b.page.click(".tut-top .link-btn");
+  await fakeSync(b.page);
+  await b.api("/api/sync/enable", { method: "POST", body: { code } });
+  assert.equal((await learned(b.api)).length, 20, "phone B got phone A's words");
+
+  // Both phones go offline and learn different words; B adds a word of its own.
+  online = false;
+  await a.api("/api/learn/complete", { method: "POST", body: { word_ids: ids(20, 30), xp: 10 } });
+  await b.api("/api/learn/complete", { method: "POST", body: { word_ids: ids(30, 45), xp: 15 } });
+  const own = edition === "east" ? { hanzi: "考拉", pinyin: "kǎo lā", english: "koala" } : { hanzi: "pingvin", pinyin: "", english: "penguin" };
+  await b.api("/api/words", { method: "POST", body: own });
+  await a.page.waitForTimeout(500);
+
+  // Back online: each syncs (A, B, then A again picks up B's part).
+  online = true;
+  await a.api("/api/sync/now", { method: "POST" });
+  await b.api("/api/sync/now", { method: "POST" });
+  await a.api("/api/sync/now", { method: "POST" });
+  const want = words.slice(0, 45).map((w: any) => w.hanzi).sort();
+  assert.deepEqual(await learned(a.api), want, "phone A has every word learned on both phones");
+  assert.deepEqual(await learned(b.api), want, "phone B has every word learned on both phones");
+  assert.ok((await a.api("/api/words")).some((w: any) => w.hanzi === own.hanzi), "phone B's own word reached phone A");
+  assert.deepEqual([...a.errors, ...b.errors].filter((e) => !/sync|Failed to fetch|internet/i.test(e)), []);
+});
+
+test("AI: offered only when it can really answer (a model server that responds)", async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  // A new learner has the AI switch on, but no model and no model server: no AI in the app.
+  let s = await api("/api/settings");
+  assert.equal(s.ai_wanted, true, "the switch is on by default");
+  assert.equal(s.ai_enabled, false, "but the AI isn't offered while nothing can answer");
+  const words = await api("/api/words");
+  await api("/api/learn/complete", { method: "POST", body: { word_ids: words.slice(0, 30).map((w: any) => w.id), xp: 0 } });
+  // The first grammar lesson of the path, so that the next stone is new words again.
+  const lesson = await api("/api/grammar/lesson");
+  await api("/api/grammar/complete", { method: "POST", body: { ids: lesson.points.map((p: any) => p.id), xp: 0 } });
+  const session = await api("/api/sentences/session?use_ai=1");
+  assert.ok(session.sentences.length, "built-in sentences are used");
+  assert.equal(session.note, null, "without a complaint about the AI");
+  await go(page, "#/", ".home-head");
+  await page.locator(".primary-go").click();
+  await page.locator(".sheet .mode").last().click();
+  await page.waitForSelector(".lesson .ex-kicker");
+  assert.equal(await page.locator(".lesson", { hasText: "Memory hook & example" }).count(), 0, "no AI button on a new word");
+  await page.reload();
+  await page.waitForSelector(".home-head", { timeout: 20000 });
+  await page.evaluate(() => document.getElementById("splash")?.remove());
+
+  // A model server appears (as with Ollama on a computer): now the AI is on.
+  await page.route("http://ai.test/**", (route) =>
+    route.fulfill({ status: 200, contentType: "application/json", headers: { "Access-Control-Allow-Origin": "*" }, body: JSON.stringify({ data: [{ id: "gemma" }] }) })
+  );
+  s = await api("/api/settings", { method: "PUT", body: { ai_enabled: true, llm_base_url: "http://ai.test/v1", llm_model: "gemma" } });
+  assert.equal(s.ai_enabled, true, "a model server that answers turns the AI on");
+  // Switched off by hand: off, whatever the server says.
+  s = await api("/api/settings", { method: "PUT", body: { ai_enabled: false } });
+  assert.equal(s.ai_enabled, false);
+  assert.equal(s.ai_wanted, false);
+  assert.deepEqual(errors, []);
+});
+
+test("Slovenian without the AI: a sentence is right in more than one way; forms lead to their words", { skip: edition !== "heritage" }, async () => {
+  const { page, errors, api } = await fresh();
+  await start(page);
+  await page.click(".tut-top .link-btn");
+  const grade = (zh: string, answer: string) => api("/api/sentences/grade", { method: "POST", body: { en: "", zh, answer } });
+  assert.equal((await grade("Lačen sem.", "Lačna sem")).correct, true, "said by a woman");
+  assert.equal((await grade("Sem iz Slovenije.", "Jaz sem iz Slovenije")).correct, true, "with the pronoun");
+  assert.equal((await grade("Boli me glava.", "Glava me boli")).correct, true, "another word order");
+  assert.equal((await grade("Stane dva evra.", "stane 2 evra")).correct, true, "a digit for the number");
+  const wrong = await grade("Lačen sem.", "Žejen sem");
+  assert.equal(wrong.correct, false);
+  assert.equal(wrong.corrected, "Lačen sem.");
+  // Speech recognition writes "2" for "dva".
+  assert.equal((await api("/api/speech/compare", { method: "POST", body: { heard: "stane 2 evra", expected: "Stane dva evra." } })).score, 100);
+  // Words from a photo: "kavo" is the course word "kava", not a new word.
+  const { words } = await api("/api/photo/words", { method: "POST", body: { text: "Kavo z mlekom, prosim. Imam dve sestri." } });
+  const kava = words.find((w: any) => w.t === "kava");
+  assert.ok(kava && kava.kind !== "new", "kavo → kava, a word of the course");
+  assert.ok(!words.some((w: any) => w.t === "kavo"), "the inflected form isn't offered as a new word");
+  assert.deepEqual(errors, []);
+});

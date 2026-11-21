@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 40 944 944">
+  <defs>
+    <style>@font-face{font-family:L;font-weight:700;src:url(lora-latin-ext-700-normal.woff2);unicode-range:U+0100-024F}@font-face{font-family:L;font-weight:700;src:url(lora-latin-700-normal.woff2)}</style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b6553b"/><stop offset="1" stop-color="#7f3320"/></linearGradient>
+    <linearGradient id="lf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf3e2"/><stop offset="1" stop-color="#e6d3ad"/></linearGradient>
+  </defs>
+  <rect x="40" y="40" width="944" height="944" rx="210" fill="url(#bg)"/>
+  <rect x="88" y="88" width="848" height="848" rx="170" fill="none" stroke="#f0d49a" stroke-opacity=".45" stroke-width="6" stroke-dasharray="14 14"/>
+  <g transform="translate(530,500) rotate(-40)">
+    <path d="M-410,0 C-380,-170 -230,-268 -20,-268 C200,-268 330,-80 460,0 C330,80 200,268 -20,268 C-230,268 -380,170 -410,0 Z" fill="url(#lf)" stroke="#d39b32" stroke-width="14"/>
+    <path d="M-390,0 L440,0 M-250,0 L-150,-150 M-250,0 L-150,150 M-20,0 L80,-170 M-20,0 L80,170 M200,0 L270,-110 M200,0 L270,110" stroke="#cbb488" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M440,0 C 500,10 540,40 560,90" stroke="#d39b32" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <g font-family="L, Georgia, serif" font-weight="700" fill="#2c4a6e" text-anchor="middle" dominant-baseline="central">
+      <text transform="translate(-175,-112) rotate(40)" font-size="170">Č</text>
+      <text transform="translate(115,-108) rotate(40)" font-size="170">Þ</text>
+      <text transform="translate(-175,112) rotate(40)" font-size="170">Ħ</text>
+      <text transform="translate(130,110) rotate(40)" font-size="170">Ŵ</text>
+    </g>
+  </g>
+</svg>
